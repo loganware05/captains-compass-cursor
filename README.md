@@ -44,8 +44,10 @@ Prefer a **disposable sandbox** before any important project:
 
 ```bash
 ./scripts/install.sh /path/to/product-repo
-./scripts/install.sh --force /path/to/product-repo   # intentional overwrite
+./scripts/install.sh --force /path/to/product-repo   # intentional overwrite of .cursor only
 ```
+
+Control repository (private): https://github.com/loganware05/captains-compass-cursor
 
 After install, the product repo should contain:
 

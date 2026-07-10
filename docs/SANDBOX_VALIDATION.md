@@ -42,10 +42,10 @@ Results:
 | Rollback checkpoint (`rollback/pre-contact-form`) | Pass |
 | Contact form implemented | Pass |
 | Tests | Pass (15/15) |
-| GitHub issue / remote PR | Blocked — GitHub auth unavailable; used local issue placeholder and PR-ready description |
+| GitHub issue / remote PR | Pass — [issue #1](https://github.com/loganware05/captain-compass-sandbox/issues/1), [PR #2](https://github.com/loganware05/captain-compass-sandbox/pull/2) |
 | Upgraded to Compass 0.2.0 | Pass — hooks + React/Playwright/GitHub Skills installed; product docs preserved |
 
-This matches V0.1–V0.2 expectations: GitHub remote PRs need `gh auth login` (see `docs/integrations/github.md`). Until then, a local issue placeholder plus a PR-ready description satisfies the workflow.
+Control repo: https://github.com/loganware05/captains-compass-cursor
 
 ### Failure tests (optional follow-ups)
 
