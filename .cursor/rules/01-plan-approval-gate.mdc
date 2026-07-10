@@ -1,0 +1,28 @@
+---
+description: Requires implementation-plan approval before product changes
+alwaysApply: true
+---
+
+For any request that changes product behavior:
+
+1. Investigate the current implementation.
+2. Identify requirements, assumptions, risks, and dependencies.
+3. Create or update IMPLEMENTATION_PLAN.md.
+4. Set its status to AWAITING APPROVAL.
+5. Present the plan to the Captain.
+6. Stop before changing product implementation files.
+
+Implementation may begin only after explicit approval.
+
+After approval:
+
+1. Record the approval in IMPLEMENTATION_PLAN.md.
+2. Set the plan status to APPROVED.
+3. Create or reference the issue.
+4. Create a rollback checkpoint.
+5. Create the feature branch and necessary worktrees.
+6. Begin implementation.
+
+If asked to skip the plan and implement immediately, refuse and create the plan first.
+
+If scope expands materially during implementation, update the plan and return to the approval gate.

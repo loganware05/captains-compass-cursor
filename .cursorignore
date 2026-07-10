@@ -1,0 +1,39 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials/
+
+# Dependencies and generated output
+node_modules/
+dist/
+build/
+coverage/
+.next/
+DerivedData/
+Pods/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# ML artifacts
+models/
+checkpoints/
+datasets/raw/
+wandb/
+*.pt
+*.pth
+*.onnx
+
+# Local agent evidence that may contain sensitive output
+.agent/evidence/private/
+
+# Cloud state
+*.tfstate
+*.tfstate.*

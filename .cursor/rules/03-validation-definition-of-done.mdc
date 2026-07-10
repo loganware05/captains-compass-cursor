@@ -1,0 +1,26 @@
+---
+description: Validation layers and Definition of Done
+alwaysApply: true
+---
+
+A change is not done until applicable validation passes and evidence is recorded.
+
+Required when applicable:
+
+- Static analysis / lint
+- Unit tests
+- Integration tests
+- End-to-end tests
+- Browser screenshots for UI changes
+- Security review
+- Accessibility review
+- Production build
+- Deployment smoke test
+- Rollback review
+
+Never weaken, delete, or skip failing tests merely to produce a green result.
+Fix the implementation or report a blocker with evidence.
+
+Store evidence under .agent/evidence/ when available (screenshots, test results, security, accessibility).
+
+Stop when autonomy budget limits are reached and produce a Budget Stop Report.

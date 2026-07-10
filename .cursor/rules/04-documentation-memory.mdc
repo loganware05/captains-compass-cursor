@@ -1,0 +1,21 @@
+---
+description: Where project knowledge belongs across docs, Skills, and rules
+alwaysApply: true
+---
+
+Keep project memory accurate after meaningful work.
+
+Document ownership:
+
+- PROJECT_CONTEXT.md — durable product, stack, repo map, constraints, terminology
+- DECISIONS.md — architectural and process decisions (ADRs)
+- PROGRESS.md — current status, completed work, next steps, blockers
+- TESTING.md — how to test this project; commands and checklists
+- CHANGELOG.md — user-facing and workflow version history
+- IMPLEMENTATION_PLAN.md — approval-gated execution contract for the active change
+- Skills — detailed task procedures loaded only when relevant
+- Rules — always-on operating constraints; keep short
+
+Do not store secrets in documentation.
+Do not store implementation-critical approvals only outside the repository.
+Update PROGRESS.md and relevant docs before declaring work complete.

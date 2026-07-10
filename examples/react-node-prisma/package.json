@@ -1,0 +1,6 @@
+{
+  "name": "react-node-prisma-fixture",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Minimal fixture for Captain's Compass installer tests"
+}

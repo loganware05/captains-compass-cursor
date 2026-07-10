@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": ".cursor/hooks/secret-protection.sh",
+        "failClosed": false
+      },
+      {
+        "command": ".cursor/hooks/protected-branch.sh",
+        "failClosed": false
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": ".cursor/hooks/plan-approval-check.sh",
+        "matcher": "Write|StrReplace|EditNotebook",
+        "failClosed": false
+      }
+    ]
+  }
+}

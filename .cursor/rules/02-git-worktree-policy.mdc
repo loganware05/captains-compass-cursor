@@ -1,0 +1,29 @@
+---
+description: Git, branch, issue, commit, and worktree policy
+alwaysApply: true
+---
+
+Never implement directly on main, master, develop, or a protected release branch.
+
+Every implementation must have:
+
+- An issue reference (or documented placeholder when GitHub is unavailable)
+- A feature or fix branch
+- A rollback checkpoint (tag or documented commit SHA)
+- Cohesive commits
+- A pull request (or PR-ready description)
+- Validation evidence
+
+Use parallel agents only when workstreams have clear file and interface boundaries.
+
+Use isolated Git worktrees for parallel workstreams.
+
+Branch naming:
+
+feature/<issue>-<description>
+fix/<issue>-<description>
+agent/<issue>-<role>-<description>
+
+Commit format:
+
+<type>(<scope>): <summary> (<issue-reference>)
