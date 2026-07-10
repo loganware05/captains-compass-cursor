@@ -1,17 +1,30 @@
 # Example: React + Node + Prisma fixture
 
-This directory is a **minimal fixture** for installer tests and documentation.
-It is not a full application.
+Minimal **illustrative** layout for Captain's Compass installer docs and future module tests.
+It is not a full production application.
 
-## Purpose
-
-- Demonstrate the intended product shape for a later tech-module example
-- Provide a Git-initialized tree that `install.sh` can target in tests
-
-## Stack (illustrative)
+## Intended stack
 
 - React (frontend)
 - Node.js (API)
 - PostgreSQL + Prisma (data)
 
-Technology-specific Skills for this stack are deferred past Version 0.1.
+## Layout
+
+```
+examples/react-node-prisma/
+├── README.md
+├── package.json
+├── prisma/
+│   └── schema.prisma   # illustrative schema only
+└── src/
+    └── server/
+        └── README.md   # where API code would live
+```
+
+## Skills to use in a real product repo
+
+- `react-engineering`
+- `node-engineering`
+- `postgres-prisma`
+- `playwright-browser-validation`

@@ -78,6 +78,8 @@ SKILLS=(
   github-integration
   react-engineering
   playwright-browser-validation
+  node-engineering
+  postgres-prisma
 )
 
 for s in "${SKILLS[@]}"; do
