@@ -39,3 +39,11 @@
 - **Context:** V0.1 sandbox passed; design sequence calls for GitHub → Playwright → hooks → React module next.
 - **Decision:** Ship V0.2.0 with `github-integration`, `react-engineering`, `playwright-browser-validation`, and the first three hooks (secrets, protected branch, plan approval). Keep hooks fail-open (`failClosed: false`) initially.
 - **Consequences:** Stronger enforcement without freezing work if a hook misbehaves; remaining hooks and tech modules deferred to later versions.
+
+## ADR-006: V0.3 adds Node and Postgres/Prisma Skills
+
+- **Status:** Accepted
+- **Date:** 2026-07-10
+- **Context:** Design roadmap versions Node + PostgreSQL/Prisma as v0.3.0 after React/Playwright.
+- **Decision:** Add `node-engineering` and `postgres-prisma` Skills plus integration docs and an illustrative Prisma example schema. Keep them as Skills (not always-on rules).
+- **Consequences:** Agents load backend/data guidance only when relevant; production DB access remains approval-gated and out of default agent context.

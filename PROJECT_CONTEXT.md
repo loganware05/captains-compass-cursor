@@ -112,4 +112,4 @@ gh auth status   # GitHub Stage 1
 
 ## Current Priorities
 
-Maintain V0.2.0; add remaining hooks and V0.3 Node/Prisma modules after sandbox re-validation.
+Ship and validate Version 0.3.0 (Node + Prisma Skills); then Docker/cloud modules.

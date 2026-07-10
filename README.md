@@ -4,12 +4,14 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and install scripts. Product application code does not live here. Install a smaller workflow package into each product repository.
 
-## Current version: 0.2.0
+**GitHub template:** https://github.com/loganware05/captains-compass-cursor
+
+## Current version: 0.3.0
 
 ### Included
 
 - Five always-applied core rules
-- Ten Skills (7 foundational + GitHub, React, Playwright)
+- Twelve Skills (foundational + GitHub, React, Playwright, Node, Postgres/Prisma)
 - Eight specialist subagents
 - Seven documentation templates
 - First three hooks (secrets, protected branch, plan approval)
@@ -19,9 +21,9 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 
 ### Not included yet
 
-- Remaining hooks (branch-name, format, pre-push tests, PR evidence)
+- Remaining hooks (branch-name, format, pre-push, PR evidence)
 - Linear / Notion / cloud MCP stages
-- Node, Prisma, Docker, Python/ML, iOS Skills
+- Docker, Python/ML, iOS Skills
 - Automatic updates that overwrite project customizations
 - Overnight autonomy / auto-merge / production deploys
 
@@ -44,10 +46,10 @@ Prefer a **disposable sandbox** before any important project:
 
 ```bash
 ./scripts/install.sh /path/to/product-repo
-./scripts/install.sh --force /path/to/product-repo   # intentional overwrite of .cursor only
+./scripts/install.sh --force /path/to/product-repo   # refreshes .cursor only; keeps product docs
 ```
 
-Control repository (private): https://github.com/loganware05/captains-compass-cursor
+Control repository (private template): https://github.com/loganware05/captains-compass-cursor
 
 After install, the product repo should contain:
 
@@ -61,7 +63,11 @@ After install, the product repo should contain:
 gh auth login
 ```
 
-See [`docs/integrations/github.md`](docs/integrations/github.md). Without auth, agents use a local issue placeholder and a PR-ready description.
+See [`docs/integrations/github.md`](docs/integrations/github.md).
+
+## Node / Postgres / Prisma (V0.3)
+
+See [`docs/integrations/node-postgres-prisma.md`](docs/integrations/node-postgres-prisma.md).
 
 ## Design documents
 

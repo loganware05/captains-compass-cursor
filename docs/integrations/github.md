@@ -45,18 +45,19 @@ See Skill: `.cursor/skills/github-integration/SKILL.md`.
 | Control (workflow) | https://github.com/loganware05/captains-compass-cursor | Private |
 | Sandbox (validation) | https://github.com/loganware05/captain-compass-sandbox | Private |
 
-## Enable as GitHub template (manual)
+## Enable as GitHub template
 
-On the control repository:
+**Status:** Enabled (2026-07-10) on https://github.com/loganware05/captains-compass-cursor
 
-1. Open **Settings**
-2. Enable **Template repository**
-3. Topics already applied: `cursor`, `agentic-engineering`, `ai-agents`, `developer-workflow`, `git-worktrees`
-4. Optional: create a GitHub Release for `v0.2.0`
+Topics: `cursor`, `agentic-engineering`, `ai-agents`, `developer-workflow`, `git-worktrees`
+
+Release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v0.2.0
+
+Optional later releases:
 
 ```bash
 cd /path/to/captains-compass-cursor
-git tag -a v0.2.0 -m "Captain's Compass v0.2.0"
-git push origin v0.2.0
-gh release create v0.2.0 --title "v0.2.0" --notes-file CHANGELOG.md
+git tag -a v0.3.0 -m "Captain's Compass v0.3.0"
+git push origin v0.3.0
+gh release create v0.3.0 --title "v0.3.0" --notes-file CHANGELOG.md
 ```

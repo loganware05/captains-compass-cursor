@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.0 — 2026-07-10
+
+### Added
+
+- `node-engineering` Skill for Node.js APIs, auth boundaries, and integration tests
+- `postgres-prisma` Skill for PostgreSQL/Prisma schema, migrations, and rollback notes
+- `docs/integrations/node-postgres-prisma.md`
+- Illustrative Prisma schema under `examples/react-node-prisma/`
+
+### Changed
+
+- Doctor and installer tests expect the V0.3 Skills
+- VERSION bumped to 0.3.0
+
 ## 0.2.0 — 2026-07-10
 
 ### Added
