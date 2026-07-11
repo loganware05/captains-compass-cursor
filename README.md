@@ -6,12 +6,12 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 
 **GitHub template:** https://github.com/loganware05/captains-compass-cursor
 
-## Current version: 0.3.1
+## Current version: 0.4.0
 
 ### Included
 
 - Five always-applied core rules
-- Twelve Skills (foundational + GitHub, React, Playwright, Node, Postgres/Prisma)
+- Thirteen Skills (foundational + GitHub, React, Playwright, Node, Postgres/Prisma, Docker/cloud)
 - Eight specialist subagents
 - Seven documentation templates
 - Seven hooks (secrets, protected branch, plan approval, branch-name, format, pre-push tests, PR evidence)
@@ -22,7 +22,7 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 ### Not included yet
 
 - Linear / Notion / cloud MCP stages
-- Docker, Python/ML, iOS Skills (Docker/cloud starts in V0.4)
+- Python/ML, iOS Skills; full cloud MCP Stage 5
 - Automatic updates that overwrite project customizations
 - Overnight autonomy / auto-merge / production deploys
 
@@ -67,6 +67,10 @@ See [`docs/integrations/github.md`](docs/integrations/github.md).
 ## Node / Postgres / Prisma (V0.3)
 
 See [`docs/integrations/node-postgres-prisma.md`](docs/integrations/node-postgres-prisma.md).
+
+## Docker / cloud previews (V0.4)
+
+See [`docs/integrations/docker-cloud.md`](docs/integrations/docker-cloud.md).
 
 ## Design documents
 
