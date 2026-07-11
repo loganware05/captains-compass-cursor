@@ -9,6 +9,22 @@
       {
         "command": ".cursor/hooks/protected-branch.sh",
         "failClosed": false
+      },
+      {
+        "command": ".cursor/hooks/branch-name-validation.sh",
+        "failClosed": false
+      },
+      {
+        "command": ".cursor/hooks/pre-commit-formatting.sh",
+        "failClosed": false
+      },
+      {
+        "command": ".cursor/hooks/pre-push-tests.sh",
+        "failClosed": false
+      },
+      {
+        "command": ".cursor/hooks/pr-evidence-validation.sh",
+        "failClosed": false
       }
     ],
     "preToolUse": [

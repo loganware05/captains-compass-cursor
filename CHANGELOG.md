@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.1 — 2026-07-10
+
+### Added
+
+- Remaining hooks: branch-name validation, pre-commit formatting, pre-push tests, PR evidence validation
+- Shared hook helpers (`.cursor/hooks/_common.sh`) for cwd-aware repo resolution
+
+### Changed
+
+- `hooks.json` registers all seven safety hooks
+- Doctor and installer tests cover the new hooks
+
 ## 0.3.0 — 2026-07-10
 
 ### Added
