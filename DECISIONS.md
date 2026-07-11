@@ -63,3 +63,11 @@
 - **Context:** Design roadmap versions Docker and cloud previews as v0.4.0 after Node/Prisma.
 - **Decision:** Add `docker-cloud` Skill focused on containers and preview/staging deploys. Production destructive actions remain Captain-approved and out of default autonomy.
 - **Consequences:** Agents can containerize and document preview deploys without gaining production release authority.
+
+## ADR-009: V0.5 adds Linear and Notion MCP Skills without moving approval out of the repo
+
+- **Status:** Accepted
+- **Date:** 2026-07-11
+- **Context:** Design MCP stages 3–4 cover Linear and Notion after GitHub/Playwright.
+- **Decision:** Ship `linear-integration` and `notion-integration` Skills plus setup docs. Repository plans/decisions remain authoritative; Linear/Notion are coordination and research surfaces.
+- **Consequences:** Agents can use MCP when configured; offline fallbacks remain valid.
