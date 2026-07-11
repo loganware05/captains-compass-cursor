@@ -2,25 +2,22 @@
 
 ## Current status
 
-Shipping **V0.3.0** (Node + PostgreSQL/Prisma Skills). V0.2.0 is released and the control repo is a GitHub template.
+Implementing **V0.3.1** remaining hooks, then starting **V0.4** Docker/cloud.
 
 ## Completed
 
-- V0.1–V0.2 workflow, sandbox proof, GitHub Stage 1
-- Template repository enabled
-- GitHub Release [v0.2.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v0.2.0)
-- Sandbox contact-form [PR #2](https://github.com/loganware05/captain-compass-sandbox/pull/2) merged by Captain
+- V0.1–V0.3.0 workflow package
+- Template repository + releases v0.2.0 / v0.3.0
+- Sandbox on Compass 0.3.0
 
 ## In progress
 
-- V0.3 `node-engineering` + `postgres-prisma` Skills and docs
+- Remaining hooks (branch-name, format, pre-push, PR evidence) for v0.3.1
 
 ## Next
 
-- Merge V0.3 PR; tag `v0.3.0`
-- Force-install V0.3 into the sandbox
-- Remaining hooks (optional, stronger enforcement)
-- V0.4 Docker / cloud previews
+- Merge v0.3.1; upgrade sandbox
+- V0.4 Docker / cloud preview Skill and docs
 - Linear / Notion MCP stages
 
 ## Blockers

@@ -1,25 +1,20 @@
-# Hooks (V0.2)
+# Hooks
 
-Project hooks enforce the first three Captain's Compass safety gates.
+Configured in `.cursor/hooks.json` (`beforeShellExecution` + `preToolUse`):
 
-Configured in `.cursor/hooks.json`:
+1. **secret-protection** — block staging/committing secrets
+2. **protected-branch** — block mutations on main/master/develop/release/production
+3. **plan-approval-check** — block product source edits without an APPROVED plan
+4. **branch-name-validation** — require `feature|fix|chore|docs|agent|hotfix/<name>`
+5. **pre-commit-formatting** — run `npm run format` or `lint` before commit when present (`COMPASS_SKIP_FORMAT=1`)
+6. **pre-push-tests** — run `npm test` before push when present (`COMPASS_SKIP_TESTS=1`)
+7. **pr-evidence-validation** — require plan + `.agent/evidence/` files before `gh pr create` (`COMPASS_SKIP_PR_EVIDENCE=1`)
 
-1. **secret-protection** (`beforeShellExecution`) — blocks staging/committing `.env`, keys, and hard-coded secret assignments in shell
-2. **protected-branch** (`beforeShellExecution`) — blocks commit/push/merge/rebase on `main` / `master` / `develop` / `release` / `production`
-3. **plan-approval-check** (`preToolUse` Write|StrReplace|EditNotebook) — blocks product source edits unless `IMPLEMENTATION_PLAN.md` is APPROVED (or later in-progress states) with an approval record, on a non-protected branch
+Shared helpers live in `_common.sh`. Hooks use `python3` for JSON. Default `failClosed: false`.
 
-Deferred hooks:
-
-4. Branch-name validation
-5. Pre-commit formatting
-6. Pre-push test execution
-7. Pull-request evidence validation
-
-Hooks use `python3` (stdlib) for JSON. Fail-open by default (`failClosed: false`) so a broken hook does not freeze legitimate work; tighten later if desired.
-
-## Manual test
+## Manual tests
 
 ```bash
-echo '{"command":"git commit -m test"}' | .cursor/hooks/protected-branch.sh
-echo '{"path":"src/App.tsx"}' | .cursor/hooks/plan-approval-check.sh
+echo '{"command":"git commit -m x"}' | .cursor/hooks/branch-name-validation.sh
+echo '{"command":"gh pr create","cwd":"/path/to/repo"}' | .cursor/hooks/pr-evidence-validation.sh
 ```

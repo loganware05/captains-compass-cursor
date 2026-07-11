@@ -47,3 +47,11 @@
 - **Context:** Design roadmap versions Node + PostgreSQL/Prisma as v0.3.0 after React/Playwright.
 - **Decision:** Add `node-engineering` and `postgres-prisma` Skills plus integration docs and an illustrative Prisma example schema. Keep them as Skills (not always-on rules).
 - **Consequences:** Agents load backend/data guidance only when relevant; production DB access remains approval-gated and out of default agent context.
+
+## ADR-007: Complete the seven-hook safety set in V0.3.1
+
+- **Status:** Accepted
+- **Date:** 2026-07-10
+- **Context:** Design Part 10 lists seven hooks; V0.2 shipped the first three after sandbox proof.
+- **Decision:** Add branch-name, pre-commit formatting, pre-push tests, and PR evidence hooks with fail-open defaults and skip env vars (`COMPASS_SKIP_FORMAT`, `COMPASS_SKIP_TESTS`, `COMPASS_SKIP_PR_EVIDENCE`). Resolve target repos via cwd/`cd` helpers.
+- **Consequences:** Stronger local enforcement without freezing cross-repo agent work; skip valves for intentional overrides.

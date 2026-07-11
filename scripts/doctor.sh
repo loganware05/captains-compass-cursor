@@ -127,6 +127,10 @@ HOOK_SCRIPTS=(
   secret-protection.sh
   protected-branch.sh
   plan-approval-check.sh
+  branch-name-validation.sh
+  pre-commit-formatting.sh
+  pre-push-tests.sh
+  pr-evidence-validation.sh
 )
 for h in "${HOOK_SCRIPTS[@]}"; do
   path="$ROOT/.cursor/hooks/$h"
@@ -139,6 +143,12 @@ for h in "${HOOK_SCRIPTS[@]}"; do
     ok "hook $h"
   fi
 done
+
+if [[ -f "$ROOT/.cursor/hooks/_common.sh" ]]; then
+  ok "hooks _common.sh"
+else
+  warn "hooks _common.sh missing (shared helpers)"
+fi
 
 if ! command -v python3 >/dev/null 2>&1; then
   warn "python3 not on PATH (hooks require python3 for JSON)"

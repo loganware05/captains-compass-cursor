@@ -114,9 +114,48 @@ assert_contains "plan allows editing plan file" 'allow' "$out"
 cd "$ROOT"
 rm -rf "$TMPP"
 
+echo "=== hook: branch name ==="
+TMPN="$(mktemp -d "${TMPDIR:-/tmp}/compass-branchname-XXXXXX")"
+git -C "$TMPN" init -q
+echo x > "$TMPN/f"
+git -C "$TMPN" add f
+git -C "$TMPN" -c user.email=t@t.com -c user.name=t commit -q -m init
+(
+  cd "$TMPN"
+  git checkout -B weird-name >/dev/null 2>&1
+  out="$(echo "{\"command\":\"git commit -m x\",\"cwd\":\"$TMPN\"}" | "$ROOT/.cursor/hooks/branch-name-validation.sh")"
+  echo "$out" > /tmp/compass-branchname-bad.out
+  git checkout -B feature/ok-name >/dev/null
+  out2="$(echo "{\"command\":\"git commit -m x\",\"cwd\":\"$TMPN\"}" | "$ROOT/.cursor/hooks/branch-name-validation.sh")"
+  echo "$out2" > /tmp/compass-branchname-good.out
+)
+assert_contains "branch-name denies weird-name" 'deny' "$(cat /tmp/compass-branchname-bad.out)"
+assert_contains "branch-name allows feature/*" 'allow' "$(cat /tmp/compass-branchname-good.out)"
+rm -rf "$TMPN"
+
+echo "=== hook: pr evidence ==="
+TMPE="$(mktemp -d "${TMPDIR:-/tmp}/compass-evidence-XXXXXX")"
+git -C "$TMPE" init -q
+out="$(echo "{\"command\":\"gh pr create\",\"cwd\":\"$TMPE\"}" | "$ROOT/.cursor/hooks/pr-evidence-validation.sh")"
+assert_contains "pr-evidence denies missing plan" 'deny' "$out"
+mkdir -p "$TMPE/.agent/evidence"
+cat > "$TMPE/IMPLEMENTATION_PLAN.md" <<'PLAN'
+# Implementation Plan
+## Metadata
+- Status: APPROVED
+- Approved by: Captain
+- Approval date: 2026-07-10
+## Approval Record
+Approved.
+PLAN
+echo proof > "$TMPE/.agent/evidence/note.txt"
+out="$(echo "{\"command\":\"gh pr create\",\"cwd\":\"$TMPE\"}" | "$ROOT/.cursor/hooks/pr-evidence-validation.sh")"
+assert_contains "pr-evidence allows with plan+files" 'allow' "$out"
+rm -rf "$TMPE"
+
 echo "=== install into temp git repo ==="
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/compass-install-XXXXXX")"
-cleanup() { rm -rf "$TMP" /tmp/compass-hook-feature.out /tmp/compass-hook-main.out 2>/dev/null || true; }
+cleanup() { rm -rf "$TMP" /tmp/compass-hook-feature.out /tmp/compass-hook-main.out /tmp/compass-branchname-bad.out /tmp/compass-branchname-good.out 2>/dev/null || true; }
 trap cleanup EXIT
 
 git -C "$TMP" init -q
@@ -138,6 +177,10 @@ assert_true "installed prisma skill" test -f "$TMP/.cursor/skills/postgres-prism
 assert_true "installed agent" test -f "$TMP/.cursor/agents/repository-scout.md"
 assert_true "installed hooks.json" test -f "$TMP/.cursor/hooks.json"
 assert_true "installed plan-approval hook" test -x "$TMP/.cursor/hooks/plan-approval-check.sh"
+assert_true "installed branch-name hook" test -x "$TMP/.cursor/hooks/branch-name-validation.sh"
+assert_true "installed pre-push hook" test -x "$TMP/.cursor/hooks/pre-push-tests.sh"
+assert_true "installed pr-evidence hook" test -x "$TMP/.cursor/hooks/pr-evidence-validation.sh"
+assert_true "installed hooks common" test -f "$TMP/.cursor/hooks/_common.sh"
 assert_true "created evidence dir" test -d "$TMP/.agent/evidence"
 assert_true "wrote COMPASS_VERSION" test -f "$TMP/.agent/COMPASS_VERSION"
 assert_eq "version matches" "$(tr -d '[:space:]' < "$ROOT/VERSION")" "$(tr -d '[:space:]' < "$TMP/.agent/COMPASS_VERSION")"
