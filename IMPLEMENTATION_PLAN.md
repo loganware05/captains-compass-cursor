@@ -3,113 +3,85 @@
 ## Metadata
 
 - Status: APPROVED
-- Plan ID: compass-v0.1
-- Issue: N/A (control repo bootstrap)
-- Branch: main
-- Created: 2026-07-10
-- Last updated: 2026-07-10
+- Plan ID: compass-post-1.0-onboarding
+- Issue: #14
+- Branch: feature/14-post-1.0-onboarding
+- Created: 2026-07-11
+- Last updated: 2026-07-11
 - Approved by: Captain
-- Approval date: 2026-07-10
-- Approved revision: plan Compass V0.1 Bootstrap
+- Approval date: 2026-07-11
+- Approved revision: compass-post-1.0-onboarding (no VERSION bump; defer sandbox failure tests)
+- Rollback checkpoint: `rollback/pre-post-1.0-onboarding` (`1f9a242`)
 
 ## Request
 
-Implement Version 0.1 of the Captain's Compass reusable Cursor workflow template repository.
+After releasing **v1.0.0**, complete the design Part 14 onboarding documentation and refresh project memory so the stable workflow is clear for new and existing product repos.
 
 ## Problem Statement
 
-There is no installable, approval-gated agentic engineering workflow package yet—only design documents.
+v1.0.0 is tagged and the sandbox is on 1.0.0, but PROGRESS/SANDBOX memory still describe pre-release state, and the two onboarding paths from the design docs (new project vs existing project) are only partially reflected in README quick commands.
 
 ## Desired Outcome
 
-A working control repository with rules, Skills, agents, templates, install/doctor scripts, tests, and README that can be installed into a disposable product sandbox.
+Operators can follow a single onboarding guide for installing Compass into a new or existing product repo, and project memory accurately reflects the stable 1.0.0 baseline.
 
 ## Acceptance Criteria
 
-- VERSION is 0.1.0
-- Five always-applied rules, seven Skills, eight agents
-- Seven installable doc templates
-- install.sh and doctor.sh work; automated tests pass
-- README documents usage and V0.1 boundaries
-- No product application code in this repo
+- [x] `docs/PRODUCT_ONBOARDING.md` documents new-project and existing-project install paths (branch → install → PR), plus update/uninstall pointers
+- [x] README links to the onboarding guide
+- [x] `PROGRESS.md`, `SANDBOX_VALIDATION.md`, and `PROJECT_CONTEXT.md` reflect v1.0.0 stable (sandbox at 1.0.0; template repo + topics already live)
+- [x] `CHANGELOG.md` notes the docs-only post-1.0 patch in Unreleased (no VERSION bump)
+- [x] `./tests/run.sh` still passes (49/49)
+- [x] Evidence note under `.agent/evidence/post-1.0-onboarding/`
 
 ## Non-Goals
 
-Hooks, MCP integrations, tech-specific Skills, update.sh auto-overwrite, production product installs.
+- Deeper cloud automation
+- Expanding `examples/react-node-prisma` into a runnable app
+- Sandbox failure-test exercises (deferred)
+- Changing hooks, Skills, or installer behavior
+- Version bump to 1.0.1
 
 ## Assumptions
 
-- Cursor loads `.cursor/rules/`, Skills, and agents as documented
-- Bash is available on macOS/Linux for scripts
+- GitHub template + topics already configured (verified: `isTemplate: true`)
+- Release https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.0.0 exists
+- Sandbox at `/Users/loganware/Documents/Personal/Code/captain-compass-sandbox` reports `.agent/COMPASS_VERSION=1.0.0`
 
 ## Open Questions
 
-None for V0.1.
+1. Ship as docs-only on `1.0.0` (CHANGELOG Unreleased) or bump to `1.0.1`? → **No bump** (Captain)
+2. Include optional sandbox failure-test runs in this PR, or defer? → **Defer**
 
-## Current-State Analysis
+## Affected Systems
 
-Repository contained only three design markdown files; no git history, no workflow package.
+- Documentation (`docs/`, README, memory docs)
+- Evidence folder only
 
-## Proposed Architecture
+## Independent Workstreams
 
-Control repo owns reusable workflow; product repos receive a copy via install.sh.
+1. **Docs** — PRODUCT_ONBOARDING + README link + memory refresh
+2. **Validation** — run `./tests/run.sh`; record evidence
 
-## Workstreams
+## Test Plan
 
-1. Bootstrap and root docs
-2. AGENTS.md + rules + Skills + agents
-3. Templates + scripts + tests + README
-4. Sandbox install validation
+- `./tests/run.sh`
+- Manual: doctor on sandbox still passes (no sandbox update required for docs-only)
 
-## Parallelization Plan
+## Migration / Rollback
 
-Sequential within the control repo; no parallel product workstreams.
-
-## Files Expected to Change
-
-All V0.1 scaffold files under `.cursor/`, `templates/`, `scripts/`, `tests/`, `examples/`, and root docs.
-
-## Testing Strategy
-
-Automated installer/doctor tests; manual sandbox approval-gate exercise.
-
-## Security Review
-
-Installer must not overwrite without `--force`; secrets stay in ignore files.
-
-## Accessibility Review
-
-N/A for control repo UI (none). Skill/agent included for product installs.
-
-## Migration Plan
-
-N/A (greenfield).
-
-## Deployment Plan
-
-Local only; optional private GitHub remote later.
-
-## Rollback Plan
-
-Revert commits or delete uncommitted scaffold.
-
-## Risks and Mitigations
-
-- Cursor config paths may differ by version — keep Skills/agents conventional and document assumptions
-- Accidental install into important repos — README warns; sandbox first
+- Rollback: `git reset --hard rollback/pre-post-1.0-onboarding` (or revert the PR)
+- No product-repo migration
 
 ## Autonomy Budget
 
-- Maximum iterations: 20
-- Maximum failed validation cycles: 3
-- Maximum estimated cost: N/A
-- Maximum elapsed time: session
+- Max iterations: 2
+- Stop if scope expands into Skills/hooks/examples code
 
-## Definition of Done
+## Risks
 
-All acceptance criteria met; doctor and tests pass; sandbox install verified.
+- Low: docs-only change; risk of stale memory if skipped
 
-## Approval Record
+## First Mate Recommendation
 
-- Approved by Captain via plan confirmation in Cursor (Compass V0.1 Bootstrap)
-- Date: 2026-07-10
+Approve as a small docs PR base **`main`**. Prefer **no VERSION bump** (CHANGELOG Unreleased).

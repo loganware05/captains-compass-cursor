@@ -3,7 +3,7 @@
 ## Product Summary
 
 Captain's Compass is a reusable Cursor IDE engineering workflow template.
-It is a control repository: it owns rules, Skills, subagents, document
+It is a control repository: it owns rules, Skills, subagents, hooks, document
 templates, and installation scripts. Product application code does not live here.
 
 ## Intended Users
@@ -24,40 +24,43 @@ agentic engineering process across multiple product repositories.
 - Installer reliably provisions a product repo
 - Doctor script detects missing or broken workflow files
 - Sandbox feature exercise completes with evidence and a PR-ready branch
+- Product repos can update/uninstall without losing memory docs
 
 ## Current Technology Stack
 
-- Cursor IDE (rules, Skills, subagents)
-- Bash install/doctor scripts
+- Cursor IDE (rules, Skills, subagents, hooks)
+- Bash install / update / uninstall / doctor scripts
 - Git / Git worktrees
 - Markdown project memory documents
+- Optional MCP integrations (GitHub, Linear, Notion, cloud, Postgres) documented under `docs/integrations/`
 
 ## Repository Map
 
-- `.cursor/` — reusable rules, Skills, agents (source of truth)
+- `.cursor/` — reusable rules, Skills, agents, hooks (source of truth)
 - `templates/docs/` — blank docs installed into product repos
-- `scripts/` — install.sh, doctor.sh
-- `examples/` — fixture projects for installer tests
-- `tests/` — automated installer/doctor tests
-- `docs/design/` — source design documents (not installed)
+- `scripts/` — install.sh, update.sh, uninstall.sh, doctor.sh
+- `examples/` — fixture projects for installer docs/tests
+- `tests/` — automated installer/doctor/hook tests
+- `docs/` — onboarding, upgrading, release checklist, integrations, design sources
 
 ## Major Components
 
 1. AGENTS.md operating contract
 2. Five always-applied core rules
-3. Seven foundational Skills
+3. Seventeen Skills (foundational + tech/integration)
 4. Eight specialist subagents
-5. Documentation templates
-6. Installation and doctor scripts
+5. Seven safety hooks
+6. Documentation templates
+7. Installation, update, uninstall, and doctor scripts
 
 ## External Services
 
-None required for Version 0.1. MCP integrations (GitHub, Linear, Notion, cloud)
-are deferred.
+None required for core workflow. Optional GitHub CLI/MCP and other MCPs are
+documented per integration guide.
 
 ## Environments
 
-Local development only for V0.1.
+Local development and product-repo installs. GitHub template repository enabled.
 
 ## Deployment Targets
 
@@ -68,6 +71,7 @@ Not applicable. This repository is installed into other Git repositories.
 - Never commit secrets
 - Never install into production product repos until sandbox validation passes
 - Installer refuses overwrite unless `--force` is provided
+- Update/uninstall must not destroy product memory docs by default
 
 ## Accessibility Expectations
 
@@ -79,12 +83,13 @@ Installer and doctor should complete in seconds on a typical laptop.
 
 ## Known Constraints
 
-- Version 0.1 excludes hooks, MCP, tech-specific Skills, and auto-updates
 - Cursor agent behavior depends on the host IDE; scripts only provision files
+- Control-repo scripts are not copied into product repos; run them from this repo
+- Stacked PRs that merge to a feature base (not `main`) can leave versions off `main`
 
 ## Known Technical Debt
 
-None yet (initial release).
+None blocking for v1.0.0. Optional follow-ups: richer examples, deeper cloud automation, sandbox failure-test exercises.
 
 ## Terminology
 
@@ -99,8 +104,10 @@ None yet (initial release).
 ```bash
 ./scripts/doctor.sh
 ./scripts/install.sh /path/to/product-repo
+./scripts/update.sh /path/to/product-repo
+./scripts/uninstall.sh --yes /path/to/product-repo
 ./tests/run.sh
-gh auth status   # GitHub Stage 1
+gh auth status
 ```
 
 ## Local Development Setup
@@ -112,4 +119,4 @@ gh auth status   # GitHub Stage 1
 
 ## Current Priorities
 
-Ship and validate Version 0.3.0 (Node + Prisma Skills); then Docker/cloud modules.
+Maintain the stable v1.0.0 baseline; ship post-1.0 onboarding docs (#14); optional richer examples and failure-test exercises afterward.

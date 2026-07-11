@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `docs/PRODUCT_ONBOARDING.md` — new vs existing product-repo install paths
+
+### Changed
+
+- README links to product onboarding
+- Project memory (`PROGRESS.md`, `PROJECT_CONTEXT.md`, `SANDBOX_VALIDATION.md`) reflects stable v1.0.0
+
 ## 1.0.0 — 2026-07-11
 
 ### Added
