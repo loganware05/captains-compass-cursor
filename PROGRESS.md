@@ -2,25 +2,26 @@
 
 ## Current status
 
-**V0.3.1** released. **V0.4.0** awaits landing on `main` via PR #7 (sandbox already upgraded from the v0.4 tip). **V0.5.0** Linear/Notion Skills in progress.
+**V0.4.0** released. **V0.5.0** awaits landing on `main` via PR #9 (sandbox already on 0.5.0). **V0.6.0** Python/ML + Cloud MCP Stage 5 docs in progress.
 
 ## Completed
 
-- Seven-hook set (v0.3.1) released
-- Docker/cloud Skill implemented; sandbox on 0.4.0 locally
-- Template repo + GitHub Stage 1
+- Hooks complete (v0.3.1)
+- Docker/cloud Skill (v0.4.0) released
+- Linear/Notion Skills implemented (v0.5.0; land via PR #9)
+- Sandbox refreshed to 0.5.0
 
 ## In progress
 
-- Linear + Notion MCP Stage 3–4 Skills/docs (v0.5.0)
-- Captain merge of [PR #7](https://github.com/loganware05/captains-compass-cursor/pull/7) to land v0.4 on main
+- V0.6 Python/ML Skill + Cloud MCP Stage 5 documentation
+- Captain merge of [PR #9](https://github.com/loganware05/captains-compass-cursor/pull/9)
 
 ## Next
 
-- Tag `v0.4.0` after PR #7 merges
-- Merge/tag v0.5.0 Linear/Notion
-- Optional cloud MCP Stage 5 hardening
+- Tag `v0.5.0` after PR #9 merges
+- Merge/tag v0.6.0
+- Optional iOS module (design v0.6 historically; our numbering uses v0.7)
 
 ## Blockers
 
-None — PR #7 needed only to align `main` with the already-built v0.4 package.
+None — always merge release PRs into `main` (not only stack bases).

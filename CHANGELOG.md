@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.0 — 2026-07-11
+
+### Added
+
+- `python-ml` Skill for Python services and reproducible ML workflows
+- Cloud MCP Stage 5 guidance (`docs/integrations/cloud-mcp.md`)
+- `docs/integrations/python-ml.md` and `examples/python-ml/` fixture
+- Stacked-PR caution in GitHub integration docs
+
+### Changed
+
+- Doctor/tests expect the Python/ML Skill
+- VERSION bumped to 0.6.0
+
 ## 0.5.0 — 2026-07-11
 
 ### Added

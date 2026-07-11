@@ -6,12 +6,12 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 
 **GitHub template:** https://github.com/loganware05/captains-compass-cursor
 
-## Current version: 0.5.0
+## Current version: 0.6.0
 
 ### Included
 
 - Five always-applied core rules
-- Fifteen Skills (foundational + GitHub, React, Playwright, Node, Postgres/Prisma, Docker/cloud, Linear, Notion)
+- Sixteen Skills (foundational + GitHub, React, Playwright, Node, Postgres/Prisma, Docker/cloud, Linear, Notion, Python/ML)
 - Eight specialist subagents
 - Seven documentation templates
 - Seven hooks (secrets, protected branch, plan approval, branch-name, format, pre-push tests, PR evidence)
@@ -22,7 +22,7 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 ### Not included yet
 
 - Linear / Notion / cloud MCP stages
-- Python/ML, iOS Skills; deeper cloud MCP Stage 5
+- iOS Skill; deeper production cloud automation (still approval-gated)
 - Automatic updates that overwrite project customizations
 - Overnight autonomy / auto-merge / production deploys
 
@@ -75,6 +75,10 @@ See [`docs/integrations/docker-cloud.md`](docs/integrations/docker-cloud.md).
 ## Linear / Notion (V0.5)
 
 See [`docs/integrations/linear.md`](docs/integrations/linear.md) and [`docs/integrations/notion.md`](docs/integrations/notion.md).
+
+## Python / ML + Cloud MCP (V0.6)
+
+See [`docs/integrations/python-ml.md`](docs/integrations/python-ml.md) and [`docs/integrations/cloud-mcp.md`](docs/integrations/cloud-mcp.md).
 
 ## Design documents
 

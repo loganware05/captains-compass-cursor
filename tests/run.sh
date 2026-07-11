@@ -177,6 +177,7 @@ assert_true "installed prisma skill" test -f "$TMP/.cursor/skills/postgres-prism
 assert_true "installed docker-cloud skill" test -f "$TMP/.cursor/skills/docker-cloud/SKILL.md"
 assert_true "installed linear skill" test -f "$TMP/.cursor/skills/linear-integration/SKILL.md"
 assert_true "installed notion skill" test -f "$TMP/.cursor/skills/notion-integration/SKILL.md"
+assert_true "installed python-ml skill" test -f "$TMP/.cursor/skills/python-ml/SKILL.md"
 assert_true "installed agent" test -f "$TMP/.cursor/agents/repository-scout.md"
 assert_true "installed hooks.json" test -f "$TMP/.cursor/hooks.json"
 assert_true "installed plan-approval hook" test -x "$TMP/.cursor/hooks/plan-approval-check.sh"
