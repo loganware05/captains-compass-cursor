@@ -174,6 +174,7 @@ assert_true "installed playwright skill" test -f "$TMP/.cursor/skills/playwright
 assert_true "installed github skill" test -f "$TMP/.cursor/skills/github-integration/SKILL.md"
 assert_true "installed node skill" test -f "$TMP/.cursor/skills/node-engineering/SKILL.md"
 assert_true "installed prisma skill" test -f "$TMP/.cursor/skills/postgres-prisma/SKILL.md"
+assert_true "installed docker-cloud skill" test -f "$TMP/.cursor/skills/docker-cloud/SKILL.md"
 assert_true "installed agent" test -f "$TMP/.cursor/agents/repository-scout.md"
 assert_true "installed hooks.json" test -f "$TMP/.cursor/hooks.json"
 assert_true "installed plan-approval hook" test -x "$TMP/.cursor/hooks/plan-approval-check.sh"

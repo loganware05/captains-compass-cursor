@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.0 — 2026-07-10
+
+### Added
+
+- `docker-cloud` Skill for Dockerfiles, Compose, preview deploys, and rollback notes
+- `docs/integrations/docker-cloud.md`
+- Illustrative `examples/docker-cloud/` Compose + Dockerfile fixture
+
+### Changed
+
+- Doctor and installer tests expect the Docker/cloud Skill
+- VERSION bumped to 0.4.0
+
 ## 0.3.1 — 2026-07-10
 
 ### Added

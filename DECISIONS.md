@@ -55,3 +55,11 @@
 - **Context:** Design Part 10 lists seven hooks; V0.2 shipped the first three after sandbox proof.
 - **Decision:** Add branch-name, pre-commit formatting, pre-push tests, and PR evidence hooks with fail-open defaults and skip env vars (`COMPASS_SKIP_FORMAT`, `COMPASS_SKIP_TESTS`, `COMPASS_SKIP_PR_EVIDENCE`). Resolve target repos via cwd/`cd` helpers.
 - **Consequences:** Stronger local enforcement without freezing cross-repo agent work; skip valves for intentional overrides.
+
+## ADR-008: V0.4 adds Docker and cloud preview Skill
+
+- **Status:** Accepted
+- **Date:** 2026-07-10
+- **Context:** Design roadmap versions Docker and cloud previews as v0.4.0 after Node/Prisma.
+- **Decision:** Add `docker-cloud` Skill focused on containers and preview/staging deploys. Production destructive actions remain Captain-approved and out of default autonomy.
+- **Consequences:** Agents can containerize and document preview deploys without gaining production release authority.
