@@ -2,35 +2,27 @@
 
 Reusable **Cursor IDE** agentic engineering workflow template.
 
-This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and install scripts. Product application code does not live here. Install a smaller workflow package into each product repository.
-
 **GitHub template:** https://github.com/loganware05/captains-compass-cursor
 
-## Current version: 0.7.0
+This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
+
+## Current version: 1.0.0 (stable)
 
 ### Included
 
-- Five always-applied core rules
+- Approval-gated operating model (`AGENTS.md` + five core rules)
 - Seventeen Skills (foundational + GitHub, React, Playwright, Node, Postgres/Prisma, Docker/cloud, Linear, Notion, Python/ML, iOS)
 - Eight specialist subagents
-- Seven documentation templates
-- Seven hooks (secrets, protected branch, plan approval, branch-name, format, pre-push tests, PR evidence)
-- `scripts/install.sh` and `scripts/doctor.sh`
-- Example fixture (`examples/react-node-prisma/`)
+- Seven safety hooks
+- `install.sh`, `update.sh`, `uninstall.sh`, `doctor.sh`
+- Documentation templates and integration guides
 - Automated installer / doctor / hook tests
 
-### Not included yet
+### Operating model
 
-- Linear / Notion / cloud MCP stages
-- Deeper production cloud automation (still approval-gated); v1.0 polish
-- Automatic updates that overwrite project customizations
-- Overnight autonomy / auto-merge / production deploys
-
-## Operating model
-
-- **Captain** — you (human). Approves plans and merges.
-- **First Mate** — primary Cursor agent. Discovers, plans, coordinates, verifies.
-- **Approval gate** — agents may investigate and write `IMPLEMENTATION_PLAN.md`, but must not change product implementation files until the plan status is **APPROVED** (also enforced by the plan-approval hook).
+- **Captain** — human owner; approves plans and merges
+- **First Mate** — coordinating Cursor agent
+- **Approval gate** — no product implementation changes until `IMPLEMENTATION_PLAN.md` is **APPROVED**
 
 ## Quick start (control repo)
 
@@ -41,52 +33,39 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 
 ## Install into a product repository
 
-Prefer a **disposable sandbox** before any important project:
-
 ```bash
 ./scripts/install.sh /path/to/product-repo
-./scripts/install.sh --force /path/to/product-repo   # refreshes .cursor only; keeps product docs
 ```
 
-Control repository (private template): https://github.com/loganware05/captains-compass-cursor
-
-After install, the product repo should contain:
-
-- `.cursor/rules/`, `.cursor/skills/`, `.cursor/agents/`, `.cursor/hooks/`, `.cursor/hooks.json`
-- `.agent/evidence/`
-- Root memory docs (`AGENTS.md`, `PROJECT_CONTEXT.md`, …)
-
-## GitHub (Stage 1)
+## Update an existing install
 
 ```bash
-gh auth login
+./scripts/update.sh /path/to/product-repo
 ```
 
-See [`docs/integrations/github.md`](docs/integrations/github.md).
+See [`docs/UPGRADING.md`](docs/UPGRADING.md).
 
-## Node / Postgres / Prisma (V0.3)
+## Uninstall
 
-See [`docs/integrations/node-postgres-prisma.md`](docs/integrations/node-postgres-prisma.md).
+```bash
+./scripts/uninstall.sh --yes /path/to/product-repo
+```
 
-## Docker / cloud previews (V0.4)
+## Integrations
 
-See [`docs/integrations/docker-cloud.md`](docs/integrations/docker-cloud.md).
+| Area | Doc |
+|---|---|
+| GitHub | [`docs/integrations/github.md`](docs/integrations/github.md) |
+| Node / Postgres / Prisma | [`docs/integrations/node-postgres-prisma.md`](docs/integrations/node-postgres-prisma.md) |
+| Docker / cloud | [`docs/integrations/docker-cloud.md`](docs/integrations/docker-cloud.md) / [`cloud-mcp.md`](docs/integrations/cloud-mcp.md) |
+| Linear / Notion | [`linear.md`](docs/integrations/linear.md) / [`notion.md`](docs/integrations/notion.md) |
+| Python / ML | [`docs/integrations/python-ml.md`](docs/integrations/python-ml.md) |
+| iOS | [`docs/integrations/ios.md`](docs/integrations/ios.md) |
+| Postgres MCP | [`docs/integrations/postgres-mcp.md`](docs/integrations/postgres-mcp.md) |
 
-## Linear / Notion (V0.5)
+## Releases
 
-See [`docs/integrations/linear.md`](docs/integrations/linear.md) and [`docs/integrations/notion.md`](docs/integrations/notion.md).
-
-## Python / ML + Cloud MCP (V0.6)
-
-See [`docs/integrations/python-ml.md`](docs/integrations/python-ml.md) and [`docs/integrations/cloud-mcp.md`](docs/integrations/cloud-mcp.md).
-
-## iOS (V0.7)
-
-See [`docs/integrations/ios.md`](docs/integrations/ios.md).
-
-## Design documents
-
-Source design material lives under [`docs/design/`](docs/design/) and is **not** installed into product repos.
+See [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md) and [`CHANGELOG.md`](CHANGELOG.md).
 
 ## License
 

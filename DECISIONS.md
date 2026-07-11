@@ -87,3 +87,11 @@
 - **Context:** Design tech-module order places iOS after Python/ML.
 - **Decision:** Ship `ios-engineering` Skill and a lightweight example placeholder. Full Xcode projects remain in product repos.
 - **Consequences:** Agents get iOS guidance via Skills; the control repo stays free of product app binaries.
+
+## ADR-012: V1.0.0 is the first stable reusable workflow release
+
+- **Status:** Accepted
+- **Date:** 2026-07-11
+- **Context:** Core gate, hooks, GitHub Stage 1, and major tech Skills are proven; template repo is live.
+- **Decision:** Ship 1.0.0 with safe `update.sh` / `uninstall.sh`, upgrading docs, release checklist, and Postgres MCP Stage 6 guidance. Updates still refuse to clobber product memory docs.
+- **Consequences:** Product repos can upgrade workflow packages predictably; further modules remain additive minor/major releases.

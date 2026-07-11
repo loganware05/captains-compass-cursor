@@ -178,6 +178,16 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "scripts/doctor.sh missing"
   fi
+  if [[ -f "$ROOT/scripts/update.sh" ]]; then
+    ok "scripts/update.sh present"
+  else
+    fail "scripts/update.sh missing"
+  fi
+  if [[ -f "$ROOT/scripts/uninstall.sh" ]]; then
+    ok "scripts/uninstall.sh present"
+  else
+    fail "scripts/uninstall.sh missing"
+  fi
 fi
 
 echo
