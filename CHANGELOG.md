@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.0 — 2026-07-11
+
+### Added
+
+- `linear-integration` Skill (MCP Stage 3)
+- `notion-integration` Skill (MCP Stage 4)
+- Docs: `docs/integrations/linear.md`, `docs/integrations/notion.md`
+
+### Changed
+
+- Doctor and installer tests expect Linear/Notion Skills
+- VERSION bumped to 0.5.0
+
 ## 0.4.0 — 2026-07-10
 
 ### Added

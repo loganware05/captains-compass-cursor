@@ -2,26 +2,25 @@
 
 ## Current status
 
-**V0.3.1** hooks are ready to merge; **V0.4.0** Docker/cloud Skill is implemented on this stacked branch.
+**V0.3.1** released. **V0.4.0** awaits landing on `main` via PR #7 (sandbox already upgraded from the v0.4 tip). **V0.5.0** Linear/Notion Skills in progress.
 
 ## Completed
 
-- V0.1–V0.3.0 workflow package (approval gate, Skills, first hooks, GitHub Stage 1, Node/Prisma)
-- Template repository enabled
-- Releases: [v0.2.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v0.2.0), [v0.3.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v0.3.0)
-- Sandbox upgraded to Compass `0.3.0` (doctor passed; Node + Prisma Skills present)
-- Seven-hook set for v0.3.1 (branch-name, format, pre-push, PR evidence + shared helpers)
-- `docker-cloud` Skill, docs, and example fixture for v0.4.0
+- Seven-hook set (v0.3.1) released
+- Docker/cloud Skill implemented; sandbox on 0.4.0 locally
+- Template repo + GitHub Stage 1
 
 ## In progress
 
-- Captain merge of v0.3.1 (PR #5), then v0.4 (PR #6)
+- Linear + Notion MCP Stage 3–4 Skills/docs (v0.5.0)
+- Captain merge of [PR #7](https://github.com/loganware05/captains-compass-cursor/pull/7) to land v0.4 on main
 
 ## Next
 
-- Tag `v0.3.1` and `v0.4.0`; upgrade sandbox
-- Linear / Notion MCP stages
+- Tag `v0.4.0` after PR #7 merges
+- Merge/tag v0.5.0 Linear/Notion
+- Optional cloud MCP Stage 5 hardening
 
 ## Blockers
 
-None.
+None — PR #7 needed only to align `main` with the already-built v0.4 package.
