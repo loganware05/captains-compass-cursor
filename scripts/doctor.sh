@@ -81,6 +81,8 @@ SKILLS=(
   node-engineering
   postgres-prisma
   docker-cloud
+  linear-integration
+  notion-integration
 )
 
 for s in "${SKILLS[@]}"; do
