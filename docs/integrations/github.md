@@ -61,3 +61,9 @@ git tag -a v0.3.0 -m "Captain's Compass v0.3.0"
 git push origin v0.3.0
 gh release create v0.3.0 --title "v0.3.0" --notes-file CHANGELOG.md
 ```
+
+## Stacked PR caution
+
+When using stacked branches, **merge the final release PR into `main`**, not only into the stack base branch.
+
+If a PR’s base is another feature branch, GitHub will merge into that branch. Open a follow-up “land onto main” PR (see history of PR #7 / #9) or retarget the PR base to `main` before merging.
