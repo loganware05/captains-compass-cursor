@@ -80,6 +80,7 @@ SKILLS=(
   playwright-browser-validation
   node-engineering
   postgres-prisma
+  docker-cloud
 )
 
 for s in "${SKILLS[@]}"; do

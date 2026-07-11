@@ -1,0 +1,15 @@
+# Illustrative Compose file for Captain's Compass examples.
+services:
+  web:
+    image: node:22-alpine
+    working_dir: /app
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+    ports:
+      - "5173:5173"
+    environment:
+      NODE_ENV: development
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:5173"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

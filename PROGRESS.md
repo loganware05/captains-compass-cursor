@@ -2,22 +2,21 @@
 
 ## Current status
 
-Implementing **V0.3.1** remaining hooks, then starting **V0.4** Docker/cloud.
+**V0.3.1** hooks PR open; **V0.4.0** Docker/cloud Skill scaffolding in progress.
 
 ## Completed
 
-- V0.1–V0.3.0 workflow package
-- Template repository + releases v0.2.0 / v0.3.0
-- Sandbox on Compass 0.3.0
+- V0.1–V0.3.0 core workflow, GitHub Stage 1, Node/Prisma Skills
+- Seven-hook set implemented on `feature/remaining-hooks` (PR pending)
 
 ## In progress
 
-- Remaining hooks (branch-name, format, pre-push, PR evidence) for v0.3.1
+- V0.4 `docker-cloud` Skill, docs, and example fixture
 
 ## Next
 
-- Merge v0.3.1; upgrade sandbox
-- V0.4 Docker / cloud preview Skill and docs
+- Merge v0.3.1 hooks PR; then merge v0.4
+- Tag releases; upgrade sandbox
 - Linear / Notion MCP stages
 
 ## Blockers
