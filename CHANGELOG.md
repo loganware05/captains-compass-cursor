@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.7.0 — 2026-07-11
+
+### Added
+
+- `ios-engineering` Skill for Swift/SwiftUI workflows
+- `docs/integrations/ios.md` and `examples/ios/` placeholder
+
+### Changed
+
+- Doctor/tests expect the iOS Skill
+- VERSION bumped to 0.7.0
+
 ## 0.6.0 — 2026-07-11
 
 ### Added

@@ -2,26 +2,23 @@
 
 ## Current status
 
-**V0.4.0** released. **V0.5.0** awaits landing on `main` via PR #9 (sandbox already on 0.5.0). **V0.6.0** Python/ML + Cloud MCP Stage 5 docs in progress.
+**V0.5.0** and **V0.6.0** are on `main` and released. Sandbox is on 0.6.0. **V0.7.0** iOS Skill in progress (PR targets `main` directly).
 
 ## Completed
 
-- Hooks complete (v0.3.1)
-- Docker/cloud Skill (v0.4.0) released
-- Linear/Notion Skills implemented (v0.5.0; land via PR #9)
-- Sandbox refreshed to 0.5.0
+- Landed stacked merges onto `main` (including v0.6 via PR #11)
+- Releases through v0.6.0
+- Sandbox refreshed to 0.6.0
 
 ## In progress
 
-- V0.6 Python/ML Skill + Cloud MCP Stage 5 documentation
-- Captain merge of [PR #9](https://github.com/loganware05/captains-compass-cursor/pull/9)
+- V0.7 `ios-engineering` Skill
 
 ## Next
 
-- Tag `v0.5.0` after PR #9 merges
-- Merge/tag v0.6.0
-- Optional iOS module (design v0.6 historically; our numbering uses v0.7)
+- Merge/tag v0.7.0
+- Toward v1.0.0 stable reusable workflow polish
 
 ## Blockers
 
-None — always merge release PRs into `main` (not only stack bases).
+None. Prefer PRs with base `main` for releases.
