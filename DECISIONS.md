@@ -71,3 +71,11 @@
 - **Context:** Design MCP stages 3–4 cover Linear and Notion after GitHub/Playwright.
 - **Decision:** Ship `linear-integration` and `notion-integration` Skills plus setup docs. Repository plans/decisions remain authoritative; Linear/Notion are coordination and research surfaces.
 - **Consequences:** Agents can use MCP when configured; offline fallbacks remain valid.
+
+## ADR-010: V0.6 adds Python/ML Skill and explicit Cloud MCP Stage 5 limits
+
+- **Status:** Accepted
+- **Date:** 2026-07-11
+- **Context:** Design tech-module order places Python/ML after Docker; MCP Stage 5 covers cloud platforms.
+- **Decision:** Add `python-ml` Skill plus Stage 5 docs that keep production cloud actions Captain-approved. Also document stacked-PR landing onto `main`.
+- **Consequences:** Agents gain ML guidance without expanding production cloud autonomy; release PRs must target `main`.

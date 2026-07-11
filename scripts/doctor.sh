@@ -83,6 +83,7 @@ SKILLS=(
   docker-cloud
   linear-integration
   notion-integration
+  python-ml
 )
 
 for s in "${SKILLS[@]}"; do
