@@ -2,23 +2,23 @@
 
 ## Current status
 
-**V0.5.0** and **V0.6.0** are on `main` and released. Sandbox is on 0.6.0. **V0.7.0** iOS Skill in progress (PR targets `main` directly).
+**V0.7.0** released; sandbox on 0.7.0. **V1.0.0** stable polish in progress (update/uninstall scripts + release docs).
 
 ## Completed
 
-- Landed stacked merges onto `main` (including v0.6 via PR #11)
-- Releases through v0.6.0
-- Sandbox refreshed to 0.6.0
+- Full tech Skill set through iOS (v0.7)
+- Seven hooks + GitHub Stage 1
+- Template repository + releases through v0.7.0
 
 ## In progress
 
-- V0.7 `ios-engineering` Skill
+- V1.0.0: `update.sh`, `uninstall.sh`, UPGRADING + RELEASE checklist, Postgres MCP Stage 6 docs
 
 ## Next
 
-- Merge/tag v0.7.0
-- Toward v1.0.0 stable reusable workflow polish
+- Merge/tag v1.0.0
+- Optional future: deeper cloud automation, richer examples
 
 ## Blockers
 
-None. Prefer PRs with base `main` for releases.
+None. Release PRs should use base `main`.

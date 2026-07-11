@@ -207,6 +207,19 @@ NON_GIT="$(mktemp -d "${TMPDIR:-/tmp}/compass-nongit-XXXXXX")"
 assert_false "non-git target fails" "$ROOT/scripts/install.sh" "$NON_GIT"
 rm -rf "$NON_GIT"
 
+echo "=== update.sh refreshes version ==="
+chmod +x "$ROOT/scripts/update.sh" "$ROOT/scripts/uninstall.sh"
+echo "0.0.0-test" > "$TMP/.agent/COMPASS_VERSION"
+assert_true "update.sh succeeds" "$ROOT/scripts/update.sh" "$TMP"
+assert_eq "update wrote new version" "$(tr -d '[:space:]' < "$ROOT/VERSION")" "$(tr -d '[:space:]' < "$TMP/.agent/COMPASS_VERSION")"
+assert_true "update kept PROJECT_CONTEXT marker" grep -q "PRODUCT_MARKER" "$TMP/PROJECT_CONTEXT.md"
+
+echo "=== uninstall.sh removes cursor package ==="
+assert_true "uninstall requires --yes" bash -c "! '$ROOT/scripts/uninstall.sh' '$TMP' >/dev/null 2>&1"
+assert_true "uninstall --yes succeeds" "$ROOT/scripts/uninstall.sh" --yes "$TMP"
+assert_true "uninstall removed rules" bash -c "! test -d '$TMP/.cursor/rules'"
+assert_true "uninstall kept PROJECT_CONTEXT" test -f "$TMP/PROJECT_CONTEXT.md"
+
 echo "=== refuse install into control repo ==="
 assert_false "install into self fails" "$ROOT/scripts/install.sh" "$ROOT"
 

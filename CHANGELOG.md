@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.0 — 2026-07-11
+
+### Added
+
+- `scripts/update.sh` for safe product-repo refreshes
+- `scripts/uninstall.sh` (requires `--yes`; optional `--purge-docs`)
+- `docs/UPGRADING.md` and `docs/RELEASE_CHECKLIST.md`
+- PostgreSQL MCP Stage 6 guidance (`docs/integrations/postgres-mcp.md`)
+
+### Changed
+
+- Declares the first **stable** reusable workflow release
+- README documents update/uninstall paths
+- Doctor/tests cover update/uninstall scripts
+
 ## 0.7.0 — 2026-07-11
 
 ### Added
