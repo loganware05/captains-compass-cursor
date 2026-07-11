@@ -84,6 +84,7 @@ SKILLS=(
   linear-integration
   notion-integration
   python-ml
+  ios-engineering
 )
 
 for s in "${SKILLS[@]}"; do

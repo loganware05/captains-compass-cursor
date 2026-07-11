@@ -79,3 +79,11 @@
 - **Context:** Design tech-module order places Python/ML after Docker; MCP Stage 5 covers cloud platforms.
 - **Decision:** Add `python-ml` Skill plus Stage 5 docs that keep production cloud actions Captain-approved. Also document stacked-PR landing onto `main`.
 - **Consequences:** Agents gain ML guidance without expanding production cloud autonomy; release PRs must target `main`.
+
+## ADR-011: V0.7 adds iOS engineering Skill without embedding a full Xcode app
+
+- **Status:** Accepted
+- **Date:** 2026-07-11
+- **Context:** Design tech-module order places iOS after Python/ML.
+- **Decision:** Ship `ios-engineering` Skill and a lightweight example placeholder. Full Xcode projects remain in product repos.
+- **Consequences:** Agents get iOS guidance via Skills; the control repo stays free of product app binaries.
