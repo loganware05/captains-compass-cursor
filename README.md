@@ -33,6 +33,8 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 
 ## Install into a product repository
 
+Full guide (new vs existing projects): [`docs/PRODUCT_ONBOARDING.md`](docs/PRODUCT_ONBOARDING.md).
+
 ```bash
 ./scripts/install.sh /path/to/product-repo
 ```

@@ -2,23 +2,27 @@
 
 ## Current status
 
-**V0.7.0** released; sandbox on 0.7.0. **V1.0.0** stable polish in progress (update/uninstall scripts + release docs).
+**V1.0.0 stable** released and tagged. Sandbox at **1.0.0**. Post-1.0 onboarding docs implemented on `feature/14-post-1.0-onboarding` (#14); awaiting PR merge.
 
 ## Completed
 
-- Full tech Skill set through iOS (v0.7)
+- Full Skill set through iOS (v0.7) and stable polish (v1.0)
 - Seven hooks + GitHub Stage 1
-- Template repository + releases through v0.7.0
+- `update.sh` / `uninstall.sh`, UPGRADING, RELEASE_CHECKLIST, Postgres MCP Stage 6
+- Template repository + topics on GitHub
+- Releases through [v1.0.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.0.0)
+- Sandbox approval-gate exercise (contact form) and upgrade path through 1.0.0
+- `docs/PRODUCT_ONBOARDING.md` + memory refresh for stable baseline (#14)
 
 ## In progress
 
-- V1.0.0: `update.sh`, `uninstall.sh`, UPGRADING + RELEASE checklist, Postgres MCP Stage 6 docs
+- Open/merge PR for #14
 
 ## Next
 
-- Merge/tag v1.0.0
+- Optional: sandbox failure-test exercises
 - Optional future: deeper cloud automation, richer examples
 
 ## Blockers
 
-None. Release PRs should use base `main`.
+None. Release and docs PRs should use base `main`.

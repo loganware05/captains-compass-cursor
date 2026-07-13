@@ -4,12 +4,15 @@ Disposable sandbox path (created during V0.1 build):
 
 `/Users/loganware/Documents/Personal/Code/captain-compass-sandbox`
 
+Installed Compass version: **1.0.0** (via `.agent/COMPASS_VERSION`; refreshed after the v1.0.0 release).
+
 ## Automated install verification (completed)
 
 - [x] Vite React TypeScript sandbox initialized and committed
 - [x] `scripts/install.sh` installed Compass v0.1.0
 - [x] `scripts/doctor.sh` passed on the sandbox
 - [x] Rules, Skills, agents, docs, and `.agent/evidence/` present
+- [x] Updated through releases to **1.0.0** (`update.sh`); doctor passed
 
 ## Manual Cursor exercises
 
@@ -44,6 +47,7 @@ Results:
 | Tests | Pass (15/15) |
 | GitHub issue / remote PR | Pass — [issue #1](https://github.com/loganware05/captain-compass-sandbox/issues/1), [PR #2](https://github.com/loganware05/captain-compass-sandbox/pull/2) |
 | Upgraded to Compass 0.2.0 | Pass — hooks + React/Playwright/GitHub Skills installed; product docs preserved |
+| Upgraded to Compass 1.0.0 | Pass — doctor clean; product memory preserved |
 
 Control repo: https://github.com/loganware05/captains-compass-cursor
 
