@@ -5,11 +5,13 @@
 ### Added
 
 - `docs/PRODUCT_ONBOARDING.md` — new vs existing product-repo install paths
+- Sandbox failure-test evidence (bypass, scope, failing test, secret, parallel, budget)
 
 ### Changed
 
 - README links to product onboarding
 - Project memory (`PROGRESS.md`, `PROJECT_CONTEXT.md`, `SANDBOX_VALIDATION.md`) reflects stable v1.0.0
+- `docs/SANDBOX_VALIDATION.md` records all six deliberate failure exercises as passed (2026-07-14)
 
 ## 1.0.0 — 2026-07-11
 

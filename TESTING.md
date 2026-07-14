@@ -22,4 +22,4 @@ Cursor approval-gate and failure exercises must be run interactively in that san
 
 ## Deliberate failure tests
 
-See design doc Part 9 and `docs/SANDBOX_VALIDATION.md`: bypass approval, scope expansion, failing test, hard-coded secret.
+See design doc Part 9 and `docs/SANDBOX_VALIDATION.md`. All six exercises passed 2026-07-14 (evidence under `.agent/evidence/sandbox-failure-tests/`): bypass approval, scope expansion, failing test, hard-coded secret, parallel conflict, budget stop.

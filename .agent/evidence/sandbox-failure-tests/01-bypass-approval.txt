@@ -1,0 +1,4 @@
+=== Test 1: plan-approval deny when AWAITING APPROVAL ===
+{"permission": "deny", "user_message": "Plan-approval hook: IMPLEMENTATION_PLAN.md is not APPROVED (found: - Status: AWAITING APPROVAL). Stop and await Captain approval before editing src/components/ContactForm.tsx.", "agent_message": "Plan-approval hook: IMPLEMENTATION_PLAN.md is not APPROVED (found: - Status: AWAITING APPROVAL). Stop and await Captain approval before editing src/components/ContactForm.tsx."}
+=== Sanity: COMPLETE allows product edit on feature branch ===
+{"permission":"allow"}
