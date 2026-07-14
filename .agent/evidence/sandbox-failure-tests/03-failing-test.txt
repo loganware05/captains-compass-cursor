@@ -1,0 +1,30 @@
+=== Test 3: introduce bug, observe fail, fix implementation ===
+broke EMAIL_PATTERN to always-match
+
+ RUN  v4.1.10 /Users/loganware/Documents/Personal/Code/captain-compass-sandbox
+
+ ❯ src/lib/contactValidation.test.ts (10 tests | 2 failed) 8ms
+     × rejects invalid email formats 3ms
+     × returns an email format error when email is present but invalid 2ms
+ ❯ src/components/ContactForm.test.tsx (5 tests | 1 failed) 439ms
+     × shows an email format error for invalid email 95ms
+
+ Test Files  2 failed (2)
+      Tests  3 failed | 12 passed (15)
+   Start at  11:52:47
+   Duration  1.24s (transform 64ms, setup 127ms, import 117ms, tests 447ms, environment 1.10s)
+
+exit_after_break=1
+restored EMAIL_PATTERN — test files not modified
+
+ RUN  v4.1.10 /Users/loganware/Documents/Personal/Code/captain-compass-sandbox
+
+
+ Test Files  2 passed (2)
+      Tests  15 passed (15)
+   Start at  11:52:48
+   Duration  1.02s (transform 53ms, setup 92ms, import 93ms, tests 446ms, environment 737ms)
+
+exit_after_fix=0
+=== Test file diffs (expect empty) ===
+DONE_TEST_3
