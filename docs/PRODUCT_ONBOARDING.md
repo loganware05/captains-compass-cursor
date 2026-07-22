@@ -40,8 +40,8 @@ git push -u origin chore/install-captains-compass
 
 After merge:
 
-1. Fill in `PROJECT_CONTEXT.md` for the product.
-2. Open the repository alone in Cursor.
+1. Open the repository alone in Cursor.
+2. Paste **Prompt 2** from [`AGENT_INSTALL_PROMPT.md`](AGENT_INSTALL_PROMPT.md) so the First Mate interviews you and fills `PROJECT_CONTEXT.md`.
 3. Ask the First Mate to follow `AGENTS.md` for the next change.
 4. Expect `IMPLEMENTATION_PLAN.md` to reach **AWAITING APPROVAL** before product code changes.
 
@@ -108,3 +108,9 @@ Doctor reads `.agent/COMPASS_VERSION` in product repos (there is no product `VER
 1. Customize `PROJECT_CONTEXT.md`, `TESTING.md`, and `DECISIONS.md`.
 2. Use the approval gate for every product-behavior change.
 3. Store evidence under `.agent/evidence/` before opening PRs (PR evidence hook).
+
+### Agent-ready prompts
+
+For copy-paste Cursor agent instructions (install + activate / fill `PROJECT_CONTEXT.md`), see [`AGENT_INSTALL_PROMPT.md`](AGENT_INSTALL_PROMPT.md).
+
+Recommended sequence: install (Prompt 1) → open the product repo alone → activate with Prompt 2 so the First Mate interviews the Captain and fills project memory before the first feature plan.
