@@ -17,11 +17,11 @@
 
 ## In progress
 
-- `docs/agent-install-prompt` — agent-ready install + activation prompts (local issue: `docs/local-agent-install-prompt`)
+- [PR #18](https://github.com/loganware05/captains-compass-cursor/pull/18) — agent-ready install + activation prompts (`docs/local-agent-install-prompt`)
 
 ## Next
 
-- Open PR for agent install/activation prompts
+- Merge PR #18
 - Optional future: deeper cloud automation, richer examples
 
 ## Blockers
