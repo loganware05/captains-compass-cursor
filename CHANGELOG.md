@@ -4,6 +4,7 @@
 
 ### Added
 
+- `docs/AGENT_INSTALL_PROMPT.md` — copy-paste agent prompts for install and post-install activation (PROJECT_CONTEXT interview)
 - `docs/PRODUCT_ONBOARDING.md` — new vs existing product-repo install paths
 - Sandbox failure-test evidence (bypass, scope, failing test, secret, parallel, budget)
 

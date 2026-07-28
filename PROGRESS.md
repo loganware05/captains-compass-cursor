@@ -17,11 +17,11 @@
 
 ## In progress
 
-- Merge control PR for #16 docs/evidence
-- Merge sandbox chore [PR #4](https://github.com/loganware05/captain-compass-sandbox/pull/4)
+- [PR #18](https://github.com/loganware05/captains-compass-cursor/pull/18) — agent-ready install + activation prompts (`docs/local-agent-install-prompt`)
 
 ## Next
 
+- Merge PR #18
 - Optional future: deeper cloud automation, richer examples
 
 ## Blockers

@@ -41,7 +41,7 @@ agentic engineering process across multiple product repositories.
 - `scripts/` — install.sh, update.sh, uninstall.sh, doctor.sh
 - `examples/` — fixture projects for installer docs/tests
 - `tests/` — automated installer/doctor/hook tests
-- `docs/` — onboarding, upgrading, release checklist, integrations, design sources
+- `docs/` — onboarding, agent install/activation prompts, upgrading, release checklist, integrations, design sources
 
 ## Major Components
 

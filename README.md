@@ -35,6 +35,8 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 
 Full guide (new vs existing projects): [`docs/PRODUCT_ONBOARDING.md`](docs/PRODUCT_ONBOARDING.md).
 
+Copy-paste Cursor agent prompts (install + activate / fill `PROJECT_CONTEXT.md`): [`docs/AGENT_INSTALL_PROMPT.md`](docs/AGENT_INSTALL_PROMPT.md).
+
 ```bash
 ./scripts/install.sh /path/to/product-repo
 ```
