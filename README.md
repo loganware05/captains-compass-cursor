@@ -6,12 +6,12 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.0.0 (stable)
+## Current version: 1.1.0
 
 ### Included
 
 - Approval-gated operating model (`AGENTS.md` + five core rules)
-- Seventeen Skills (foundational + GitHub, React, Playwright, Node, Postgres/Prisma, Docker/cloud, Linear, Notion, Python/ML, iOS)
+- Twenty Skills (foundational + tech/integration + source-context, cleanup, review-fix loop)
 - Eight specialist subagents
 - Seven safety hooks
 - `install.sh`, `update.sh`, `uninstall.sh`, `doctor.sh`
@@ -65,6 +65,7 @@ See [`docs/UPGRADING.md`](docs/UPGRADING.md).
 | Linear / Notion | [`linear.md`](docs/integrations/linear.md) / [`notion.md`](docs/integrations/notion.md) |
 | Python / ML | [`docs/integrations/python-ml.md`](docs/integrations/python-ml.md) |
 | iOS | [`docs/integrations/ios.md`](docs/integrations/ios.md) |
+| opensrc (optional) | [`docs/integrations/opensrc.md`](docs/integrations/opensrc.md) |
 | Postgres MCP | [`docs/integrations/postgres-mcp.md`](docs/integrations/postgres-mcp.md) |
 
 ## Releases

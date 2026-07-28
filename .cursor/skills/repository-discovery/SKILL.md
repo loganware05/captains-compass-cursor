@@ -24,7 +24,7 @@ Starting a new task, onboarding to an unfamiliar repository, or before writing a
 5. Identify database and deployment configuration.
 6. Note existing Cursor instructions (AGENTS.md, rules, Skills).
 7. List high-risk files and missing documentation.
-8. Recommend Skills relevant to the current task.
+8. Recommend Skills relevant to the current task (including `source-code-context` when integrating unfamiliar packages).
 
 ## Output
 

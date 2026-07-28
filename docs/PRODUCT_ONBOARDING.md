@@ -3,7 +3,7 @@
 Install Captain's Compass into a **product** repository after validating the workflow in a disposable sandbox.
 
 Control repository: https://github.com/loganware05/captains-compass-cursor  
-Current stable version: **1.0.0**
+Current stable version: **1.1.0**
 
 Do not install into critical production repos until sandbox validation has passed. See [`SANDBOX_VALIDATION.md`](SANDBOX_VALIDATION.md).
 

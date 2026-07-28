@@ -85,6 +85,9 @@ SKILLS=(
   notion-integration
   python-ml
   ios-engineering
+  source-code-context
+  code-structure-cleanup
+  review-fix-loop
 )
 
 for s in "${SKILLS[@]}"; do

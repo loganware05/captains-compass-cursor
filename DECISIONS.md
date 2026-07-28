@@ -95,3 +95,11 @@
 - **Context:** Core gate, hooks, GitHub Stage 1, and major tech Skills are proven; template repo is live.
 - **Decision:** Ship 1.0.0 with safe `update.sh` / `uninstall.sh`, upgrading docs, release checklist, and Postgres MCP Stage 6 guidance. Updates still refuse to clobber product memory docs.
 - **Consequences:** Product repos can upgrade workflow packages predictably; further modules remain additive minor/major releases.
+
+## ADR-013: V1.1.0 adds Micky-inspired Skills; opensrc is preferred-optional
+
+- **Status:** Accepted
+- **Date:** 2026-07-28
+- **Context:** Podcast/agentic-engineering tactics (source-as-context, post-feature cleanup, review-fix loops) complement Compass’s control plane. [opensrc](https://github.com/vercel-labs/opensrc) automates dependency source fetch/cache.
+- **Decision:** Ship three Skills (`source-code-context`, `code-structure-cleanup`, `review-fix-loop`) as v1.1.0. Prefer opensrc when installed; fall back to Captain-approved `reference/repos/` paths. Do not require opensrc for doctor/install. Code-structure cleanup that touches product files always requires a **separate** approved `IMPLEMENTATION_PLAN.md`.
+- **Consequences:** Agents get clearer tactical playbooks without expanding always-on rules; product repos remain usable without the opensrc CLI.
