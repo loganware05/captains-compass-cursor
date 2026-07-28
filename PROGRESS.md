@@ -2,7 +2,7 @@
 
 ## Current status
 
-**V1.1.0 in progress** on `feature/19-micky-inspired-skills` ([#19](https://github.com/loganware05/captains-compass-cursor/issues/19)). Rollback: `rollback/pre-micky-inspired-skills` (`2dd5429`).
+**V1.1.0 PR open:** [PR #20](https://github.com/loganware05/captains-compass-cursor/pull/20) for [#19](https://github.com/loganware05/captains-compass-cursor/issues/19). Rollback: `rollback/pre-micky-inspired-skills` (`2dd5429`).
 
 ## Completed
 
@@ -18,11 +18,11 @@
 
 ## In progress
 
-- #19 — Micky-inspired Skills + opensrc preferred-optional docs + VERSION 1.1.0 (branch `feature/19-micky-inspired-skills`; validation evidence under `.agent/evidence/micky-inspired-skills/`)
+- [PR #20](https://github.com/loganware05/captains-compass-cursor/pull/20) — v1.1.0 Micky-inspired Skills (#19)
 
 ## Next
 
-- Open/merge PR for #19
+- Merge PR #20; optionally cut GitHub release `v1.1.0`
 - Optional future: deeper cloud automation, richer examples, young-package harden
 
 ## Blockers

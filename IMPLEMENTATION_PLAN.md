@@ -61,7 +61,7 @@ Ship as **VERSION 1.1.0**. Doctor, installer tests, README/PROJECT_CONTEXT skill
 - [x] Light touch see-also links on related Skills where useful
 - [x] `./scripts/doctor.sh` and `./tests/run.sh` pass on the control repo
 - [x] ADR for opensrc-as-optional-tool and cleanup-separate-plan
-- [x] VERSION = 1.1.0; PROGRESS.md updated; PR targeting `main` (pending open)
+- [x] VERSION = 1.1.0; PROGRESS.md updated; PR targeting `main` ([#20](https://github.com/loganware05/captains-compass-cursor/pull/20))
 
 ## Non-Goals
 
