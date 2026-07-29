@@ -2,7 +2,7 @@
 
 ## Current status
 
-**V1.0.0 stable.** Sandbox failure-test campaign (#16) completed with evidence; control-repo PR pending. Sandbox Compass 1.0.0 chore PR: [sandbox#4](https://github.com/loganware05/captain-compass-sandbox/pull/4).
+**V1.1.0 PR open:** [PR #20](https://github.com/loganware05/captains-compass-cursor/pull/20) for [#19](https://github.com/loganware05/captains-compass-cursor/issues/19). Rollback: `rollback/pre-micky-inspired-skills` (`2dd5429`).
 
 ## Completed
 
@@ -13,16 +13,17 @@
 - Releases through [v1.0.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.0.0)
 - Sandbox approval-gate exercise (contact form) and upgrade path through 1.0.0
 - `docs/PRODUCT_ONBOARDING.md` + memory refresh (#14 / PR #15)
-- Sandbox failure tests 1–6 (bypass, scope, failing test, secret, parallel, budget) — #16
+- Sandbox failure tests 1–6 — #16 / PR #17
+- Agent install/activation prompts — #18
 
 ## In progress
 
-- [PR #18](https://github.com/loganware05/captains-compass-cursor/pull/18) — agent-ready install + activation prompts (`docs/local-agent-install-prompt`)
+- [PR #20](https://github.com/loganware05/captains-compass-cursor/pull/20) — v1.1.0 Micky-inspired Skills (#19)
 
 ## Next
 
-- Merge PR #18
-- Optional future: deeper cloud automation, richer examples
+- Merge PR #20; optionally cut GitHub release `v1.1.0`
+- Optional future: deeper cloud automation, richer examples, young-package harden
 
 ## Blockers
 

@@ -30,6 +30,8 @@ Implementation and validation are complete and the change is ready for Captain r
 8. Update PROGRESS.md and CHANGELOG.md as needed.
 9. Produce a First Mate completion report.
 
+See also: `review-fix-loop` when review feedback still needs iterative fixes before this Skill runs.
+
 ## Output
 
 PR (remote when possible) or PR-ready description, plus completion report for the Captain.

@@ -2,17 +2,23 @@
 
 ## Unreleased
 
+## 1.1.0 — 2026-07-28
+
 ### Added
 
+- `source-code-context` Skill — search real package/repo source before guessing APIs (prefer optional [opensrc](https://github.com/vercel-labs/opensrc))
+- `code-structure-cleanup` Skill — post-feature service-layer cleanup under a **separate** approved plan
+- `review-fix-loop` Skill — iterate on PR/review feedback until merge-ready or a human decision
+- `docs/integrations/opensrc.md` — preferred-optional opensrc setup and fallbacks
 - `docs/AGENT_INSTALL_PROMPT.md` — copy-paste agent prompts for install and post-install activation (PROJECT_CONTEXT interview)
 - `docs/PRODUCT_ONBOARDING.md` — new vs existing product-repo install paths
 - Sandbox failure-test evidence (bypass, scope, failing test, secret, parallel, budget)
 
 ### Changed
 
-- README links to product onboarding
-- Project memory (`PROGRESS.md`, `PROJECT_CONTEXT.md`, `SANDBOX_VALIDATION.md`) reflects stable v1.0.0
-- `docs/SANDBOX_VALIDATION.md` records all six deliberate failure exercises as passed (2026-07-14)
+- VERSION `1.1.0`; doctor/tests expect twenty Skills
+- README links to product onboarding, agent install prompts, and opensrc docs
+- Project memory reflects v1.1.0 priorities and ADR-013
 
 ## 1.0.0 — 2026-07-11
 
