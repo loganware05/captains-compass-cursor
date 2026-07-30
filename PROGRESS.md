@@ -2,7 +2,7 @@
 
 ## Current status
 
-**Version-update documentation in progress:** [#21](https://github.com/loganware05/captains-compass-cursor/issues/21) on `feature/21-version-update-guide`. Rollback: `rollback/pre-version-update-guide` (`a6b2aae`).
+**Version-update documentation PR open:** [PR #22](https://github.com/loganware05/captains-compass-cursor/pull/22) for [#21](https://github.com/loganware05/captains-compass-cursor/issues/21). Rollback: `rollback/pre-version-update-guide` (`a6b2aae`).
 
 ## Completed
 
@@ -19,11 +19,11 @@
 
 ## In progress
 
-- #21 — README and upgrading guide for latest/pinned forward workflow updates
+- [PR #22](https://github.com/loganware05/captains-compass-cursor/pull/22) — README and upgrading guide for latest/pinned forward workflow updates
 
 ## Next
 
-- Open/merge PR for #21
+- Merge PR #22
 - Create a separate approval-gated plan to repair the v1.1.0 release/tag target
 - Optional future: deeper cloud automation, richer examples, young-package harden
 

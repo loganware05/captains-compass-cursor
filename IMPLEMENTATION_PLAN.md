@@ -63,7 +63,7 @@ workflow update through a product-repo branch/PR.
 - [x] `./scripts/doctor.sh` passes.
 - [x] Documentation link/command review passes.
 - [x] CHANGELOG and PROGRESS are updated; evidence is recorded.
-- [ ] PR targets `main`.
+- [x] PR targets `main` ([#22](https://github.com/loganware05/captains-compass-cursor/pull/22)).
 
 ## Non-Goals
 
