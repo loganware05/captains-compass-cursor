@@ -2,7 +2,10 @@
 
 ## Current status
 
-**Version-update documentation PR open:** [PR #22](https://github.com/loganware05/captains-compass-cursor/pull/22) for [#21](https://github.com/loganware05/captains-compass-cursor/issues/21). Rollback: `rollback/pre-version-update-guide` (`a6b2aae`).
+**V1.1.0 release repaired.** The annotated
+[`v1.1.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.1.0)
+tag/release now points to `a6b2aae` (PR #20). Release checklist hardening is in
+progress under [#23](https://github.com/loganware05/captains-compass-cursor/issues/23).
 
 ## Completed
 
@@ -16,19 +19,20 @@
 - Sandbox failure tests 1–6 — #16 / PR #17
 - Agent install/activation prompts — #18
 - V1.1.0 Micky-inspired Skills — #19 / PR #20
+- Latest/pinned forward update documentation — #21 / PR #22
+- Repaired v1.1.0 tag/release; preserved rollback tag — #23
 
 ## In progress
 
-- [PR #22](https://github.com/loganware05/captains-compass-cursor/pull/22) — README and upgrading guide for latest/pinned forward workflow updates
+- #23 — release checklist hardening and evidence PR
+- Sandbox v1.1.0 workflow refresh — [sandbox PR #6](https://github.com/loganware05/captain-compass-sandbox/pull/6)
 
 ## Next
 
-- Merge PR #22
-- Create a separate approval-gated plan to repair the v1.1.0 release/tag target
+- Open/merge the #23 control PR
+- Merge sandbox PR #6 and reopen the sandbox in Cursor
 - Optional future: deeper cloud automation, richer examples, young-package harden
 
 ## Blockers
 
-The GitHub release titled v1.1.0 currently targets
-`rollback/pre-micky-inspired-skills`; no `v1.1.0` Git tag exists. Pinned-update
-docs require a real `vX.Y.Z` tag and therefore fail safely until repair.
+None.

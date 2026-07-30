@@ -1,0 +1,84 @@
+$ /path/to/control/scripts/doctor.sh /path/to/sandbox
+---
+Captain's Compass doctor
+Root: /Users/loganware/Documents/Personal/Code/captain-compass-sandbox
+
+  ok: COMPASS_VERSION=1.1.0 (installed product)
+  ok: AGENTS.md
+  ok: PROJECT_CONTEXT.md
+  ok: IMPLEMENTATION_PLAN.md
+  ok: DECISIONS.md
+  ok: PROGRESS.md
+  ok: TESTING.md
+  ok: CHANGELOG.md
+  ok: rule 00-core-operating-model.mdc
+  ok: rule 01-plan-approval-gate.mdc
+  ok: rule 02-git-worktree-policy.mdc
+  ok: rule 03-validation-definition-of-done.mdc
+  ok: rule 04-documentation-memory.mdc
+  ok: skill repository-discovery
+  ok: skill implementation-planning
+  ok: skill worktree-orchestration
+  ok: skill testing-validation
+  ok: skill security-review
+  ok: skill accessibility-review
+  ok: skill pull-request-preparation
+  ok: skill github-integration
+  ok: skill react-engineering
+  ok: skill playwright-browser-validation
+  ok: skill node-engineering
+  ok: skill postgres-prisma
+  ok: skill docker-cloud
+  ok: skill linear-integration
+  ok: skill notion-integration
+  ok: skill python-ml
+  ok: skill ios-engineering
+  ok: skill source-code-context
+  ok: skill code-structure-cleanup
+  ok: skill review-fix-loop
+  ok: agent repository-scout.md
+  ok: agent architecture-agent.md
+  ok: agent implementation-agent.md
+  ok: agent test-engineer.md
+  ok: agent security-reviewer.md
+  ok: agent accessibility-reviewer.md
+  ok: agent adversarial-reviewer.md
+  ok: agent documentation-agent.md
+  ok: hooks.json
+  ok: hook secret-protection.sh
+  ok: hook protected-branch.sh
+  ok: hook plan-approval-check.sh
+  ok: hook branch-name-validation.sh
+  ok: hook pre-commit-formatting.sh
+  ok: hook pre-push-tests.sh
+  ok: hook pr-evidence-validation.sh
+  ok: hooks _common.sh
+
+Doctor passed: 0 errors, 0 warning(s)
+
+$ npm --prefix /path/to/sandbox test
+---
+
+> captain-compass-sandbox@0.0.0 test
+> vitest run
+
+
+ RUN  v4.1.10 /Users/loganware/Documents/Personal/Code/captain-compass-sandbox
+
+
+ Test Files  2 passed (2)
+      Tests  15 passed (15)
+   Start at  03:27:00
+   Duration  2.52s (transform 130ms, setup 263ms, import 224ms, tests 692ms, environment 2.70s)
+
+
+$ git -C /path/to/sandbox diff main...HEAD --name-only
+---
+.agent/COMPASS_VERSION
+.agent/evidence/compass-v1.1.0-refresh/validation.md
+.cursor/skills/code-structure-cleanup/SKILL.md
+.cursor/skills/pull-request-preparation/SKILL.md
+.cursor/skills/repository-discovery/SKILL.md
+.cursor/skills/review-fix-loop/SKILL.md
+.cursor/skills/source-code-context/SKILL.md
+PROGRESS.md
