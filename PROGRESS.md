@@ -2,7 +2,7 @@
 
 ## Current status
 
-**V1.1.0 PR open:** [PR #20](https://github.com/loganware05/captains-compass-cursor/pull/20) for [#19](https://github.com/loganware05/captains-compass-cursor/issues/19). Rollback: `rollback/pre-micky-inspired-skills` (`2dd5429`).
+**Version-update documentation PR open:** [PR #22](https://github.com/loganware05/captains-compass-cursor/pull/22) for [#21](https://github.com/loganware05/captains-compass-cursor/issues/21). Rollback: `rollback/pre-version-update-guide` (`a6b2aae`).
 
 ## Completed
 
@@ -15,16 +15,20 @@
 - `docs/PRODUCT_ONBOARDING.md` + memory refresh (#14 / PR #15)
 - Sandbox failure tests 1–6 — #16 / PR #17
 - Agent install/activation prompts — #18
+- V1.1.0 Micky-inspired Skills — #19 / PR #20
 
 ## In progress
 
-- [PR #20](https://github.com/loganware05/captains-compass-cursor/pull/20) — v1.1.0 Micky-inspired Skills (#19)
+- [PR #22](https://github.com/loganware05/captains-compass-cursor/pull/22) — README and upgrading guide for latest/pinned forward workflow updates
 
 ## Next
 
-- Merge PR #20; optionally cut GitHub release `v1.1.0`
+- Merge PR #22
+- Create a separate approval-gated plan to repair the v1.1.0 release/tag target
 - Optional future: deeper cloud automation, richer examples, young-package harden
 
 ## Blockers
 
-None. Prefer PR base `main`.
+The GitHub release titled v1.1.0 currently targets
+`rollback/pre-micky-inspired-skills`; no `v1.1.0` Git tag exists. Pinned-update
+docs require a real `vX.Y.Z` tag and therefore fail safely until repair.
