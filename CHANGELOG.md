@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Changed
+
+- README and `docs/UPGRADING.md` document latest/pinned forward upgrades using
+  tagged detached worktrees, version verification, product PR review, and the
+  unsupported-downgrade boundary (#21)
+
 ## 1.1.0 — 2026-07-28
 
 ### Added

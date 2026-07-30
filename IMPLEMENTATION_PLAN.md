@@ -3,117 +3,122 @@
 ## Metadata
 
 - Status: APPROVED
-- Plan ID: compass-micky-inspired-skills
-- Issue: #19
-- Branch: feature/19-micky-inspired-skills
-- Created: 2026-07-28
-- Last updated: 2026-07-28
+- Plan ID: document-version-pinned-updates
+- Issue: #21
+- Branch: feature/21-version-update-guide
+- Created: 2026-07-30
+- Last updated: 2026-07-30
 - Approved by: Captain
-- Approval date: 2026-07-28
-- Approved revision: compass-micky-inspired-skills (VERSION 1.1.0; opensrc preferred-optional; cleanup always separate plan; GitHub issue #19)
-- Rollback checkpoint: `rollback/pre-micky-inspired-skills` (`2dd5429`)
+- Approval date: 2026-07-30
+- Approved revision: document-version-pinned-updates (latest + pinned forward upgrades; downgrades unsupported; release repair separate)
+- Rollback checkpoint: `rollback/pre-version-update-guide` (`a6b2aae`)
 
 ## Request
 
-Add three Compass Skills inspired by [micky-podcast-agentic-engineering](https://github.com/pawel-cell/micky-podcast-agentic-engineering):
+Update the README with safe instructions for refreshing an existing product
+repository to the latest or an explicitly selected Captain's Compass version.
 
-1. `source-code-context`
-2. `code-structure-cleanup`
-3. `review-fix-loop`
+## Current Behavior
 
-Also evaluate [vercel-labs/opensrc](https://github.com/vercel-labs/opensrc) as tooling for the source-code-context Skill and decide whether (and how) to incorporate it.
+- README only shows `./scripts/update.sh /path/to/product-repo`.
+- `docs/UPGRADING.md` explains what is preserved, but not how the selected
+  control-repo checkout determines the installed version.
+- `update.sh` installs the `VERSION` from the control-repo checkout that runs it.
+- Updates copy/overwrite workflow assets but do not remove assets absent from an
+  older release. Therefore clean downgrades are not currently supported.
+- GitHub release `v1.1.0 — micky-inspired-skills` currently targets
+  `rollback/pre-micky-inspired-skills`, and no `v1.1.0` Git tag exists. Repair
+  is intentionally deferred to a separate approval-gated plan.
 
-## Problem Statement
+## Approved Scope Decisions
 
-Compass already provides a strong control plane (approval gate, memory docs, hooks, validation evidence, specialist agents). It is weaker on three tactical patterns that reduce agent hallucination and improve post-feature quality:
-
-1. Searching real dependency/library source instead of guessing APIs from incomplete docs
-2. A deliberate cleanup pass after a feature works (service-layer extraction without behavior change)
-3. An iterative review-fix loop that consumes PR/review feedback until merge-ready or a human decision is required
-
-Without these Skills, agents underuse evidence from package source, leave duplicated mechanics in place, and treat review as a one-shot step rather than a loop.
+1. Document latest and explicitly pinned **forward upgrades**.
+2. Explicitly state that downgrades are unsupported.
+3. Prepare a separate plan after this PR to repair the v1.1.0 release/tag.
 
 ## Desired Outcome
 
-After this change, product repos that install/update Compass gain three new Skills (loaded only when relevant). Agents:
-
-- Prefer real package/repo source when integrating or debugging libraries
-- Run a cleanup pass only under a **separate approved** `IMPLEMENTATION_PLAN.md`
-- Iterate on review feedback with clear stop conditions
-
-`opensrc` is documented as the **preferred optional tool** for fetching/caching dependency source (not vendored into Compass; not required for install).
-
-Ship as **VERSION 1.1.0**. Doctor, installer tests, README/PROJECT_CONTEXT skill counts, CHANGELOG, and integration docs are updated.
-
-## opensrc decision (approved)
-
-**Preferred-optional.** Skill prefers `opensrc` when installed; falls back to Captain-approved `reference/repos/…`; `docs/integrations/opensrc.md` documents setup. Doctor does **not** require the `opensrc` binary.
+A user can identify the product's installed Compass version, choose a newer
+release, run that exact release's scripts without disturbing their normal
+control-repo checkout, verify the result, review the diff, and submit the
+workflow update through a product-repo branch/PR.
 
 ## Acceptance Criteria
 
-- [x] Skill `.cursor/skills/source-code-context/SKILL.md` exists with frontmatter `name:` and Compass-style procedure (opensrc preferred, reference-path fallback, cite sources, no silent dependency swaps)
-- [x] Skill `.cursor/skills/code-structure-cleanup/SKILL.md` exists: post-feature only; service-layer extraction; no behavior change; **always requires its own approved IMPLEMENTATION_PLAN.md** (never mixed into the feature plan)
-- [x] Skill `.cursor/skills/review-fix-loop/SKILL.md` exists: small-PR preflight; read diff + feedback; fix only relevant items; re-validate; stop on human decisions; no auto-merge
-- [x] `docs/integrations/opensrc.md` documents optional install and Skill usage
-- [x] Cross-links from README, CHANGELOG 1.1.0, PROJECT_CONTEXT skill count (17 → 20)
-- [x] `scripts/doctor.sh` SKILLS array includes the three new Skills
-- [x] `tests/run.sh` asserts the three Skill files install correctly
-- [x] Light touch see-also links on related Skills where useful
-- [x] `./scripts/doctor.sh` and `./tests/run.sh` pass on the control repo
-- [x] ADR for opensrc-as-optional-tool and cleanup-separate-plan
-- [x] VERSION = 1.1.0; PROGRESS.md updated; PR targeting `main` ([#20](https://github.com/loganware05/captains-compass-cursor/pull/20))
+- [x] README explains that the source checkout controls the installed version.
+- [x] README shows how to read `.agent/COMPASS_VERSION`.
+- [x] README documents updating to the latest stable release.
+- [x] README documents a pinned forward upgrade using a detached Git worktree
+      for `vX.Y.Z`, including tag existence verification and cleanup.
+- [x] README tells users to read release notes/CHANGELOG before updating.
+- [x] README instructs users to use a dedicated product-repo branch, run doctor,
+      review the workflow diff, and open a PR.
+- [x] README states that product memory docs are preserved.
+- [x] README clearly states downgrades are unsupported by `update.sh`.
+- [x] `docs/UPGRADING.md` is aligned with the README and contains the detailed
+      procedure (README may remain concise and link to it).
+- [x] Commands quote paths and avoid destructive Git operations.
+- [x] Documentation does not claim `v1.1.0` is safely pin-able until its tag is
+      repaired; examples use placeholders such as `vX.Y.Z`.
+- [x] `./scripts/doctor.sh` passes.
+- [x] Documentation link/command review passes.
+- [x] CHANGELOG and PROGRESS are updated; evidence is recorded.
+- [ ] PR targets `main`.
 
 ## Non-Goals
 
-- Vendoring or forking `vercel-labs/opensrc`
-- Requiring `opensrc` for Compass install/doctor success
-- Replacing the approval gate, hooks, or evidence DoD
-- Always-on “launch earlier” rule
-- Young-package (&lt;14 day) security harden (follow-up)
-- New hooks
-- Sandbox failure-test campaign for these Skills
-
-## Open Questions (resolved)
-
-1. VERSION → **1.1.0 now** (Captain)
-2. opensrc → **preferred-optional** (Captain)
-3. Cleanup approval → **always a separate plan** (Captain)
-4. Issue → **#19** (created after approval)
+- Supporting downgrades or removing stale workflow assets.
+- Changing `install.sh`, `update.sh`, or `doctor.sh`.
+- Repairing GitHub release/tag metadata in this change.
+- Installing/updating Compass in a real product repository.
+- Broad project improvements beyond recording specific follow-up candidates.
 
 ## Affected Systems
 
-- `.cursor/skills/` (three new Skills; optional see-also edits)
-- `scripts/doctor.sh`, `tests/run.sh`
-- `docs/integrations/opensrc.md` (new)
-- `VERSION`, `README.md`, `PROJECT_CONTEXT.md`, `CHANGELOG.md`, `PROGRESS.md`, `DECISIONS.md`
-- Installer copies Skills via existing `cp -R .cursor/skills`
+- `README.md`
+- `docs/UPGRADING.md`
+- `CHANGELOG.md`
+- `PROGRESS.md`
+- `IMPLEMENTATION_PLAN.md`
+- `.agent/evidence/document-version-pinned-updates/`
 
-## Independent Workstreams
+## Implementation Approach
 
-Single branch `feature/19-micky-inspired-skills`, sequential A→B→C→D.
-
-| Stream | Boundary |
-|---|---|
-| A — `source-code-context` + `docs/integrations/opensrc.md` | Skill + integration doc |
-| B — `code-structure-cleanup` | Skill (separate-plan rule) |
-| C — `review-fix-loop` | Skill + see-also on PR skill |
-| D — doctor/tests/docs/VERSION/ADR | packaging |
+1. Add a concise README workflow:
+   - inspect current product version;
+   - choose latest or a newer explicit release;
+   - fetch tags in the control repo;
+   - create a detached worktree at `vX.Y.Z`;
+   - run that checkout's `update.sh` and `doctor.sh`;
+   - review/commit changes in a product-repo update branch;
+   - remove the temporary worktree.
+2. Expand `docs/UPGRADING.md` with rationale, safeguards, and troubleshooting.
+3. Preserve the existing statement that product memory docs are not overwritten.
+4. Add a prominent unsupported-downgrade warning.
 
 ## Test Plan
 
-1. `./scripts/doctor.sh` on control repo
-2. `./tests/run.sh`
-3. Manual Skill frontmatter/structure review
-4. Doc link check
+1. Run `./scripts/doctor.sh`.
+2. Review every documented command for valid quoting and path behavior.
+3. Verify all README links resolve to repository files.
+4. Confirm no product implementation or scripts changed.
+5. Record results under `.agent/evidence/document-version-pinned-updates/`.
 
 ## Migration / Rollback
 
-- Product repos: `./scripts/update.sh /path/to/product-repo`
-- Rollback tag: `rollback/pre-micky-inspired-skills`
-- `opensrc` cache at `~/.opensrc/` unrelated to Compass uninstall
+- Documentation-only change; no product migration.
+- Roll back by reverting the documentation PR.
+- A rollback tag and commit SHA will be recorded before implementation.
+
+## Follow-Up (separate approval required)
+
+Create a dedicated plan to repair the v1.1.0 release so it targets an annotated
+`v1.1.0` tag on the merged release commit rather than
+`rollback/pre-micky-inspired-skills`. Audit tag/release consistency before
+performing external GitHub mutations.
 
 ## Autonomy Budget
 
-- Max iterations: 3
-- Max failed validation cycles: 2
-- Max elapsed minutes: 90
+- Max iterations: 2
+- Max failed validation cycles: 1
+- Max elapsed minutes: 45
