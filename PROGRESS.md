@@ -5,7 +5,8 @@
 **V1.1.0 release repaired.** The annotated
 [`v1.1.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.1.0)
 tag/release now points to `a6b2aae` (PR #20). Release checklist hardening is in
-progress under [#23](https://github.com/loganware05/captains-compass-cursor/issues/23).
+[PR #24](https://github.com/loganware05/captains-compass-cursor/pull/24) under
+[#23](https://github.com/loganware05/captains-compass-cursor/issues/23).
 
 ## Completed
 
@@ -24,12 +25,12 @@ progress under [#23](https://github.com/loganware05/captains-compass-cursor/issu
 
 ## In progress
 
-- #23 — release checklist hardening and evidence PR
+- [PR #24](https://github.com/loganware05/captains-compass-cursor/pull/24) — release checklist hardening and evidence
 - Sandbox v1.1.0 workflow refresh — [sandbox PR #6](https://github.com/loganware05/captain-compass-sandbox/pull/6)
 
 ## Next
 
-- Open/merge the #23 control PR
+- Merge control PR #24
 - Merge sandbox PR #6 and reopen the sandbox in Cursor
 - Optional future: deeper cloud automation, richer examples, young-package harden
 

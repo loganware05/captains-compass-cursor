@@ -97,7 +97,7 @@ Preserve `rollback/pre-micky-inspired-skills` (`2dd5429`).
 - [x] Prior releases spot-checked (`v1.0.0` … `v0.2.0`); no additional defects found
 - [x] PROGRESS/CHANGELOG updated; evidence under `.agent/evidence/repair-v1.1.0-release/`
 - [x] Doctor still passes
-- [ ] PR for checklist/docs targets `main` (tag/release actions may be direct after approval)
+- [x] PR for checklist/docs targets `main` ([#24](https://github.com/loganware05/captains-compass-cursor/pull/24))
 
 ## Non-Goals
 
