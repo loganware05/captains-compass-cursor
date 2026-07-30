@@ -1,0 +1,21 @@
+$ git rev-parse 'v1.1.0^{commit}'
+---
+a6b2aae6be3c5f4e632561198b3499992075ffd2
+
+$ git ls-remote --tags origin 'refs/tags/v1.1.0' 'refs/tags/v1.1.0^{}' 'refs/tags/rollback/pre-micky-inspired-skills'
+---
+74c763303e25ec34d28631b7ce0c3002acf96a51	refs/tags/rollback/pre-micky-inspired-skills
+7e1cfa6e4dd58f0dd3b5c09323c56f97a6227fcd	refs/tags/v1.1.0
+a6b2aae6be3c5f4e632561198b3499992075ffd2	refs/tags/v1.1.0^{}
+
+$ gh release view v1.1.0 --json name,tagName,targetCommitish,url
+---
+{"name":"v1.1.0 — Micky-inspired Skills","tagName":"v1.1.0","targetCommitish":"main","url":"https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.1.0"}
+
+$ gh api repos/loganware05/captains-compass-cursor/releases --jq '[.[] | select(.tag_name | startswith("rollback/"))]'
+---
+[]
+
+$ git tag --list 'v*' --sort=-version:refname | awk '/^v[0-9]+\.[0-9]+\.[0-9]+$/ {print; exit}'
+---
+v1.1.0

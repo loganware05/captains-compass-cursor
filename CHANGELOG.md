@@ -7,6 +7,15 @@
 - README and `docs/UPGRADING.md` document latest/pinned forward upgrades using
   tagged detached worktrees, version verification, product PR review, and the
   unsupported-downgrade boundary (#21)
+- `docs/RELEASE_CHECKLIST.md` verifies stable tag names, intended/remote commit
+  identity, and GitHub release `tagName` before declaring a release complete
+  (#23)
+
+### Fixed
+
+- Replaced the malformed v1.1.0 GitHub release attached to
+  `rollback/pre-micky-inspired-skills` with an annotated `v1.1.0` tag/release on
+  the PR #20 merge commit; the rollback tag remains intact (#23)
 
 ## 1.1.0 — 2026-07-28
 
