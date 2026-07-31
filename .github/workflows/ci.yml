@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  doctor-and-tests:
+    name: Doctor and tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Doctor
+        run: ./scripts/doctor.sh
+
+      - name: Automated tests
+        run: ./tests/run.sh

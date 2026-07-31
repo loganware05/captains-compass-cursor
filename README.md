@@ -6,17 +6,19 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.1.0
+## Current version: 1.2.0
 
 ### Included
 
 - Approval-gated operating model (`AGENTS.md` + five core rules)
-- Twenty Skills (foundational + tech/integration + source-context, cleanup, review-fix loop)
+- Twenty-one Skills (foundational + tech/integration + source-context, cleanup, review-fix, autonomy-budget)
 - Eight specialist subagents
-- Seven safety hooks
+- Seven safety hooks (critical: fail-closed; soft: fail-open)
+- Autonomy budget ledgers under `.agent/budgets/` + Budget Stop Report templates
 - `install.sh`, `update.sh`, `uninstall.sh`, `doctor.sh`
 - Documentation templates and integration guides
 - Automated installer / doctor / hook tests
+- Control-repo CI (GitHub Actions: doctor + tests)
 
 ### Operating model
 

@@ -60,7 +60,9 @@ Use all applicable validation layers:
 - Never weaken tests merely to make them pass.
 - Never silently expand scope.
 - Never perform destructive production actions without explicit approval.
-- Stop when iteration, cost, or time limits are reached.
+- Stop when iteration, cost, or time limits are reached; track usage in
+  `.agent/budgets/<plan-id>.md` and write a Budget Stop Report under
+  `.agent/evidence/` when stopping (Skill: `autonomy-budget`).
 
 ## Completion Requirements
 

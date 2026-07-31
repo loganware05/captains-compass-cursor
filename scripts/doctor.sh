@@ -88,6 +88,7 @@ SKILLS=(
   source-code-context
   code-structure-cleanup
   review-fix-loop
+  autonomy-budget
 )
 
 for s in "${SKILLS[@]}"; do
@@ -171,6 +172,60 @@ if [[ -d "$ROOT/templates/docs" ]]; then
       fail "missing template templates/docs/$f"
     fi
   done
+  for f in BUDGET_LEDGER.md BUDGET_STOP_REPORT.md; do
+    if [[ -f "$ROOT/templates/agent/$f" ]]; then
+      ok "budget template $f"
+    else
+      fail "missing template templates/agent/$f"
+    fi
+  done
+  if [[ -f "$ROOT/.github/workflows/ci.yml" ]]; then
+    ok "control CI workflow"
+  else
+    fail "missing .github/workflows/ci.yml"
+  fi
+  if [[ -f "$ROOT/.cursor/hooks.json" ]]; then
+    if command -v python3 >/dev/null 2>&1; then
+      if python3 - "$ROOT/.cursor/hooks.json" <<'PY'
+import json, sys
+path = sys.argv[1]
+data = json.load(open(path))
+critical = {
+    ".cursor/hooks/secret-protection.sh": True,
+    ".cursor/hooks/protected-branch.sh": True,
+    ".cursor/hooks/plan-approval-check.sh": True,
+}
+soft = {
+    ".cursor/hooks/branch-name-validation.sh": False,
+    ".cursor/hooks/pre-commit-formatting.sh": False,
+    ".cursor/hooks/pre-push-tests.sh": False,
+    ".cursor/hooks/pr-evidence-validation.sh": False,
+}
+entries = []
+for group in data.get("hooks", {}).values():
+    for item in group:
+        entries.append(item)
+by_cmd = {e.get("command"): e.get("failClosed") for e in entries}
+errors = []
+for cmd, expected in critical.items():
+    if by_cmd.get(cmd) is not True:
+        errors.append(f"{cmd} expected failClosed true got {by_cmd.get(cmd)!r}")
+for cmd, expected in soft.items():
+    if by_cmd.get(cmd) is not False:
+        errors.append(f"{cmd} expected failClosed false got {by_cmd.get(cmd)!r}")
+if errors:
+    print("; ".join(errors))
+    sys.exit(1)
+PY
+      then
+        ok "hooks.json failClosed policy"
+      else
+        fail "hooks.json failClosed policy"
+      fi
+    else
+      warn "skip failClosed policy check (no python3)"
+    fi
+  fi
   if [[ -x "$ROOT/scripts/install.sh" || -f "$ROOT/scripts/install.sh" ]]; then
     ok "scripts/install.sh present"
   else
@@ -190,6 +245,15 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "scripts/uninstall.sh present"
   else
     fail "scripts/uninstall.sh missing"
+  fi
+fi
+
+# Installed product: budgets directory expected after install/update
+if [[ -f "$ROOT/.agent/COMPASS_VERSION" ]]; then
+  if [[ -d "$ROOT/.agent/budgets" ]]; then
+    ok ".agent/budgets directory"
+  else
+    fail "missing .agent/budgets (re-run update/install)"
   fi
 fi
 

@@ -1,0 +1,284 @@
+=== control repo budget templates + CI ===
+PASS: budget ledger template in control
+PASS: budget stop template in control
+PASS: control CI workflow present
+PASS: autonomy-budget skill in control
+=== doctor on control repo ===
+Captain's Compass doctor
+Root: /Users/loganware/Documents/Personal/Code/captains-compass-cursor
+
+  ok: VERSION=1.2.0
+  ok: AGENTS.md
+  ok: PROJECT_CONTEXT.md
+  ok: IMPLEMENTATION_PLAN.md
+  ok: DECISIONS.md
+  ok: PROGRESS.md
+  ok: TESTING.md
+  ok: CHANGELOG.md
+  ok: rule 00-core-operating-model.mdc
+  ok: rule 01-plan-approval-gate.mdc
+  ok: rule 02-git-worktree-policy.mdc
+  ok: rule 03-validation-definition-of-done.mdc
+  ok: rule 04-documentation-memory.mdc
+  ok: skill repository-discovery
+  ok: skill implementation-planning
+  ok: skill worktree-orchestration
+  ok: skill testing-validation
+  ok: skill security-review
+  ok: skill accessibility-review
+  ok: skill pull-request-preparation
+  ok: skill github-integration
+  ok: skill react-engineering
+  ok: skill playwright-browser-validation
+  ok: skill node-engineering
+  ok: skill postgres-prisma
+  ok: skill docker-cloud
+  ok: skill linear-integration
+  ok: skill notion-integration
+  ok: skill python-ml
+  ok: skill ios-engineering
+  ok: skill source-code-context
+  ok: skill code-structure-cleanup
+  ok: skill review-fix-loop
+  ok: skill autonomy-budget
+  ok: agent repository-scout.md
+  ok: agent architecture-agent.md
+  ok: agent implementation-agent.md
+  ok: agent test-engineer.md
+  ok: agent security-reviewer.md
+  ok: agent accessibility-reviewer.md
+  ok: agent adversarial-reviewer.md
+  ok: agent documentation-agent.md
+  ok: hooks.json
+  ok: hook secret-protection.sh
+  ok: hook protected-branch.sh
+  ok: hook plan-approval-check.sh
+  ok: hook branch-name-validation.sh
+  ok: hook pre-commit-formatting.sh
+  ok: hook pre-push-tests.sh
+  ok: hook pr-evidence-validation.sh
+  ok: hooks _common.sh
+  ok: template AGENTS.md
+  ok: template PROJECT_CONTEXT.md
+  ok: template IMPLEMENTATION_PLAN.md
+  ok: template DECISIONS.md
+  ok: template PROGRESS.md
+  ok: template TESTING.md
+  ok: template CHANGELOG.md
+  ok: budget template BUDGET_LEDGER.md
+  ok: budget template BUDGET_STOP_REPORT.md
+  ok: control CI workflow
+  ok: hooks.json failClosed policy
+  ok: scripts/install.sh present
+  ok: scripts/doctor.sh present
+  ok: scripts/update.sh present
+  ok: scripts/uninstall.sh present
+
+Doctor passed: 0 errors, 0 warning(s)
+PASS: doctor passes on control repo
+=== hook: secret protection ===
+PASS: secret allows npm test
+PASS: secret denies git add .env
+=== hook: protected branch ===
+Reset branch 'feature/hook-test'
+Switched to a new branch 'main'
+PASS: protected allows feature branch
+PASS: protected denies main
+=== hook: plan approval ===
+Reset branch 'feature/plan'
+PASS: plan denies DRAFT for src
+PASS: plan allows APPROVED src on feature
+PASS: plan allows editing plan file
+=== hook: branch name ===
+Switched to a new branch 'feature/ok-name'
+PASS: branch-name denies weird-name
+PASS: branch-name allows feature/*
+=== hook: pr evidence ===
+PASS: pr-evidence denies missing plan
+PASS: pr-evidence allows with plan+files
+=== install into temp git repo ===
+added: AGENTS.md
+added: PROJECT_CONTEXT.md
+added: IMPLEMENTATION_PLAN.md
+added: DECISIONS.md
+added: PROGRESS.md
+added: TESTING.md
+added: CHANGELOG.md
+
+Captain's Compass v1.2.0 installed into:
+  /var/folders/d_/6_jq1n8s5156kldr783f89480000gn/T/compass-install-Rw9bME
+
+Next steps:
+  1. Fill in PROJECT_CONTEXT.md for this product.
+  2. Open the repository in Cursor.
+  3. Ask the First Mate to follow AGENTS.md for your next change.
+  4. Expect IMPLEMENTATION_PLAN.md to reach AWAITING APPROVAL before product code changes.
+
+Do not install into critical production repos until you have validated the workflow in a disposable sandbox.
+
+Note: --force refreshes .cursor rules/skills/agents/hooks but does not overwrite existing
+product memory docs (PROJECT_CONTEXT.md, IMPLEMENTATION_PLAN.md, etc.).
+PASS: installed AGENTS.md
+PASS: installed rules
+PASS: installed skill
+PASS: installed react skill
+PASS: installed playwright skill
+PASS: installed github skill
+PASS: installed node skill
+PASS: installed prisma skill
+PASS: installed docker-cloud skill
+PASS: installed linear skill
+PASS: installed notion skill
+PASS: installed python-ml skill
+PASS: installed ios skill
+PASS: installed source-code-context skill
+PASS: installed code-structure-cleanup skill
+PASS: installed review-fix-loop skill
+PASS: installed autonomy-budget skill
+PASS: installed agent
+PASS: installed hooks.json
+PASS: installed plan-approval hook
+PASS: installed branch-name hook
+PASS: installed pre-push hook
+PASS: installed pr-evidence hook
+PASS: installed hooks common
+PASS: created evidence dir
+PASS: created budgets dir
+PASS: installed budget ledger template
+PASS: installed budget stop template
+PASS: wrote COMPASS_VERSION
+PASS: version matches
+=== hooks.json failClosed policy ===
+PASS: critical hooks failClosed true / soft false
+=== doctor on installed product ===
+Captain's Compass doctor
+Root: /var/folders/d_/6_jq1n8s5156kldr783f89480000gn/T/compass-install-Rw9bME
+
+  ok: COMPASS_VERSION=1.2.0 (installed product)
+  ok: AGENTS.md
+  ok: PROJECT_CONTEXT.md
+  ok: IMPLEMENTATION_PLAN.md
+  ok: DECISIONS.md
+  ok: PROGRESS.md
+  ok: TESTING.md
+  ok: CHANGELOG.md
+  ok: rule 00-core-operating-model.mdc
+  ok: rule 01-plan-approval-gate.mdc
+  ok: rule 02-git-worktree-policy.mdc
+  ok: rule 03-validation-definition-of-done.mdc
+  ok: rule 04-documentation-memory.mdc
+  ok: skill repository-discovery
+  ok: skill implementation-planning
+  ok: skill worktree-orchestration
+  ok: skill testing-validation
+  ok: skill security-review
+  ok: skill accessibility-review
+  ok: skill pull-request-preparation
+  ok: skill github-integration
+  ok: skill react-engineering
+  ok: skill playwright-browser-validation
+  ok: skill node-engineering
+  ok: skill postgres-prisma
+  ok: skill docker-cloud
+  ok: skill linear-integration
+  ok: skill notion-integration
+  ok: skill python-ml
+  ok: skill ios-engineering
+  ok: skill source-code-context
+  ok: skill code-structure-cleanup
+  ok: skill review-fix-loop
+  ok: skill autonomy-budget
+  ok: agent repository-scout.md
+  ok: agent architecture-agent.md
+  ok: agent implementation-agent.md
+  ok: agent test-engineer.md
+  ok: agent security-reviewer.md
+  ok: agent accessibility-reviewer.md
+  ok: agent adversarial-reviewer.md
+  ok: agent documentation-agent.md
+  ok: hooks.json
+  ok: hook secret-protection.sh
+  ok: hook protected-branch.sh
+  ok: hook plan-approval-check.sh
+  ok: hook branch-name-validation.sh
+  ok: hook pre-commit-formatting.sh
+  ok: hook pre-push-tests.sh
+  ok: hook pr-evidence-validation.sh
+  ok: hooks _common.sh
+  ok: .agent/budgets directory
+
+Doctor passed: 0 errors, 0 warning(s)
+PASS: doctor passes on installed product
+=== refuse overwrite without --force ===
+PASS: second install without --force fails
+=== --force preserves existing product docs ===
+keep: AGENTS.md (already exists; not overwritten)
+keep: PROJECT_CONTEXT.md (already exists; not overwritten)
+keep: IMPLEMENTATION_PLAN.md (already exists; not overwritten)
+keep: DECISIONS.md (already exists; not overwritten)
+keep: PROGRESS.md (already exists; not overwritten)
+keep: TESTING.md (already exists; not overwritten)
+keep: CHANGELOG.md (already exists; not overwritten)
+
+Captain's Compass v1.2.0 installed into:
+  /var/folders/d_/6_jq1n8s5156kldr783f89480000gn/T/compass-install-Rw9bME
+
+Next steps:
+  1. Fill in PROJECT_CONTEXT.md for this product.
+  2. Open the repository in Cursor.
+  3. Ask the First Mate to follow AGENTS.md for your next change.
+  4. Expect IMPLEMENTATION_PLAN.md to reach AWAITING APPROVAL before product code changes.
+
+Do not install into critical production repos until you have validated the workflow in a disposable sandbox.
+
+Note: --force refreshes .cursor rules/skills/agents/hooks but does not overwrite existing
+product memory docs (PROJECT_CONTEXT.md, IMPLEMENTATION_PLAN.md, etc.).
+PASS: install --force succeeds
+PASS: force keeps PROJECT_CONTEXT
+PASS: force still refreshes skills
+=== refuse non-git target ===
+PASS: non-git target fails
+=== update.sh refreshes version ===
+Captain's Compass update
+  target:  /var/folders/d_/6_jq1n8s5156kldr783f89480000gn/T/compass-install-Rw9bME
+  from:    0.0.0-test
+  to:      1.2.0
+
+keep: AGENTS.md (already exists; not overwritten)
+keep: PROJECT_CONTEXT.md (already exists; not overwritten)
+keep: IMPLEMENTATION_PLAN.md (already exists; not overwritten)
+keep: DECISIONS.md (already exists; not overwritten)
+keep: PROGRESS.md (already exists; not overwritten)
+keep: TESTING.md (already exists; not overwritten)
+keep: CHANGELOG.md (already exists; not overwritten)
+
+Captain's Compass v1.2.0 installed into:
+  /var/folders/d_/6_jq1n8s5156kldr783f89480000gn/T/compass-install-Rw9bME
+
+Next steps:
+  1. Fill in PROJECT_CONTEXT.md for this product.
+  2. Open the repository in Cursor.
+  3. Ask the First Mate to follow AGENTS.md for your next change.
+  4. Expect IMPLEMENTATION_PLAN.md to reach AWAITING APPROVAL before product code changes.
+
+Do not install into critical production repos until you have validated the workflow in a disposable sandbox.
+
+Note: --force refreshes .cursor rules/skills/agents/hooks but does not overwrite existing
+product memory docs (PROJECT_CONTEXT.md, IMPLEMENTATION_PLAN.md, etc.).
+
+Update complete: 0.0.0-test -> 1.2.0
+Review CHANGELOG.md in the control repo for what changed.
+PASS: update.sh succeeds
+PASS: update wrote new version
+PASS: update kept PROJECT_CONTEXT marker
+=== uninstall.sh removes cursor package ===
+PASS: uninstall requires --yes
+Uninstalling Captain's Compass from /var/folders/d_/6_jq1n8s5156kldr783f89480000gn/T/compass-install-Rw9bME
+Uninstall complete. Product source code was not modified.
+PASS: uninstall --yes succeeds
+PASS: uninstall removed rules
+PASS: uninstall kept PROJECT_CONTEXT
+=== refuse install into control repo ===
+PASS: install into self fails
+
+Results: 61 passed, 0 failed

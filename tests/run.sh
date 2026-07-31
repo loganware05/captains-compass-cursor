@@ -54,6 +54,12 @@ assert_contains() {
 
 chmod +x "$ROOT/scripts/install.sh" "$ROOT/scripts/doctor.sh" "$ROOT/.cursor/hooks/"*.sh
 
+echo "=== control repo budget templates + CI ==="
+assert_true "budget ledger template in control" test -f "$ROOT/templates/agent/BUDGET_LEDGER.md"
+assert_true "budget stop template in control" test -f "$ROOT/templates/agent/BUDGET_STOP_REPORT.md"
+assert_true "control CI workflow present" test -f "$ROOT/.github/workflows/ci.yml"
+assert_true "autonomy-budget skill in control" test -f "$ROOT/.cursor/skills/autonomy-budget/SKILL.md"
+
 echo "=== doctor on control repo ==="
 assert_true "doctor passes on control repo" "$ROOT/scripts/doctor.sh" "$ROOT"
 
@@ -182,6 +188,7 @@ assert_true "installed ios skill" test -f "$TMP/.cursor/skills/ios-engineering/S
 assert_true "installed source-code-context skill" test -f "$TMP/.cursor/skills/source-code-context/SKILL.md"
 assert_true "installed code-structure-cleanup skill" test -f "$TMP/.cursor/skills/code-structure-cleanup/SKILL.md"
 assert_true "installed review-fix-loop skill" test -f "$TMP/.cursor/skills/review-fix-loop/SKILL.md"
+assert_true "installed autonomy-budget skill" test -f "$TMP/.cursor/skills/autonomy-budget/SKILL.md"
 assert_true "installed agent" test -f "$TMP/.cursor/agents/repository-scout.md"
 assert_true "installed hooks.json" test -f "$TMP/.cursor/hooks.json"
 assert_true "installed plan-approval hook" test -x "$TMP/.cursor/hooks/plan-approval-check.sh"
@@ -190,8 +197,37 @@ assert_true "installed pre-push hook" test -x "$TMP/.cursor/hooks/pre-push-tests
 assert_true "installed pr-evidence hook" test -x "$TMP/.cursor/hooks/pr-evidence-validation.sh"
 assert_true "installed hooks common" test -f "$TMP/.cursor/hooks/_common.sh"
 assert_true "created evidence dir" test -d "$TMP/.agent/evidence"
+assert_true "created budgets dir" test -d "$TMP/.agent/budgets"
+assert_true "installed budget ledger template" test -f "$TMP/.agent/budgets/_templates/BUDGET_LEDGER.md"
+assert_true "installed budget stop template" test -f "$TMP/.agent/budgets/_templates/BUDGET_STOP_REPORT.md"
 assert_true "wrote COMPASS_VERSION" test -f "$TMP/.agent/COMPASS_VERSION"
 assert_eq "version matches" "$(tr -d '[:space:]' < "$ROOT/VERSION")" "$(tr -d '[:space:]' < "$TMP/.agent/COMPASS_VERSION")"
+
+echo "=== hooks.json failClosed policy ==="
+failclosed_out="$(python3 - "$TMP/.cursor/hooks.json" <<'PY'
+import json, sys
+data = json.load(open(sys.argv[1]))
+entries = [e for group in data.get("hooks", {}).values() for e in group]
+by_cmd = {e.get("command"): e.get("failClosed") for e in entries}
+critical = [
+    ".cursor/hooks/secret-protection.sh",
+    ".cursor/hooks/protected-branch.sh",
+    ".cursor/hooks/plan-approval-check.sh",
+]
+soft = [
+    ".cursor/hooks/branch-name-validation.sh",
+    ".cursor/hooks/pre-commit-formatting.sh",
+    ".cursor/hooks/pre-push-tests.sh",
+    ".cursor/hooks/pr-evidence-validation.sh",
+]
+ok = all(by_cmd.get(c) is True for c in critical) and all(by_cmd.get(c) is False for c in soft)
+print("ok" if ok else "bad")
+for c in critical + soft:
+    print(f"{c}={by_cmd.get(c)!r}")
+sys.exit(0 if ok else 1)
+PY
+)" || true
+assert_contains "critical hooks failClosed true / soft false" '^ok$' "$(echo "$failclosed_out" | head -n1)"
 
 echo "=== doctor on installed product ==="
 assert_true "doctor passes on installed product" "$ROOT/scripts/doctor.sh" "$TMP"

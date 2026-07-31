@@ -23,4 +23,6 @@ Fix the implementation or report a blocker with evidence.
 
 Store evidence under .agent/evidence/ when available (screenshots, test results, security, accessibility).
 
-Stop when autonomy budget limits are reached and produce a Budget Stop Report.
+Track each approved plan’s autonomy budget in `.agent/budgets/<plan-id>.md`.
+Stop when any limit is reached and produce a Budget Stop Report under
+`.agent/evidence/` (see Skill `autonomy-budget`).

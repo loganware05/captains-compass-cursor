@@ -103,3 +103,28 @@
 - **Context:** Podcast/agentic-engineering tactics (source-as-context, post-feature cleanup, review-fix loops) complement Compass’s control plane. [opensrc](https://github.com/vercel-labs/opensrc) automates dependency source fetch/cache.
 - **Decision:** Ship three Skills (`source-code-context`, `code-structure-cleanup`, `review-fix-loop`) as v1.1.0. Prefer opensrc when installed; fall back to Captain-approved `reference/repos/` paths. Do not require opensrc for doctor/install. Code-structure cleanup that touches product files always requires a **separate** approved `IMPLEMENTATION_PLAN.md`.
 - **Consequences:** Agents get clearer tactical playbooks without expanding always-on rules; product repos remain usable without the opensrc CLI.
+
+## ADR-014: Critical hooks are fail-closed; autonomy budgets are ledger-backed (v1.2.0)
+
+- **Status:** Accepted
+- **Date:** 2026-07-30
+- **Context:** ADR-005 kept all hooks fail-open while the harness matured. Production
+  harness practice requires safety sensors that do not silently degrade. Autonomy
+  budgets existed in design/templates but lacked a Skill and on-disk ledger.
+  Control-repo regressions had no CI gate.
+- **Decision:**
+  1. Set `failClosed: true` for `secret-protection`, `protected-branch`, and
+     `plan-approval-check`. Keep soft hooks (`branch-name-validation`,
+     `pre-commit-formatting`, `pre-push-tests`, `pr-evidence-validation`)
+     fail-open.
+  2. Ship `autonomy-budget` Skill, Markdown ledger + Budget Stop Report templates,
+     installer `.agent/budgets/` layout, and a one-line always-on pointer in the
+     validation rule. Budget enforcement remains agent-procedural (Cursor does not
+     expose spend/iteration counters to hooks).
+  3. Add control-repo GitHub Actions CI running `doctor.sh` and `tests/run.sh`.
+  4. Ship as minor version **1.2.0**. This supersedes the fail-open stance of
+     ADR-005 **for critical hooks only**.
+- **Consequences:** Safer default deny when critical hooks fail; product repos
+  gain budget templates on install/update; PRs to this control repo get automated
+  harness checks. Soft-hook friction remains opt-out via existing `COMPASS_SKIP_*`
+  env vars.

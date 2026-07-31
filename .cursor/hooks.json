@@ -4,11 +4,11 @@
     "beforeShellExecution": [
       {
         "command": ".cursor/hooks/secret-protection.sh",
-        "failClosed": false
+        "failClosed": true
       },
       {
         "command": ".cursor/hooks/protected-branch.sh",
-        "failClosed": false
+        "failClosed": true
       },
       {
         "command": ".cursor/hooks/branch-name-validation.sh",
@@ -31,7 +31,7 @@
       {
         "command": ".cursor/hooks/plan-approval-check.sh",
         "matcher": "Write|StrReplace|EditNotebook",
-        "failClosed": false
+        "failClosed": true
       }
     ]
   }

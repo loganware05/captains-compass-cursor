@@ -2,8 +2,21 @@
 
 ## Unreleased
 
+## 1.2.0 — 2026-07-30
+
+### Added
+
+- `autonomy-budget` Skill — per-plan ledger under `.agent/budgets/` and Budget Stop Report procedure (#26)
+- `templates/agent/BUDGET_LEDGER.md` and `BUDGET_STOP_REPORT.md`
+- Control-repo CI (`.github/workflows/ci.yml`) runs `doctor.sh` and `tests/run.sh` (#26)
+- Installer creates `.agent/budgets/` (+ `_templates/`, `private/`) and copies budget templates
+
 ### Changed
 
+- Critical hooks are fail-closed: `secret-protection`, `protected-branch`,
+  `plan-approval-check` (`failClosed: true`); soft hooks remain fail-open (#26)
+- Validation rule and AGENTS safety point at `.agent/budgets/` + stop reports
+- VERSION `1.2.0`; doctor expects twenty-one Skills; ADR-014
 - README and `docs/UPGRADING.md` document latest/pinned forward upgrades using
   tagged detached worktrees, version verification, product PR review, and the
   unsupported-downgrade boundary (#21)
