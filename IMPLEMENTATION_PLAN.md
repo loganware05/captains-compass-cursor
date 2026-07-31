@@ -2,7 +2,7 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: p2-evals-harness-gc-session-supplychain
 - Issue: [#32](https://github.com/loganware05/captains-compass-cursor/issues/32)
 - Branch: `feature/32-p2-evals-harness-gc-session`
@@ -15,21 +15,18 @@
 
 ## Request
 
-Implement P2 → **v1.4.0**: evals, harness-gc, sessions, structural-test examples,
+P2 → **v1.4.0**: evals, harness-gc, sessions, structural-test examples,
 dependency-supply-chain, soft-hook skip signaling.
 
-## Acceptance Criteria
+## Completion Record
 
-See `docs/plans/P2_AWAITING_APPROVAL.md` (source). Implementation tracks those ACs.
+- Control PR [#33](https://github.com/loganware05/captains-compass-cursor/pull/33) merged (`a2fe6ce`)
+- Tag/release [`v1.4.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.4.0) on `a2fe6ce`
+- Release validation: doctor + 85/85 tests + 11/11 evals
+- Sandbox refresh: [issue #11](https://github.com/loganware05/captain-compass-sandbox/issues/11) / [PR #12](https://github.com/loganware05/captain-compass-sandbox/pull/12)
+- Evidence: `.agent/evidence/p2-evals-harness-gc-session/`, `.agent/evidence/release-v1.4.0/`
+- ADR-016 accepted
 
-## Autonomy Budget
+## Next
 
-- Ledger: `.agent/budgets/p2-evals-harness-gc-session.md`
-- Max iterations: 10; max failed validation cycles: 3; max elapsed: 360m
-
-## Approval Record
-
-- Approved by: Captain
-- Approval date: 2026-07-30
-- Issue: #32
-- Rollback: `rollback/pre-p2-evals-harness-gc-session` (`6a34526`)
+Original P0–P2 orchestration roadmap is complete. Future work is backlog.
