@@ -107,7 +107,7 @@ Compass’s control plane is policy-strong but sensor-soft:
 - [x] `VERSION` → `1.2.0`
 - [x] `CHANGELOG.md`, `PROGRESS.md`, `PROJECT_CONTEXT.md` updated
 - [x] Evidence under `.agent/evidence/p0-failclosed-budgets-ci/`
-- [ ] GitHub issue + feature branch + rollback tag + PR to `main`
+- [x] GitHub issue + feature branch + rollback tag + PR to `main`
 - [ ] Sandbox refresh to 1.2.0 via sandbox issue/PR after control merge
       (same pattern as v1.1.0)
 
