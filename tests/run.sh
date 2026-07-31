@@ -64,6 +64,9 @@ assert_true "multi-runtime docs in control" test -f "$ROOT/docs/integrations/mul
 assert_true "plan-feature command in control" test -f "$ROOT/.cursor/commands/plan-feature.md"
 assert_true "implement-approved-plan command in control" test -f "$ROOT/.cursor/commands/implement-approved-plan.md"
 assert_true "CLAUDE.md template in control" test -f "$ROOT/templates/docs/CLAUDE.md"
+assert_true "harness-gc skill in control" test -f "$ROOT/.cursor/skills/harness-gc/SKILL.md"
+assert_true "dependency-supply-chain skill in control" test -f "$ROOT/.cursor/skills/dependency-supply-chain/SKILL.md"
+assert_true "session note template in control" test -f "$ROOT/templates/agent/SESSION_NOTE.md"
 
 echo "=== doctor on control repo ==="
 assert_true "doctor passes on control repo" "$ROOT/scripts/doctor.sh" "$ROOT"
@@ -214,6 +217,10 @@ assert_true "installed initialize-project command" test -f "$TMP/.cursor/command
 assert_true "installed CLAUDE.md adapter" test -f "$TMP/CLAUDE.md"
 assert_true "installed evidence matrix doc" test -f "$TMP/docs/EVIDENCE_MATRIX.md"
 assert_true "installed multi-runtime doc" test -f "$TMP/docs/integrations/multi-runtime-agents.md"
+assert_true "installed harness-gc skill" test -f "$TMP/.cursor/skills/harness-gc/SKILL.md"
+assert_true "installed dependency-supply-chain skill" test -f "$TMP/.cursor/skills/dependency-supply-chain/SKILL.md"
+assert_true "created sessions dir" test -d "$TMP/.agent/sessions"
+assert_true "installed session note template" test -f "$TMP/.agent/sessions/_templates/SESSION_NOTE.md"
 assert_true "wrote COMPASS_VERSION" test -f "$TMP/.agent/COMPASS_VERSION"
 assert_eq "version matches" "$(tr -d '[:space:]' < "$ROOT/VERSION")" "$(tr -d '[:space:]' < "$TMP/.agent/COMPASS_VERSION")"
 
@@ -277,6 +284,9 @@ assert_true "uninstall requires --yes" bash -c "! '$ROOT/scripts/uninstall.sh' '
 assert_true "uninstall --yes succeeds" "$ROOT/scripts/uninstall.sh" --yes "$TMP"
 assert_true "uninstall removed rules" bash -c "! test -d '$TMP/.cursor/rules'"
 assert_true "uninstall kept PROJECT_CONTEXT" test -f "$TMP/PROJECT_CONTEXT.md"
+
+echo "=== harness evals ==="
+assert_true "evals runner passes" "$ROOT/tests/evals/run.sh"
 
 echo "=== refuse install into control repo ==="
 assert_false "install into self fails" "$ROOT/scripts/install.sh" "$ROOT"

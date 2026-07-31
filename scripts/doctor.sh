@@ -89,6 +89,8 @@ SKILLS=(
   code-structure-cleanup
   review-fix-loop
   autonomy-budget
+  harness-gc
+  dependency-supply-chain
 )
 
 for s in "${SKILLS[@]}"; do
@@ -172,13 +174,28 @@ if [[ -d "$ROOT/templates/docs" ]]; then
       fail "missing template templates/docs/$f"
     fi
   done
-  for f in BUDGET_LEDGER.md BUDGET_STOP_REPORT.md; do
+  for f in BUDGET_LEDGER.md BUDGET_STOP_REPORT.md SESSION_NOTE.md; do
     if [[ -f "$ROOT/templates/agent/$f" ]]; then
       ok "budget template $f"
     else
       fail "missing template templates/agent/$f"
     fi
   done
+  if [[ -f "$ROOT/tests/evals/run.sh" ]]; then
+    ok "evals runner"
+  else
+    fail "missing tests/evals/run.sh"
+  fi
+  if [[ -f "$ROOT/docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md" ]]; then
+    ok "sandbox behavioral checklist"
+  else
+    fail "missing docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md"
+  fi
+  if [[ -f "$ROOT/examples/structural-tests/README.md" ]]; then
+    ok "structural-tests example"
+  else
+    fail "missing examples/structural-tests/README.md"
+  fi
   if [[ -f "$ROOT/.github/workflows/ci.yml" ]]; then
     ok "control CI workflow"
   else

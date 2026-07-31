@@ -35,7 +35,10 @@ an iteration / validation cycle completes, or when any budget limit may have bee
      using `templates/agent/BUDGET_STOP_REPORT.md`
    - Set plan/progress notes to reflect the stop
    - Ask the Captain for the next action (raise budget, narrow scope, or abandon)
-5. Never raise budget limits unilaterally. Never weaken tests to stay under budget.
+5. At phase boundaries, append a short note under `.agent/sessions/` using
+   `templates/agent/SESSION_NOTE.md` (or `.agent/budgets/_templates/` siblings when
+   installed). Keep machine traces under `.agent/runs/` if used.
+6. Never raise budget limits unilaterally. Never weaken tests to stay under budget.
 
 ## Ledger path
 

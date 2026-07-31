@@ -19,3 +19,6 @@ jobs:
 
       - name: Automated tests
         run: ./tests/run.sh
+
+      - name: Harness evals
+        run: ./tests/evals/run.sh

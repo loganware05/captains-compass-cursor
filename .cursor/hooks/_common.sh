@@ -33,6 +33,43 @@ compass_deny() {
   exit 0
 }
 
+# Soft-hook skips: process env, command-string assignment, or marker file.
+# Usage: compass_soft_skip FORMAT|TESTS|PR_EVIDENCE
+compass_soft_skip() {
+  local kind="$1"
+  local env_var=""
+  local cmd_pat=""
+  case "$kind" in
+    FORMAT)
+      env_var="COMPASS_SKIP_FORMAT"
+      cmd_pat='COMPASS_SKIP_FORMAT=1'
+      ;;
+    TESTS)
+      env_var="COMPASS_SKIP_TESTS"
+      cmd_pat='COMPASS_SKIP_TESTS=1'
+      ;;
+    PR_EVIDENCE)
+      env_var="COMPASS_SKIP_PR_EVIDENCE"
+      cmd_pat='COMPASS_SKIP_PR_EVIDENCE=1'
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+  if [[ "${!env_var:-}" == "1" ]]; then
+    return 0
+  fi
+  if echo "${COMPASS_COMMAND:-}" | grep -Fq "$cmd_pat"; then
+    return 0
+  fi
+  local repo
+  repo="$(compass_repo_dir)"
+  if [[ -f "$repo/.agent/COMPASS_SKIP_HOOKS" ]]; then
+    return 0
+  fi
+  return 1
+}
+
 compass_branch() {
   local dir="$1"
   git -C "$dir" rev-parse --abbrev-ref HEAD 2>/dev/null || echo ""

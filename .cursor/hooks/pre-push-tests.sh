@@ -19,7 +19,7 @@ if echo "$COMPASS_COMMAND" | grep -Eqi 'refs/tags/|origin[[:space:]]+v[0-9]'; th
   compass_allow
 fi
 
-if [[ "${COMPASS_SKIP_TESTS:-}" == "1" ]]; then
+if compass_soft_skip TESTS; then
   compass_allow
 fi
 

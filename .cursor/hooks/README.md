@@ -17,14 +17,20 @@ Configured in `.cursor/hooks.json` (`beforeShellExecution` + `preToolUse`):
   **denies** the action. Safety must not silently degrade.
 - **Soft** hooks (branch name, format, tests, PR evidence) use `failClosed: false` so
   missing local tooling or transient runner issues do not freeze Captain workflows.
-  Soft shell hooks still honor `COMPASS_SKIP_*` env vars when present.
+
+### Soft-hook skip mechanisms (any one is enough)
+
+1. **Process env:** `COMPASS_SKIP_FORMAT=1`, `COMPASS_SKIP_TESTS=1`, `COMPASS_SKIP_PR_EVIDENCE=1`
+2. **Command-string prefix/assignment** visible to the hook, e.g.
+   `COMPASS_SKIP_TESTS=1 git push` (needed when Cursor does not forward shell exports)
+3. **Marker file:** create `.agent/COMPASS_SKIP_HOOKS` in the repo (remove when done)
 
 Shared helpers live in `_common.sh`. Hooks use `python3` for JSON.
 
 Before `gh pr create`, collect evidence per [`docs/EVIDENCE_MATRIX.md`](../../docs/EVIDENCE_MATRIX.md)
 (change-type → required artifacts under `.agent/evidence/`). The PR-evidence hook
 only checks that an approved/complete plan exists and that `.agent/evidence/` is
-non-empty (soft / fail-open).
+non-empty (soft / fail-open), unless skipped as above.
 
 ## Manual tests
 
