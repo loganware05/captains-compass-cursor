@@ -2,16 +2,29 @@
 
 ## What we test
 
-1. **Doctor script** — expected files, rule frontmatter, Skill structure, hooks, VERSION
-2. **Installer** — copies workflow into a temporary Git repo; refuses overwrite without `--force`
-3. **Hooks** — secret protection, protected-branch, plan-approval allow/deny cases
-4. **Sandbox exercise (manual)** — approval gate, then implement after approval
+1. **Doctor script** — expected files, rule frontmatter, Skill structure, hooks,
+   failClosed policy, budget templates, VERSION, control CI workflow
+2. **Installer** — copies workflow into a temporary Git repo; refuses overwrite without `--force`;
+   creates `.agent/budgets/` and budget templates
+3. **Hooks** — secret protection, protected-branch, plan-approval allow/deny cases,
+   branch-name, PR evidence; failClosed critical/soft split
+4. **Sandbox exercise (manual)** — approval gate, then implement after approval;
+   budget stop when limits hit
 
-## Automated tests
+## Automated tests (local)
 
 ```bash
+./scripts/doctor.sh
 ./tests/run.sh
 ```
+
+## Control-repo CI
+
+GitHub Actions (`.github/workflows/ci.yml`) runs the same commands on every
+pull request and push to `main`:
+
+1. `./scripts/doctor.sh`
+2. `./tests/run.sh`
 
 ## Manual sandbox checklist
 

@@ -33,9 +33,9 @@ wandb/
 
 # Local agent evidence that may contain sensitive output
 .agent/evidence/private/
+.agent/budgets/private/
 .agent/runs/
 .agent/handoffs/
-.agent/budgets/
 
 # Cloud state
 *.tfstate

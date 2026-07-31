@@ -47,16 +47,17 @@ agentic engineering process across multiple product repositories.
 
 1. AGENTS.md operating contract
 2. Five always-applied core rules
-3. Twenty Skills (foundational + tech/integration + source-context, cleanup, review-fix)
+3. Twenty-one Skills (foundational + tech/integration + source-context, cleanup, review-fix, autonomy-budget)
 4. Eight specialist subagents
-5. Seven safety hooks
-6. Documentation templates
+5. Seven safety hooks (three critical fail-closed; four soft fail-open)
+6. Documentation and budget templates
 7. Installation, update, uninstall, and doctor scripts
+8. Control-repo CI (doctor + automated tests)
 
 ## External Services
 
 None required for core workflow. Optional GitHub CLI/MCP, opensrc CLI, and other
-MCPs are documented per integration guide.
+MCPs are documented per integration guide. GitHub Actions runs on this control repo.
 
 ## Environments
 
@@ -89,7 +90,9 @@ Installer and doctor should complete in seconds on a typical laptop.
 
 ## Known Technical Debt
 
-None blocking for v1.1.0. Optional follow-ups: richer examples, deeper cloud automation, young-package supply-chain harden.
+None blocking for v1.2.0 P0. Optional follow-ups: P1 phase commands / evidence
+matrix / multi-runtime adapters; P2 evals, harness GC, session ledger,
+structural-test examples, young-package supply-chain harden.
 
 ## Terminology
 
@@ -119,4 +122,5 @@ gh auth status
 
 ## Current Priorities
 
-Ship and stabilize v1.1.0 (Micky-inspired Skills + opensrc docs); optional richer examples afterward.
+Ship and verify v1.2.0 (fail-closed critical hooks, autonomy budgets, control CI);
+then P1/P2 per sequenced plans after sandbox refresh.

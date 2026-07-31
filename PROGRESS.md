@@ -2,10 +2,10 @@
 
 ## Current status
 
-**V1.1.0 stable and verified.** The annotated
-[`v1.1.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.1.0)
-tag/release points to `a6b2aae` (PR #20); release safeguards are merged; the
-disposable sandbox is refreshed to 1.1.0 and green.
+**Implementing P0 (v1.2.0):** fail-closed critical hooks, autonomy budget
+mechanics, and control-repo CI ([#26](https://github.com/loganware05/captains-compass-cursor/issues/26)).
+Prior stable release remains
+[`v1.1.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.1.0).
 
 ## Completed
 
@@ -26,11 +26,13 @@ disposable sandbox is refreshed to 1.1.0 and green.
 
 ## In progress
 
-None.
+- P0 fail-closed hooks + autonomy budgets + control CI — #26
 
 ## Next
 
-- Optional future: deeper cloud automation, richer examples, young-package harden
+- After P0 merge/release: refresh disposable sandbox to 1.2.0
+- Then P1 (separate plan): Cursor phase commands; evidence matrix; multi-runtime AGENTS adapters
+- Then P2 (separate plan): golden-agent evals; harness GC; session ledger; structural-test examples; young-package harden
 
 ## Blockers
 

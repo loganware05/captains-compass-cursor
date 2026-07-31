@@ -107,7 +107,7 @@ if [[ ${#conflicts[@]} -gt 0 && "$FORCE" -ne 1 ]]; then
   exit 1
 fi
 
-mkdir -p "$TARGET/.cursor" "$TARGET/.agent/evidence"
+mkdir -p "$TARGET/.cursor" "$TARGET/.agent/evidence" "$TARGET/.agent/budgets" "$TARGET/.agent/budgets/_templates" "$TARGET/.agent/budgets/private"
 
 # Copy Cursor package
 cp -R "$SOURCE_ROOT/.cursor/rules" "$TARGET/.cursor/"
@@ -138,6 +138,12 @@ for f in "${DOC_FILES[@]}"; do
   fi
 done
 
+# Budget templates (refreshable; live ledgers under .agent/budgets/ are product-owned)
+if [[ -d "$SOURCE_ROOT/templates/agent" ]]; then
+  mkdir -p "$TARGET/.agent/budgets/_templates"
+  cp "$SOURCE_ROOT/templates/agent/"*.md "$TARGET/.agent/budgets/_templates/" 2>/dev/null || true
+fi
+
 # Copy ignore helpers if missing
 if [[ ! -f "$TARGET/.cursorignore" ]]; then
   cp "$SOURCE_ROOT/.cursorignore" "$TARGET/.cursorignore"
@@ -158,6 +164,7 @@ if ! grep -q "Captain's Compass" "$GITIGNORE" 2>/dev/null; then
     echo ""
     echo "# Captain's Compass"
     echo ".agent/evidence/private/"
+    echo ".agent/budgets/private/"
     echo ".agent/runs/"
     echo ".env"
     echo ".env.*"
@@ -165,6 +172,7 @@ if ! grep -q "Captain's Compass" "$GITIGNORE" 2>/dev/null; then
   } >> "$GITIGNORE"
 else
   ensure_gitignore_line ".agent/evidence/private/"
+  ensure_gitignore_line ".agent/budgets/private/"
   ensure_gitignore_line ".agent/runs/"
 fi
 

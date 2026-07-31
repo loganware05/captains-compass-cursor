@@ -52,10 +52,15 @@
 
 ## Autonomy Budget
 
+After approval, create `.agent/budgets/<plan-id>.md` from the budget ledger
+template and keep it updated each cycle (Skill: `autonomy-budget`).
+
 - Maximum iterations:
 - Maximum failed validation cycles:
 - Maximum estimated cost:
 - Maximum elapsed time:
+- Budget ledger path: `.agent/budgets/<plan-id>.md`
+- On limit: write `.agent/evidence/<slug>/BUDGET_STOP_REPORT.md` and stop
 
 ## Definition of Done
 
