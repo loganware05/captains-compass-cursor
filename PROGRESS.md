@@ -2,10 +2,10 @@
 
 ## Current status
 
-**Implementing P0 (v1.2.0):** fail-closed critical hooks, autonomy budget
-mechanics, and control-repo CI ([#26](https://github.com/loganware05/captains-compass-cursor/issues/26)).
-Prior stable release remains
-[`v1.1.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.1.0).
+**V1.2.0 released.** Tag/release
+[`v1.2.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.2.0)
+points at `56c1227` (PR #27). Sandbox refresh PR is open; P1 plan is next
+(awaiting approval).
 
 ## Completed
 
@@ -22,18 +22,27 @@ Prior stable release remains
 - Latest/pinned forward update documentation — #21 / PR #22
 - Repaired v1.1.0 tag/release; preserved rollback tag — #23
 - Release checklist hardening/evidence — #23 / PR #24
-- Sandbox v1.1.0 workflow refresh — sandbox #5 / PR #6 (doctor + 15/15 tests)
+- Sandbox v1.1.0 workflow refresh — sandbox #5 / PR #6
+- P0 fail-closed hooks + autonomy budgets + control CI — #26 / PR #27 / **v1.2.0**
 
 ## In progress
 
-- P0 fail-closed hooks + autonomy budgets + control CI — #26
+- Sandbox v1.2.0 refresh — [sandbox #7](https://github.com/loganware05/captain-compass-sandbox/issues/7) / [PR #8](https://github.com/loganware05/captain-compass-sandbox/pull/8)
+- P1 plan draft — [`docs/plans/P1_AWAITING_APPROVAL.md`](docs/plans/P1_AWAITING_APPROVAL.md)
 
 ## Next
 
-- After P0 merge/release: refresh disposable sandbox to 1.2.0
-- Then P1 (separate plan): Cursor phase commands; evidence matrix; multi-runtime AGENTS adapters
-- Then P2 (separate plan): golden-agent evals; harness GC; session ledger; structural-test examples; young-package harden
+- Captain merges sandbox PR #8
+- Approve P1 plan (then promote to root `IMPLEMENTATION_PLAN.md`)
+- Then P2 (evals, harness GC, session ledger, structural tests, supply-chain)
 
 ## Blockers
 
 None.
+
+## Known follow-up (non-blocking)
+
+Soft Cursor shell hooks (`pre-commit-formatting`, `pre-push-tests`) can deny in
+the agent runner even when `npm run lint` / `npm test` pass locally; `COMPASS_SKIP_*`
+env vars are not reliably visible to Cursor’s hook process. Consider detecting
+`git -C` / improving skip signaling in a later plan.
