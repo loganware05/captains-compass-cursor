@@ -50,9 +50,10 @@ agentic engineering process across multiple product repositories.
 3. Twenty-one Skills (foundational + tech/integration + source-context, cleanup, review-fix, autonomy-budget)
 4. Eight specialist subagents
 5. Seven safety hooks (three critical fail-closed; four soft fail-open)
-6. Documentation and budget templates
-7. Installation, update, uninstall, and doctor scripts
-8. Control-repo CI (doctor + automated tests)
+6. Six Cursor phase commands under `.cursor/commands/`
+7. Documentation, budget templates, evidence matrix, multi-runtime adapters
+8. Installation, update, uninstall, and doctor scripts
+9. Control-repo CI (doctor + automated tests)
 
 ## External Services
 
@@ -90,9 +91,8 @@ Installer and doctor should complete in seconds on a typical laptop.
 
 ## Known Technical Debt
 
-None blocking for v1.2.0 P0. Optional follow-ups: P1 phase commands / evidence
-matrix / multi-runtime adapters; P2 evals, harness GC, session ledger,
-structural-test examples, young-package supply-chain harden.
+None blocking for v1.3.0 P1. Optional follow-ups: P2 evals/harness GC/session
+ledger/structural tests/supply-chain; soft-hook `COMPASS_SKIP_*` env inheritance.
 
 ## Terminology
 
@@ -122,5 +122,5 @@ gh auth status
 
 ## Current Priorities
 
-P1 awaiting approval (phase commands, evidence matrix, multi-runtime adapters)
-after v1.2.0 release and sandbox refresh.
+Ship and verify v1.3.0 (phase commands, evidence matrix, multi-runtime adapters);
+then P2 per sequenced plan after sandbox refresh.

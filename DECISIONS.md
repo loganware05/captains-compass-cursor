@@ -128,3 +128,20 @@
   gain budget templates on install/update; PRs to this control repo get automated
   harness checks. Soft-hook friction remains opt-out via existing `COMPASS_SKIP_*`
   env vars.
+
+## ADR-015: P1 phase commands, evidence matrix, multi-runtime pointers (v1.3.0)
+
+- **Status:** Accepted
+- **Date:** 2026-07-30
+- **Context:** Operators re-entered phases via free-form chat; evidence expectations
+  were unstructured; teams compose Cursor with Claude Code / Codex.
+- **Decision:**
+  1. Ship six Cursor slash commands as thin Markdown prompts wrapping existing
+     Skills (approval gate unchanged).
+  2. Add `docs/EVIDENCE_MATRIX.md` and wire plan/TESTING/hooks docs to it; keep
+     PR-evidence hook soft/fail-open.
+  3. Keep `AGENTS.md` canonical; install thin `CLAUDE.md` only when missing;
+     document multi-runtime composition without policy forks.
+- **Consequences:** Clearer phase entry points and validation expectations;
+  Claude Code users get a pointer without overwriting custom `CLAUDE.md`.
+  Soft-hook `COMPASS_SKIP_*` env inheritance remains a deferred follow-up.

@@ -138,6 +138,38 @@ for f in "${DOC_FILES[@]}"; do
   fi
 done
 
+# Thin Claude Code adapter — only when missing (never overwrite customized CLAUDE.md)
+if [[ -f "$SOURCE_ROOT/templates/docs/CLAUDE.md" ]]; then
+  if [[ -f "$TARGET/CLAUDE.md" ]]; then
+    echo "keep: CLAUDE.md (already exists; not overwritten)"
+  else
+    cp "$SOURCE_ROOT/templates/docs/CLAUDE.md" "$TARGET/CLAUDE.md"
+    echo "added: CLAUDE.md"
+  fi
+fi
+
+# Optional guidance docs (install when missing; do not clobber)
+mkdir -p "$TARGET/docs"
+for f in EVIDENCE_MATRIX.md; do
+  if [[ -f "$SOURCE_ROOT/docs/$f" ]]; then
+    if [[ -f "$TARGET/docs/$f" ]]; then
+      echo "keep: docs/$f (already exists; not overwritten)"
+    else
+      cp "$SOURCE_ROOT/docs/$f" "$TARGET/docs/$f"
+      echo "added: docs/$f"
+    fi
+  fi
+done
+if [[ -f "$SOURCE_ROOT/docs/integrations/multi-runtime-agents.md" ]]; then
+  mkdir -p "$TARGET/docs/integrations"
+  if [[ -f "$TARGET/docs/integrations/multi-runtime-agents.md" ]]; then
+    echo "keep: docs/integrations/multi-runtime-agents.md (already exists; not overwritten)"
+  else
+    cp "$SOURCE_ROOT/docs/integrations/multi-runtime-agents.md" "$TARGET/docs/integrations/multi-runtime-agents.md"
+    echo "added: docs/integrations/multi-runtime-agents.md"
+  fi
+fi
+
 # Budget templates (refreshable; live ledgers under .agent/budgets/ are product-owned)
 if [[ -d "$SOURCE_ROOT/templates/agent" ]]; then
   mkdir -p "$TARGET/.agent/budgets/_templates"

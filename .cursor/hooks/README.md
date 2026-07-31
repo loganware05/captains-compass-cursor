@@ -21,6 +21,11 @@ Configured in `.cursor/hooks.json` (`beforeShellExecution` + `preToolUse`):
 
 Shared helpers live in `_common.sh`. Hooks use `python3` for JSON.
 
+Before `gh pr create`, collect evidence per [`docs/EVIDENCE_MATRIX.md`](../../docs/EVIDENCE_MATRIX.md)
+(change-type → required artifacts under `.agent/evidence/`). The PR-evidence hook
+only checks that an approved/complete plan exists and that `.agent/evidence/` is
+non-empty (soft / fail-open).
+
 ## Manual tests
 
 ```bash

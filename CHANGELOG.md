@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+## 1.3.0 — 2026-07-30
+
+### Added
+
+- Six Cursor phase commands under `.cursor/commands/` (`initialize-project`,
+  `plan-feature`, `implement-approved-plan`, `validate-change`, `prepare-pr`,
+  `close-workstream`) (#29)
+- `docs/EVIDENCE_MATRIX.md` — required evidence by change type (#29)
+- `docs/integrations/multi-runtime-agents.md` — Cursor / Claude Code / Codex guidance (#29)
+- Thin `CLAUDE.md` adapter installed only when missing (`templates/docs/CLAUDE.md`) (#29)
+
+### Changed
+
+- VERSION `1.3.0`; plan template Testing/DoD references the evidence matrix
+- Installer copies evidence matrix + multi-runtime docs when missing
+- Hooks README and TESTING.md link the evidence matrix
+- ADR-015
+
 ## 1.2.0 — 2026-07-30
 
 ### Added
