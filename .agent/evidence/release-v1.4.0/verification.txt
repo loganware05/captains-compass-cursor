@@ -1,0 +1,4 @@
+RELEASE_TAG=v1.4.0
+RELEASE_COMMIT=a2fe6ce55f9dc4e81e979ee8816a8dd1b1540f32
+SANDBOX_ISSUE=https://github.com/loganware05/captain-compass-sandbox/issues/11
+SANDBOX_PR=https://github.com/loganware05/captain-compass-sandbox/pull/12

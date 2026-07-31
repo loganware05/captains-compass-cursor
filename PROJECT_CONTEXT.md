@@ -121,4 +121,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship and verify v1.4.0 (evals, harness GC, sessions, supply-chain, soft-hook skips).
+Stabilize v1.4.0 after sandbox refresh; backlog thereafter.
