@@ -34,6 +34,7 @@ wandb/
 # Local agent evidence that may contain sensitive output
 .agent/evidence/private/
 .agent/budgets/private/
+.agent/sessions/private/
 .agent/runs/
 .agent/handoffs/
 

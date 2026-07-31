@@ -47,13 +47,13 @@ agentic engineering process across multiple product repositories.
 
 1. AGENTS.md operating contract
 2. Five always-applied core rules
-3. Twenty-one Skills (foundational + tech/integration + source-context, cleanup, review-fix, autonomy-budget)
+3. Twenty-three Skills (including harness-gc, dependency-supply-chain, autonomy-budget)
 4. Eight specialist subagents
-5. Seven safety hooks (three critical fail-closed; four soft fail-open)
+5. Seven safety hooks (three critical fail-closed; four soft fail-open with multi-path skips)
 6. Six Cursor phase commands under `.cursor/commands/`
-7. Documentation, budget templates, evidence matrix, multi-runtime adapters
+7. Documentation, budget/session templates, evidence matrix, multi-runtime adapters, evals
 8. Installation, update, uninstall, and doctor scripts
-9. Control-repo CI (doctor + automated tests)
+9. Control-repo CI (doctor + tests + harness evals)
 
 ## External Services
 
@@ -91,8 +91,7 @@ Installer and doctor should complete in seconds on a typical laptop.
 
 ## Known Technical Debt
 
-None blocking for v1.3.0 P1. Optional follow-ups: P2 evals/harness GC/session
-ledger/structural tests/supply-chain; soft-hook `COMPASS_SKIP_*` env inheritance.
+None blocking for v1.4.0 P2. Future backlog after the original orchestration roadmap.
 
 ## Terminology
 
@@ -122,5 +121,4 @@ gh auth status
 
 ## Current Priorities
 
-P2 awaiting approval (evals, harness GC, session ledger, structural-test examples,
-young-package supply-chain, soft-hook skip signaling) after v1.3.0 release.
+Ship and verify v1.4.0 (evals, harness GC, sessions, supply-chain, soft-hook skips).

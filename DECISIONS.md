@@ -145,3 +145,21 @@
 - **Consequences:** Clearer phase entry points and validation expectations;
   Claude Code users get a pointer without overwriting custom `CLAUDE.md`.
   Soft-hook `COMPASS_SKIP_*` env inheritance remains a deferred follow-up.
+
+## ADR-016: P2 evals, harness GC, sessions, supply-chain, soft-hook skips (v1.4.0)
+
+- **Status:** Accepted
+- **Date:** 2026-07-30
+- **Context:** Production harness practice needs deterministic sensors, drift GC,
+  light observability, supply-chain caution, and soft-hook skips that work when
+  Cursor does not forward shell environment variables to hook processes.
+- **Decision:**
+  1. Ship `tests/evals/run.sh` (deterministic) + manual sandbox behavioral checklist;
+     no LLM-in-CI.
+  2. Add `harness-gc` and `dependency-supply-chain` Skills; young-package thresholds
+     are **labeled guidance** only.
+  3. Human session notes under `.agent/sessions/`; machine traces under `.agent/runs/`.
+  4. Soft hooks honor env, command-string `COMPASS_SKIP_*=1`, or `.agent/COMPASS_SKIP_HOOKS`.
+  5. Add structural-test examples under `examples/structural-tests/`.
+- **Consequences:** Stronger regression signal and clearer agent procedures without
+  expanding always-on rules; Captains retain judgment on young dependencies.

@@ -11,7 +11,7 @@ if ! echo "$COMPASS_COMMAND" | grep -Eqi '(^|[[:space:]])git[[:space:]]+commit';
   compass_allow
 fi
 
-if [[ "${COMPASS_SKIP_FORMAT:-}" == "1" ]]; then
+if compass_soft_skip FORMAT; then
   compass_allow
 fi
 

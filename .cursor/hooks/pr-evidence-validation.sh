@@ -12,7 +12,7 @@ if ! echo "$COMPASS_COMMAND" | grep -Eqi '(^|[[:space:]])gh[[:space:]]+pr[[:spac
   compass_allow
 fi
 
-if [[ "${COMPASS_SKIP_PR_EVIDENCE:-}" == "1" ]]; then
+if compass_soft_skip PR_EVIDENCE; then
   compass_allow
 fi
 

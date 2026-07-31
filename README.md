@@ -6,22 +6,21 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.3.0
+## Current version: 1.4.0
 
 ### Included
 
 - Approval-gated operating model (`AGENTS.md` + five core rules)
-- Twenty-one Skills (foundational + tech/integration + source-context, cleanup, review-fix, autonomy-budget)
+- Twenty-three Skills (including harness-gc, dependency-supply-chain, autonomy-budget)
 - Eight specialist subagents
-- Seven safety hooks (critical: fail-closed; soft: fail-open)
+- Seven safety hooks (critical fail-closed; soft skips via env / command string / marker)
 - Six Cursor phase slash commands (`.cursor/commands/`)
-- Autonomy budget ledgers under `.agent/budgets/` + Budget Stop Report templates
-- Evidence matrix (`docs/EVIDENCE_MATRIX.md`) and multi-runtime agent docs
+- Autonomy budgets + session notes (`.agent/budgets/`, `.agent/sessions/`)
+- Evidence matrix, multi-runtime docs, harness evals + sandbox behavioral checklist
+- Structural-test examples (`examples/structural-tests/`)
 - Thin `CLAUDE.md` adapter when missing
 - `install.sh`, `update.sh`, `uninstall.sh`, `doctor.sh`
-- Documentation templates and integration guides
-- Automated installer / doctor / hook tests
-- Control-repo CI (GitHub Actions: doctor + tests)
+- Control-repo CI (doctor + tests + evals)
 
 ### Operating model
 
@@ -146,6 +145,8 @@ instructions, validation, and troubleshooting.
 | opensrc (optional) | [`docs/integrations/opensrc.md`](docs/integrations/opensrc.md) |
 | Multi-runtime agents | [`docs/integrations/multi-runtime-agents.md`](docs/integrations/multi-runtime-agents.md) |
 | Evidence matrix | [`docs/EVIDENCE_MATRIX.md`](docs/EVIDENCE_MATRIX.md) |
+| Harness evals | [`docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md`](docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md) |
+| Structural tests (examples) | [`examples/structural-tests/`](examples/structural-tests/) |
 | Postgres MCP | [`docs/integrations/postgres-mcp.md`](docs/integrations/postgres-mcp.md) |
 
 ## Releases
