@@ -2,7 +2,7 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: p1-commands-evidence-multiruntime
 - Issue: [#29](https://github.com/loganware05/captains-compass-cursor/issues/29)
 - Branch: `feature/29-p1-commands-evidence-multiruntime`
@@ -15,42 +15,18 @@
 
 ## Request
 
-Implement **P1** after v1.2.0 → **v1.3.0**.
+P1: phase commands, evidence matrix, multi-runtime adapters → **v1.3.0**.
 
-## Acceptance Criteria
+## Completion Record
 
-### A. Phase commands
+- Control PR [#30](https://github.com/loganware05/captains-compass-cursor/pull/30) merged (`91e4866`)
+- Tag/release [`v1.3.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.3.0) on `91e4866`
+- Release validation: doctor + 77/77 tests on release commit
+- Sandbox refresh: [issue #9](https://github.com/loganware05/captain-compass-sandbox/issues/9) / [PR #10](https://github.com/loganware05/captain-compass-sandbox/pull/10)
+- Evidence: `.agent/evidence/p1-commands-evidence-multiruntime/`, `.agent/evidence/release-v1.3.0/`
+- ADR-015 accepted
 
-- [x] Six commands under `.cursor/commands/`
-- [x] Thin prompts; implement refuses without APPROVED plan
-- [x] README documents invocation
-- [x] doctor/tests assert the six files
+## Next plan (awaiting approval)
 
-### B. Evidence matrix
-
-- [x] `docs/EVIDENCE_MATRIX.md`
-- [x] Plan template + TESTING.md + hooks README reference matrix
-- [x] Soft PR-evidence hook remains fail-open
-
-### C. Multi-runtime adapters
-
-- [x] `docs/integrations/multi-runtime-agents.md`
-- [x] Install thin `CLAUDE.md` only when missing
-- [x] Doctor does not require CLAUDE.md on products
-- [x] Codex nested AGENTS notes (docs only)
-
-### D. Release hygiene
-
-- [x] VERSION 1.3.0; CHANGELOG; ADR-015; memory; evidence
-- [x] Issue + branch + rollback
-- [ ] PR merged; tag/release; sandbox refresh (Captain)
-
-## Autonomy Budget
-
-Ledger: `.agent/budgets/p1-commands-evidence-multiruntime.md`
-
-## Approval Record
-
-- Approved by: Captain on 2026-07-30
-- Issue: #29
-- Rollback: `rollback/pre-p1-commands-evidence-multiruntime` (`ff9225d`)
+See [`docs/plans/P2_AWAITING_APPROVAL.md`](docs/plans/P2_AWAITING_APPROVAL.md).
+After Captain approval, promote that document to root `IMPLEMENTATION_PLAN.md`.

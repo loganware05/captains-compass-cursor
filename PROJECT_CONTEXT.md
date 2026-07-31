@@ -122,5 +122,5 @@ gh auth status
 
 ## Current Priorities
 
-Ship and verify v1.3.0 (phase commands, evidence matrix, multi-runtime adapters);
-then P2 per sequenced plan after sandbox refresh.
+P2 awaiting approval (evals, harness GC, session ledger, structural-test examples,
+young-package supply-chain, soft-hook skip signaling) after v1.3.0 release.

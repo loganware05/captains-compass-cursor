@@ -2,25 +2,26 @@
 
 ## Current status
 
-**Implementing P1 (v1.3.0):** phase commands, evidence matrix, multi-runtime
-adapters ([#29](https://github.com/loganware05/captains-compass-cursor/issues/29)).
-Prior release: [`v1.2.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.2.0).
+**V1.3.0 released.** Tag/release
+[`v1.3.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.3.0)
+points at `91e4866` (PR #30). Sandbox refresh PR is open; **P2 plan awaits approval**.
 
 ## Completed
 
-- Through v1.2.0: fail-closed critical hooks, autonomy budgets, control CI (#26 / PR #27)
-- Sandbox refreshed to 1.2.0 (sandbox #7 / PR #8)
-- v1.2.0 closeout docs (PR #28)
+- Through v1.2.0: fail-closed critical hooks, autonomy budgets, control CI
+- P1 phase commands, evidence matrix, multi-runtime — #29 / PR #30 / **v1.3.0**
+- Sandbox 1.2.0 refresh (sandbox #7 / PR #8)
 
 ## In progress
 
-- P1 — #29
+- Sandbox v1.3.0 refresh — [sandbox #9](https://github.com/loganware05/captain-compass-sandbox/issues/9) / [PR #10](https://github.com/loganware05/captain-compass-sandbox/pull/10)
+- P2 plan draft — [`docs/plans/P2_AWAITING_APPROVAL.md`](docs/plans/P2_AWAITING_APPROVAL.md)
 
 ## Next
 
-- Merge/release v1.3.0; sandbox refresh
-- Then P2 (separate plan): golden-agent evals; harness GC; session ledger;
-  structural-test examples; young-package harden; optional soft-hook skip signaling
+- Captain merges sandbox PR #10
+- Approve P2 implementation plan
+- Implement P2 → v1.4.0
 
 ## Blockers
 
