@@ -70,7 +70,10 @@ if [[ "$PURGE_DOCS" -eq 1 ]]; then
     "$TARGET/DECISIONS.md" \
     "$TARGET/PROGRESS.md" \
     "$TARGET/TESTING.md" \
-    "$TARGET/CHANGELOG.md"
+    "$TARGET/CHANGELOG.md" \
+    "$TARGET/CLAUDE.md" \
+    "$TARGET/docs/EVIDENCE_MATRIX.md" \
+    "$TARGET/docs/integrations/multi-runtime-agents.md"
 fi
 
 # Clean empty .cursor if vacant

@@ -6,7 +6,7 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.2.0
+## Current version: 1.3.0
 
 ### Included
 
@@ -14,7 +14,10 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 - Twenty-one Skills (foundational + tech/integration + source-context, cleanup, review-fix, autonomy-budget)
 - Eight specialist subagents
 - Seven safety hooks (critical: fail-closed; soft: fail-open)
+- Six Cursor phase slash commands (`.cursor/commands/`)
 - Autonomy budget ledgers under `.agent/budgets/` + Budget Stop Report templates
+- Evidence matrix (`docs/EVIDENCE_MATRIX.md`) and multi-runtime agent docs
+- Thin `CLAUDE.md` adapter when missing
 - `install.sh`, `update.sh`, `uninstall.sh`, `doctor.sh`
 - Documentation templates and integration guides
 - Automated installer / doctor / hook tests
@@ -25,6 +28,7 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 - **Captain** — human owner; approves plans and merges
 - **First Mate** — coordinating Cursor agent
 - **Approval gate** — no product implementation changes until `IMPLEMENTATION_PLAN.md` is **APPROVED**
+- **Phase commands** — type `/` in Cursor Agent chat (`/plan-feature`, `/implement-approved-plan`, …)
 
 ## Quick start (control repo)
 
@@ -140,6 +144,8 @@ instructions, validation, and troubleshooting.
 | Python / ML | [`docs/integrations/python-ml.md`](docs/integrations/python-ml.md) |
 | iOS | [`docs/integrations/ios.md`](docs/integrations/ios.md) |
 | opensrc (optional) | [`docs/integrations/opensrc.md`](docs/integrations/opensrc.md) |
+| Multi-runtime agents | [`docs/integrations/multi-runtime-agents.md`](docs/integrations/multi-runtime-agents.md) |
+| Evidence matrix | [`docs/EVIDENCE_MATRIX.md`](docs/EVIDENCE_MATRIX.md) |
 | Postgres MCP | [`docs/integrations/postgres-mcp.md`](docs/integrations/postgres-mcp.md) |
 
 ## Releases

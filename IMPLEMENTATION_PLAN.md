@@ -2,31 +2,55 @@
 
 ## Metadata
 
-- Status: COMPLETE
-- Plan ID: p0-failclosed-budgets-ci
-- Issue: [#26](https://github.com/loganware05/captains-compass-cursor/issues/26)
-- Branch: `feature/26-p0-failclosed-budgets-ci`
+- Status: APPROVED
+- Plan ID: p1-commands-evidence-multiruntime
+- Issue: [#29](https://github.com/loganware05/captains-compass-cursor/issues/29)
+- Branch: `feature/29-p1-commands-evidence-multiruntime`
 - Created: 2026-07-30
 - Last updated: 2026-07-30
 - Approved by: Captain
 - Approval date: 2026-07-30
-- Approved revision: P0 plan as written; Markdown ledger; sandbox refresh after 1.2.0 before P1; always-on budget bullet
-- Rollback checkpoint: `rollback/pre-p0-failclosed-budgets-ci` (`a6a7882`)
+- Approved revision: P1 as drafted; CLAUDE.md only when missing; defer soft-hook COMPASS_SKIP_* fix
+- Rollback checkpoint: `rollback/pre-p1-commands-evidence-multiruntime` (`ff9225d`)
 
 ## Request
 
-P0: fail-closed critical hooks, autonomy budget mechanics, control-repo CI → **v1.2.0**.
+Implement **P1** after v1.2.0 → **v1.3.0**.
 
-## Completion Record
+## Acceptance Criteria
 
-- Control PR [#27](https://github.com/loganware05/captains-compass-cursor/pull/27) merged (`56c1227`)
-- Tag/release [`v1.2.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.2.0) on `56c1227`
-- Release validation: doctor + 61/61 tests on release commit
-- Sandbox refresh: [issue #7](https://github.com/loganware05/captain-compass-sandbox/issues/7) / [PR #8](https://github.com/loganware05/captain-compass-sandbox/pull/8)
-- Evidence: `.agent/evidence/p0-failclosed-budgets-ci/`, `.agent/evidence/release-v1.2.0/`
-- ADR-014 accepted
+### A. Phase commands
 
-## Next plan (awaiting approval)
+- [x] Six commands under `.cursor/commands/`
+- [x] Thin prompts; implement refuses without APPROVED plan
+- [x] README documents invocation
+- [x] doctor/tests assert the six files
 
-See [`docs/plans/P1_AWAITING_APPROVAL.md`](docs/plans/P1_AWAITING_APPROVAL.md).
-After Captain approval, promote that document to root `IMPLEMENTATION_PLAN.md`.
+### B. Evidence matrix
+
+- [x] `docs/EVIDENCE_MATRIX.md`
+- [x] Plan template + TESTING.md + hooks README reference matrix
+- [x] Soft PR-evidence hook remains fail-open
+
+### C. Multi-runtime adapters
+
+- [x] `docs/integrations/multi-runtime-agents.md`
+- [x] Install thin `CLAUDE.md` only when missing
+- [x] Doctor does not require CLAUDE.md on products
+- [x] Codex nested AGENTS notes (docs only)
+
+### D. Release hygiene
+
+- [x] VERSION 1.3.0; CHANGELOG; ADR-015; memory; evidence
+- [x] Issue + branch + rollback
+- [ ] PR merged; tag/release; sandbox refresh (Captain)
+
+## Autonomy Budget
+
+Ledger: `.agent/budgets/p1-commands-evidence-multiruntime.md`
+
+## Approval Record
+
+- Approved by: Captain on 2026-07-30
+- Issue: #29
+- Rollback: `rollback/pre-p1-commands-evidence-multiruntime` (`ff9225d`)

@@ -18,6 +18,11 @@
 ./tests/run.sh
 ```
 
+## Evidence matrix
+
+Required validation artifacts by change type:
+[`docs/EVIDENCE_MATRIX.md`](docs/EVIDENCE_MATRIX.md).
+
 ## Control-repo CI
 
 GitHub Actions (`.github/workflows/ci.yml`) runs the same commands on every

@@ -38,6 +38,10 @@
 
 ## Testing Strategy
 
+Classify the change using the evidence matrix (`docs/EVIDENCE_MATRIX.md` in the
+Compass control repo, or the copy under product `docs/` when installed). List
+required artifacts and where they will be stored under `.agent/evidence/`.
+
 ## Security Review
 
 ## Accessibility Review
@@ -63,6 +67,10 @@ template and keep it updated each cycle (Skill: `autonomy-budget`).
 - On limit: write `.agent/evidence/<slug>/BUDGET_STOP_REPORT.md` and stop
 
 ## Definition of Done
+
+Satisfy the evidence matrix row(s) for this change type, plus any extra criteria
+in Acceptance Criteria. Plan status may move to COMPLETE only after merge (or
+explicit Captain stop) and memory updates.
 
 ## Approval Record
 

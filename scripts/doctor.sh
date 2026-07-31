@@ -184,6 +184,36 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing .github/workflows/ci.yml"
   fi
+  COMMANDS=(
+    initialize-project.md
+    plan-feature.md
+    implement-approved-plan.md
+    validate-change.md
+    prepare-pr.md
+    close-workstream.md
+  )
+  for c in "${COMMANDS[@]}"; do
+    if [[ -f "$ROOT/.cursor/commands/$c" ]]; then
+      ok "command $c"
+    else
+      fail "missing command .cursor/commands/$c"
+    fi
+  done
+  if [[ -f "$ROOT/docs/EVIDENCE_MATRIX.md" ]]; then
+    ok "docs/EVIDENCE_MATRIX.md"
+  else
+    fail "missing docs/EVIDENCE_MATRIX.md"
+  fi
+  if [[ -f "$ROOT/docs/integrations/multi-runtime-agents.md" ]]; then
+    ok "docs/integrations/multi-runtime-agents.md"
+  else
+    fail "missing docs/integrations/multi-runtime-agents.md"
+  fi
+  if [[ -f "$ROOT/templates/docs/CLAUDE.md" ]]; then
+    ok "template CLAUDE.md"
+  else
+    fail "missing templates/docs/CLAUDE.md"
+  fi
   if [[ -f "$ROOT/.cursor/hooks.json" ]]; then
     if command -v python3 >/dev/null 2>&1; then
       if python3 - "$ROOT/.cursor/hooks.json" <<'PY'
