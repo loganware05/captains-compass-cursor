@@ -122,5 +122,5 @@ gh auth status
 
 ## Current Priorities
 
-Ship and verify v1.2.0 (fail-closed critical hooks, autonomy budgets, control CI);
-then P1/P2 per sequenced plans after sandbox refresh.
+P1 awaiting approval (phase commands, evidence matrix, multi-runtime adapters)
+after v1.2.0 release and sandbox refresh.
