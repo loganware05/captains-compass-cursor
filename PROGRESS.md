@@ -2,11 +2,10 @@
 
 ## Current status
 
-**V1.1.0 release repaired.** The annotated
+**V1.1.0 stable and verified.** The annotated
 [`v1.1.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.1.0)
-tag/release now points to `a6b2aae` (PR #20). Release checklist hardening is in
-[PR #24](https://github.com/loganware05/captains-compass-cursor/pull/24) under
-[#23](https://github.com/loganware05/captains-compass-cursor/issues/23).
+tag/release points to `a6b2aae` (PR #20); release safeguards are merged; the
+disposable sandbox is refreshed to 1.1.0 and green.
 
 ## Completed
 
@@ -22,16 +21,15 @@ tag/release now points to `a6b2aae` (PR #20). Release checklist hardening is in
 - V1.1.0 Micky-inspired Skills — #19 / PR #20
 - Latest/pinned forward update documentation — #21 / PR #22
 - Repaired v1.1.0 tag/release; preserved rollback tag — #23
+- Release checklist hardening/evidence — #23 / PR #24
+- Sandbox v1.1.0 workflow refresh — sandbox #5 / PR #6 (doctor + 15/15 tests)
 
 ## In progress
 
-- [PR #24](https://github.com/loganware05/captains-compass-cursor/pull/24) — release checklist hardening and evidence
-- Sandbox v1.1.0 workflow refresh — [sandbox PR #6](https://github.com/loganware05/captain-compass-sandbox/pull/6)
+None.
 
 ## Next
 
-- Merge control PR #24
-- Merge sandbox PR #6 and reopen the sandbox in Cursor
 - Optional future: deeper cloud automation, richer examples, young-package harden
 
 ## Blockers

@@ -2,7 +2,7 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: repair-v1.1.0-release-tag
 - Issue: #23
 - Branch: feature/23-repair-v1.1.0-release
@@ -149,3 +149,13 @@ Preserve `rollback/pre-micky-inspired-skills` (`2dd5429`).
 - Max iterations: 2
 - Max failed validation cycles: 1
 - Max elapsed minutes: 45
+
+## Completion Record
+
+- Public `v1.1.0` tag/release repaired and verified
+- Control checklist/evidence merged in [PR #24](https://github.com/loganware05/captains-compass-cursor/pull/24)
+- Sandbox workflow refresh merged in [sandbox PR #6](https://github.com/loganware05/captain-compass-sandbox/pull/6)
+- Post-merge sandbox verification: Compass doctor passed; `npm test` 15/15
+- Issues [#23](https://github.com/loganware05/captains-compass-cursor/issues/23)
+  and [sandbox #5](https://github.com/loganware05/captain-compass-sandbox/issues/5)
+  closed
