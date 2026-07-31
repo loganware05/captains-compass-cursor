@@ -32,6 +32,7 @@
   - `control-validation.txt`
   - `release-state.txt`
   - `sandbox-validation.txt`
+  - `sandbox-post-merge.txt`
 
 ## Sandbox refresh
 
@@ -51,3 +52,12 @@
 - Preserve `rollback/pre-micky-inspired-skills`.
 - Checklist/docs rollback: revert the control PR.
 - Sandbox rollback: revert sandbox PR #6 or use its rollback tag.
+
+## Post-merge verification
+
+- Control PR #24: merged 2026-07-30; issue #23 closed
+- Sandbox PR #6: merged 2026-07-30; sandbox issue #5 closed
+- Sandbox `main` commit: `5a9ee1f20130864ddc79554a40cc205bd7bbbfa3`
+- Sandbox `main`: `.agent/COMPASS_VERSION` = `1.1.0`
+- Sandbox Compass doctor: PASS (0 errors, 0 warnings)
+- Sandbox `npm test`: PASS (15/15)

@@ -1,0 +1,85 @@
+$ git -C /path/to/sandbox branch --show-current
+---
+main
+
+$ git -C /path/to/sandbox rev-parse HEAD
+---
+5a9ee1f20130864ddc79554a40cc205bd7bbbfa3
+
+$ git -C /path/to/sandbox status -sb
+---
+## main...origin/main
+
+$ /path/to/control/scripts/doctor.sh /path/to/sandbox
+---
+Captain's Compass doctor
+Root: /Users/loganware/Documents/Personal/Code/captain-compass-sandbox
+
+  ok: COMPASS_VERSION=1.1.0 (installed product)
+  ok: AGENTS.md
+  ok: PROJECT_CONTEXT.md
+  ok: IMPLEMENTATION_PLAN.md
+  ok: DECISIONS.md
+  ok: PROGRESS.md
+  ok: TESTING.md
+  ok: CHANGELOG.md
+  ok: rule 00-core-operating-model.mdc
+  ok: rule 01-plan-approval-gate.mdc
+  ok: rule 02-git-worktree-policy.mdc
+  ok: rule 03-validation-definition-of-done.mdc
+  ok: rule 04-documentation-memory.mdc
+  ok: skill repository-discovery
+  ok: skill implementation-planning
+  ok: skill worktree-orchestration
+  ok: skill testing-validation
+  ok: skill security-review
+  ok: skill accessibility-review
+  ok: skill pull-request-preparation
+  ok: skill github-integration
+  ok: skill react-engineering
+  ok: skill playwright-browser-validation
+  ok: skill node-engineering
+  ok: skill postgres-prisma
+  ok: skill docker-cloud
+  ok: skill linear-integration
+  ok: skill notion-integration
+  ok: skill python-ml
+  ok: skill ios-engineering
+  ok: skill source-code-context
+  ok: skill code-structure-cleanup
+  ok: skill review-fix-loop
+  ok: agent repository-scout.md
+  ok: agent architecture-agent.md
+  ok: agent implementation-agent.md
+  ok: agent test-engineer.md
+  ok: agent security-reviewer.md
+  ok: agent accessibility-reviewer.md
+  ok: agent adversarial-reviewer.md
+  ok: agent documentation-agent.md
+  ok: hooks.json
+  ok: hook secret-protection.sh
+  ok: hook protected-branch.sh
+  ok: hook plan-approval-check.sh
+  ok: hook branch-name-validation.sh
+  ok: hook pre-commit-formatting.sh
+  ok: hook pre-push-tests.sh
+  ok: hook pr-evidence-validation.sh
+  ok: hooks _common.sh
+
+Doctor passed: 0 errors, 0 warning(s)
+
+$ npm --prefix /path/to/sandbox test -- --run
+---
+
+> captain-compass-sandbox@0.0.0 test
+> vitest run --run
+
+
+ RUN  v4.1.10 /Users/loganware/Documents/Personal/Code/captain-compass-sandbox
+
+
+ Test Files  2 passed (2)
+      Tests  15 passed (15)
+   Start at  19:43:02
+   Duration  1.95s (transform 110ms, setup 209ms, import 180ms, tests 646ms, environment 1.85s)
+
