@@ -36,6 +36,12 @@ Task graph planner:
 ./scripts/plan-task-graph.sh "Build a React dashboard with tests"
 ```
 
+Agent manifest builder:
+
+```bash
+./scripts/build-agent-manifests.sh "Build a React dashboard with tests" draft-plan-id
+```
+
 ## Evidence matrix
 
 Required validation artifacts by change type:
