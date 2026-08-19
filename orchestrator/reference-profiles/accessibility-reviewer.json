@@ -1,0 +1,39 @@
+{
+  "agent_affinity": [
+    "accessibility-reviewer"
+  ],
+  "capabilities_provided": [
+    "keyboard-navigation-review",
+    "screen-reader-label-review",
+    "color-contrast-check",
+    "accessibility-evidence-capture"
+  ],
+  "categories": [
+    "quality",
+    "accessibility",
+    "review"
+  ],
+  "compatible_stacks": [
+    "any"
+  ],
+  "confidence": 0.9,
+  "id": "accessibility-reviewer",
+  "kind": "agent-profile",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "maturity": "proven",
+  "provenance": {
+    "authored_by": "compass",
+    "confidence": 0.9,
+    "inferred": false
+  },
+  "security_sensitivity": "low",
+  "source": {
+    "path": ".cursor/agents/accessibility-reviewer.md",
+    "type": "compass-agent"
+  },
+  "tags": [
+    "a11y",
+    "review"
+  ],
+  "version": "1.0.0"
+}

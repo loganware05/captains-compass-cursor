@@ -1,0 +1,31 @@
+id: security-review
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/security-review/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [security, quality, validation]
+tags:
+  - security
+  - auth
+  - secrets
+  - injection
+capabilities_provided:
+  - auth-review
+  - authorization-review
+  - secrets-scan
+  - injection-review
+  - dependency-security-review
+compatible_stacks:
+  - any
+security_sensitivity: high
+agent_affinity:
+  - security-reviewer
+  - adversarial-reviewer
+maturity: proven
+confidence: 0.9

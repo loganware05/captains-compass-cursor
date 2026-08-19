@@ -1,0 +1,30 @@
+id: node-engineering
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/node-engineering/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [backend, implementation, api]
+tags:
+  - node
+  - express
+  - api
+  - auth
+capabilities_provided:
+  - node-api-development
+  - auth-boundary-enforcement
+  - request-validation
+  - server-integration-tests
+compatible_stacks:
+  - node
+security_sensitivity: high
+agent_affinity:
+  - implementation-agent
+  - test-engineer
+maturity: proven
+confidence: 0.9

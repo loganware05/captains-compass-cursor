@@ -1,0 +1,31 @@
+id: python-ml
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/python-ml/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [backend, ml, data]
+tags:
+  - python
+  - ml
+  - training
+  - inference
+capabilities_provided:
+  - python-service-development
+  - data-pipeline
+  - ml-training
+  - ml-evaluation
+  - experiment-reproducibility
+compatible_stacks:
+  - python
+security_sensitivity: medium
+agent_affinity:
+  - implementation-agent
+  - test-engineer
+maturity: proven
+confidence: 0.9

@@ -1,0 +1,34 @@
+id: dependency-supply-chain
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/dependency-supply-chain/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [security, dependencies, supply-chain]
+tags:
+  - npm
+  - pypi
+  - lockfile
+  - audit
+capabilities_provided:
+  - dependency-risk-assessment
+  - lockfile-discipline
+  - package-provenance-review
+  - supply-chain-approval-gate
+compatible_stacks:
+  - node
+  - python
+  - rust
+  - swift
+  - any
+security_sensitivity: high
+agent_affinity:
+  - security-reviewer
+  - architecture-agent
+maturity: proven
+confidence: 0.9

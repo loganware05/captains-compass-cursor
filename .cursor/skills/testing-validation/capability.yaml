@@ -1,0 +1,31 @@
+id: testing-validation
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/testing-validation/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [testing, quality, validation]
+tags:
+  - testing
+  - validation
+  - lint
+  - evidence
+capabilities_provided:
+  - lint-execution
+  - unit-test-execution
+  - integration-test-execution
+  - validation-evidence-capture
+  - definition-of-done-validation
+compatible_stacks:
+  - any
+security_sensitivity: low
+agent_affinity:
+  - test-engineer
+  - implementation-agent
+maturity: proven
+confidence: 0.9

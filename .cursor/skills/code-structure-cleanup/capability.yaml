@@ -1,0 +1,28 @@
+id: code-structure-cleanup
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/code-structure-cleanup/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [refactoring, quality]
+tags:
+  - cleanup
+  - refactor
+  - services
+capabilities_provided:
+  - duplication-identification
+  - service-layer-extraction
+  - behavior-preserving-refactor
+compatible_stacks:
+  - any
+security_sensitivity: low
+agent_affinity:
+  - implementation-agent
+  - architecture-agent
+maturity: proven
+confidence: 0.9

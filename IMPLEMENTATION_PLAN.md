@@ -59,8 +59,8 @@ Success means the Captain can approve or reject planning quality **before** any 
 ## Acceptance Criteria
 
 - [x] Minimal JSON Schemas exist for Capability, Task, AgentManifest, ModelProfile (+ stub CandidateCapability, ExecutionRun stubs for extension)
-- [ ] All 23 existing Skills are discoverable via a compiled registry (authored metadata + safe inference fallback)
-- [ ] Eight existing subagents are indexed as **reference agent profiles** (not deleted; extracted capabilities)
+- [x] All 23 existing Skills are discoverable via a compiled registry (authored metadata + safe inference fallback)
+- [x] Eight existing subagents are indexed as **reference agent profiles** (not deleted; extracted capabilities)
 - [ ] Deterministic orchestrator modules: registry load, capability inference, task decomposition, dependency validation, Skill ranking, manifest assembly, plan section rendering
 - [ ] Technology Intelligence **provider interface** exists with a no-op/stub provider (no GitHub Stars coupling)
 - [ ] Enhanced `IMPLEMENTATION_PLAN.md` template + `/plan-feature` command document new sections
@@ -702,6 +702,8 @@ Until then, only planning documents and discovery artifacts may change.
 - **Branch:** `feature/35-m1-capability-aware-planning`
 - **Rollback:** `rollback/pre-m1-capability-aware-planning` @ `5929f10`
 
-**In progress:** Phase B — Skill registry sidecars and reference agent profiles.
+**In progress:** Phase C — capability resolver and matcher.
+
+**Phase B complete (2026-08-19):** 23 `capability.yaml` sidecars, 8 reference agent profiles, registry compiler, stdlib YAML loader, inference fallback, doctor/CI compile step.
 
 **Phase A complete (2026-08-19):** JSON Schemas, `orchestrator/` package skeleton, stdlib validator, model catalog, Technology Intelligence stub provider, orchestrator unit tests, doctor/test integration.

@@ -222,6 +222,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     else
       fail "orchestrator catalog validation failed"
     fi
+    if "$ROOT/scripts/compile-capability-registry.sh" >/dev/null 2>&1; then
+      ok "capability registry compiles"
+    else
+      fail "capability registry compile failed"
+    fi
   else
     warn "skip orchestrator catalog validation (no python3)"
   fi

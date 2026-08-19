@@ -1,0 +1,32 @@
+id: react-engineering
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/react-engineering/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [frontend, implementation, ui]
+tags:
+  - react
+  - typescript
+  - vite
+  - nextjs
+capabilities_provided:
+  - react-component-development
+  - typescript-ui
+  - client-state-management
+  - component-testing
+compatible_stacks:
+  - react
+  - web
+  - node
+security_sensitivity: medium
+agent_affinity:
+  - implementation-agent
+  - test-engineer
+maturity: proven
+confidence: 0.9

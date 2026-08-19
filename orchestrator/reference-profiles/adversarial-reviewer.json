@@ -1,0 +1,39 @@
+{
+  "agent_affinity": [
+    "adversarial-reviewer"
+  ],
+  "capabilities_provided": [
+    "adversarial-code-review",
+    "scope-drift-detection",
+    "edge-case-identification",
+    "test-quality-review"
+  ],
+  "categories": [
+    "quality",
+    "review",
+    "validation"
+  ],
+  "compatible_stacks": [
+    "any"
+  ],
+  "confidence": 0.9,
+  "id": "adversarial-reviewer",
+  "kind": "agent-profile",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "maturity": "proven",
+  "provenance": {
+    "authored_by": "compass",
+    "confidence": 0.9,
+    "inferred": false
+  },
+  "security_sensitivity": "low",
+  "source": {
+    "path": ".cursor/agents/adversarial-reviewer.md",
+    "type": "compass-agent"
+  },
+  "tags": [
+    "adversarial",
+    "review"
+  ],
+  "version": "1.0.0"
+}

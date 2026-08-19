@@ -1,0 +1,28 @@
+id: notion-integration
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/notion-integration/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [integration, documentation, planning]
+tags:
+  - notion
+  - mcp
+  - requirements
+capabilities_provided:
+  - notion-requirements-read
+  - notion-research-read
+  - notion-release-summary-write
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - documentation-agent
+  - repository-scout
+maturity: proven
+confidence: 0.9

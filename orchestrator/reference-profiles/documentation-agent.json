@@ -1,0 +1,39 @@
+{
+  "agent_affinity": [
+    "documentation-agent"
+  ],
+  "capabilities_provided": [
+    "project-memory-update",
+    "progress-tracking",
+    "changelog-update",
+    "plan-status-update"
+  ],
+  "categories": [
+    "documentation",
+    "process",
+    "memory"
+  ],
+  "compatible_stacks": [
+    "any"
+  ],
+  "confidence": 0.9,
+  "id": "documentation-agent",
+  "kind": "agent-profile",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "maturity": "proven",
+  "provenance": {
+    "authored_by": "compass",
+    "confidence": 0.9,
+    "inferred": false
+  },
+  "security_sensitivity": "low",
+  "source": {
+    "path": ".cursor/agents/documentation-agent.md",
+    "type": "compass-agent"
+  },
+  "tags": [
+    "docs",
+    "memory"
+  ],
+  "version": "1.0.0"
+}

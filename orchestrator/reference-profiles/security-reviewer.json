@@ -1,0 +1,39 @@
+{
+  "agent_affinity": [
+    "security-reviewer"
+  ],
+  "capabilities_provided": [
+    "auth-review",
+    "authorization-review",
+    "secrets-exposure-scan",
+    "injection-review"
+  ],
+  "categories": [
+    "security",
+    "quality",
+    "review"
+  ],
+  "compatible_stacks": [
+    "any"
+  ],
+  "confidence": 0.9,
+  "id": "security-reviewer",
+  "kind": "agent-profile",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "maturity": "proven",
+  "provenance": {
+    "authored_by": "compass",
+    "confidence": 0.9,
+    "inferred": false
+  },
+  "security_sensitivity": "low",
+  "source": {
+    "path": ".cursor/agents/security-reviewer.md",
+    "type": "compass-agent"
+  },
+  "tags": [
+    "security",
+    "review"
+  ],
+  "version": "1.0.0"
+}

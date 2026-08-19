@@ -1,0 +1,39 @@
+{
+  "agent_affinity": [
+    "architecture-agent"
+  ],
+  "capabilities_provided": [
+    "component-boundary-design",
+    "api-contract-definition",
+    "security-boundary-definition",
+    "migration-rollback-strategy"
+  ],
+  "categories": [
+    "architecture",
+    "planning",
+    "design"
+  ],
+  "compatible_stacks": [
+    "any"
+  ],
+  "confidence": 0.9,
+  "id": "architecture-agent",
+  "kind": "agent-profile",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "maturity": "proven",
+  "provenance": {
+    "authored_by": "compass",
+    "confidence": 0.9,
+    "inferred": false
+  },
+  "security_sensitivity": "low",
+  "source": {
+    "path": ".cursor/agents/architecture-agent.md",
+    "type": "compass-agent"
+  },
+  "tags": [
+    "architecture",
+    "contracts"
+  ],
+  "version": "1.0.0"
+}

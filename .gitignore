@@ -37,6 +37,7 @@ wandb/
 .agent/sessions/private/
 .agent/runs/
 .agent/handoffs/
+.agent/capabilities/compiled/registry.json
 
 # Cloud state
 *.tfstate

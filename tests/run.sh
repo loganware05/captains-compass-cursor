@@ -52,7 +52,7 @@ assert_contains() {
   fi
 }
 
-chmod +x "$ROOT/scripts/install.sh" "$ROOT/scripts/doctor.sh" "$ROOT/.cursor/hooks/"*.sh
+chmod +x "$ROOT/scripts/install.sh" "$ROOT/scripts/doctor.sh" "$ROOT/scripts/compile-capability-registry.sh" "$ROOT/.cursor/hooks/"*.sh
 
 echo "=== control repo budget templates + CI ==="
 assert_true "budget ledger template in control" test -f "$ROOT/templates/agent/BUDGET_LEDGER.md"
@@ -287,6 +287,10 @@ assert_true "uninstall kept PROJECT_CONTEXT" test -f "$TMP/PROJECT_CONTEXT.md"
 
 echo "=== orchestrator schema tests ==="
 assert_true "orchestrator unittest" bash -c "cd '$ROOT' && PYTHONPATH='$ROOT' python3 -m unittest discover -s tests/orchestrator -p 'test_*.py' -q"
+
+echo "=== capability registry compile ==="
+assert_true "registry compiles" "$ROOT/scripts/compile-capability-registry.sh"
+assert_true "registry output exists" test -f "$ROOT/.agent/capabilities/compiled/registry.json"
 
 echo "=== harness evals ==="
 assert_true "evals runner passes" "$ROOT/tests/evals/run.sh"

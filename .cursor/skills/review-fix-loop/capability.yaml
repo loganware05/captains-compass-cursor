@@ -1,0 +1,28 @@
+id: review-fix-loop
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/review-fix-loop/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [process, quality, delivery]
+tags:
+  - pr
+  - review
+  - feedback
+capabilities_provided:
+  - review-feedback-triage
+  - iterative-fix-loop
+  - review-resolution-summary
+compatible_stacks:
+  - any
+security_sensitivity: low
+agent_affinity:
+  - implementation-agent
+  - adversarial-reviewer
+maturity: proven
+confidence: 0.9
