@@ -211,13 +211,13 @@ if [[ -d "$ROOT/templates/docs" ]]; then
       fail "missing orchestrator/schemas/$s"
     fi
   done
-  if [[ -f "$ROOT/orchestrator/models/catalog.json" ]]; then
+  if [[ -f "$ROOT/orchestrator/model_profiles/catalog.json" ]]; then
     ok "orchestrator model catalog"
   else
-    fail "missing orchestrator/models/catalog.json"
+    fail "missing orchestrator/model_profiles/catalog.json"
   fi
   if command -v python3 >/dev/null 2>&1; then
-    if PYTHONPATH="$ROOT" python3 -c "from orchestrator.models import load_catalog; load_catalog()" 2>/dev/null; then
+    if PYTHONPATH="$ROOT" python3 -c "from orchestrator.model_profiles import load_catalog; load_catalog()" 2>/dev/null; then
       ok "orchestrator catalog validates"
     else
       fail "orchestrator catalog validation failed"

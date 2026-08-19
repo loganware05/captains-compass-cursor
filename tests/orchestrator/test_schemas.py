@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unittest
 
-from orchestrator.models import load_catalog
+from orchestrator.model_profiles import load_catalog
 from orchestrator.providers.technology_intelligence import StubTechnologyIntelligenceProvider
 from orchestrator.schemas.validate import (
     ValidationError,

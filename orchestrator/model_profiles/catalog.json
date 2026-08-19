@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "profiles": [
+    {
+      "id": "coding-strong",
+      "class": "coding-strong",
+      "description": "Strong coding and refactoring; default for implementation and test tasks.",
+      "recommended_slugs": ["inherit", "composer-2.5-fast"],
+      "strengths": ["implementation", "tests", "refactoring", "debugging"]
+    },
+    {
+      "id": "reasoning-strong",
+      "class": "reasoning-strong",
+      "description": "Architecture, planning, tradeoff analysis, and schema design.",
+      "recommended_slugs": ["inherit", "claude-opus-5-thinking-high"],
+      "strengths": ["architecture", "planning", "decomposition", "risk-analysis"]
+    },
+    {
+      "id": "fast-iter",
+      "class": "fast-iter",
+      "description": "Quick iteration on small, well-bounded tasks.",
+      "recommended_slugs": ["inherit", "composer-2.5-fast"],
+      "strengths": ["small-diffs", "docs", "mechanical-changes"]
+    },
+    {
+      "id": "inherit",
+      "class": "inherit",
+      "description": "Use the Captain's currently selected Cursor model.",
+      "recommended_slugs": ["inherit"],
+      "strengths": ["captain-controlled"]
+    }
+  ]
+}

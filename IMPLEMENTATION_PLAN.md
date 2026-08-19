@@ -192,7 +192,7 @@ orchestrator/matcher — rank Skills vs required capabilities
         ↓
 orchestrator/assembler — AgentManifest proposals
         ↓
-orchestrator/models — model class recommendation
+orchestrator/model_profiles — model class recommendation
         ↓
 orchestrator/plan_writer — IMPLEMENTATION_PLAN sections
         ↓
@@ -495,7 +495,7 @@ scripts/capability-plan.sh
 .cursor/skills/*/capability.yaml         # 23 sidecars
 orchestrator/reference-profiles/*.json   # 8 profiles
 orchestrator/schemas/*.schema.json
-orchestrator/models/catalog.json
+orchestrator/model_profiles/catalog.json
 tests/orchestrator/test_*.py
 tests/fixtures/planning/*.json
 docs/integrations/technology-intelligence.md
