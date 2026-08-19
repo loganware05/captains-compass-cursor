@@ -163,3 +163,26 @@
   5. Add structural-test examples under `examples/structural-tests/`.
 - **Consequences:** Stronger regression signal and clearer agent procedures without
   expanding always-on rules; Captains retain judgment on young dependencies.
+
+## ADR-017: Skill capability metadata uses sidecar files (v1.5.0 M1)
+
+- **Status:** Accepted
+- **Date:** 2026-08-19
+- **Context:** Milestone 1 requires machine-readable capability metadata on Compass
+  Skills. Metadata could live in extended `SKILL.md` frontmatter or a separate file.
+  Skills must remain backwards compatible with Cursor loading, `doctor.sh`, and
+  install/update directory copies.
+- **Decision:**
+  1. Add optional `capability.yaml` sidecar alongside each Skill directory
+     (`.cursor/skills/<slug>/capability.yaml`).
+  2. Keep `SKILL.md` frontmatter limited to `name` and `description`.
+  3. Registry compiler treats sidecar as authoritative when present; otherwise
+     infers minimal metadata with a warning (`provenance.inferred: true`).
+  4. Enforce `capability.id` equals Skill frontmatter `name` at compile time.
+  5. Extract reference agent routing metadata to
+     `orchestrator/reference-profiles/*.json` — do not bloat agent Markdown
+     frontmatter.
+  6. Reject hybrid frontmatter + sidecar dual-authoring (single source of truth).
+- **Consequences:** Clean separation of procedure vs routing; safe validation;
+  install/update unchanged; M1 ships sidecars for all 23 control-repo Skills.
+  See [`docs/design/CAPABILITY_METADATA_SIDECAR_VS_FRONTMATTER.md`](docs/design/CAPABILITY_METADATA_SIDECAR_VS_FRONTMATTER.md).
