@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/task.schema.json",
+  "title": "Task",
+  "description": "A dependency-aware unit of work in a planning task graph.",
+  "type": "object",
+  "required": ["id", "objective"],
+  "additionalProperties": true,
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "objective": { "type": "string", "minLength": 1 },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "required_capabilities": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "parallelizable": { "type": "boolean" },
+    "expected_artifacts": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

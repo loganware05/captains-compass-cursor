@@ -37,6 +37,7 @@ agentic engineering process across multiple product repositories.
 ## Repository Map
 
 - `.cursor/` — reusable rules, Skills, agents, hooks (source of truth)
+- `orchestrator/` — capability schemas, registry compiler (M1), planning pipeline (v1.5.0+)
 - `templates/docs/` — blank docs installed into product repos
 - `scripts/` — install.sh, update.sh, uninstall.sh, doctor.sh
 - `examples/` — fixture projects for installer docs/tests
@@ -54,6 +55,7 @@ agentic engineering process across multiple product repositories.
 7. Documentation, budget/session templates, evidence matrix, multi-runtime adapters, evals
 8. Installation, update, uninstall, and doctor scripts
 9. Control-repo CI (doctor + tests + harness evals)
+10. **Orchestrator module** (`orchestrator/`) — M1 capability-aware planning contracts (v1.5.0 in progress)
 
 ## External Services
 

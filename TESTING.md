@@ -18,6 +18,12 @@
 ./tests/run.sh
 ```
 
+Orchestrator schema unit tests (included in `tests/run.sh`):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_*.py' -v
+```
+
 ## Evidence matrix
 
 Required validation artifacts by change type:

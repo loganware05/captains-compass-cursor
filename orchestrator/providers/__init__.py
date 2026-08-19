@@ -1,0 +1,1 @@
+"""External intelligence provider adapters."""

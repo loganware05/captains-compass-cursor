@@ -285,6 +285,9 @@ assert_true "uninstall --yes succeeds" "$ROOT/scripts/uninstall.sh" --yes "$TMP"
 assert_true "uninstall removed rules" bash -c "! test -d '$TMP/.cursor/rules'"
 assert_true "uninstall kept PROJECT_CONTEXT" test -f "$TMP/PROJECT_CONTEXT.md"
 
+echo "=== orchestrator schema tests ==="
+assert_true "orchestrator unittest" bash -c "cd '$ROOT' && PYTHONPATH='$ROOT' python3 -m unittest discover -s tests/orchestrator -p 'test_*.py' -q"
+
 echo "=== harness evals ==="
 assert_true "evals runner passes" "$ROOT/tests/evals/run.sh"
 

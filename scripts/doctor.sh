@@ -196,6 +196,35 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing examples/structural-tests/README.md"
   fi
+  ORCHESTRATOR_SCHEMAS=(
+    capability.schema.json
+    task.schema.json
+    agent-manifest.schema.json
+    model-profile.schema.json
+    candidate-capability.schema.json
+    execution-run.schema.json
+  )
+  for s in "${ORCHESTRATOR_SCHEMAS[@]}"; do
+    if [[ -f "$ROOT/orchestrator/schemas/$s" ]]; then
+      ok "orchestrator schema $s"
+    else
+      fail "missing orchestrator/schemas/$s"
+    fi
+  done
+  if [[ -f "$ROOT/orchestrator/models/catalog.json" ]]; then
+    ok "orchestrator model catalog"
+  else
+    fail "missing orchestrator/models/catalog.json"
+  fi
+  if command -v python3 >/dev/null 2>&1; then
+    if PYTHONPATH="$ROOT" python3 -c "from orchestrator.models import load_catalog; load_catalog()" 2>/dev/null; then
+      ok "orchestrator catalog validates"
+    else
+      fail "orchestrator catalog validation failed"
+    fi
+  else
+    warn "skip orchestrator catalog validation (no python3)"
+  fi
   if [[ -f "$ROOT/.github/workflows/ci.yml" ]]; then
     ok "control CI workflow"
   else

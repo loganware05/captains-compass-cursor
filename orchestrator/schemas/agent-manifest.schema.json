@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/agent-manifest.schema.json",
+  "title": "AgentManifest",
+  "description": "Proposed worker configuration for a single task.",
+  "type": "object",
+  "required": ["task_id", "role", "reference_profile", "model", "skills", "rationale"],
+  "additionalProperties": true,
+  "properties": {
+    "task_id": { "type": "string", "minLength": 1 },
+    "role": { "type": "string", "minLength": 1 },
+    "reference_profile": { "type": "string", "minLength": 1 },
+    "model": {
+      "type": "object",
+      "required": ["class"],
+      "properties": {
+        "class": {
+          "type": "string",
+          "enum": ["coding-strong", "reasoning-strong", "fast-iter", "inherit"]
+        },
+        "recommendation": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "skills": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "tools": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "permissions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "autonomy_budget": {
+      "type": "object",
+      "properties": {
+        "max_iterations": { "type": "integer", "minimum": 1 },
+        "ledger_path": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "rationale": { "type": "string", "minLength": 1 },
+    "scoring_breakdown": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["factor", "score", "note"],
+        "properties": {
+          "factor": { "type": "string" },
+          "score": { "type": "number" },
+          "note": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
