@@ -1,0 +1,8 @@
+{
+  "objective": "Build an accessible React dashboard with client-side routing and component tests",
+  "context": {
+    "stacks": ["react", "web"]
+  },
+  "expected_top_skills": ["react-engineering", "playwright-browser-validation", "accessibility-review"],
+  "expected_gaps": []
+}

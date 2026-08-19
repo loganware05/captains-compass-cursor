@@ -24,6 +24,12 @@ Orchestrator schema unit tests (included in `tests/run.sh`):
 PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_*.py' -v
 ```
 
+Capability resolve CLI:
+
+```bash
+./scripts/capability-resolve.sh "Build a React dashboard with tests"
+```
+
 ## Evidence matrix
 
 Required validation artifacts by change type:

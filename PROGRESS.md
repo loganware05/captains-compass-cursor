@@ -12,16 +12,17 @@
 - M1 plan approved; ADR-017 sidecar metadata decision documented
 - M1 Phase A: orchestrator schemas, stdlib validator, model catalog, TI stub ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
 - M1 Phase B: Skill sidecars, reference profiles, registry compiler — PR [#36](https://github.com/loganware05/captains-compass-cursor/pull/36)
+- M1 Phase C: intent inference, Skill matcher, resolver CLI ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
 
 ## In progress
 
-- M1 Phase C: capability inference + matcher ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
-- PR [#36](https://github.com/loganware05/captains-compass-cursor/pull/36) — Phase A + B on `feature/35-m1-capability-aware-planning`
+- M1 Phase D: task graph planner ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
+- PR [#36](https://github.com/loganware05/captains-compass-cursor/pull/36) — Phases A–C
 
 ## Next
 
-- Phase C capability matcher
-- Phase D task graph planner
+- Phase D task graph planner + cycle validation
+- Phase E agent manifest builder
 
 ## Blockers
 

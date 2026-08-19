@@ -61,7 +61,7 @@ Success means the Captain can approve or reject planning quality **before** any 
 - [x] Minimal JSON Schemas exist for Capability, Task, AgentManifest, ModelProfile (+ stub CandidateCapability, ExecutionRun stubs for extension)
 - [x] All 23 existing Skills are discoverable via a compiled registry (authored metadata + safe inference fallback)
 - [x] Eight existing subagents are indexed as **reference agent profiles** (not deleted; extracted capabilities)
-- [ ] Deterministic orchestrator modules: registry load, capability inference, task decomposition, dependency validation, Skill ranking, manifest assembly, plan section rendering
+- [ ] Deterministic orchestrator modules: registry load, capability inference, task decomposition, dependency validation, Skill ranking, manifest assembly, plan section rendering *(registry load, inference, ranking — Phase C done)*
 - [ ] Technology Intelligence **provider interface** exists with a no-op/stub provider (no GitHub Stars coupling)
 - [ ] Enhanced `IMPLEMENTATION_PLAN.md` template + `/plan-feature` command document new sections
 - [ ] New Skill `capability-planning` instructs First Mate to run the orchestrator during planning
@@ -702,7 +702,9 @@ Until then, only planning documents and discovery artifacts may change.
 - **Branch:** `feature/35-m1-capability-aware-planning`
 - **Rollback:** `rollback/pre-m1-capability-aware-planning` @ `5929f10`
 
-**In progress:** Phase C — capability resolver and matcher.
+**In progress:** Phase D — task graph planner.
+
+**Phase C complete (2026-08-19):** intent inference, deterministic Skill matcher with explainable scoring, resolver API, six planning fixtures, `capability-resolve.sh` CLI.
 
 **Phase B complete (2026-08-19):** 23 `capability.yaml` sidecars, 8 reference agent profiles, registry compiler, stdlib YAML loader, inference fallback, doctor/CI compile step.
 

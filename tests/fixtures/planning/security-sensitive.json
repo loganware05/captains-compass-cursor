@@ -1,0 +1,8 @@
+{
+  "objective": "Review OAuth login flow for auth flaws, secrets exposure, and injection risks",
+  "context": {
+    "security_sensitive": true
+  },
+  "expected_top_skills": ["security-review", "dependency-supply-chain"],
+  "expected_gaps": []
+}

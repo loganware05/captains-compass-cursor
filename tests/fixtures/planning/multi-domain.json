@@ -1,0 +1,9 @@
+{
+  "objective": "Ship a full-stack feature: React UI, Node API, Prisma migrations, Docker preview deploy, and tests",
+  "context": {
+    "stacks": ["react", "node", "postgres", "docker"]
+  },
+  "expected_top_skills": ["react-engineering", "node-engineering", "postgres-prisma", "docker-cloud"],
+  "expected_gaps": [],
+  "top_n": 8
+}
