@@ -293,9 +293,14 @@ assert_true "registry compiles" "$ROOT/scripts/compile-capability-registry.sh"
 assert_true "registry output exists" test -f "$ROOT/.agent/capabilities/compiled/registry.json"
 
 echo "=== capability resolve smoke ==="
-chmod +x "$ROOT/scripts/capability-resolve.sh"
+chmod +x "$ROOT/scripts/capability-resolve.sh" "$ROOT/scripts/plan-task-graph.sh"
 out="$( "$ROOT/scripts/capability-resolve.sh" "Build a React dashboard" )"
 assert_contains "resolve returns react-engineering" 'react-engineering' "$out"
+
+echo "=== task graph planner smoke ==="
+graph_out="$( "$ROOT/scripts/plan-task-graph.sh" "Build a React dashboard with tests" )"
+assert_contains "planner returns task-discovery" 'task-discovery' "$graph_out"
+assert_contains "planner returns task-impl-frontend" 'task-impl-frontend' "$graph_out"
 
 echo "=== harness evals ==="
 assert_true "evals runner passes" "$ROOT/tests/evals/run.sh"

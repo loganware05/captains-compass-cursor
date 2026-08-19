@@ -30,6 +30,12 @@ Capability resolve CLI:
 ./scripts/capability-resolve.sh "Build a React dashboard with tests"
 ```
 
+Task graph planner:
+
+```bash
+./scripts/plan-task-graph.sh "Build a React dashboard with tests"
+```
+
 ## Evidence matrix
 
 Required validation artifacts by change type:
