@@ -56,7 +56,7 @@ agentic engineering process across multiple product repositories.
 7. Documentation, budget/session templates, evidence matrix, multi-runtime adapters, evals
 8. Installation, update, uninstall, and doctor scripts
 9. Control-repo CI (doctor + tests + harness evals)
-10. **Orchestrator module** (`orchestrator/`) — M1 capability-aware planning contracts (v1.5.0 in progress)
+10. **Orchestrator module** (`orchestrator/`) — M1 capability-aware planning (v1.5.0)
 
 ## External Services
 
@@ -94,7 +94,7 @@ Installer and doctor should complete in seconds on a typical laptop.
 
 ## Known Technical Debt
 
-None blocking for v1.4.0 P2. Future backlog after the original orchestration roadmap.
+None blocking for v1.5.0 M1. Future: TI live adapters, execution telemetry (M2+).
 
 ## Terminology
 
@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Stabilize v1.4.0 after sandbox refresh; backlog thereafter.
+Ship v1.5.0 (merge PR #36, tag, sandbox refresh); then Milestone 2 backlog.

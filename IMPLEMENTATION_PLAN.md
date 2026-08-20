@@ -2,7 +2,7 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: m1-capability-aware-planning
 - Issue: [#35](https://github.com/loganware05/captains-compass-cursor/issues/35)
 - Branch: `feature/35-m1-capability-aware-planning`
@@ -69,7 +69,7 @@ Success means the Captain can approve or reject planning quality **before** any 
 - [x] `plan-approval-check.sh` behavior unchanged for APPROVED/DRAFT gating
 - [x] `./scripts/doctor.sh`, `./tests/run.sh`, `./tests/evals/run.sh` pass with new tests added
 - [x] Install/update propagate new orchestrator assets and registry build step where applicable
-- [x] ADR-017 recorded; PROGRESS/CHANGELOG updated on completion *(CHANGELOG on v1.5.0 release)*
+- [x] ADR-017 recorded; PROGRESS/CHANGELOG updated on completion
 - [ ] No product-repo implementation changes in this milestone (control-repo only)
 
 ## Non-Goals
@@ -702,7 +702,9 @@ Until then, only planning documents and discovery artifacts may change.
 - **Branch:** `feature/35-m1-capability-aware-planning`
 - **Rollback:** `rollback/pre-m1-capability-aware-planning` @ `5929f10`
 
-**M1 complete (2026-08-19):** Phases A–H shipped on branch `feature/35-m1-capability-aware-planning` — pending release prep (v1.5.0).
+**M1 implementation complete (2026-08-19):** Phases A–H plus release prep (VERSION 1.5.0, CHANGELOG). Tag `v1.5.0` after merge to `main`.
+
+**Release prep (2026-08-19):** VERSION 1.5.0, CHANGELOG, README, GitHub release notes draft, validation evidence under `.agent/evidence/release-v1.5.0/`.
 
 **Phase H complete (2026-08-19):** TI integration contract doc, candidate validation gate, candidate-table render tests, install/doctor/eval propagation.
 

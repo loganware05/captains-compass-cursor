@@ -6,17 +6,18 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.4.0
+## Current version: 1.5.0
 
 ### Included
 
 - Approval-gated operating model (`AGENTS.md` + five core rules)
 - Twenty-four Skills (including capability-planning, harness-gc, dependency-supply-chain, autonomy-budget)
-- Eight specialist subagents
+- Capability-aware planning orchestrator (`orchestrator/`, `scripts/capability-plan.sh`)
+- Eight specialist subagents (also indexed as reference agent profiles)
 - Seven safety hooks (critical fail-closed; soft skips via env / command string / marker)
 - Six Cursor phase slash commands (`.cursor/commands/`)
 - Autonomy budgets + session notes (`.agent/budgets/`, `.agent/sessions/`)
-- Evidence matrix, multi-runtime docs, harness evals + sandbox behavioral checklist
+- Evidence matrix, multi-runtime docs, technology-intelligence adapter contract, harness evals + sandbox behavioral checklist
 - Structural-test examples (`examples/structural-tests/`)
 - Thin `CLAUDE.md` adapter when missing
 - `install.sh`, `update.sh`, `uninstall.sh`, `doctor.sh`
