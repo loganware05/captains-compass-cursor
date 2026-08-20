@@ -2,27 +2,24 @@
 
 ## Current status
 
-**V1.5.0 release-ready** on `feature/35-m1-capability-aware-planning` — issue
-[#35](https://github.com/loganware05/captains-compass-cursor/issues/35), PR
-[#36](https://github.com/loganware05/captains-compass-cursor/pull/36). Awaiting
-Captain merge to `main`, annotated tag `v1.5.0`, GitHub release, and sandbox
-refresh.
+**V1.5.0 released** — tag [`v1.5.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.5.0)
+on `1806eb3`. M1 capability-aware planning is live. Sandbox refreshed to 1.5.0;
+interactive `/plan-feature` checklist row 7 remains Captain/agent manual.
 
 ## Completed
 
 - Through v1.4.0: P0–P2 orchestration roadmap, evals, harness-gc, supply-chain
-- M1 plan approved; ADR-017 sidecar metadata decision documented
-- M1 Phases A–H: orchestrator, registry, resolver, planner, manifests, plan writer, tests/evals, TI boundary (#35)
-- M1 release prep: VERSION `1.5.0`, CHANGELOG, README, evidence pack
+- M1 Phases A–H via [#35](https://github.com/loganware05/captains-compass-cursor/issues/35) / [#36](https://github.com/loganware05/captains-compass-cursor/pull/36)
+- Release prep + VERSION land via [#37](https://github.com/loganware05/captains-compass-cursor/pull/37)
+- Annotated tag `v1.5.0`, GitHub release, sandbox `update.sh` 1.4.0 → 1.5.0
 
 ## In progress
 
-- Captain merge of PR [#36](https://github.com/loganware05/captains-compass-cursor/pull/36)
-- Tag + GitHub release + sandbox `update.sh` (per `docs/RELEASE_CHECKLIST.md`)
+- Sandbox chore PR for 1.5.0 assets (if opened)
+- Interactive sandbox checklist row 7: capability-aware `/plan-feature`
 
 ## Next
 
-- Interactive sandbox row 7: capability-aware `/plan-feature` in Cursor
 - Milestone 2 backlog (execution telemetry, live TI adapter)
 
 ## Blockers

@@ -1,0 +1,9 @@
+RELEASE_TAG=v1.5.0
+RELEASE_COMMIT=1806eb3d5ddcd413b5d819b84453431d67a66623
+RELEASE_PR_FEATURE=https://github.com/loganware05/captains-compass-cursor/pull/36
+RELEASE_PR_VERSION=https://github.com/loganware05/captains-compass-cursor/pull/37
+GITHUB_RELEASE=https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.5.0
+SANDBOX_PATH=/Users/loganware/Documents/Personal/Code/captain-compass-sandbox
+SANDBOX_FROM=1.4.0
+SANDBOX_TO=1.5.0
+SANDBOX_DOCTOR=passed
