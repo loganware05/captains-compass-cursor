@@ -11,6 +11,7 @@ Do **not** put LLM calls in CI — this checklist is Captain/agent interactive.
 | 4 | Evidence | Validation artifacts appear under `.agent/evidence/<slug>/` |
 | 5 | Budget stop | With a tiny autonomy budget, agent stops and writes Budget Stop Report |
 | 6 | Phase commands | `/plan-feature` and `/implement-approved-plan` behave as documented |
+| 7 | Capability-aware `/plan-feature` | Plan includes Required Capabilities, Task Graph, agent manifests, TI **NOT APPROVED** banner; capability gaps are explicit; agent stops at approval gate |
 
 Record results under `.agent/evidence/sandbox-behavioral-<date>/` with a short
 markdown note. Automated sensors live in `tests/evals/run.sh` and `tests/run.sh`.

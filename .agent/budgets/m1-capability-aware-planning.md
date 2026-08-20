@@ -7,7 +7,7 @@
 - Branch: feature/35-m1-capability-aware-planning
 - Created: 2026-08-19
 - Last updated: 2026-08-19
-- Status: ACTIVE
+- Status: COMPLETE
 
 ## Limits (from approved plan)
 
@@ -21,7 +21,7 @@
 
 ## Usage
 
-- Iterations used: 1
+- Iterations used: 9
 - Failed validation cycles: 0
 - Estimated cost used (USD): 0
 - Cost is estimate: true
@@ -32,6 +32,8 @@
 | Date | Iteration | Result | Notes |
 |---|---|---|---|
 | 2026-08-19 | 1 | in progress | Phase A schemas + orchestrator skeleton |
+| 2026-08-19 | 2–8 | pass | Phases B–H + tests |
+| 2026-08-19 | 9 | pass | Release prep VERSION 1.5.0 |
 
 ## Stop condition
 

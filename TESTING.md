@@ -3,7 +3,8 @@
 ## What we test
 
 1. **Doctor script** — expected files, rule frontmatter, Skill structure, hooks,
-   failClosed policy, budget templates, VERSION, control CI workflow
+   failClosed policy, budget templates, VERSION, control CI workflow, orchestrator
+   schemas, capability registry compile, TI integration doc
 2. **Installer** — copies workflow into a temporary Git repo; refuses overwrite without `--force`;
    creates `.agent/budgets/`, `.agent/capabilities/compiled/`, `.agent/plans/`, and budget templates
 3. **Hooks** — secret protection, protected-branch, plan-approval allow/deny cases,

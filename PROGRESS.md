@@ -2,31 +2,28 @@
 
 ## Current status
 
-**V1.4.0 released.** M1 multi-agent orchestration foundation **approved** — issue
-[#35](https://github.com/loganware05/captains-compass-cursor/issues/35), branch
-`feature/35-m1-capability-aware-planning`, target **v1.5.0**.
+**V1.5.0 release-ready** on `feature/35-m1-capability-aware-planning` — issue
+[#35](https://github.com/loganware05/captains-compass-cursor/issues/35), PR
+[#36](https://github.com/loganware05/captains-compass-cursor/pull/36). Awaiting
+Captain merge to `main`, annotated tag `v1.5.0`, GitHub release, and sandbox
+refresh.
 
 ## Completed
 
 - Through v1.4.0: P0–P2 orchestration roadmap, evals, harness-gc, supply-chain
 - M1 plan approved; ADR-017 sidecar metadata decision documented
-- M1 Phase A: orchestrator schemas, stdlib validator, model catalog, TI stub ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
-- M1 Phase B: Skill sidecars, reference profiles, registry compiler — PR [#36](https://github.com/loganware05/captains-compass-cursor/pull/36)
-- M1 Phase C: intent inference, Skill matcher, resolver CLI ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
-- M1 Phase D: task graph planner + validation ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
-- M1 Phase E: agent manifest assembler ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
-- M1 Phase F: plan writer + capability-planning Skill ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
-- M1 Phase G: tests, evals, install/doctor hardening ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
-- M1 Phase H: TI provider boundary + integration doc ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
+- M1 Phases A–H: orchestrator, registry, resolver, planner, manifests, plan writer, tests/evals, TI boundary (#35)
+- M1 release prep: VERSION `1.5.0`, CHANGELOG, README, evidence pack
 
 ## In progress
 
-- M1 release prep: VERSION bump, CHANGELOG, sandbox exercise ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
-- PR [#36](https://github.com/loganware05/captains-compass-cursor/pull/36) — Phases A–H
+- Captain merge of PR [#36](https://github.com/loganware05/captains-compass-cursor/pull/36)
+- Tag + GitHub release + sandbox `update.sh` (per `docs/RELEASE_CHECKLIST.md`)
 
 ## Next
 
-- Merge PR #36, tag v1.5.0, sandbox `/plan-feature` exercise
+- Interactive sandbox row 7: capability-aware `/plan-feature` in Cursor
+- Milestone 2 backlog (execution telemetry, live TI adapter)
 
 ## Blockers
 

@@ -184,5 +184,5 @@
      frontmatter.
   6. Reject hybrid frontmatter + sidecar dual-authoring (single source of truth).
 - **Consequences:** Clean separation of procedure vs routing; safe validation;
-  install/update unchanged; M1 ships sidecars for all 23 control-repo Skills.
+  install/update unchanged; M1 ships sidecars for all 24 control-repo Skills.
   See [`docs/design/CAPABILITY_METADATA_SIDECAR_VS_FRONTMATTER.md`](docs/design/CAPABILITY_METADATA_SIDECAR_VS_FRONTMATTER.md).
