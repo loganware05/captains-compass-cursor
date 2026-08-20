@@ -91,6 +91,7 @@ SKILLS=(
   autonomy-budget
   harness-gc
   dependency-supply-chain
+  capability-planning
 )
 
 for s in "${SKILLS[@]}"; do

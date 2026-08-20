@@ -35,6 +35,7 @@ SKILL_SLUGS = (
     "autonomy-budget",
     "harness-gc",
     "dependency-supply-chain",
+    "capability-planning",
 )
 
 AGENT_PROFILES = (

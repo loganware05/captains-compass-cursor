@@ -48,7 +48,7 @@ agentic engineering process across multiple product repositories.
 
 1. AGENTS.md operating contract
 2. Five always-applied core rules
-3. Twenty-three Skills (including harness-gc, dependency-supply-chain, autonomy-budget)
+3. Twenty-four Skills (including capability-planning, harness-gc, dependency-supply-chain, autonomy-budget)
 4. Eight specialist subagents
 5. Seven safety hooks (three critical fail-closed; four soft fail-open with multi-path skips)
 6. Six Cursor phase commands under `.cursor/commands/`

@@ -66,7 +66,8 @@ assert_true "implement-approved-plan command in control" test -f "$ROOT/.cursor/
 assert_true "CLAUDE.md template in control" test -f "$ROOT/templates/docs/CLAUDE.md"
 assert_true "harness-gc skill in control" test -f "$ROOT/.cursor/skills/harness-gc/SKILL.md"
 assert_true "dependency-supply-chain skill in control" test -f "$ROOT/.cursor/skills/dependency-supply-chain/SKILL.md"
-assert_true "session note template in control" test -f "$ROOT/templates/agent/SESSION_NOTE.md"
+assert_true "capability-planning skill in control" test -f "$ROOT/.cursor/skills/capability-planning/SKILL.md"
+assert_true "capability-plan script in control" test -f "$ROOT/scripts/capability-plan.sh"
 
 echo "=== doctor on control repo ==="
 assert_true "doctor passes on control repo" "$ROOT/scripts/doctor.sh" "$ROOT"
@@ -293,7 +294,7 @@ assert_true "registry compiles" "$ROOT/scripts/compile-capability-registry.sh"
 assert_true "registry output exists" test -f "$ROOT/.agent/capabilities/compiled/registry.json"
 
 echo "=== capability resolve smoke ==="
-chmod +x "$ROOT/scripts/capability-resolve.sh" "$ROOT/scripts/plan-task-graph.sh" "$ROOT/scripts/build-agent-manifests.sh"
+chmod +x "$ROOT/scripts/capability-resolve.sh" "$ROOT/scripts/plan-task-graph.sh" "$ROOT/scripts/build-agent-manifests.sh" "$ROOT/scripts/capability-plan.sh"
 out="$( "$ROOT/scripts/capability-resolve.sh" "Build a React dashboard" )"
 assert_contains "resolve returns react-engineering" 'react-engineering' "$out"
 
@@ -306,6 +307,13 @@ echo "=== agent manifest assembler smoke ==="
 manifest_out="$( "$ROOT/scripts/build-agent-manifests.sh" "Build a React dashboard with tests" )"
 assert_contains "manifest references implementation-agent" 'implementation-agent' "$manifest_out"
 assert_contains "manifest includes react-engineering skill" 'react-engineering' "$manifest_out"
+
+echo "=== capability plan integration smoke ==="
+plan_out="$( "$ROOT/scripts/capability-plan.sh" --plan-id smoke-test "Build a React dashboard with tests" )"
+assert_contains "plan has Required Capabilities" '## Required Capabilities' "$plan_out"
+assert_contains "plan has Task Graph" '## Task Graph' "$plan_out"
+assert_contains "plan has Approval Boundary" '## Approval Boundary' "$plan_out"
+assert_contains "plan mentions react-engineering" 'react-engineering' "$plan_out"
 
 echo "=== harness evals ==="
 assert_true "evals runner passes" "$ROOT/tests/evals/run.sh"

@@ -61,10 +61,10 @@ Success means the Captain can approve or reject planning quality **before** any 
 - [x] Minimal JSON Schemas exist for Capability, Task, AgentManifest, ModelProfile (+ stub CandidateCapability, ExecutionRun stubs for extension)
 - [x] All 23 existing Skills are discoverable via a compiled registry (authored metadata + safe inference fallback)
 - [x] Eight existing subagents are indexed as **reference agent profiles** (not deleted; extracted capabilities)
-- [ ] Deterministic orchestrator modules: registry load, capability inference, task decomposition, dependency validation, Skill ranking, manifest assembly, plan section rendering *(through Phase E — manifest assembly done; plan rendering Phase F)*
+- [ ] Deterministic orchestrator modules: registry load, capability inference, task decomposition, dependency validation, Skill ranking, manifest assembly, plan section rendering *(Phase F plan rendering done; Phase G eval hardening remaining)*
 - [ ] Technology Intelligence **provider interface** exists with a no-op/stub provider (no GitHub Stars coupling)
-- [ ] Enhanced `IMPLEMENTATION_PLAN.md` template + `/plan-feature` command document new sections
-- [ ] New Skill `capability-planning` instructs First Mate to run the orchestrator during planning
+- [x] Enhanced `IMPLEMENTATION_PLAN.md` template + `/plan-feature` command document new sections
+- [x] New Skill `capability-planning` instructs First Mate to run the orchestrator during planning
 - [ ] Capability gaps surface explicitly (no silent improvisation fixture case)
 - [ ] `plan-approval-check.sh` behavior unchanged for APPROVED/DRAFT gating
 - [ ] `./scripts/doctor.sh`, `./tests/run.sh`, `./tests/evals/run.sh` pass with new tests added
@@ -702,7 +702,9 @@ Until then, only planning documents and discovery artifacts may change.
 - **Branch:** `feature/35-m1-capability-aware-planning`
 - **Rollback:** `rollback/pre-m1-capability-aware-planning` @ `5929f10`
 
-**In progress:** Phase F — implementation plan integration.
+**In progress:** Phase G — tests, evals, and harness hardening.
+
+**Phase F complete (2026-08-19):** plan writer, `capability-plan.sh`, `capability-planning` Skill, enhanced plan template, `/plan-feature` integration, technology-intelligence doc.
 
 **Phase E complete (2026-08-19):** per-task agent manifests with reference profiles, Skill selection (top 3), model class recommendations, autonomy budget defaults, `build-agent-manifests.sh`.
 

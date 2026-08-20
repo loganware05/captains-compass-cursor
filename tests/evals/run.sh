@@ -105,7 +105,11 @@ assert_true "harness-gc skill" test -f "$ROOT/.cursor/skills/harness-gc/SKILL.md
 assert_true "dependency-supply-chain skill" test -f "$ROOT/.cursor/skills/dependency-supply-chain/SKILL.md"
 assert_true "session note template" test -f "$ROOT/templates/agent/SESSION_NOTE.md"
 assert_true "structural-tests example" test -f "$ROOT/examples/structural-tests/README.md"
-assert_true "sandbox behavioral checklist" test -f "$ROOT/docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md"
+assert_true "capability-planning skill" test -f "$ROOT/.cursor/skills/capability-planning/SKILL.md"
+assert_true "capability-plan.sh" test -x "$ROOT/scripts/capability-plan.sh"
+template="$ROOT/templates/docs/IMPLEMENTATION_PLAN.md"
+assert_contains "template has Required Capabilities" '## Required Capabilities' "$(cat "$template")"
+assert_contains "template has Approval Boundary" '## Approval Boundary' "$(cat "$template")"
 
 echo
 echo "Eval results: $PASS passed, $FAIL failed"

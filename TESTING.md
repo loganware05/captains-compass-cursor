@@ -42,6 +42,12 @@ Agent manifest builder:
 ./scripts/build-agent-manifests.sh "Build a React dashboard with tests" draft-plan-id
 ```
 
+Full capability-aware plan sections:
+
+```bash
+./scripts/capability-plan.sh --plan-id my-feature "Build a React dashboard with tests"
+```
+
 ## Evidence matrix
 
 Required validation artifacts by change type:
