@@ -7,3 +7,6 @@ SANDBOX_PATH=/Users/loganware/Documents/Personal/Code/captain-compass-sandbox
 SANDBOX_FROM=1.4.0
 SANDBOX_TO=1.5.0
 SANDBOX_DOCTOR=passed
+SANDBOX_ISSUE=https://github.com/loganware05/captain-compass-sandbox/issues/13
+SANDBOX_PR=https://github.com/loganware05/captain-compass-sandbox/pull/14
+CLOSEOUT_PR=https://github.com/loganware05/captains-compass-cursor/pull/38
