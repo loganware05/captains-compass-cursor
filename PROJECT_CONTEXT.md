@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship v1.5.0 (merge PR #36, tag, sandbox refresh); then Milestone 2 backlog.
+Ship v1.5.0 complete; Milestone 2 backlog next (execution telemetry, live TI).
