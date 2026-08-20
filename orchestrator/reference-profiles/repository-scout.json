@@ -1,0 +1,39 @@
+{
+  "agent_affinity": [
+    "repository-scout"
+  ],
+  "capabilities_provided": [
+    "read-only-discovery",
+    "repo-structure-mapping",
+    "tooling-identification",
+    "skill-recommendation"
+  ],
+  "categories": [
+    "discovery",
+    "onboarding",
+    "architecture"
+  ],
+  "compatible_stacks": [
+    "any"
+  ],
+  "confidence": 0.9,
+  "id": "repository-scout",
+  "kind": "agent-profile",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "maturity": "proven",
+  "provenance": {
+    "authored_by": "compass",
+    "confidence": 0.9,
+    "inferred": false
+  },
+  "security_sensitivity": "low",
+  "source": {
+    "path": ".cursor/agents/repository-scout.md",
+    "type": "compass-agent"
+  },
+  "tags": [
+    "discovery",
+    "scout"
+  ],
+  "version": "1.0.0"
+}

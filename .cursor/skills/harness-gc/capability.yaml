@@ -1,0 +1,30 @@
+id: harness-gc
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/harness-gc/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [process, governance, maintenance]
+tags:
+  - compass
+  - rules
+  - skills
+  - drift
+capabilities_provided:
+  - harness-drift-detection
+  - rules-inventory
+  - skills-inventory
+  - harness-cleanup-reporting
+compatible_stacks:
+  - any
+security_sensitivity: low
+agent_affinity:
+  - documentation-agent
+  - repository-scout
+maturity: proven
+confidence: 0.9

@@ -1,0 +1,30 @@
+id: github-integration
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/github-integration/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [integration, delivery, git]
+tags:
+  - github
+  - gh-cli
+  - issues
+  - pull-requests
+capabilities_provided:
+  - github-issue-create
+  - github-pr-create
+  - github-ci-status-inspection
+  - github-auth-fallback
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - documentation-agent
+  - implementation-agent
+maturity: proven
+confidence: 0.9

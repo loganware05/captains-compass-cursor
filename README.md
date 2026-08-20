@@ -11,7 +11,7 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 ### Included
 
 - Approval-gated operating model (`AGENTS.md` + five core rules)
-- Twenty-three Skills (including harness-gc, dependency-supply-chain, autonomy-budget)
+- Twenty-four Skills (including capability-planning, harness-gc, dependency-supply-chain, autonomy-budget)
 - Eight specialist subagents
 - Seven safety hooks (critical fail-closed; soft skips via env / command string / marker)
 - Six Cursor phase slash commands (`.cursor/commands/`)

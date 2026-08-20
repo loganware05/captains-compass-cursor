@@ -5,7 +5,7 @@
 1. **Doctor script** — expected files, rule frontmatter, Skill structure, hooks,
    failClosed policy, budget templates, VERSION, control CI workflow
 2. **Installer** — copies workflow into a temporary Git repo; refuses overwrite without `--force`;
-   creates `.agent/budgets/` and budget templates
+   creates `.agent/budgets/`, `.agent/capabilities/compiled/`, `.agent/plans/`, and budget templates
 3. **Hooks** — secret protection, protected-branch, plan-approval allow/deny cases,
    branch-name, PR evidence; failClosed critical/soft split
 4. **Sandbox exercise (manual)** — approval gate, then implement after approval;
@@ -16,6 +16,36 @@
 ```bash
 ./scripts/doctor.sh
 ./tests/run.sh
+```
+
+Orchestrator schema unit tests (included in `tests/run.sh`):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_*.py' -v
+```
+
+Capability resolve CLI:
+
+```bash
+./scripts/capability-resolve.sh "Build a React dashboard with tests"
+```
+
+Task graph planner:
+
+```bash
+./scripts/plan-task-graph.sh "Build a React dashboard with tests"
+```
+
+Agent manifest builder:
+
+```bash
+./scripts/build-agent-manifests.sh "Build a React dashboard with tests" draft-plan-id
+```
+
+Full capability-aware plan sections:
+
+```bash
+./scripts/capability-plan.sh --plan-id my-feature "Build a React dashboard with tests"
 ```
 
 ## Evidence matrix
@@ -30,6 +60,10 @@ Deterministic sensors (CI + local):
 ```bash
 ./tests/evals/run.sh
 ```
+
+Evals cover: failClosed policy, plan-approval gate, soft-hook skips, orchestrator schema
+presence, stub Technology Intelligence provider isolation, golden fixture determinism, and
+enhanced plan template sections.
 
 Manual sandbox behavioral checklist:
 [`docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md`](docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md).

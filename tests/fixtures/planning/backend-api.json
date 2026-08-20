@@ -1,0 +1,8 @@
+{
+  "objective": "Add a Node REST API with auth boundaries, request validation, and integration tests",
+  "context": {
+    "stacks": ["node"]
+  },
+  "expected_top_skills": ["node-engineering", "testing-validation"],
+  "expected_gaps": []
+}

@@ -52,7 +52,7 @@ assert_contains() {
   fi
 }
 
-chmod +x "$ROOT/scripts/install.sh" "$ROOT/scripts/doctor.sh" "$ROOT/.cursor/hooks/"*.sh
+chmod +x "$ROOT/scripts/install.sh" "$ROOT/scripts/doctor.sh" "$ROOT/scripts/compile-capability-registry.sh" "$ROOT/.cursor/hooks/"*.sh
 
 echo "=== control repo budget templates + CI ==="
 assert_true "budget ledger template in control" test -f "$ROOT/templates/agent/BUDGET_LEDGER.md"
@@ -66,7 +66,8 @@ assert_true "implement-approved-plan command in control" test -f "$ROOT/.cursor/
 assert_true "CLAUDE.md template in control" test -f "$ROOT/templates/docs/CLAUDE.md"
 assert_true "harness-gc skill in control" test -f "$ROOT/.cursor/skills/harness-gc/SKILL.md"
 assert_true "dependency-supply-chain skill in control" test -f "$ROOT/.cursor/skills/dependency-supply-chain/SKILL.md"
-assert_true "session note template in control" test -f "$ROOT/templates/agent/SESSION_NOTE.md"
+assert_true "capability-planning skill in control" test -f "$ROOT/.cursor/skills/capability-planning/SKILL.md"
+assert_true "capability-plan script in control" test -f "$ROOT/scripts/capability-plan.sh"
 
 echo "=== doctor on control repo ==="
 assert_true "doctor passes on control repo" "$ROOT/scripts/doctor.sh" "$ROOT"
@@ -217,8 +218,14 @@ assert_true "installed initialize-project command" test -f "$TMP/.cursor/command
 assert_true "installed CLAUDE.md adapter" test -f "$TMP/CLAUDE.md"
 assert_true "installed evidence matrix doc" test -f "$TMP/docs/EVIDENCE_MATRIX.md"
 assert_true "installed multi-runtime doc" test -f "$TMP/docs/integrations/multi-runtime-agents.md"
+assert_true "installed technology-intelligence doc" test -f "$TMP/docs/integrations/technology-intelligence.md"
 assert_true "installed harness-gc skill" test -f "$TMP/.cursor/skills/harness-gc/SKILL.md"
 assert_true "installed dependency-supply-chain skill" test -f "$TMP/.cursor/skills/dependency-supply-chain/SKILL.md"
+assert_true "installed capability-planning skill" test -f "$TMP/.cursor/skills/capability-planning/SKILL.md"
+assert_true "installed capability-planning sidecar" test -f "$TMP/.cursor/skills/capability-planning/capability.yaml"
+assert_true "installed plan template has Required Capabilities" grep -q "## Required Capabilities" "$TMP/IMPLEMENTATION_PLAN.md"
+assert_true "created capabilities compiled dir" test -d "$TMP/.agent/capabilities/compiled"
+assert_true "created plans dir" test -d "$TMP/.agent/plans"
 assert_true "created sessions dir" test -d "$TMP/.agent/sessions"
 assert_true "installed session note template" test -f "$TMP/.agent/sessions/_templates/SESSION_NOTE.md"
 assert_true "wrote COMPASS_VERSION" test -f "$TMP/.agent/COMPASS_VERSION"
@@ -284,6 +291,35 @@ assert_true "uninstall requires --yes" bash -c "! '$ROOT/scripts/uninstall.sh' '
 assert_true "uninstall --yes succeeds" "$ROOT/scripts/uninstall.sh" --yes "$TMP"
 assert_true "uninstall removed rules" bash -c "! test -d '$TMP/.cursor/rules'"
 assert_true "uninstall kept PROJECT_CONTEXT" test -f "$TMP/PROJECT_CONTEXT.md"
+
+echo "=== orchestrator schema tests ==="
+assert_true "orchestrator unittest" bash -c "cd '$ROOT' && PYTHONPATH='$ROOT' python3 -m unittest discover -s tests/orchestrator -p 'test_*.py' -q"
+
+echo "=== capability registry compile ==="
+assert_true "registry compiles" "$ROOT/scripts/compile-capability-registry.sh"
+assert_true "registry output exists" test -f "$ROOT/.agent/capabilities/compiled/registry.json"
+
+echo "=== capability resolve smoke ==="
+chmod +x "$ROOT/scripts/capability-resolve.sh" "$ROOT/scripts/plan-task-graph.sh" "$ROOT/scripts/build-agent-manifests.sh" "$ROOT/scripts/capability-plan.sh"
+out="$( "$ROOT/scripts/capability-resolve.sh" "Build a React dashboard" )"
+assert_contains "resolve returns react-engineering" 'react-engineering' "$out"
+
+echo "=== task graph planner smoke ==="
+graph_out="$( "$ROOT/scripts/plan-task-graph.sh" "Build a React dashboard with tests" )"
+assert_contains "planner returns task-discovery" 'task-discovery' "$graph_out"
+assert_contains "planner returns task-impl-frontend" 'task-impl-frontend' "$graph_out"
+
+echo "=== agent manifest assembler smoke ==="
+manifest_out="$( "$ROOT/scripts/build-agent-manifests.sh" "Build a React dashboard with tests" )"
+assert_contains "manifest references implementation-agent" 'implementation-agent' "$manifest_out"
+assert_contains "manifest includes react-engineering skill" 'react-engineering' "$manifest_out"
+
+echo "=== capability plan integration smoke ==="
+plan_out="$( "$ROOT/scripts/capability-plan.sh" --plan-id smoke-test "Build a React dashboard with tests" )"
+assert_contains "plan has Required Capabilities" '## Required Capabilities' "$plan_out"
+assert_contains "plan has Task Graph" '## Task Graph' "$plan_out"
+assert_contains "plan has Approval Boundary" '## Approval Boundary' "$plan_out"
+assert_contains "plan mentions react-engineering" 'react-engineering' "$plan_out"
 
 echo "=== harness evals ==="
 assert_true "evals runner passes" "$ROOT/tests/evals/run.sh"

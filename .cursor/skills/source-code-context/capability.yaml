@@ -1,0 +1,32 @@
+id: source-code-context
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/source-code-context/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [development, integration, research]
+tags:
+  - opensrc
+  - packages
+  - api
+  - source
+capabilities_provided:
+  - package-source-fetch
+  - dependency-source-search
+  - api-discovery
+compatible_stacks:
+  - node
+  - python
+  - rust
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - implementation-agent
+  - repository-scout
+maturity: proven
+confidence: 0.9

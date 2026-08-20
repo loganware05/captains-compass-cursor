@@ -1,0 +1,6 @@
+{
+  "objective": "Implement a quantum compiler with qubit error correction synthesis pipeline",
+  "context": {},
+  "expected_top_skills": [],
+  "expected_gaps": ["quantum-circuit-synthesis", "quantum-error-correction"]
+}

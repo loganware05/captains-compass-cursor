@@ -107,7 +107,7 @@ if [[ ${#conflicts[@]} -gt 0 && "$FORCE" -ne 1 ]]; then
   exit 1
 fi
 
-mkdir -p "$TARGET/.cursor" "$TARGET/.agent/evidence" "$TARGET/.agent/budgets" "$TARGET/.agent/budgets/_templates" "$TARGET/.agent/budgets/private" "$TARGET/.agent/sessions" "$TARGET/.agent/sessions/private" "$TARGET/.agent/runs"
+mkdir -p "$TARGET/.cursor" "$TARGET/.agent/evidence" "$TARGET/.agent/budgets" "$TARGET/.agent/budgets/_templates" "$TARGET/.agent/budgets/private" "$TARGET/.agent/sessions" "$TARGET/.agent/sessions/private" "$TARGET/.agent/runs" "$TARGET/.agent/capabilities/compiled" "$TARGET/.agent/plans"
 
 
 # Copy Cursor package
@@ -168,6 +168,15 @@ if [[ -f "$SOURCE_ROOT/docs/integrations/multi-runtime-agents.md" ]]; then
   else
     cp "$SOURCE_ROOT/docs/integrations/multi-runtime-agents.md" "$TARGET/docs/integrations/multi-runtime-agents.md"
     echo "added: docs/integrations/multi-runtime-agents.md"
+  fi
+fi
+if [[ -f "$SOURCE_ROOT/docs/integrations/technology-intelligence.md" ]]; then
+  mkdir -p "$TARGET/docs/integrations"
+  if [[ -f "$TARGET/docs/integrations/technology-intelligence.md" ]]; then
+    echo "keep: docs/integrations/technology-intelligence.md (already exists; not overwritten)"
+  else
+    cp "$SOURCE_ROOT/docs/integrations/technology-intelligence.md" "$TARGET/docs/integrations/technology-intelligence.md"
+    echo "added: docs/integrations/technology-intelligence.md"
   fi
 fi
 

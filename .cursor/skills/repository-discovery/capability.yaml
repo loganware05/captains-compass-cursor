@@ -1,0 +1,29 @@
+id: repository-discovery
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/repository-discovery/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [discovery, onboarding, architecture]
+tags:
+  - onboarding
+  - architecture
+  - tooling
+capabilities_provided:
+  - repo-structure-mapping
+  - tooling-identification
+  - convention-discovery
+  - skill-recommendation
+compatible_stacks:
+  - any
+security_sensitivity: low
+agent_affinity:
+  - repository-scout
+  - architecture-agent
+maturity: proven
+confidence: 0.9

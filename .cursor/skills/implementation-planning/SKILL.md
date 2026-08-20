@@ -23,17 +23,18 @@ infrastructure change, or other task that modifies product behavior.
 
 1. Read the required project documents.
 2. Inspect relevant implementation files.
-3. Identify current behavior.
-4. Define desired behavior.
-5. Identify assumptions and open questions.
-6. Identify affected systems.
-7. Define independent workstreams.
-8. Define tests and evidence.
-9. Define migration and rollback requirements.
-10. Define time, cost, and iteration limits.
-11. Write IMPLEMENTATION_PLAN.md.
-12. Set its status to AWAITING APPROVAL.
-13. Present the plan and stop.
+3. Load Skill `capability-planning` and run `./scripts/capability-plan.sh` for the objective; merge rendered sections into `IMPLEMENTATION_PLAN.md`.
+4. Identify current behavior.
+5. Define desired behavior.
+6. Identify assumptions and open questions.
+7. Identify affected systems.
+8. Define independent workstreams (align with task graph when present).
+9. Define tests and evidence.
+10. Define migration and rollback requirements.
+11. Define time, cost, and iteration limits.
+12. Write IMPLEMENTATION_PLAN.md.
+13. Set its status to AWAITING APPROVAL.
+14. Present the plan and stop.
 
 ## Output
 

@@ -1,0 +1,32 @@
+id: playwright-browser-validation
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/playwright-browser-validation/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [testing, validation, ui]
+tags:
+  - playwright
+  - e2e
+  - browser
+  - screenshots
+capabilities_provided:
+  - playwright-execution
+  - e2e-testing
+  - browser-screenshots
+  - ui-evidence-capture
+compatible_stacks:
+  - web
+  - react
+  - node
+security_sensitivity: medium
+agent_affinity:
+  - test-engineer
+  - accessibility-reviewer
+maturity: proven
+confidence: 0.9

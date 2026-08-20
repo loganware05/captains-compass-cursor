@@ -1,0 +1,29 @@
+id: autonomy-budget
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/autonomy-budget/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [process, governance, autonomy]
+tags:
+  - budget
+  - limits
+  - iterations
+capabilities_provided:
+  - budget-ledger-management
+  - iteration-tracking
+  - budget-limit-enforcement
+  - budget-stop-reporting
+compatible_stacks:
+  - any
+security_sensitivity: low
+agent_affinity:
+  - implementation-agent
+  - documentation-agent
+maturity: proven
+confidence: 0.9

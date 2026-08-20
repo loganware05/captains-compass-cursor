@@ -1,0 +1,37 @@
+{
+  "agent_affinity": [
+    "implementation-agent"
+  ],
+  "capabilities_provided": [
+    "feature-implementation",
+    "scoped-code-change",
+    "convention-following",
+    "local-validation"
+  ],
+  "categories": [
+    "implementation",
+    "development"
+  ],
+  "compatible_stacks": [
+    "any"
+  ],
+  "confidence": 0.9,
+  "id": "implementation-agent",
+  "kind": "agent-profile",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "maturity": "proven",
+  "provenance": {
+    "authored_by": "compass",
+    "confidence": 0.9,
+    "inferred": false
+  },
+  "security_sensitivity": "low",
+  "source": {
+    "path": ".cursor/agents/implementation-agent.md",
+    "type": "compass-agent"
+  },
+  "tags": [
+    "implementation"
+  ],
+  "version": "1.0.0"
+}

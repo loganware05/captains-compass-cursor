@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/execution-run.schema.json",
+  "title": "ExecutionRun",
+  "description": "Stub provenance record linking objective, task, plan, agent, and Git evidence (Milestone 2+ population).",
+  "type": "object",
+  "required": ["run_id", "plan_id", "task_id", "outcome"],
+  "additionalProperties": true,
+  "properties": {
+    "run_id": { "type": "string", "minLength": 1 },
+    "plan_id": { "type": "string", "minLength": 1 },
+    "task_id": { "type": "string", "minLength": 1 },
+    "objective": { "type": "string" },
+    "outcome": {
+      "type": "string",
+      "enum": ["pending", "success", "partial", "failed", "cancelled"]
+    },
+    "agents": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "models": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "skills": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "issue": { "type": "string" },
+        "branch": { "type": "string" },
+        "worktree": { "type": "string" },
+        "commits": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "pull_request": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "retries": { "type": "integer", "minimum": 0 },
+    "lessons": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

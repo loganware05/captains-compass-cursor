@@ -1,0 +1,34 @@
+id: accessibility-review
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/accessibility-review/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [quality, accessibility, validation]
+tags:
+  - a11y
+  - wcag
+  - keyboard
+  - contrast
+capabilities_provided:
+  - keyboard-navigation-review
+  - screen-reader-review
+  - semantic-markup-review
+  - color-contrast-check
+  - accessibility-evidence-capture
+compatible_stacks:
+  - web
+  - react
+  - ios
+  - any
+security_sensitivity: low
+agent_affinity:
+  - accessibility-reviewer
+  - test-engineer
+maturity: proven
+confidence: 0.9

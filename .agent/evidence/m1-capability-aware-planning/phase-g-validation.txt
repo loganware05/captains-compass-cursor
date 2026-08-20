@@ -1,0 +1,21 @@
+Phase G validation — 2026-08-19
+Plan ID: m1-capability-aware-planning
+Branch: feature/35-m1-capability-aware-planning
+
+./scripts/doctor.sh
+  Doctor passed: 0 errors, 0 warning(s)
+
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_*.py' -q
+  Ran 57 tests — OK
+
+./tests/run.sh
+  Results: 103 passed, 0 failed
+
+./tests/evals/run.sh
+  Eval results: 21 passed, 0 failed
+
+New coverage:
+- tests/orchestrator/test_integration.py (golden fixture pipeline)
+- registry path-traversal rejection test
+- install: capability-planning skill + sidecar, plan template sections, .agent/plans + capabilities dirs
+- evals: stub TI isolation, golden fixture determinism, orchestrator schema presence

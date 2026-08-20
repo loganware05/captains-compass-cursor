@@ -1,0 +1,38 @@
+{
+  "agent_affinity": [
+    "test-engineer"
+  ],
+  "capabilities_provided": [
+    "unit-test-authoring",
+    "integration-test-authoring",
+    "e2e-test-authoring",
+    "test-evidence-capture"
+  ],
+  "categories": [
+    "testing",
+    "quality",
+    "validation"
+  ],
+  "compatible_stacks": [
+    "any"
+  ],
+  "confidence": 0.9,
+  "id": "test-engineer",
+  "kind": "agent-profile",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "maturity": "proven",
+  "provenance": {
+    "authored_by": "compass",
+    "confidence": 0.9,
+    "inferred": false
+  },
+  "security_sensitivity": "low",
+  "source": {
+    "path": ".cursor/agents/test-engineer.md",
+    "type": "compass-agent"
+  },
+  "tags": [
+    "testing"
+  ],
+  "version": "1.0.0"
+}

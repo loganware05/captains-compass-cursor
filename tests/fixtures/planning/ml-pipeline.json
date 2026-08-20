@@ -1,0 +1,8 @@
+{
+  "objective": "Train and evaluate an ML model with reproducible Python experiment workflows",
+  "context": {
+    "stacks": ["python"]
+  },
+  "expected_top_skills": ["python-ml"],
+  "expected_gaps": []
+}

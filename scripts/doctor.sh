@@ -91,6 +91,7 @@ SKILLS=(
   autonomy-budget
   harness-gc
   dependency-supply-chain
+  capability-planning
 )
 
 for s in "${SKILLS[@]}"; do
@@ -196,6 +197,65 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing examples/structural-tests/README.md"
   fi
+  ORCHESTRATOR_SCHEMAS=(
+    capability.schema.json
+    task.schema.json
+    agent-manifest.schema.json
+    model-profile.schema.json
+    candidate-capability.schema.json
+    execution-run.schema.json
+  )
+  for s in "${ORCHESTRATOR_SCHEMAS[@]}"; do
+    if [[ -f "$ROOT/orchestrator/schemas/$s" ]]; then
+      ok "orchestrator schema $s"
+    else
+      fail "missing orchestrator/schemas/$s"
+    fi
+  done
+  if [[ -f "$ROOT/orchestrator/model_profiles/catalog.json" ]]; then
+    ok "orchestrator model catalog"
+  else
+    fail "missing orchestrator/model_profiles/catalog.json"
+  fi
+  if command -v python3 >/dev/null 2>&1; then
+    if PYTHONPATH="$ROOT" python3 -c "from orchestrator.model_profiles import load_catalog; load_catalog()" 2>/dev/null; then
+      ok "orchestrator catalog validates"
+    else
+      fail "orchestrator catalog validation failed"
+    fi
+    if "$ROOT/scripts/compile-capability-registry.sh" >/dev/null 2>&1; then
+      ok "capability registry compiles"
+    else
+      fail "capability registry compile failed"
+    fi
+  else
+    warn "skip orchestrator catalog validation (no python3)"
+  fi
+  if [[ -f "$ROOT/scripts/capability-plan.sh" ]]; then
+    ok "scripts/capability-plan.sh present"
+  else
+    fail "missing scripts/capability-plan.sh"
+  fi
+  if [[ -f "$ROOT/.cursor/skills/capability-planning/capability.yaml" ]]; then
+    ok "capability-planning sidecar"
+  else
+    fail "missing capability-planning/capability.yaml"
+  fi
+  if [[ -f "$ROOT/.agent/capabilities/compiled/.gitkeep" ]]; then
+    ok ".agent/capabilities/compiled layout"
+  else
+    fail "missing .agent/capabilities/compiled/.gitkeep"
+  fi
+  if [[ -d "$ROOT/tests/fixtures/planning" ]]; then
+    fixture_count="$(find "$ROOT/tests/fixtures/planning" -maxdepth 1 -name '*.json' | wc -l | tr -d ' ')"
+    if [[ "$fixture_count" -ge 6 ]]; then
+      ok "planning fixtures ($fixture_count)"
+    else
+      fail "expected at least 6 planning fixtures, found $fixture_count"
+    fi
+  else
+    fail "missing tests/fixtures/planning"
+  fi
   if [[ -f "$ROOT/.github/workflows/ci.yml" ]]; then
     ok "control CI workflow"
   else
@@ -225,6 +285,16 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "docs/integrations/multi-runtime-agents.md"
   else
     fail "missing docs/integrations/multi-runtime-agents.md"
+  fi
+  if [[ -f "$ROOT/docs/integrations/technology-intelligence.md" ]]; then
+    ok "docs/integrations/technology-intelligence.md"
+  else
+    fail "missing docs/integrations/technology-intelligence.md"
+  fi
+  if [[ -f "$ROOT/orchestrator/providers/technology_intelligence/validate.py" ]]; then
+    ok "TI candidate validation"
+  else
+    fail "missing orchestrator/providers/technology_intelligence/validate.py"
   fi
   if [[ -f "$ROOT/templates/docs/CLAUDE.md" ]]; then
     ok "template CLAUDE.md"

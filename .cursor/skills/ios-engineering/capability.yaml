@@ -1,0 +1,31 @@
+id: ios-engineering
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/ios-engineering/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [mobile, implementation, frontend]
+tags:
+  - swift
+  - swiftui
+  - xcode
+  - ios
+capabilities_provided:
+  - swiftui-development
+  - xcode-project-management
+  - ios-accessibility-labels
+  - simulator-testing
+compatible_stacks:
+  - ios
+  - swift
+security_sensitivity: medium
+agent_affinity:
+  - implementation-agent
+  - test-engineer
+maturity: proven
+confidence: 0.9

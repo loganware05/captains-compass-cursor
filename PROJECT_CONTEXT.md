@@ -33,10 +33,12 @@ agentic engineering process across multiple product repositories.
 - Git / Git worktrees
 - Markdown project memory documents
 - Optional MCP integrations (GitHub, Linear, Notion, cloud, Postgres) documented under `docs/integrations/`
+- **Technology Intelligence adapter** — stub provider + integration contract (`docs/integrations/technology-intelligence.md`); no external repo coupling in M1
 
 ## Repository Map
 
 - `.cursor/` — reusable rules, Skills, agents, hooks (source of truth)
+- `orchestrator/` — capability schemas, registry compiler (M1), planning pipeline (v1.5.0+)
 - `templates/docs/` — blank docs installed into product repos
 - `scripts/` — install.sh, update.sh, uninstall.sh, doctor.sh
 - `examples/` — fixture projects for installer docs/tests
@@ -47,13 +49,14 @@ agentic engineering process across multiple product repositories.
 
 1. AGENTS.md operating contract
 2. Five always-applied core rules
-3. Twenty-three Skills (including harness-gc, dependency-supply-chain, autonomy-budget)
+3. Twenty-four Skills (including capability-planning, harness-gc, dependency-supply-chain, autonomy-budget)
 4. Eight specialist subagents
 5. Seven safety hooks (three critical fail-closed; four soft fail-open with multi-path skips)
 6. Six Cursor phase commands under `.cursor/commands/`
 7. Documentation, budget/session templates, evidence matrix, multi-runtime adapters, evals
 8. Installation, update, uninstall, and doctor scripts
 9. Control-repo CI (doctor + tests + harness evals)
+10. **Orchestrator module** (`orchestrator/`) — M1 capability-aware planning contracts (v1.5.0 in progress)
 
 ## External Services
 

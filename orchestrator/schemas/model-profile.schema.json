@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/model-profile.schema.json",
+  "title": "ModelProfile",
+  "description": "Documented model class used for worker recommendations (Cursor IDE selection remains Captain-controlled).",
+  "type": "object",
+  "required": ["id", "class", "description"],
+  "additionalProperties": true,
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "class": {
+      "type": "string",
+      "enum": ["coding-strong", "reasoning-strong", "fast-iter", "inherit"]
+    },
+    "description": { "type": "string", "minLength": 1 },
+    "recommended_slugs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "strengths": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
