@@ -15,7 +15,8 @@ interactive `/plan-feature` checklist row 7 remains Captain/agent manual.
 
 ## In progress
 
-- Sandbox chore PR for 1.5.0 assets (if opened)
+- Closeout PR [#38](https://github.com/loganware05/captains-compass-cursor/pull/38)
+- Sandbox refresh PR [sandbox#14](https://github.com/loganware05/captain-compass-sandbox/pull/14) ([issue #13](https://github.com/loganware05/captain-compass-sandbox/issues/13))
 - Interactive sandbox checklist row 7: capability-aware `/plan-feature`
 
 ## Next
