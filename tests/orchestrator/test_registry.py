@@ -53,45 +53,46 @@ class RegistryCompileTests(unittest.TestCase):
         self.assertEqual(len(result.registry["reference_profiles"]), 8)
         self.assertEqual(result.warnings, [])
 
-    def test_write_registry_file(self) -> None:
+    def test_skill_ids_are_unique(self) -> None:
+        result = compile_registry(ROOT)
+        ids = [s["id"] for s in result.registry["skills"]]
+        self.assertEqual(len(ids), len(set(ids)))
+
+    def test_path_traversal_in_source_path_raises(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             repo = Path(tmp)
-            (repo / ".cursor" / "skills" / "demo-skill").mkdir(parents=True)
-            (repo / ".cursor" / "skills" / "demo-skill" / "SKILL.md").write_text(
-                "---\nname: demo-skill\ndescription: Demo\n---\n",
+            skill_dir = repo / ".cursor" / "skills" / "evil-skill"
+            skill_dir.mkdir(parents=True)
+            (skill_dir / "SKILL.md").write_text(
+                "---\nname: evil-skill\ndescription: Evil\n---\n",
                 encoding="utf-8",
             )
-            (repo / ".cursor" / "skills" / "demo-skill" / "capability.yaml").write_text(
+            (skill_dir / "capability.yaml").write_text(
                 """
-id: demo-skill
+id: evil-skill
 version: "1.0.0"
 kind: skill
 source:
   type: compass-skill
-  path: .cursor/skills/demo-skill/SKILL.md
+  path: .cursor/skills/../../../etc/passwd
 capabilities_provided:
-  - demo-capability
+  - x
 """.strip()
                 + "\n",
                 encoding="utf-8",
             )
-            (repo / "orchestrator" / "reference-profiles").mkdir(parents=True)
-            profile = {
-                "id": "demo-agent",
-                "version": "1.0.0",
-                "kind": "agent-profile",
-                "source": {"type": "compass-agent", "path": ".cursor/agents/demo-agent.md"},
-                "capabilities_provided": ["demo-review"],
-            }
-            (repo / "orchestrator" / "reference-profiles" / "demo-agent.json").write_text(
-                json.dumps(profile),
-                encoding="utf-8",
-            )
-            # Patch slugs by compiling minimal subset via direct normalize - skip full compile
-            # Instead test duplicate detection on synthetic merge
-        result = compile_registry(ROOT)
-        ids = [s["id"] for s in result.registry["skills"]]
-        self.assertEqual(len(ids), len(set(ids)))
+            from orchestrator.registry import compiler as comp
+
+            original = comp.SKILL_SLUGS
+            original_profiles = comp.AGENT_PROFILES
+            comp.SKILL_SLUGS = ("evil-skill",)
+            comp.AGENT_PROFILES = ()
+            try:
+                with self.assertRaises(RegistryCompileError):
+                    compile_registry(repo)
+            finally:
+                comp.SKILL_SLUGS = original
+                comp.AGENT_PROFILES = original_profiles
 
     def test_id_mismatch_raises(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

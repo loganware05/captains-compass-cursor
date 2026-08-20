@@ -231,6 +231,31 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     warn "skip orchestrator catalog validation (no python3)"
   fi
+  if [[ -f "$ROOT/scripts/capability-plan.sh" ]]; then
+    ok "scripts/capability-plan.sh present"
+  else
+    fail "missing scripts/capability-plan.sh"
+  fi
+  if [[ -f "$ROOT/.cursor/skills/capability-planning/capability.yaml" ]]; then
+    ok "capability-planning sidecar"
+  else
+    fail "missing capability-planning/capability.yaml"
+  fi
+  if [[ -f "$ROOT/.agent/capabilities/compiled/.gitkeep" ]]; then
+    ok ".agent/capabilities/compiled layout"
+  else
+    fail "missing .agent/capabilities/compiled/.gitkeep"
+  fi
+  if [[ -d "$ROOT/tests/fixtures/planning" ]]; then
+    fixture_count="$(find "$ROOT/tests/fixtures/planning" -maxdepth 1 -name '*.json' | wc -l | tr -d ' ')"
+    if [[ "$fixture_count" -ge 6 ]]; then
+      ok "planning fixtures ($fixture_count)"
+    else
+      fail "expected at least 6 planning fixtures, found $fixture_count"
+    fi
+  else
+    fail "missing tests/fixtures/planning"
+  fi
   if [[ -f "$ROOT/.github/workflows/ci.yml" ]]; then
     ok "control CI workflow"
   else

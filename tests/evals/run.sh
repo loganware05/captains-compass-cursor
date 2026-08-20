@@ -109,7 +109,55 @@ assert_true "capability-planning skill" test -f "$ROOT/.cursor/skills/capability
 assert_true "capability-plan.sh" test -x "$ROOT/scripts/capability-plan.sh"
 template="$ROOT/templates/docs/IMPLEMENTATION_PLAN.md"
 assert_contains "template has Required Capabilities" '## Required Capabilities' "$(cat "$template")"
+assert_contains "template has Task Graph" '## Task Graph' "$(cat "$template")"
+assert_contains "template has Proposed Agent Configuration" '## Proposed Agent Configuration' "$(cat "$template")"
 assert_contains "template has Approval Boundary" '## Approval Boundary' "$(cat "$template")"
+
+echo "=== eval: orchestrator schemas present ==="
+for schema in capability.schema.json task.schema.json agent-manifest.schema.json; do
+  assert_true "schema $schema" test -f "$ROOT/orchestrator/schemas/$schema"
+done
+
+echo "=== eval: stub TI provider isolation ==="
+stub_out="$(PYTHONPATH="$ROOT" python3 - "$ROOT" <<'PY'
+import sys
+from pathlib import Path
+from orchestrator.plan_writer.build import build_capability_plan
+from orchestrator.plan_writer.render import render_capability_plan_sections
+
+root = Path(sys.argv[1])
+artifacts = build_capability_plan(root, "Build a React dashboard", plan_id="eval-stub-ti")
+markdown = render_capability_plan_sections(artifacts)
+assert artifacts.technology_intelligence_candidates == []
+assert "NOT APPROVED FOR EXECUTION" in markdown
+assert "stub" in markdown.lower()
+print("ok")
+PY
+)"
+assert_contains "stub TI returns no candidates" '^ok$' "$stub_out"
+
+echo "=== eval: golden fixture determinism ==="
+golden_out="$(PYTHONPATH="$ROOT" python3 - "$ROOT" <<'PY'
+import json
+import sys
+from pathlib import Path
+from orchestrator.plan_writer.build import build_capability_plan
+
+root = Path(sys.argv[1])
+fixtures = root / "tests" / "fixtures" / "planning"
+for path in sorted(fixtures.glob("*.json")):
+    fixture = json.loads(path.read_text(encoding="utf-8"))
+    objective = fixture["objective"]
+    context = fixture.get("context", {})
+    plan_id = f"eval-{path.stem}"
+    first = build_capability_plan(root, objective, context, plan_id=plan_id)
+    second = build_capability_plan(root, objective, context, plan_id=plan_id)
+    assert first.resolve == second.resolve, path.name
+    assert first.task_graph == second.task_graph, path.name
+print("ok")
+PY
+)"
+assert_contains "golden fixtures deterministic" '^ok$' "$golden_out"
 
 echo
 echo "Eval results: $PASS passed, $FAIL failed"

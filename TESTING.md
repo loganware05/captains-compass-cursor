@@ -5,7 +5,7 @@
 1. **Doctor script** — expected files, rule frontmatter, Skill structure, hooks,
    failClosed policy, budget templates, VERSION, control CI workflow
 2. **Installer** — copies workflow into a temporary Git repo; refuses overwrite without `--force`;
-   creates `.agent/budgets/` and budget templates
+   creates `.agent/budgets/`, `.agent/capabilities/compiled/`, `.agent/plans/`, and budget templates
 3. **Hooks** — secret protection, protected-branch, plan-approval allow/deny cases,
    branch-name, PR evidence; failClosed critical/soft split
 4. **Sandbox exercise (manual)** — approval gate, then implement after approval;
@@ -60,6 +60,10 @@ Deterministic sensors (CI + local):
 ```bash
 ./tests/evals/run.sh
 ```
+
+Evals cover: failClosed policy, plan-approval gate, soft-hook skips, orchestrator schema
+presence, stub Technology Intelligence provider isolation, golden fixture determinism, and
+enhanced plan template sections.
 
 Manual sandbox behavioral checklist:
 [`docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md`](docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md).

@@ -59,17 +59,17 @@ Success means the Captain can approve or reject planning quality **before** any 
 ## Acceptance Criteria
 
 - [x] Minimal JSON Schemas exist for Capability, Task, AgentManifest, ModelProfile (+ stub CandidateCapability, ExecutionRun stubs for extension)
-- [x] All 23 existing Skills are discoverable via a compiled registry (authored metadata + safe inference fallback)
+- [x] All 24 Skills are discoverable via a compiled registry (authored metadata + safe inference fallback)
 - [x] Eight existing subagents are indexed as **reference agent profiles** (not deleted; extracted capabilities)
-- [ ] Deterministic orchestrator modules: registry load, capability inference, task decomposition, dependency validation, Skill ranking, manifest assembly, plan section rendering *(Phase F plan rendering done; Phase G eval hardening remaining)*
-- [ ] Technology Intelligence **provider interface** exists with a no-op/stub provider (no GitHub Stars coupling)
+- [x] Deterministic orchestrator modules: registry load, capability inference, task decomposition, dependency validation, Skill ranking, manifest assembly, plan section rendering
+- [x] Technology Intelligence **provider interface** exists with a no-op/stub provider (no GitHub Stars coupling)
 - [x] Enhanced `IMPLEMENTATION_PLAN.md` template + `/plan-feature` command document new sections
 - [x] New Skill `capability-planning` instructs First Mate to run the orchestrator during planning
-- [ ] Capability gaps surface explicitly (no silent improvisation fixture case)
-- [ ] `plan-approval-check.sh` behavior unchanged for APPROVED/DRAFT gating
-- [ ] `./scripts/doctor.sh`, `./tests/run.sh`, `./tests/evals/run.sh` pass with new tests added
-- [ ] Install/update propagate new orchestrator assets and registry build step where applicable
-- [ ] ADR-017 recorded; PROGRESS/CHANGELOG updated on completion
+- [x] Capability gaps surface explicitly (no silent improvisation fixture case)
+- [x] `plan-approval-check.sh` behavior unchanged for APPROVED/DRAFT gating
+- [x] `./scripts/doctor.sh`, `./tests/run.sh`, `./tests/evals/run.sh` pass with new tests added
+- [x] Install/update propagate new orchestrator assets and registry build step where applicable
+- [x] ADR-017 recorded; PROGRESS/CHANGELOG updated on completion *(CHANGELOG on v1.5.0 release)*
 - [ ] No product-repo implementation changes in this milestone (control-repo only)
 
 ## Non-Goals
@@ -702,7 +702,9 @@ Until then, only planning documents and discovery artifacts may change.
 - **Branch:** `feature/35-m1-capability-aware-planning`
 - **Rollback:** `rollback/pre-m1-capability-aware-planning` @ `5929f10`
 
-**In progress:** Phase G — tests, evals, and harness hardening.
+**In progress:** Phase H — Technology Intelligence provider doc finalization.
+
+**Phase G complete (2026-08-19):** integration golden tests (6 fixtures), path-traversal registry guard test, install propagation (`.agent/capabilities/compiled`, `.agent/plans`, capability-planning sidecar), doctor fixture/schema checks, eval stub-TI isolation + golden determinism — **103/103 tests, 21/21 evals**.
 
 **Phase F complete (2026-08-19):** plan writer, `capability-plan.sh`, `capability-planning` Skill, enhanced plan template, `/plan-feature` integration, technology-intelligence doc.
 
