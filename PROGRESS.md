@@ -17,16 +17,16 @@
 - M1 Phase E: agent manifest assembler ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
 - M1 Phase F: plan writer + capability-planning Skill ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
 - M1 Phase G: tests, evals, install/doctor hardening ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
+- M1 Phase H: TI provider boundary + integration doc ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
 
 ## In progress
 
-- M1 Phase H: TI provider doc finalization ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
-- PR [#36](https://github.com/loganware05/captains-compass-cursor/pull/36) — Phases A–G
+- M1 release prep: VERSION bump, CHANGELOG, sandbox exercise ([#35](https://github.com/loganware05/captains-compass-cursor/issues/35))
+- PR [#36](https://github.com/loganware05/captains-compass-cursor/pull/36) — Phases A–H
 
 ## Next
 
-- Phase H provider doc polish (stub shipped in F)
-- Release prep: VERSION bump, CHANGELOG, sandbox exercise
+- Merge PR #36, tag v1.5.0, sandbox `/plan-feature` exercise
 
 ## Blockers
 

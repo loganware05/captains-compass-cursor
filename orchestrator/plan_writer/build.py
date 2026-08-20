@@ -9,6 +9,7 @@ from pathlib import Path
 from orchestrator.assembler.manifest import build_manifests
 from orchestrator.planner.build import build_task_graph
 from orchestrator.providers.technology_intelligence import StubTechnologyIntelligenceProvider
+from orchestrator.providers.technology_intelligence.validate import validate_ti_candidates
 from orchestrator.registry.compiler import write_registry
 from orchestrator.registry.load import load_registry
 from orchestrator.resolver.resolve import resolve_capabilities
@@ -46,6 +47,7 @@ def build_capability_plan(
         item.to_dict()
         for item in ti_provider.discover_candidates(objective, context)
     ]
+    validate_ti_candidates(candidates)
 
     plans_dir = repo_root / ".agent" / "plans" / plan_id
     plans_dir.mkdir(parents=True, exist_ok=True)

@@ -286,6 +286,16 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing docs/integrations/multi-runtime-agents.md"
   fi
+  if [[ -f "$ROOT/docs/integrations/technology-intelligence.md" ]]; then
+    ok "docs/integrations/technology-intelligence.md"
+  else
+    fail "missing docs/integrations/technology-intelligence.md"
+  fi
+  if [[ -f "$ROOT/orchestrator/providers/technology_intelligence/validate.py" ]]; then
+    ok "TI candidate validation"
+  else
+    fail "missing orchestrator/providers/technology_intelligence/validate.py"
+  fi
   if [[ -f "$ROOT/templates/docs/CLAUDE.md" ]]; then
     ok "template CLAUDE.md"
   else

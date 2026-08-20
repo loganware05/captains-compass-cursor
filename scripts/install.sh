@@ -170,6 +170,15 @@ if [[ -f "$SOURCE_ROOT/docs/integrations/multi-runtime-agents.md" ]]; then
     echo "added: docs/integrations/multi-runtime-agents.md"
   fi
 fi
+if [[ -f "$SOURCE_ROOT/docs/integrations/technology-intelligence.md" ]]; then
+  mkdir -p "$TARGET/docs/integrations"
+  if [[ -f "$TARGET/docs/integrations/technology-intelligence.md" ]]; then
+    echo "keep: docs/integrations/technology-intelligence.md (already exists; not overwritten)"
+  else
+    cp "$SOURCE_ROOT/docs/integrations/technology-intelligence.md" "$TARGET/docs/integrations/technology-intelligence.md"
+    echo "added: docs/integrations/technology-intelligence.md"
+  fi
+fi
 
 # Budget templates (refreshable; live ledgers under .agent/budgets/ are product-owned)
 if [[ -d "$SOURCE_ROOT/templates/agent" ]]; then

@@ -1,0 +1,23 @@
+Phase H validation — 2026-08-19
+Plan ID: m1-capability-aware-planning
+Branch: feature/35-m1-capability-aware-planning
+
+./scripts/doctor.sh
+  Doctor passed: 0 errors, 0 warning(s)
+  ok: docs/integrations/technology-intelligence.md
+  ok: TI candidate validation
+
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_*.py' -q
+  Ran 62 tests — OK
+
+./tests/run.sh
+  Results: 104 passed, 0 failed
+
+./tests/evals/run.sh
+  Eval results: 22 passed, 0 failed
+
+Deliverables:
+- docs/integrations/technology-intelligence.md (full adapter contract)
+- orchestrator/providers/technology_intelligence/validate.py
+- tests/orchestrator/test_ti_provider.py (validation + candidate table render)
+- install propagates TI integration doc to product repos

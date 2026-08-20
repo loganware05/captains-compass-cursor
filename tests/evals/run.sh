@@ -107,6 +107,7 @@ assert_true "session note template" test -f "$ROOT/templates/agent/SESSION_NOTE.
 assert_true "structural-tests example" test -f "$ROOT/examples/structural-tests/README.md"
 assert_true "capability-planning skill" test -f "$ROOT/.cursor/skills/capability-planning/SKILL.md"
 assert_true "capability-plan.sh" test -x "$ROOT/scripts/capability-plan.sh"
+assert_true "technology-intelligence doc" test -f "$ROOT/docs/integrations/technology-intelligence.md"
 template="$ROOT/templates/docs/IMPLEMENTATION_PLAN.md"
 assert_contains "template has Required Capabilities" '## Required Capabilities' "$(cat "$template")"
 assert_contains "template has Task Graph" '## Task Graph' "$(cat "$template")"

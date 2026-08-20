@@ -702,7 +702,9 @@ Until then, only planning documents and discovery artifacts may change.
 - **Branch:** `feature/35-m1-capability-aware-planning`
 - **Rollback:** `rollback/pre-m1-capability-aware-planning` @ `5929f10`
 
-**In progress:** Phase H — Technology Intelligence provider doc finalization.
+**M1 complete (2026-08-19):** Phases A–H shipped on branch `feature/35-m1-capability-aware-planning` — pending release prep (v1.5.0).
+
+**Phase H complete (2026-08-19):** TI integration contract doc, candidate validation gate, candidate-table render tests, install/doctor/eval propagation.
 
 **Phase G complete (2026-08-19):** integration golden tests (6 fixtures), path-traversal registry guard test, install propagation (`.agent/capabilities/compiled`, `.agent/plans`, capability-planning sidecar), doctor fixture/schema checks, eval stub-TI isolation + golden determinism — **103/103 tests, 21/21 evals**.
 

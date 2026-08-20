@@ -218,6 +218,7 @@ assert_true "installed initialize-project command" test -f "$TMP/.cursor/command
 assert_true "installed CLAUDE.md adapter" test -f "$TMP/CLAUDE.md"
 assert_true "installed evidence matrix doc" test -f "$TMP/docs/EVIDENCE_MATRIX.md"
 assert_true "installed multi-runtime doc" test -f "$TMP/docs/integrations/multi-runtime-agents.md"
+assert_true "installed technology-intelligence doc" test -f "$TMP/docs/integrations/technology-intelligence.md"
 assert_true "installed harness-gc skill" test -f "$TMP/.cursor/skills/harness-gc/SKILL.md"
 assert_true "installed dependency-supply-chain skill" test -f "$TMP/.cursor/skills/dependency-supply-chain/SKILL.md"
 assert_true "installed capability-planning skill" test -f "$TMP/.cursor/skills/capability-planning/SKILL.md"

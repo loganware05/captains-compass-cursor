@@ -33,6 +33,7 @@ agentic engineering process across multiple product repositories.
 - Git / Git worktrees
 - Markdown project memory documents
 - Optional MCP integrations (GitHub, Linear, Notion, cloud, Postgres) documented under `docs/integrations/`
+- **Technology Intelligence adapter** — stub provider + integration contract (`docs/integrations/technology-intelligence.md`); no external repo coupling in M1
 
 ## Repository Map
 
