@@ -16,6 +16,7 @@ on `1806eb3`. M1 capability-aware planning is shipped and sandbox-validated
 - Sandbox checklist row 7: capability-aware `/plan-feature` PASS (plan
   `sandbox-behavioral-plan-feature-2026-08-20`; evidence in sandbox
   `.agent/evidence/sandbox-behavioral-2026-08-20/`)
+- Sandbox contact counter landed on `main` via [sandbox#19](https://github.com/loganware05/captain-compass-sandbox/pull/19)
 
 ## In progress
 
@@ -24,8 +25,6 @@ None.
 ## Next
 
 - Milestone 2 backlog (execution telemetry, live TI adapter)
-- Optional: land sandbox contact-counter feature onto sandbox `main` if still
-  only on `chore/13-refresh-compass-1.5.0` / feature branch ([sandbox#15](https://github.com/loganware05/captain-compass-sandbox/pull/15))
 
 ## Blockers
 
