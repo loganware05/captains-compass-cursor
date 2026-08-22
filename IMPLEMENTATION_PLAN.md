@@ -702,6 +702,8 @@ Until then, only planning documents and discovery artifacts may change.
 - **Branch:** `feature/35-m1-capability-aware-planning`
 - **Rollback:** `rollback/pre-m1-capability-aware-planning` @ `5929f10`
 
+**M1 shipped (2026-08-20):** Tag `v1.5.0` @ `1806eb3`; GitHub release published; sandbox checklist row 7 PASS (`sandbox-behavioral-plan-feature-2026-08-20`).
+
 **M1 implementation complete (2026-08-19):** Phases A–H plus release prep (VERSION 1.5.0, CHANGELOG). Tag `v1.5.0` after merge to `main`.
 
 **Release prep (2026-08-19):** VERSION 1.5.0, CHANGELOG, README, GitHub release notes draft, validation evidence under `.agent/evidence/release-v1.5.0/`.
