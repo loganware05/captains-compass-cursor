@@ -14,7 +14,7 @@ Tag: `v1.6.0`
 | Detached worktree `tests/run.sh` | 111 passed |
 | Annotated tag push | OK |
 | GitHub release | https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.6.0 |
-| Sandbox update 1.5.0 → 1.6.0 | pending (PR) |
+| Sandbox update 1.5.0 → 1.6.0 | doctor passed; [sandbox#21](https://github.com/loganware05/captain-compass-sandbox/pull/21) open |
 
 ## Links
 
