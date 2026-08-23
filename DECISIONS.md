@@ -164,6 +164,33 @@
 - **Consequences:** Stronger regression signal and clearer agent procedures without
   expanding always-on rules; Captains retain judgment on young dependencies.
 
+## ADR-018: Execution telemetry, file TI, and Experience dual-path (v1.6.0 M2)
+
+- **Status:** Accepted
+- **Date:** 2026-08-23
+- **Context:** Milestone 1 left `ExecutionRun` unpopulated, Technology Intelligence
+  as an empty stub, and candidate promotion as documentation only. Captains need
+  post-execution learning without enabling live Stars APIs in CI or auto-executing
+  external candidates.
+- **Decision:**
+  1. Write schema-valid `ExecutionRun` + `Experience` artifacts via
+     `orchestrator/telemetry/` and `scripts/record-execution-run.sh` at workstream
+     close (`execution-telemetry` Skill). Runtime JSON under `.agent/experience/`
+     is gitignored; commit Experience samples in **control-repo tests/fixtures**
+     by default.
+  2. Ship Skill `experience-skill-training`: import an Experience from a product
+     repo → draft Skill under control-repo staging → run control-repo tests →
+     Captain-approved PR only (never auto-land into `.cursor/skills/`).
+  3. Add `FileTechnologyIntelligenceProvider` behind `COMPASS_TI_PROVIDER=file`
+     (default remains `stub`). Fixtures are **redacted Stars-shaped** offline
+     samples — no live network TI in CI.
+  4. Candidate promotion advances `DISCOVERED → ANALYZED` and may open a
+     **Captain-approved Skill sidecar PR**; `approved_for_execution` stays
+     `false`; never auto-merge or auto-execute.
+- **Consequences:** Planning can learn from closed workstreams; TI is demoable
+  offline; promotion remains Captain-gated. See
+  [`docs/integrations/technology-intelligence.md`](docs/integrations/technology-intelligence.md).
+
 ## ADR-017: Skill capability metadata uses sidecar files (v1.5.0 M1)
 
 - **Status:** Accepted

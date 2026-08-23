@@ -92,6 +92,9 @@ SKILLS=(
   harness-gc
   dependency-supply-chain
   capability-planning
+  execution-telemetry
+  candidate-promotion
+  experience-skill-training
 )
 
 for s in "${SKILLS[@]}"; do
@@ -204,6 +207,7 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     model-profile.schema.json
     candidate-capability.schema.json
     execution-run.schema.json
+    experience.schema.json
   )
   for s in "${ORCHESTRATOR_SCHEMAS[@]}"; do
     if [[ -f "$ROOT/orchestrator/schemas/$s" ]]; then
@@ -240,6 +244,16 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "capability-planning sidecar"
   else
     fail "missing capability-planning/capability.yaml"
+  fi
+  if [[ -f "$ROOT/.agent/experience/.gitkeep" ]]; then
+    ok ".agent/experience layout"
+  else
+    fail "missing .agent/experience/.gitkeep"
+  fi
+  if [[ -f "$ROOT/scripts/record-execution-run.sh" ]]; then
+    ok "scripts/record-execution-run.sh present"
+  else
+    fail "missing scripts/record-execution-run.sh"
   fi
   if [[ -f "$ROOT/.agent/capabilities/compiled/.gitkeep" ]]; then
     ok ".agent/capabilities/compiled layout"

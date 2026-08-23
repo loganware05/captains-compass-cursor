@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Milestone 2 (target v1.6.0)
+
+- Execution telemetry: `ExecutionRun` + `Experience` store, `record-execution-run.sh`, Skill `execution-telemetry`
+- File Technology Intelligence provider (`COMPASS_TI_PROVIDER=file`) with redacted Stars-shaped fixtures
+- Candidate promotion (`DISCOVERED → ANALYZED`) and Captain-gated Skill sidecar drafts
+- Skill `experience-skill-training` (product Experience → control-repo draft Skill)
+- ADR-018; twenty-seven Skills; doctor/evals/tests cover telemetry + file TI
+
 ## 1.5.0 — 2026-08-19
 
 ### Added

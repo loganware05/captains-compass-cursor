@@ -21,17 +21,19 @@
 
 ## Usage
 
-- Iterations used: 0
+- Iterations used: 2
 - Failed validation cycles: 0
 - Estimated cost used (USD): 0
 - Cost is estimate: true
-- Elapsed minutes: 0
+- Elapsed minutes: ~90
 
 ## Cycle log
 
 | Date | Iteration | Result | Notes |
 |---|---|---|---|
 | 2026-08-23 | 0 | approved | Kickoff: issue, rollback, branch |
+| 2026-08-23 | 1 | impl | T-A–T-E2 telemetry, file TI, promotion, training Skills |
+| 2026-08-23 | 2 | pass | doctor + unittest + evals + tests/run.sh (111 pass) |
 
 ## Stop condition
 

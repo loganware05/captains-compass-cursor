@@ -44,7 +44,7 @@ class TechnologyIntelligenceProvider(Protocol):
 |---|---|
 | `kind` | Must be `"candidate"` |
 | `approved_for_execution` | Must be `false` (schema enforces `const: false`) |
-| `lifecycle_stage` | `DISCOVERED` or `ANALYZED` only in M1 |
+| `lifecycle_stage` | `DISCOVERED` or `ANALYZED` (M2 promotion ceiling before Captain PR) |
 | `source.type` | Must be `"external-candidate"` |
 | `source.path` | Opaque locator (repo URL, catalog id, etc.) — no path traversal into Compass |
 | `capabilities_provided` | Non-empty list of capability ids the signal might satisfy |
@@ -56,6 +56,18 @@ Optional: `discovery_signal`, `notes`, `source.provenance_url`.
 `orchestrator/providers/technology_intelligence/validate.py` runs before plan
 rendering. Invalid or `approved_for_execution: true` candidates **fail closed**
 with `TechnologyIntelligenceValidationError`.
+
+## Provider selection
+
+| Env var | Values | Default |
+|---|---|---|
+| `COMPASS_TI_PROVIDER` | `stub` \| `file` | `stub` |
+| `COMPASS_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/` |
+
+`orchestrator/plan_writer/build.py` calls `select_ti_provider()`. CI and default
+installs stay on **stub** (empty list). Set `COMPASS_TI_PROVIDER=file` for local
+demos using redacted Stars-shaped fixtures under
+`orchestrator/providers/technology_intelligence/fixtures/`.
 
 ## Plan rendering
 
@@ -69,67 +81,71 @@ The plan writer (`orchestrator/plan_writer/render.py`) always renders a
 | Provider result | Rendered content |
 |---|---|
 | Empty (stub) | *No external candidates queried (Technology Intelligence provider: stub).* |
-| Non-empty | Markdown table: ID, discovery signal, lifecycle stage |
+| Non-empty (file) | Markdown table: ID, discovery signal, lifecycle stage |
 
 Candidates appear **only** in this section — never in Skill ranking, task
 manifests, or install targets.
 
-## Current status (M1 / v1.5.0)
+## Current status (M2 / v1.6.0)
 
 | Component | Status |
 |---|---|
 | `TechnologyIntelligenceProvider` protocol | Shipped |
 | `StubTechnologyIntelligenceProvider` | Shipped — returns `[]` |
+| `FileTechnologyIntelligenceProvider` | Shipped — redacted Stars-shaped fixtures |
 | `CandidateCapability` + schema | Shipped |
 | Pre-render validation | Shipped |
-| GitHub Star Categorization body | **Not wired** — future adapter |
+| Candidate promotion `DISCOVERED → ANALYZED` | Shipped (`candidate-promotion` Skill) |
+| Captain-approved Skill sidecar PR path | Shipped (draft under staging; never auto-merge) |
+| Live GitHub Star Categorization API | **Not wired** — future adapter |
 | Auto-install / execute external repos | **Prohibited** |
 
-Default pipeline (`orchestrator/plan_writer/build.py`) uses the stub provider.
-Replacing it with a live adapter is a **control-repo change** requiring plan
-approval and security review.
+## Promotion path
 
-## Implementing a future provider
+```text
+DISCOVERED → ANALYZED → (Captain-approved Skill sidecar PR) → AVAILABLE_SKILL
+  → PROVEN_SKILL
+```
 
-1. Add a class implementing `TechnologyIntelligenceProvider` in
-   `orchestrator/providers/technology_intelligence/` (e.g. `github_stars.py`).
-2. Map external records to `CandidateCapability` — set `approved_for_execution`
-   only via `to_dict()` (always `false`).
+M2 ceiling: advance to **ANALYZED**, write staging candidate + optional Skill
+draft under `.agent/capabilities/candidates/`, then open a PR for Captain
+approval. Never auto-merge or set `approved_for_execution: true`.
+
+Scripts:
+
+- `./scripts/promote-candidate.sh`
+- `./scripts/train-skill-from-experience.sh` (product Experience → control draft)
+
+## Implementing a future live provider
+
+1. Add a class implementing `TechnologyIntelligenceProvider` (e.g. `github_stars.py`).
+2. Map external records to `CandidateCapability` — `approved_for_execution` always
+   `false` via `to_dict()`.
 3. Unit-test with golden fixtures; never call live APIs in CI.
-4. Wire the provider in `build_capability_plan()` behind an explicit config flag
-   or environment variable (not enabled by default).
-5. Document provenance, rate limits, and secret handling in this file.
-6. Extend `tests/evals/run.sh` with isolation sensors if behavior changes.
+4. Extend `select_ti_provider()` behind an explicit env value (not default).
+5. Document provenance, rate limits, and secret handling here.
+6. Extend `tests/evals/run.sh` isolation sensors if behavior changes.
 
 **Do not:**
 
 - Import code from starred or external repositories at planning time
-- Add candidates to the compiled Skill registry without promotion
+- Add candidates to the compiled Skill registry without Captain approval
 - Grant agent manifests tools/permissions based on TI output alone
 - Skip schema validation
-
-## Promotion path (future milestones)
-
-```text
-DISCOVERED → ANALYZED → SECURITY_REVIEWED → SANDBOX_TESTED → APPROVED
-  → AVAILABLE_SKILL → PROVEN_SKILL
-```
-
-A GitHub star, npm download count, or blog mention is a **discovery signal**, not
-permission to execute. Promotion requires Captain approval, security review, and
-(suggested) sandbox validation before a sidecar or Skill enters the registry.
 
 ## Captain Compass responsibilities
 
 - Display candidates separately from approved Skills
 - Never auto-install or execute external repositories
-- Require explicit Captain approval before candidate promotion
+- Require explicit Captain approval before candidate promotion lands
 - Keep TI adapters optional; product repos receive this doc via install for policy
   awareness; the Python orchestrator remains control-repo only
 
 ## Related artifacts
 
 - Schema: `orchestrator/schemas/candidate-capability.schema.json`
-- Stub tests: `tests/orchestrator/test_schemas.py`, `tests/orchestrator/test_plan_writer.py`
-- Eval isolation: `tests/evals/run.sh` (stub TI sensor)
-- Skill prohibition: `.cursor/skills/capability-planning/SKILL.md`
+- File fixtures: `orchestrator/providers/technology_intelligence/fixtures/`
+- Stub/file tests: `tests/orchestrator/test_schemas.py`,
+  `tests/orchestrator/test_file_ti_and_promotion.py`
+- Eval isolation: `tests/evals/run.sh` (stub + file TI sensors)
+- Skills: `capability-planning`, `candidate-promotion`, `experience-skill-training`

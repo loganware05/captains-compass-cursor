@@ -36,6 +36,17 @@ SKILLS: dict[str, dict] = {
         "security_sensitivity": "low",
         "agent_affinity": ["implementation-agent", "documentation-agent"],
     },
+    "candidate-promotion": {
+        "categories": ["process", "security", "orchestration"],
+        "tags": ["candidates", "promotion", "technology-intelligence"],
+        "capabilities_provided": [
+            "candidate-lifecycle-advancement",
+            "skill-sidecar-draft-proposal",
+        ],
+        "compatible_stacks": ["any"],
+        "security_sensitivity": "high",
+        "agent_affinity": ["security-reviewer", "architecture-agent"],
+    },
     "code-structure-cleanup": {
         "categories": ["refactoring", "quality"],
         "tags": ["cleanup", "refactor", "services"],
@@ -73,6 +84,28 @@ SKILLS: dict[str, dict] = {
         "compatible_stacks": ["node", "python", "web", "any"],
         "security_sensitivity": "high",
         "agent_affinity": ["implementation-agent", "architecture-agent"],
+    },
+    "execution-telemetry": {
+        "categories": ["process", "orchestration", "telemetry"],
+        "tags": ["telemetry", "experience", "execution-run"],
+        "capabilities_provided": [
+            "execution-run-recording",
+            "experience-store-population",
+        ],
+        "compatible_stacks": ["any"],
+        "security_sensitivity": "medium",
+        "agent_affinity": ["documentation-agent", "test-engineer"],
+    },
+    "experience-skill-training": {
+        "categories": ["process", "learning", "orchestration"],
+        "tags": ["experience", "training", "skills"],
+        "capabilities_provided": [
+            "experience-to-skill-draft",
+            "control-repo-skill-training",
+        ],
+        "compatible_stacks": ["any"],
+        "security_sensitivity": "medium",
+        "agent_affinity": ["documentation-agent", "architecture-agent"],
     },
     "github-integration": {
         "categories": ["integration", "delivery", "git"],

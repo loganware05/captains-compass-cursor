@@ -36,6 +36,8 @@ wandb/
 .agent/budgets/private/
 .agent/sessions/private/
 .agent/runs/
+.agent/experience/*.json
+!.agent/experience/.gitkeep
 .agent/handoffs/
 .agent/capabilities/compiled/registry.json
 .agent/plans/

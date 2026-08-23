@@ -1,0 +1,17 @@
+{
+  "id": "stars-redacted-pdf-kit",
+  "version": "0.1.0",
+  "full_name": "example-org/pdf-toolkit-lite",
+  "html_url": "https://github.com/example-org/pdf-toolkit-lite",
+  "description": "REDACTED sample for PDF parsing discovery signals",
+  "star_signal": "github-stars:redacted:n=42",
+  "stargazers_count_bucket": "10-100",
+  "topics_redacted": ["pdf", "parsing"],
+  "capabilities_provided": ["pdf-parsing", "document-extraction"],
+  "source": {
+    "type": "external-candidate",
+    "path": "github.com/example-org/pdf-toolkit-lite",
+    "provenance_url": "https://github.com/example-org/pdf-toolkit-lite"
+  },
+  "notes": "Offline redacted Stars-shaped fixture — NOT APPROVED FOR EXECUTION"
+}

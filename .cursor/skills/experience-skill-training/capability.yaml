@@ -1,0 +1,27 @@
+id: experience-skill-training
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/experience-skill-training/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.8
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, learning, orchestration]
+tags:
+  - experience
+  - training
+  - skills
+capabilities_provided:
+  - experience-to-skill-draft
+  - control-repo-skill-training
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - documentation-agent
+  - architecture-agent
+maturity: available
+confidence: 0.8

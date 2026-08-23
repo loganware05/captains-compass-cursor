@@ -1,0 +1,20 @@
+{
+  "id": "stars-redacted-accessible-forms",
+  "version": "0.1.0",
+  "full_name": "example-org/accessible-react-forms",
+  "html_url": "https://github.com/example-org/accessible-react-forms",
+  "description": "REDACTED sample inspired by starred repos for accessible form patterns",
+  "star_signal": "github-stars:redacted:n=128",
+  "stargazers_count_bucket": "100-500",
+  "topics_redacted": ["a11y", "react", "forms"],
+  "capabilities_provided": [
+    "accessible-form-patterns",
+    "aria-live-region-guidance"
+  ],
+  "source": {
+    "type": "external-candidate",
+    "path": "github.com/example-org/accessible-react-forms",
+    "provenance_url": "https://github.com/example-org/accessible-react-forms"
+  },
+  "notes": "Offline redacted Stars-shaped fixture — NOT APPROVED FOR EXECUTION"
+}

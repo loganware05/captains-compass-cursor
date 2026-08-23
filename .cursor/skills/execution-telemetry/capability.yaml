@@ -1,0 +1,27 @@
+id: execution-telemetry
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/execution-telemetry/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, orchestration, telemetry]
+tags:
+  - telemetry
+  - experience
+  - execution-run
+capabilities_provided:
+  - execution-run-recording
+  - experience-store-population
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - documentation-agent
+  - test-engineer
+maturity: available
+confidence: 0.85

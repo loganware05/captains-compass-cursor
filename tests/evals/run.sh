@@ -106,8 +106,13 @@ assert_true "dependency-supply-chain skill" test -f "$ROOT/.cursor/skills/depend
 assert_true "session note template" test -f "$ROOT/templates/agent/SESSION_NOTE.md"
 assert_true "structural-tests example" test -f "$ROOT/examples/structural-tests/README.md"
 assert_true "capability-planning skill" test -f "$ROOT/.cursor/skills/capability-planning/SKILL.md"
+assert_true "execution-telemetry skill" test -f "$ROOT/.cursor/skills/execution-telemetry/SKILL.md"
+assert_true "candidate-promotion skill" test -f "$ROOT/.cursor/skills/candidate-promotion/SKILL.md"
+assert_true "experience-skill-training skill" test -f "$ROOT/.cursor/skills/experience-skill-training/SKILL.md"
 assert_true "capability-plan.sh" test -x "$ROOT/scripts/capability-plan.sh"
+assert_true "record-execution-run.sh" test -x "$ROOT/scripts/record-execution-run.sh"
 assert_true "technology-intelligence doc" test -f "$ROOT/docs/integrations/technology-intelligence.md"
+assert_true "experience.schema.json" test -f "$ROOT/orchestrator/schemas/experience.schema.json"
 template="$ROOT/templates/docs/IMPLEMENTATION_PLAN.md"
 assert_contains "template has Required Capabilities" '## Required Capabilities' "$(cat "$template")"
 assert_contains "template has Task Graph" '## Task Graph' "$(cat "$template")"
@@ -121,11 +126,13 @@ done
 
 echo "=== eval: stub TI provider isolation ==="
 stub_out="$(PYTHONPATH="$ROOT" python3 - "$ROOT" <<'PY'
+import os
 import sys
 from pathlib import Path
 from orchestrator.plan_writer.build import build_capability_plan
 from orchestrator.plan_writer.render import render_capability_plan_sections
 
+os.environ.pop("COMPASS_TI_PROVIDER", None)
 root = Path(sys.argv[1])
 artifacts = build_capability_plan(root, "Build a React dashboard", plan_id="eval-stub-ti")
 markdown = render_capability_plan_sections(artifacts)
@@ -136,6 +143,42 @@ print("ok")
 PY
 )"
 assert_contains "stub TI returns no candidates" '^ok$' "$stub_out"
+
+echo "=== eval: file TI provider isolation ==="
+file_out="$(COMPASS_TI_PROVIDER=file PYTHONPATH="$ROOT" python3 - "$ROOT" <<'PY'
+import os
+import sys
+from pathlib import Path
+from orchestrator.plan_writer.build import build_capability_plan
+from orchestrator.plan_writer.render import render_capability_plan_sections
+
+assert os.environ.get("COMPASS_TI_PROVIDER") == "file"
+root = Path(sys.argv[1])
+artifacts = build_capability_plan(root, "accessible forms", plan_id="eval-file-ti")
+markdown = render_capability_plan_sections(artifacts)
+assert len(artifacts.technology_intelligence_candidates) >= 1
+assert "NOT APPROVED FOR EXECUTION" in markdown
+assert "stars-redacted" in markdown
+for c in artifacts.technology_intelligence_candidates:
+    assert c.get("approved_for_execution") is False
+print("ok")
+PY
+)"
+assert_contains "file TI returns redacted candidates" '^ok$' "$file_out"
+
+echo "=== eval: record-execution-run smoke ==="
+SMOKE="$(mktemp -d "${TMPDIR:-/tmp}/compass-telemetry-XXXXXX")"
+mkdir -p "$SMOKE/.agent/runs" "$SMOKE/.agent/experience"
+smoke_out="$("$ROOT/scripts/record-execution-run.sh" \
+  --plan-id eval-smoke \
+  --outcome success \
+  --objective "eval smoke" \
+  --skills "execution-telemetry" \
+  --repo-root "$SMOKE" 2>&1)"
+assert_contains "record-execution-run writes experience" 'experience' "$smoke_out"
+assert_true "smoke run json exists" test -n "$(find "$SMOKE/.agent/runs" -name '*.json' | head -1)"
+assert_true "smoke experience json exists" test -n "$(find "$SMOKE/.agent/experience" -name '*.json' | head -1)"
+rm -rf "$SMOKE"
 
 echo "=== eval: golden fixture determinism ==="
 golden_out="$(PYTHONPATH="$ROOT" python3 - "$ROOT" <<'PY'

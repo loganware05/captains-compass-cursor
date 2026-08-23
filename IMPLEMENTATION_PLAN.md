@@ -5,14 +5,14 @@
 - Status: APPROVED
 - Plan ID: m2-execution-telemetry-ti
 - Issue: [#41](https://github.com/loganware05/captains-compass-cursor/issues/41)
-- Branch: `feature/<issue>-m2-execution-telemetry-ti`
+- Branch: `feature/41-m2-execution-telemetry-ti`
 - Target release: **v1.6.0** (additive; non-breaking)
 - Created: 2026-08-22
 - Last updated: 2026-08-23
 - Approved by: Captain
 - Approval date: 2026-08-23
 - Approved revision: M2 as drafted + resolved open questions (experience dual-path, Stars-shaped fixtures, Captain-approved Skill sidecar PR, v1.6.0)
-- Rollback checkpoint: TBD (`rollback/pre-m2-execution-telemetry-ti`)
+- Rollback checkpoint: `rollback/pre-m2-execution-telemetry-ti` (`c8f978d`)
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
   - Meta prompt: Foundation Implementation (Milestone 1 shipped; M2 continues deferred items)
@@ -61,32 +61,32 @@ After M2 (v1.6.0), Captain Compass can:
 
 ## Acceptance Criteria
 
-- [ ] `experience.schema.json` (+ any needed `ExecutionRun` field extensions) validated
-- [ ] `orchestrator/telemetry/` (or equivalent) can create/load ExecutionRuns under
+- [x] `experience.schema.json` (+ any needed `ExecutionRun` field extensions) validated
+- [x] `orchestrator/telemetry/` (or equivalent) can create/load ExecutionRuns under
       `.agent/runs/<run-id>.json` and Experiences under `.agent/experience/`
-- [ ] CLI: `scripts/record-execution-run.sh` (and thin Python module) accepts plan-id /
+- [x] CLI: `scripts/record-execution-run.sh` (and thin Python module) accepts plan-id /
       Git refs / outcome and writes schema-valid artifacts
-- [ ] Skills `close-workstream` / `pull-request-preparation` (and/or new
+- [x] Skills `close-workstream` / `pull-request-preparation` (and/or new
       `execution-telemetry` Skill) instruct First Mate to record runs on completion
-- [ ] File-backed TI provider: `FileTechnologyIntelligenceProvider` reading
+- [x] File-backed TI provider: `FileTechnologyIntelligenceProvider` reading
       `orchestrator/providers/technology_intelligence/fixtures/*.json` (or
       `.agent/capabilities/candidates/`) when
       `COMPASS_TI_PROVIDER=file` (default remains `stub`)
-- [ ] Plan writer continues to render **NOT APPROVED FOR EXECUTION**; file provider
+- [x] Plan writer continues to render **NOT APPROVED FOR EXECUTION**; file provider
       never sets `approved_for_execution: true`
-- [ ] Candidate promotion Skill + script: validate schema, advance lifecycle to
+- [x] Candidate promotion Skill + script: validate schema, advance lifecycle to
       `ANALYZED`, write staging sidecar; support Captain-approved Skill sidecar PR
       (still never auto-merge / auto-execute)
-- [ ] `experience-skill-training` Skill: import production Experience → draft Skill
+- [x] `experience-skill-training` Skill: import production Experience → draft Skill
       under control-repo staging → run control-repo tests; commit Experiences in
       control-repo **tests/fixtures** by default (not product-repo by default)
-- [ ] TI fixtures are **redacted Stars-shaped** offline samples
-- [ ] Doctor / install seed `.agent/runs/` layout (gitignored contents) and
+- [x] TI fixtures are **redacted Stars-shaped** offline samples
+- [x] Doctor / install seed `.agent/runs/` layout (gitignored contents) and
       `.agent/experience/.gitkeep` as needed
-- [ ] Unit + harness tests; evals prove stub default + file provider offline fixtures
-- [ ] ADR-018 (or DECISIONS entry) for telemetry + TI file provider decisions
-- [ ] `./scripts/doctor.sh`, `./tests/run.sh`, `./tests/evals/run.sh` pass
-- [ ] No product-repo app code changes; control-repo only (sandbox refresh after release)
+- [x] Unit + harness tests; evals prove stub default + file provider offline fixtures
+- [x] ADR-018 (or DECISIONS entry) for telemetry + TI file provider decisions
+- [x] `./scripts/doctor.sh`, `./tests/run.sh`, `./tests/evals/run.sh` pass
+- [x] No product-repo app code changes; control-repo only (sandbox refresh after release)
 
 ## Non-Goals
 
@@ -438,5 +438,7 @@ Until then, only planning documents and discovery artifacts may change.
 - **Approval date:** 2026-08-23
 - **Approved revision:** M2 execution telemetry + file TI + promotion + experience-skill-training; v1.6.0
 - **Issue:** [#41](https://github.com/loganware05/captains-compass-cursor/issues/41)
-- **Branch:** 
-- **Rollback:**  @ 
+- **Branch:** `feature/41-m2-execution-telemetry-ti`
+- **Rollback:** `rollback/pre-m2-execution-telemetry-ti` @ `c8f978d`
+
+**Phase T-A in progress (2026-08-23):** Experience schema, ExecutionRun store layout, validator registration.

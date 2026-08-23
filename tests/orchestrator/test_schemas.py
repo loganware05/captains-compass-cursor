@@ -121,5 +121,11 @@ class ExecutionRunSchemaTests(unittest.TestCase):
         validate_document(doc, "execution-run.schema.json")
 
 
+class ExperienceSchemaPresenceTests(unittest.TestCase):
+    def test_experience_schema_loads(self) -> None:
+        schema = load_schema("experience.schema.json")
+        self.assertEqual(schema["title"], "Experience")
+
+
 if __name__ == "__main__":
     unittest.main()

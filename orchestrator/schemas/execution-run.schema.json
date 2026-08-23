@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://captains-compass.dev/schemas/execution-run.schema.json",
   "title": "ExecutionRun",
-  "description": "Stub provenance record linking objective, task, plan, agent, and Git evidence (Milestone 2+ population).",
+  "description": "Provenance record linking objective, task, plan, agent, and Git evidence (populated by Milestone 2 telemetry).",
   "type": "object",
   "required": ["run_id", "plan_id", "task_id", "outcome"],
   "additionalProperties": true,
@@ -41,6 +41,8 @@
       },
       "additionalProperties": true
     },
+    "recorded_at": { "type": "string", "minLength": 1 },
+    "experience_id": { "type": "string", "minLength": 1 },
     "retries": { "type": "integer", "minimum": 0 },
     "lessons": {
       "type": "array",
