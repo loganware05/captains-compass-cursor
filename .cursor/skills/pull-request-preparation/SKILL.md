@@ -28,7 +28,8 @@ Implementation and validation are complete and the change is ready for Captain r
    - If `gh` (or GitHub MCP) is authenticated, create the remote PR.
    - Otherwise, leave a PR-ready description and local issue placeholder.
 8. Update PROGRESS.md and CHANGELOG.md as needed.
-9. Produce a First Mate completion report.
+9. When closing out, load Skill `execution-telemetry` and record the run/Experience.
+10. Produce a First Mate completion report.
 
 See also: `review-fix-loop` when review feedback still needs iterative fixes before this Skill runs.
 

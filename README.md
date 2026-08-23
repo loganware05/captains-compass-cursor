@@ -11,7 +11,7 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 ### Included
 
 - Approval-gated operating model (`AGENTS.md` + five core rules)
-- Twenty-four Skills (including capability-planning, harness-gc, dependency-supply-chain, autonomy-budget)
+- Twenty-seven Skills (including capability-planning, execution-telemetry, candidate-promotion, experience-skill-training, harness-gc, dependency-supply-chain, autonomy-budget)
 - Capability-aware planning orchestrator (`orchestrator/`, `scripts/capability-plan.sh`)
 - Eight specialist subagents (also indexed as reference agent profiles)
 - Seven safety hooks (critical fail-closed; soft skips via env / command string / marker)

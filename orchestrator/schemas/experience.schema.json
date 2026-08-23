@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/experience.schema.json",
+  "title": "Experience",
+  "description": "Append-only learning record summarizing an ExecutionRun for future planning readback and Skill training (Milestone 2).",
+  "type": "object",
+  "required": [
+    "experience_id",
+    "plan_id",
+    "outcome",
+    "source_instance",
+    "skills_used"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "experience_id": { "type": "string", "minLength": 1 },
+    "plan_id": { "type": "string", "minLength": 1 },
+    "run_id": { "type": "string", "minLength": 1 },
+    "objective": { "type": "string" },
+    "outcome": {
+      "type": "string",
+      "enum": ["pending", "success", "partial", "failed", "cancelled"]
+    },
+    "source_instance": {
+      "type": "string",
+      "enum": ["control-test", "product-import", "control-live"],
+      "description": "control-test = fixtures; product-import = imported from product repo; control-live = recorded in control repo"
+    },
+    "skills_used": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "capabilities_exercised": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "lessons": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "issue": { "type": "string" },
+        "branch": { "type": "string" },
+        "pull_request": { "type": "string" },
+        "source_repo_path": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "created_at": { "type": "string", "minLength": 1 }
+  }
+}

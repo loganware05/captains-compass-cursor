@@ -107,7 +107,7 @@ if [[ ${#conflicts[@]} -gt 0 && "$FORCE" -ne 1 ]]; then
   exit 1
 fi
 
-mkdir -p "$TARGET/.cursor" "$TARGET/.agent/evidence" "$TARGET/.agent/budgets" "$TARGET/.agent/budgets/_templates" "$TARGET/.agent/budgets/private" "$TARGET/.agent/sessions" "$TARGET/.agent/sessions/private" "$TARGET/.agent/runs" "$TARGET/.agent/capabilities/compiled" "$TARGET/.agent/plans"
+mkdir -p "$TARGET/.cursor" "$TARGET/.agent/evidence" "$TARGET/.agent/budgets" "$TARGET/.agent/budgets/_templates" "$TARGET/.agent/budgets/private" "$TARGET/.agent/sessions" "$TARGET/.agent/sessions/private" "$TARGET/.agent/runs" "$TARGET/.agent/experience" "$TARGET/.agent/capabilities/compiled" "$TARGET/.agent/plans"
 
 
 # Copy Cursor package

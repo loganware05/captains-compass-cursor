@@ -2,29 +2,31 @@
 
 ## Current status
 
-**V1.5.0 complete.** Tag [`v1.5.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.5.0)
-on `1806eb3`. M1 capability-aware planning is shipped and sandbox-validated
-(checklist row 7 PASS).
+**M2 IMPLEMENTATION COMPLETE (pre-release)** — issue
+[#41](https://github.com/loganware05/captains-compass-cursor/issues/41), branch
+`feature/41-m2-execution-telemetry-ti`, target **v1.6.0**.
+Rollback: `rollback/pre-m2-execution-telemetry-ti` @ `c8f978d`.
+
+Acceptance criteria checked; validation evidence under
+`.agent/evidence/m2-execution-telemetry-ti/`. Working tree not yet committed.
 
 ## Completed
 
-- Through v1.4.0: P0–P2 orchestration roadmap, evals, harness-gc, supply-chain
-- M1 Phases A–H via [#35](https://github.com/loganware05/captains-compass-cursor/issues/35) / [#36](https://github.com/loganware05/captains-compass-cursor/pull/36)
-- Release prep + VERSION land via [#37](https://github.com/loganware05/captains-compass-cursor/pull/37)
-- Annotated tag `v1.5.0`, GitHub release, closeout [#38](https://github.com/loganware05/captains-compass-cursor/pull/38)
-- Sandbox refresh [sandbox#14](https://github.com/loganware05/captain-compass-sandbox/pull/14) ([issue #13](https://github.com/loganware05/captain-compass-sandbox/issues/13))
-- Sandbox checklist row 7: capability-aware `/plan-feature` PASS (plan
-  `sandbox-behavioral-plan-feature-2026-08-20`; evidence in sandbox
-  `.agent/evidence/sandbox-behavioral-2026-08-20/`)
-- Sandbox contact counter landed on `main` via [sandbox#19](https://github.com/loganware05/captain-compass-sandbox/pull/19)
+- Through v1.5.0 / M1 capability-aware planning
+- M2 plan approved (2026-08-23) with resolved open questions
+- Phases T-A–T-F: telemetry, Skills, file TI, promotion, experience training,
+  doctor/evals/docs/ADR-018
+- Validation: doctor pass; 75 unit tests; 31 evals; `tests/run.sh` 111 pass
 
 ## In progress
 
-None.
+- None (awaiting Captain commit / PR / T-G VERSION bump to v1.6.0)
 
 ## Next
 
-- Milestone 2 backlog (execution telemetry, live TI adapter)
+1. Commit on `feature/41-m2-execution-telemetry-ti` (Captain request)
+2. Open PR for #41
+3. T-G: VERSION `1.6.0`, tag, release notes, sandbox refresh
 
 ## Blockers
 

@@ -15,6 +15,7 @@ SCHEMA_FILES = (
     "model-profile.schema.json",
     "candidate-capability.schema.json",
     "execution-run.schema.json",
+    "experience.schema.json",
 )
 
 

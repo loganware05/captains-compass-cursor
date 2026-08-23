@@ -8,7 +8,7 @@ from pathlib import Path
 
 from orchestrator.assembler.manifest import build_manifests
 from orchestrator.planner.build import build_task_graph
-from orchestrator.providers.technology_intelligence import StubTechnologyIntelligenceProvider
+from orchestrator.providers.technology_intelligence.file_provider import select_ti_provider
 from orchestrator.providers.technology_intelligence.validate import validate_ti_candidates
 from orchestrator.registry.compiler import write_registry
 from orchestrator.registry.load import load_registry
@@ -42,7 +42,7 @@ def build_capability_plan(
     registry = load_registry(repo_root)
     manifests = build_manifests(task_graph, registry, plan_id=plan_id)
 
-    ti_provider = StubTechnologyIntelligenceProvider()
+    ti_provider = select_ti_provider()
     candidates = [
         item.to_dict()
         for item in ti_provider.discover_candidates(objective, context)

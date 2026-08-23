@@ -36,6 +36,9 @@ SKILL_SLUGS = (
     "harness-gc",
     "dependency-supply-chain",
     "capability-planning",
+    "execution-telemetry",
+    "candidate-promotion",
+    "experience-skill-training",
 )
 
 AGENT_PROFILES = (

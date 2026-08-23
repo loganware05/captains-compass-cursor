@@ -68,6 +68,9 @@ def render_reusable_capabilities(artifacts: CapabilityPlanArtifacts) -> str:
 
 
 def render_technology_intelligence_candidates(artifacts: CapabilityPlanArtifacts) -> str:
+    import os
+
+    provider_name = os.environ.get("COMPASS_TI_PROVIDER", "stub").strip().lower() or "stub"
     lines = [
         "## Technology Intelligence Candidates",
         "",
@@ -77,7 +80,7 @@ def render_technology_intelligence_candidates(artifacts: CapabilityPlanArtifacts
     candidates = artifacts.technology_intelligence_candidates
     if not candidates:
         lines.append(
-            "*No external candidates queried (Technology Intelligence provider: stub).*"
+            f"*No external candidates queried (Technology Intelligence provider: {provider_name}).*"
         )
     else:
         lines.extend(["| ID | Signal | Lifecycle |", "|---|---|---|"])
@@ -86,6 +89,7 @@ def render_technology_intelligence_candidates(artifacts: CapabilityPlanArtifacts
                 f"| `{candidate.get('id')}` | {candidate.get('discovery_signal', 'n/a')} | "
                 f"{candidate.get('lifecycle_stage', 'DISCOVERED')} |"
             )
+        lines.extend(["", f"*Provider: `{provider_name}` (candidates remain non-executable).*"])
     lines.append("")
     return "\n".join(lines)
 
