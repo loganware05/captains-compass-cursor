@@ -1,0 +1,119 @@
+## Required Capabilities
+
+Inferred from the objective and repository context.
+
+- implementation-plan-authoring
+
+
+**Domains detected:** general
+
+## Reusable Capabilities Found
+
+Approved Compass Skills ranked for this objective (deterministic matcher).
+
+| Skill | Score | Notes |
+|---|---:|---|
+| `implementation-planning` | 0.75 | capability_overlap=0.45 |
+| `accessibility-review` | 0.3 | lifecycle_stage=0.15 |
+| `autonomy-budget` | 0.3 | lifecycle_stage=0.15 |
+| `capability-planning` | 0.3 | lifecycle_stage=0.15 |
+| `code-structure-cleanup` | 0.3 | lifecycle_stage=0.15 |
+| `dependency-supply-chain` | 0.3 | lifecycle_stage=0.15 |
+| `docker-cloud` | 0.3 | lifecycle_stage=0.15 |
+| `github-integration` | 0.3 | lifecycle_stage=0.15 |
+| `harness-gc` | 0.3 | lifecycle_stage=0.15 |
+| `ios-engineering` | 0.3 | lifecycle_stage=0.15 |
+| `linear-integration` | 0.3 | lifecycle_stage=0.15 |
+| `node-engineering` | 0.3 | lifecycle_stage=0.15 |
+| `notion-integration` | 0.3 | lifecycle_stage=0.15 |
+| `playwright-browser-validation` | 0.3 | lifecycle_stage=0.15 |
+| `postgres-prisma` | 0.3 | lifecycle_stage=0.15 |
+| `pull-request-preparation` | 0.3 | lifecycle_stage=0.15 |
+| `python-ml` | 0.3 | lifecycle_stage=0.15 |
+| `react-engineering` | 0.3 | lifecycle_stage=0.15 |
+| `repository-discovery` | 0.3 | lifecycle_stage=0.15 |
+| `review-fix-loop` | 0.3 | lifecycle_stage=0.15 |
+| `security-review` | 0.3 | lifecycle_stage=0.15 |
+| `source-code-context` | 0.3 | lifecycle_stage=0.15 |
+| `testing-validation` | 0.3 | lifecycle_stage=0.15 |
+| `worktree-orchestration` | 0.3 | lifecycle_stage=0.15 |
+| `candidate-promotion` | 0.255 | lifecycle_stage=0.105 |
+| `execution-telemetry` | 0.255 | lifecycle_stage=0.105 |
+| `experience-skill-training` | 0.255 | lifecycle_stage=0.105 |
+
+### Capability Gaps
+
+No capability gaps detected for the inferred requirements.
+
+## Technology Intelligence Candidates
+
+> **NOT APPROVED FOR EXECUTION** — discovery signals only.
+
+| ID | Signal | Lifecycle |
+|---|---|---|
+| `stars-redacted-accessible-forms` | github-stars:redacted:n=128 | DISCOVERED |
+| `stars-redacted-pdf-kit` | github-stars:redacted:n=42 | DISCOVERED |
+
+*Provider: `file` (candidates remain non-executable).*
+
+## Task Graph
+
+Execution order: task-discovery → task-architecture → task-implementation → task-validation → task-documentation
+
+| Task ID | Objective | Dependencies | Parallelizable |
+|---|---|---|---|
+| `task-discovery` | Discover repository structure, tooling, risks, and conventions | — | no |
+| `task-architecture` | Define components, contracts, data changes, and rollback strategy | task-discovery | no |
+| `task-implementation` | Implement approved changes for: accessible forms patterns | task-architecture | no |
+| `task-validation` | Run applicable validation layers and capture evidence | task-implementation | no |
+| `task-documentation` | Update project memory docs and completion records | task-validation | no |
+
+Machine artifact: `.agent/plans/release-v1.6.0-file-ti-smoke/task-graph.json`
+
+## Proposed Agent Configuration
+
+One manifest per task. Reference profiles map to existing `.cursor/agents/` templates.
+
+| Task | Profile | Model class | Skills | Rationale |
+|---|---|---|---|---|
+| `task-discovery` | `repository-scout` | reasoning-strong | `repository-discovery`, `capability-planning`, `harness-gc` | Task 'task-discovery' requires [repo-structure-mapping, tooling-identification, convention-discovery]. Reference profile 'repository-scout' with model class 'reasoning-strong'. Selected Skills: [repository-discovery, capability-planning, harness-gc]. |
+| `task-architecture` | `architecture-agent` | reasoning-strong | `capability-planning`, `code-structure-cleanup`, `dependency-supply-chain` | Task 'task-architecture' requires [component-boundary-design, api-contract-definition, migration-rollback-strategy]. Reference profile 'architecture-agent' with model class 'reasoning-strong'. Selected Skills: [capability-planning, code-structure-cleanup, dependency-supply-chain]. |
+| `task-implementation` | `implementation-agent` | inherit | `autonomy-budget`, `code-structure-cleanup`, `docker-cloud` | Task 'task-implementation' requires [feature-implementation, convention-following]. Reference profile 'implementation-agent' with model class 'inherit'. Selected Skills: [autonomy-budget, code-structure-cleanup, docker-cloud]. |
+| `task-validation` | `test-engineer` | coding-strong | `testing-validation`, `accessibility-review`, `ios-engineering` | Task 'task-validation' requires [unit-test-execution, integration-test-execution, definition-of-done-validation, validation-evidence-capture]. Reference profile 'test-engineer' with model class 'coding-strong'. Selected Skills: [testing-validation, accessibility-review, ios-engineering]. |
+| `task-documentation` | `documentation-agent` | fast-iter | `pull-request-preparation`, `autonomy-budget`, `github-integration` | Task 'task-documentation' requires [project-memory-update, progress-tracking, completion-reporting]. Reference profile 'documentation-agent' with model class 'fast-iter'. Selected Skills: [pull-request-preparation, autonomy-budget, github-integration]. |
+
+Machine artifact: `.agent/plans/release-v1.6.0-file-ti-smoke/manifests.json`
+
+## Evaluation Strategy
+
+After implementation (post-approval), Captain Compass will determine success by:
+
+- Matching task acceptance criteria from the task graph
+- Applicable validation layers from `TESTING.md` / evidence matrix
+- Security and accessibility reviews when manifests include those tasks
+- Adversarial review before merge when scope is non-trivial
+- Comparison of outcome vs inferred required capabilities
+
+Capability planning quality for this plan is evaluated by:
+
+- Explicit capability gaps (must not be silent)
+- Deterministic Skill ranking reproducibility
+- Inspectable agent manifest rationale per task
+
+## Learning Plan
+
+Retain under `.agent/plans/release-v1.6.0-file-ti-smoke/`:
+
+- .agent/plans/release-v1.6.0-file-ti-smoke/resolve.json
+- .agent/plans/release-v1.6.0-file-ti-smoke/task-graph.json
+- .agent/plans/release-v1.6.0-file-ti-smoke/manifests.json
+- Link to issue, branch, PR, tests, and evaluation evidence after execution
+
+Use execution evidence in Milestone 2+ to tune Skill confidence and routing.
+
+## Approval Boundary
+
+**Implementation must not begin until the Captain explicitly approves this plan.**
+
+Machine-generated capability matches and agent manifests are **proposals** only. The Captain may approve, revise, or reject before any product implementation proceeds.
+

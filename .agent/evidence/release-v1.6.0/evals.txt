@@ -1,0 +1,43 @@
+=== eval: failClosed policy ===
+PASS: failClosed critical/soft split
+=== eval: plan-approval DRAFT vs APPROVED ===
+Reset branch 'feature/eval'
+PASS: eval denies DRAFT src edit
+PASS: eval allows APPROVED src edit
+=== eval: soft-hook command-string skip ===
+PASS: format skip via command string
+PASS: tests skip via command string
+PASS: pr-evidence skip via marker file
+=== eval: control assets present ===
+PASS: harness-gc skill
+PASS: dependency-supply-chain skill
+PASS: session note template
+PASS: structural-tests example
+PASS: capability-planning skill
+PASS: execution-telemetry skill
+PASS: candidate-promotion skill
+PASS: experience-skill-training skill
+PASS: capability-plan.sh
+PASS: record-execution-run.sh
+PASS: technology-intelligence doc
+PASS: experience.schema.json
+PASS: template has Required Capabilities
+PASS: template has Task Graph
+PASS: template has Proposed Agent Configuration
+PASS: template has Approval Boundary
+=== eval: orchestrator schemas present ===
+PASS: schema capability.schema.json
+PASS: schema task.schema.json
+PASS: schema agent-manifest.schema.json
+=== eval: stub TI provider isolation ===
+PASS: stub TI returns no candidates
+=== eval: file TI provider isolation ===
+PASS: file TI returns redacted candidates
+=== eval: record-execution-run smoke ===
+PASS: record-execution-run writes experience
+PASS: smoke run json exists
+PASS: smoke experience json exists
+=== eval: golden fixture determinism ===
+PASS: golden fixtures deterministic
+
+Eval results: 31 passed, 0 failed
