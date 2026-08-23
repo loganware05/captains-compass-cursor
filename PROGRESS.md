@@ -2,29 +2,22 @@
 
 ## Current status
 
-**V1.5.0 complete.** Tag [`v1.5.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.5.0)
-on `1806eb3`. M1 capability-aware planning is shipped and sandbox-validated
-(checklist row 7 PASS).
+**M2 APPROVED** — issue [#41](https://github.com/loganware05/captains-compass-cursor/issues/41), branch
+`feature/41-m2-execution-telemetry-ti`, target **v1.6.0**.
+Rollback: `rollback/pre-m2-execution-telemetry-ti` @ `c8f978d`.
 
 ## Completed
 
-- Through v1.4.0: P0–P2 orchestration roadmap, evals, harness-gc, supply-chain
-- M1 Phases A–H via [#35](https://github.com/loganware05/captains-compass-cursor/issues/35) / [#36](https://github.com/loganware05/captains-compass-cursor/pull/36)
-- Release prep + VERSION land via [#37](https://github.com/loganware05/captains-compass-cursor/pull/37)
-- Annotated tag `v1.5.0`, GitHub release, closeout [#38](https://github.com/loganware05/captains-compass-cursor/pull/38)
-- Sandbox refresh [sandbox#14](https://github.com/loganware05/captain-compass-sandbox/pull/14) ([issue #13](https://github.com/loganware05/captain-compass-sandbox/issues/13))
-- Sandbox checklist row 7: capability-aware `/plan-feature` PASS (plan
-  `sandbox-behavioral-plan-feature-2026-08-20`; evidence in sandbox
-  `.agent/evidence/sandbox-behavioral-2026-08-20/`)
-- Sandbox contact counter landed on `main` via [sandbox#19](https://github.com/loganware05/captain-compass-sandbox/pull/19)
+- Through v1.5.0 / M1 capability-aware planning
+- M2 plan approved with resolved open questions (2026-08-23)
 
 ## In progress
 
-None.
+- M2 Phase T-A: Experience + ExecutionRun schemas + store layout ([#41](https://github.com/loganware05/captains-compass-cursor/issues/41))
 
 ## Next
 
-- Milestone 2 backlog (execution telemetry, live TI adapter)
+- T-B telemetry writer → T-C Skills → T-D file TI → T-E promotion → T-E2 experience training → T-F harness
 
 ## Blockers
 
