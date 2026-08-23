@@ -2,7 +2,7 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: m2-execution-telemetry-ti
 - Issue: [#41](https://github.com/loganware05/captains-compass-cursor/issues/41)
 - Branch: `feature/41-m2-execution-telemetry-ti`
@@ -441,4 +441,12 @@ Until then, only planning documents and discovery artifacts may change.
 - **Branch:** `feature/41-m2-execution-telemetry-ti`
 - **Rollback:** `rollback/pre-m2-execution-telemetry-ti` @ `c8f978d`
 
-**Phase T-A in progress (2026-08-23):** Experience schema, ExecutionRun store layout, validator registration.
+**Phase T-G complete (2026-08-23):** VERSION `1.6.0`, release evidence, release PR pending.
+
+## Completion Record
+
+- **Completed:** 2026-08-23
+- **Merged feature PR:** [#42](https://github.com/loganware05/captains-compass-cursor/pull/42) @ `ccd4e61`
+- **Release PR:** `chore/41-release-v1.6.0` (pending)
+- **Rollback (M2 feature):** `rollback/pre-m2-execution-telemetry-ti` @ `c8f978d`
+- **Rollback (pre-v1.6.0 VERSION):** `rollback/pre-v1.6.0` @ `ccd4e61` (tag at release)

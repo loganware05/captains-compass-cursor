@@ -1,0 +1,4 @@
+release-v1.6.0 validation: doctor 0 errors; unittest 75 pass; tests/run 111 pass; evals 31 pass
+VERSION=1.6.0 CHANGELOG=## 1.6.0 — 2026-08-23
+feature merge: ccd4e61 (PR #42)
+rollback/pre-v1.6.0 target: ccd4e61 (pre-VERSION bump)
