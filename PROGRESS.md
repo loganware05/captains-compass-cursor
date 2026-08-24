@@ -2,23 +2,24 @@
 
 ## Current status
 
-**M3 COMPLETE (release prep)** — feature [#46](https://github.com/loganware05/captains-compass-cursor/pull/46) merged @ `a0156e8`.
-T-G on `chore/45-release-v1.7.0` for **v1.7.0**.
+**v1.7.0 RELEASED** — tag `v1.7.0` @ `df73f59`, GitHub release published.
+M3 complete ([#45](https://github.com/loganware05/captains-compass-cursor/issues/45)).
+
+Sandbox refresh: https://github.com/loganware05/captain-compass-sandbox/pull/23 (pending merge)
 
 ## Completed
 
-- v1.5.0 / M1; v1.6.0 / M2
-- v1.7.0 / M3 evaluator, experience routing, SANDBOX_TESTED promotion, subagent proficiency (#45)
+- v1.5.0 / M1; v1.6.0 / M2; v1.7.0 / M3
+- Tag / release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.7.0
 
 ## In progress
 
-- Tag `v1.7.0`, GitHub release, sandbox refresh
+- Sandbox refresh 1.6.0 → 1.7.0 ([#22](https://github.com/loganware05/captain-compass-sandbox/issues/22))
 
 ## Next
 
-1. Merge release PR
-2. Tag + `gh release create`
-3. Sandbox `update.sh` to 1.7.0
+1. Merge sandbox refresh PR
+2. Milestone 4 planning when Captain ready (persistent-role promotion / bounded Level 3)
 
 ## Blockers
 
