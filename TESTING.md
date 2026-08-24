@@ -94,7 +94,10 @@ Knowledge Steward ingest and query (explicit CLI only):
 
 ```bash
 ./scripts/ingest-knowledge.sh --from-store experience,evaluations,decisions
+./scripts/ingest-knowledge.sh --from-store decisions --rebuild-vector
+./scripts/rebuild-knowledge-vector-index.sh
 ./scripts/query-knowledge.sh --query "evaluator routing" --kind decision
+./scripts/query-knowledge.sh --query "matcher tuning" --mode hybrid
 ```
 
 ## Evidence matrix

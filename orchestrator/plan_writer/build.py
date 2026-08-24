@@ -25,6 +25,7 @@ class CapabilityPlanArtifacts:
     technology_intelligence_candidates: list[dict] = field(default_factory=list)
     experience_signals: list[dict] = field(default_factory=list)
     knowledge_context: list[dict] = field(default_factory=list)
+    knowledge_search_mode: str = "keyword"
     artifact_paths: dict[str, str] = field(default_factory=dict)
 
 
@@ -74,14 +75,22 @@ def build_capability_plan(
                 continue
 
     knowledge_context: list[dict] = []
+    knowledge_search_mode = "keyword"
     try:
         from orchestrator.knowledge.query import query_knowledge
+        from orchestrator.knowledge.vector_index import select_knowledge_search_mode
 
+        knowledge_search_mode = select_knowledge_search_mode(repo_root)
         knowledge_context = query_knowledge(
-            repo_root, objective, top_n=5, rebuild_index=False
+            repo_root,
+            objective,
+            top_n=5,
+            rebuild_index=False,
+            mode=knowledge_search_mode,
         )
     except Exception:
         knowledge_context = []
+        knowledge_search_mode = "keyword"
 
     plans_dir = repo_root / ".agent" / "plans" / plan_id
     plans_dir.mkdir(parents=True, exist_ok=True)
@@ -148,6 +157,7 @@ def build_capability_plan(
         technology_intelligence_candidates=candidates,
         experience_signals=experience_signals,
         knowledge_context=knowledge_context,
+        knowledge_search_mode=knowledge_search_mode,
         artifact_paths={
             "task_graph": str(task_graph_path.relative_to(repo_root)),
             "manifests": str(manifests_path.relative_to(repo_root)),

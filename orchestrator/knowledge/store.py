@@ -28,6 +28,10 @@ def index_path(repo_root: Path) -> Path:
     return knowledge_root(repo_root) / "index.json"
 
 
+def vector_index_path(repo_root: Path) -> Path:
+    return knowledge_root(repo_root) / "vector-index.json"
+
+
 def ingest_log_dir(repo_root: Path) -> Path:
     return knowledge_root(repo_root) / "ingest-log"
 

@@ -322,6 +322,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing executable scripts/query-knowledge.sh"
   fi
+  if [[ -x "$ROOT/scripts/rebuild-knowledge-vector-index.sh" ]]; then
+    ok "rebuild-knowledge-vector-index.sh"
+  else
+    fail "missing executable scripts/rebuild-knowledge-vector-index.sh"
+  fi
   if [[ -f "$ROOT/.agent/capabilities/compiled/.gitkeep" ]]; then
     ok ".agent/capabilities/compiled layout"
   else

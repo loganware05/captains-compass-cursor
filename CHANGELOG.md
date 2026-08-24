@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Added
+
+- Milestone 6: Vector Experience Store — TF-IDF file vector index, hybrid
+  keyword+vector query, `rebuild-knowledge-vector-index.sh` (extends `knowledge-steward`).
+
 ## 1.9.0 — 2026-08-24
 
 ### Added

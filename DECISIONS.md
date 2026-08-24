@@ -23,6 +23,27 @@
   control; specialist graduation is reviewable via PR; rankings stay
   deterministic at default weights.
 
+## ADR-022: TF-IDF vector Experience store with hybrid knowledge search (v1.10.0 M6)
+
+- **Status:** Accepted
+- **Date:** 2026-08-24
+- **Context:** M5 shipped keyword-only Knowledge Steward with a NoOp
+  `VectorIndexAdapter`. Semantic recall misses related items with low token
+  overlap. ADR-021 deferred production vector DB to M6+.
+- **Decision:**
+  1. Ship stdlib **TF-IDF sparse vector index** at
+     `.agent/knowledge/vector-index.json` via `FileVectorIndexAdapter`.
+  2. Query supports `keyword`, `vector`, and **`hybrid`** modes; CLI default
+     remains `keyword`; plan writer uses **hybrid** when vector index exists.
+  3. Vector rebuild is **explicit CLI only** (`rebuild-knowledge-vector-index.sh`
+     and `ingest-knowledge.sh --rebuild-vector`).
+  4. Missing vector index → vector/hybrid modes degrade to keyword results.
+  5. Production embedding APIs and vector DBs remain deferred; adapter boundary
+     preserved for future providers.
+  6. Performance-knowledge ingest deferred to **M7**.
+- **Consequences:** Planning gains semantic recall without CI network deps;
+  keyword index remains authoritative fallback; hybrid scores stay informational.
+
 ## ADR-021: Knowledge Steward with stdlib keyword index (v1.9.0 M5)
 
 - **Status:** Accepted

@@ -122,7 +122,7 @@ def render_knowledge_context(artifacts: CapabilityPlanArtifacts) -> str:
     lines = [
         "## Knowledge Context",
         "",
-        "Informational readback from `.agent/knowledge/` (keyword index). "
+        f"Informational readback from `.agent/knowledge/` ({artifacts.knowledge_search_mode} search). "
         "**Does not alter Skill rankings or matcher weights.** "
         "Populate via explicit `./scripts/ingest-knowledge.sh`.",
         "",

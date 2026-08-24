@@ -56,7 +56,7 @@ agentic engineering process across multiple product repositories.
 7. Documentation, budget/session templates, evidence matrix, multi-runtime adapters, evals
 8. Installation, update, uninstall, and doctor scripts
 9. Control-repo CI (doctor + tests + harness evals)
-10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3), persistent roles + bounded weight apply (v1.8.0 M4), knowledge steward (v1.9.0 M5)
+10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3), persistent roles + bounded weight apply (v1.8.0 M4), knowledge steward (v1.9.0 M5), hybrid vector search (v1.10.0 M6)
 
 ## External Services
 
@@ -94,7 +94,7 @@ Installer and doctor should complete in seconds on a typical laptop.
 
 ## Known Technical Debt
 
-None blocking for M5 planning. Later: vector Experience store adapter, live TI adapters.
+None blocking. M7: performance-knowledge ingest, live TI adapters, production embedding providers.
 
 ## Terminology
 
@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 6 planning when Captain ready. v1.9.0 / M5 fully closed.
+Ship Milestone 6 feature implementation (#58) on `feature/58-m6-vector-experience-store`; release **v1.10.0** after merge.
