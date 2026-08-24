@@ -85,7 +85,7 @@ After M5 (v1.9.0), Captain Compass can:
 - [x] `.cursor/agents/knowledge-steward.md` subagent
 - [x] ADR-021 for Knowledge Steward + stdlib index vs deferred vector store
 - [x] Doctor / install / tests / evals pass
-- [ ] Control-repo only; sandbox refresh after release
+- [x] Control-repo only; sandbox refresh after release
 
 ## Non-Goals
 
