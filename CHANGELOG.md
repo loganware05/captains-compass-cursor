@@ -2,10 +2,21 @@
 
 ## Unreleased
 
+## 1.10.0 — 2026-08-24
+
 ### Added
 
-- Milestone 6: Vector Experience Store — TF-IDF file vector index, hybrid
-  keyword+vector query, `rebuild-knowledge-vector-index.sh` (extends `knowledge-steward`).
+- TF-IDF file vector index (`.agent/knowledge/vector-index.json`) and
+  `FileVectorIndexAdapter` (#58)
+- Hybrid knowledge query: `query-knowledge.sh --mode keyword|vector|hybrid` (#58)
+- `rebuild-knowledge-vector-index.sh` and `ingest-knowledge.sh --rebuild-vector` (#58)
+- Plan writer **hybrid** Knowledge Context when vector index exists (#58)
+- ADR-022 (#58)
+
+### Changed
+
+- VERSION `1.10.0`; extends `knowledge-steward` Skill (no new Skill count)
+- CLI query default remains `keyword`; plan writer defaults to hybrid when index present
 
 ## 1.9.0 — 2026-08-24
 

@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 6 feature implementation (#58) on `feature/58-m6-vector-experience-store`; release **v1.10.0** after merge.
+Ship Milestone 7 planning when Captain ready. v1.10.0 / M6 release closeout in progress.

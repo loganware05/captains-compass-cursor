@@ -2,17 +2,18 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: m6-vector-experience-store
 - Issue: [#58](https://github.com/loganware05/captains-compass-cursor/issues/58)
-- Branch: `feature/58-m6-vector-experience-store`
-- Target release: **v1.10.0** (additive; non-breaking)
+- Branch: `feature/58-m6-vector-experience-store` (merged #59)
+- Target release: **v1.10.0** (released 2026-08-24)
 - Created: 2026-08-24
 - Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
 - Approved revision: hybrid plan-writer default; dedicated rebuild script; performance ingest M7
 - Rollback checkpoint: `rollback/pre-m6-vector-experience-store` @ `abbb316`
+- Feature PR: [#59](https://github.com/loganware05/captains-compass-cursor/pull/59) (merged @ `3859000`)
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
   - Prior plans: M1–M5 COMPLETE (v1.5.0–v1.9.0)
@@ -62,21 +63,21 @@ After M6 (v1.10.0), Captain Compass can:
 
 ## Acceptance Criteria
 
-- [ ] `FileVectorIndexAdapter` implements `VectorIndexAdapter` with TF-IDF sparse
+- [x] `FileVectorIndexAdapter` implements `VectorIndexAdapter` with TF-IDF sparse
       vectors stored under `.agent/knowledge/vector-index.json`
-- [ ] `query_knowledge()` supports `mode=keyword|vector|hybrid`; default remains
+- [x] `query_knowledge()` supports `mode=keyword|vector|hybrid`; default remains
       **`keyword`** for backward compatibility
-- [ ] Hybrid merge is deterministic, documented, and includes provenance +
+- [x] Hybrid merge is deterministic, documented, and includes provenance +
       per-mode scores on results
-- [ ] Vector index rebuild is **explicit CLI only** (ingest flag or dedicated
+- [x] Vector index rebuild is **explicit CLI only** (ingest flag or dedicated
       rebuild script); no hooks
-- [ ] Empty or missing vector index → vector/hybrid modes degrade gracefully to
+- [x] Empty or missing vector index → vector/hybrid modes degrade gracefully to
       keyword-only results
-- [ ] Plan writer Knowledge Context uses hybrid query when vector index exists
+- [x] Plan writer Knowledge Context uses hybrid query when vector index exists
       (env override: `COMPASS_KNOWLEDGE_SEARCH_MODE`)
-- [ ] Extend Skill `knowledge-steward` + doctor checks for vector index layout
-- [ ] ADR-022 for stdlib TF-IDF vector index vs deferred production embedding DB
-- [ ] Doctor / install / tests / evals pass
+- [x] Extend Skill `knowledge-steward` + doctor checks for vector index layout
+- [x] ADR-022 for stdlib TF-IDF vector index vs deferred production embedding DB
+- [x] Doctor / install / tests / evals pass
 - [ ] Control-repo only; sandbox refresh after release
 
 ## Non-Goals
