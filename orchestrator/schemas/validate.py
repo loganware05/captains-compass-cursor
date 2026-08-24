@@ -22,6 +22,7 @@ SCHEMA_FILES = (
     "persistent-role-promotion.schema.json",
     "knowledge-item.schema.json",
     "procedure-promotion.schema.json",
+    "vector-index.schema.json",
 )
 
 

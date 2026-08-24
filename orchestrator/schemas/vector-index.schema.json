@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/vector-index.schema.json",
+  "title": "VectorIndex",
+  "description": "TF-IDF sparse vector index for knowledge items (Milestone 6).",
+  "type": "object",
+  "required": ["version", "kind", "item_count", "idf", "vectors", "built_at"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "minLength": 1 },
+    "kind": { "type": "string", "const": "tfidf-vector-index" },
+    "item_count": { "type": "integer", "minimum": 0 },
+    "idf": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "vectors": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": { "type": "number" }
+      }
+    },
+    "built_at": { "type": "string", "minLength": 1 }
+  }
+}
