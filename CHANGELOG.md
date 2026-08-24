@@ -2,11 +2,25 @@
 
 ## Unreleased
 
+## 1.8.0 — 2026-08-24
+
 ### Added
 
-- Milestone 4: persistent-role promotion (staging + PR only) and bounded Level 3
-  Captain-flagged routing weight apply (`persistent-role-promotion`,
-  `bounded-autonomy` Skills; `weights.json`; apply audit trail).
+- Persistent-role promotion Skill + CLI (`propose-persistent-role.sh`); staging drafts
+  + Captain PR only (#50)
+- Bounded Level 3 autonomy: Captain-flagged routing weight apply (`bounded-autonomy`,
+  `apply-routing-proposal.sh`) under autonomy budget + eval gate (#50)
+- `orchestrator/matcher/weights.json` with loader; apply audit under
+  `.agent/routing/applied/` (#50)
+- Assembler preference for Captain-approved proficient / persistent-role agents (#50)
+- ADR-020 (#50)
+
+### Changed
+
+- VERSION `1.8.0`; thirty-one Skills
+- Install seeds `.agent/routing/applied/`, `.agent/agents/promotions/`
+- Routing proposals include `captain_approved: false` by default; apply requires
+  explicit Captain flag per proposal
 
 ## 1.7.0 — 2026-08-24
 

@@ -2,28 +2,24 @@
 
 ## Current status
 
-**M4 feature implementation complete** — awaiting PR merge for #50, then T-F
-release prep **v1.8.0**.
-
-Branch: `feature/50-m4-persistent-roles-bounded-autonomy`  
-Rollback: `rollback/pre-m4-persistent-roles-bounded-autonomy` @ `25fd83f`  
-Evidence: `.agent/evidence/m4-persistent-roles-bounded-autonomy/validation.md`
+**M4 COMPLETE** — v1.8.0 release prep in progress on `chore/50-release-v1.8.0`.
+Feature merged via [#51](https://github.com/loganware05/captains-compass-cursor/pull/51).
 
 ## Completed
 
-- v1.5.0 / M1; v1.6.0 / M2; v1.7.0 / M3
-- M4 T-A–T-E: weights.json, persistent-role promotion, assembler affinity,
-  Captain-flagged apply, ADR-020, doctor/tests/evals (92 unit / 39 eval / 114 run)
+- v1.5.0 / M1; v1.6.0 / M2; v1.7.0 / M3; v1.8.0 / M4 feature (#50, #51)
+- M4: persistent roles, bounded apply, ADR-020, validation evidence
 
 ## In progress
 
-- Feature PR for #50; then release v1.8.0 + sandbox refresh
+- v1.8.0 tag + GitHub release + sandbox refresh
 
 ## Next
 
-1. Merge feature PR
-2. T-F release prep (VERSION 1.8.0, tag, sandbox update)
-3. Close #50
+1. Merge release prep PR
+2. Tag `v1.8.0` + GitHub release
+3. Sandbox refresh PR + closeout docs
+4. Close #50
 
 ## Blockers
 
