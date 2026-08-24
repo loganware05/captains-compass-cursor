@@ -38,6 +38,12 @@ wandb/
 .agent/runs/
 .agent/experience/*.json
 !.agent/experience/.gitkeep
+.agent/evaluations/*.json
+!.agent/evaluations/.gitkeep
+.agent/routing/proposals/*.json
+!.agent/routing/proposals/.gitkeep
+.agent/agents/proficiency/*.json
+!.agent/agents/proficiency/.gitkeep
 .agent/handoffs/
 .agent/capabilities/compiled/registry.json
 .agent/plans/

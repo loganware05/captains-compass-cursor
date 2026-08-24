@@ -39,6 +39,8 @@ SKILL_SLUGS = (
     "execution-telemetry",
     "candidate-promotion",
     "experience-skill-training",
+    "compass-evaluator",
+    "experience-routing",
 )
 
 AGENT_PROFILES = (
@@ -50,6 +52,7 @@ AGENT_PROFILES = (
     "accessibility-reviewer",
     "adversarial-reviewer",
     "documentation-agent",
+    "compass-evaluator",
 )
 
 
@@ -127,12 +130,13 @@ def compile_registry(repo_root: Path) -> CompileResult:
         skills.append(capability)
 
     profiles: list[dict] = []
+    seen_profile_ids: set[str] = set()
     for profile_id in AGENT_PROFILES:
         profile = load_reference_profile(repo_root, profile_id)
         pid = profile["id"]
-        if pid in seen_ids:
-            raise RegistryCompileError(f"duplicate capability id: {pid}")
-        seen_ids.add(pid)
+        if pid in seen_profile_ids:
+            raise RegistryCompileError(f"duplicate reference profile id: {pid}")
+        seen_profile_ids.add(pid)
         profiles.append(profile)
 
     registry = {

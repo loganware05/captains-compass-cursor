@@ -1,0 +1,28 @@
+id: compass-evaluator
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/compass-evaluator/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, evaluation, orchestration]
+tags:
+  - evaluator
+  - experiments
+  - comparison
+capabilities_provided:
+  - bounded-experiment-recording
+  - alternative-comparison
+  - evaluation-evidence-capture
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - compass-evaluator
+  - adversarial-reviewer
+maturity: available
+confidence: 0.85

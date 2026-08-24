@@ -49,8 +49,8 @@ class InferTests(unittest.TestCase):
 class RegistryCompileTests(unittest.TestCase):
     def test_compile_control_repo_registry(self) -> None:
         result = compile_registry(ROOT)
-        self.assertEqual(len(result.registry["skills"]), 27)
-        self.assertEqual(len(result.registry["reference_profiles"]), 8)
+        self.assertEqual(len(result.registry["skills"]), 29)
+        self.assertEqual(len(result.registry["reference_profiles"]), 9)
         self.assertEqual(result.warnings, [])
 
     def test_skill_ids_are_unique(self) -> None:

@@ -49,14 +49,14 @@ agentic engineering process across multiple product repositories.
 
 1. AGENTS.md operating contract
 2. Five always-applied core rules
-3. Twenty-seven Skills (including capability-planning, execution-telemetry, candidate-promotion, experience-skill-training, harness-gc, dependency-supply-chain, autonomy-budget)
-4. Eight specialist subagents
+3. Twenty-nine Skills (including compass-evaluator, experience-routing, capability-planning, execution-telemetry, candidate-promotion, experience-skill-training)
+4. Nine specialist subagents (including `compass-evaluator`)
 5. Seven safety hooks (three critical fail-closed; four soft fail-open with multi-path skips)
 6. Six Cursor phase commands under `.cursor/commands/`
 7. Documentation, budget/session templates, evidence matrix, multi-runtime adapters, evals
 8. Installation, update, uninstall, and doctor scripts
 9. Control-repo CI (doctor + tests + harness evals)
-10. **Orchestrator module** (`orchestrator/`) — capability-aware planning (v1.5.0+) and execution telemetry / file TI (v1.6.0 M2)
+10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3)
 
 ## External Services
 
@@ -94,8 +94,9 @@ Installer and doctor should complete in seconds on a typical laptop.
 
 ## Known Technical Debt
 
-None blocking for M2. Future: live TI adapters (Stars API), Level 3 weight tuning,
-vector Experience store / Knowledge Steward.
+None blocking for M2. Future M3+: evaluator experiments, experience-based routing
+proposals, extended promotion lifecycle. Later: live TI adapters, Level 3 weight
+tuning, vector Experience store / Knowledge Steward.
 
 ## Terminology
 
@@ -125,5 +126,5 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 2 (v1.6.0): execution telemetry, file TI, candidate promotion,
-experience-skill-training.
+Ship Milestone 3 (v1.7.0): evaluator, experience-routing proposals, SANDBOX_TESTED
+promotion ceiling, subagent proficiency metadata.

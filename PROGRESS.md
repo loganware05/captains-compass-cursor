@@ -2,25 +2,23 @@
 
 ## Current status
 
-**v1.6.0 RELEASED** — tag `v1.6.0` @ `2c5bd32`, GitHub release published.
-M2 complete ([#41](https://github.com/loganware05/captains-compass-cursor/issues/41)).
-
-Sandbox refresh PR: https://github.com/loganware05/captain-compass-sandbox/pull/21 (pending merge)
+**M3 IN PROGRESS** — issue [#45](https://github.com/loganware05/captains-compass-cursor/issues/45),
+branch `feature/45-m3-evaluator-experience-routing`, target **v1.7.0**.
+Rollback: `rollback/pre-m3-evaluator-experience-routing` @ `f36beb2`.
 
 ## Completed
 
-- v1.5.0 / M1 capability-aware planning
-- v1.6.0 / M2 execution telemetry, file TI, promotion, experience training (PR [#42](https://github.com/loganware05/captains-compass-cursor/pull/42), release PR [#43](https://github.com/loganware05/captains-compass-cursor/pull/43))
-- Tag `v1.6.0` + GitHub release (2026-08-23)
+- v1.5.0 / M1; v1.6.0 / M2 (telemetry, file TI, promotion, experience training)
+- M3 plan approved 2026-08-24 (proposal-only weights; evaluator Skill+CLI+subagent;
+  SANDBOX_TESTED candidate ceiling; subagent proficiency metadata)
 
 ## In progress
 
-- Sandbox refresh 1.5.0 → 1.6.0 ([#20](https://github.com/loganware05/captain-compass-sandbox/issues/20))
+- M3 implementation T-A–T-F on `feature/45-m3-evaluator-experience-routing`
 
 ## Next
 
-1. Merge sandbox refresh PR
-2. Milestone 3 planning (when Captain ready)
+- Validate; open PR for #45; T-G release prep after merge
 
 ## Blockers
 

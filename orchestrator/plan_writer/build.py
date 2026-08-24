@@ -23,6 +23,7 @@ class CapabilityPlanArtifacts:
     task_graph: dict
     manifests: dict
     technology_intelligence_candidates: list[dict] = field(default_factory=list)
+    experience_signals: list[dict] = field(default_factory=list)
     artifact_paths: dict[str, str] = field(default_factory=dict)
 
 
@@ -48,6 +49,28 @@ def build_capability_plan(
         for item in ti_provider.discover_candidates(objective, context)
     ]
     validate_ti_candidates(candidates)
+
+    experience_signals: list[dict] = []
+    for folder in (
+        repo_root / "tests" / "fixtures" / "experience",
+        repo_root / ".agent" / "experience",
+    ):
+        if not folder.is_dir():
+            continue
+        for path in sorted(folder.glob("*.json"))[:5]:
+            try:
+                with path.open(encoding="utf-8") as handle:
+                    doc = json.load(handle)
+                if isinstance(doc, dict) and doc.get("experience_id"):
+                    experience_signals.append(
+                        {
+                            "experience_id": doc.get("experience_id"),
+                            "outcome": doc.get("outcome"),
+                            "skills_used": list(doc.get("skills_used") or [])[:8],
+                        }
+                    )
+            except (OSError, json.JSONDecodeError):
+                continue
 
     plans_dir = repo_root / ".agent" / "plans" / plan_id
     plans_dir.mkdir(parents=True, exist_ok=True)
@@ -112,6 +135,7 @@ def build_capability_plan(
         task_graph=task_graph,
         manifests=manifests,
         technology_intelligence_candidates=candidates,
+        experience_signals=experience_signals,
         artifact_paths={
             "task_graph": str(task_graph_path.relative_to(repo_root)),
             "manifests": str(manifests_path.relative_to(repo_root)),

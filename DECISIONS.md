@@ -164,6 +164,27 @@
 - **Consequences:** Stronger regression signal and clearer agent procedures without
   expanding always-on rules; Captains retain judgment on young dependencies.
 
+## ADR-019: Evaluator, experience routing proposals, and dual promotion ceilings (v1.7.0 M3)
+
+- **Status:** Accepted
+- **Date:** 2026-08-24
+- **Context:** M2 records Experiences but does not influence routing. Candidate
+  promotion stopped at ANALYZED. Architecture calls for a Captain Compass
+  Evaluator and experience-based scheduling without Level 3 autonomy.
+- **Decision:**
+  1. Ship Skill + CLI `compass-evaluator` / `run-evaluation.sh` and Cursor
+     subagent `.cursor/agents/compass-evaluator.md` for bounded experiments
+     under `.agent/evaluations/`.
+  2. Experience-based routing writes **proposals only**
+     (`auto_apply: false`); matcher `WEIGHTS` never mutate from proposals in M3.
+  3. Candidate lifecycle ceiling is `SANDBOX_TESTED` (evidence-gated
+     `SECURITY_REVIEWED` / `SANDBOX_TESTED`). Live Skills still need Captain PR.
+  4. Separate Captain-approved **subagent proficiency / classification** metadata
+     under `.agent/agents/proficiency/` tracks proficiency after Skill training —
+     not silent persistent-role promotion.
+- **Consequences:** Learning loop becomes readable and reviewable; rankings stay
+  deterministic by default; subagent proficiency is auditable.
+
 ## ADR-018: Execution telemetry, file TI, and Experience dual-path (v1.6.0 M2)
 
 - **Status:** Accepted

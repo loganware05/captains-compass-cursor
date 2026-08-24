@@ -77,15 +77,15 @@ Checklist row 7 from `docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md`.
 | Stopped at approval gate before product edits | Pass |
 | Post-approval implementation + tests | Pass — [sandbox#15](https://github.com/loganware05/captain-compass-sandbox/pull/15) (21/21 tests) |
 
-| Sandbox update 1.5.0 → 1.6.0 | doctor passed; [sandbox#21](https://github.com/loganware05/captain-compass-sandbox/pull/21) open |
+| Sandbox update 1.5.0 → 1.6.0 | Pass — [sandbox#21](https://github.com/loganware05/captain-compass-sandbox/pull/21) merged |
 
-### Execution telemetry + file TI (v1.6.0) — refresh started 2026-08-23
+### Execution telemetry + file TI (v1.6.0) — refresh complete 2026-08-23
 
 | Step | Result |
 |---|---|
 | Control release `v1.6.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.6.0 |
-| Sandbox refreshed to Compass 1.6.0 | Pending merge — [sandbox#21](https://github.com/loganware05/captain-compass-sandbox/pull/21) |
-| `record-execution-run.sh` on sandbox close | Pending interactive |
+| Sandbox refreshed to Compass 1.6.0 | Pass — [sandbox#21](https://github.com/loganware05/captain-compass-sandbox/pull/21) |
+| `record-execution-run.sh` on sandbox close | Pending interactive (optional) |
 
 Control mirror: `.agent/evidence/release-v1.6.0/post-tag-validation.md`
 

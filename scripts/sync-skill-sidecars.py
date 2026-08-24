@@ -47,6 +47,18 @@ SKILLS: dict[str, dict] = {
         "security_sensitivity": "high",
         "agent_affinity": ["security-reviewer", "architecture-agent"],
     },
+    "compass-evaluator": {
+        "categories": ["process", "evaluation", "orchestration"],
+        "tags": ["evaluator", "experiments", "comparison"],
+        "capabilities_provided": [
+            "bounded-experiment-recording",
+            "alternative-comparison",
+            "evaluation-evidence-capture",
+        ],
+        "compatible_stacks": ["any"],
+        "security_sensitivity": "medium",
+        "agent_affinity": ["compass-evaluator", "adversarial-reviewer"],
+    },
     "code-structure-cleanup": {
         "categories": ["refactoring", "quality"],
         "tags": ["cleanup", "refactor", "services"],
@@ -106,6 +118,18 @@ SKILLS: dict[str, dict] = {
         "compatible_stacks": ["any"],
         "security_sensitivity": "medium",
         "agent_affinity": ["documentation-agent", "architecture-agent"],
+    },
+    "experience-routing": {
+        "categories": ["process", "learning", "orchestration"],
+        "tags": ["experience", "routing", "proposals"],
+        "capabilities_provided": [
+            "experience-routing-proposal",
+            "matcher-weight-suggestion",
+            "agent-proficiency-recording",
+        ],
+        "compatible_stacks": ["any"],
+        "security_sensitivity": "medium",
+        "agent_affinity": ["documentation-agent", "architecture-agent", "compass-evaluator"],
     },
     "github-integration": {
         "categories": ["integration", "delivery", "git"],
