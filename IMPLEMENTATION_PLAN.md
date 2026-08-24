@@ -2,168 +2,161 @@
 
 ## Metadata
 
-- Status: COMPLETE
-- Plan ID: m3-evaluator-experience-routing
-- Issue: [#45](https://github.com/loganware05/captains-compass-cursor/issues/45)
-- Branch: `feature/45-m3-evaluator-experience-routing`
-- Target release: **v1.7.0** (additive; non-breaking)
-- Created: 2026-08-23
-- Last updated: 2026-08-23
+- Status: APPROVED
+- Plan ID: m4-persistent-roles-bounded-autonomy
+- Issue: [#50](https://github.com/loganware05/captains-compass-cursor/issues/50)
+- Branch: `feature/50-m4-persistent-roles-bounded-autonomy`
+- Target release: **v1.8.0** (additive; non-breaking)
+- Created: 2026-08-24
+- Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
-- Approved revision: M3 as drafted + resolved open questions (proposal-only weights, evaluator Skill+CLI+subagent proficiency, SANDBOX_TESTED candidate ceiling, v1.7.0)
-- Rollback checkpoint: `rollback/pre-m3-evaluator-experience-routing` (`f36beb2`)
+- Approved revision: post-approval decisions recorded below
+- Rollback checkpoint: `rollback/pre-m4-persistent-roles-bounded-autonomy` @ `25fd83f`
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
-  - Prior plans: M1 COMPLETE (v1.5.0), M2 COMPLETE (v1.6.0)
-  - Baseline: **v1.6.0** (`f36beb2` / current `main` after closeout #44)
-- Machine artifacts: `.agent/plans/m3-evaluator-experience-routing/`
+  - Prior plans: M1–M3 COMPLETE (v1.5.0–v1.7.0)
+  - Baseline: **v1.7.0** (`25fd83f` / current `main` after closeout #49)
+- Machine artifacts: `.agent/plans/m4-persistent-roles-bounded-autonomy/`
 
 ## Request
 
-Proceed with **Milestone 3** of the Captain Compass multi-agent orchestration OS:
-close the learning loop opened in M2 by adding a **Captain Compass Evaluator**,
-**experience-based routing proposals**, and an **extended promotion lifecycle** —
-without Level 3 autonomous self-modification or live network Technology Intelligence.
+Proceed with **Milestone 4** of the Captain Compass multi-agent orchestration OS:
+deliver Notion sequence items **11–12** — **persistent-role promotion** of specialist
+subagents after measurable performance, and **bounded Level 3 autonomy** for
+routing self-improvement under explicit budgets — without weakening the product
+approval gate or enabling live network Technology Intelligence.
 
 ## Problem Statement
 
-After M2:
+After M3:
 
-- ExecutionRuns and Experiences are recorded but **do not influence** Skill ranking
-- Candidate promotion stops at `ANALYZED`; `SECURITY_REVIEWED` / `SANDBOX_TESTED` are docs only
-- Architecture calls for a **Captain Compass Evaluator** to arbitrate uncertain choices via
-  bounded experiments — no Skill, schema, or CLI exists yet
-- Matcher weights remain static; any Experience-driven change would require ad-hoc edits
+- Subagent **proficiency / classification** metadata exists, but there is no path to
+  promote a dynamic worker into a **persistent specialist role** (checked-in agent
+  profile + routing affinity) based on evidence
+- Experience-routing proposals remain forever proposal-only — Stage 3 autonomy
+  (bounded self-tuning) is documented but not operational
+- Assembler always uses the static reference-profile set; proficiency does not
+  influence manifests
+- High-impact changes still correctly escalate to the Captain, but there is no
+  reversible, audited **apply** path for approved weight proposals
 
-Without M3, telemetry is write-only and promotion cannot accumulate sandbox evidence
-before Captain Skill PRs.
+Without M4, Compass cannot graduate proven subagents or safely close the learning
+loop into routing behavior.
 
 ## Desired Outcome
 
-After M3 (v1.7.0), Captain Compass can:
+After M4 (v1.8.0), Captain Compass can:
 
-1. Run **bounded evaluator experiments** (compare alternatives A/B with schemas + evidence
-   under `.agent/evaluations/`) via Skill + CLI — proposals only
-2. **Read** Experience / ExecutionRun stores and emit **routing proposals**
-   (Skill confidence deltas, optional matcher weight suggestions) as reviewable artifacts —
-   never auto-apply to live matcher weights
-3. Advance candidates `ANALYZED → SECURITY_REVIEWED → SANDBOX_TESTED` with required evidence
-   paths; still Captain-gated before `APPROVED` / Skill sidecar PR
-4. Provide `compass-evaluator` Cursor subagent + reference profile, and a schema for
-   **subagent proficiency / classification** records updated only with Captain-approved
-   metadata (fed by Skills trained / Experiences)
-5. Keep approval gate, hooks, and non-executable TI invariants intact
+1. **Propose and (Captain-approved) apply persistent-role promotions** for classified
+   subagents that meet measurable thresholds (proficiency level, Experience count,
+   optional Evaluation evidence) — writing/updating `.cursor/agents/` + reference
+   profiles only via explicit Captain-approved PR path (never silent)
+2. Prefer **Captain-approved proficient agents** in agent-manifest assembly when
+   affinity matches (explainable; deterministic)
+3. Support **bounded Level 3** routing updates:
+   - Default remains proposal-only
+   - Explicit CLI can apply a Captain-approved routing proposal to a checked-in
+     `orchestrator/matcher/weights.json` (or equivalent) **only** when autonomy-budget
+     limits allow and golden eval sensors still pass
+4. Keep product implementation behind the existing approval gate; no live Stars TI;
+   no auto-merge of Skills or agents
 
 ## Acceptance Criteria
 
-- [x] `evaluation.schema.json` (+ experiment result schema) validated; directory
-      `.agent/evaluations/` seeded (gitignored contents + `.gitkeep`)
-- [x] Skill `compass-evaluator` (+ script `scripts/run-evaluation.sh`) can record a
-      bounded comparison experiment with provenance and outcome score
-- [x] Skill / module `experience-routing` reads Experiences and writes proposal JSON under
-      `.agent/routing/proposals/` (Captain review; no live weight mutation)
-- [x] Optional opt-in: apply a **Captain-approved** proposal file to sidecar confidence
-      fields only via explicit CLI (never silent); matcher weight file remains proposal-only
-      unless Captain chooses otherwise in Open Questions
-- [x] `candidate-promotion` extended: `SECURITY_REVIEWED` and `SANDBOX_TESTED` stages with
-      evidence requirements; still `approved_for_execution: false`
-- [x] Plan writer / capability-plan may surface a short “Experience signals” readback
-      section (informational; not auto-rank override)
-- [x] Cursor subagent `.cursor/agents/compass-evaluator.md` + reference profile JSON
-- [x] Subagent proficiency/classification schema + store under `.agent/agents/proficiency/`
-      (Captain-approved metadata writes only; proposal helpers allowed)
-- [x] ADR-019 (or DECISIONS entry) for evaluator + experience-routing + promotion extension
-- [x] Unit + harness tests; evals prove proposals do not change default matcher scores
-- [x] `./scripts/doctor.sh`, `./tests/run.sh`, `./tests/evals/run.sh` pass
-- [x] No product-repo app code; control-repo only (sandbox refresh after release)
+- [x] Schema for `persistent-role-promotion` proposals + applied records
+- [x] Skill `persistent-role-promotion` + CLI: propose from proficiency/Experiences;
+      draft agent Markdown + reference profile under staging; Captain PR still required
+      to land under `.cursor/agents/`
+- [x] Measurable gates documented (e.g. proficiency ≥ proficient, N successful
+      Experiences, optional evaluation winner) — tunable constants
+- [x] Assembler reads Captain-approved proficiency / persistent-role registry and
+      prefers matching profiles with scoring_breakdown notes
+- [x] `orchestrator/matcher/weights.json` (or sidecar) loaded by `score.py` when present;
+      repo ships defaults identical to today’s hard-coded WEIGHTS
+- [x] Skill / CLI `apply-routing-proposal`: applies only if
+      `captain_approved: true` on the proposal **and** autonomy budget allows;
+      writes weights file; never mutates Skills/agents
+- [x] Eval sensors: default rankings stable with default weights; apply path rejected
+      without Captain flag; golden fixtures still deterministic after apply+rollback
+- [x] ADR-020 for persistent roles + bounded Level 3 apply path
+- [x] Doctor / install / tests / evals pass
+- [ ] Control-repo only; sandbox refresh after release
 
 ## Non-Goals
 
-- Level 3 autonomous weight / prompt self-tuning
+- Fully unsupervised overnight weight/prompt self-modification without Captain
+  approval flag on each apply (even Level 3 remains Captain-flagged + budgeted)
 - Live GitHub Stars / network TI in CI
-- Auto-merge Skill PRs or auto-set `approved_for_execution: true`
-- Vector database / Knowledge Steward productization
-- Full persistent-role promotion of dynamic workers without Captain metadata approval (Notion item 11); M3 only tracks proficiency/classification metadata
+- Auto-merge agent or Skill PRs
+- Vector database / full Knowledge Steward productization (defer M5+)
+- Changing plan-approval hook semantics for product source edits
 - Replacing Cursor subagent invocation mechanics
-- Full ML experiment platform
 
 ## Assumptions
 
-- Python 3 remains available
-- M2 Experience fixtures and store layout are sufficient seed data
-- Evaluator experiments are local/offline by default
-- Capitan remains authority for any confidence or weight change landing in git
+- M3 proficiency store + Experience fixtures remain the evidence substrate
+- Python 3 available; stdlib-first JSON schemas
+- Captains will review agent Markdown diffs before merge (same as Skill PRs)
+- Level 3 “autonomy” in M4 means **budgeted apply of pre-approved proposals**, not
+  free-running continuous training
 
-## Resolved Decisions (Captain approval 2026-08-24)
+## Resolved Decisions (Captain, 2026-08-24)
 
-1. **Matcher weights:** Experience-routing remains **proposal-only** — never auto-apply
-   to live matcher weights in M3.
-2. **Evaluator surface:** Ship Skill + CLI **and** a Cursor subagent
-   (`compass-evaluator`) plus **subagent proficiency / classification metadata** so that
-   after sufficient Skill training, classified subagents can be tracked as proficient for
-   specific task classes (Captain-approved metadata; not silent role promotion).
-3. **Promotion ceilings:**
-   - **Candidate capabilities:** stop at `SANDBOX_TESTED` (Captain Skill PR still required
-     for `APPROVED` / live Skills).
-   - **Classified subagents:** Captain-approved metadata is the ceiling for classification
-     and proficiency tracking (separate from candidate Skill lifecycle).
-4. **Target version:** **v1.7.0** confirmed.
+1. **Level 3 apply mode:** Captain flag per apply — proposal must have
+   `captain_approved: true` + autonomy budget allows + evals pass. No auto-delta
+   apply without per-proposal Captain flag.
+2. **Persistent-role landing:** Staging drafts + Captain PR only. No
+   `--captain-approved` copy into `.cursor/agents/` outside a PR merge path.
+3. **Knowledge Steward:** Deferred entirely to **M5** (out of M4 scope).
+4. **Target version:** **v1.8.0** confirmed.
 
 ## Current-State Analysis
 
-| Area | State (v1.6.0) |
+| Area | State (v1.7.0) |
 |---|---|
-| Planning pipeline | Registry → resolve → task graph → manifests → plan sections |
-| Telemetry | `orchestrator/telemetry/` + `record-execution-run.sh` |
-| TI | stub default; file provider offline |
-| Promotion | `DISCOVERED → ANALYZED` + Skill draft staging |
-| Matcher | Static weights in `orchestrator/matcher/score.py` |
-| Evaluator | Documented in Notion only |
+| Proficiency metadata | `.agent/agents/proficiency/` + schema; Captain flag |
+| Routing proposals | `auto_apply: false`; WEIGHTS hard-coded in `score.py` |
+| Candidate promotion | Ceiling `SANDBOX_TESTED` |
+| Evaluator | Skill + CLI + subagent |
+| Assembler | Static reference profiles only |
+| Autonomy budget | Per-plan ledger; no weight-apply integration |
 
 ## Proposed Architecture
 
 ```text
-.agent/evaluations/           # experiment runs (gitignored JSON)
-.agent/routing/proposals/     # experience-routing proposals (gitignored)
-.agent/agents/proficiency/    # Captain-gated subagent proficiency metadata
-orchestrator/evaluator/       # schemas + run_experiment + report
-orchestrator/routing/         # load Experiences → proposal builders
-orchestrator/promotion/       # extend lifecycle stages through SANDBOX_TESTED
-orchestrator/agents/          # proficiency/classification helpers
-.cursor/skills/compass-evaluator/
-.cursor/skills/experience-routing/
-.cursor/agents/compass-evaluator.md
-orchestrator/reference-profiles/compass-evaluator.json
-scripts/run-evaluation.sh
-scripts/propose-experience-routing.sh
-scripts/record-agent-proficiency.sh
+.agent/agents/promotions/          # persistent-role proposals + records
+.agent/routing/applied/            # audit log of applied weight proposals
+orchestrator/matcher/weights.json  # checked-in defaults (optional override file)
+orchestrator/agents/promote.py     # persistent-role proposal builder
+orchestrator/routing/apply.py      # Captain-flagged weight apply + rollback helper
+.cursor/skills/persistent-role-promotion/
+.cursor/skills/bounded-autonomy/     # or extend experience-routing
+scripts/propose-persistent-role.sh
+scripts/apply-routing-proposal.sh
 ```
 
 **Safety invariants:**
 
-- Default matcher behavior unchanged until Captain merges an approved change
-- Candidates remain `approved_for_execution: false`
-- Evaluator cannot skip plan-approval hook or mutate product source
+- Product plan-approval gate unchanged
+- Weight apply requires Captain flag (unless Open Q1 = B) + budget + eval gate
+- Persistent roles land via PR (or explicit Captain apply on feature branch only)
+- Candidates remain non-executable; TI default stub
 
 ## Required Capabilities
 
-*(Capability-plan inference — security/test/github domains; see machine artifacts.)*
+*(Capability-plan: plan + github domains; see machine artifacts.)*
 
-Control-repo intent also requires: evaluation recording, experience readback,
-routing proposal authoring, candidate lifecycle advancement, schema validation,
-doctor/evals coverage.
+Human intent also requires: proficiency readback, persistent-role drafting,
+matcher weight load/apply, autonomy-budget enforcement, evaluation gates,
+assembler affinity preference.
 
 ## Reusable Capabilities Found
 
-Top machine-ranked Skills for the clarified objective: `security-review`,
-`testing-validation`, `dependency-supply-chain`, `github-integration`,
-`pull-request-preparation`, plus M2 Skills `candidate-promotion`,
-`execution-telemetry`, `experience-skill-training` (lower score due to maturity).
-
-**Human refinement:** Implementation should preferentially load
-`implementation-planning`, `capability-planning`, `execution-telemetry`,
-`candidate-promotion`, `testing-validation`, `security-review`, `autonomy-budget`.
+Top machine-ranked: `implementation-planning`, `github-integration`,
+`pull-request-preparation`, plus M2/M3 Skills `experience-routing`,
+`compass-evaluator`, `candidate-promotion`, `execution-telemetry`,
+`autonomy-budget` (prefer these in implementation manifests).
 
 ## Technology Intelligence Candidates
 
@@ -171,73 +164,77 @@ Top machine-ranked Skills for the clarified objective: `security-review`,
 
 *No external candidates queried (Technology Intelligence provider: stub).*
 
-Live Stars adapters remain deferred (same as M2 non-goal).
+## Experience Signals
+
+Informational readback (fixtures + local Experiences). Does not auto-adjust weights.
+
+Machine artifact may list control-repo Experience ids when present.
 
 ## Task Graph
 
-**Human-authored M3 phases** (refines generic planner output):
+**Human-authored M4 phases:**
 
 | Task ID | Objective | Dependencies | Parallelizable |
 |---|---|---|---|
-| T-A | Evaluation schemas + `.agent/evaluations/` layout | — | no |
-| T-B | `orchestrator/evaluator/` + `run-evaluation.sh` + Skill | T-A | no |
-| T-C | Experience routing proposals module + Skill + CLI | — | yes (vs T-B) |
-| T-D | Promotion through `SANDBOX_TESTED` + subagent proficiency metadata | T-A | yes (vs T-B/C) |
-| T-E | Optional plan-writer “Experience signals” readback | T-C | no |
-| T-F | Doctor / install / tests / evals / ADR-019 | T-B, T-C, T-D, T-E | no |
-| T-G | Release prep v1.7.0 | T-F | no |
+| T-A | weights.json extraction + score.py loader (behavior-identical defaults) | — | no |
+| T-B | Persistent-role proposal schemas + Skill/CLI + staging drafts | — | yes (vs T-A) |
+| T-C | Assembler preference for Captain-approved proficient / persistent roles | T-B | no |
+| T-D | Bounded apply path for routing proposals + budget/eval gates + audit log | T-A | yes (vs T-B) |
+| T-E | Doctor / install / tests / evals / ADR-020 | T-A–T-D | no |
+| T-F | Release prep v1.8.0 | T-E | no |
 
-Machine artifact (generic): `.agent/plans/m3-evaluator-experience-routing/task-graph.json`
+Generic planner artifact: `.agent/plans/m4-persistent-roles-bounded-autonomy/task-graph.json`
 
 ## Proposed Agent Configuration
 
 | Task | Profile | Skills |
 |---|---|---|
 | Discovery / architecture | `repository-scout` / `architecture-agent` | `capability-planning`, `implementation-planning` |
-| Implementation | `implementation-agent` | `execution-telemetry`, `candidate-promotion`, `autonomy-budget` |
+| Implementation | `implementation-agent` | `experience-routing`, `compass-evaluator`, `autonomy-budget` |
 | Validation | `test-engineer` | `testing-validation` |
-| Security | `security-reviewer` | `security-review`, `candidate-promotion` |
+| Security | `security-reviewer` | `security-review` |
+| Evaluation of apply gates | `compass-evaluator` | `compass-evaluator` |
 | Documentation | `documentation-agent` | `pull-request-preparation` |
-
-Machine artifact: `.agent/plans/m3-evaluator-experience-routing/manifests.json`
 
 ## Workstreams
 
-1. **Evaluator** — schemas, runner, Skill, evidence format
-2. **Experience routing** — proposal generator; optional apply path per Open Q1
-3. **Promotion extension** — lifecycle + evidence gates
-4. **Harness** — doctor, tests, evals, ADR, docs, release
+1. **Matcher weights file** — extract defaults; load path; rollback helper
+2. **Persistent-role promotion** — propose/draft/Captain PR path
+3. **Assembler affinity** — prefer approved proficient/persistent profiles
+4. **Bounded Level 3 apply** — Captain-flagged proposal apply + budget + evals
+5. **Harness** — ADR-020, doctor, tests, release
 
 ## Parallelization Plan
 
-T-B, T-C, and T-D may proceed in parallel after T-A schemas land, using separate
-worktrees if needed. T-E depends on T-C. T-F integrates all.
+T-A and T-B can start in parallel. T-C depends on T-B. T-D depends on T-A.
+T-E integrates all. Use separate worktrees only if file boundaries stay clean
+(`matcher/` vs `agents/` vs `routing/apply.py`).
 
 ## Files Expected to Change
 
 ### New
 
 ```text
-orchestrator/schemas/evaluation.schema.json
-orchestrator/evaluator/
-orchestrator/routing/
-.cursor/skills/compass-evaluator/
-.cursor/skills/experience-routing/
-scripts/run-evaluation.sh
-scripts/propose-experience-routing.sh
-tests/orchestrator/test_evaluator.py
-tests/orchestrator/test_experience_routing.py
-tests/fixtures/evaluations/
-.agent/evaluations/.gitkeep
-.agent/routing/proposals/.gitkeep
+orchestrator/matcher/weights.json
+orchestrator/routing/apply.py
+orchestrator/agents/promote.py
+orchestrator/schemas/persistent-role-promotion.schema.json
+.cursor/skills/persistent-role-promotion/
+.cursor/skills/bounded-autonomy/   # optional; may extend experience-routing
+scripts/propose-persistent-role.sh
+scripts/apply-routing-proposal.sh
+tests/orchestrator/test_m4_*.py
+.agent/agents/promotions/.gitkeep
+.agent/routing/applied/.gitkeep
 ```
 
 ### Modified
 
 ```text
-orchestrator/promotion/advance.py
-orchestrator/plan_writer/render.py   # optional Experience signals section
-.cursor/skills/candidate-promotion/SKILL.md
+orchestrator/matcher/score.py
+orchestrator/assembler/manifest.py
+orchestrator/agents/proficiency.py
+.cursor/skills/experience-routing/SKILL.md
 scripts/doctor.sh, scripts/install.sh
 tests/run.sh, tests/evals/run.sh
 DECISIONS.md, TESTING.md, README.md, PROJECT_CONTEXT.md
@@ -246,21 +243,23 @@ CHANGELOG.md, PROGRESS.md, VERSION (on release)
 
 ## Testing Strategy
 
-Evidence under `.agent/evidence/m3-evaluator-experience-routing/`.
+Evidence under `.agent/evidence/m4-persistent-roles-bounded-autonomy/`.
 
 | Layer | Action |
 |---|---|
-| Unit | evaluation schema; proposal builder; promotion stage transitions |
-| Integration | CLI smokes; capability-plan unchanged default rankings |
-| Evals | sensor: default matcher scores identical with/without Experiences present |
-| Security | proposals cannot flip `approved_for_execution`; path-safe IDs |
-| Rollback | tag restore |
+| Unit | weights load equals hard-coded defaults; apply rejects without Captain flag |
+| Unit | persistent-role gates; staging drafts only |
+| Integration | assembler prefers approved proficient agent when affinity matches |
+| Evals | golden fixture rankings unchanged under default weights |
+| Evals | after apply, rankings may change; rollback restores defaults |
+| Security | path-safe IDs; no secret capture; no auto-merge |
+| Rollback | tag + weights file restore |
 
 ## Security Review
 
-- Evaluations must not capture secrets from env or private evidence dirs
-- Routing proposals are non-authoritative until Captain merge
-- Promotion evidence paths stay under `.agent/` staging
+- Weight apply must be auditable (who/when/proposal id)
+- Persistent-role drafts must not grant elevated tools/permissions beyond existing profiles
+- Budget stop must prevent apply loops
 
 ## Accessibility Review
 
@@ -268,29 +267,30 @@ Not applicable (no UI).
 
 ## Migration Plan
 
-1. Product repos: `update.sh` adds new Skills; no behavior change until used
-2. Existing Experiences remain valid input for proposals
-3. Matcher defaults unchanged on upgrade
+1. Product repos: `update.sh` adds Skills; default behavior unchanged until Captain
+   applies a proposal or merges a persistent-role PR
+2. Existing hard-coded WEIGHTS become the checked-in `weights.json` defaults
+3. Forward-only upgrades
 
 ## Deployment Plan
 
 - Merge via PR after validation
-- Tag `v1.7.0`
-- Sandbox `update.sh` + optional evaluator / routing demo
+- Tag `v1.8.0`
+- Sandbox `update.sh` + optional persistent-role / apply demo
 
 ## Rollback Plan
 
-1. Restore `rollback/pre-m3-evaluator-experience-routing`
-2. Revert VERSION to 1.6.0
-3. Product repos stay on 1.6.0 until ready (forward-only updates)
+1. Restore `rollback/pre-m4-persistent-roles-bounded-autonomy`
+2. Revert VERSION to 1.7.0
+3. Restore default `weights.json` from tag if needed
 
 ## Risks and Mitigations
 
 | Risk | Impact | Mitigation |
 |---|---|---|
-| Silent ranking drift | Unpredictable plans | Default scores unchanged; eval sensor |
-| Over-scoped Level 3 | Autonomy creep | Explicit non-goal; proposals only |
-| Promotion evidence theater | False confidence | Require file paths + schema validation |
+| Ranking drift after apply | Unpredictable plans | Eval gate + rollback; Captain flag |
+| Premature persistent roles | Wrong specialist defaults | Threshold gates + PR review |
+| Level 3 scope creep | Unbounded autonomy | Explicit non-goals; budget stop |
 
 ## Evaluation Strategy
 
@@ -298,72 +298,53 @@ After implementation (post-approval), success by:
 
 - Acceptance criteria checked
 - Doctor / tests / evals green
-- Default Skill ranking golden fixtures still deterministic
-- Evaluator smoke writes schema-valid evaluation JSON
-- Routing proposal smoke from `tests/fixtures/experience/`
+- Default WEIGHTS behavior identical to v1.7.0 before any apply
+- Apply without Captain flag fails closed
+- Persistent-role drafts never appear as live agents until PR merge (or explicit apply decision)
 
 ## Learning Plan
 
-Retain under `.agent/plans/m3-evaluator-experience-routing/`:
+Retain under `.agent/plans/m4-persistent-roles-bounded-autonomy/`:
 
 - `resolve.json`, `task-graph.json`, `manifests.json`
 - Link issue, branch, PR, evidence after execution
 
-Feeds Milestone 4+ (persistent-role promotion; bounded Level 3 autonomy) only after
-Captain expands autonomy budget.
+Feeds M5+ Knowledge Steward / live TI only after Captain expands scope.
 
 ## Autonomy Budget
 
-After approval, create `.agent/budgets/m3-evaluator-experience-routing.md`.
+After approval, create `.agent/budgets/m4-persistent-roles-bounded-autonomy.md`.
 
 - Maximum iterations: 20
 - Maximum failed validation cycles: 5
 - Maximum estimated cost: Captain-defined
 - Maximum elapsed time: 5 working days
-- Budget ledger path: `.agent/budgets/m3-evaluator-experience-routing.md`
+- Maximum weight-apply operations per plan: 3 (M4-specific)
+- Budget ledger path: `.agent/budgets/m4-persistent-roles-bounded-autonomy.md`
 
 ## Definition of Done
 
 - All Acceptance Criteria checked
 - Doctor / tests / evals green
 - Security review recorded
-- ADR-019 accepted
+- ADR-020 accepted
 - PROGRESS / CHANGELOG / TESTING updated
 - PR prepared with evidence
 - No implementation on protected branches
 
 ## Approval Boundary
 
-**Implementation must not begin until the Captain explicitly approves this plan.**
+Plan is **APPROVED**. Implementation proceeds on `feature/50-m4-persistent-roles-bounded-autonomy`
+only — never on protected base branches.
 
-Machine-generated capability matches and agent manifests are **proposals** only.
-The Captain may approve, revise, or reject before any product implementation proceeds.
-
-Approval means:
-
-1. Record approval below (and resolve open questions as needed)
-2. Set Status to **APPROVED**
-3. Create GitHub issue
-4. Create rollback tag
-5. Create feature branch `feature/<issue>-m3-evaluator-experience-routing`
-6. Begin Phase T-A
-
-Until then, only planning documents and discovery artifacts may change.
+Machine-generated capability matches and agent manifests remain **proposals** until
+Captain merges persistent-role PRs or sets `captain_approved` on routing proposals.
 
 ## Approval Record
 
 - **Approved by:** Captain
 - **Approval date:** 2026-08-24
-- **Approved revision:** M3 evaluator + experience-routing (proposal-only) + SANDBOX_TESTED candidate ceiling + compass-evaluator subagent + proficiency metadata; v1.7.0
-- **Issue:** [#45](https://github.com/loganware05/captains-compass-cursor/issues/45)
-- **Branch:** `feature/45-m3-evaluator-experience-routing`
-- **Rollback:** `rollback/pre-m3-evaluator-experience-routing` @ `f36beb2`
-
-**Phase T-G complete (2026-08-24):** VERSION `1.7.0`, release evidence, release PR pending.
-
-## Completion Record
-
-- **Completed:** 2026-08-24
-- **Merged feature PR:** [#46](https://github.com/loganware05/captains-compass-cursor/pull/46) @ `a0156e8`
-- **Release PR:** `chore/45-release-v1.7.0` (pending)
-- **Rollback (M3 feature):** `rollback/pre-m3-evaluator-experience-routing` @ `f36beb2`
+- **Approved revision:** Open questions resolved as above (Captain flag; staging+PR; KS→M5; v1.8.0)
+- **Issue:** [#50](https://github.com/loganware05/captains-compass-cursor/issues/50)
+- **Branch:** `feature/50-m4-persistent-roles-bounded-autonomy`
+- **Rollback:** `rollback/pre-m4-persistent-roles-bounded-autonomy` @ `25fd83f`

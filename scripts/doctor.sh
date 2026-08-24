@@ -97,6 +97,8 @@ SKILLS=(
   experience-skill-training
   compass-evaluator
   experience-routing
+  persistent-role-promotion
+  bounded-autonomy
 )
 
 for s in "${SKILLS[@]}"; do
@@ -273,10 +275,35 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing .agent/routing/proposals/.gitkeep"
   fi
+  if [[ -f "$ROOT/.agent/routing/applied/.gitkeep" ]]; then
+    ok ".agent/routing/applied layout"
+  else
+    fail "missing .agent/routing/applied/.gitkeep"
+  fi
   if [[ -f "$ROOT/.agent/agents/proficiency/.gitkeep" ]]; then
     ok ".agent/agents/proficiency layout"
   else
     fail "missing .agent/agents/proficiency/.gitkeep"
+  fi
+  if [[ -f "$ROOT/.agent/agents/promotions/.gitkeep" ]]; then
+    ok ".agent/agents/promotions layout"
+  else
+    fail "missing .agent/agents/promotions/.gitkeep"
+  fi
+  if [[ -f "$ROOT/orchestrator/matcher/weights.json" ]]; then
+    ok "matcher weights.json"
+  else
+    fail "missing orchestrator/matcher/weights.json"
+  fi
+  if [[ -x "$ROOT/scripts/propose-persistent-role.sh" ]]; then
+    ok "propose-persistent-role.sh"
+  else
+    fail "missing executable scripts/propose-persistent-role.sh"
+  fi
+  if [[ -x "$ROOT/scripts/apply-routing-proposal.sh" ]]; then
+    ok "apply-routing-proposal.sh"
+  else
+    fail "missing executable scripts/apply-routing-proposal.sh"
   fi
   if [[ -f "$ROOT/.agent/capabilities/compiled/.gitkeep" ]]; then
     ok ".agent/capabilities/compiled layout"

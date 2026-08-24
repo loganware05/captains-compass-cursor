@@ -75,6 +75,21 @@ Promote candidate / train from Experience (staging drafts only):
 ./scripts/train-skill-from-experience.sh --experience path/to/experience.json --skill-slug draft-slug
 ```
 
+Persistent-role proposal (staging + PR only):
+
+```bash
+./scripts/propose-persistent-role.sh --agent-id compass-evaluator
+```
+
+Captain-flagged weight apply (bounded Level 3):
+
+```bash
+# After editing proposal to set "captain_approved": true
+./scripts/apply-routing-proposal.sh \
+  --proposal .agent/routing/proposals/<id>.json \
+  --budget .agent/budgets/<plan-id>.md
+```
+
 ## Evidence matrix
 
 Required validation artifacts by change type:

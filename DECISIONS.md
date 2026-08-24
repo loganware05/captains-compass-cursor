@@ -1,5 +1,28 @@
 # Decisions
 
+## ADR-020: Persistent-role promotion and bounded Level 3 weight apply (v1.8.0 M4)
+
+- **Status:** Accepted
+- **Date:** 2026-08-24
+- **Context:** M3 records proficiency and routing proposals but cannot graduate
+  specialists or close the learning loop into matcher weights. Architecture
+  calls for persistent roles and Stage 3 autonomy without unsupervised self-mod.
+- **Decision:**
+  1. Persistent-role promotions write **staging drafts + proposals only**;
+     landing under `.cursor/agents/` requires a Captain-reviewed PR (no
+     `--captain-approved` filesystem copy into live agents).
+  2. Matcher weights live in `orchestrator/matcher/weights.json` with defaults
+     identical to historical hard-coded `WEIGHTS`.
+  3. Bounded Level 3 apply requires `captain_approved: true` on each routing
+     proposal, autonomy-budget weight-apply headroom, and an eval gate; audit
+     under `.agent/routing/applied/`. `auto_apply` remains `false`.
+  4. Assembler may prefer Captain-approved proficient / registry persistent
+     roles when reference profiles already exist; staging drafts never override.
+  5. Knowledge Steward remains deferred to **M5**.
+- **Consequences:** Learning loop can update rankings under explicit Captain
+  control; specialist graduation is reviewable via PR; rankings stay
+  deterministic at default weights.
+
 ## ADR-001: Separate control repository
 
 - **Status:** Accepted

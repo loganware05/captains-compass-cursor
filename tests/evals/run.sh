@@ -227,6 +227,40 @@ PY
 )"
 assert_contains "golden fixtures deterministic" '^ok$' "$golden_out"
 
+echo "=== eval: M4 apply rejects without captain_approved ==="
+m4_out="$(PYTHONPATH="$ROOT" python3 - "$ROOT" <<'PY'
+import json
+import sys
+import tempfile
+from pathlib import Path
+
+from orchestrator.matcher.score import DEFAULT_WEIGHTS
+from orchestrator.routing.apply import ApplyError, apply_routing_proposal
+from orchestrator.routing.propose import build_routing_proposal, load_experiences
+
+root = Path(sys.argv[1])
+exp = root / "tests" / "fixtures" / "experience" / "contact-counter.json"
+proposal = build_routing_proposal(load_experiences([exp]))
+with tempfile.TemporaryDirectory() as tmp:
+    repo = Path(tmp)
+    prop = repo / "p.json"
+    prop.write_text(json.dumps(proposal), encoding="utf-8")
+    weights = repo / "w.json"
+    weights.write_text(json.dumps(DEFAULT_WEIGHTS), encoding="utf-8")
+    try:
+        apply_routing_proposal(repo, prop, weights_path=weights, run_eval_gate=False)
+    except ApplyError as exc:
+        if "captain_approved" in str(exc):
+            print("ok")
+            raise SystemExit(0)
+        print(f"bad:{exc}")
+        raise SystemExit(1)
+    print("bad:applied")
+    raise SystemExit(1)
+PY
+)"
+assert_contains "apply rejects without captain flag" '^ok$' "$m4_out"
+
 echo
 echo "Eval results: $PASS passed, $FAIL failed"
 if [[ "$FAIL" -gt 0 ]]; then

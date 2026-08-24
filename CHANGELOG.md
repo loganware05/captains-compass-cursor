@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Added
+
+- Milestone 4: persistent-role promotion (staging + PR only) and bounded Level 3
+  Captain-flagged routing weight apply (`persistent-role-promotion`,
+  `bounded-autonomy` Skills; `weights.json`; apply audit trail).
+
 ## 1.7.0 — 2026-08-24
 
 ### Added

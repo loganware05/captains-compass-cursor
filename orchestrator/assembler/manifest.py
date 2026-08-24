@@ -4,16 +4,16 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from orchestrator.assembler.affinity import resolve_reference_profile
 from orchestrator.assembler.profiles import (
     model_class_for_task,
     permissions_for_task,
-    reference_profile_for_task,
     role_for_task,
 )
 from orchestrator.matcher.score import rank_skills
 from orchestrator.model_profiles import load_catalog
 from orchestrator.registry.load import load_registry, registry_skills
-from orchestrator.schemas.validate import ValidationError, validate_document
+from orchestrator.schemas.validate import validate_document
 
 
 class ManifestBuildError(ValueError):
@@ -74,9 +74,10 @@ def build_manifest_for_task(
     security_sensitive: bool,
     plan_id: str,
     top_n: int = 3,
+    repo_root: Path | None = None,
 ) -> dict:
     task_id = task["id"]
-    reference_profile = reference_profile_for_task(task_id)
+    reference_profile, affinity_notes = resolve_reference_profile(task, repo_root)
     model_class = model_class_for_task(task_id)
     required = list(task.get("required_capabilities") or [])
 
@@ -88,6 +89,10 @@ def build_manifest_for_task(
         security_sensitive=security_sensitive,
         top_n=top_n,
     )
+
+    scoring_breakdown = list(affinity_notes)
+    if breakdown:
+        scoring_breakdown.extend(breakdown)
 
     manifest = {
         "task_id": task_id,
@@ -103,8 +108,8 @@ def build_manifest_for_task(
         },
         "rationale": _rationale(task, reference_profile, skill_ids, model_class),
     }
-    if breakdown:
-        manifest["scoring_breakdown"] = breakdown
+    if scoring_breakdown:
+        manifest["scoring_breakdown"] = scoring_breakdown
 
     validate_document(manifest, "agent-manifest.schema.json")
     return manifest
@@ -116,6 +121,7 @@ def build_manifests(
     *,
     plan_id: str = "draft",
     top_n: int = 3,
+    repo_root: Path | None = None,
 ) -> dict:
     tasks = task_graph.get("tasks") or []
     if not tasks:
@@ -133,6 +139,7 @@ def build_manifests(
             security_sensitive=security_sensitive,
             plan_id=plan_id,
             top_n=top_n,
+            repo_root=repo_root,
         )
         for task in tasks
     ]
@@ -160,7 +167,13 @@ def build_manifests_for_objective(
     context = dict(context or {})
     task_graph = build_task_graph(objective, context)
     registry = load_registry(repo_root)
-    return build_manifests(task_graph, registry, plan_id=plan_id, top_n=top_n)
+    return build_manifests(
+        task_graph,
+        registry,
+        plan_id=plan_id,
+        top_n=top_n,
+        repo_root=repo_root,
+    )
 
 
 def write_manifests(

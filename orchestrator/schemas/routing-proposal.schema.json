@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://captains-compass.dev/schemas/routing-proposal.schema.json",
   "title": "RoutingProposal",
-  "description": "Experience-based routing proposal — proposal-only; never auto-applies matcher weights (Milestone 3).",
+  "description": "Experience-based routing proposal. auto_apply stays false; Captain-flagged apply via apply-routing-proposal.sh (Milestone 4).",
   "type": "object",
   "required": [
     "proposal_id",
@@ -35,12 +35,16 @@
     },
     "matcher_weight_suggestions": {
       "type": "object",
-      "description": "Suggested WEIGHTS map; informational only in M3",
+      "description": "Suggested WEIGHTS map; applied only via Captain-flagged CLI",
       "additionalProperties": { "type": "number" }
     },
     "auto_apply": { "type": "boolean", "const": false },
+    "captain_approved": {
+      "type": "boolean",
+      "description": "Must be true before apply-routing-proposal.sh will apply weights"
+    },
     "notes": { "type": "string" },
-    "created_at": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string" , "minLength": 1 },
     "captain_approval_required": { "type": "boolean", "const": true }
   }
 }

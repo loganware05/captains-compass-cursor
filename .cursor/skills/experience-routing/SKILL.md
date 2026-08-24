@@ -1,6 +1,6 @@
 ---
 name: experience-routing
-description: Proposes Skill confidence and matcher weight adjustments from Experiences (proposal-only)
+description: Proposes Skill confidence and matcher weight adjustments from Experiences (proposal-only until Captain-flagged apply)
 ---
 
 # Experience Routing
@@ -25,11 +25,12 @@ routing improvements based on historical outcomes.
      --experiences tests/fixtures/experience/contact-counter.json
    ```
 
-3. Confirm `auto_apply` is `false` — **never** mutate `orchestrator/matcher/score.py`
-   WEIGHTS from this Skill in M3.
+3. Confirm `auto_apply` is `false` and `captain_approved` is `false` by default.
 4. Present skill confidence deltas and weight suggestions to the Captain.
-5. Optionally record subagent proficiency metadata after Skill training (still
-   Captain-gated):
+5. To apply weights (Milestone 4 Level 3), Captain sets `captain_approved: true`
+   on the proposal JSON, then use Skill `bounded-autonomy` /
+   `./scripts/apply-routing-proposal.sh` under an autonomy budget.
+6. Optionally record subagent proficiency metadata after Skill training:
 
    ```bash
    ./scripts/record-agent-proficiency.sh \
@@ -41,6 +42,8 @@ routing improvements based on historical outcomes.
    ```
 
    Set `--captain-approved true` only after explicit Captain approval.
+7. For persistent specialist roles, use Skill `persistent-role-promotion`
+   (staging + PR only).
 
 ## Output
 
@@ -49,6 +52,7 @@ routing improvements based on historical outcomes.
 
 ## Prohibited actions
 
-- Do not auto-apply matcher weights
+- Do not auto-apply matcher weights from proposal generation
 - Do not mark proficiency `captain_approved: true` without Captain confirmation
 - Do not advance candidates past `SANDBOX_TESTED`
+- Do not land persistent roles without a Captain-reviewed PR

@@ -79,7 +79,10 @@ class ManifestAssemblerTests(unittest.TestCase):
             "task-impl-frontend",
         )
         self.assertIn("scoring_breakdown", manifest)
-        self.assertEqual(len(manifest["scoring_breakdown"]), 5)
+        self.assertGreaterEqual(len(manifest["scoring_breakdown"]), 5)
+        factors = [item.get("factor") for item in manifest["scoring_breakdown"]]
+        self.assertIn("reference_profile_default", factors)
+        self.assertIn("capability_overlap", factors)
 
     def test_fixture_manifests_are_deterministic(self) -> None:
         fixture = json.loads((FIXTURES / "frontend-ui.json").read_text(encoding="utf-8"))
