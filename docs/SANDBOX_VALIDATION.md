@@ -139,3 +139,13 @@ Control mirror: `.agent/evidence/release-v1.10.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.11.0/post-tag-validation.md`
 
+### Procedure knowledge + offline TI cache (v1.12.0) — refresh complete 2026-08-24
+
+| Step | Result |
+|---|---|
+| Control release `v1.12.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.12.0 |
+| Sandbox refreshed to Compass 1.12.0 | Pass — [sandbox#29](https://github.com/loganware05/captain-compass-sandbox/pull/29) merged |
+| Procedure ingest / cached TI smoke on sandbox | Pending interactive (optional) |
+
+Control mirror: `.agent/evidence/release-v1.12.0/post-tag-validation.md`
+

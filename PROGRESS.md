@@ -2,27 +2,22 @@
 
 ## Current status
 
-**M8 feature merged** — release prep for **v1.12.0** in progress.
+**M8 fully closed** — v1.12.0 released; sandbox refreshed ([#29](https://github.com/loganware05/captain-compass-sandbox/pull/29)).
 
-- Feature PR: [#67](https://github.com/loganware05/captains-compass-cursor/pull/67) (merged)
-- Release branch: `chore/66-release-v1.12.0`
-- Issue: [#66](https://github.com/loganware05/captains-compass-cursor/issues/66)
+Release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.12.0
 
 ## Completed
 
-- v1.5.0–v1.11.0 / M1–M7 (#54–#65)
-- M8 feature: procedure ingest, Procedure Context, TI cache, `procedure-playbooks` Skill (#67)
+- v1.5.0–v1.12.0 / M1–M8 (#54–#68)
+- Tag `v1.12.0`; sandbox refresh; post-tag validation recorded
 
 ## In progress
 
-- v1.12.0 release prep (VERSION, CHANGELOG, evidence, plan COMPLETE)
+None.
 
 ## Next
 
-1. Merge release prep PR
-2. Tag `v1.12.0` + GitHub release
-3. Sandbox refresh 1.11.0 → 1.12.0
-4. Closeout PR; close issue #66
+Milestone 9 planning when Captain ready.
 
 ## Blockers
 
