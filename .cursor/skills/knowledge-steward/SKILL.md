@@ -14,7 +14,7 @@ ADR headings from `DECISIONS.md`.
 ## Inputs
 
 - Explicit file paths or store roots (`experience`, `evaluations`, `routing`,
-  `runs`, `decisions`)
+  `runs`, `decisions`, `procedures`)
 - Search query for readback
 
 ## Procedure
@@ -64,6 +64,8 @@ ADR headings from `DECISIONS.md`.
    input only — it does not alter Skill rankings or matcher weights.
 7. Review **Performance Context** in capability plans (always rendered; empty
    when no `kind: performance` items match).
+8. For procedure playbooks, use Skill `procedure-playbooks` or
+   `--from-store procedures` after staging/approved playbooks exist.
 
 ## Output
 

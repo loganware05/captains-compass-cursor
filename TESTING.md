@@ -107,8 +107,16 @@ Live Technology Intelligence (Captain local; gh auth required):
 ```bash
 COMPASS_TI_PROVIDER=github-stars \
   ./scripts/query-technology-intelligence.sh --query "accessible react forms"
-COMPASS_TI_PROVIDER=github-stars \
-  ./scripts/capability-plan.sh --plan-id ti-live-demo "accessible react forms"
+./scripts/refresh-ti-cache.sh
+COMPASS_TI_PROVIDER=github-stars-cached \
+  ./scripts/query-technology-intelligence.sh --query "accessible react forms"
+```
+
+Procedure playbook ingest:
+
+```bash
+./scripts/ingest-knowledge.sh --from-store procedures
+./scripts/query-knowledge.sh --query "bounded autonomy" --kind procedure
 ```
 
 ## Evidence matrix

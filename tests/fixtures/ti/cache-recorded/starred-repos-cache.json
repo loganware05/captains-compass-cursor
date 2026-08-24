@@ -1,0 +1,21 @@
+{
+  "refreshed_at": "2026-08-24T20:00:00Z",
+  "source": "golden-fixture",
+  "record_count": 2,
+  "records": [
+    {
+      "id": 401,
+      "full_name": "example-org/accessible-react-forms",
+      "html_url": "https://github.com/example-org/accessible-react-forms",
+      "description": "Accessible React form patterns with ARIA live regions",
+      "topics": ["react", "accessibility", "forms"]
+    },
+    {
+      "id": 402,
+      "full_name": "example-org/pdf-kit-node",
+      "html_url": "https://github.com/example-org/pdf-kit-node",
+      "description": "PDF generation utilities for Node.js services",
+      "topics": ["nodejs", "pdf"]
+    }
+  ]
+}

@@ -2,180 +2,169 @@
 
 ## Metadata
 
-- Status: COMPLETE
-- Plan ID: m7-performance-ti
-- Issue: [#62](https://github.com/loganware05/captains-compass-cursor/issues/62) — M7: Performance knowledge ingest + live GitHub Stars TI (v1.11.0)
-- Branch: `feature/62-m7-performance-ti` (merged #63)
-- Target release: **v1.11.0** (released 2026-08-24)
+- Status: APPROVED
+- Plan ID: m8-procedure-ti-cache
+- Issue: [#66](https://github.com/loganware05/captains-compass-cursor/issues/66) — M8: Procedure knowledge lifecycle + offline TI cache (v1.12.0)
+- Branch: `feature/66-m8-procedure-ti-cache`
+- Target release: **v1.12.0** (additive; non-breaking)
 - Created: 2026-08-24
 - Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
-- Approved revision: Captain decisions on Open Questions (see below)
-- Rollback checkpoint: `rollback/pre-m7-performance-ti` @ `d05b7b8`
-- Feature PR: [#63](https://github.com/loganware05/captains-compass-cursor/pull/63) (merged @ `a71663b`)
+- Approved revision: Procedure Context always render; separate github-stars-cached; staging+approved ingest; v1.12.0; procedure-playbooks Skill
+- Rollback checkpoint: `rollback/pre-m8-procedure-ti-cache` @ `c0f02b1`
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
-  - Prior plans: M1–M6 COMPLETE (v1.5.0–v1.10.0)
-  - Baseline: **v1.10.0** (`d05b7b8` / current `main` after closeout #61)
-  - ADR-022 deferral: performance-knowledge ingest + live TI → M7
-- Machine artifacts: `.agent/plans/m7-performance-ti/`
+  - Prior plans: M1–M7 COMPLETE (v1.5.0–v1.11.0)
+  - Baseline: **v1.11.0** (`c0f02b1` / current `main` after closeout #65)
+  - M7 deferral: optional TI cache → M8; procedure knowledge form incomplete after M5 staging-only promotion
+- Machine artifacts: `.agent/plans/m8-procedure-ti-cache/`
 
 ## Request
 
-Proceed with **Milestone 7** of the Captain Compass multi-agent orchestration OS:
+Proceed with **Milestone 8** of the Captain Compass multi-agent orchestration OS:
 
-1. **Performance-knowledge ingest** — map `ExecutionRun` and `Experience` artifacts
-   into durable `kind: performance` knowledge items with execution metrics and
-   provenance (explicit CLI only).
-2. **Live Technology Intelligence adapter** — opt-in GitHub Stars-shaped discovery
-   via `gh` / GitHub API for capability planning, **Captain-gated**, never CI
-   default, never auto-execute external repos.
+1. **Procedure knowledge lifecycle** — ingest Captain-approved staging playbooks into
+   durable `kind: procedure` knowledge items; surface **Procedure Context** in
+   capability plans (informational; explicit CLI only).
+2. **Offline TI cache** — explicit file cache for starred-repo discovery signals so
+   local planning can reuse last-known TI results without repeated `gh` calls; CI
+   remains stub + golden fixtures.
 
 ## Problem Statement
 
-After M6:
+After M7:
 
-- `ExecutionRun` ingest maps to `kind: artifact` with minimal metrics; ADR-022
-  deferred **performance** knowledge form enrichment to M7
-- Experience ingest produces `kind: performance` but lacks structured execution
-  metrics (retries, agents/models, capability linkage)
-- Plan writer **Knowledge Context** does not surface a dedicated **Performance**
-  readback for planners evaluating historical execution quality
-- Technology Intelligence is **stub** (CI) or **file** (offline fixtures) only;
-  live GitHub Stars discovery is documented but not wired
-- The Notion architecture expects Technology Intelligence to answer “what external
-  patterns/repos might help?” — currently only offline redacted samples
+- M5 shipped procedure **promotion proposals** (staging + PR only) but staging
+  playbooks under `.agent/knowledge/procedures/staging/` are **not ingested** as
+  queryable `kind: procedure` knowledge items
+- Plan writer surfaces Knowledge, Performance, and Experience readback but not
+  **Procedure Context** — the third Notion knowledge form remains planning-invisible
+- Live TI (`COMPASS_TI_PROVIDER=github-stars`) re-fetches via `gh` on every plan;
+  M7 noted **optional TI cache** for M8+ to reduce flakiness and rate-limit risk
+- Production embedding APIs remain correctly deferred; M8 should stay stdlib/CI-safe
 
-Without M7, execution telemetry and live discovery remain disconnected from the
-unified knowledge layer and planning readback.
+Without M8, validated playbooks stay orphaned in staging and live TI lacks an offline
+reuse path after an explicit Captain refresh.
 
 ## Desired Outcome
 
-After M7 (v1.11.0), Captain Compass can:
+After M8 (v1.12.0), Captain Compass can:
 
-1. Ingest **performance knowledge items** from `.agent/runs/` and
-   `.agent/experience/` with structured metrics (outcome, retries, skills,
-   agents/models, plan/task linkage)
-2. Query performance knowledge via existing `query-knowledge.sh --kind performance`
-3. Surface **Performance Context** in capability plans (informational; no matcher
-   weight changes)
-4. Query live TI via explicit opt-in (`COMPASS_TI_PROVIDER=github-stars`) using
-   authenticated `gh` when Captain runs planning locally
-5. Retain all M5–M6 safety invariants: explicit CLI ingest, NOT APPROVED FOR
-   EXECUTION banner, no auto-install of external repos
+1. Ingest staging procedure playbooks (`.agent/knowledge/procedures/staging/*/playbook.md`)
+   into `kind: procedure` knowledge items with provenance links to source proposals
+2. Query procedure knowledge via `query-knowledge.sh --kind procedure`
+3. Surface **Procedure Context** in capability plans (always rendered; empty when none)
+4. Refresh offline TI cache via explicit CLI (`refresh-ti-cache.sh`) when `gh` auth is available
+5. Use cached starred-repo records when `COMPASS_TI_PROVIDER=github-stars-cached` or when
+   live provider is configured to prefer cache (Captain decision at approval)
+6. Retain all M5–M7 safety invariants: explicit CLI, NOT APPROVED FOR EXECUTION,
+   no auto-install of procedures or external repos
 
 ## Acceptance Criteria
 
-- [x] `item_from_execution_run` maps to `kind: performance` with optional
-      `performance_metrics` object (outcome, retries, skills, agents, models,
-      plan_id, task_id, experience_id)
-- [x] Experience ingest enriches performance items (capabilities exercised,
-      lessons, run linkage)
-- [x] Schema allows optional `performance_metrics` on knowledge items (backward
-      compatible)
-- [x] Plan writer **Performance Context** section (top-N `kind: performance`
-      from hybrid/keyword query on objective)
-- [x] `GithubStarsTechnologyIntelligenceProvider` behind
-      `COMPASS_TI_PROVIDER=github-stars` (opt-in only)
-- [x] Live TI uses `gh` when available; fails closed to empty list without auth
-      (no CI network calls by default)
-- [x] Golden-recorded fixtures for live TI mapper tests (no network in CI)
-- [x] CLI `./scripts/query-technology-intelligence.sh` for explicit Captain TI
-      queries (read-only)
-- [x] Extend `knowledge-steward` + `candidate-promotion` Skills; doctor checks
-- [x] ADR-023 for performance knowledge + live TI boundaries
+- [x] `item_from_procedure_playbook()` maps staging playbooks → `kind: procedure`
+- [x] `ingest-knowledge.sh --from-store procedures` ingests staging + approved playbooks
+      (explicit CLI; never auto on promotion write)
+- [x] Plan writer **Procedure Context** section (top-N `kind: procedure` query on objective;
+      always rendered; empty when none)
+- [x] Offline TI cache at `.agent/intelligence/ti-cache/starred-repos.json` with schema validation
+- [x] `./scripts/refresh-ti-cache.sh` — explicit Captain refresh via `gh` (fail closed without auth)
+- [x] `CachedGithubStarsTechnologyIntelligenceProvider` behind
+      `COMPASS_TI_PROVIDER=github-stars-cached` (opt-in; CI default unchanged)
+- [x] Golden-recorded cache fixtures for mapper tests (no network in CI)
+- [x] Extend `knowledge-steward` + `technology-intelligence-live` Skills; doctor checks (34 Skills)
+- [x] ADR-024 for procedure ingest + TI cache boundaries
 - [x] Doctor / install / tests / evals pass
-- [x] Control-repo only; sandbox refresh after release
+- [ ] Control-repo only; sandbox refresh after release
 
 ## Non-Goals
 
-- Auto-ingest performance on `record-execution-run.sh` (explicit CLI only)
-- Auto-install or execute starred repositories
-- Setting `approved_for_execution: true` on TI candidates
+- Auto-ingest procedures when `propose-procedure-from-knowledge.sh` writes staging
+- Auto-install staging playbooks into `.cursor/skills/` or rules
 - Production embedding / vector DB providers (still deferred)
-- Full GitHub Star Categorization pipeline (batch ML) — M7 is **live query adapter**
-- NotebookLM / Notion MCP ingestion
-- Mutating matcher weights from performance or TI readback
+- Notion MCP / NotebookLM knowledge ingestion (still deferred)
+- Broader TI providers (topic search, Hugging Face, package registries)
+- Mutating matcher weights from procedure or cached TI readback
+- TTL-based background cache refresh
 
 ## Assumptions
 
-- M5/M6 knowledge store, hybrid query, and ingest audit remain stable
-- Captain has `gh auth login` for local live TI demos (optional)
-- CI continues on `COMPASS_TI_PROVIDER=stub` with golden fixtures for github-stars mapper
-- Performance items use idempotent keys (`know-run-*`, `know-exp-*`)
+- M5–M7 knowledge store, hybrid query, live Stars TI, and procedure promotion staging remain stable
+- Captain runs `refresh-ti-cache.sh` locally when they want fresh starred-repo signals cached
+- CI continues on `COMPASS_TI_PROVIDER=stub` with golden cache fixtures for cached provider tests
+- Procedure items use idempotent keys (`know-proc-<slug>`)
 
 ## Open Questions (Captain — resolved 2026-08-24)
 
-1. **Live TI scope:** GitHub **starred repos only** (`COMPASS_TI_PROVIDER=github-stars`).
-2. **Performance Context default:** **always render** section (empty when none).
-3. **Re-ingest execution runs:** **overwrite** existing `know-run-*` as `kind: performance`.
-4. **Target version:** **v1.11.0**.
-5. **Skills:** **extend** `knowledge-steward` + `candidate-promotion` **and ship**
-   `technology-intelligence-live` Skill.
+1. **Procedure Context default:** **always render** (empty when none).
+2. **TI cache provider:** **separate** `github-stars-cached` provider.
+3. **Procedure ingest scope:** **staging + approved** roots.
+4. **Target version:** **v1.12.0**.
+5. **Skills:** **new** dedicated `procedure-playbooks` Skill.
 
 ## Current-State Analysis
 
-| Area | State (v1.10.0) |
+| Area | State (v1.11.0) |
 |---|---|
-| ExecutionRun ingest | `kind: artifact`, basic summary |
-| Experience ingest | `kind: performance`, basic summary |
-| Knowledge query | keyword / vector / hybrid |
-| Plan sections | Knowledge Context (hybrid when index exists) |
-| TI providers | `stub` (default), `file` (offline fixtures) |
-| Live GitHub Stars | Documented only |
+| Procedure promotion | Staging + proposal JSON only (M5) |
+| Procedure ingest | Not implemented |
+| Plan sections | Knowledge, Performance, Experience; no Procedure |
+| Live TI | `github-stars` via `gh`; no file cache |
+| TI cache | Documented deferral from M7 only |
+| Skill count | 33 |
 
 ## Proposed Architecture
 
 ```text
 orchestrator/knowledge/ingest.py
-  item_from_execution_run()   # EXTEND → kind: performance + metrics
-  item_from_experience()      # EXTEND → richer performance fields
-
-orchestrator/schemas/knowledge-item.schema.json
-  performance_metrics         # NEW optional object
+  item_from_procedure_playbook()   # NEW → kind: procedure
+  STORE_ROOTS["procedures"]        # NEW staging root
 
 orchestrator/plan_writer/
-  build.py                    # performance_context query
-  render.py                   # Performance Context section
+  build.py                         # procedure_context query
+  render.py                        # Procedure Context section
 
 orchestrator/providers/technology_intelligence/
-  github_stars_provider.py    # NEW live adapter (gh-backed)
-  file_provider.py            # shared _candidate_from_stars_shaped mapper
-  select_ti_provider()        # EXTEND: github-stars branch
+  ti_cache.py                      # NEW read/write cache helpers
+  github_stars_provider.py         # EXTEND optional cache read path
+  file_provider.py                 # select_ti_provider() github-stars-cached branch
 
 scripts/
-  query-technology-intelligence.sh   # NEW explicit TI CLI
-  ingest-knowledge.sh                # document runs+experience performance path
+  refresh-ti-cache.sh              # NEW explicit cache refresh CLI
+  ingest-knowledge.sh              # document --from-store procedures
 
-tests/fixtures/ti/github-stars-recorded/
-tests/orchestrator/test_m7_performance_ti.py
+.agent/intelligence/ti-cache/
+  starred-repos.json               # runtime cache (gitignored pattern TBD)
+
+tests/fixtures/ti/cache-recorded/
+tests/orchestrator/test_m8_procedure_ti_cache.py
 ```
 
 **Safety invariants:**
 
-- Live TI never default; CI uses stub + golden recordings
-- TI candidates always `approved_for_execution: false`
-- Performance ingest explicit CLI only
-- Performance / TI sections informational only in plans
+- Cache refresh explicit CLI only; never CI network by default
+- Cached TI candidates still `approved_for_execution: false`
+- Procedure ingest explicit CLI only; staging never auto-promotes to Skills
+- Procedure / cached TI sections informational only in plans
 
 ## Required Capabilities
 
 Inferred from the objective and repository context.
 
-- performance-metrics-ingest
-- execution-run-knowledge-mapping
-- experience-performance-enrichment
-- plan-performance-context-section
-- github-stars-ti-adapter
-- ti-golden-record-testing
-- captain-gated-live-discovery
-- explicit-cli-ti-query
+- procedure-playbook-ingest
+- procedure-knowledge-query
+- plan-procedure-context-section
+- ti-offline-cache-store
+- ti-cache-refresh-cli
+- cached-github-stars-provider
+- ti-cache-golden-record-testing
+- knowledge-steward-procedure-workflow
 
 **Domains detected:** knowledge, github, plan
 
-Human intent also requires: gh auth boundary, fail-closed without credentials,
-extend existing Knowledge Steward workflow.
+Human intent also requires: gh auth boundary for cache refresh, fail-closed without
+credentials, extend existing Knowledge Steward + TI live Skills.
 
 ## Reusable Capabilities Found
 
@@ -183,23 +172,22 @@ Approved Compass Skills ranked for this objective (deterministic matcher).
 
 | Skill | Score | Notes |
 |---|---:|---|
-| `knowledge-steward` | 0.5571 | performance ingest + query |
-| `execution-telemetry` | 0.4929 | ExecutionRun / Experience sources |
-| `candidate-promotion` | 0.4286 | TI candidate ceiling |
-| `github-integration` | 0.3643 | gh CLI for live TI |
+| `knowledge-steward` | 0.5571 | procedure ingest + query |
+| `technology-intelligence-live` | 0.4929 | cache refresh + cached provider |
+| `candidate-promotion` | 0.4286 | procedure promotion ceiling unchanged |
+| `github-integration` | 0.3643 | gh CLI for cache refresh |
 | `capability-planning` | 0.3643 | plan writer integration |
-| `compass-evaluator` | 0.3 | evaluation artifacts |
-| `experience-routing` | 0.3 | routing context |
+| `implementation-planning` | 0.3643 | this plan |
 | `testing-validation` | 0.3 | validation evidence |
-| `security-review` | 0.3 | TI boundary review |
+| `security-review` | 0.3 | TI/procedure boundary review |
 
-Prefer in implementation manifests: `knowledge-steward`, `execution-telemetry`,
-`candidate-promotion`, `github-integration`, `capability-planning`.
+Prefer in implementation manifests: `knowledge-steward`, `technology-intelligence-live`,
+`github-integration`, `capability-planning`.
 
 ### Capability Gaps
 
-No new Skill required unless Captain requests `technology-intelligence-live`;
-default proposal extends existing Skills.
+No new Skill required by default; extend existing Skills unless Captain requests
+`procedure-playbooks` dedicated Skill.
 
 ## Technology Intelligence Candidates
 
@@ -222,45 +210,44 @@ Informational readback from `.agent/knowledge/` (hybrid search when vector index
 
 | Item | Kind | Score | Title |
 |---|---|---:|---|
-| `know-adr-022` | decision | 0.5484 | ADR-022: TF-IDF vector Experience store with hybrid knowledge search (v1.10.0 M6) |
-| `know-adr-018` | decision | 0.3226 | ADR-018: Execution telemetry, file TI, and Experience dual-path (v1.6.0 M2) |
-| `know-adr-021` | decision | 0.2581 | ADR-021: Knowledge Steward with stdlib keyword index (v1.9.0 M5) |
+| `know-adr-023` | decision | — | ADR-023: Performance knowledge ingest and live GitHub Stars TI (v1.11.0 M7) |
+| `know-adr-021` | decision | — | ADR-021: Knowledge Steward with stdlib keyword index (v1.9.0 M5) |
 
 ## Task Graph
 
-**Human-authored M7 phases:**
+**Human-authored M8 phases:**
 
 | Task ID | Objective | Dependencies | Parallelizable |
 |---|---|---|---|
-| T-A | `performance_metrics` schema + ingest mappers (runs, experience) | — | no |
-| T-B | Plan writer **Performance Context** section | T-A | yes (vs T-C) |
-| T-C | `GithubStarsTechnologyIntelligenceProvider` + golden recordings | — | yes (vs T-B) |
-| T-D | `query-technology-intelligence.sh`; extend Skills; doctor/install | T-A, T-C | no |
-| T-E | Tests/evals; ADR-023; docs | T-B–T-D | no |
-| T-F | Release prep v1.11.0 | T-E | no |
+| T-A | Procedure playbook ingest mapper + `--from-store procedures` | — | yes (vs T-C) |
+| T-B | Plan writer **Procedure Context** section | T-A | no |
+| T-C | TI cache store + `refresh-ti-cache.sh` + cached provider | — | yes (vs T-A) |
+| T-D | Extend Skills, doctor, ingest docs | T-A, T-C | no |
+| T-E | Tests/evals; ADR-024; docs | T-B–T-D | no |
+| T-F | Release prep v1.12.0 | T-E | no |
 
-Generic planner artifact: `.agent/plans/m7-performance-ti/task-graph.json`
+Generic planner artifact: `.agent/plans/m8-procedure-ti-cache/task-graph.json`
 
 ## Proposed Agent Configuration
 
 | Task | Profile | Skills |
 |---|---|---|
 | Discovery / architecture | `repository-scout` / `architecture-agent` | `capability-planning`, `implementation-planning` |
-| Performance ingest | `implementation-agent` | `knowledge-steward`, `execution-telemetry` |
-| Live TI adapter | `implementation-agent` | `github-integration`, `candidate-promotion`, `security-review` |
+| Procedure ingest | `implementation-agent` | `knowledge-steward`, `implementation-planning` |
+| TI cache adapter | `implementation-agent` | `technology-intelligence-live`, `github-integration`, `security-review` |
 | Plan integration | `implementation-agent` | `capability-planning`, `knowledge-steward` |
 | Validation | `test-engineer` | `testing-validation`, `security-review` |
-| Documentation | `documentation-agent` | `pull-request-preparation`, `candidate-promotion` |
+| Documentation | `documentation-agent` | `pull-request-preparation`, `knowledge-steward` |
 
-Machine manifests: `.agent/plans/m7-performance-ti/manifests.json`
+Machine manifests: `.agent/plans/m8-procedure-ti-cache/manifests.json`
 
 ## Workstreams
 
-1. **Performance knowledge mappers** — runs/experience → `kind: performance`
-2. **Performance Context** — plan section (informational)
-3. **Live TI adapter** — github-stars via gh, golden CI tests
-4. **CLIs + Skills** — query TI, extend knowledge-steward
-5. **Harness** — ADR-023, doctor, tests, release
+1. **Procedure ingest** — staging playbooks → `kind: procedure`
+2. **Procedure Context** — plan section (informational)
+3. **TI cache** — refresh CLI, cached provider, golden tests
+4. **CLIs + Skills** — extend knowledge-steward, technology-intelligence-live
+5. **Harness** — ADR-024, doctor, tests, release
 
 ## Parallelization Plan
 
@@ -272,93 +259,48 @@ T-E integrates all. Avoid parallel edits on `orchestrator/plan_writer/`.
 ### New
 
 ```text
-orchestrator/providers/technology_intelligence/github_stars_provider.py
-orchestrator/providers/technology_intelligence/mapper.py
-scripts/query-technology-intelligence.sh
-tests/fixtures/ti/github-stars-recorded/
-tests/fixtures/knowledge/performance/
-tests/orchestrator/test_m7_performance_ti.py
+orchestrator/providers/technology_intelligence/ti_cache.py
+scripts/refresh-ti-cache.sh
+tests/fixtures/ti/cache-recorded/starred-repos-cache.json
+tests/fixtures/knowledge/procedures/sample-playbook/
+tests/orchestrator/test_m8_procedure_ti_cache.py
+.agent/intelligence/.gitkeep (or ti-cache/.gitkeep)
 ```
 
 ### Modified
 
 ```text
 orchestrator/knowledge/ingest.py
-orchestrator/schemas/knowledge-item.schema.json
 orchestrator/plan_writer/build.py
 orchestrator/plan_writer/render.py
+orchestrator/providers/technology_intelligence/github_stars_provider.py
 orchestrator/providers/technology_intelligence/file_provider.py
-orchestrator/providers/technology_intelligence/__init__.py
-.cursor/skills/knowledge-steward/SKILL.md
-.cursor/skills/candidate-promotion/SKILL.md
-scripts/doctor.sh
 scripts/ingest-knowledge.sh
-tests/evals/run.sh
-tests/orchestrator/test_m5_knowledge_steward.py
+scripts/query-technology-intelligence.sh
+.cursor/skills/knowledge-steward/SKILL.md
+.cursor/skills/technology-intelligence-live/SKILL.md
 docs/integrations/technology-intelligence.md
-DECISIONS.md
-TESTING.md
-README.md
-PROJECT_CONTEXT.md
-CHANGELOG.md (on release)
-VERSION (on release)
+DECISIONS.md (ADR-024)
+TESTING.md, CHANGELOG.md (Unreleased), PROGRESS.md, PROJECT_CONTEXT.md
+tests/orchestrator/test_plan_writer.py
 ```
 
-## Testing Strategy
+## Migration and Rollback
 
-Evidence under `.agent/evidence/m7-performance-ti/`.
-
-| Layer | Action |
-|---|---|
-| Unit | execution-run → performance item with metrics |
-| Unit | experience enrich preserves idempotency |
-| Unit | github-stars mapper from golden recordings (no network) |
-| Unit | live provider returns [] without gh auth |
-| Integration | ingest runs+experience → query `--kind performance` |
-| Integration | capability plan renders Performance Context |
-| Integration | `COMPASS_TI_PROVIDER=github-stars` with mock gh stdout |
-| Evals | CI stays stub; golden TI isolation sensors |
-| Security | TI never sets approved_for_execution; no secret paths in ingest |
-| Rollback | tag restores artifact-kind runs + stub-only TI |
-
-## Security Review
-
-- Live TI requires explicit env + gh auth; no tokens in repo
-- TI output validated; fail closed on schema violations
-- Performance ingest rejects secret paths (existing M5 guards)
-- No external repo code import at planning time
-
-## Accessibility Review
-
-Not applicable (no UI).
-
-## Migration Plan
-
-1. Product repos: `update.sh` adds docs/CLI; no behavior change until Captain runs ingest/TI
-2. Re-ingest updates `know-run-*` items to `kind: performance` (idempotent)
-3. CI unchanged on stub TI default
-
-## Deployment Plan
-
-- Merge via PR after validation
-- Tag `v1.11.0`
-- Sandbox `update.sh` + optional performance ingest + TI demo (local gh)
-
-## Rollback Plan
-
-1. Restore `rollback/pre-m7-performance-ti`
-2. Revert VERSION to 1.10.0
-3. Remove performance_metrics from re-ingested items if needed (re-run ingest)
+1. Rollback tag: `rollback/pre-m8-procedure-ti-cache` @ baseline `c0f02b1`
+2. Revert feature branch; cache file is runtime-only under `.agent/intelligence/`
+3. Procedure knowledge items removable via re-ingest skip or manual delete under `.agent/knowledge/items/`
+4. `COMPASS_TI_PROVIDER=stub` restores pre-M8 TI behavior
 
 ## Risks and Mitigations
 
 | Risk | Impact | Mitigation |
 |---|---|---|
-| Live TI flakiness / rate limits | Broken local demos | Fail closed; golden recordings; cache optional later |
-| gh not installed | Empty TI results | Clear CLI error message; document prerequisites |
-| Performance item noise | Bad planning context | `--kind performance` filter; top-N cap |
-| CI network leakage | Nondeterministic tests | Stub default; mock gh in tests only |
-| Scope creep to full Stars ML | Delay M7 | Adapter boundary; redacted mapping only |
+| Stale TI cache misleads planning | Wrong discovery signals | Explicit refresh CLI; cache timestamp in JSON; document staleness |
+| Procedure staging ingested before Captain review | Premature playbook surfacing | Ingest explicit CLI only; default plans empty until Captain ingests |
+| Cache file contains private repo names | Local leak if committed | gitignore `.agent/intelligence/ti-cache/`; redact in docs |
+| CI network leakage | Nondeterministic tests | Stub default; golden cache fixtures only |
+| Scope creep to Notion ingest | Delay M8 | ADR-024 explicitly defers Notion/NotebookLM |
 
 ## Evaluation Strategy
 
@@ -366,36 +308,37 @@ After implementation (post-approval), success by:
 
 - Acceptance criteria checked
 - Doctor / tests / evals green
-- Stub CI identical to v1.10.0 for default env
-- Fixture ingest → Performance Context populated
-- Live TI with mocked gh returns validated candidates
+- Stub CI identical to v1.11.0 for default env
+- Fixture procedure ingest → Procedure Context populated
+- Cached provider with golden fixture returns validated candidates
+- `refresh-ti-cache.sh` fails closed without gh auth
 
 ## Learning Plan
 
-Retain under `.agent/plans/m7-performance-ti/`:
+Retain under `.agent/plans/m8-procedure-ti-cache/`:
 
 - `resolve.json`, `task-graph.json`, `manifests.json`
 - Link issue, branch, PR, evidence after execution
 
-Feeds M8+ optional TI cache, broader discovery providers after Captain expands scope.
+Feeds M9+ optional approved-procedure root, TTL cache hints, broader TI providers.
 
 ## Autonomy Budget
 
-After approval, create `.agent/budgets/m7-performance-ti.md`.
+After approval, create `.agent/budgets/m8-procedure-ti-cache.md`.
 
 - Maximum iterations: 20
 - Maximum failed validation cycles: 5
 - Maximum estimated cost: Captain-defined
 - Maximum elapsed time: 5 working days
-- Maximum live TI query batches per plan: 10 (M7-specific)
-- Budget ledger path: `.agent/budgets/m7-performance-ti.md`
+- Maximum TI cache refresh batches per plan: 5 (M8-specific)
+- Budget ledger path: `.agent/budgets/m8-procedure-ti-cache.md`
 
 ## Definition of Done
 
 - All Acceptance Criteria checked
 - Doctor / tests / evals green
 - Security review recorded
-- ADR-023 accepted
+- ADR-024 accepted
 - PROGRESS / CHANGELOG / TESTING updated
 - PR prepared with evidence
 - No implementation on protected branches
@@ -412,9 +355,7 @@ proceeds.
 
 - **Approved by:** Captain
 - **Approval date:** 2026-08-24
-- **Approved revision:** starred repos only; Performance Context always render; re-ingest overwrite; v1.11.0; extend Skills + technology-intelligence-live
-- **Issue:** #62
-- **Branch:** feature/62-m7-performance-ti
-- **Rollback:** rollback/pre-m7-performance-ti @ d05b7b8
-- **Feature PR:** #63 (merged)
-- **Release:** v1.11.0 (2026-08-24)
+- **Approved revision:** Procedure Context always render; separate github-stars-cached; staging+approved ingest; v1.12.0; procedure-playbooks Skill
+- **Issue:** #66
+- **Branch:** feature/66-m8-procedure-ti-cache
+- **Rollback:** rollback/pre-m8-procedure-ti-cache @ c0f02b1

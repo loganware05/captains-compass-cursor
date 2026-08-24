@@ -28,6 +28,11 @@ STORE_ROOTS: dict[str, tuple[str, ...]] = {
     "routing": (".agent/routing/proposals", ".agent/routing/applied"),
     "runs": (".agent/runs",),
     "decisions": ("DECISIONS.md",),
+    "procedures": (
+        ".agent/knowledge/procedures/staging",
+        ".agent/knowledge/procedures/approved",
+        "tests/fixtures/knowledge/procedures",
+    ),
 }
 
 
@@ -186,6 +191,52 @@ def item_from_execution_run(doc: dict, source_path: str) -> dict:
     )
 
 
+def item_from_procedure_playbook(text: str, source_path: str, *, lifecycle: str = "staging") -> dict:
+    """Map a procedure playbook markdown file to kind: procedure."""
+    path = Path(source_path)
+    slug = path.parent.name
+    if not _SAFE_ID.match(slug.replace("_", "-")):
+        slug = re.sub(r"[^a-z0-9-]+", "-", slug.lower()).strip("-") or "procedure"
+    title_match = re.search(r"^#\s+Procedure:\s*(.+)$", text, re.MULTILINE)
+    title = title_match.group(1).strip() if title_match else slug.replace("-", " ").title()
+    summary_parts: list[str] = []
+    for line in text.splitlines():
+        if line.startswith("## Steps"):
+            break
+        stripped = line.strip()
+        if stripped and not stripped.startswith("#"):
+            summary_parts.append(stripped)
+    summary = " ".join(summary_parts)[:2000] or f"Procedure playbook {slug} ({lifecycle})."
+    confidence = 0.85 if lifecycle == "approved" else 0.75
+    return _base_item(
+        item_id=f"know-proc-{slug}",
+        kind="procedure",
+        title=title,
+        summary=summary,
+        source_type="procedure-playbook",
+        source_id=slug,
+        source_path=source_path,
+        keywords=["procedure", "playbook", lifecycle, slug],
+        confidence=confidence,
+        provenance={"procedure_lifecycle": lifecycle},
+    )
+
+
+def ingest_procedure_playbook(repo_root: Path, path: Path, *, lifecycle: str = "staging") -> list[dict]:
+    repo_root = Path(repo_root)
+    path = Path(path).resolve()
+    reject_secret_path(str(path))
+    if path.name != "playbook.md":
+        raise IngestError(f"expected playbook.md: {path}")
+    rel = str(path.relative_to(repo_root)) if path.is_relative_to(repo_root) else str(path)
+    if lifecycle == "auto":
+        lifecycle = "approved" if "approved" in path.parts else "staging"
+    text = path.read_text(encoding="utf-8")
+    item = item_from_procedure_playbook(text, rel, lifecycle=lifecycle)
+    write_knowledge_item(repo_root, item)
+    return [item]
+
+
 def items_from_decisions_md(text: str, source_path: str) -> list[dict]:
     """Auto-ingest ADR headings from DECISIONS.md."""
     items: list[dict] = []
@@ -250,6 +301,9 @@ def ingest_path(repo_root: Path, path: Path) -> list[dict]:
             raise IngestError(f"unsupported JSON artifact: {path}")
         write_knowledge_item(repo_root, item)
         written.append(item)
+    elif path.name == "playbook.md":
+        lifecycle = "approved" if "approved" in path.parts else "staging"
+        return ingest_procedure_playbook(repo_root, path, lifecycle=lifecycle)
     elif path.name == "DECISIONS.md" or path.suffix == ".md" and "DECISIONS" in path.name:
         text = path.read_text(encoding="utf-8")
         for item in items_from_decisions_md(text, rel):
@@ -277,6 +331,16 @@ def ingest_store_roots(
         for rel in STORE_ROOTS[key]:
             base = repo_root / rel
             if not base.exists():
+                continue
+            if key == "procedures":
+                if not base.is_dir():
+                    continue
+                for path in sorted(base.rglob("playbook.md")):
+                    try:
+                        all_written.extend(ingest_procedure_playbook(repo_root, path, lifecycle="auto"))
+                        sources.append(str(path.relative_to(repo_root)))
+                    except IngestError:
+                        continue
                 continue
             if base.is_file():
                 all_written.extend(ingest_path(repo_root, base))

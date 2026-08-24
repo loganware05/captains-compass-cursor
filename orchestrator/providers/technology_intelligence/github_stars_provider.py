@@ -93,6 +93,33 @@ def fetch_starred_repos(*, limit: int = _DEFAULT_LIMIT) -> list[dict]:
     return [item for item in payload if isinstance(item, dict)]
 
 
+def discover_candidates_from_records(
+    raw_repos: list[dict],
+    objective: str,
+    *,
+    top_n: int = _DEFAULT_TOP_N,
+) -> list[CandidateCapability]:
+    """Rank GitHub API-shaped repo records into TI candidates."""
+    if not raw_repos:
+        return []
+    objective_tokens = _tokenize(objective)
+    ranked: list[tuple[float, dict]] = []
+    for repo in raw_repos:
+        score = _score_repo(objective_tokens, repo)
+        if score <= 0 and objective_tokens:
+            continue
+        ranked.append((score if objective_tokens else 1.0, repo))
+    ranked.sort(key=lambda pair: (-pair[0], str(pair[1].get("full_name") or "")))
+    selected = [repo for _, repo in ranked[:top_n]] if objective_tokens else raw_repos[:top_n]
+    candidates: list[CandidateCapability] = []
+    for repo in selected:
+        shaped = repo_record_from_github_api(repo)
+        candidates.append(candidate_from_stars_shaped(shaped))
+    docs = [item.to_dict() for item in candidates]
+    validate_ti_candidates(docs)
+    return candidates
+
+
 class GithubStarsTechnologyIntelligenceProvider:
     """Live TI from Captain's GitHub starred repositories (explicit opt-in)."""
 
@@ -110,25 +137,7 @@ class GithubStarsTechnologyIntelligenceProvider:
     def discover_candidates(self, objective: str, context: dict) -> list[CandidateCapability]:
         del context
         raw_repos = self._fetch_starred(limit=self.limit)
-        if not raw_repos:
-            return []
-        objective_tokens = _tokenize(objective)
-        ranked: list[tuple[float, dict]] = []
-        for repo in raw_repos:
-            score = _score_repo(objective_tokens, repo)
-            if score <= 0 and objective_tokens:
-                continue
-            ranked.append((score if objective_tokens else 1.0, repo))
-        ranked.sort(key=lambda pair: (-pair[0], str(pair[1].get("full_name") or "")))
-        selected = [repo for _, repo in ranked[: self.top_n]] if objective_tokens else raw_repos[: self.top_n]
-
-        candidates: list[CandidateCapability] = []
-        for repo in selected:
-            shaped = repo_record_from_github_api(repo)
-            candidates.append(candidate_from_stars_shaped(shaped))
-        docs = [item.to_dict() for item in candidates]
-        validate_ti_candidates(docs)
-        return candidates
+        return discover_candidates_from_records(raw_repos, objective, top_n=self.top_n)
 
 
 def load_recorded_starred_fixtures(fixtures_dir: Path) -> list[dict]:

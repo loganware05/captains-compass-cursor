@@ -168,6 +168,31 @@ def render_performance_context(artifacts: CapabilityPlanArtifacts) -> str:
     return "\n".join(lines)
 
 
+def render_procedure_context(artifacts: CapabilityPlanArtifacts) -> str:
+    """Informational procedure knowledge readback — always rendered."""
+    lines = [
+        "## Procedure Context",
+        "",
+        "Informational readback from `kind: procedure` knowledge items. "
+        "**Does not alter Skill rankings or matcher weights.** "
+        "Populate via `./scripts/ingest-knowledge.sh --from-store procedures`.",
+        "",
+    ]
+    items = artifacts.procedure_context or []
+    if not items:
+        lines.append("*No procedure knowledge items matched this objective.*")
+    else:
+        lines.extend(["| Item | Lifecycle | Title |", "|---|---|---|"])
+        for item in items:
+            lifecycle = (item.get("provenance") or {}).get("procedure_lifecycle", "n/a")
+            lines.append(
+                f"| `{item.get('item_id', 'n/a')}` | {lifecycle} | "
+                f"{str(item.get('title', '')).replace('|', '/')} |"
+            )
+    lines.append("")
+    return "\n".join(lines)
+
+
 def render_task_graph(artifacts: CapabilityPlanArtifacts) -> str:
     lines = [
         "## Task Graph",
@@ -289,6 +314,7 @@ def render_capability_plan_sections(artifacts: CapabilityPlanArtifacts) -> str:
         render_experience_signals(artifacts),
         render_knowledge_context(artifacts),
         render_performance_context(artifacts),
+        render_procedure_context(artifacts),
         render_task_graph(artifacts),
         render_agent_configuration(artifacts),
         render_evaluation_strategy(artifacts),

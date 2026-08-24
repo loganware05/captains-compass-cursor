@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-024: Procedure knowledge ingest and offline TI cache (v1.12.0 M8)
+
+- **Status:** Accepted
+- **Date:** 2026-08-24
+- **Context:** M5 shipped procedure promotion staging but playbooks were not
+  ingested as queryable `kind: procedure` knowledge. M7 shipped live Stars TI
+  but deferred offline cache. Plans lacked **Procedure Context** readback.
+- **Decision:**
+  1. Ingest `playbook.md` from **staging** and **approved** procedure roots via
+     explicit CLI (`--from-store procedures`); idempotent `know-proc-*` keys.
+  2. Plan writer always renders **Procedure Context** (empty when no matches).
+  3. Ship `./scripts/refresh-ti-cache.sh` and separate
+     `COMPASS_TI_PROVIDER=github-stars-cached` reading
+     `.agent/intelligence/ti-cache/starred-repos.json`.
+  4. New Skill `procedure-playbooks` (34 Skills total); extend knowledge-steward
+     and technology-intelligence-live.
+  5. Production embedding APIs and Notion MCP ingest remain deferred.
+- **Consequences:** Third Notion knowledge form becomes planning-visible;
+  local TI reuse without repeated gh calls; CI/default stub unchanged.
+
 ## ADR-023: Performance knowledge ingest and live GitHub Stars TI (v1.11.0 M7)
 
 - **Status:** Accepted

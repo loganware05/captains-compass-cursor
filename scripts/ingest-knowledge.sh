@@ -10,7 +10,7 @@ REPO_ROOT="$ROOT"
 
 usage() {
   cat <<'USAGE'
-Usage: ingest-knowledge.sh [--paths file1[,file2...]] [--from-store experience,evaluations,routing,runs,decisions] [--rebuild-vector]
+Usage: ingest-knowledge.sh [--paths file1[,file2...]] [--from-store experience,evaluations,routing,runs,decisions,procedures] [--rebuild-vector]
 
 Explicit CLI only — never auto-runs on workstream close.
 Rebuilds keyword index after ingest. Use --rebuild-vector to also rebuild vector-index.json.

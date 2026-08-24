@@ -45,6 +45,7 @@ SKILL_SLUGS = (
     "bounded-autonomy",
     "knowledge-steward",
     "technology-intelligence-live",
+    "procedure-playbooks",
 )
 
 AGENT_PROFILES = (
