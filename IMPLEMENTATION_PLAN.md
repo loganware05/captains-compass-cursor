@@ -2,7 +2,7 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: m3-evaluator-experience-routing
 - Issue: [#45](https://github.com/loganware05/captains-compass-cursor/issues/45)
 - Branch: `feature/45-m3-evaluator-experience-routing`
@@ -359,4 +359,11 @@ Until then, only planning documents and discovery artifacts may change.
 - **Branch:** `feature/45-m3-evaluator-experience-routing`
 - **Rollback:** `rollback/pre-m3-evaluator-experience-routing` @ `f36beb2`
 
-**Phase T-A in progress (2026-08-24):** evaluation schemas and store layout.
+**Phase T-G complete (2026-08-24):** VERSION `1.7.0`, release evidence, release PR pending.
+
+## Completion Record
+
+- **Completed:** 2026-08-24
+- **Merged feature PR:** [#46](https://github.com/loganware05/captains-compass-cursor/pull/46) @ `a0156e8`
+- **Release PR:** `chore/45-release-v1.7.0` (pending)
+- **Rollback (M3 feature):** `rollback/pre-m3-evaluator-experience-routing` @ `f36beb2`

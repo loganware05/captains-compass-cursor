@@ -7,7 +7,7 @@
 - Branch: feature/45-m3-evaluator-experience-routing
 - Created: 2026-08-24
 - Last updated: 2026-08-24
-- Status: ACTIVE
+- Status: COMPLETE
 
 ## Limits (from approved plan)
 
@@ -34,6 +34,7 @@
 | 2026-08-24 | 0 | approved | Kickoff: issue #45, rollback, branch |
 | 2026-08-24 | 1 | impl | T-A–T-F evaluator, routing, promotion, proficiency |
 | 2026-08-24 | 2 | pass | doctor + 84 unit + 38 evals + tests/run 114 |
+| 2026-08-24 | 3 | complete | PR #46 merged; T-G release prep v1.7.0 |
 
 ## Stop condition
 

@@ -2,23 +2,23 @@
 
 ## Current status
 
-**M3 IN PROGRESS** — issue [#45](https://github.com/loganware05/captains-compass-cursor/issues/45),
-branch `feature/45-m3-evaluator-experience-routing`, target **v1.7.0**.
-Rollback: `rollback/pre-m3-evaluator-experience-routing` @ `f36beb2`.
+**M3 COMPLETE (release prep)** — feature [#46](https://github.com/loganware05/captains-compass-cursor/pull/46) merged @ `a0156e8`.
+T-G on `chore/45-release-v1.7.0` for **v1.7.0**.
 
 ## Completed
 
-- v1.5.0 / M1; v1.6.0 / M2 (telemetry, file TI, promotion, experience training)
-- M3 plan approved 2026-08-24 (proposal-only weights; evaluator Skill+CLI+subagent;
-  SANDBOX_TESTED candidate ceiling; subagent proficiency metadata)
+- v1.5.0 / M1; v1.6.0 / M2
+- v1.7.0 / M3 evaluator, experience routing, SANDBOX_TESTED promotion, subagent proficiency (#45)
 
 ## In progress
 
-- M3 implementation T-A–T-F on `feature/45-m3-evaluator-experience-routing`
+- Tag `v1.7.0`, GitHub release, sandbox refresh
 
 ## Next
 
-- Validate; open PR for #45; T-G release prep after merge
+1. Merge release PR
+2. Tag + `gh release create`
+3. Sandbox `update.sh` to 1.7.0
 
 ## Blockers
 
