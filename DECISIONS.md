@@ -1,5 +1,28 @@
 # Decisions
 
+## ADR-025: Skill promotion lifecycle completion and Artifact Context (v1.13.0 M9)
+
+- **Status:** Accepted
+- **Date:** 2026-08-24
+- **Context:** M3 capped candidate promotion at `SANDBOX_TESTED`. Notion §9 item 9
+  calls for a full Skill promotion lifecycle. Plans lacked **Artifact Context**
+  for the fifth knowledge form.
+- **Decision:**
+  1. Extend candidate stages through `APPROVED` → `AVAILABLE_SKILL` → `PROVEN_SKILL`.
+  2. Require `--captain-approved` for all stages after `SANDBOX_TESTED`.
+  3. `AVAILABLE_SKILL` writes install **proposals** under
+     `.agent/capabilities/candidates/available-proposals/` — never auto-install
+     into `.cursor/skills/`; never set `approved_for_execution: true`.
+  4. `PROVEN_SKILL` requires ≥2 successful Experiences referencing the skill slug
+     (override via `COMPASS_PROVEN_SUCCESS_THRESHOLD`).
+  5. Plan writer always renders **Artifact Context** (`kind: artifact`).
+  6. New Skill `skill-lifecycle` (35 Skills); `candidate-promotion` remains the
+     pre-sandbox path.
+  7. Notion MCP / NotebookLM ingest and production embeddings remain deferred.
+- **Consequences:** Candidates can graduate to proven maturity under Captain
+  control; Artifact knowledge becomes planning-visible; CI/default stub TI
+  unchanged.
+
 ## ADR-024: Procedure knowledge ingest and offline TI cache (v1.12.0 M8)
 
 - **Status:** Accepted

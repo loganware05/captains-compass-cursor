@@ -17,6 +17,7 @@ from orchestrator.plan_writer.build import build_capability_plan
 from orchestrator.plan_writer.render import render_capability_plan_sections
 from orchestrator.promotion.advance import (
     CANDIDATE_CEILING,
+    PRE_CAPTAIN_CEILING,
     PromotionError,
     advance_lifecycle,
     load_candidate_json,
@@ -94,10 +95,12 @@ class PromotionCeilingTests(unittest.TestCase):
             target_stage="SANDBOX_TESTED",
             evidence_paths=[".agent/evidence/sandbox.md"],
         )
-        self.assertEqual(sandbox["lifecycle_stage"], CANDIDATE_CEILING)
+        self.assertEqual(sandbox["lifecycle_stage"], PRE_CAPTAIN_CEILING)
+        self.assertEqual(PRE_CAPTAIN_CEILING, "SANDBOX_TESTED")
+        self.assertEqual(CANDIDATE_CEILING, "PROVEN_SKILL")
         self.assertFalse(sandbox["approved_for_execution"])
 
-    def test_rejects_approved_stage(self) -> None:
+    def test_rejects_approved_without_captain_flag(self) -> None:
         candidate = load_candidate_json(FIXTURE_CANDIDATE)
         with self.assertRaises(PromotionError):
             advance_lifecycle(candidate, target_stage="APPROVED")

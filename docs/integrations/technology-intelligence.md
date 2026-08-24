@@ -113,6 +113,8 @@ manifests, or install targets.
 | Pre-render validation | Shipped |
 | `query-technology-intelligence.sh` | Shipped — explicit Captain TI queries |
 | Candidate promotion `DISCOVERED → SANDBOX_TESTED` | Shipped (`candidate-promotion` Skill) |
+| Candidate promotion `APPROVED → PROVEN_SKILL` | Shipped (`skill-lifecycle` Skill; `--captain-approved`) |
+| AVAILABLE_SKILL install proposals | Shipped — staging only; never auto-install |
 | Captain-approved Skill sidecar PR path | Shipped (draft under staging; never auto-merge) |
 | Batch GitHub Star Categorization ML pipeline | **Deferred** — M7 is live query adapter only |
 | Auto-install / execute external repos | **Prohibited** |
@@ -120,13 +122,16 @@ manifests, or install targets.
 ## Promotion path
 
 ```text
-DISCOVERED → ANALYZED → (Captain-approved Skill sidecar PR) → AVAILABLE_SKILL
-  → PROVEN_SKILL
+DISCOVERED → ANALYZED → SECURITY_REVIEWED → SANDBOX_TESTED
+  → APPROVED → AVAILABLE_SKILL → PROVEN_SKILL
 ```
 
-M2 ceiling: advance to **ANALYZED**, write staging candidate + optional Skill
-draft under `.agent/capabilities/candidates/`, then open a PR for Captain
-approval. Never auto-merge or set `approved_for_execution: true`.
+Pre-sandbox: Skill `candidate-promotion`. Post-sandbox: Skill `skill-lifecycle`
+with `--captain-approved`. `AVAILABLE_SKILL` writes a proposal under
+`.agent/capabilities/candidates/available-proposals/` — live install still
+requires a Captain-reviewed PR. `PROVEN_SKILL` requires ≥2 successful Experiences
+(default; `COMPASS_PROVEN_SUCCESS_THRESHOLD`). Never auto-merge or set
+`approved_for_execution: true`.
 
 Scripts:
 

@@ -193,6 +193,30 @@ def render_procedure_context(artifacts: CapabilityPlanArtifacts) -> str:
     return "\n".join(lines)
 
 
+def render_artifact_context(artifacts: CapabilityPlanArtifacts) -> str:
+    """Informational artifact knowledge readback — always rendered."""
+    lines = [
+        "## Artifact Context",
+        "",
+        "Informational readback from `kind: artifact` knowledge items. "
+        "**Does not alter Skill rankings or matcher weights.** "
+        "Populate via `./scripts/ingest-knowledge.sh` (routing/evaluations stores).",
+        "",
+    ]
+    items = artifacts.artifact_context or []
+    if not items:
+        lines.append("*No artifact knowledge items matched this objective.*")
+    else:
+        lines.extend(["| Item | Title |", "|---|---|"])
+        for item in items:
+            lines.append(
+                f"| `{item.get('item_id', 'n/a')}` | "
+                f"{str(item.get('title', '')).replace('|', '/')} |"
+            )
+    lines.append("")
+    return "\n".join(lines)
+
+
 def render_task_graph(artifacts: CapabilityPlanArtifacts) -> str:
     lines = [
         "## Task Graph",
@@ -315,6 +339,7 @@ def render_capability_plan_sections(artifacts: CapabilityPlanArtifacts) -> str:
         render_knowledge_context(artifacts),
         render_performance_context(artifacts),
         render_procedure_context(artifacts),
+        render_artifact_context(artifacts),
         render_task_graph(artifacts),
         render_agent_configuration(artifacts),
         render_evaluation_strategy(artifacts),
