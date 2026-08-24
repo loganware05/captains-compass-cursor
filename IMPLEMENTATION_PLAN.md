@@ -2,17 +2,18 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: m7-performance-ti
 - Issue: [#62](https://github.com/loganware05/captains-compass-cursor/issues/62) — M7: Performance knowledge ingest + live GitHub Stars TI (v1.11.0)
-- Branch: `feature/62-m7-performance-ti`
-- Target release: **v1.11.0** (additive; non-breaking)
+- Branch: `feature/62-m7-performance-ti` (merged #63)
+- Target release: **v1.11.0** (released 2026-08-24)
 - Created: 2026-08-24
 - Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
 - Approved revision: Captain decisions on Open Questions (see below)
 - Rollback checkpoint: `rollback/pre-m7-performance-ti` @ `d05b7b8`
+- Feature PR: [#63](https://github.com/loganware05/captains-compass-cursor/pull/63) (merged @ `a71663b`)
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
   - Prior plans: M1–M6 COMPLETE (v1.5.0–v1.10.0)
@@ -85,7 +86,7 @@ After M7 (v1.11.0), Captain Compass can:
 - [x] Extend `knowledge-steward` + `candidate-promotion` Skills; doctor checks
 - [x] ADR-023 for performance knowledge + live TI boundaries
 - [x] Doctor / install / tests / evals pass
-- [ ] Control-repo only; sandbox refresh after release
+- [ ] Control-repo only; sandbox refresh after release (closeout PR)
 
 ## Non-Goals
 
@@ -409,9 +410,11 @@ proceeds.
 
 ## Approval Record
 
-- **Approved by:**
-- **Approval date:**
-- **Approved revision:**
-- **Issue:**
-- **Branch:**
-- **Rollback:**
+- **Approved by:** Captain
+- **Approval date:** 2026-08-24
+- **Approved revision:** starred repos only; Performance Context always render; re-ingest overwrite; v1.11.0; extend Skills + technology-intelligence-live
+- **Issue:** #62
+- **Branch:** feature/62-m7-performance-ti
+- **Rollback:** rollback/pre-m7-performance-ti @ d05b7b8
+- **Feature PR:** #63 (merged)
+- **Release:** v1.11.0 (2026-08-24)
