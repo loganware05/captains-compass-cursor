@@ -2,17 +2,18 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: m5-knowledge-steward
 - Issue: [#54](https://github.com/loganware05/captains-compass-cursor/issues/54)
-- Branch: `feature/54-m5-knowledge-steward`
-- Target release: **v1.9.0** (additive; non-breaking)
+- Branch: `feature/54-m5-knowledge-steward` (merged #55)
+- Target release: **v1.9.0** (released 2026-08-24)
 - Created: 2026-08-24
 - Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
 - Approved revision: post-approval decisions recorded below
 - Rollback checkpoint: `rollback/pre-m5-knowledge-steward` @ `56bb5bc`
+- Feature PR: [#55](https://github.com/loganware05/captains-compass-cursor/pull/55) (merged @ `7777e62`)
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
   - Prior plans: M1–M4 COMPLETE (v1.5.0–v1.8.0)

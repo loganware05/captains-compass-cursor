@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 5 feature (#54), then release **v1.9.0** (sandbox refresh after tag).
+Ship Milestone 6 planning when Captain ready. v1.9.0 / M5 release closeout in progress.
