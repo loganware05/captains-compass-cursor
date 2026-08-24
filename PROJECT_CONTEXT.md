@@ -126,5 +126,5 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 3 (v1.7.0): evaluator, experience-routing proposals, SANDBOX_TESTED
-promotion ceiling, subagent proficiency metadata.
+Idle after v1.7.0. Next: Milestone 4 planning when Captain ready (persistent-role
+promotion / bounded Level 3 autonomy).
