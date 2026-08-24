@@ -33,6 +33,14 @@ STORE_ROOTS: dict[str, tuple[str, ...]] = {
         ".agent/knowledge/procedures/approved",
         "tests/fixtures/knowledge/procedures",
     ),
+    "notion": (
+        ".agent/knowledge/external/notion",
+        "tests/fixtures/knowledge/external/notion",
+    ),
+    "notebooklm": (
+        ".agent/knowledge/external/notebooklm",
+        "tests/fixtures/knowledge/external/notebooklm",
+    ),
 }
 
 
@@ -222,6 +230,84 @@ def item_from_procedure_playbook(text: str, source_path: str, *, lifecycle: str 
     )
 
 
+def _slug_from_path(path: Path) -> str:
+    stem = path.stem if path.suffix else path.name
+    slug = re.sub(r"[^a-z0-9-]+", "-", stem.lower()).strip("-")
+    return slug or "external"
+
+
+def item_from_notion_export(text: str, source_path: str) -> dict:
+    """Map a Captain-exported Notion markdown page to kind: knowledge."""
+    path = Path(source_path)
+    slug = _slug_from_path(path)
+    title_match = re.search(r"^#\s+(.+)$", text, re.MULTILINE)
+    title = title_match.group(1).strip() if title_match else slug.replace("-", " ").title()
+    paragraphs = [ln.strip() for ln in text.splitlines() if ln.strip() and not ln.startswith("#")]
+    summary = " ".join(paragraphs)[:2000] or f"Notion export {slug}."
+    url_match = re.search(r"https?://(?:www\.)?notion\.(?:so|site)/\S+", text)
+    provenance: dict[str, Any] = {"external_source": "notion", "export_mode": "file"}
+    if url_match:
+        provenance["source_url"] = url_match.group(0).rstrip(").,]\"'")
+    return _base_item(
+        item_id=f"know-notion-{slug}",
+        kind="knowledge",
+        title=title,
+        summary=summary,
+        source_type="notion-export",
+        source_id=slug,
+        source_path=source_path,
+        keywords=["notion", "external", "knowledge", slug],
+        confidence=0.8,
+        provenance=provenance,
+    )
+
+
+def item_from_notebooklm_note(text: str, source_path: str) -> dict:
+    """Map a Captain-exported NotebookLM learning note to kind: knowledge."""
+    path = Path(source_path)
+    slug = _slug_from_path(path)
+    title_match = re.search(r"^#\s+(.+)$", text, re.MULTILINE)
+    title = title_match.group(1).strip() if title_match else slug.replace("-", " ").title()
+    paragraphs = [ln.strip() for ln in text.splitlines() if ln.strip() and not ln.startswith("#")]
+    summary = " ".join(paragraphs)[:2000] or f"NotebookLM note {slug}."
+    return _base_item(
+        item_id=f"know-nlm-{slug}",
+        kind="knowledge",
+        title=title,
+        summary=summary,
+        source_type="notebooklm-export",
+        source_id=slug,
+        source_path=source_path,
+        keywords=["notebooklm", "external", "knowledge", "learning", slug],
+        confidence=0.75,
+        provenance={"external_source": "notebooklm", "export_mode": "file"},
+    )
+
+
+def ingest_external_markdown(
+    repo_root: Path,
+    path: Path,
+    *,
+    source: str,
+) -> list[dict]:
+    """Ingest a single Notion or NotebookLM markdown export."""
+    repo_root = Path(repo_root)
+    path = Path(path).resolve()
+    reject_secret_path(str(path))
+    if path.suffix.lower() != ".md":
+        raise IngestError(f"expected .md export: {path}")
+    rel = str(path.relative_to(repo_root)) if path.is_relative_to(repo_root) else str(path)
+    text = path.read_text(encoding="utf-8")
+    if source == "notion":
+        item = item_from_notion_export(text, rel)
+    elif source == "notebooklm":
+        item = item_from_notebooklm_note(text, rel)
+    else:
+        raise IngestError(f"unsupported external source: {source!r}")
+    write_knowledge_item(repo_root, item)
+    return [item]
+
+
 def ingest_procedure_playbook(repo_root: Path, path: Path, *, lifecycle: str = "staging") -> list[dict]:
     repo_root = Path(repo_root)
     path = Path(path).resolve()
@@ -338,6 +424,18 @@ def ingest_store_roots(
                 for path in sorted(base.rglob("playbook.md")):
                     try:
                         all_written.extend(ingest_procedure_playbook(repo_root, path, lifecycle="auto"))
+                        sources.append(str(path.relative_to(repo_root)))
+                    except IngestError:
+                        continue
+                continue
+            if key in {"notion", "notebooklm"}:
+                if not base.is_dir():
+                    continue
+                for path in sorted(base.rglob("*.md")):
+                    try:
+                        all_written.extend(
+                            ingest_external_markdown(repo_root, path, source=key)
+                        )
                         sources.append(str(path.relative_to(repo_root)))
                     except IngestError:
                         continue

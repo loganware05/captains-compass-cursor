@@ -1,0 +1,30 @@
+id: external-knowledge-ingest
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/external-knowledge-ingest/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, knowledge, orchestration, research]
+tags:
+  - notion
+  - notebooklm
+  - external-knowledge
+  - ingest
+capabilities_provided:
+  - external-notion-ingest
+  - external-notebooklm-ingest
+  - external-knowledge-query
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - knowledge-steward
+  - notion-integration
+  - documentation-agent
+maturity: available
+confidence: 0.85

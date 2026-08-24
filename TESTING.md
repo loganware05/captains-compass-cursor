@@ -125,6 +125,21 @@ Procedure playbook ingest:
 ./scripts/query-knowledge.sh --query "bounded autonomy" --kind procedure
 ```
 
+External Notion / NotebookLM file ingest:
+
+```bash
+./scripts/ingest-knowledge.sh --from-store notion,notebooklm
+./scripts/query-knowledge.sh --query "approval gate" --kind knowledge
+```
+
+Hugging Face file TI + stale-aware cache refresh:
+
+```bash
+COMPASS_TI_PROVIDER=huggingface-file \
+  ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
+./scripts/refresh-ti-cache.sh --if-stale 24
+```
+
 ## Evidence matrix
 
 Required validation artifacts by change type:

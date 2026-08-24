@@ -14,7 +14,7 @@ ADR headings from `DECISIONS.md`.
 ## Inputs
 
 - Explicit file paths or store roots (`experience`, `evaluations`, `routing`,
-  `runs`, `decisions`, `procedures`)
+  `runs`, `decisions`, `procedures`, `notion`, `notebooklm`)
 - Search query for readback
 
 ## Procedure
@@ -27,6 +27,13 @@ ADR headings from `DECISIONS.md`.
    ```
 
    `decisions` auto-ingests **ADR headings** from `DECISIONS.md`.
+
+   For Captain-exported Notion / NotebookLM files, use Skill
+   `external-knowledge-ingest` or:
+
+   ```bash
+   ./scripts/ingest-knowledge.sh --from-store notion,notebooklm
+   ```
 
 2. **Query** for planning context (read-only):
 

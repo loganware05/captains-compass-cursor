@@ -2,107 +2,50 @@
 
 ## Metadata
 
-- Status: COMPLETE
-- Plan ID: m9-skill-promotion-artifacts
-- Issue: [#70](https://github.com/loganware05/captains-compass-cursor/issues/70) — M9: Skill promotion lifecycle + Artifact Context (v1.13.0)
-- Branch: `feature/70-m9-skill-promotion-artifacts` (merged #71)
-- Target release: **v1.13.0** (released 2026-08-24)
+- Status: APPROVED
+- Plan ID: m10-external-knowledge-ti
+- Issue: [#74](https://github.com/loganware05/captains-compass-cursor/issues/74) — M10: External knowledge ingest + Hugging Face file TI (v1.14.0)
+- Branch: `feature/74-m10-external-knowledge-ti`
+- Target release: **v1.14.0** (additive; non-breaking)
 - Created: 2026-08-24
 - Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
-- Approved revision: v1.13.0; Artifact Context included; --captain-approved for APPROVED+; PROVEN_SKILL ≥2 successful Experiences; dedicated skill-lifecycle Skill
-- Rollback checkpoint: `rollback/pre-m9-skill-promotion-artifacts` @ `d2ec205`
-- Feature PR: [#71](https://github.com/loganware05/captains-compass-cursor/pull/71) (merged @ `e451554`)
+- Approved revision: v1.14.0; both knowledge+HF TI; file export only; fetched_at + --if-stale; dedicated external-knowledge-ingest Skill
+- Rollback checkpoint: `rollback/pre-m10-external-knowledge-ti` @ `bc5f8a7`
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
-  - Prior plans: M1–M8 COMPLETE (v1.5.0–v1.12.0)
-  - Baseline: **v1.12.0** (`d2ec205` / current `main` after closeout #69)
-- Machine artifacts: `.agent/plans/m9-skill-promotion-artifacts/`
+  - Prior plans: M1–M9 COMPLETE (v1.5.0–v1.13.0)
+  - Baseline: **v1.13.0** (`bc5f8a7`)
+- Machine artifacts: `.agent/plans/m10-external-knowledge-ti/`
 
 ## Request
 
-Proceed with **Milestone 9** of the Captain Compass multi-agent orchestration OS:
-
-1. **Skill promotion lifecycle completion** — raise the Captain-gated candidate ceiling
-   past `SANDBOX_TESTED` through `APPROVED` → `AVAILABLE_SKILL` → `PROVEN_SKILL`
-   (staging + proposals only; never auto-install or set `approved_for_execution: true`).
-2. **Artifact Context** — surface `kind: artifact` knowledge in capability plans
-   (always rendered; empty when none).
-3. **Dedicated `skill-lifecycle` Skill** — promotion + proficiency training path.
-
-## Problem Statement
-
-After M8:
-
-- Notion §9 item 9 (*Skill promotion lifecycle*) is only half-shipped:
-  ceiling hard-coded at `SANDBOX_TESTED`
-- No formal Captain-flagged path to `APPROVED` / `AVAILABLE_SKILL` proposals /
-  `PROVEN_SKILL` from Experience evidence
-- Plan writer lacks **Artifact Context** for the fifth Notion knowledge form
-
-## Desired Outcome
-
-After M9 (v1.13.0):
-
-1. Advance to `APPROVED` / `AVAILABLE_SKILL` / `PROVEN_SKILL` with `--captain-approved`
-2. `AVAILABLE_SKILL` writes install **proposals** only (never live Skills)
-3. `PROVEN_SKILL` requires ≥2 successful Experiences referencing the skill slug
-4. **Artifact Context** always rendered in plans
-5. New Skill `skill-lifecycle` (35 Skills)
+Milestone 10: file-export Notion/NotebookLM knowledge ingest + Hugging Face file TI
++ TI cache `fetched_at` / `--if-stale`.
 
 ## Acceptance Criteria
 
-- [x] Extend stages through `PROVEN_SKILL` with evidence + `--captain-approved` for APPROVED+
-- [x] `promote-candidate.sh` supports new stages; rejects missing Captain flag / evidence
-- [x] `AVAILABLE_SKILL` writes proposal under
-      `.agent/capabilities/candidates/available-proposals/<slug>/`
-- [x] `PROVEN_SKILL` requires ≥2 successful Experiences (default)
-- [x] Plan writer **Artifact Context** (always rendered; empty when none)
-- [x] New Skill `skill-lifecycle`; extend `candidate-promotion` docs; ADR-025
-- [x] Doctor / tests / evals pass (35 Skills)
-- [x] Control-repo only; sandbox refresh after release
-
-## Non-Goals
-
-- Auto-install Skills into `.cursor/skills/` or auto-merge promotion PRs
-- Setting `approved_for_execution: true`
-- Mutating matcher weights from promotion or Artifact Context
-- Production embedding / vector DB providers
-- Notion MCP / NotebookLM knowledge ingestion (defer M10+)
-- Broader live TI providers
-- TTL background TI cache refresh
+- [x] Notion + NotebookLM file ingest → `kind: knowledge` (explicit CLI)
+- [x] `COMPASS_TI_PROVIDER=huggingface-file` with golden fixtures
+- [x] TI cache `fetched_at` + `refresh-ti-cache.sh --if-stale <hours>`
+- [x] Skill `external-knowledge-ingest`; extend knowledge-steward + technology-intelligence-live; ADR-026
+- [x] Doctor / tests / evals pass (36 Skills)
+- [ ] Control-repo only; sandbox refresh after release
 
 ## Open Questions (Captain — resolved 2026-08-24)
 
-1. **Target version:** **v1.13.0**
-2. **Artifact Context:** **included** in M9
-3. **`APPROVED` gate:** require **`--captain-approved`** for APPROVED+
-4. **`PROVEN_SKILL` threshold:** **≥2** successful Experiences
-5. **Skills:** new dedicated **`skill-lifecycle`** Skill
-
-## Workstreams / Tasks
-
-| ID | Workstream | Depends | Parallel? |
-|---|---|---|---|
-| T-A | Promotion stage model + gates + tests | — | no |
-| T-B | AVAILABLE / PROVEN proposal writers + CLI | T-A | no |
-| T-C | Artifact Context in plan writer + fixtures | — | yes w/ T-A |
-| T-D | skill-lifecycle Skill, doctor, ADR-025, docs | T-B, T-C | no |
-| T-E | Validation evidence + feature PR | T-D | no |
-| T-F | Release prep v1.13.0 | T-E | no |
-
-## Approval Boundary
-
-**Implementation may begin — Captain approved 2026-08-24.**
+1. **v1.14.0**
+2. **Both** knowledge ingest and HF file TI
+3. **File export only**
+4. **`fetched_at` and `refresh-ti-cache.sh --if-stale`**
+5. Dedicated **`external-knowledge-ingest`** Skill (abstract enough)
 
 ## Approval Record
 
 - **Approved by:** Captain
 - **Approval date:** 2026-08-24
-- **Approved revision:** v1.13.0; Artifact Context; --captain-approved for APPROVED+; PROVEN ≥2 Experiences; skill-lifecycle Skill
-- **Issue:** #70
-- **Branch:** feature/70-m9-skill-promotion-artifacts
-- **Rollback:** rollback/pre-m9-skill-promotion-artifacts @ d2ec205
-- **Feature PR:** #71 (merged)
-- **Release:** v1.13.0 (2026-08-24)
+- **Approved revision:** v1.14.0; both; file export; fetched_at + --if-stale; external-knowledge-ingest Skill
+- **Issue:** #74
+- **Branch:** feature/74-m10-external-knowledge-ti
+- **Rollback:** rollback/pre-m10-external-knowledge-ti @ bc5f8a7

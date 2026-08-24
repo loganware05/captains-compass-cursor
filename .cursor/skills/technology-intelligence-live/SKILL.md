@@ -41,19 +41,28 @@ during capability planning — not offline fixtures and not CI defaults.
 
    ```bash
    ./scripts/refresh-ti-cache.sh
+   ./scripts/refresh-ti-cache.sh --if-stale 24
    COMPASS_TI_PROVIDER=github-stars-cached \
      ./scripts/query-technology-intelligence.sh --query "accessible react forms"
+   ```
+
+   Cache envelope includes `fetched_at` (and legacy `refreshed_at`).
+7. **Hugging Face file TI** (offline fixtures / Captain export dir — no Hub network in CI):
+
+   ```bash
+   COMPASS_TI_PROVIDER=huggingface-file \
+     ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
    ```
 
 ## Output
 
 - JSON list of normalized `CandidateCapability` payloads
 - Plan section **Technology Intelligence Candidates** when planning with
-  `COMPASS_TI_PROVIDER=github-stars` or `github-stars-cached`
+  `COMPASS_TI_PROVIDER=github-stars`, `github-stars-cached`, or `huggingface-file`
 
 ## Prohibited actions
 
 - Running live TI in CI or as default provider
 - Setting `approved_for_execution: true`
 - Auto-cloning, installing, or executing external repositories
-- Using topic/search APIs beyond starred repos (M7 scope)
+- Live Hugging Face Hub network calls from this Skill (file provider only)

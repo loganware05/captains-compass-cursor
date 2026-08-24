@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Added
+
+- File-export Notion + NotebookLM knowledge ingest (`--from-store notion,notebooklm`) (#74)
+- `COMPASS_TI_PROVIDER=huggingface-file` offline HF model-card TI (#74)
+- TI cache `fetched_at` + `refresh-ti-cache.sh --if-stale <hours>` (#74)
+- Skill `external-knowledge-ingest` (36 Skills) (#74)
+- ADR-026 (#74)
+
+### Changed
+
+- `knowledge-steward` / `technology-intelligence-live` document external ingest + HF file TI (#74)
+- Stars cache envelope writes `fetched_at` (keeps `refreshed_at` alias) (#74)
+
 ## 1.13.0 — 2026-08-24
 
 ### Added

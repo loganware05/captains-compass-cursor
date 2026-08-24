@@ -24,6 +24,33 @@ def candidate_from_stars_shaped(raw: dict) -> CandidateCapability:
     )
 
 
+def candidate_from_huggingface_shaped(raw: dict) -> CandidateCapability:
+    """Map Hugging Face model-card-shaped records to CandidateCapability."""
+    source = raw.get("source") if isinstance(raw.get("source"), dict) else {}
+    model_id = str(
+        raw.get("model_id") or raw.get("id") or source.get("path") or "unknown-model"
+    )
+    caps = list(raw.get("capabilities_provided") or [])
+    if not caps:
+        pipeline = str(raw.get("pipeline_tag") or raw.get("task") or "").strip()
+        caps = [pipeline.replace("-", "_") or "hf-model-pattern"]
+    return CandidateCapability(
+        id=str(raw.get("id") or f"hf-{model_id.replace('/', '-')}"),
+        version=str(raw.get("version") or "0.1.0"),
+        capabilities_provided=caps,
+        discovery_signal=str(
+            raw.get("discovery_signal") or f"huggingface-file:{model_id}"
+        ),
+        source_path=str(source.get("path") or model_id),
+        provenance_url=str(
+            source.get("provenance_url")
+            or raw.get("url")
+            or f"https://huggingface.co/{model_id}"
+        ),
+        notes=str(raw.get("notes") or raw.get("description") or ""),
+    )
+
+
 def repo_record_from_github_api(item: dict) -> dict:
     """Normalize `gh api user/starred` repo payload to Stars-shaped record."""
     full_name = str(item.get("full_name") or "")

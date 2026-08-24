@@ -50,6 +50,9 @@ def select_ti_provider(repo_root: Path | None = None):
     from orchestrator.providers.technology_intelligence.github_stars_provider import (
         GithubStarsTechnologyIntelligenceProvider,
     )
+    from orchestrator.providers.technology_intelligence.huggingface_file_provider import (
+        HuggingFaceFileTechnologyIntelligenceProvider,
+    )
     from orchestrator.providers.technology_intelligence.ti_cache import (
         CachedGithubStarsTechnologyIntelligenceProvider,
     )
@@ -63,4 +66,6 @@ def select_ti_provider(repo_root: Path | None = None):
         return GithubStarsTechnologyIntelligenceProvider()
     if name in {"github-stars-cached", "cached", "stars-cached"}:
         return CachedGithubStarsTechnologyIntelligenceProvider(repo_root)
+    if name in {"huggingface-file", "hf-file", "huggingface"}:
+        return HuggingFaceFileTechnologyIntelligenceProvider()
     return StubTechnologyIntelligenceProvider()
