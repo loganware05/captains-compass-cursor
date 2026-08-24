@@ -2,10 +2,24 @@
 
 ## Unreleased
 
+## 1.9.0 — 2026-08-24
+
 ### Added
 
-- Milestone 5: Knowledge Steward — ingest, keyword index, query, Knowledge Context
-  in plans, procedure promotion proposals, ADR heading auto-ingest (`knowledge-steward`).
+- Knowledge Steward Skill + CLIs (`ingest-knowledge.sh`, `query-knowledge.sh`,
+  `propose-procedure-from-knowledge.sh`); explicit CLI ingest only (#54)
+- `orchestrator/knowledge/` — ingest, keyword index, query, procedure promotion
+  staging; `VectorIndexAdapter` NoOp stub for M6+ (#54)
+- Store layout: `.agent/knowledge/items/`, `index.json`, `ingest-log/` (#54)
+- Plan writer **Knowledge Context** section (informational only) (#54)
+- ADR heading auto-ingest from `DECISIONS.md` (#54)
+- `knowledge-steward` subagent + reference profile (#54)
+- ADR-021 (#54)
+
+### Changed
+
+- VERSION `1.9.0`; thirty-two Skills; ten reference agent profiles
+- Install seeds `.agent/knowledge/` paths
 
 ## 1.8.0 — 2026-08-24
 
