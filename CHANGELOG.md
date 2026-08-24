@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.13.0 — 2026-08-24
+
 ### Added
 
 - Candidate promotion stages `APPROVED` → `AVAILABLE_SKILL` → `PROVEN_SKILL`
@@ -15,6 +17,7 @@
 
 ### Changed
 
+- VERSION `1.13.0`
 - `promote-candidate.sh` supports post-sandbox stages + `--captain-approved` (#70)
 - `candidate-promotion` Skill documents pre-sandbox ceiling; defers to
   `skill-lifecycle` for APPROVED+ (#70)

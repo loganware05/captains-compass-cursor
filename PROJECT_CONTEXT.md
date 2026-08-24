@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 9 feature (skill promotion lifecycle + Artifact Context). v1.12.0 / M8 fully closed.
+Ship v1.13.0 / M9 release (skill promotion lifecycle + Artifact Context). Production embedding providers remain deferred.

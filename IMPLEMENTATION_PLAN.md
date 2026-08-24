@@ -2,17 +2,18 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: m9-skill-promotion-artifacts
 - Issue: [#70](https://github.com/loganware05/captains-compass-cursor/issues/70) — M9: Skill promotion lifecycle + Artifact Context (v1.13.0)
-- Branch: `feature/70-m9-skill-promotion-artifacts`
-- Target release: **v1.13.0** (additive; non-breaking)
+- Branch: `feature/70-m9-skill-promotion-artifacts` (merged #71)
+- Target release: **v1.13.0** (released 2026-08-24)
 - Created: 2026-08-24
 - Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
 - Approved revision: v1.13.0; Artifact Context included; --captain-approved for APPROVED+; PROVEN_SKILL ≥2 successful Experiences; dedicated skill-lifecycle Skill
 - Rollback checkpoint: `rollback/pre-m9-skill-promotion-artifacts` @ `d2ec205`
+- Feature PR: [#71](https://github.com/loganware05/captains-compass-cursor/pull/71) (merged @ `e451554`)
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
   - Prior plans: M1–M8 COMPLETE (v1.5.0–v1.12.0)
@@ -60,7 +61,7 @@ After M9 (v1.13.0):
 - [x] Plan writer **Artifact Context** (always rendered; empty when none)
 - [x] New Skill `skill-lifecycle`; extend `candidate-promotion` docs; ADR-025
 - [x] Doctor / tests / evals pass (35 Skills)
-- [ ] Control-repo only; sandbox refresh after release
+- [ ] Control-repo only; sandbox refresh after release (closeout PR)
 
 ## Non-Goals
 
@@ -103,3 +104,5 @@ After M9 (v1.13.0):
 - **Issue:** #70
 - **Branch:** feature/70-m9-skill-promotion-artifacts
 - **Rollback:** rollback/pre-m9-skill-promotion-artifacts @ d2ec205
+- **Feature PR:** #71 (merged)
+- **Release:** v1.13.0 (2026-08-24)
