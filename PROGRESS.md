@@ -2,27 +2,22 @@
 
 ## Current status
 
-**M7 feature merged** — release prep for **v1.11.0** in progress.
+**M7 fully closed** — v1.11.0 released; sandbox refreshed ([#28](https://github.com/loganware05/captain-compass-sandbox/pull/28)).
 
-- Feature PR: [#63](https://github.com/loganware05/captains-compass-cursor/pull/63) (merged)
-- Release branch: `chore/62-release-v1.11.0`
-- Issue: [#62](https://github.com/loganware05/captains-compass-cursor/issues/62)
+Release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.11.0
 
 ## Completed
 
-- v1.5.0–v1.10.0 / M1–M6 (#54–#61)
-- M7 feature: performance ingest, Performance Context, live Stars TI (#63)
+- v1.5.0–v1.11.0 / M1–M7 (#54–#64)
+- Tag `v1.11.0`; sandbox refresh; post-tag validation recorded
 
 ## In progress
 
-- v1.11.0 release prep (VERSION, CHANGELOG, evidence, plan COMPLETE)
+None.
 
 ## Next
 
-1. Merge release prep PR
-2. Tag `v1.11.0` + GitHub release
-3. Sandbox refresh 1.10.0 → 1.11.0
-4. Closeout PR; close issue #62
+Milestone 8 planning when Captain ready.
 
 ## Blockers
 

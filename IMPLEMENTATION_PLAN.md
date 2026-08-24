@@ -86,7 +86,7 @@ After M7 (v1.11.0), Captain Compass can:
 - [x] Extend `knowledge-steward` + `candidate-promotion` Skills; doctor checks
 - [x] ADR-023 for performance knowledge + live TI boundaries
 - [x] Doctor / install / tests / evals pass
-- [ ] Control-repo only; sandbox refresh after release (closeout PR)
+- [x] Control-repo only; sandbox refresh after release
 
 ## Non-Goals
 
