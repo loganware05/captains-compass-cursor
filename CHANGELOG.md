@@ -2,13 +2,22 @@
 
 ## Unreleased
 
-### Milestone 3 (target v1.7.0)
+## 1.7.0 — 2026-08-24
 
-- Captain Compass Evaluator Skill + CLI + `compass-evaluator` subagent
-- Experience-routing proposals (proposal-only; no live matcher weight mutation)
-- Candidate promotion through `SECURITY_REVIEWED` → `SANDBOX_TESTED`
-- Captain-gated subagent proficiency / classification metadata
-- ADR-019; twenty-nine Skills; nine reference agent profiles
+### Added
+
+- Captain Compass Evaluator Skill + CLI (`run-evaluation.sh`) + `compass-evaluator` subagent (#45)
+- Experience-routing proposals (proposal-only; no live matcher weight mutation) (#45)
+- Candidate promotion through `SECURITY_REVIEWED` → `SANDBOX_TESTED` with evidence gates (#45)
+- Captain-gated subagent proficiency / classification metadata (`record-agent-proficiency.sh`) (#45)
+- Plan section **Experience Signals** (informational; does not alter rankings) (#45)
+- ADR-019 (#45)
+
+### Changed
+
+- VERSION `1.7.0`; twenty-nine Skills; nine reference agent profiles
+- Install seeds `.agent/evaluations/`, `.agent/routing/proposals/`, `.agent/agents/proficiency/`
+- Registry compiler allows Skill and reference-profile ids to share names across kinds
 
 ## 1.6.0 — 2026-08-23
 
