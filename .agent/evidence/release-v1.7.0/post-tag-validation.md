@@ -14,10 +14,12 @@ Tag: `v1.7.0`
 | Detached worktree `tests/run.sh` | 114 passed |
 | Annotated tag push | OK |
 | GitHub release | https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.7.0 |
-| Sandbox update 1.6.0 → 1.7.0 | doctor passed; sandbox refresh PR open |
+| Sandbox update 1.6.0 → 1.7.0 | Pass — [sandbox#23](https://github.com/loganware05/captain-compass-sandbox/pull/23) merged |
 
 ## Links
 
 - Feature PR: https://github.com/loganware05/captains-compass-cursor/pull/46
 - VERSION PR: https://github.com/loganware05/captains-compass-cursor/pull/47
 - Issue: https://github.com/loganware05/captains-compass-cursor/issues/45
+- Sandbox PR: https://github.com/loganware05/captain-compass-sandbox/pull/23
+- Closeout PR: https://github.com/loganware05/captains-compass-cursor/pull/48

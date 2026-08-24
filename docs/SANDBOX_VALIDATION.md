@@ -89,12 +89,12 @@ Checklist row 7 from `docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md`.
 
 Control mirror: `.agent/evidence/release-v1.6.0/post-tag-validation.md`
 
-### Evaluator + experience routing (v1.7.0) — refresh started 2026-08-24
+### Evaluator + experience routing (v1.7.0) — refresh complete 2026-08-24
 
 | Step | Result |
 |---|---|
 | Control release `v1.7.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.7.0 |
-| Sandbox refreshed to Compass 1.7.0 | Pending merge — [sandbox#23](https://github.com/loganware05/captain-compass-sandbox/pull/23) |
+| Sandbox refreshed to Compass 1.7.0 | Pass — [sandbox#23](https://github.com/loganware05/captain-compass-sandbox/pull/23) merged |
 | Evaluator / routing smoke on sandbox | Pending interactive (optional) |
 
 Control mirror: `.agent/evidence/release-v1.7.0/post-tag-validation.md`
