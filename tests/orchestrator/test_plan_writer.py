@@ -28,6 +28,7 @@ class PlanWriterTests(unittest.TestCase):
             "## Technology Intelligence Candidates",
             "## Knowledge Context",
             "## Performance Context",
+            "## Procedure Context",
             "## Task Graph",
             "## Proposed Agent Configuration",
             "## Evaluation Strategy",

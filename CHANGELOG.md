@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Procedure playbook ingest (`--from-store procedures`) → `kind: procedure` (#66)
+- Plan writer **Procedure Context** section (always rendered; empty when none) (#66)
+- Offline TI cache: `refresh-ti-cache.sh`, `COMPASS_TI_PROVIDER=github-stars-cached` (#66)
+- Skill `procedure-playbooks` (34 Skills); extends `knowledge-steward`,
+  `technology-intelligence-live` (#66)
+- ADR-024 (#66)
+
+### Changed
+
+- `ingest-knowledge.sh` supports `procedures` store root (staging + approved) (#66)
+- `select_ti_provider()` accepts repo root for cached Stars TI (#66)
+
 ## 1.11.0 — 2026-08-24
 
 ### Added

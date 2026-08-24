@@ -9,10 +9,11 @@ PROVIDER="${COMPASS_TI_PROVIDER:-stub}"
 
 usage() {
   cat <<'USAGE'
-Usage: query-technology-intelligence.sh --query TEXT [--top N] [--provider stub|file|github-stars]
+Usage: query-technology-intelligence.sh --query TEXT [--top N] [--provider stub|file|github-stars|github-stars-cached]
 
 Read-only Technology Intelligence discovery. Does not install or execute external repos.
-Default provider is stub; set COMPASS_TI_PROVIDER=github-stars for live starred repos (gh auth required).
+Default provider is stub. Use github-stars for live gh; github-stars-cached reads
+.agent/intelligence/ti-cache/ (refresh via ./scripts/refresh-ti-cache.sh).
 USAGE
 }
 
@@ -32,16 +33,19 @@ if [[ -z "$QUERY" ]]; then
 fi
 
 export COMPASS_TI_PROVIDER="$PROVIDER"
+export COMPASS_REPO_ROOT="$ROOT"
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python3 - "$QUERY" "$TOP" <<'PY'
+python3 - "$ROOT" "$QUERY" "$TOP" <<'PY'
 import json
 import sys
+from pathlib import Path
 
 from orchestrator.providers.technology_intelligence.file_provider import select_ti_provider
 
-query = sys.argv[1]
-top_n = int(sys.argv[2])
-provider = select_ti_provider()
+repo = Path(sys.argv[1]).resolve()
+query = sys.argv[2]
+top_n = int(sys.argv[3])
+provider = select_ti_provider(repo)
 candidates = provider.discover_candidates(query, {})
 if top_n > 0:
     candidates = candidates[:top_n]

@@ -46,8 +46,11 @@ def ensure_store_layout(repo_root: Path) -> None:
         ingest_log_dir(repo_root),
         procedures_dir(repo_root) / "proposals",
         procedures_dir(repo_root) / "staging",
+        procedures_dir(repo_root) / "approved",
     ):
         path.mkdir(parents=True, exist_ok=True)
+    intel_cache = Path(repo_root) / ".agent" / "intelligence" / "ti-cache"
+    intel_cache.mkdir(parents=True, exist_ok=True)
 
 
 def assert_safe_id(value: str, label: str = "item_id") -> None:

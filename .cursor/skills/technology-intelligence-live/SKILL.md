@@ -37,12 +37,19 @@ during capability planning — not offline fixtures and not CI defaults.
    input only; never clone or execute starred repos without Captain approval.
 5. To promote a candidate, switch to Skill `candidate-promotion` (staging ceiling
    `SANDBOX_TESTED`; Skill install requires Captain PR).
+6. **Offline cache** (optional — separate provider):
+
+   ```bash
+   ./scripts/refresh-ti-cache.sh
+   COMPASS_TI_PROVIDER=github-stars-cached \
+     ./scripts/query-technology-intelligence.sh --query "accessible react forms"
+   ```
 
 ## Output
 
 - JSON list of normalized `CandidateCapability` payloads
 - Plan section **Technology Intelligence Candidates** when planning with
-  `COMPASS_TI_PROVIDER=github-stars`
+  `COMPASS_TI_PROVIDER=github-stars` or `github-stars-cached`
 
 ## Prohibited actions
 

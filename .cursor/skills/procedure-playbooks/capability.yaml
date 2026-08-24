@@ -1,0 +1,31 @@
+id: procedure-playbooks
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/procedure-playbooks/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, learning, orchestration, knowledge, procedures]
+tags:
+  - procedure
+  - playbook
+  - knowledge
+  - ingest
+capabilities_provided:
+  - procedure-playbook-ingest
+  - procedure-knowledge-query
+  - procedure-context-planning
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - knowledge-steward
+  - procedure-playbooks
+  - documentation-agent
+  - architecture-agent
+maturity: available
+confidence: 0.85

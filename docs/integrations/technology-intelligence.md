@@ -61,7 +61,7 @@ with `TechnologyIntelligenceValidationError`.
 
 | Env var | Values | Default |
 |---|---|---|
-| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` | `stub` |
+| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` | `stub` |
 | `COMPASS_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/` |
 
 `orchestrator/plan_writer/build.py` calls `select_ti_provider()`. CI and default
@@ -69,12 +69,17 @@ installs stay on **stub** (empty list). Set `COMPASS_TI_PROVIDER=file` for local
 demos using redacted Stars-shaped fixtures under
 `orchestrator/providers/technology_intelligence/fixtures/`. Set
 `COMPASS_TI_PROVIDER=github-stars` for **live starred repos** via authenticated
-`gh` (Captain local only; fails closed without auth).
+`gh` (Captain local only; fails closed without auth). Set
+`COMPASS_TI_PROVIDER=github-stars-cached` to read the offline cache at
+`.agent/intelligence/ti-cache/starred-repos.json` (refresh via
+`./scripts/refresh-ti-cache.sh`).
 
-Explicit read-only query:
+Explicit read-only queries:
 
 ```bash
 COMPASS_TI_PROVIDER=github-stars ./scripts/query-technology-intelligence.sh --query "react forms"
+./scripts/refresh-ti-cache.sh
+COMPASS_TI_PROVIDER=github-stars-cached ./scripts/query-technology-intelligence.sh --query "react forms"
 ```
 
 ## Plan rendering
@@ -102,6 +107,8 @@ manifests, or install targets.
 | `StubTechnologyIntelligenceProvider` | Shipped — returns `[]` (CI default) |
 | `FileTechnologyIntelligenceProvider` | Shipped — redacted Stars-shaped fixtures |
 | `GithubStarsTechnologyIntelligenceProvider` | Shipped — live starred repos via `gh` (opt-in) |
+| `CachedGithubStarsTechnologyIntelligenceProvider` | Shipped — offline cache via `github-stars-cached` (M8) |
+| `refresh-ti-cache.sh` | Shipped — explicit cache refresh CLI (M8) |
 | `CandidateCapability` + schema | Shipped |
 | Pre-render validation | Shipped |
 | `query-technology-intelligence.sh` | Shipped — explicit Captain TI queries |

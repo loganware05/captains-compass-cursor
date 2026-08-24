@@ -101,6 +101,7 @@ SKILLS=(
   bounded-autonomy
   knowledge-steward
   technology-intelligence-live
+  procedure-playbooks
 )
 
 for s in "${SKILLS[@]}"; do
@@ -327,6 +328,16 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "rebuild-knowledge-vector-index.sh"
   else
     fail "missing executable scripts/rebuild-knowledge-vector-index.sh"
+  fi
+  if [[ -x "$ROOT/scripts/refresh-ti-cache.sh" ]]; then
+    ok "refresh-ti-cache.sh"
+  else
+    fail "missing executable scripts/refresh-ti-cache.sh"
+  fi
+  if [[ -f "$ROOT/.agent/intelligence/.gitkeep" ]]; then
+    ok ".agent/intelligence layout"
+  else
+    fail "missing .agent/intelligence/.gitkeep"
   fi
   if [[ -f "$ROOT/.agent/capabilities/compiled/.gitkeep" ]]; then
     ok ".agent/capabilities/compiled layout"
