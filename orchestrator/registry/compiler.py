@@ -41,6 +41,8 @@ SKILL_SLUGS = (
     "experience-skill-training",
     "compass-evaluator",
     "experience-routing",
+    "persistent-role-promotion",
+    "bounded-autonomy",
 )
 
 AGENT_PROFILES = (

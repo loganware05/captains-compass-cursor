@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/persistent-role-promotion.schema.json",
+  "title": "PersistentRolePromotion",
+  "description": "Proposal to promote a proficient subagent to a persistent specialist role. Staging drafts only; Captain PR required to land under .cursor/agents/ (Milestone 4).",
+  "type": "object",
+  "required": [
+    "proposal_id",
+    "kind",
+    "agent_id",
+    "proficiency_record_ids",
+    "proficiency_level",
+    "gates_passed",
+    "staging_paths",
+    "landing_mode",
+    "captain_approval_required"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "proposal_id": { "type": "string", "minLength": 1 },
+    "kind": { "type": "string", "const": "persistent-role-promotion" },
+    "agent_id": { "type": "string", "minLength": 1 },
+    "proficiency_record_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "experience_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "classifications": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "proficiency_level": {
+      "type": "string",
+      "enum": ["novice", "developing", "proficient", "expert"]
+    },
+    "gates_passed": {
+      "type": "object",
+      "additionalProperties": { "type": "boolean" }
+    },
+    "staging_paths": {
+      "type": "object",
+      "properties": {
+        "agent_markdown": { "type": "string" },
+        "reference_profile": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "landing_mode": {
+      "type": "string",
+      "const": "staging_and_pr_only"
+    },
+    "captain_approval_required": { "type": "boolean", "const": true },
+    "notes": { "type": "string" },
+    "created_at": { "type": "string", "minLength": 1 }
+  }
+}

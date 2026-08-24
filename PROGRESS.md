@@ -2,26 +2,28 @@
 
 ## Current status
 
-**v1.7.0 FULLY CLOSED OUT** — tag `v1.7.0` @ `df73f59`.
-M3 complete ([#45](https://github.com/loganware05/captains-compass-cursor/issues/45)).
+**M4 feature implementation complete** — awaiting PR merge for #50, then T-F
+release prep **v1.8.0**.
 
-- Control closeout: [#48](https://github.com/loganware05/captains-compass-cursor/pull/48) merged
-- Sandbox refresh: [#23](https://github.com/loganware05/captain-compass-sandbox/pull/23) merged (issue [#22](https://github.com/loganware05/captain-compass-sandbox/issues/22) closed)
+Branch: `feature/50-m4-persistent-roles-bounded-autonomy`  
+Rollback: `rollback/pre-m4-persistent-roles-bounded-autonomy` @ `25fd83f`  
+Evidence: `.agent/evidence/m4-persistent-roles-bounded-autonomy/validation.md`
 
 ## Completed
 
-- v1.5.0 / M1 capability-aware planning
-- v1.6.0 / M2 execution telemetry, file TI, promotion, experience training
-- v1.7.0 / M3 evaluator, experience routing, SANDBOX_TESTED promotion, subagent proficiency
-  - Release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.7.0
+- v1.5.0 / M1; v1.6.0 / M2; v1.7.0 / M3
+- M4 T-A–T-E: weights.json, persistent-role promotion, assembler affinity,
+  Captain-flagged apply, ADR-020, doctor/tests/evals (92 unit / 39 eval / 114 run)
 
 ## In progress
 
-- None
+- Feature PR for #50; then release v1.8.0 + sandbox refresh
 
 ## Next
 
-1. Milestone 4 planning when Captain ready (persistent-role promotion / bounded Level 3 autonomy)
+1. Merge feature PR
+2. T-F release prep (VERSION 1.8.0, tag, sandbox update)
+3. Close #50
 
 ## Blockers
 

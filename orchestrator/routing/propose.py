@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
-from orchestrator.matcher.score import WEIGHTS
+from orchestrator.matcher.score import get_weights
 from orchestrator.schemas.validate import validate_document
 
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,120}$")
@@ -84,10 +84,14 @@ def build_routing_proposal(
         "kind": "routing-proposal",
         "based_on_experiences": experience_ids,
         "skill_confidence_deltas": deltas,
-        "matcher_weight_suggestions": dict(WEIGHTS),
+        "matcher_weight_suggestions": get_weights(),
         "auto_apply": False,
+        "captain_approved": False,
         "notes": notes
-        or "Proposal-only: does not mutate orchestrator/matcher/score.py WEIGHTS",
+        or (
+            "Proposal-only until Captain sets captain_approved=true and runs "
+            "apply-routing-proposal.sh under autonomy budget"
+        ),
         "created_at": _utc_now(),
         "captain_approval_required": True,
     }

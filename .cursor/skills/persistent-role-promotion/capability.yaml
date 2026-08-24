@@ -1,0 +1,28 @@
+id: persistent-role-promotion
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/persistent-role-promotion/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, learning, orchestration]
+tags:
+  - persistent-role
+  - promotion
+  - agents
+capabilities_provided:
+  - persistent-role-proposal
+  - specialist-agent-staging
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - documentation-agent
+  - architecture-agent
+  - compass-evaluator
+maturity: available
+confidence: 0.85

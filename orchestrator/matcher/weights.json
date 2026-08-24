@@ -1,0 +1,7 @@
+{
+  "capability_overlap": 0.45,
+  "stack_match": 0.20,
+  "lifecycle_stage": 0.15,
+  "security_bonus": 0.10,
+  "agent_affinity": 0.10
+}

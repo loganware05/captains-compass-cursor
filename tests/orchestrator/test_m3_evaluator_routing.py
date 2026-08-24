@@ -67,6 +67,7 @@ class RoutingProposalTests(unittest.TestCase):
         proposal = build_routing_proposal(experiences)
         self.assertFalse(proposal["auto_apply"])
         self.assertEqual(proposal["matcher_weight_suggestions"], dict(WEIGHTS))
+        self.assertFalse(proposal.get("captain_approved"))
         with tempfile.TemporaryDirectory() as tmp:
             path = write_routing_proposal(Path(tmp), proposal)
             self.assertTrue(path.is_file())
