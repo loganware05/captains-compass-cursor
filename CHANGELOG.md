@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.11.0 — 2026-08-24
 
 ### Added
 
@@ -16,7 +16,7 @@
 
 ### Changed
 
-- Re-ingest overwrites existing `know-run-*` items from `artifact` → `performance` (#62)
+- VERSION `1.11.0`; re-ingest overwrites existing `know-run-*` as `performance` (#62)
 - `knowledge-item.schema.json` optional `performance_metrics` object (#62)
 
 ## 1.10.0 — 2026-08-24
