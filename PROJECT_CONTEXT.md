@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 8 when Captain approves plan (procedure ingest + TI cache). v1.11.0 / M7 fully closed.
+Ship v1.12.0 / M8 release (procedure ingest + TI cache). Production embedding providers remain deferred.

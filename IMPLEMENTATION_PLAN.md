@@ -2,17 +2,18 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: m8-procedure-ti-cache
 - Issue: [#66](https://github.com/loganware05/captains-compass-cursor/issues/66) — M8: Procedure knowledge lifecycle + offline TI cache (v1.12.0)
-- Branch: `feature/66-m8-procedure-ti-cache`
-- Target release: **v1.12.0** (additive; non-breaking)
+- Branch: `feature/66-m8-procedure-ti-cache` (merged #67)
+- Target release: **v1.12.0** (released 2026-08-24)
 - Created: 2026-08-24
 - Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
 - Approved revision: Procedure Context always render; separate github-stars-cached; staging+approved ingest; v1.12.0; procedure-playbooks Skill
 - Rollback checkpoint: `rollback/pre-m8-procedure-ti-cache` @ `c0f02b1`
+- Feature PR: [#67](https://github.com/loganware05/captains-compass-cursor/pull/67) (merged @ `ab1efb1`)
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
   - Prior plans: M1–M7 COMPLETE (v1.5.0–v1.11.0)
@@ -76,7 +77,7 @@ After M8 (v1.12.0), Captain Compass can:
 - [x] Extend `knowledge-steward` + `technology-intelligence-live` Skills; doctor checks (34 Skills)
 - [x] ADR-024 for procedure ingest + TI cache boundaries
 - [x] Doctor / install / tests / evals pass
-- [ ] Control-repo only; sandbox refresh after release
+- [ ] Control-repo only; sandbox refresh after release (closeout PR)
 
 ## Non-Goals
 
@@ -359,3 +360,5 @@ proceeds.
 - **Issue:** #66
 - **Branch:** feature/66-m8-procedure-ti-cache
 - **Rollback:** rollback/pre-m8-procedure-ti-cache @ c0f02b1
+- **Feature PR:** #67 (merged)
+- **Release:** v1.12.0 (2026-08-24)

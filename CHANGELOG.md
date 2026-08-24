@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.12.0 — 2026-08-24
+
 ### Added
 
 - Procedure playbook ingest (`--from-store procedures`) → `kind: procedure` (#66)
@@ -13,6 +15,7 @@
 
 ### Changed
 
+- VERSION `1.12.0`
 - `ingest-knowledge.sh` supports `procedures` store root (staging + approved) (#66)
 - `select_ti_provider()` accepts repo root for cached Stars TI (#66)
 
