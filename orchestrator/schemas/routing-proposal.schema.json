@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/routing-proposal.schema.json",
+  "title": "RoutingProposal",
+  "description": "Experience-based routing proposal — proposal-only; never auto-applies matcher weights (Milestone 3).",
+  "type": "object",
+  "required": [
+    "proposal_id",
+    "kind",
+    "based_on_experiences",
+    "skill_confidence_deltas",
+    "matcher_weight_suggestions",
+    "auto_apply"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "proposal_id": { "type": "string", "minLength": 1 },
+    "kind": { "type": "string", "const": "routing-proposal" },
+    "based_on_experiences": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "skill_confidence_deltas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["skill_id", "delta", "rationale"],
+        "properties": {
+          "skill_id": { "type": "string" },
+          "delta": { "type": "number" },
+          "rationale": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "matcher_weight_suggestions": {
+      "type": "object",
+      "description": "Suggested WEIGHTS map; informational only in M3",
+      "additionalProperties": { "type": "number" }
+    },
+    "auto_apply": { "type": "boolean", "const": false },
+    "notes": { "type": "string" },
+    "created_at": { "type": "string", "minLength": 1 },
+    "captain_approval_required": { "type": "boolean", "const": true }
+  }
+}

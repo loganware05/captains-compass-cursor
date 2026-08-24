@@ -1,0 +1,39 @@
+{
+  "agent_affinity": [
+    "compass-evaluator"
+  ],
+  "capabilities_provided": [
+    "bounded-experiment-recording",
+    "alternative-comparison",
+    "evaluation-evidence-capture",
+    "disagreement-arbitration"
+  ],
+  "categories": [
+    "evaluation",
+    "quality",
+    "orchestration"
+  ],
+  "compatible_stacks": [
+    "any"
+  ],
+  "confidence": 0.85,
+  "id": "compass-evaluator",
+  "kind": "agent-profile",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "maturity": "available",
+  "provenance": {
+    "authored_by": "compass",
+    "confidence": 0.85,
+    "inferred": false
+  },
+  "security_sensitivity": "medium",
+  "source": {
+    "path": ".cursor/agents/compass-evaluator.md",
+    "type": "compass-agent"
+  },
+  "tags": [
+    "evaluator",
+    "experiments"
+  ],
+  "version": "1.0.0"
+}

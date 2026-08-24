@@ -94,6 +94,29 @@ def render_technology_intelligence_candidates(artifacts: CapabilityPlanArtifacts
     return "\n".join(lines)
 
 
+def render_experience_signals(artifacts: CapabilityPlanArtifacts) -> str:
+    """Informational Experience readback — does not alter Skill rankings."""
+    lines = [
+        "## Experience Signals",
+        "",
+        "Informational readback from Experience fixtures/stores. "
+        "**Does not auto-adjust matcher weights** (proposal-only via Skill `experience-routing`).",
+        "",
+    ]
+    signals = artifacts.experience_signals or []
+    if not signals:
+        lines.append("*No Experience signals loaded for this plan.*")
+    else:
+        lines.extend(["| Experience | Outcome | Skills |", "|---|---|---|"])
+        for item in signals:
+            skills = ", ".join(f"`{s}`" for s in (item.get("skills_used") or [])[:5]) or "—"
+            lines.append(
+                f"| `{item.get('experience_id', 'n/a')}` | {item.get('outcome', 'n/a')} | {skills} |"
+            )
+    lines.append("")
+    return "\n".join(lines)
+
+
 def render_task_graph(artifacts: CapabilityPlanArtifacts) -> str:
     lines = [
         "## Task Graph",
@@ -212,6 +235,7 @@ def render_capability_plan_sections(artifacts: CapabilityPlanArtifacts) -> str:
         render_required_capabilities(artifacts),
         render_reusable_capabilities(artifacts),
         render_technology_intelligence_candidates(artifacts),
+        render_experience_signals(artifacts),
         render_task_graph(artifacts),
         render_agent_configuration(artifacts),
         render_evaluation_strategy(artifacts),

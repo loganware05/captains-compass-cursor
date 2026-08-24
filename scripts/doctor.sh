@@ -95,6 +95,8 @@ SKILLS=(
   execution-telemetry
   candidate-promotion
   experience-skill-training
+  compass-evaluator
+  experience-routing
 )
 
 for s in "${SKILLS[@]}"; do
@@ -120,6 +122,7 @@ AGENTS=(
   accessibility-reviewer.md
   adversarial-reviewer.md
   documentation-agent.md
+  compass-evaluator.md
 )
 
 for a in "${AGENTS[@]}"; do
@@ -254,6 +257,26 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "scripts/record-execution-run.sh present"
   else
     fail "missing scripts/record-execution-run.sh"
+  fi
+  if [[ -f "$ROOT/.agent/evaluations/.gitkeep" ]]; then
+    ok ".agent/evaluations layout"
+  else
+    fail "missing .agent/evaluations/.gitkeep"
+  fi
+  if [[ -f "$ROOT/scripts/run-evaluation.sh" ]]; then
+    ok "scripts/run-evaluation.sh present"
+  else
+    fail "missing scripts/run-evaluation.sh"
+  fi
+  if [[ -f "$ROOT/.agent/routing/proposals/.gitkeep" ]]; then
+    ok ".agent/routing/proposals layout"
+  else
+    fail "missing .agent/routing/proposals/.gitkeep"
+  fi
+  if [[ -f "$ROOT/.agent/agents/proficiency/.gitkeep" ]]; then
+    ok ".agent/agents/proficiency layout"
+  else
+    fail "missing .agent/agents/proficiency/.gitkeep"
   fi
   if [[ -f "$ROOT/.agent/capabilities/compiled/.gitkeep" ]]; then
     ok ".agent/capabilities/compiled layout"

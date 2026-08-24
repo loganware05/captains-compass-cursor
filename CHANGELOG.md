@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Milestone 3 (target v1.7.0)
+
+- Captain Compass Evaluator Skill + CLI + `compass-evaluator` subagent
+- Experience-routing proposals (proposal-only; no live matcher weight mutation)
+- Candidate promotion through `SECURITY_REVIEWED` → `SANDBOX_TESTED`
+- Captain-gated subagent proficiency / classification metadata
+- ADR-019; twenty-nine Skills; nine reference agent profiles
+
 ## 1.6.0 — 2026-08-23
 
 ### Added

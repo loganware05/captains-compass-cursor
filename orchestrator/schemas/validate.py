@@ -16,6 +16,9 @@ SCHEMA_FILES = (
     "candidate-capability.schema.json",
     "execution-run.schema.json",
     "experience.schema.json",
+    "evaluation.schema.json",
+    "routing-proposal.schema.json",
+    "agent-proficiency.schema.json",
 )
 
 

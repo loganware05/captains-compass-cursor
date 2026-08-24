@@ -36,7 +36,12 @@
     "approved_for_execution": { "type": "boolean", "const": false },
     "lifecycle_stage": {
       "type": "string",
-      "enum": ["DISCOVERED", "ANALYZED"]
+      "enum": [
+        "DISCOVERED",
+        "ANALYZED",
+        "SECURITY_REVIEWED",
+        "SANDBOX_TESTED"
+      ]
     },
     "discovery_signal": { "type": "string" },
     "notes": { "type": "string" }

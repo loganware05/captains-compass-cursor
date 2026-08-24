@@ -109,10 +109,16 @@ assert_true "capability-planning skill" test -f "$ROOT/.cursor/skills/capability
 assert_true "execution-telemetry skill" test -f "$ROOT/.cursor/skills/execution-telemetry/SKILL.md"
 assert_true "candidate-promotion skill" test -f "$ROOT/.cursor/skills/candidate-promotion/SKILL.md"
 assert_true "experience-skill-training skill" test -f "$ROOT/.cursor/skills/experience-skill-training/SKILL.md"
+assert_true "compass-evaluator skill" test -f "$ROOT/.cursor/skills/compass-evaluator/SKILL.md"
+assert_true "experience-routing skill" test -f "$ROOT/.cursor/skills/experience-routing/SKILL.md"
+assert_true "compass-evaluator agent" test -f "$ROOT/.cursor/agents/compass-evaluator.md"
 assert_true "capability-plan.sh" test -x "$ROOT/scripts/capability-plan.sh"
 assert_true "record-execution-run.sh" test -x "$ROOT/scripts/record-execution-run.sh"
+assert_true "run-evaluation.sh" test -x "$ROOT/scripts/run-evaluation.sh"
+assert_true "propose-experience-routing.sh" test -x "$ROOT/scripts/propose-experience-routing.sh"
 assert_true "technology-intelligence doc" test -f "$ROOT/docs/integrations/technology-intelligence.md"
 assert_true "experience.schema.json" test -f "$ROOT/orchestrator/schemas/experience.schema.json"
+assert_true "evaluation.schema.json" test -f "$ROOT/orchestrator/schemas/evaluation.schema.json"
 template="$ROOT/templates/docs/IMPLEMENTATION_PLAN.md"
 assert_contains "template has Required Capabilities" '## Required Capabilities' "$(cat "$template")"
 assert_contains "template has Task Graph" '## Task Graph' "$(cat "$template")"
@@ -165,6 +171,24 @@ print("ok")
 PY
 )"
 assert_contains "file TI returns redacted candidates" '^ok$' "$file_out"
+
+echo "=== eval: routing proposal does not mutate weights ==="
+route_out="$(PYTHONPATH="$ROOT" python3 - "$ROOT" <<'PY'
+import sys
+from pathlib import Path
+from orchestrator.matcher.score import WEIGHTS
+from orchestrator.routing.propose import build_routing_proposal, load_experiences
+
+root = Path(sys.argv[1])
+before = dict(WEIGHTS)
+experiences = load_experiences([root / "tests" / "fixtures" / "experience" / "contact-counter.json"])
+proposal = build_routing_proposal(experiences)
+assert proposal["auto_apply"] is False
+assert dict(WEIGHTS) == before
+print("ok")
+PY
+)"
+assert_contains "routing proposal leaves WEIGHTS unchanged" '^ok$' "$route_out"
 
 echo "=== eval: record-execution-run smoke ==="
 SMOKE="$(mktemp -d "${TMPDIR:-/tmp}/compass-telemetry-XXXXXX")"

@@ -2,214 +2,168 @@
 
 ## Metadata
 
-- Status: COMPLETE
-- Plan ID: m2-execution-telemetry-ti
-- Issue: [#41](https://github.com/loganware05/captains-compass-cursor/issues/41)
-- Branch: `feature/41-m2-execution-telemetry-ti`
-- Target release: **v1.6.0** (additive; non-breaking)
-- Created: 2026-08-22
+- Status: APPROVED
+- Plan ID: m3-evaluator-experience-routing
+- Issue: [#45](https://github.com/loganware05/captains-compass-cursor/issues/45)
+- Branch: `feature/45-m3-evaluator-experience-routing`
+- Target release: **v1.7.0** (additive; non-breaking)
+- Created: 2026-08-23
 - Last updated: 2026-08-23
 - Approved by: Captain
-- Approval date: 2026-08-23
-- Approved revision: M2 as drafted + resolved open questions (experience dual-path, Stars-shaped fixtures, Captain-approved Skill sidecar PR, v1.6.0)
-- Rollback checkpoint: `rollback/pre-m2-execution-telemetry-ti` (`c8f978d`)
+- Approval date: 2026-08-24
+- Approved revision: M3 as drafted + resolved open questions (proposal-only weights, evaluator Skill+CLI+subagent proficiency, SANDBOX_TESTED candidate ceiling, v1.7.0)
+- Rollback checkpoint: `rollback/pre-m3-evaluator-experience-routing` (`f36beb2`)
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
-  - Meta prompt: Foundation Implementation (Milestone 1 shipped; M2 continues deferred items)
-  - Prior plan: M1 capability-aware planning (COMPLETE, v1.5.0)
-  - Baseline: **v1.5.0** (`c8f978d` / current `main`)
+  - Prior plans: M1 COMPLETE (v1.5.0), M2 COMPLETE (v1.6.0)
+  - Baseline: **v1.6.0** (`f36beb2` / current `main` after closeout #44)
+- Machine artifacts: `.agent/plans/m3-evaluator-experience-routing/`
 
 ## Request
 
-Proceed with **Milestone 2** of the Captain Compass multi-agent orchestration OS:
-close the gap between planning artifacts and post-execution learning by recording
-**execution telemetry**, optionally wiring a **file-backed Technology Intelligence**
-provider (still not executable), and adding a **Captain-gated candidate promotion**
-path — without autonomous product execution or Level 3 self-modification.
+Proceed with **Milestone 3** of the Captain Compass multi-agent orchestration OS:
+close the learning loop opened in M2 by adding a **Captain Compass Evaluator**,
+**experience-based routing proposals**, and an **extended promotion lifecycle** —
+without Level 3 autonomous self-modification or live network Technology Intelligence.
 
 ## Problem Statement
 
-Milestone 1 ships capability-aware planning (registry → resolve → task graph →
-manifests → plan sections) and stops at the approval gate. After implementation:
+After M2:
 
-- `ExecutionRun` schema exists but is never populated
-- `.agent/runs/` is gitignored with no writer API or Skill procedure
-- There is no append-only **Experience** store linking outcomes to Skills/tasks
-- Technology Intelligence remains a stub (`[]`); no fixture/file provider for local demos
-- Candidate lifecycle (`DISCOVERED → … → PROVEN_SKILL`) is documentation only
+- ExecutionRuns and Experiences are recorded but **do not influence** Skill ranking
+- Candidate promotion stops at `ANALYZED`; `SECURITY_REVIEWED` / `SANDBOX_TESTED` are docs only
+- Architecture calls for a **Captain Compass Evaluator** to arbitrate uncertain choices via
+  bounded experiments — no Skill, schema, or CLI exists yet
+- Matcher weights remain static; any Experience-driven change would require ad-hoc edits
 
-Without M2, planning cannot learn from completed workstreams, and TI remains
-untestable except as an empty stub.
+Without M3, telemetry is write-only and promotion cannot accumulate sandbox evidence
+before Captain Skill PRs.
 
 ## Desired Outcome
 
-After M2 (v1.6.0), Captain Compass can:
+After M3 (v1.7.0), Captain Compass can:
 
-1. Record validated `ExecutionRun` JSON at workstream close (Git provenance: issue,
-   branch, commits, PR, outcome, Skills used)
-2. Append summarized **Experience** records for future planning/readback
-3. Optionally load TI candidates from a **file catalog** behind an explicit config
-   flag (CI stays offline; candidates still **NOT APPROVED FOR EXECUTION**)
-4. Promote a candidate sidecar `DISCOVERED → ANALYZED`, then open a **Captain-approved
-   Skill sidecar PR** path into `.cursor/skills/<slug>/` — never auto-execute or
-   auto-merge
-5. Support **two Experience instances**: (a) control-repo test fixtures by default;
-   (b) `experience-skill-training` Skill that imports a production-repo Experience
-   sample, drafts a Skill candidate in the control repo, and runs control-repo tests
-   before any Captain approval
-6. Keep the existing approval gate, hooks, and post-approval implementation model
+1. Run **bounded evaluator experiments** (compare alternatives A/B with schemas + evidence
+   under `.agent/evaluations/`) via Skill + CLI — proposals only
+2. **Read** Experience / ExecutionRun stores and emit **routing proposals**
+   (Skill confidence deltas, optional matcher weight suggestions) as reviewable artifacts —
+   never auto-apply to live matcher weights
+3. Advance candidates `ANALYZED → SECURITY_REVIEWED → SANDBOX_TESTED` with required evidence
+   paths; still Captain-gated before `APPROVED` / Skill sidecar PR
+4. Provide `compass-evaluator` Cursor subagent + reference profile, and a schema for
+   **subagent proficiency / classification** records updated only with Captain-approved
+   metadata (fed by Skills trained / Experiences)
+5. Keep approval gate, hooks, and non-executable TI invariants intact
 
 ## Acceptance Criteria
 
-- [x] `experience.schema.json` (+ any needed `ExecutionRun` field extensions) validated
-- [x] `orchestrator/telemetry/` (or equivalent) can create/load ExecutionRuns under
-      `.agent/runs/<run-id>.json` and Experiences under `.agent/experience/`
-- [x] CLI: `scripts/record-execution-run.sh` (and thin Python module) accepts plan-id /
-      Git refs / outcome and writes schema-valid artifacts
-- [x] Skills `close-workstream` / `pull-request-preparation` (and/or new
-      `execution-telemetry` Skill) instruct First Mate to record runs on completion
-- [x] File-backed TI provider: `FileTechnologyIntelligenceProvider` reading
-      `orchestrator/providers/technology_intelligence/fixtures/*.json` (or
-      `.agent/capabilities/candidates/`) when
-      `COMPASS_TI_PROVIDER=file` (default remains `stub`)
-- [x] Plan writer continues to render **NOT APPROVED FOR EXECUTION**; file provider
-      never sets `approved_for_execution: true`
-- [x] Candidate promotion Skill + script: validate schema, advance lifecycle to
-      `ANALYZED`, write staging sidecar; support Captain-approved Skill sidecar PR
-      (still never auto-merge / auto-execute)
-- [x] `experience-skill-training` Skill: import production Experience → draft Skill
-      under control-repo staging → run control-repo tests; commit Experiences in
-      control-repo **tests/fixtures** by default (not product-repo by default)
-- [x] TI fixtures are **redacted Stars-shaped** offline samples
-- [x] Doctor / install seed `.agent/runs/` layout (gitignored contents) and
-      `.agent/experience/.gitkeep` as needed
-- [x] Unit + harness tests; evals prove stub default + file provider offline fixtures
-- [x] ADR-018 (or DECISIONS entry) for telemetry + TI file provider decisions
+- [x] `evaluation.schema.json` (+ experiment result schema) validated; directory
+      `.agent/evaluations/` seeded (gitignored contents + `.gitkeep`)
+- [x] Skill `compass-evaluator` (+ script `scripts/run-evaluation.sh`) can record a
+      bounded comparison experiment with provenance and outcome score
+- [x] Skill / module `experience-routing` reads Experiences and writes proposal JSON under
+      `.agent/routing/proposals/` (Captain review; no live weight mutation)
+- [x] Optional opt-in: apply a **Captain-approved** proposal file to sidecar confidence
+      fields only via explicit CLI (never silent); matcher weight file remains proposal-only
+      unless Captain chooses otherwise in Open Questions
+- [x] `candidate-promotion` extended: `SECURITY_REVIEWED` and `SANDBOX_TESTED` stages with
+      evidence requirements; still `approved_for_execution: false`
+- [x] Plan writer / capability-plan may surface a short “Experience signals” readback
+      section (informational; not auto-rank override)
+- [x] Cursor subagent `.cursor/agents/compass-evaluator.md` + reference profile JSON
+- [x] Subagent proficiency/classification schema + store under `.agent/agents/proficiency/`
+      (Captain-approved metadata writes only; proposal helpers allowed)
+- [x] ADR-019 (or DECISIONS entry) for evaluator + experience-routing + promotion extension
+- [x] Unit + harness tests; evals prove proposals do not change default matcher scores
 - [x] `./scripts/doctor.sh`, `./tests/run.sh`, `./tests/evals/run.sh` pass
-- [x] No product-repo app code changes; control-repo only (sandbox refresh after release)
+- [x] No product-repo app code; control-repo only (sandbox refresh after release)
 
 ## Non-Goals
 
-- Autonomous product execution beyond today's `/implement-approved-plan` machinery
-- Live GitHub Stars / network TI in CI (file fixtures only in M2)
-- Auto-promotion to `AVAILABLE_SKILL` / `PROVEN_SKILL` without Captain approval
-- Auto-install or execute external repositories
-- Vector databases, ML routing, persistent Knowledge Steward agent
-- Level 3 self-improvement (auto-tuning matcher weights)
-- Evaluator experiment runner productization
+- Level 3 autonomous weight / prompt self-tuning
+- Live GitHub Stars / network TI in CI
+- Auto-merge Skill PRs or auto-set `approved_for_execution: true`
+- Vector database / Knowledge Steward productization
+- Full persistent-role promotion of dynamic workers without Captain metadata approval (Notion item 11); M3 only tracks proficiency/classification metadata
 - Replacing Cursor subagent invocation mechanics
+- Full ML experiment platform
 
 ## Assumptions
 
-- Python 3 remains available (hooks / orchestrator already require it)
-- M2 remains **control-repo** infrastructure; product repos get Skill/template updates via install/update
-- Git evidence is available locally via `git` / `gh` when recording runs (graceful degrade if missing)
-- File TI fixtures are curated, checked-in, offline samples — not scraped live data
-- Matcher score updates from Experience remain **manual/readback** in M2 (no auto weight tuning)
+- Python 3 remains available
+- M2 Experience fixtures and store layout are sufficient seed data
+- Evaluator experiments are local/offline by default
+- Capitan remains authority for any confidence or weight change landing in git
 
-## Resolved Decisions (Captain approval 2026-08-23)
+## Resolved Decisions (Captain approval 2026-08-24)
 
-1. **Experience dual-path:** By default, commit Experience samples in **control-repo
-   tests only**. Additionally ship Skill `experience-skill-training` so a Captain can
-   import an Experience from a **production** repo, draft/train a Skill candidate in
-   the control repo, and validate with control-repo tests before approval.
-2. **TI fixtures:** Use **redacted Stars-shaped** offline samples (GitHub Star
-   Categorization-compatible shape, no live network).
-3. **Promotion ceiling:** Allow a **Captain-approved Skill sidecar PR** into
-   `.cursor/skills/<slug>/` after staging `ANALYZED` — never auto-merge or execute.
-4. **Target version:** **v1.6.0** confirmed.
+1. **Matcher weights:** Experience-routing remains **proposal-only** — never auto-apply
+   to live matcher weights in M3.
+2. **Evaluator surface:** Ship Skill + CLI **and** a Cursor subagent
+   (`compass-evaluator`) plus **subagent proficiency / classification metadata** so that
+   after sufficient Skill training, classified subagents can be tracked as proficient for
+   specific task classes (Captain-approved metadata; not silent role promotion).
+3. **Promotion ceilings:**
+   - **Candidate capabilities:** stop at `SANDBOX_TESTED` (Captain Skill PR still required
+     for `APPROVED` / live Skills).
+   - **Classified subagents:** Captain-approved metadata is the ceiling for classification
+     and proficiency tracking (separate from candidate Skill lifecycle).
+4. **Target version:** **v1.7.0** confirmed.
 
 ## Current-State Analysis
 
-| Asset | M1 state | M2 need |
-|---|---|---|
-| `execution-run.schema.json` | Stub schema | Writer + Skill + tests |
-| Experience schema | Absent | Add |
-| `.agent/runs/` | Gitignored, unused | Writer API |
-| TI provider | Stub only | File provider + flag |
-| Candidate lifecycle | Docs only | Promote DISCOVERED→ANALYZED tooling |
-| `/close-workstream` | Docs update only | Call telemetry recorder |
-| Approval gate / hooks | Unchanged | Must remain unchanged |
+| Area | State (v1.6.0) |
+|---|---|
+| Planning pipeline | Registry → resolve → task graph → manifests → plan sections |
+| Telemetry | `orchestrator/telemetry/` + `record-execution-run.sh` |
+| TI | stub default; file provider offline |
+| Promotion | `DISCOVERED → ANALYZED` + Skill draft staging |
+| Matcher | Static weights in `orchestrator/matcher/score.py` |
+| Evaluator | Documented in Notion only |
 
 ## Proposed Architecture
 
 ```text
-orchestrator/
-  telemetry/
-    record.py           # build ExecutionRun + Experience from inputs
-    store.py            # write/read .agent/runs + .agent/experience
-  experience/
-    schema (JSON Schema)
-  providers/technology_intelligence/
-    stub.py (existing)
-    file_provider.py    # NEW — offline fixtures
-    fixtures/           # curated candidate JSON
-    validate.py (existing)
-  promotion/
-    advance.py          # DISCOVERED → ANALYZED staging + draft Skill PR prep
-  training/
-    from_experience.py  # import product Experience → control-repo Skill draft
-
-scripts/
-  record-execution-run.sh
-  ti-discover.sh        # optional: run provider and print candidates
-  promote-candidate.sh  # staging lifecycle advance
-  train-skill-from-experience.sh
-
-.cursor/skills/
-  execution-telemetry/       # NEW
-  candidate-promotion/       # NEW (Captain-gated)
-  experience-skill-training/ # NEW (product Experience → control training)
+.agent/evaluations/           # experiment runs (gitignored JSON)
+.agent/routing/proposals/     # experience-routing proposals (gitignored)
+.agent/agents/proficiency/    # Captain-gated subagent proficiency metadata
+orchestrator/evaluator/       # schemas + run_experiment + report
+orchestrator/routing/         # load Experiences → proposal builders
+orchestrator/promotion/       # extend lifecycle stages through SANDBOX_TESTED
+orchestrator/agents/          # proficiency/classification helpers
+.cursor/skills/compass-evaluator/
+.cursor/skills/experience-routing/
+.cursor/agents/compass-evaluator.md
+orchestrator/reference-profiles/compass-evaluator.json
+scripts/run-evaluation.sh
+scripts/propose-experience-routing.sh
+scripts/record-agent-proficiency.sh
 ```
 
-**Config:**
+**Safety invariants:**
 
-| Variable | Default | Effect |
-|---|---|---|
-| `COMPASS_TI_PROVIDER` | `stub` | `stub` \| `file` |
-| `COMPASS_TI_FIXTURES_DIR` | package fixtures | Override fixture path |
-
-**Safety invariants (unchanged):**
-
-- Candidates never enter Skill ranking or agent manifests as approved Skills
-- `approved_for_execution` remains schema-const `false`
-- Plan-approval hook behavior unchanged
+- Default matcher behavior unchanged until Captain merges an approved change
+- Candidates remain `approved_for_execution: false`
+- Evaluator cannot skip plan-approval hook or mutate product source
 
 ## Required Capabilities
 
-Inferred from the objective and repository context.
+*(Capability-plan inference — security/test/github domains; see machine artifacts.)*
 
-- implementation-plan-authoring
-- approval-gate-enforcement
-- scope-definition
-- rollback-planning
-- github-issue-create
-- github-pr-create
-- pr-description-assembly
-
-**Domains detected:** plan, github
+Control-repo intent also requires: evaluation recording, experience readback,
+routing proposal authoring, candidate lifecycle advancement, schema validation,
+doctor/evals coverage.
 
 ## Reusable Capabilities Found
 
-Approved Compass Skills ranked for this objective (deterministic matcher).
+Top machine-ranked Skills for the clarified objective: `security-review`,
+`testing-validation`, `dependency-supply-chain`, `github-integration`,
+`pull-request-preparation`, plus M2 Skills `candidate-promotion`,
+`execution-telemetry`, `experience-skill-training` (lower score due to maturity).
 
-| Skill | Score | Notes |
-|---|---:|---|
-| `implementation-planning` | 0.5571 | capability_overlap=0.2571 |
-| `github-integration` | 0.4286 | lifecycle_stage=0.15 |
-| `pull-request-preparation` | 0.3643 | lifecycle_stage=0.15 |
-| `capability-planning` | 0.3 | lifecycle_stage=0.15 |
-| `testing-validation` | 0.3 | lifecycle_stage=0.15 |
-| `security-review` | 0.3 | lifecycle_stage=0.15 |
-| `autonomy-budget` | 0.3 | lifecycle_stage=0.15 |
-| `harness-gc` | 0.3 | lifecycle_stage=0.15 |
-
-### Capability Gaps
-
-No capability gaps detected for the inferred requirements.
-
-*(Human note: M2 adds Skills `execution-telemetry`, `candidate-promotion`, and
-`experience-skill-training` with sidecars — registry count becomes 27.)*
+**Human refinement:** Implementation should preferentially load
+`implementation-planning`, `capability-planning`, `execution-telemetry`,
+`candidate-promotion`, `testing-validation`, `security-review`, `autonomy-budget`.
 
 ## Technology Intelligence Candidates
 
@@ -217,199 +171,163 @@ No capability gaps detected for the inferred requirements.
 
 *No external candidates queried (Technology Intelligence provider: stub).*
 
-*(M2 will add a file provider so this section can demonstrate offline fixtures
-without network access; banner and non-execution rules remain mandatory.)*
+Live Stars adapters remain deferred (same as M2 non-goal).
 
 ## Task Graph
 
-| ID | Objective | Depends on | Parallelizable |
-|---|---|---|---|
-| T-A | Schemas: Experience + ExecutionRun extensions; store layout | — | — |
-| T-B | Telemetry writer + `record-execution-run.sh` + unit tests | T-A | — |
-| T-C | Skills: `execution-telemetry`; wire close-workstream / PR prep | T-B | — |
-| T-D | File TI provider + fixtures + config flag + plan_writer wiring | — | yes (vs T-B) |
-| T-E | Candidate promotion (→ANALYZED + Captain Skill sidecar PR path) | T-D | — |
-| T-E2 | `experience-skill-training` Skill + CLI (product → control) | T-B | yes (vs T-E) |
-| T-F | Doctor/install/evals/docs/ADR; sandbox checklist row | T-C, T-E, T-E2 | — |
-| T-G | Release prep v1.6.0 | T-F | — |
+**Human-authored M3 phases** (refines generic planner output):
 
-Machine artifacts: `.agent/plans/m2-execution-telemetry-ti/{resolve,task-graph,manifests}.json`
+| Task ID | Objective | Dependencies | Parallelizable |
+|---|---|---|---|
+| T-A | Evaluation schemas + `.agent/evaluations/` layout | — | no |
+| T-B | `orchestrator/evaluator/` + `run-evaluation.sh` + Skill | T-A | no |
+| T-C | Experience routing proposals module + Skill + CLI | — | yes (vs T-B) |
+| T-D | Promotion through `SANDBOX_TESTED` + subagent proficiency metadata | T-A | yes (vs T-B/C) |
+| T-E | Optional plan-writer “Experience signals” readback | T-C | no |
+| T-F | Doctor / install / tests / evals / ADR-019 | T-B, T-C, T-D, T-E | no |
+| T-G | Release prep v1.7.0 | T-F | no |
+
+Machine artifact (generic): `.agent/plans/m3-evaluator-experience-routing/task-graph.json`
 
 ## Proposed Agent Configuration
 
-| Task | Reference profile | Skills | Model class | Rationale |
-|---|---|---|---|---|
-| T-A–B | `architecture-agent` / `implementation-agent` | `capability-planning`, `implementation-planning` | reasoning-strong / coding-strong | Schemas + telemetry module |
-| T-C | `documentation-agent` | `execution-telemetry`, `pull-request-preparation` | fast-iter | Skill + command wiring |
-| T-D–E | `security-reviewer` + `implementation-agent` | `security-review`, `dependency-supply-chain` | coding-strong | TI/promotion safety |
-| T-F | `test-engineer` | `testing-validation`, `harness-gc` | coding-strong | Deterministic sensors |
-| Final review | `adversarial-reviewer` | — | inherit | Scope/safety gap review |
+| Task | Profile | Skills |
+|---|---|---|
+| Discovery / architecture | `repository-scout` / `architecture-agent` | `capability-planning`, `implementation-planning` |
+| Implementation | `implementation-agent` | `execution-telemetry`, `candidate-promotion`, `autonomy-budget` |
+| Validation | `test-engineer` | `testing-validation` |
+| Security | `security-reviewer` | `security-review`, `candidate-promotion` |
+| Documentation | `documentation-agent` | `pull-request-preparation` |
+
+Machine artifact: `.agent/plans/m3-evaluator-experience-routing/manifests.json`
 
 ## Workstreams
 
-Single sequential workstream on one feature branch (shared harness files).
-T-D may proceed in parallel with T-B after T-A schemas land if using a worktree
-with clear file boundaries (`providers/` vs `telemetry/`).
+1. **Evaluator** — schemas, runner, Skill, evidence format
+2. **Experience routing** — proposal generator; optional apply path per Open Q1
+3. **Promotion extension** — lifecycle + evidence gates
+4. **Harness** — doctor, tests, evals, ADR, docs, release
 
 ## Parallelization Plan
 
-Optional parallel worktrees after approval:
-
-- Worktree A: `telemetry/` + Skills close-workstream
-- Worktree B: `providers/technology_intelligence/file_provider.py` + promotion
-
-Do not parallelize doctor/tests/CHANGELOG edits.
+T-B, T-C, and T-D may proceed in parallel after T-A schemas land, using separate
+worktrees if needed. T-E depends on T-C. T-F integrates all.
 
 ## Files Expected to Change
 
 ### New
 
 ```text
-orchestrator/schemas/experience.schema.json
-orchestrator/telemetry/*.py
-orchestrator/promotion/*.py
-orchestrator/providers/technology_intelligence/file_provider.py
-orchestrator/providers/technology_intelligence/fixtures/*.json
-.cursor/skills/execution-telemetry/{SKILL.md,capability.yaml}
-.cursor/skills/candidate-promotion/{SKILL.md,capability.yaml}
-.cursor/skills/experience-skill-training/{SKILL.md,capability.yaml}
-scripts/record-execution-run.sh
-scripts/promote-candidate.sh
-scripts/train-skill-from-experience.sh
-tests/orchestrator/test_telemetry.py
-tests/orchestrator/test_file_ti_provider.py
-tests/orchestrator/test_promotion.py
-tests/orchestrator/test_experience_training.py
-tests/fixtures/experience/*.json
-.agent/experience/.gitkeep
+orchestrator/schemas/evaluation.schema.json
+orchestrator/evaluator/
+orchestrator/routing/
+.cursor/skills/compass-evaluator/
+.cursor/skills/experience-routing/
+scripts/run-evaluation.sh
+scripts/propose-experience-routing.sh
+tests/orchestrator/test_evaluator.py
+tests/orchestrator/test_experience_routing.py
+tests/fixtures/evaluations/
+.agent/evaluations/.gitkeep
+.agent/routing/proposals/.gitkeep
 ```
 
 ### Modified
 
 ```text
-orchestrator/plan_writer/build.py          # provider selection
-orchestrator/schemas/execution-run.schema.json  # if fields needed
-.cursor/commands/close-workstream.md
-.cursor/skills/pull-request-preparation/SKILL.md
+orchestrator/promotion/advance.py
+orchestrator/plan_writer/render.py   # optional Experience signals section
+.cursor/skills/candidate-promotion/SKILL.md
 scripts/doctor.sh, scripts/install.sh
 tests/run.sh, tests/evals/run.sh
-docs/integrations/technology-intelligence.md
-DECISIONS.md (ADR-018)
-PROGRESS.md, CHANGELOG.md, TESTING.md, README.md, PROJECT_CONTEXT.md
-VERSION (on release)
+DECISIONS.md, TESTING.md, README.md, PROJECT_CONTEXT.md
+CHANGELOG.md, PROGRESS.md, VERSION (on release)
 ```
-
-### Explicitly not modified
-
-- `.cursor/hooks/plan-approval-check.sh` behavior
-- Matcher auto-weight tuning
-- Live network scrapers
 
 ## Testing Strategy
 
-Evidence under `.agent/evidence/m2-execution-telemetry-ti/` per
-`docs/EVIDENCE_MATRIX.md` (control-repo infrastructure).
+Evidence under `.agent/evidence/m3-evaluator-experience-routing/`.
 
 | Layer | Action |
 |---|---|
-| Unit | telemetry write/read; schema validation; file TI fixtures; promotion staging |
-| Integration | `record-execution-run.sh` smoke; capability-plan with `COMPASS_TI_PROVIDER=file` |
-| Evals | default stub isolation; file provider offline; runs dir layout |
-| Security | candidates cannot approve execution; path traversal rejected; no secrets in fixtures |
-| Approval gate | DRAFT still denies product edits |
-| Install smoke | temp product gets new Skills + dirs |
+| Unit | evaluation schema; proposal builder; promotion stage transitions |
+| Integration | CLI smokes; capability-plan unchanged default rankings |
+| Evals | sensor: default matcher scores identical with/without Experiences present |
+| Security | proposals cannot flip `approved_for_execution`; path-safe IDs |
 | Rollback | tag restore |
 
 ## Security Review
 
-- File TI fixtures must not embed tokens/credentials
-- Promotion writes only to staging paths, never silently into approved Skills
-- Provider selection fail-closed to stub on unknown config values
-- Experience/run JSON must not capture `.env` contents or private keys
+- Evaluations must not capture secrets from env or private evidence dirs
+- Routing proposals are non-authoritative until Captain merge
+- Promotion evidence paths stay under `.agent/` staging
 
 ## Accessibility Review
 
-Not applicable (no UI). Docs remain structured Markdown.
+Not applicable (no UI).
 
 ## Migration Plan
 
-1. Product repos: `update.sh` adds new Skills; optional — run telemetry on next close
-2. Existing plans without ExecutionRuns remain valid
-3. Default TI stays stub — no behavior change until Captain sets `COMPASS_TI_PROVIDER=file`
+1. Product repos: `update.sh` adds new Skills; no behavior change until used
+2. Existing Experiences remain valid input for proposals
+3. Matcher defaults unchanged on upgrade
 
 ## Deployment Plan
 
 - Merge via PR after validation
-- Tag `v1.6.0`
-- Sandbox `update.sh` + checklist row for telemetry + optional file TI demo
+- Tag `v1.7.0`
+- Sandbox `update.sh` + optional evaluator / routing demo
 
 ## Rollback Plan
 
-1. Restore `rollback/pre-m2-execution-telemetry-ti`
-2. Revert VERSION to 1.5.0
-3. Product repos stay on 1.5.0 until ready (forward-only updates)
+1. Restore `rollback/pre-m3-evaluator-experience-routing`
+2. Revert VERSION to 1.6.0
+3. Product repos stay on 1.6.0 until ready (forward-only updates)
 
 ## Risks and Mitigations
 
 | Risk | Impact | Mitigation |
 |---|---|---|
-| Scope creep into live Stars API | Network/secrets in CI | File fixtures only; ADR |
-| Telemetry noise / PII | Privacy | Schema allowlist fields; scrub paths |
-| Promotion mistaken for install | Safety | Staging-only; Captain PR for Skill add |
-| Matcher auto-tune temptation | Unbounded learning | Explicit non-goal |
+| Silent ranking drift | Unpredictable plans | Default scores unchanged; eval sensor |
+| Over-scoped Level 3 | Autonomy creep | Explicit non-goal; proposals only |
+| Promotion evidence theater | False confidence | Require file paths + schema validation |
 
 ## Evaluation Strategy
 
-After implementation (post-approval), Captain Compass will determine success by:
+After implementation (post-approval), success by:
 
-- Matching task acceptance criteria from the task graph
-- Applicable validation layers from `TESTING.md` / evidence matrix
-- Security and accessibility reviews when manifests include those tasks
-- Adversarial review before merge when scope is non-trivial
-- Comparison of outcome vs inferred required capabilities
-
-Capability planning quality for this plan is evaluated by:
-
-- Explicit capability gaps (must not be silent)
-- Deterministic Skill ranking reproducibility
-- Inspectable agent manifest rationale per task
-
-**M2-specific success checks:**
-
-1. Same fixture inputs → identical ExecutionRun field shapes (deterministic)
-2. `COMPASS_TI_PROVIDER=stub` → empty candidates (regression)
-3. `COMPASS_TI_PROVIDER=file` → fixture candidates + NOT APPROVED banner
-4. Promotion of approved-for-execution=true fixture **fails closed**
+- Acceptance criteria checked
+- Doctor / tests / evals green
+- Default Skill ranking golden fixtures still deterministic
+- Evaluator smoke writes schema-valid evaluation JSON
+- Routing proposal smoke from `tests/fixtures/experience/`
 
 ## Learning Plan
 
-Retain under `.agent/plans/m2-execution-telemetry-ti/`:
+Retain under `.agent/plans/m3-evaluator-experience-routing/`:
 
-- `.agent/plans/m2-execution-telemetry-ti/resolve.json`
-- `.agent/plans/m2-execution-telemetry-ti/task-graph.json`
-- `.agent/plans/m2-execution-telemetry-ti/manifests.json`
-- Link to issue, branch, PR, tests, and evaluation evidence after execution
+- `resolve.json`, `task-graph.json`, `manifests.json`
+- Link issue, branch, PR, evidence after execution
 
-Use ExecutionRun / Experience population in M2 to enable Milestone 3+ routing
-improvements (still Captain-gated; no Level 3 auto-tune in M2).
+Feeds Milestone 4+ (persistent-role promotion; bounded Level 3 autonomy) only after
+Captain expands autonomy budget.
 
 ## Autonomy Budget
 
-After approval, create `.agent/budgets/m2-execution-telemetry-ti.md`.
+After approval, create `.agent/budgets/m3-evaluator-experience-routing.md`.
 
 - Maximum iterations: 20
 - Maximum failed validation cycles: 5
 - Maximum estimated cost: Captain-defined
 - Maximum elapsed time: 5 working days
-- Budget ledger path: `.agent/budgets/m2-execution-telemetry-ti.md`
-- On limit: `.agent/evidence/m2-execution-telemetry-ti/BUDGET_STOP_REPORT.md`
+- Budget ledger path: `.agent/budgets/m3-evaluator-experience-routing.md`
 
 ## Definition of Done
 
 - All Acceptance Criteria checked
 - Doctor / tests / evals green
-- Security review recorded under `.agent/evidence/m2-execution-telemetry-ti/`
-- ADR-018 accepted
+- Security review recorded
+- ADR-019 accepted
 - PROGRESS / CHANGELOG / TESTING updated
 - PR prepared with evidence
 - No implementation on protected branches
@@ -427,7 +345,7 @@ Approval means:
 2. Set Status to **APPROVED**
 3. Create GitHub issue
 4. Create rollback tag
-5. Create feature branch `feature/<issue>-m2-execution-telemetry-ti`
+5. Create feature branch `feature/<issue>-m3-evaluator-experience-routing`
 6. Begin Phase T-A
 
 Until then, only planning documents and discovery artifacts may change.
@@ -435,18 +353,10 @@ Until then, only planning documents and discovery artifacts may change.
 ## Approval Record
 
 - **Approved by:** Captain
-- **Approval date:** 2026-08-23
-- **Approved revision:** M2 execution telemetry + file TI + promotion + experience-skill-training; v1.6.0
-- **Issue:** [#41](https://github.com/loganware05/captains-compass-cursor/issues/41)
-- **Branch:** `feature/41-m2-execution-telemetry-ti`
-- **Rollback:** `rollback/pre-m2-execution-telemetry-ti` @ `c8f978d`
+- **Approval date:** 2026-08-24
+- **Approved revision:** M3 evaluator + experience-routing (proposal-only) + SANDBOX_TESTED candidate ceiling + compass-evaluator subagent + proficiency metadata; v1.7.0
+- **Issue:** [#45](https://github.com/loganware05/captains-compass-cursor/issues/45)
+- **Branch:** `feature/45-m3-evaluator-experience-routing`
+- **Rollback:** `rollback/pre-m3-evaluator-experience-routing` @ `f36beb2`
 
-**Phase T-G complete (2026-08-23):** VERSION `1.6.0`, release evidence, release PR pending.
-
-## Completion Record
-
-- **Completed:** 2026-08-23
-- **Merged feature PR:** [#42](https://github.com/loganware05/captains-compass-cursor/pull/42) @ `ccd4e61`
-- **Release PR:** `chore/41-release-v1.6.0` (pending)
-- **Rollback (M2 feature):** `rollback/pre-m2-execution-telemetry-ti` @ `c8f978d`
-- **Rollback (pre-v1.6.0 VERSION):** `rollback/pre-v1.6.0` @ `ccd4e61` (tag at release)
+**Phase T-A in progress (2026-08-24):** evaluation schemas and store layout.
