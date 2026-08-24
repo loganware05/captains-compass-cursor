@@ -1,0 +1,17 @@
+[
+  {
+    "id": "hf-sentence-transformers-all-minilm",
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "version": "0.1.0",
+    "pipeline_tag": "sentence-similarity",
+    "description": "Compact sentence embeddings for semantic search demos",
+    "capabilities_provided": ["sentence-embeddings", "semantic-similarity"],
+    "discovery_signal": "huggingface-file:sentence-transformers/all-MiniLM-L6-v2",
+    "source": {
+      "type": "external-candidate",
+      "path": "sentence-transformers/all-MiniLM-L6-v2",
+      "provenance_url": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2"
+    },
+    "notes": "Golden recorded HF fixture — NOT APPROVED FOR EXECUTION"
+  }
+]

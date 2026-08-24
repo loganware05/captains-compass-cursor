@@ -61,7 +61,7 @@ with `TechnologyIntelligenceValidationError`.
 
 | Env var | Values | Default |
 |---|---|---|
-| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` | `stub` |
+| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` \| `huggingface-file` | `stub` |
 | `COMPASS_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/` |
 
 `orchestrator/plan_writer/build.py` calls `select_ti_provider()`. CI and default
@@ -72,14 +72,18 @@ demos using redacted Stars-shaped fixtures under
 `gh` (Captain local only; fails closed without auth). Set
 `COMPASS_TI_PROVIDER=github-stars-cached` to read the offline cache at
 `.agent/intelligence/ti-cache/starred-repos.json` (refresh via
-`./scripts/refresh-ti-cache.sh`).
+`./scripts/refresh-ti-cache.sh`; optional `--if-stale HOURS` skips when
+`fetched_at` is fresh). Set `COMPASS_TI_PROVIDER=huggingface-file` for offline
+Hugging Face model-card fixtures (no Hub network in CI).
 
 Explicit read-only queries:
 
 ```bash
 COMPASS_TI_PROVIDER=github-stars ./scripts/query-technology-intelligence.sh --query "react forms"
 ./scripts/refresh-ti-cache.sh
+./scripts/refresh-ti-cache.sh --if-stale 24
 COMPASS_TI_PROVIDER=github-stars-cached ./scripts/query-technology-intelligence.sh --query "react forms"
+COMPASS_TI_PROVIDER=huggingface-file ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
 ```
 
 ## Plan rendering
@@ -108,7 +112,8 @@ manifests, or install targets.
 | `FileTechnologyIntelligenceProvider` | Shipped — redacted Stars-shaped fixtures |
 | `GithubStarsTechnologyIntelligenceProvider` | Shipped — live starred repos via `gh` (opt-in) |
 | `CachedGithubStarsTechnologyIntelligenceProvider` | Shipped — offline cache via `github-stars-cached` (M8) |
-| `refresh-ti-cache.sh` | Shipped — explicit cache refresh CLI (M8) |
+| `refresh-ti-cache.sh` | Shipped — explicit cache refresh CLI (M8); `--if-stale` (M10) |
+| `HuggingFaceFileTechnologyIntelligenceProvider` | Shipped — offline HF model cards via `huggingface-file` (M10) |
 | `CandidateCapability` + schema | Shipped |
 | Pre-render validation | Shipped |
 | `query-technology-intelligence.sh` | Shipped — explicit Captain TI queries |

@@ -64,6 +64,22 @@ SKILLS: dict[str, dict] = {
             "documentation-agent",
         ],
     },
+    "external-knowledge-ingest": {
+        "categories": ["process", "knowledge", "orchestration", "research"],
+        "tags": ["notion", "notebooklm", "external-knowledge", "ingest"],
+        "capabilities_provided": [
+            "external-notion-ingest",
+            "external-notebooklm-ingest",
+            "external-knowledge-query",
+        ],
+        "compatible_stacks": ["any"],
+        "security_sensitivity": "medium",
+        "agent_affinity": [
+            "knowledge-steward",
+            "notion-integration",
+            "documentation-agent",
+        ],
+    },
     "compass-evaluator": {
         "categories": ["process", "evaluation", "orchestration"],
         "tags": ["evaluator", "experiments", "comparison"],

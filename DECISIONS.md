@@ -1,5 +1,27 @@
 # Decisions
 
+## ADR-026: External knowledge ingest and Hugging Face file TI (v1.14.0 M10)
+
+- **Status:** Accepted
+- **Date:** 2026-08-24
+- **Context:** Notion architecture lists Notion, NotebookLM, and Hugging Face as
+  TI/knowledge sources. M9 deferred file-export ingest and broader TI providers.
+  Live MCP/Hub calls must stay out of CI.
+- **Decision:**
+  1. Ingest Captain-exported Notion/NotebookLM markdown via explicit CLI
+     (`--from-store notion,notebooklm`) into `kind: knowledge` with provenance
+     `export_mode: file` (no live MCP pull).
+  2. Ship `HuggingFaceFileTechnologyIntelligenceProvider` behind
+     `COMPASS_TI_PROVIDER=huggingface-file` (fixtures / local export; no Hub
+     network in CI).
+  3. TI Stars cache envelope includes `fetched_at` (and legacy `refreshed_at`);
+     `refresh-ti-cache.sh --if-stale HOURS` skips network when fresh.
+  4. New Skill `external-knowledge-ingest` (36 Skills); extend
+     `knowledge-steward` and `technology-intelligence-live`.
+  5. Production embeddings and package-registry TI remain deferred.
+- **Consequences:** External research becomes durable and queryable; HF signals
+  enter candidate promotion; CI/default stub TI unchanged.
+
 ## ADR-025: Skill promotion lifecycle completion and Artifact Context (v1.13.0 M9)
 
 - **Status:** Accepted
