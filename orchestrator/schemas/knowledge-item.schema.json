@@ -44,6 +44,21 @@
       "type": "object",
       "additionalProperties": true
     },
+    "performance_metrics": {
+      "type": "object",
+      "properties": {
+        "outcome": { "type": "string" },
+        "retries": { "type": "integer", "minimum": 0 },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "agents": { "type": "array", "items": { "type": "string" } },
+        "models": { "type": "array", "items": { "type": "string" } },
+        "plan_id": { "type": "string" },
+        "task_id": { "type": "string" },
+        "experience_id": { "type": "string" },
+        "capabilities_exercised": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
     "captain_approved": { "type": "boolean" },
     "created_at": { "type": "string", "minLength": 1 },
     "updated_at": { "type": "string", "minLength": 1 }

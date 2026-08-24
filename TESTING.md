@@ -94,10 +94,21 @@ Knowledge Steward ingest and query (explicit CLI only):
 
 ```bash
 ./scripts/ingest-knowledge.sh --from-store experience,evaluations,decisions
+./scripts/ingest-knowledge.sh --from-store runs,experience
 ./scripts/ingest-knowledge.sh --from-store decisions --rebuild-vector
 ./scripts/rebuild-knowledge-vector-index.sh
 ./scripts/query-knowledge.sh --query "evaluator routing" --kind decision
 ./scripts/query-knowledge.sh --query "matcher tuning" --mode hybrid
+./scripts/query-knowledge.sh --query "execution retries" --kind performance
+```
+
+Live Technology Intelligence (Captain local; gh auth required):
+
+```bash
+COMPASS_TI_PROVIDER=github-stars \
+  ./scripts/query-technology-intelligence.sh --query "accessible react forms"
+COMPASS_TI_PROVIDER=github-stars \
+  ./scripts/capability-plan.sh --plan-id ti-live-demo "accessible react forms"
 ```
 
 ## Evidence matrix

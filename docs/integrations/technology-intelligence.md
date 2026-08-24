@@ -61,13 +61,21 @@ with `TechnologyIntelligenceValidationError`.
 
 | Env var | Values | Default |
 |---|---|---|
-| `COMPASS_TI_PROVIDER` | `stub` \| `file` | `stub` |
+| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` | `stub` |
 | `COMPASS_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/` |
 
 `orchestrator/plan_writer/build.py` calls `select_ti_provider()`. CI and default
 installs stay on **stub** (empty list). Set `COMPASS_TI_PROVIDER=file` for local
 demos using redacted Stars-shaped fixtures under
-`orchestrator/providers/technology_intelligence/fixtures/`.
+`orchestrator/providers/technology_intelligence/fixtures/`. Set
+`COMPASS_TI_PROVIDER=github-stars` for **live starred repos** via authenticated
+`gh` (Captain local only; fails closed without auth).
+
+Explicit read-only query:
+
+```bash
+COMPASS_TI_PROVIDER=github-stars ./scripts/query-technology-intelligence.sh --query "react forms"
+```
 
 ## Plan rendering
 
@@ -86,18 +94,20 @@ The plan writer (`orchestrator/plan_writer/render.py`) always renders a
 Candidates appear **only** in this section — never in Skill ranking, task
 manifests, or install targets.
 
-## Current status (M2 / v1.6.0)
+## Current status (M7 / v1.11.0)
 
 | Component | Status |
 |---|---|
 | `TechnologyIntelligenceProvider` protocol | Shipped |
-| `StubTechnologyIntelligenceProvider` | Shipped — returns `[]` |
+| `StubTechnologyIntelligenceProvider` | Shipped — returns `[]` (CI default) |
 | `FileTechnologyIntelligenceProvider` | Shipped — redacted Stars-shaped fixtures |
+| `GithubStarsTechnologyIntelligenceProvider` | Shipped — live starred repos via `gh` (opt-in) |
 | `CandidateCapability` + schema | Shipped |
 | Pre-render validation | Shipped |
-| Candidate promotion `DISCOVERED → ANALYZED` | Shipped (`candidate-promotion` Skill) |
+| `query-technology-intelligence.sh` | Shipped — explicit Captain TI queries |
+| Candidate promotion `DISCOVERED → SANDBOX_TESTED` | Shipped (`candidate-promotion` Skill) |
 | Captain-approved Skill sidecar PR path | Shipped (draft under staging; never auto-merge) |
-| Live GitHub Star Categorization API | **Not wired** — future adapter |
+| Batch GitHub Star Categorization ML pipeline | **Deferred** — M7 is live query adapter only |
 | Auto-install / execute external repos | **Prohibited** |
 
 ## Promotion path
@@ -148,4 +158,5 @@ Scripts:
 - Stub/file tests: `tests/orchestrator/test_schemas.py`,
   `tests/orchestrator/test_file_ti_and_promotion.py`
 - Eval isolation: `tests/evals/run.sh` (stub + file TI sensors)
-- Skills: `capability-planning`, `candidate-promotion`, `experience-skill-training`
+- Skills: `capability-planning`, `candidate-promotion`, `experience-skill-training`,
+  `technology-intelligence-live`

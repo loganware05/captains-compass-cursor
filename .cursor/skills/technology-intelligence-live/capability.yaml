@@ -1,0 +1,31 @@
+id: technology-intelligence-live
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/technology-intelligence-live/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, discovery, github, orchestration]
+tags:
+  - technology-intelligence
+  - github-stars
+  - live-discovery
+  - captain-gated
+capabilities_provided:
+  - github-stars-ti-query
+  - live-candidate-discovery
+  - ti-readback-planning
+compatible_stacks:
+  - any
+security_sensitivity: high
+agent_affinity:
+  - knowledge-steward
+  - candidate-promotion
+  - architecture-agent
+  - repository-scout
+maturity: available
+confidence: 0.85

@@ -26,6 +26,8 @@ class PlanWriterTests(unittest.TestCase):
             "## Required Capabilities",
             "## Reusable Capabilities Found",
             "## Technology Intelligence Candidates",
+            "## Knowledge Context",
+            "## Performance Context",
             "## Task Graph",
             "## Proposed Agent Configuration",
             "## Evaluation Strategy",

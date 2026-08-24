@@ -191,9 +191,9 @@ def load_candidate_json(path: Path) -> dict:
     if not isinstance(doc, dict):
         raise TechnologyIntelligenceValidationError("candidate file must be a JSON object")
     if doc.get("kind") != "candidate" or "approved_for_execution" not in doc:
-        from orchestrator.providers.technology_intelligence.file_provider import (
-            _candidate_from_stars_shaped,
+        from orchestrator.providers.technology_intelligence.mapper import (
+            candidate_from_stars_shaped,
         )
 
-        doc = _candidate_from_stars_shaped(doc).to_dict()
+        doc = candidate_from_stars_shaped(doc).to_dict()
     return doc

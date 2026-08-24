@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 
 from orchestrator.providers.technology_intelligence import CandidateCapability
+from orchestrator.providers.technology_intelligence.mapper import candidate_from_stars_shaped
 from orchestrator.providers.technology_intelligence.validate import validate_ti_candidates
 
 DEFAULT_FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures"
@@ -17,24 +18,6 @@ def _fixtures_dir() -> Path:
     if override:
         return Path(override).expanduser().resolve()
     return DEFAULT_FIXTURES_DIR
-
-
-def _candidate_from_stars_shaped(raw: dict) -> CandidateCapability:
-    """Map redacted Stars-export shaped records to CandidateCapability."""
-    source = raw.get("source") if isinstance(raw.get("source"), dict) else {}
-    return CandidateCapability(
-        id=str(raw["id"]),
-        version=str(raw.get("version") or "0.1.0"),
-        capabilities_provided=list(raw.get("capabilities_provided") or []),
-        discovery_signal=str(
-            raw.get("discovery_signal")
-            or raw.get("star_signal")
-            or "github-stars:redacted"
-        ),
-        source_path=str(source.get("path") or raw.get("full_name") or raw["id"]),
-        provenance_url=str(source.get("provenance_url") or raw.get("html_url") or ""),
-        notes=str(raw.get("notes") or raw.get("description") or ""),
-    )
 
 
 class FileTechnologyIntelligenceProvider:
@@ -55,7 +38,7 @@ class FileTechnologyIntelligenceProvider:
             for raw in records:
                 if not isinstance(raw, dict):
                     continue
-                candidates.append(_candidate_from_stars_shaped(raw))
+                candidates.append(candidate_from_stars_shaped(raw))
         docs = [item.to_dict() for item in candidates]
         validate_ti_candidates(docs)
         return candidates
@@ -64,11 +47,15 @@ class FileTechnologyIntelligenceProvider:
 def select_ti_provider():
     """Return TI provider from COMPASS_TI_PROVIDER (default stub)."""
     from orchestrator.providers.technology_intelligence import StubTechnologyIntelligenceProvider
+    from orchestrator.providers.technology_intelligence.github_stars_provider import (
+        GithubStarsTechnologyIntelligenceProvider,
+    )
 
     name = os.environ.get("COMPASS_TI_PROVIDER", "stub").strip().lower() or "stub"
     if name == "stub":
         return StubTechnologyIntelligenceProvider()
     if name == "file":
         return FileTechnologyIntelligenceProvider()
-    # Fail closed to stub for unknown values
+    if name in {"github-stars", "github", "live"}:
+        return GithubStarsTechnologyIntelligenceProvider()
     return StubTechnologyIntelligenceProvider()

@@ -26,6 +26,7 @@ class CapabilityPlanArtifacts:
     experience_signals: list[dict] = field(default_factory=list)
     knowledge_context: list[dict] = field(default_factory=list)
     knowledge_search_mode: str = "keyword"
+    performance_context: list[dict] = field(default_factory=list)
     artifact_paths: dict[str, str] = field(default_factory=dict)
 
 
@@ -91,6 +92,21 @@ def build_capability_plan(
     except Exception:
         knowledge_context = []
         knowledge_search_mode = "keyword"
+
+    performance_context: list[dict] = []
+    try:
+        from orchestrator.knowledge.query import query_knowledge
+
+        performance_context = query_knowledge(
+            repo_root,
+            objective,
+            kind="performance",
+            top_n=5,
+            rebuild_index=False,
+            mode=knowledge_search_mode,
+        )
+    except Exception:
+        performance_context = []
 
     plans_dir = repo_root / ".agent" / "plans" / plan_id
     plans_dir.mkdir(parents=True, exist_ok=True)
@@ -158,6 +174,7 @@ def build_capability_plan(
         experience_signals=experience_signals,
         knowledge_context=knowledge_context,
         knowledge_search_mode=knowledge_search_mode,
+        performance_context=performance_context,
         artifact_paths={
             "task_graph": str(task_graph_path.relative_to(repo_root)),
             "manifests": str(manifests_path.relative_to(repo_root)),

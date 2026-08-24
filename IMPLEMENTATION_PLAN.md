@@ -2,183 +2,179 @@
 
 ## Metadata
 
-- Status: COMPLETE
-- Plan ID: m6-vector-experience-store
-- Issue: [#58](https://github.com/loganware05/captains-compass-cursor/issues/58)
-- Branch: `feature/58-m6-vector-experience-store` (merged #59)
-- Target release: **v1.10.0** (released 2026-08-24)
+- Status: APPROVED
+- Plan ID: m7-performance-ti
+- Issue: [#62](https://github.com/loganware05/captains-compass-cursor/issues/62) — M7: Performance knowledge ingest + live GitHub Stars TI (v1.11.0)
+- Branch: `feature/62-m7-performance-ti`
+- Target release: **v1.11.0** (additive; non-breaking)
 - Created: 2026-08-24
 - Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
-- Approved revision: hybrid plan-writer default; dedicated rebuild script; performance ingest M7
-- Rollback checkpoint: `rollback/pre-m6-vector-experience-store` @ `abbb316`
-- Feature PR: [#59](https://github.com/loganware05/captains-compass-cursor/pull/59) (merged @ `3859000`)
+- Approved revision: Captain decisions on Open Questions (see below)
+- Rollback checkpoint: `rollback/pre-m7-performance-ti` @ `d05b7b8`
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
-  - Prior plans: M1–M5 COMPLETE (v1.5.0–v1.9.0)
-  - Baseline: **v1.9.0** (`6f09555` / current `main` after closeout #57)
-  - ADR-021 deferral: production vector DB → M6+
-- Machine artifacts: `.agent/plans/m6-vector-experience-store/`
+  - Prior plans: M1–M6 COMPLETE (v1.5.0–v1.10.0)
+  - Baseline: **v1.10.0** (`d05b7b8` / current `main` after closeout #61)
+  - ADR-022 deferral: performance-knowledge ingest + live TI → M7
+- Machine artifacts: `.agent/plans/m7-performance-ti/`
 
 ## Request
 
-Proceed with **Milestone 6** of the Captain Compass multi-agent orchestration OS:
-deliver a **local Vector Experience Store** — a CI-safe, file-backed semantic index
-that extends M5 Knowledge Steward with hybrid keyword + vector search, without
-production vector databases, live Technology Intelligence, or weakening the
-approval gate.
+Proceed with **Milestone 7** of the Captain Compass multi-agent orchestration OS:
+
+1. **Performance-knowledge ingest** — map `ExecutionRun` and `Experience` artifacts
+   into durable `kind: performance` knowledge items with execution metrics and
+   provenance (explicit CLI only).
+2. **Live Technology Intelligence adapter** — opt-in GitHub Stars-shaped discovery
+   via `gh` / GitHub API for capability planning, **Captain-gated**, never CI
+   default, never auto-execute external repos.
 
 ## Problem Statement
 
-After M5:
+After M6:
 
-- Knowledge query is **keyword-only**; semantically related items with low token
-  overlap are missed (e.g. “routing weights” vs “matcher tuning”)
-- `VectorIndexAdapter` is a **NoOp stub**; ADR-021 explicitly deferred vector
-  search to M6+
-- Plan writer **Knowledge Context** uses keyword query only; no semantic recall
-- The Notion architecture expects durable learning artifacts to inform planning
-  beyond exact token matches
-- `PROJECT_CONTEXT.md` lists **vector Experience store adapter** as remaining
-  technical debt
+- `ExecutionRun` ingest maps to `kind: artifact` with minimal metrics; ADR-022
+  deferred **performance** knowledge form enrichment to M7
+- Experience ingest produces `kind: performance` but lacks structured execution
+  metrics (retries, agents/models, capability linkage)
+- Plan writer **Knowledge Context** does not surface a dedicated **Performance**
+  readback for planners evaluating historical execution quality
+- Technology Intelligence is **stub** (CI) or **file** (offline fixtures) only;
+  live GitHub Stars discovery is documented but not wired
+- The Notion architecture expects Technology Intelligence to answer “what external
+  patterns/repos might help?” — currently only offline redacted samples
 
-Without M6, Knowledge Steward recall quality plateaus at keyword overlap while
-the architecture promises richer Experience-driven intelligence.
+Without M7, execution telemetry and live discovery remain disconnected from the
+unified knowledge layer and planning readback.
 
 ## Desired Outcome
 
-After M6 (v1.10.0), Captain Compass can:
+After M7 (v1.11.0), Captain Compass can:
 
-1. Build a **rebuildable file-backed vector index** from `.agent/knowledge/items/`
-   using stdlib TF-IDF + cosine similarity (no external embedding API in CI)
-2. Query knowledge in **`keyword`**, **`vector`**, or **`hybrid`** modes via
-   explicit CLI (`query-knowledge.sh --mode hybrid`)
-3. Optionally rebuild vector index during explicit ingest
-   (`ingest-knowledge.sh --rebuild-vector`)
-4. Surface **hybrid-ranked Knowledge Context** in capability plans when a vector
-   index exists (informational only — no matcher weight changes)
-5. Retain M5 safety invariants: explicit CLI only, read-only query, staging-only
-   procedure promotion, no secret ingest
+1. Ingest **performance knowledge items** from `.agent/runs/` and
+   `.agent/experience/` with structured metrics (outcome, retries, skills,
+   agents/models, plan/task linkage)
+2. Query performance knowledge via existing `query-knowledge.sh --kind performance`
+3. Surface **Performance Context** in capability plans (informational; no matcher
+   weight changes)
+4. Query live TI via explicit opt-in (`COMPASS_TI_PROVIDER=github-stars`) using
+   authenticated `gh` when Captain runs planning locally
+5. Retain all M5–M6 safety invariants: explicit CLI ingest, NOT APPROVED FOR
+   EXECUTION banner, no auto-install of external repos
 
 ## Acceptance Criteria
 
-- [x] `FileVectorIndexAdapter` implements `VectorIndexAdapter` with TF-IDF sparse
-      vectors stored under `.agent/knowledge/vector-index.json`
-- [x] `query_knowledge()` supports `mode=keyword|vector|hybrid`; default remains
-      **`keyword`** for backward compatibility
-- [x] Hybrid merge is deterministic, documented, and includes provenance +
-      per-mode scores on results
-- [x] Vector index rebuild is **explicit CLI only** (ingest flag or dedicated
-      rebuild script); no hooks
-- [x] Empty or missing vector index → vector/hybrid modes degrade gracefully to
-      keyword-only results
-- [x] Plan writer Knowledge Context uses hybrid query when vector index exists
-      (env override: `COMPASS_KNOWLEDGE_SEARCH_MODE`)
-- [x] Extend Skill `knowledge-steward` + doctor checks for vector index layout
-- [x] ADR-022 for stdlib TF-IDF vector index vs deferred production embedding DB
+- [x] `item_from_execution_run` maps to `kind: performance` with optional
+      `performance_metrics` object (outcome, retries, skills, agents, models,
+      plan_id, task_id, experience_id)
+- [x] Experience ingest enriches performance items (capabilities exercised,
+      lessons, run linkage)
+- [x] Schema allows optional `performance_metrics` on knowledge items (backward
+      compatible)
+- [x] Plan writer **Performance Context** section (top-N `kind: performance`
+      from hybrid/keyword query on objective)
+- [x] `GithubStarsTechnologyIntelligenceProvider` behind
+      `COMPASS_TI_PROVIDER=github-stars` (opt-in only)
+- [x] Live TI uses `gh` when available; fails closed to empty list without auth
+      (no CI network calls by default)
+- [x] Golden-recorded fixtures for live TI mapper tests (no network in CI)
+- [x] CLI `./scripts/query-technology-intelligence.sh` for explicit Captain TI
+      queries (read-only)
+- [x] Extend `knowledge-steward` + `candidate-promotion` Skills; doctor checks
+- [x] ADR-023 for performance knowledge + live TI boundaries
 - [x] Doctor / install / tests / evals pass
-- [x] Control-repo only; sandbox refresh after release
+- [ ] Control-repo only; sandbox refresh after release
 
 ## Non-Goals
 
-- Production vector databases (Pinecone, pgvector, Weaviate, etc.) in M6
-- OpenAI / Hugging Face / network embedding APIs in CI default path
-- Live GitHub Stars / network Technology Intelligence (defer **M7+**)
-- Auto-ingest or auto-rebuild on workstream close
-- Changing plan-approval hook semantics or matcher weight mutation from query
-- Replacing keyword index (both indexes coexist; keyword remains rebuildable)
-- Performance-knowledge ingest mappers (defer unless Captain expands scope in
-  approval revision)
+- Auto-ingest performance on `record-execution-run.sh` (explicit CLI only)
+- Auto-install or execute starred repositories
+- Setting `approved_for_execution: true` on TI candidates
+- Production embedding / vector DB providers (still deferred)
+- Full GitHub Star Categorization pipeline (batch ML) — M7 is **live query adapter**
 - NotebookLM / Notion MCP ingestion
+- Mutating matcher weights from performance or TI readback
 
 ## Assumptions
 
-- M5 knowledge item schema and ingest paths remain stable
-- Python 3 stdlib (`math`, `json`, `re`) sufficient for TF-IDF + cosine similarity
-- Vector index size stays small enough for file JSON in control-repo tests/fixtures
-- Captain continues explicit CLI ingestion workflow from M5
-- Product repos may gitignore runtime vector index; control repo ships fixtures
+- M5/M6 knowledge store, hybrid query, and ingest audit remain stable
+- Captain has `gh auth login` for local live TI demos (optional)
+- CI continues on `COMPASS_TI_PROVIDER=stub` with golden fixtures for github-stars mapper
+- Performance items use idempotent keys (`know-run-*`, `know-exp-*`)
 
-## Resolved Decisions (Captain, 2026-08-24)
+## Open Questions (Captain — resolved 2026-08-24)
 
-1. **Plan-writer default** when vector index exists: **hybrid** Knowledge Context.
-2. **Rebuild CLI:** `ingest-knowledge.sh --rebuild-vector` **and**
-   `rebuild-knowledge-vector-index.sh`.
-3. **Target version:** **v1.10.0** confirmed.
-4. **Performance ingest:** defer to **M7**.
-
-## Open Questions (Captain — resolve at approval)
-
-_Resolved — see above._
+1. **Live TI scope:** GitHub **starred repos only** (`COMPASS_TI_PROVIDER=github-stars`).
+2. **Performance Context default:** **always render** section (empty when none).
+3. **Re-ingest execution runs:** **overwrite** existing `know-run-*` as `kind: performance`.
+4. **Target version:** **v1.11.0**.
+5. **Skills:** **extend** `knowledge-steward` + `candidate-promotion` **and ship**
+   `technology-intelligence-live` Skill.
 
 ## Current-State Analysis
 
-| Area | State (v1.9.0) |
+| Area | State (v1.10.0) |
 |---|---|
-| Knowledge items | `.agent/knowledge/items/` + ingest CLI |
-| Keyword index | `.agent/knowledge/index.json` (TF token overlap) |
-| Vector adapter | `NoOpVectorIndexAdapter` only |
-| Query CLI | `--query`, `--kind`, `--top` (keyword only) |
-| Plan Knowledge Context | Keyword query via `build.py` |
-| Experience / TI / routing | M2–M4 unchanged |
+| ExecutionRun ingest | `kind: artifact`, basic summary |
+| Experience ingest | `kind: performance`, basic summary |
+| Knowledge query | keyword / vector / hybrid |
+| Plan sections | Knowledge Context (hybrid when index exists) |
+| TI providers | `stub` (default), `file` (offline fixtures) |
+| Live GitHub Stars | Documented only |
 
 ## Proposed Architecture
 
 ```text
-.agent/knowledge/
-  items/              # existing knowledge-item JSON
-  index.json          # existing keyword inverted index
-  vector-index.json   # NEW: TF-IDF sparse vectors + corpus stats
-  ingest-log/         # existing audit
+orchestrator/knowledge/ingest.py
+  item_from_execution_run()   # EXTEND → kind: performance + metrics
+  item_from_experience()      # EXTEND → richer performance fields
 
-orchestrator/knowledge/
-  index.py            # existing keyword index (unchanged contract)
-  query.py            # EXTEND: mode keyword|vector|hybrid merge
-  vector_index.py     # NEW: build/load TF-IDF vectors, cosine scoring
-  adapters/
-    vector.py         # EXTEND: FileVectorIndexAdapter + NoOp default
+orchestrator/schemas/knowledge-item.schema.json
+  performance_metrics         # NEW optional object
+
+orchestrator/plan_writer/
+  build.py                    # performance_context query
+  render.py                   # Performance Context section
+
+orchestrator/providers/technology_intelligence/
+  github_stars_provider.py    # NEW live adapter (gh-backed)
+  file_provider.py            # shared _candidate_from_stars_shaped mapper
+  select_ti_provider()        # EXTEND: github-stars branch
 
 scripts/
-  query-knowledge.sh  # EXTEND: --mode keyword|vector|hybrid
-  ingest-knowledge.sh # EXTEND: --rebuild-vector (optional)
-  rebuild-knowledge-vector-index.sh  # NEW (if Open Q2 = both)
+  query-technology-intelligence.sh   # NEW explicit TI CLI
+  ingest-knowledge.sh                # document runs+experience performance path
 
-orchestrator/schemas/vector-index.schema.json  # NEW (optional validation)
+tests/fixtures/ti/github-stars-recorded/
+tests/orchestrator/test_m7_performance_ti.py
 ```
 
-**Hybrid scoring (deterministic proposal):**
+**Safety invariants:**
 
-```text
-final_score = 0.5 * keyword_score + 0.5 * vector_score   # when both present
-```
-
-Tie-break: higher keyword score, then `item_id` lexicographic (same as M5).
-
-**Safety invariants (carry forward from M5):**
-
-- Query is read-only; never mutates matcher weights or registry
-- Vector rebuild requires explicit CLI
-- No secret paths in index build
-- Production embedding providers remain behind future adapter interface
+- Live TI never default; CI uses stub + golden recordings
+- TI candidates always `approved_for_execution: false`
+- Performance ingest explicit CLI only
+- Performance / TI sections informational only in plans
 
 ## Required Capabilities
 
 Inferred from the objective and repository context.
 
-- tf-idf-vector-build
-- cosine-similarity-query
-- hybrid-knowledge-ranking
-- vector-index-persistence
-- knowledge-steward-extension
-- explicit-cli-rebuild
-- provenance-preservation
-- backward-compatible-keyword-default
+- performance-metrics-ingest
+- execution-run-knowledge-mapping
+- experience-performance-enrichment
+- plan-performance-context-section
+- github-stars-ti-adapter
+- ti-golden-record-testing
+- captain-gated-live-discovery
+- explicit-cli-ti-query
 
-**Domains detected:** knowledge, plan
+**Domains detected:** knowledge, github, plan
 
-Human intent also requires: stdlib-only CI default, deterministic hybrid merge,
-integration with existing Knowledge Context section.
+Human intent also requires: gh auth boundary, fail-closed without credentials,
+extend existing Knowledge Steward workflow.
 
 ## Reusable Capabilities Found
 
@@ -186,23 +182,23 @@ Approved Compass Skills ranked for this objective (deterministic matcher).
 
 | Skill | Score | Notes |
 |---|---:|---|
-| `knowledge-steward` | 0.5571 | primary M5 Skill to extend |
-| `implementation-planning` | 0.4286 | lifecycle_stage=0.15 |
+| `knowledge-steward` | 0.5571 | performance ingest + query |
+| `execution-telemetry` | 0.4929 | ExecutionRun / Experience sources |
+| `candidate-promotion` | 0.4286 | TI candidate ceiling |
+| `github-integration` | 0.3643 | gh CLI for live TI |
 | `capability-planning` | 0.3643 | plan writer integration |
-| `execution-telemetry` | 0.3 | Experience source artifacts |
-| `compass-evaluator` | 0.3 | evaluation artifact sources |
-| `experience-routing` | 0.3 | routing artifact sources |
+| `compass-evaluator` | 0.3 | evaluation artifacts |
+| `experience-routing` | 0.3 | routing context |
 | `testing-validation` | 0.3 | validation evidence |
-| `security-review` | 0.3 | ingest path safety |
-| `pull-request-preparation` | 0.3 | release closeout |
+| `security-review` | 0.3 | TI boundary review |
 
 Prefer in implementation manifests: `knowledge-steward`, `execution-telemetry`,
-`compass-evaluator`, `capability-planning`, `testing-validation`.
+`candidate-promotion`, `github-integration`, `capability-planning`.
 
 ### Capability Gaps
 
-No new Skill required unless Captain requests a separate `vector-knowledge` Skill;
-**extend `knowledge-steward`** is the default proposal.
+No new Skill required unless Captain requests `technology-intelligence-live`;
+default proposal extends existing Skills.
 
 ## Technology Intelligence Candidates
 
@@ -221,88 +217,84 @@ Informational readback from Experience fixtures/stores. **Does not auto-adjust m
 
 ## Knowledge Context
 
-Informational readback from `.agent/knowledge/` (keyword index). **Does not alter Skill rankings or matcher weights.** Populate via explicit `./scripts/ingest-knowledge.sh`.
+Informational readback from `.agent/knowledge/` (hybrid search when vector index exists). **Does not alter Skill rankings or matcher weights.**
 
 | Item | Kind | Score | Title |
 |---|---|---:|---|
-| `know-adr-021` | decision | 0.5484 | ADR-021: Knowledge Steward with stdlib keyword index (v1.9.0 M5) |
+| `know-adr-022` | decision | 0.5484 | ADR-022: TF-IDF vector Experience store with hybrid knowledge search (v1.10.0 M6) |
 | `know-adr-018` | decision | 0.3226 | ADR-018: Execution telemetry, file TI, and Experience dual-path (v1.6.0 M2) |
-| `know-adr-020` | decision | 0.2581 | ADR-020: Persistent-role promotion and bounded Level 3 weight apply (v1.8.0 M4) |
-| `know-adr-019` | decision | 0.1935 | ADR-019: Evaluator, experience routing proposals, and dual promotion ceilings (v1.7.0 M3) |
-| `know-adr-014` | decision | 0.1613 | ADR-014: Critical hooks are fail-closed; autonomy budgets are ledger-backed (v1.2.0) |
+| `know-adr-021` | decision | 0.2581 | ADR-021: Knowledge Steward with stdlib keyword index (v1.9.0 M5) |
 
 ## Task Graph
 
-**Human-authored M6 phases:**
+**Human-authored M7 phases:**
 
 | Task ID | Objective | Dependencies | Parallelizable |
 |---|---|---|---|
-| T-A | `vector-index.schema.json` + `vector_index.py` + store paths | — | no |
-| T-B | `FileVectorIndexAdapter`; build/rebuild from knowledge items | T-A | yes (vs T-C) |
-| T-C | Hybrid query merge in `query.py`; CLI `--mode` | T-A | yes (vs T-B) |
-| T-D | Extend `knowledge-steward` Skill; ingest `--rebuild-vector`; doctor/install | T-B | no |
-| T-E | Plan writer hybrid Knowledge Context; tests/evals; ADR-022 | T-B–T-D | no |
-| T-F | Release prep v1.10.0 | T-E | no |
+| T-A | `performance_metrics` schema + ingest mappers (runs, experience) | — | no |
+| T-B | Plan writer **Performance Context** section | T-A | yes (vs T-C) |
+| T-C | `GithubStarsTechnologyIntelligenceProvider` + golden recordings | — | yes (vs T-B) |
+| T-D | `query-technology-intelligence.sh`; extend Skills; doctor/install | T-A, T-C | no |
+| T-E | Tests/evals; ADR-023; docs | T-B–T-D | no |
+| T-F | Release prep v1.11.0 | T-E | no |
 
-Generic planner artifact: `.agent/plans/m6-vector-experience-store/task-graph.json`
+Generic planner artifact: `.agent/plans/m7-performance-ti/task-graph.json`
 
 ## Proposed Agent Configuration
 
 | Task | Profile | Skills |
 |---|---|---|
 | Discovery / architecture | `repository-scout` / `architecture-agent` | `capability-planning`, `implementation-planning` |
-| Vector index implementation | `implementation-agent` | `knowledge-steward`, `python-ml`, `code-structure-cleanup` |
-| Query / CLI integration | `implementation-agent` | `knowledge-steward`, `testing-validation` |
-| Validation | `test-engineer` | `testing-validation`, `compass-evaluator` |
-| Security | `security-reviewer` | `security-review` |
-| Documentation | `documentation-agent` | `pull-request-preparation`, `knowledge-steward` |
+| Performance ingest | `implementation-agent` | `knowledge-steward`, `execution-telemetry` |
+| Live TI adapter | `implementation-agent` | `github-integration`, `candidate-promotion`, `security-review` |
+| Plan integration | `implementation-agent` | `capability-planning`, `knowledge-steward` |
+| Validation | `test-engineer` | `testing-validation`, `security-review` |
+| Documentation | `documentation-agent` | `pull-request-preparation`, `candidate-promotion` |
 
-Machine manifests: `.agent/plans/m6-vector-experience-store/manifests.json`
+Machine manifests: `.agent/plans/m7-performance-ti/manifests.json`
 
 ## Workstreams
 
-1. **Vector index module** — TF-IDF build, sparse storage, cosine query
-2. **Adapter implementation** — replace NoOp default in explicit vector paths only
-3. **Hybrid query** — merge keyword + vector scores deterministically
-4. **CLI + Skill extension** — rebuild and query modes
-5. **Plan integration** — optional hybrid Knowledge Context
-6. **Harness** — ADR-022, doctor, tests, release
+1. **Performance knowledge mappers** — runs/experience → `kind: performance`
+2. **Performance Context** — plan section (informational)
+3. **Live TI adapter** — github-stars via gh, golden CI tests
+4. **CLIs + Skills** — query TI, extend knowledge-steward
+5. **Harness** — ADR-023, doctor, tests, release
 
 ## Parallelization Plan
 
-T-A first. T-B and T-C can proceed in parallel after T-A. T-D depends on T-B.
-T-E integrates all. Avoid parallel worktrees on `orchestrator/knowledge/query.py`.
+T-A and T-C can start in parallel. T-B depends on T-A. T-D integrates T-A+T-C.
+T-E integrates all. Avoid parallel edits on `orchestrator/plan_writer/`.
 
 ## Files Expected to Change
 
 ### New
 
 ```text
-orchestrator/knowledge/vector_index.py
-orchestrator/schemas/vector-index.schema.json
-scripts/rebuild-knowledge-vector-index.sh          # if Open Q2 = dedicated script
-tests/fixtures/knowledge/vector-hybrid/
-tests/orchestrator/test_m6_vector_experience_store.py
-.agent/knowledge/vector-index.json                 # test fixture only (optional committed sample)
+orchestrator/providers/technology_intelligence/github_stars_provider.py
+orchestrator/providers/technology_intelligence/mapper.py
+scripts/query-technology-intelligence.sh
+tests/fixtures/ti/github-stars-recorded/
+tests/fixtures/knowledge/performance/
+tests/orchestrator/test_m7_performance_ti.py
 ```
 
 ### Modified
 
 ```text
-orchestrator/knowledge/adapters/vector.py
-orchestrator/knowledge/query.py
-orchestrator/knowledge/ingest.py                    # optional --rebuild-vector hook
-orchestrator/knowledge/store.py                     # vector index path helper
+orchestrator/knowledge/ingest.py
+orchestrator/schemas/knowledge-item.schema.json
 orchestrator/plan_writer/build.py
-orchestrator/plan_writer/render.py                  # note hybrid mode in section header
-orchestrator/schemas/validate.py
+orchestrator/plan_writer/render.py
+orchestrator/providers/technology_intelligence/file_provider.py
+orchestrator/providers/technology_intelligence/__init__.py
 .cursor/skills/knowledge-steward/SKILL.md
-scripts/query-knowledge.sh
-scripts/ingest-knowledge.sh
+.cursor/skills/candidate-promotion/SKILL.md
 scripts/doctor.sh
-scripts/install.sh
+scripts/ingest-knowledge.sh
 tests/evals/run.sh
-tests/orchestrator/test_m5_knowledge_steward.py     # ensure keyword default unchanged
+tests/orchestrator/test_m5_knowledge_steward.py
+docs/integrations/technology-intelligence.md
 DECISIONS.md
 TESTING.md
 README.md
@@ -313,27 +305,27 @@ VERSION (on release)
 
 ## Testing Strategy
 
-Evidence under `.agent/evidence/m6-vector-experience-store/`.
+Evidence under `.agent/evidence/m7-performance-ti/`.
 
 | Layer | Action |
 |---|---|
-| Unit | TF-IDF build deterministic on fixtures |
-| Unit | cosine scoring ranks semantically closer items higher |
-| Unit | hybrid merge deterministic; tie-break stable |
-| Unit | missing vector index → vector/hybrid fall back to keyword |
-| Unit | query does not mutate weights, registry, or keyword index |
-| Integration | ingest fixtures → rebuild vector → hybrid query finds ADR items |
-| Integration | capability plan Knowledge Context uses hybrid when index present |
-| Evals | golden plan determinism when vector index absent (unchanged from v1.9.0) |
-| Security | vector build rejects secret paths; no arbitrary file read |
-| Rollback | tag restores NoOp adapter behavior |
+| Unit | execution-run → performance item with metrics |
+| Unit | experience enrich preserves idempotency |
+| Unit | github-stars mapper from golden recordings (no network) |
+| Unit | live provider returns [] without gh auth |
+| Integration | ingest runs+experience → query `--kind performance` |
+| Integration | capability plan renders Performance Context |
+| Integration | `COMPASS_TI_PROVIDER=github-stars` with mock gh stdout |
+| Evals | CI stays stub; golden TI isolation sensors |
+| Security | TI never sets approved_for_execution; no secret paths in ingest |
+| Rollback | tag restores artifact-kind runs + stub-only TI |
 
 ## Security Review
 
-- Vector index build must use same secret-path rejection as ingest
-- Query remains confined to `.agent/knowledge/` artifacts
-- No network calls in default CI vector path
-- Hybrid scores are informational only in plans
+- Live TI requires explicit env + gh auth; no tokens in repo
+- TI output validated; fail closed on schema violations
+- Performance ingest rejects secret paths (existing M5 guards)
+- No external repo code import at planning time
 
 ## Accessibility Review
 
@@ -341,31 +333,31 @@ Not applicable (no UI).
 
 ## Migration Plan
 
-1. Product repos: `update.sh` adds vector index path seed; empty until Captain runs rebuild CLI
-2. Existing keyword workflows unchanged (`--mode` default `keyword`)
-3. Forward-only; vector index rebuildable from items/
+1. Product repos: `update.sh` adds docs/CLI; no behavior change until Captain runs ingest/TI
+2. Re-ingest updates `know-run-*` items to `kind: performance` (idempotent)
+3. CI unchanged on stub TI default
 
 ## Deployment Plan
 
 - Merge via PR after validation
-- Tag `v1.10.0`
-- Sandbox `update.sh` + optional hybrid query demo
+- Tag `v1.11.0`
+- Sandbox `update.sh` + optional performance ingest + TI demo (local gh)
 
 ## Rollback Plan
 
-1. Restore `rollback/pre-m6-vector-experience-store`
-2. Revert VERSION to 1.9.0
-3. Delete `.agent/knowledge/vector-index.json` if needed (keyword index unaffected)
+1. Restore `rollback/pre-m7-performance-ti`
+2. Revert VERSION to 1.10.0
+3. Remove performance_metrics from re-ingested items if needed (re-run ingest)
 
 ## Risks and Mitigations
 
 | Risk | Impact | Mitigation |
 |---|---|---|
-| TF-IDF quality vs embeddings | Weaker semantic recall | Document limits in ADR-022; hybrid keeps keyword signal |
-| Index size growth | Slow rebuild/query | Sparse vectors; retention constants from M5 |
-| Non-deterministic float drift | Flaky tests | Round scores; fixed fixture corpus |
-| Scope creep to embedding APIs | CI/network deps | Adapter boundary; stdlib-only default |
-| Breaking M5 keyword default | Regressions | Default `--mode keyword`; eval golden fixtures |
+| Live TI flakiness / rate limits | Broken local demos | Fail closed; golden recordings; cache optional later |
+| gh not installed | Empty TI results | Clear CLI error message; document prerequisites |
+| Performance item noise | Bad planning context | `--kind performance` filter; top-N cap |
+| CI network leakage | Nondeterministic tests | Stub default; mock gh in tests only |
+| Scope creep to full Stars ML | Delay M7 | Adapter boundary; redacted mapping only |
 
 ## Evaluation Strategy
 
@@ -373,37 +365,36 @@ After implementation (post-approval), success by:
 
 - Acceptance criteria checked
 - Doctor / tests / evals green
-- Missing vector index → behavior identical to v1.9.0 for keyword mode
-- Fixture corpus → hybrid returns items keyword-only misses
-- No matcher weight or registry mutation from query
+- Stub CI identical to v1.10.0 for default env
+- Fixture ingest → Performance Context populated
+- Live TI with mocked gh returns validated candidates
 
 ## Learning Plan
 
-Retain under `.agent/plans/m6-vector-experience-store/`:
+Retain under `.agent/plans/m7-performance-ti/`:
 
 - `resolve.json`, `task-graph.json`, `manifests.json`
 - Link issue, branch, PR, evidence after execution
 
-Feeds M7+ live Technology Intelligence adapters and optional embedding
-providers only after Captain expands scope.
+Feeds M8+ optional TI cache, broader discovery providers after Captain expands scope.
 
 ## Autonomy Budget
 
-After approval, create `.agent/budgets/m6-vector-experience-store.md`.
+After approval, create `.agent/budgets/m7-performance-ti.md`.
 
 - Maximum iterations: 20
 - Maximum failed validation cycles: 5
 - Maximum estimated cost: Captain-defined
 - Maximum elapsed time: 5 working days
-- Maximum vector rebuild batches per plan: 10 (M6-specific)
-- Budget ledger path: `.agent/budgets/m6-vector-experience-store.md`
+- Maximum live TI query batches per plan: 10 (M7-specific)
+- Budget ledger path: `.agent/budgets/m7-performance-ti.md`
 
 ## Definition of Done
 
 - All Acceptance Criteria checked
 - Doctor / tests / evals green
 - Security review recorded
-- ADR-022 accepted
+- ADR-023 accepted
 - PROGRESS / CHANGELOG / TESTING updated
 - PR prepared with evidence
 - No implementation on protected branches
@@ -418,9 +409,9 @@ proceeds.
 
 ## Approval Record
 
-- **Approved by:** Captain
-- **Approval date:** 2026-08-24
-- **Approved revision:** hybrid plan-writer; dedicated rebuild script; v1.10.0; performance ingest M7
-- **Issue:** [#58](https://github.com/loganware05/captains-compass-cursor/issues/58)
-- **Branch:** `feature/58-m6-vector-experience-store`
-- **Rollback:** `rollback/pre-m6-vector-experience-store` @ `abbb316`
+- **Approved by:**
+- **Approval date:**
+- **Approved revision:**
+- **Issue:**
+- **Branch:**
+- **Rollback:**

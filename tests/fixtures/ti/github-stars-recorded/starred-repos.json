@@ -1,0 +1,26 @@
+[
+  {
+    "id": 101,
+    "full_name": "example-org/accessible-react-forms",
+    "html_url": "https://github.com/example-org/accessible-react-forms",
+    "description": "Accessible React form patterns with ARIA live regions",
+    "topics": ["react", "accessibility", "forms"],
+    "stargazers_count": 128
+  },
+  {
+    "id": 202,
+    "full_name": "example-org/pdf-kit-node",
+    "html_url": "https://github.com/example-org/pdf-kit-node",
+    "description": "PDF generation utilities for Node.js services",
+    "topics": ["nodejs", "pdf", "utilities"],
+    "stargazers_count": 89
+  },
+  {
+    "id": 303,
+    "full_name": "example-org/unrelated-quantum",
+    "html_url": "https://github.com/example-org/unrelated-quantum",
+    "description": "Quantum circuit simulation library",
+    "topics": ["quantum", "simulation"],
+    "stargazers_count": 42
+  }
+]

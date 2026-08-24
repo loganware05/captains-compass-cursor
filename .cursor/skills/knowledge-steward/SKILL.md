@@ -32,8 +32,13 @@ ADR headings from `DECISIONS.md`.
 
    ```bash
    ./scripts/query-knowledge.sh --query "evaluator routing" --kind decision
-   ./scripts/query-knowledge.sh --query "matcher tuning" --mode hybrid
+   ./scripts/query-knowledge.sh --query "matcher tuning" --kind performance --mode hybrid
+   ./scripts/ingest-knowledge.sh --from-store runs,experience
    ```
+
+   Execution runs ingest as `kind: performance` with `performance_metrics`
+   (outcome, retries, skills, agents, models). Re-ingest overwrites existing
+   `know-run-*` / `know-exp-*` items idempotently.
 
    When `.agent/knowledge/vector-index.json` exists, capability plans use **hybrid**
    search for Knowledge Context by default. Override with
@@ -57,6 +62,8 @@ ADR headings from `DECISIONS.md`.
 
 6. Use the **Knowledge Context** section in capability plans as informational
    input only — it does not alter Skill rankings or matcher weights.
+7. Review **Performance Context** in capability plans (always rendered; empty
+   when no `kind: performance` items match).
 
 ## Output
 
