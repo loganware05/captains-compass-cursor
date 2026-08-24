@@ -1,0 +1,128 @@
+Captain's Compass doctor
+Root: /Users/loganware/Documents/Personal/Code/captains-compass-cursor
+
+  ok: VERSION=1.9.0
+  ok: AGENTS.md
+  ok: PROJECT_CONTEXT.md
+  ok: IMPLEMENTATION_PLAN.md
+  ok: DECISIONS.md
+  ok: PROGRESS.md
+  ok: TESTING.md
+  ok: CHANGELOG.md
+  ok: rule 00-core-operating-model.mdc
+  ok: rule 01-plan-approval-gate.mdc
+  ok: rule 02-git-worktree-policy.mdc
+  ok: rule 03-validation-definition-of-done.mdc
+  ok: rule 04-documentation-memory.mdc
+  ok: skill repository-discovery
+  ok: skill implementation-planning
+  ok: skill worktree-orchestration
+  ok: skill testing-validation
+  ok: skill security-review
+  ok: skill accessibility-review
+  ok: skill pull-request-preparation
+  ok: skill github-integration
+  ok: skill react-engineering
+  ok: skill playwright-browser-validation
+  ok: skill node-engineering
+  ok: skill postgres-prisma
+  ok: skill docker-cloud
+  ok: skill linear-integration
+  ok: skill notion-integration
+  ok: skill python-ml
+  ok: skill ios-engineering
+  ok: skill source-code-context
+  ok: skill code-structure-cleanup
+  ok: skill review-fix-loop
+  ok: skill autonomy-budget
+  ok: skill harness-gc
+  ok: skill dependency-supply-chain
+  ok: skill capability-planning
+  ok: skill execution-telemetry
+  ok: skill candidate-promotion
+  ok: skill experience-skill-training
+  ok: skill compass-evaluator
+  ok: skill experience-routing
+  ok: skill persistent-role-promotion
+  ok: skill bounded-autonomy
+  ok: skill knowledge-steward
+  ok: agent repository-scout.md
+  ok: agent architecture-agent.md
+  ok: agent implementation-agent.md
+  ok: agent test-engineer.md
+  ok: agent security-reviewer.md
+  ok: agent accessibility-reviewer.md
+  ok: agent adversarial-reviewer.md
+  ok: agent documentation-agent.md
+  ok: agent compass-evaluator.md
+  ok: agent knowledge-steward.md
+  ok: hooks.json
+  ok: hook secret-protection.sh
+  ok: hook protected-branch.sh
+  ok: hook plan-approval-check.sh
+  ok: hook branch-name-validation.sh
+  ok: hook pre-commit-formatting.sh
+  ok: hook pre-push-tests.sh
+  ok: hook pr-evidence-validation.sh
+  ok: hooks _common.sh
+  ok: template AGENTS.md
+  ok: template PROJECT_CONTEXT.md
+  ok: template IMPLEMENTATION_PLAN.md
+  ok: template DECISIONS.md
+  ok: template PROGRESS.md
+  ok: template TESTING.md
+  ok: template CHANGELOG.md
+  ok: budget template BUDGET_LEDGER.md
+  ok: budget template BUDGET_STOP_REPORT.md
+  ok: budget template SESSION_NOTE.md
+  ok: evals runner
+  ok: sandbox behavioral checklist
+  ok: structural-tests example
+  ok: orchestrator schema capability.schema.json
+  ok: orchestrator schema task.schema.json
+  ok: orchestrator schema agent-manifest.schema.json
+  ok: orchestrator schema model-profile.schema.json
+  ok: orchestrator schema candidate-capability.schema.json
+  ok: orchestrator schema execution-run.schema.json
+  ok: orchestrator schema experience.schema.json
+  ok: orchestrator model catalog
+  ok: orchestrator catalog validates
+  ok: capability registry compiles
+  ok: scripts/capability-plan.sh present
+  ok: capability-planning sidecar
+  ok: .agent/experience layout
+  ok: scripts/record-execution-run.sh present
+  ok: .agent/evaluations layout
+  ok: scripts/run-evaluation.sh present
+  ok: .agent/routing/proposals layout
+  ok: .agent/routing/applied layout
+  ok: .agent/agents/proficiency layout
+  ok: .agent/agents/promotions layout
+  ok: matcher weights.json
+  ok: propose-persistent-role.sh
+  ok: apply-routing-proposal.sh
+  ok: .agent/knowledge layout
+  ok: ingest-knowledge.sh
+  ok: query-knowledge.sh
+  ok: rebuild-knowledge-vector-index.sh
+  ok: .agent/capabilities/compiled layout
+  ok: planning fixtures (6)
+  ok: control CI workflow
+  ok: command initialize-project.md
+  ok: command plan-feature.md
+  ok: command implement-approved-plan.md
+  ok: command validate-change.md
+  ok: command prepare-pr.md
+  ok: command close-workstream.md
+  ok: docs/EVIDENCE_MATRIX.md
+  ok: docs/integrations/multi-runtime-agents.md
+  ok: docs/integrations/technology-intelligence.md
+  ok: TI candidate validation
+  ok: template CLAUDE.md
+  ok: hooks.json failClosed policy
+  ok: scripts/install.sh present
+  ok: scripts/doctor.sh present
+  ok: scripts/update.sh present
+  ok: scripts/uninstall.sh present
+
+Doctor passed: 0 errors, 0 warning(s)
