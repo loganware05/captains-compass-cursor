@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Added
+
+- Milestone 5: Knowledge Steward — ingest, keyword index, query, Knowledge Context
+  in plans, procedure promotion proposals, ADR heading auto-ingest (`knowledge-steward`).
+
 ## 1.8.0 — 2026-08-24
 
 ### Added

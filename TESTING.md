@@ -90,6 +90,13 @@ Captain-flagged weight apply (bounded Level 3):
   --budget .agent/budgets/<plan-id>.md
 ```
 
+Knowledge Steward ingest and query (explicit CLI only):
+
+```bash
+./scripts/ingest-knowledge.sh --from-store experience,evaluations,decisions
+./scripts/query-knowledge.sh --query "evaluator routing" --kind decision
+```
+
 ## Evidence matrix
 
 Required validation artifacts by change type:

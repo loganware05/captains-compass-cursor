@@ -24,6 +24,7 @@ class CapabilityPlanArtifacts:
     manifests: dict
     technology_intelligence_candidates: list[dict] = field(default_factory=list)
     experience_signals: list[dict] = field(default_factory=list)
+    knowledge_context: list[dict] = field(default_factory=list)
     artifact_paths: dict[str, str] = field(default_factory=dict)
 
 
@@ -71,6 +72,16 @@ def build_capability_plan(
                     )
             except (OSError, json.JSONDecodeError):
                 continue
+
+    knowledge_context: list[dict] = []
+    try:
+        from orchestrator.knowledge.query import query_knowledge
+
+        knowledge_context = query_knowledge(
+            repo_root, objective, top_n=5, rebuild_index=False
+        )
+    except Exception:
+        knowledge_context = []
 
     plans_dir = repo_root / ".agent" / "plans" / plan_id
     plans_dir.mkdir(parents=True, exist_ok=True)
@@ -136,6 +147,7 @@ def build_capability_plan(
         manifests=manifests,
         technology_intelligence_candidates=candidates,
         experience_signals=experience_signals,
+        knowledge_context=knowledge_context,
         artifact_paths={
             "task_graph": str(task_graph_path.relative_to(repo_root)),
             "manifests": str(manifests_path.relative_to(repo_root)),

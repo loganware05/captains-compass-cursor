@@ -2,22 +2,26 @@
 
 ## Current status
 
-**M4 fully closed** — v1.8.0 released; sandbox refreshed ([#25](https://github.com/loganware05/captain-compass-sandbox/pull/25)).
+**M5 feature implementation complete** — awaiting PR merge for #54, then T-F
+release prep **v1.9.0**.
 
-Release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.8.0
+Branch: `feature/54-m5-knowledge-steward`  
+Evidence: `.agent/evidence/m5-knowledge-steward/validation.md`
 
 ## Completed
 
-- v1.5.0 / M1; v1.6.0 / M2; v1.7.0 / M3; v1.8.0 / M4 (#50, #51, #52)
-- Tag `v1.8.0`; sandbox refresh; post-tag validation recorded
+- v1.5.0–v1.8.0 / M1–M4
+- M5 T-A–T-E: knowledge store, ingest/query, Skill/subagent, plan Knowledge Context, ADR-021
 
 ## In progress
 
-None.
+- Feature PR for #54; then release v1.9.0 + sandbox refresh
 
 ## Next
 
-Milestone 5 planning (Knowledge Steward) when Captain ready.
+1. Merge feature PR
+2. T-F release prep (VERSION 1.9.0, tag, sandbox update)
+3. Close #54
 
 ## Blockers
 

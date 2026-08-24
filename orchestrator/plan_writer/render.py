@@ -117,6 +117,30 @@ def render_experience_signals(artifacts: CapabilityPlanArtifacts) -> str:
     return "\n".join(lines)
 
 
+def render_knowledge_context(artifacts: CapabilityPlanArtifacts) -> str:
+    """Informational knowledge readback — does not alter Skill rankings."""
+    lines = [
+        "## Knowledge Context",
+        "",
+        "Informational readback from `.agent/knowledge/` (keyword index). "
+        "**Does not alter Skill rankings or matcher weights.** "
+        "Populate via explicit `./scripts/ingest-knowledge.sh`.",
+        "",
+    ]
+    items = artifacts.knowledge_context or []
+    if not items:
+        lines.append("*No knowledge items matched this objective (store empty or no index).*")
+    else:
+        lines.extend(["| Item | Kind | Score | Title |", "|---|---|---:|---|"])
+        for item in items:
+            lines.append(
+                f"| `{item.get('item_id', 'n/a')}` | {item.get('kind', 'n/a')} | "
+                f"{item.get('query_score', 0)} | {str(item.get('title', '')).replace('|', '/')} |"
+            )
+    lines.append("")
+    return "\n".join(lines)
+
+
 def render_task_graph(artifacts: CapabilityPlanArtifacts) -> str:
     lines = [
         "## Task Graph",
@@ -236,6 +260,7 @@ def render_capability_plan_sections(artifacts: CapabilityPlanArtifacts) -> str:
         render_reusable_capabilities(artifacts),
         render_technology_intelligence_candidates(artifacts),
         render_experience_signals(artifacts),
+        render_knowledge_context(artifacts),
         render_task_graph(artifacts),
         render_agent_configuration(artifacts),
         render_evaluation_strategy(artifacts),

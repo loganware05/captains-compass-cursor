@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/knowledge-item.schema.json",
+  "title": "KnowledgeItem",
+  "description": "Durable knowledge store item with provenance (Milestone 5 Knowledge Steward).",
+  "type": "object",
+  "required": [
+    "item_id",
+    "kind",
+    "title",
+    "summary",
+    "source_artifact",
+    "created_at"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "item_id": { "type": "string", "minLength": 1 },
+    "kind": {
+      "type": "string",
+      "enum": ["knowledge", "decision", "procedure", "performance", "artifact"]
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string", "minLength": 1 },
+    "keywords": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "source_artifact": {
+      "type": "object",
+      "required": ["type", "id"],
+      "properties": {
+        "type": { "type": "string", "minLength": 1 },
+        "id": { "type": "string", "minLength": 1 },
+        "path": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "captain_approved": { "type": "boolean" },
+    "created_at": { "type": "string", "minLength": 1 },
+    "updated_at": { "type": "string", "minLength": 1 }
+  }
+}

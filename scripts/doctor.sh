@@ -99,6 +99,7 @@ SKILLS=(
   experience-routing
   persistent-role-promotion
   bounded-autonomy
+  knowledge-steward
 )
 
 for s in "${SKILLS[@]}"; do
@@ -125,6 +126,7 @@ AGENTS=(
   adversarial-reviewer.md
   documentation-agent.md
   compass-evaluator.md
+  knowledge-steward.md
 )
 
 for a in "${AGENTS[@]}"; do
@@ -304,6 +306,21 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "apply-routing-proposal.sh"
   else
     fail "missing executable scripts/apply-routing-proposal.sh"
+  fi
+  if [[ -f "$ROOT/.agent/knowledge/.gitkeep" ]]; then
+    ok ".agent/knowledge layout"
+  else
+    fail "missing .agent/knowledge/.gitkeep"
+  fi
+  if [[ -x "$ROOT/scripts/ingest-knowledge.sh" ]]; then
+    ok "ingest-knowledge.sh"
+  else
+    fail "missing executable scripts/ingest-knowledge.sh"
+  fi
+  if [[ -x "$ROOT/scripts/query-knowledge.sh" ]]; then
+    ok "query-knowledge.sh"
+  else
+    fail "missing executable scripts/query-knowledge.sh"
   fi
   if [[ -f "$ROOT/.agent/capabilities/compiled/.gitkeep" ]]; then
     ok ".agent/capabilities/compiled layout"

@@ -1,0 +1,39 @@
+{
+  "agent_affinity": [
+    "knowledge-steward"
+  ],
+  "capabilities_provided": [
+    "knowledge-ingestion",
+    "knowledge-query",
+    "procedure-promotion-proposal",
+    "adr-heading-ingest"
+  ],
+  "categories": [
+    "knowledge",
+    "learning",
+    "orchestration"
+  ],
+  "compatible_stacks": [
+    "any"
+  ],
+  "confidence": 0.85,
+  "id": "knowledge-steward",
+  "kind": "agent-profile",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "maturity": "available",
+  "provenance": {
+    "authored_by": "compass",
+    "confidence": 0.85,
+    "inferred": false
+  },
+  "security_sensitivity": "medium",
+  "source": {
+    "path": ".cursor/agents/knowledge-steward.md",
+    "type": "compass-agent"
+  },
+  "tags": [
+    "knowledge",
+    "steward"
+  ],
+  "version": "1.0.0"
+}

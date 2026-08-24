@@ -23,6 +23,26 @@
   control; specialist graduation is reviewable via PR; rankings stay
   deterministic at default weights.
 
+## ADR-021: Knowledge Steward with stdlib keyword index (v1.9.0 M5)
+
+- **Status:** Accepted
+- **Date:** 2026-08-24
+- **Context:** M1–M4 produce Experiences, evaluations, routing artifacts, and
+  markdown ADRs but no unified queryable knowledge layer. Notion architecture
+  defines Knowledge Steward and five knowledge forms.
+- **Decision:**
+  1. Ship `orchestrator/knowledge/` with ingest, keyword index, query, and
+     procedure promotion proposals under `.agent/knowledge/`.
+  2. Ingestion is **explicit CLI only** — no workstream-close hooks.
+  3. Auto-ingest **ADR headings** from `DECISIONS.md` when ingest CLI processes
+     that file or `--from-store decisions`.
+  4. Capability plans gain informational **Knowledge Context** (no ranking changes).
+  5. `VectorIndexAdapter` stub only; production vector DB deferred to M6+.
+  6. Procedure promotion = staging + Captain PR only.
+  7. Ship Skill + subagent `knowledge-steward`.
+- **Consequences:** Planning can surface durable project knowledge with
+  provenance; CI stays stdlib-only; vector search remains optional future work.
+
 ## ADR-001: Separate control repository
 
 - **Status:** Accepted
