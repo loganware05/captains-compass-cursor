@@ -2,17 +2,18 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: m4-persistent-roles-bounded-autonomy
 - Issue: [#50](https://github.com/loganware05/captains-compass-cursor/issues/50)
-- Branch: `feature/50-m4-persistent-roles-bounded-autonomy`
-- Target release: **v1.8.0** (additive; non-breaking)
+- Branch: `feature/50-m4-persistent-roles-bounded-autonomy` (merged #51)
+- Target release: **v1.8.0** (released 2026-08-24)
 - Created: 2026-08-24
 - Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
 - Approved revision: post-approval decisions recorded below
 - Rollback checkpoint: `rollback/pre-m4-persistent-roles-bounded-autonomy` @ `25fd83f`
+- Feature PR: [#51](https://github.com/loganware05/captains-compass-cursor/pull/51) (merged @ `ae3b0c5`)
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
   - Prior plans: M1–M3 COMPLETE (v1.5.0–v1.7.0)
@@ -81,7 +82,7 @@ After M4 (v1.8.0), Captain Compass can:
       without Captain flag; golden fixtures still deterministic after apply+rollback
 - [x] ADR-020 for persistent roles + bounded Level 3 apply path
 - [x] Doctor / install / tests / evals pass
-- [ ] Control-repo only; sandbox refresh after release
+- [x] Control-repo only; sandbox refresh after release
 
 ## Non-Goals
 

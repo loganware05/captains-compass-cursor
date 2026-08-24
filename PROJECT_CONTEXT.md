@@ -94,8 +94,7 @@ Installer and doctor should complete in seconds on a typical laptop.
 
 ## Known Technical Debt
 
-None blocking for M4 in progress. Future M5: Knowledge Steward. Later: live TI
-adapters, vector Experience store.
+None blocking. M5: Knowledge Steward. Later: live TI adapters, vector Experience store.
 
 ## Terminology
 
@@ -125,4 +124,5 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 4 feature (#50), then release **v1.8.0** (sandbox refresh after tag).
+Ship Milestone 5 planning when Captain ready (Knowledge Steward). v1.8.0 / M4
+release closeout in progress.

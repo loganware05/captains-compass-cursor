@@ -7,7 +7,7 @@
 - Branch: feature/50-m4-persistent-roles-bounded-autonomy
 - Created: 2026-08-24
 - Last updated: 2026-08-24
-- Status: ACTIVE
+- Status: COMPLETE
 
 ## Limits (from approved plan)
 
@@ -35,6 +35,7 @@
 |---|---|---|---|
 | 2026-08-24 | 0 | approved | Kickoff: issue #50, rollback, branch, decisions locked |
 | 2026-08-24 | 1 | pass | T-A–T-E impl; doctor + 92 unit + 39 evals + tests/run 114 |
+| 2026-08-24 | 2 | complete | Feature PR #51 merged; T-F release prep v1.8.0 |
 
 ## Stop condition
 
