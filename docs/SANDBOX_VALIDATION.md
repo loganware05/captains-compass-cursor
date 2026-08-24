@@ -99,4 +99,14 @@ Control mirror: `.agent/evidence/release-v1.6.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.7.0/post-tag-validation.md`
 
+### Persistent roles + bounded Level 3 (v1.8.0) — refresh complete 2026-08-24
+
+| Step | Result |
+|---|---|
+| Control release `v1.8.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.8.0 |
+| Sandbox refreshed to Compass 1.8.0 | Pass — [sandbox#25](https://github.com/loganware05/captain-compass-sandbox/pull/25) merged |
+| Persistent-role / apply smoke on sandbox | Pending interactive (optional) |
+
+Control mirror: `.agent/evidence/release-v1.8.0/post-tag-validation.md`
+
 

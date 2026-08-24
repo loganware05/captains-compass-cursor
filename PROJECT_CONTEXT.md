@@ -124,5 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 5 planning when Captain ready (Knowledge Steward). v1.8.0 / M4
-release closeout in progress.
+Ship Milestone 5 planning when Captain ready (Knowledge Steward). v1.8.0 / M4 fully closed.

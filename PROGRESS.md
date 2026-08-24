@@ -2,24 +2,22 @@
 
 ## Current status
 
-**M4 COMPLETE** — v1.8.0 release prep in progress on `chore/50-release-v1.8.0`.
-Feature merged via [#51](https://github.com/loganware05/captains-compass-cursor/pull/51).
+**M4 fully closed** — v1.8.0 released; sandbox refreshed ([#25](https://github.com/loganware05/captain-compass-sandbox/pull/25)).
+
+Release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.8.0
 
 ## Completed
 
-- v1.5.0 / M1; v1.6.0 / M2; v1.7.0 / M3; v1.8.0 / M4 feature (#50, #51)
-- M4: persistent roles, bounded apply, ADR-020, validation evidence
+- v1.5.0 / M1; v1.6.0 / M2; v1.7.0 / M3; v1.8.0 / M4 (#50, #51, #52)
+- Tag `v1.8.0`; sandbox refresh; post-tag validation recorded
 
 ## In progress
 
-- v1.8.0 tag + GitHub release + sandbox refresh
+None.
 
 ## Next
 
-1. Merge release prep PR
-2. Tag `v1.8.0` + GitHub release
-3. Sandbox refresh PR + closeout docs
-4. Close #50
+Milestone 5 planning (Knowledge Steward) when Captain ready.
 
 ## Blockers
 
