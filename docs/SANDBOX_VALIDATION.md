@@ -129,4 +129,13 @@ Control mirror: `.agent/evidence/release-v1.9.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.10.0/post-tag-validation.md`
 
+### Performance knowledge + live Stars TI (v1.11.0) — refresh complete 2026-08-24
+
+| Step | Result |
+|---|---|
+| Control release `v1.11.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.11.0 |
+| Sandbox refreshed to Compass 1.11.0 | Pass — [sandbox#28](https://github.com/loganware05/captain-compass-sandbox/pull/28) merged |
+| Performance ingest / live TI smoke on sandbox | Pending interactive (optional) |
+
+Control mirror: `.agent/evidence/release-v1.11.0/post-tag-validation.md`
 

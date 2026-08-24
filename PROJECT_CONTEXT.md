@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 8 planning when Captain approves next plan. v1.11.0 / M7 release closeout in progress.
+Ship Milestone 8 planning when Captain approves next plan. v1.11.0 / M7 fully closed.
