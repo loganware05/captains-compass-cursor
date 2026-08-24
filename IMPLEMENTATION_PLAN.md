@@ -77,7 +77,7 @@ After M8 (v1.12.0), Captain Compass can:
 - [x] Extend `knowledge-steward` + `technology-intelligence-live` Skills; doctor checks (34 Skills)
 - [x] ADR-024 for procedure ingest + TI cache boundaries
 - [x] Doctor / install / tests / evals pass
-- [ ] Control-repo only; sandbox refresh after release (closeout PR)
+- [x] Control-repo only; sandbox refresh after release
 
 ## Non-Goals
 
