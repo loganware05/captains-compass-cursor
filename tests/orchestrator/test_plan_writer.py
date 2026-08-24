@@ -29,6 +29,7 @@ class PlanWriterTests(unittest.TestCase):
             "## Knowledge Context",
             "## Performance Context",
             "## Procedure Context",
+            "## Artifact Context",
             "## Task Graph",
             "## Proposed Agent Configuration",
             "## Evaluation Strategy",

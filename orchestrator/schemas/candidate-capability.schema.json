@@ -40,7 +40,10 @@
         "DISCOVERED",
         "ANALYZED",
         "SECURITY_REVIEWED",
-        "SANDBOX_TESTED"
+        "SANDBOX_TESTED",
+        "APPROVED",
+        "AVAILABLE_SKILL",
+        "PROVEN_SKILL"
       ]
     },
     "discovery_signal": { "type": "string" },

@@ -47,6 +47,23 @@ SKILLS: dict[str, dict] = {
         "security_sensitivity": "high",
         "agent_affinity": ["security-reviewer", "architecture-agent"],
     },
+    "skill-lifecycle": {
+        "categories": ["process", "learning", "orchestration", "promotion"],
+        "tags": ["skill-lifecycle", "promotion", "proficiency", "proven"],
+        "capabilities_provided": [
+            "skill-lifecycle-promotion",
+            "skill-proven-graduation",
+            "skill-proficiency-training",
+        ],
+        "compatible_stacks": ["any"],
+        "security_sensitivity": "medium",
+        "agent_affinity": [
+            "knowledge-steward",
+            "candidate-promotion",
+            "experience-skill-training",
+            "documentation-agent",
+        ],
+    },
     "compass-evaluator": {
         "categories": ["process", "evaluation", "orchestration"],
         "tags": ["evaluator", "experiments", "comparison"],

@@ -14,9 +14,8 @@ A Technology Intelligence candidate should advance along:
 or the Captain wants a **draft Skill sidecar** prepared for an approved PR into
 `.cursor/skills/<slug>/`.
 
-**M3 ceiling:** candidates stop at `SANDBOX_TESTED`. Live `APPROVED` / Skill install
-still requires a Captain-approved PR. Subagent proficiency/classification is a
-**separate** Captain-approved metadata path (Skill `experience-routing`).
+**Ceiling for this Skill:** `SANDBOX_TESTED`. For `APPROVED` → `AVAILABLE_SKILL` →
+`PROVEN_SKILL` (Captain-gated, Experience-backed), use Skill `skill-lifecycle`.
 
 ## Inputs
 
@@ -45,10 +44,12 @@ still requires a Captain-approved PR. Subagent proficiency/classification is a
    ./scripts/promote-candidate.sh --candidate <path.json> --draft-skill <slug>
    ```
 
-4. Open a Captain-reviewed PR to copy draft files into `.cursor/skills/<slug>/`
+4. For post-sandbox stages, load Skill `skill-lifecycle` (requires
+   `--captain-approved`).
+5. Open a Captain-reviewed PR to copy draft files into `.cursor/skills/<slug>/`
    only after explicit approval. Never auto-merge.
-5. Re-run `./scripts/compile-capability-registry.sh` and tests after merge.
-6. For **live** starred-repo discovery (Captain local only), use Skill
+6. Re-run `./scripts/compile-capability-registry.sh` and tests after merge.
+7. For **live** starred-repo discovery (Captain local only), use Skill
    `technology-intelligence-live` with `COMPASS_TI_PROVIDER=github-stars`.
 
 ## Output
@@ -58,7 +59,8 @@ still requires a Captain-approved PR. Subagent proficiency/classification is a
 
 ## Prohibited actions
 
-- Advancing candidates past `SANDBOX_TESTED` via this Skill
+- Advancing candidates past `SANDBOX_TESTED` via this Skill without following
+  `skill-lifecycle` Captain gates
 - Auto-installing candidates into the Skill registry
 - Setting `approved_for_execution: true`
 - Executing or cloning external repositories as part of promotion

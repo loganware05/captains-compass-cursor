@@ -102,6 +102,7 @@ SKILLS=(
   knowledge-steward
   technology-intelligence-live
   procedure-playbooks
+  skill-lifecycle
 )
 
 for s in "${SKILLS[@]}"; do

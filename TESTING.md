@@ -72,6 +72,12 @@ Promote candidate / train from Experience (staging drafts only):
 
 ```bash
 ./scripts/promote-candidate.sh --candidate path/to/candidate.json --draft-skill draft-slug
+./scripts/promote-candidate.sh --candidate path/to/staging.json \
+  --stage APPROVED --evidence .agent/evidence/approval.md --captain-approved \
+  --skill-slug my-skill
+./scripts/promote-candidate.sh --candidate path/to/staging.json \
+  --stage AVAILABLE_SKILL --evidence .agent/evidence/approval.md --captain-approved \
+  --skill-slug my-skill
 ./scripts/train-skill-from-experience.sh --experience path/to/experience.json --skill-slug draft-slug
 ```
 

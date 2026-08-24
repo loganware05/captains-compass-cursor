@@ -2,22 +2,26 @@
 
 ## Current status
 
-**M8 fully closed** — v1.12.0 released; sandbox refreshed ([#29](https://github.com/loganware05/captain-compass-sandbox/pull/29)).
+**M9 implementation in progress** — skill promotion lifecycle + Artifact Context → **v1.13.0**.
 
-Release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.12.0
+- Issue: [#70](https://github.com/loganware05/captains-compass-cursor/issues/70)
+- Branch: `feature/70-m9-skill-promotion-artifacts`
+- Plan: `m9-skill-promotion-artifacts` — **APPROVED** (Captain 2026-08-24)
+- Rollback: `rollback/pre-m9-skill-promotion-artifacts` @ `d2ec205`
 
 ## Completed
 
-- v1.5.0–v1.12.0 / M1–M8 (#54–#68)
-- Tag `v1.12.0`; sandbox refresh; post-tag validation recorded
+- v1.5.0–v1.12.0 / M1–M8 (#54–#69)
 
 ## In progress
 
-None.
+- M9 implementation — promotion stages, Artifact Context, skill-lifecycle Skill
 
 ## Next
 
-Milestone 9 planning when Captain ready.
+1. Validation (doctor, unit tests, evals)
+2. Feature PR #70
+3. Release v1.13.0 + sandbox refresh
 
 ## Blockers
 
