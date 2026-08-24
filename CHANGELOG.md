@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+### Added
+
+- Performance knowledge ingest: `ExecutionRun` → `kind: performance` with
+  `performance_metrics`; enriched Experience performance items (#62)
+- Plan writer **Performance Context** section (always rendered; empty when none) (#62)
+- Live TI: `GithubStarsTechnologyIntelligenceProvider` via
+  `COMPASS_TI_PROVIDER=github-stars` (starred repos only; gh auth required) (#62)
+- `query-technology-intelligence.sh` explicit TI CLI (#62)
+- Skill `technology-intelligence-live` (33 Skills); extends `knowledge-steward`,
+  `candidate-promotion` (#62)
+- ADR-023 (#62)
+
+### Changed
+
+- Re-ingest overwrites existing `know-run-*` items from `artifact` → `performance` (#62)
+- `knowledge-item.schema.json` optional `performance_metrics` object (#62)
+
 ## 1.10.0 — 2026-08-24
 
 ### Added

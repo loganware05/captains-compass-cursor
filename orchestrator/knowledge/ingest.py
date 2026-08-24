@@ -51,8 +51,9 @@ def _base_item(
     keywords: list[str] | None = None,
     confidence: float = 0.7,
     provenance: dict[str, Any] | None = None,
+    performance_metrics: dict[str, Any] | None = None,
 ) -> dict:
-    return {
+    item = {
         "item_id": item_id,
         "kind": kind,
         "title": title,
@@ -68,6 +69,32 @@ def _base_item(
         "created_at": _utc_now(),
         "updated_at": _utc_now(),
     }
+    if performance_metrics:
+        item["performance_metrics"] = performance_metrics
+    return item
+
+
+def _metrics_from_execution_run(doc: dict) -> dict[str, Any]:
+    return {
+        "outcome": str(doc.get("outcome") or "unknown"),
+        "retries": int(doc.get("retries") or 0),
+        "skills": list(doc.get("skills") or []),
+        "agents": list(doc.get("agents") or []),
+        "models": list(doc.get("models") or []),
+        "plan_id": str(doc.get("plan_id") or ""),
+        "task_id": str(doc.get("task_id") or ""),
+        "experience_id": str(doc.get("experience_id") or ""),
+    }
+
+
+def _metrics_from_experience(doc: dict) -> dict[str, Any]:
+    return {
+        "outcome": str(doc.get("outcome") or "unknown"),
+        "skills": list(doc.get("skills_used") or []),
+        "capabilities_exercised": list(doc.get("capabilities_exercised") or []),
+        "plan_id": str(doc.get("plan_id") or ""),
+        "run_id": str(doc.get("run_id") or ""),
+    }
 
 
 def item_from_experience(doc: dict, source_path: str) -> dict:
@@ -80,6 +107,7 @@ def item_from_experience(doc: dict, source_path: str) -> dict:
         f"Skills: {', '.join(skills) or 'none'}. "
         f"Lessons: {'; '.join(lessons) if lessons else 'none recorded'}."
     )
+    metrics = _metrics_from_experience(doc)
     return _base_item(
         item_id=f"know-exp-{eid}",
         kind="performance",
@@ -88,9 +116,10 @@ def item_from_experience(doc: dict, source_path: str) -> dict:
         source_type="experience",
         source_id=eid,
         source_path=source_path,
-        keywords=skills + [outcome, "experience"],
+        keywords=skills + [outcome, "experience", "performance"],
         confidence=0.85 if outcome == "success" else 0.5,
         provenance=dict(doc.get("provenance") or {}),
+        performance_metrics=metrics,
     )
 
 
@@ -136,20 +165,24 @@ def item_from_routing(doc: dict, source_path: str) -> dict:
 def item_from_execution_run(doc: dict, source_path: str) -> dict:
     rid = str(doc["run_id"])
     outcome = str(doc.get("outcome") or "unknown")
+    metrics = _metrics_from_execution_run(doc)
+    skills = list(doc.get("skills") or [])
     summary = (
-        f"ExecutionRun {rid} plan={doc.get('plan_id', 'n/a')} outcome={outcome}. "
-        f"Objective: {doc.get('objective', 'n/a')}."
+        f"ExecutionRun {rid} plan={doc.get('plan_id', 'n/a')} task={doc.get('task_id', 'n/a')} "
+        f"outcome={outcome} retries={metrics['retries']}. "
+        f"Skills: {', '.join(skills) or 'none'}."
     )
     return _base_item(
         item_id=f"know-run-{rid}",
-        kind="artifact",
-        title=f"Execution run {rid}",
+        kind="performance",
+        title=f"Execution run {rid} ({outcome})",
         summary=summary[:2000],
         source_type="execution-run",
         source_id=rid,
         source_path=source_path,
-        keywords=["execution-run", outcome, "artifact"],
-        confidence=0.65,
+        keywords=["execution-run", outcome, "performance"] + skills,
+        confidence=0.75 if outcome == "success" else 0.55,
+        performance_metrics=metrics,
     )
 
 

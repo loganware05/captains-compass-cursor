@@ -1,5 +1,32 @@
 # Decisions
 
+## ADR-023: Performance knowledge ingest and live GitHub Stars TI (v1.11.0 M7)
+
+- **Status:** Accepted
+- **Date:** 2026-08-24
+- **Context:** M6 deferred performance-knowledge enrichment and live Technology
+  Intelligence. Execution runs ingested as `kind: artifact` with minimal metrics;
+  TI remained stub/file-only. Captains need execution-quality readback in plans
+  and optional live discovery from starred repos without CI network calls or
+  auto-executing external code.
+- **Decision:**
+  1. Map `ExecutionRun` and enriched `Experience` ingest to **`kind: performance`**
+     with optional `performance_metrics` (explicit CLI only; re-ingest overwrites
+     `know-run-*` / `know-exp-*` idempotently).
+  2. Plan writer always renders **Performance Context** (empty when no matches);
+     informational only — no matcher weight changes.
+  3. Ship `GithubStarsTechnologyIntelligenceProvider` behind
+     `COMPASS_TI_PROVIDER=github-stars` (starred repos only via `gh api user/starred`);
+     fail closed without `gh auth`; CI/default remains `stub`.
+  4. Golden-recorded fixtures for mapper tests; `./scripts/query-technology-intelligence.sh`
+     for explicit Captain queries.
+  5. Extend `knowledge-steward` and `candidate-promotion` Skills; add
+     `technology-intelligence-live` Skill (33 Skills total).
+- **Consequences:** Execution telemetry joins the unified knowledge layer;
+  live TI is Captain-gated and demoable locally; safety invariants from M2–M6
+  preserved. See
+  [`docs/integrations/technology-intelligence.md`](docs/integrations/technology-intelligence.md).
+
 ## ADR-020: Persistent-role promotion and bounded Level 3 weight apply (v1.8.0 M4)
 
 - **Status:** Accepted

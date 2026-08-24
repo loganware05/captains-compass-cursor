@@ -141,6 +141,33 @@ def render_knowledge_context(artifacts: CapabilityPlanArtifacts) -> str:
     return "\n".join(lines)
 
 
+def render_performance_context(artifacts: CapabilityPlanArtifacts) -> str:
+    """Informational performance knowledge readback — always rendered."""
+    lines = [
+        "## Performance Context",
+        "",
+        "Informational readback from `kind: performance` knowledge items. "
+        "**Does not alter Skill rankings or matcher weights.** "
+        "Populate via `./scripts/ingest-knowledge.sh --from-store runs,experience`.",
+        "",
+    ]
+    items = artifacts.performance_context or []
+    if not items:
+        lines.append("*No performance knowledge items matched this objective.*")
+    else:
+        lines.extend(["| Item | Outcome | Retries | Title |", "|---|---|---:|---|"])
+        for item in items:
+            metrics = item.get("performance_metrics") or {}
+            outcome = metrics.get("outcome", item.get("outcome", "n/a"))
+            retries = metrics.get("retries", "—")
+            lines.append(
+                f"| `{item.get('item_id', 'n/a')}` | {outcome} | {retries} | "
+                f"{str(item.get('title', '')).replace('|', '/')} |"
+            )
+    lines.append("")
+    return "\n".join(lines)
+
+
 def render_task_graph(artifacts: CapabilityPlanArtifacts) -> str:
     lines = [
         "## Task Graph",
@@ -261,6 +288,7 @@ def render_capability_plan_sections(artifacts: CapabilityPlanArtifacts) -> str:
         render_technology_intelligence_candidates(artifacts),
         render_experience_signals(artifacts),
         render_knowledge_context(artifacts),
+        render_performance_context(artifacts),
         render_task_graph(artifacts),
         render_agent_configuration(artifacts),
         render_evaluation_strategy(artifacts),

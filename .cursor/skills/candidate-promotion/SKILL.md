@@ -48,6 +48,8 @@ still requires a Captain-approved PR. Subagent proficiency/classification is a
 4. Open a Captain-reviewed PR to copy draft files into `.cursor/skills/<slug>/`
    only after explicit approval. Never auto-merge.
 5. Re-run `./scripts/compile-capability-registry.sh` and tests after merge.
+6. For **live** starred-repo discovery (Captain local only), use Skill
+   `technology-intelligence-live` with `COMPASS_TI_PROVIDER=github-stars`.
 
 ## Output
 

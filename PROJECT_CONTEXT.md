@@ -94,7 +94,7 @@ Installer and doctor should complete in seconds on a typical laptop.
 
 ## Known Technical Debt
 
-None blocking. M7: performance-knowledge ingest, live TI adapters, production embedding providers.
+None blocking. M7 in progress (v1.11.0): performance knowledge + live Stars TI. Production embedding providers remain deferred.
 
 ## Terminology
 
@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 7 planning when Captain ready. v1.10.0 / M6 fully closed.
+Ship Milestone 7 feature when Captain approves plan (performance ingest + live TI). v1.10.0 / M6 fully closed.

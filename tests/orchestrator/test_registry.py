@@ -49,7 +49,7 @@ class InferTests(unittest.TestCase):
 class RegistryCompileTests(unittest.TestCase):
     def test_compile_control_repo_registry(self) -> None:
         result = compile_registry(ROOT)
-        self.assertEqual(len(result.registry["skills"]), 32)
+        self.assertEqual(len(result.registry["skills"]), 33)
         self.assertEqual(len(result.registry["reference_profiles"]), 10)
         self.assertEqual(result.warnings, [])
 

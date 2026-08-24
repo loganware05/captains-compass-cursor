@@ -44,6 +44,7 @@ SKILL_SLUGS = (
     "persistent-role-promotion",
     "bounded-autonomy",
     "knowledge-steward",
+    "technology-intelligence-live",
 )
 
 AGENT_PROFILES = (

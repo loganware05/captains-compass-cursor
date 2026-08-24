@@ -1,0 +1,69 @@
+"""Map Stars-shaped records to CandidateCapability (shared by file + live TI)."""
+
+from __future__ import annotations
+
+from orchestrator.providers.technology_intelligence import CandidateCapability
+
+
+def candidate_from_stars_shaped(raw: dict) -> CandidateCapability:
+    """Map redacted or live Stars-export shaped records to CandidateCapability."""
+    source = raw.get("source") if isinstance(raw.get("source"), dict) else {}
+    full_name = str(raw.get("full_name") or source.get("path") or raw.get("nameWithOwner") or raw["id"])
+    return CandidateCapability(
+        id=str(raw.get("id") or full_name.replace("/", "-")),
+        version=str(raw.get("version") or "0.1.0"),
+        capabilities_provided=list(raw.get("capabilities_provided") or []),
+        discovery_signal=str(
+            raw.get("discovery_signal")
+            or raw.get("star_signal")
+            or f"github-stars:{full_name}"
+        ),
+        source_path=str(source.get("path") or full_name),
+        provenance_url=str(source.get("provenance_url") or raw.get("html_url") or raw.get("url") or ""),
+        notes=str(raw.get("notes") or raw.get("description") or ""),
+    )
+
+
+def repo_record_from_github_api(item: dict) -> dict:
+    """Normalize `gh api user/starred` repo payload to Stars-shaped record."""
+    full_name = str(item.get("full_name") or "")
+    topics = item.get("topics") or []
+    if isinstance(topics, list) and topics and isinstance(topics[0], dict):
+        topics = [t.get("name", "") for t in topics if isinstance(t, dict)]
+    slug = full_name.replace("/", "-") if full_name else "unknown-repo"
+    return {
+        "id": f"github-stars-{slug}",
+        "version": "0.1.0",
+        "full_name": full_name,
+        "html_url": str(item.get("html_url") or ""),
+        "description": str(item.get("description") or ""),
+        "star_signal": f"github-stars:live:{full_name}",
+        "topics_redacted": list(topics)[:10],
+        "capabilities_provided": _infer_capabilities(full_name, item.get("description") or "", topics),
+        "source": {
+            "type": "external-candidate",
+            "path": full_name or slug,
+            "provenance_url": str(item.get("html_url") or ""),
+        },
+        "notes": "Live GitHub starred repo — NOT APPROVED FOR EXECUTION",
+    }
+
+
+def _infer_capabilities(full_name: str, description: str, topics: list) -> list[str]:
+    text = f"{full_name} {description} {' '.join(str(t) for t in topics)}".lower()
+    tokens: list[str] = []
+    for word in text.replace("/", " ").replace("-", " ").split():
+        cleaned = "".join(ch for ch in word if ch.isalnum())
+        if len(cleaned) >= 3:
+            tokens.append(cleaned)
+    # Dedupe preserve order; use top tokens as capability hints
+    seen: set[str] = set()
+    caps: list[str] = []
+    for token in tokens:
+        if token in seen:
+            continue
+        seen.add(token)
+        caps.append(token)
+        if len(caps) >= 5:
+            break
+    return caps or ["external-repository-pattern"]

@@ -100,6 +100,7 @@ SKILLS=(
   persistent-role-promotion
   bounded-autonomy
   knowledge-steward
+  technology-intelligence-live
 )
 
 for s in "${SKILLS[@]}"; do
