@@ -20,6 +20,8 @@ SCHEMA_FILES = (
     "routing-proposal.schema.json",
     "agent-proficiency.schema.json",
     "persistent-role-promotion.schema.json",
+    "knowledge-item.schema.json",
+    "procedure-promotion.schema.json",
 )
 
 

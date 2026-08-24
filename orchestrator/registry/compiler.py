@@ -43,6 +43,7 @@ SKILL_SLUGS = (
     "experience-routing",
     "persistent-role-promotion",
     "bounded-autonomy",
+    "knowledge-steward",
 )
 
 AGENT_PROFILES = (
@@ -55,6 +56,7 @@ AGENT_PROFILES = (
     "adversarial-reviewer",
     "documentation-agent",
     "compass-evaluator",
+    "knowledge-steward",
 )
 
 
