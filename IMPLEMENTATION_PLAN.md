@@ -78,7 +78,7 @@ After M6 (v1.10.0), Captain Compass can:
 - [x] Extend Skill `knowledge-steward` + doctor checks for vector index layout
 - [x] ADR-022 for stdlib TF-IDF vector index vs deferred production embedding DB
 - [x] Doctor / install / tests / evals pass
-- [ ] Control-repo only; sandbox refresh after release
+- [x] Control-repo only; sandbox refresh after release
 
 ## Non-Goals
 
