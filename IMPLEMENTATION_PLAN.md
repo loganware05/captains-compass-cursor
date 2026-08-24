@@ -61,7 +61,7 @@ After M9 (v1.13.0):
 - [x] Plan writer **Artifact Context** (always rendered; empty when none)
 - [x] New Skill `skill-lifecycle`; extend `candidate-promotion` docs; ADR-025
 - [x] Doctor / tests / evals pass (35 Skills)
-- [ ] Control-repo only; sandbox refresh after release (closeout PR)
+- [x] Control-repo only; sandbox refresh after release
 
 ## Non-Goals
 

@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship v1.13.0 / M9 release (skill promotion lifecycle + Artifact Context). Production embedding providers remain deferred.
+Ship Milestone 10 planning when Captain ready. v1.13.0 / M9 fully closed.

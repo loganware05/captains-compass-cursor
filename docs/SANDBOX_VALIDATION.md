@@ -149,3 +149,13 @@ Control mirror: `.agent/evidence/release-v1.11.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.12.0/post-tag-validation.md`
 
+### Skill promotion lifecycle + Artifact Context (v1.13.0) — refresh complete 2026-08-24
+
+| Step | Result |
+|---|---|
+| Control release `v1.13.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.13.0 |
+| Sandbox refreshed to Compass 1.13.0 | Pass — [sandbox#30](https://github.com/loganware05/captain-compass-sandbox/pull/30) merged |
+| Skill lifecycle / Artifact Context smoke on sandbox | Pending interactive (optional) |
+
+Control mirror: `.agent/evidence/release-v1.13.0/post-tag-validation.md`
+
