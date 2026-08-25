@@ -1,0 +1,29 @@
+id: package-registry-ti
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/package-registry-ti/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, discovery, orchestration, packages]
+tags:
+  - npm
+  - pypi
+  - package-registry
+  - technology-intelligence
+capabilities_provided:
+  - package-registry-file-ti
+  - npm-pypi-discovery-signals
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - technology-intelligence-live
+  - candidate-promotion
+  - dependency-supply-chain
+maturity: available
+confidence: 0.85

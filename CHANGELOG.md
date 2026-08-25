@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Added
+
+- Fixture `EmbeddingProvider` + dense embedding index (`COMPASS_EMBEDDING_PROVIDER=fixture`)
+  with TF-IDF always as fallback (#78)
+- `rebuild-knowledge-embedding-index.sh` (#78)
+- `COMPASS_TI_PROVIDER=package-registry-file` offline npm/PyPI-shaped TI (#78)
+- Skills `embedding-providers` + `package-registry-ti` (38 Skills) (#78)
+- ADR-027 (#78)
+
+### Changed
+
+- `knowledge-steward` / `technology-intelligence-live` document embedding + package TI (#78)
+
 ## 1.14.0 — 2026-08-24
 
 ### Added

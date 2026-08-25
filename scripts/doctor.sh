@@ -104,6 +104,8 @@ SKILLS=(
   procedure-playbooks
   skill-lifecycle
   external-knowledge-ingest
+  embedding-providers
+  package-registry-ti
 )
 
 for s in "${SKILLS[@]}"; do
@@ -330,6 +332,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "rebuild-knowledge-vector-index.sh"
   else
     fail "missing executable scripts/rebuild-knowledge-vector-index.sh"
+  fi
+  if [[ -x "$ROOT/scripts/rebuild-knowledge-embedding-index.sh" ]]; then
+    ok "rebuild-knowledge-embedding-index.sh"
+  else
+    fail "missing executable scripts/rebuild-knowledge-embedding-index.sh"
   fi
   if [[ -x "$ROOT/scripts/refresh-ti-cache.sh" ]]; then
     ok "refresh-ti-cache.sh"

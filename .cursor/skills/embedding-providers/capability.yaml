@@ -1,0 +1,30 @@
+id: embedding-providers
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/embedding-providers/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, knowledge, orchestration, ml]
+tags:
+  - embeddings
+  - vector-search
+  - fixture
+  - tfidf-fallback
+capabilities_provided:
+  - fixture-embedding-rebuild
+  - dense-knowledge-query
+  - embedding-provider-selection
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - knowledge-steward
+  - python-ml
+  - documentation-agent
+maturity: available
+confidence: 0.85

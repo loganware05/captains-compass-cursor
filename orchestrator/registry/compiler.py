@@ -48,6 +48,8 @@ SKILL_SLUGS = (
     "procedure-playbooks",
     "skill-lifecycle",
     "external-knowledge-ingest",
+    "embedding-providers",
+    "package-registry-ti",
 )
 
 AGENT_PROFILES = (

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/embedding-index.schema.json",
+  "title": "EmbeddingIndex",
+  "description": "Dense embedding index for knowledge items (Milestone 11 fixture provider).",
+  "type": "object",
+  "required": [
+    "version",
+    "kind",
+    "backend",
+    "dimensions",
+    "item_count",
+    "vectors",
+    "built_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "minLength": 1 },
+    "kind": { "type": "string", "const": "dense-embedding-index" },
+    "backend": { "type": "string", "minLength": 1 },
+    "dimensions": { "type": "integer", "minimum": 1 },
+    "item_count": { "type": "integer", "minimum": 0 },
+    "vectors": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "number" }
+      }
+    },
+    "built_at": { "type": "string", "minLength": 1 }
+  }
+}

@@ -51,6 +51,40 @@ def candidate_from_huggingface_shaped(raw: dict) -> CandidateCapability:
     )
 
 
+def candidate_from_package_registry_shaped(raw: dict) -> CandidateCapability:
+    """Map npm/PyPI-shaped package records to CandidateCapability."""
+    source = raw.get("source") if isinstance(raw.get("source"), dict) else {}
+    ecosystem = str(raw.get("ecosystem") or raw.get("registry") or "package").lower()
+    package_name = str(
+        raw.get("package_name") or raw.get("name") or source.get("path") or "unknown-package"
+    )
+    caps = list(raw.get("capabilities_provided") or [])
+    if not caps:
+        caps = [f"{ecosystem}-package-pattern"]
+    provenance = str(
+        source.get("provenance_url")
+        or raw.get("url")
+        or (
+            f"https://www.npmjs.com/package/{package_name}"
+            if ecosystem == "npm"
+            else f"https://pypi.org/project/{package_name}/"
+            if ecosystem == "pypi"
+            else ""
+        )
+    )
+    return CandidateCapability(
+        id=str(raw.get("id") or f"{ecosystem}-{package_name.replace('/', '-')}"),
+        version=str(raw.get("version") or "0.1.0"),
+        capabilities_provided=caps,
+        discovery_signal=str(
+            raw.get("discovery_signal") or f"package-registry-file:{ecosystem}:{package_name}"
+        ),
+        source_path=str(source.get("path") or f"{ecosystem}:{package_name}"),
+        provenance_url=provenance,
+        notes=str(raw.get("notes") or raw.get("description") or ""),
+    )
+
+
 def repo_record_from_github_api(item: dict) -> dict:
     """Normalize `gh api user/starred` repo payload to Stars-shaped record."""
     full_name = str(item.get("full_name") or "")

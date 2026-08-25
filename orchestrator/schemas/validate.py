@@ -23,6 +23,7 @@ SCHEMA_FILES = (
     "knowledge-item.schema.json",
     "procedure-promotion.schema.json",
     "vector-index.schema.json",
+    "embedding-index.schema.json",
 )
 
 

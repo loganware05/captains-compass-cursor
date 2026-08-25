@@ -140,6 +140,22 @@ COMPASS_TI_PROVIDER=huggingface-file \
 ./scripts/refresh-ti-cache.sh --if-stale 24
 ```
 
+Fixture dense embeddings (TF-IDF remains fallback):
+
+```bash
+COMPASS_EMBEDDING_PROVIDER=fixture \
+  ./scripts/rebuild-knowledge-embedding-index.sh
+COMPASS_EMBEDDING_PROVIDER=fixture \
+  ./scripts/query-knowledge.sh --query "matcher tuning" --mode vector
+```
+
+Package-registry file TI:
+
+```bash
+COMPASS_TI_PROVIDER=package-registry-file \
+  ./scripts/query-technology-intelligence.sh --query "schema validation"
+```
+
 ## Evidence matrix
 
 Required validation artifacts by change type:

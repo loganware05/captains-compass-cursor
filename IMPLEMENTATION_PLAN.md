@@ -2,53 +2,52 @@
 
 ## Metadata
 
-- Status: COMPLETE
-- Plan ID: m10-external-knowledge-ti
-- Issue: [#74](https://github.com/loganware05/captains-compass-cursor/issues/74) — M10: External knowledge ingest + Hugging Face file TI (v1.14.0)
-- Branch: `feature/74-m10-external-knowledge-ti` (merged #75)
-- Target release: **v1.14.0** (released 2026-08-24)
+- Status: APPROVED
+- Plan ID: m11-embeddings-package-ti
+- Issue: [#78](https://github.com/loganware05/captains-compass-cursor/issues/78) — M11: Embedding provider protocol + package-registry file TI (v1.15.0)
+- Branch: `feature/78-m11-embeddings-package-ti`
+- Target release: **v1.15.0** (additive; non-breaking)
 - Created: 2026-08-24
-- Last updated: 2026-08-24 (closeout: sandbox #31)
+- Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
-- Approved revision: v1.14.0; both knowledge+HF TI; file export only; fetched_at + --if-stale; dedicated external-knowledge-ingest Skill
-- Rollback checkpoint: `rollback/pre-m10-external-knowledge-ti` @ `bc5f8a7`
-- Feature PR: [#75](https://github.com/loganware05/captains-compass-cursor/pull/75) (merged @ `f99dda5`)
+- Approved revision: v1.15.0; both embeddings+package TI; fixture+protocol only; TF-IDF always fallback; dedicated Skills embedding-providers + package-registry-ti
+- Rollback checkpoint: `rollback/pre-m11-embeddings-package-ti` @ `f9677bb`
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
-  - Prior plans: M1–M9 COMPLETE (v1.5.0–v1.13.0)
-  - Baseline: **v1.13.0** (`bc5f8a7`)
-- Machine artifacts: `.agent/plans/m10-external-knowledge-ti/`
+  - Prior plans: M1–M10 COMPLETE (v1.5.0–v1.14.0)
+  - Baseline: **v1.14.0** (`f9677bb`)
+- Machine artifacts: `.agent/plans/m11-embeddings-package-ti/`
 
 ## Request
 
-Milestone 10: file-export Notion/NotebookLM knowledge ingest + Hugging Face file TI
-+ TI cache `fetched_at` / `--if-stale`.
+Milestone 11: fixture EmbeddingProvider + package-registry file TI; TF-IDF always fallback.
 
 ## Acceptance Criteria
 
-- [x] Notion + NotebookLM file ingest → `kind: knowledge` (explicit CLI)
-- [x] `COMPASS_TI_PROVIDER=huggingface-file` with golden fixtures
-- [x] TI cache `fetched_at` + `refresh-ti-cache.sh --if-stale <hours>`
-- [x] Skill `external-knowledge-ingest`; extend knowledge-steward + technology-intelligence-live; ADR-026
-- [x] Doctor / tests / evals pass (36 Skills)
-- [x] Control-repo only; sandbox refresh after release ([sandbox#31](https://github.com/loganware05/captain-compass-sandbox/pull/31))
+- [x] `EmbeddingProvider` protocol + selection helper; default path unchanged (TF-IDF)
+- [x] `FixtureEmbeddingProvider` with deterministic offline vectors (no network)
+- [x] Dense vector index `.agent/knowledge/embedding-index.json` + rebuild CLI
+- [x] Hybrid / vector query prefers dense when present; TF-IDF always fallback
+- [x] `PackageRegistryFileTechnologyIntelligenceProvider` + npm/PyPI-shaped mapper
+- [x] `COMPASS_TI_PROVIDER=package-registry-file` wired; CI default unchanged (`stub`)
+- [x] Skills `embedding-providers` + `package-registry-ti`; ADR-027
+- [x] Doctor / install / tests / evals pass
+- [ ] Control-repo only; sandbox refresh after release
 
 ## Open Questions (Captain — resolved 2026-08-24)
 
-1. **v1.14.0**
-2. **Both** knowledge ingest and HF file TI
-3. **File export only**
-4. **`fetched_at` and `refresh-ti-cache.sh --if-stale`**
-5. Dedicated **`external-knowledge-ingest`** Skill
+1. **v1.15.0**
+2. **Both** embedding and package-registry TI
+3. **Fixture + protocol only** (no OpenAI-compatible HTTP)
+4. **TF-IDF always as fallback**
+5. Dedicated Skills **`embedding-providers`** + **`package-registry-ti`**
 
 ## Approval Record
 
 - **Approved by:** Captain
 - **Approval date:** 2026-08-24
-- **Approved revision:** v1.14.0; both; file export; fetched_at + --if-stale; external-knowledge-ingest Skill
-- **Issue:** #74
-- **Branch:** feature/74-m10-external-knowledge-ti
-- **Rollback:** rollback/pre-m10-external-knowledge-ti @ bc5f8a7
-- **Feature PR:** #75 (merged)
-- **Release:** v1.14.0 (2026-08-24)
+- **Approved revision:** v1.15.0; both; fixture+protocol; TF-IDF fallback; dedicated Skills
+- **Issue:** #78
+- **Branch:** feature/78-m11-embeddings-package-ti
+- **Rollback:** rollback/pre-m11-embeddings-package-ti @ f9677bb

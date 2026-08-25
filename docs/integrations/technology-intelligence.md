@@ -61,8 +61,10 @@ with `TechnologyIntelligenceValidationError`.
 
 | Env var | Values | Default |
 |---|---|---|
-| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` \| `huggingface-file` | `stub` |
+| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` \| `huggingface-file` \| `package-registry-file` | `stub` |
 | `COMPASS_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/` |
+| `COMPASS_EMBEDDING_PROVIDER` | `tfidf` \| `fixture` | `tfidf` |
+| `COMPASS_PACKAGE_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/package-registry/` |
 
 `orchestrator/plan_writer/build.py` calls `select_ti_provider()`. CI and default
 installs stay on **stub** (empty list). Set `COMPASS_TI_PROVIDER=file` for local
@@ -74,7 +76,11 @@ demos using redacted Stars-shaped fixtures under
 `.agent/intelligence/ti-cache/starred-repos.json` (refresh via
 `./scripts/refresh-ti-cache.sh`; optional `--if-stale HOURS` skips when
 `fetched_at` is fresh). Set `COMPASS_TI_PROVIDER=huggingface-file` for offline
-Hugging Face model-card fixtures (no Hub network in CI).
+Hugging Face model-card fixtures (no Hub network in CI). Set
+`COMPASS_TI_PROVIDER=package-registry-file` for offline npm/PyPI-shaped package
+fixtures (no registry network in CI). Dense knowledge embeddings are separate
+(`COMPASS_EMBEDDING_PROVIDER=fixture`; Skill `embedding-providers`) — TF-IDF
+remains the default fallback.
 
 Explicit read-only queries:
 
@@ -84,6 +90,7 @@ COMPASS_TI_PROVIDER=github-stars ./scripts/query-technology-intelligence.sh --qu
 ./scripts/refresh-ti-cache.sh --if-stale 24
 COMPASS_TI_PROVIDER=github-stars-cached ./scripts/query-technology-intelligence.sh --query "react forms"
 COMPASS_TI_PROVIDER=huggingface-file ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
+COMPASS_TI_PROVIDER=package-registry-file ./scripts/query-technology-intelligence.sh --query "schema validation"
 ```
 
 ## Plan rendering
@@ -114,6 +121,8 @@ manifests, or install targets.
 | `CachedGithubStarsTechnologyIntelligenceProvider` | Shipped — offline cache via `github-stars-cached` (M8) |
 | `refresh-ti-cache.sh` | Shipped — explicit cache refresh CLI (M8); `--if-stale` (M10) |
 | `HuggingFaceFileTechnologyIntelligenceProvider` | Shipped — offline HF model cards via `huggingface-file` (M10) |
+| `PackageRegistryFileTechnologyIntelligenceProvider` | Shipped — offline npm/PyPI via `package-registry-file` (M11) |
+| Fixture `EmbeddingProvider` + dense index | Shipped — `COMPASS_EMBEDDING_PROVIDER=fixture` (M11); TF-IDF fallback |
 | `CandidateCapability` + schema | Shipped |
 | Pre-render validation | Shipped |
 | `query-technology-intelligence.sh` | Shipped — explicit Captain TI queries |
