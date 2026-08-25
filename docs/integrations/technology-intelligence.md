@@ -61,10 +61,14 @@ with `TechnologyIntelligenceValidationError`.
 
 | Env var | Values | Default |
 |---|---|---|
-| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` \| `huggingface-file` \| `package-registry-file` | `stub` |
+| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` \| `huggingface-file` \| `package-registry-file` \| `package-registry` | `stub` |
 | `COMPASS_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/` |
-| `COMPASS_EMBEDDING_PROVIDER` | `tfidf` \| `fixture` | `tfidf` |
+| `COMPASS_EMBEDDING_PROVIDER` | `tfidf` \| `fixture` \| `openai-compatible` | `tfidf` |
+| `COMPASS_EMBEDDING_API_KEY` | API key for openai-compatible | (required when live) |
+| `COMPASS_EMBEDDING_BASE_URL` | OpenAI-compatible base URL | `https://api.openai.com/v1` |
+| `COMPASS_EMBEDDING_MODEL` | embedding model id | `text-embedding-3-small` |
 | `COMPASS_PACKAGE_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/package-registry/` |
+| `COMPASS_PACKAGE_TI_ECOSYSTEMS` | `npm,pypi` | `npm,pypi` |
 
 `orchestrator/plan_writer/build.py` calls `select_ti_provider()`. CI and default
 installs stay on **stub** (empty list). Set `COMPASS_TI_PROVIDER=file` for local
@@ -91,6 +95,7 @@ COMPASS_TI_PROVIDER=github-stars ./scripts/query-technology-intelligence.sh --qu
 COMPASS_TI_PROVIDER=github-stars-cached ./scripts/query-technology-intelligence.sh --query "react forms"
 COMPASS_TI_PROVIDER=huggingface-file ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
 COMPASS_TI_PROVIDER=package-registry-file ./scripts/query-technology-intelligence.sh --query "schema validation"
+COMPASS_TI_PROVIDER=package-registry ./scripts/query-technology-intelligence.sh --query "schema validation"
 ```
 
 ## Plan rendering
@@ -122,7 +127,9 @@ manifests, or install targets.
 | `refresh-ti-cache.sh` | Shipped — explicit cache refresh CLI (M8); `--if-stale` (M10) |
 | `HuggingFaceFileTechnologyIntelligenceProvider` | Shipped — offline HF model cards via `huggingface-file` (M10) |
 | `PackageRegistryFileTechnologyIntelligenceProvider` | Shipped — offline npm/PyPI via `package-registry-file` (M11) |
+| `PackageRegistryLiveTechnologyIntelligenceProvider` | Shipped — live npm+PyPI via `package-registry` (M12; Captain local) |
 | Fixture `EmbeddingProvider` + dense index | Shipped — `COMPASS_EMBEDDING_PROVIDER=fixture` (M11); TF-IDF fallback |
+| OpenAI-compatible `EmbeddingProvider` | Shipped — `openai-compatible` + `COMPASS_EMBEDDING_*` (M12; mocked in CI) |
 | `CandidateCapability` + schema | Shipped |
 | Pre-render validation | Shipped |
 | `query-technology-intelligence.sh` | Shipped — explicit Captain TI queries |

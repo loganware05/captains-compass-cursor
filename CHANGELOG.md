@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Added
+
+- OpenAI-compatible embedding provider (`COMPASS_EMBEDDING_PROVIDER=openai-compatible`,
+  `COMPASS_EMBEDDING_*` env) with mocked CI tests (#82)
+- Live package-registry TI (`COMPASS_TI_PROVIDER=package-registry`) for npm + PyPI (#82)
+- Soft-hook skip-env inheritance via `.agent/compass-skip.env` (#82)
+- ADR-028 (#82)
+
+### Changed
+
+- Skills `embedding-providers` / `package-registry-ti` document live paths (#82)
+- Soft-hook README documents compass-skip.env (#82)
+
 ## 1.15.0 — 2026-08-24
 
 ### Added

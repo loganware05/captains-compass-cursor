@@ -10,9 +10,9 @@ usage() {
 Usage: rebuild-knowledge-embedding-index.sh [--repo-root PATH]
 
 Rebuild .agent/knowledge/embedding-index.json using COMPASS_EMBEDDING_PROVIDER
-(default for this script: fixture). TF-IDF vector-index.json is unchanged.
-Requires COMPASS_EMBEDDING_PROVIDER=fixture (or sets it for this run).
-Explicit CLI only — never auto-runs on workstream close. No network.
+(default for this script: fixture). Supports fixture|openai-compatible.
+TF-IDF vector-index.json is unchanged. Explicit CLI only.
+openai-compatible needs COMPASS_EMBEDDING_API_KEY (+ optional BASE_URL / MODEL).
 USAGE
 }
 
@@ -32,20 +32,27 @@ import os
 import sys
 from pathlib import Path
 
-from orchestrator.knowledge.adapters.embeddings import select_embedding_provider
+from orchestrator.knowledge.adapters.embeddings import (
+    EmbeddingProviderError,
+    select_embedding_provider,
+)
 from orchestrator.knowledge.embedding_index import build_embedding_index, write_embedding_index
 
 repo = Path(sys.argv[1]).resolve()
 provider = select_embedding_provider()
 if provider is None:
     print(
-        "error: COMPASS_EMBEDDING_PROVIDER must be 'fixture' "
+        "error: COMPASS_EMBEDDING_PROVIDER must be 'fixture' or 'openai-compatible' "
         f"(got {os.environ.get('COMPASS_EMBEDDING_PROVIDER', '')!r})",
         file=sys.stderr,
     )
     sys.exit(1)
-path = write_embedding_index(repo, provider=provider)
-index = build_embedding_index(repo, provider=provider)
+try:
+    path = write_embedding_index(repo, provider=provider)
+    index = build_embedding_index(repo, provider=provider)
+except EmbeddingProviderError as exc:
+    print(f"error: {exc}", file=sys.stderr)
+    sys.exit(1)
 print(
     json.dumps(
         {

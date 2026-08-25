@@ -156,6 +156,27 @@ COMPASS_TI_PROVIDER=package-registry-file \
   ./scripts/query-technology-intelligence.sh --query "schema validation"
 ```
 
+Live package-registry TI (Captain local; never CI):
+
+```bash
+COMPASS_TI_PROVIDER=package-registry \
+  ./scripts/query-technology-intelligence.sh --query "schema validation"
+```
+
+OpenAI-compatible embeddings (Captain local; never CI):
+
+```bash
+export COMPASS_EMBEDDING_PROVIDER=openai-compatible
+export COMPASS_EMBEDDING_API_KEY=...   # never commit
+./scripts/rebuild-knowledge-embedding-index.sh
+```
+
+Soft-hook skip-env file (when Cursor does not forward process env):
+
+```bash
+printf 'COMPASS_SKIP_FORMAT=1\n' > .agent/compass-skip.env
+```
+
 ## Evidence matrix
 
 Required validation artifacts by change type:

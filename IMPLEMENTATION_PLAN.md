@@ -2,55 +2,53 @@
 
 ## Metadata
 
-- Status: COMPLETE
-- Plan ID: m11-embeddings-package-ti
-- Issue: [#78](https://github.com/loganware05/captains-compass-cursor/issues/78) — M11: Embedding provider protocol + package-registry file TI (v1.15.0)
-- Branch: `feature/78-m11-embeddings-package-ti` (merged #79)
-- Target release: **v1.15.0** (released 2026-08-24)
+- Status: APPROVED
+- Plan ID: m12-live-embeddings-registry
+- Issue: [#82](https://github.com/loganware05/captains-compass-cursor/issues/82) — M12: Live OpenAI-compatible embeddings + package-registry TI + soft-hook skips (v1.16.0)
+- Branch: `feature/82-m12-live-embeddings-registry`
+- Target release: **v1.16.0** (additive; non-breaking)
 - Created: 2026-08-24
-- Last updated: 2026-08-24 (closeout: sandbox #32)
+- Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
-- Approved revision: v1.15.0; both embeddings+package TI; fixture+protocol only; TF-IDF always fallback; dedicated Skills embedding-providers + package-registry-ti
-- Rollback checkpoint: `rollback/pre-m11-embeddings-package-ti` @ `f9677bb`
-- Feature PR: [#79](https://github.com/loganware05/captains-compass-cursor/pull/79) (merged @ `46c3f53`)
+- Approved revision: v1.16.0; embeddings+live package TI; COMPASS_EMBEDDING_*; npm+PyPI; extend existing Skills; include soft-hook compass-skip.env
+- Rollback checkpoint: `rollback/pre-m12-live-embeddings-registry` @ `1f9d948`
 - Source documents:
-  - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
-  - Prior plans: M1–M10 COMPLETE (v1.5.0–v1.14.0)
-  - Baseline: **v1.14.0** (`f9677bb`)
-- Machine artifacts: `.agent/plans/m11-embeddings-package-ti/`
+  - Notion architecture plan; M11 ADR-027 deferrals
+  - Baseline: **v1.15.0** (`1f9d948`)
+- Machine artifacts: `.agent/plans/m12-live-embeddings-registry/`
 
 ## Request
 
-Milestone 11: fixture EmbeddingProvider + package-registry file TI; TF-IDF always fallback.
+Milestone 12: live OpenAI-compatible embeddings + live npm/PyPI TI + soft-hook skip-env.
 
 ## Acceptance Criteria
 
-- [x] `EmbeddingProvider` protocol + selection helper; default path unchanged (TF-IDF)
-- [x] `FixtureEmbeddingProvider` with deterministic offline vectors (no network)
-- [x] Dense vector index `.agent/knowledge/embedding-index.json` + rebuild CLI
-- [x] Hybrid / vector query prefers dense when present; TF-IDF always fallback
-- [x] `PackageRegistryFileTechnologyIntelligenceProvider` + npm/PyPI-shaped mapper
-- [x] `COMPASS_TI_PROVIDER=package-registry-file` wired; CI default unchanged (`stub`)
-- [x] Skills `embedding-providers` + `package-registry-ti`; ADR-027
+- [x] `OpenAICompatibleEmbeddingProvider` implementing `EmbeddingProvider`
+- [x] Env contract `COMPASS_EMBEDDING_API_KEY` / `BASE_URL` / `MODEL`; secrets never logged
+- [x] Fail closed without key/URL; unknown providers fall back to TF-IDF
+- [x] CI tests use mocked HTTP only
+- [x] Dense rebuild + query; TF-IDF fallback on live failure
+- [x] Live package-registry TI (npm + PyPI); Skill updates
+- [x] Soft-hook `.agent/compass-skip.env` inheritance
+- [x] ADR-028; extend existing Skills only
 - [x] Doctor / install / tests / evals pass
-- [x] Control-repo only; sandbox refresh after release ([sandbox#32](https://github.com/loganware05/captain-compass-sandbox/pull/32))
+- [ ] Control-repo only; sandbox refresh after release
 
 ## Open Questions (Captain — resolved 2026-08-24)
 
-1. **v1.15.0**
-2. **Both** embedding and package-registry TI
-3. **Fixture + protocol only** (no OpenAI-compatible HTTP)
-4. **TF-IDF always as fallback**
-5. Dedicated Skills **`embedding-providers`** + **`package-registry-ti`**
+1. **v1.16.0**
+2. **Both** embeddings and live package-registry TI
+3. **`COMPASS_EMBEDDING_*`**
+4. **Both** npm and PyPI
+5. **Extend** existing Skills only
+6. **Include** soft-hook `compass-skip.env`
 
 ## Approval Record
 
 - **Approved by:** Captain
 - **Approval date:** 2026-08-24
-- **Approved revision:** v1.15.0; both; fixture+protocol; TF-IDF fallback; dedicated Skills
-- **Issue:** #78
-- **Branch:** feature/78-m11-embeddings-package-ti
-- **Rollback:** rollback/pre-m11-embeddings-package-ti @ f9677bb
-- **Feature PR:** #79 (merged)
-- **Release:** v1.15.0 (2026-08-24)
+- **Approved revision:** as above
+- **Issue:** #82
+- **Branch:** feature/82-m12-live-embeddings-registry
+- **Rollback:** rollback/pre-m12-live-embeddings-registry @ 1f9d948

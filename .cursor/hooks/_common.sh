@@ -33,7 +33,7 @@ compass_deny() {
   exit 0
 }
 
-# Soft-hook skips: process env, command-string assignment, or marker file.
+# Soft-hook skips: process env, command-string assignment, repo skip-env file, or marker.
 # Usage: compass_soft_skip FORMAT|TESTS|PR_EVIDENCE
 compass_soft_skip() {
   local kind="$1"
@@ -64,6 +64,12 @@ compass_soft_skip() {
   fi
   local repo
   repo="$(compass_repo_dir)"
+  # Env inheritance file — when Cursor does not forward process env to hooks.
+  # Lines like COMPASS_SKIP_FORMAT=1 (no secrets). Prefer gitignored local file.
+  local skip_env="$repo/.agent/compass-skip.env"
+  if [[ -f "$skip_env" ]] && grep -Eq "^[[:space:]]*${env_var}=1([[:space:]]|#|$)" "$skip_env"; then
+    return 0
+  fi
   if [[ -f "$repo/.agent/COMPASS_SKIP_HOOKS" ]]; then
     return 0
   fi

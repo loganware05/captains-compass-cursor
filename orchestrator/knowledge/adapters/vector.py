@@ -64,17 +64,25 @@ class DenseThenTfidfVectorIndexAdapter:
             write_embedding_index(self.repo_root, provider=provider)
 
     def query(self, text: str, *, top_n: int = 10) -> list[dict]:
+        from orchestrator.knowledge.adapters.embeddings import EmbeddingProviderError
+
         provider = select_embedding_provider()
         if provider is not None and embedding_index_exists(self.repo_root):
-            ranked = query_embedding_scores(
-                self.repo_root, text, top_n=top_n, provider=provider
-            )
+            try:
+                ranked = query_embedding_scores(
+                    self.repo_root, text, top_n=top_n, provider=provider
+                )
+            except EmbeddingProviderError:
+                ranked = []
             if ranked:
+                backend = getattr(provider, "name", "dense") or "dense"
+                if backend == "fixture":
+                    backend = "fixture-embedding"
                 return [
                     {
                         "item_id": item_id,
                         "vector_score": score,
-                        "vector_backend": "fixture-embedding",
+                        "vector_backend": backend,
                     }
                     for item_id, score in ranked
                 ]
