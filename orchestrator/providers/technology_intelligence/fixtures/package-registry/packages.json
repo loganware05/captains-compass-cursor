@@ -1,0 +1,47 @@
+[
+  {
+    "id": "npm-zod",
+    "package_name": "zod",
+    "ecosystem": "npm",
+    "version": "3.23.8",
+    "description": "TypeScript-first schema validation with static type inference",
+    "capabilities_provided": ["schema-validation", "typescript-types", "form-validation"],
+    "discovery_signal": "package-registry-file:npm:zod",
+    "source": {
+      "type": "external-candidate",
+      "path": "npm:zod",
+      "provenance_url": "https://www.npmjs.com/package/zod"
+    },
+    "notes": "Offline npm-shaped fixture — NOT APPROVED FOR EXECUTION"
+  },
+  {
+    "id": "pypi-pydantic",
+    "package_name": "pydantic",
+    "ecosystem": "pypi",
+    "version": "2.9.0",
+    "description": "Data validation using Python type annotations",
+    "capabilities_provided": ["schema-validation", "python-types", "api-models"],
+    "discovery_signal": "package-registry-file:pypi:pydantic",
+    "source": {
+      "type": "external-candidate",
+      "path": "pypi:pydantic",
+      "provenance_url": "https://pypi.org/project/pydantic/"
+    },
+    "notes": "Offline PyPI-shaped fixture — NOT APPROVED FOR EXECUTION"
+  },
+  {
+    "id": "npm-react-hook-form",
+    "package_name": "react-hook-form",
+    "ecosystem": "npm",
+    "version": "7.53.0",
+    "description": "Performant accessible forms with React hooks",
+    "capabilities_provided": ["react-forms", "accessible-forms", "form-validation"],
+    "discovery_signal": "package-registry-file:npm:react-hook-form",
+    "source": {
+      "type": "external-candidate",
+      "path": "npm:react-hook-form",
+      "provenance_url": "https://www.npmjs.com/package/react-hook-form"
+    },
+    "notes": "Offline npm-shaped fixture — NOT APPROVED FOR EXECUTION"
+  }
+]

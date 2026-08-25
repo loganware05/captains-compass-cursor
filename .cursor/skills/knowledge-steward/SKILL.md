@@ -58,6 +58,14 @@ ADR headings from `DECISIONS.md`.
    ./scripts/ingest-knowledge.sh --from-store decisions --rebuild-vector
    ```
 
+   For **fixture dense embeddings** (TF-IDF remains fallback), use Skill
+   `embedding-providers`:
+
+   ```bash
+   COMPASS_EMBEDDING_PROVIDER=fixture \
+     ./scripts/rebuild-knowledge-embedding-index.sh
+   ```
+
 4. Review matches under `.agent/knowledge/items/` with provenance.
 5. Optionally propose a reusable procedure (staging + Captain PR only):
 
@@ -79,6 +87,7 @@ ADR headings from `DECISIONS.md`.
 - Knowledge items under `.agent/knowledge/items/`
 - Rebuilt `.agent/knowledge/index.json`
 - Optional `.agent/knowledge/vector-index.json` after explicit rebuild
+- Optional `.agent/knowledge/embedding-index.json` after fixture embedding rebuild
 - Ingest audit under `.agent/knowledge/ingest-log/`
 - Optional procedure staging under `.agent/knowledge/procedures/staging/`
 

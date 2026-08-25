@@ -4,6 +4,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from orchestrator.knowledge.adapters.embeddings import select_embedding_provider
+from orchestrator.knowledge.embedding_index import (
+    embedding_index_exists,
+    query_embedding_scores,
+)
 from orchestrator.knowledge.index import load_index, tokenize, write_index
 from orchestrator.knowledge.store import list_knowledge_items
 from orchestrator.knowledge.vector_index import (
@@ -52,7 +57,28 @@ def _keyword_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int
     return ranked
 
 
-def _vector_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int) -> dict[str, float]:
+def _dense_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int) -> dict[str, float]:
+    """Dense embedding scores when fixture provider + embedding index are active."""
+    provider = select_embedding_provider()
+    if provider is None or not embedding_index_exists(repo_root):
+        return {}
+    items_by_id = {str(i["item_id"]): i for i in list_knowledge_items(repo_root)}
+    ranked: dict[str, float] = {}
+    for item_id, score in query_embedding_scores(
+        repo_root, query, top_n=top_n * 3, provider=provider
+    ):
+        item = items_by_id.get(item_id)
+        if item is None:
+            continue
+        if kind and str(item.get("kind")) != kind:
+            continue
+        ranked[item_id] = score
+        if len(ranked) >= top_n:
+            break
+    return ranked
+
+
+def _tfidf_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int) -> dict[str, float]:
     if not vector_index_exists(repo_root):
         return {}
     items_by_id = {str(i["item_id"]): i for i in list_knowledge_items(repo_root)}
@@ -67,6 +93,19 @@ def _vector_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int)
         if len(ranked) >= top_n:
             break
     return ranked
+
+
+def _vector_ranked(
+    repo_root: Path, query: str, *, kind: str | None, top_n: int
+) -> tuple[dict[str, float], str]:
+    """Return vector scores and backend label. Dense first; TF-IDF always fallback."""
+    dense = _dense_ranked(repo_root, query, kind=kind, top_n=top_n)
+    if dense:
+        return dense, "fixture-embedding"
+    tfidf = _tfidf_ranked(repo_root, query, kind=kind, top_n=top_n)
+    if tfidf:
+        return tfidf, "tfidf"
+    return {}, "none"
 
 
 def _merge_hybrid(
@@ -122,7 +161,7 @@ def query_knowledge(
         return results
 
     if normalized_mode == "vector":
-        vector_scores = _vector_ranked(repo_root, query, kind=kind, top_n=top_n)
+        vector_scores, backend = _vector_ranked(repo_root, query, kind=kind, top_n=top_n)
         if not vector_scores:
             return []
         ranked = sorted(vector_scores.items(), key=lambda pair: (-pair[1], pair[0]))
@@ -132,11 +171,12 @@ def query_knowledge(
             item["query_score"] = score
             item["vector_score"] = score
             item["search_mode"] = "vector"
+            item["vector_backend"] = backend
             results.append(item)
         return results
 
     keyword_scores = _keyword_ranked(repo_root, query, kind=kind, top_n=top_n)
-    vector_scores = _vector_ranked(repo_root, query, kind=kind, top_n=top_n)
+    vector_scores, backend = _vector_ranked(repo_root, query, kind=kind, top_n=top_n)
     if not vector_scores:
         ranked = sorted(keyword_scores.items(), key=lambda pair: (-pair[1], pair[0]))
         results = []
@@ -158,5 +198,6 @@ def query_knowledge(
         item["keyword_score"] = keyword_score
         item["vector_score"] = vector_score
         item["search_mode"] = "hybrid"
+        item["vector_backend"] = backend
         results.append(item)
     return results

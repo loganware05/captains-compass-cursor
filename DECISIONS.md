@@ -1,5 +1,27 @@
 # Decisions
 
+## ADR-027: Fixture embedding protocol and package-registry file TI (v1.15.0 M11)
+
+- **Status:** Accepted
+- **Date:** 2026-08-24
+- **Context:** M6 shipped TF-IDF vector search; M10 deferred production embeddings
+  and package-registry TI. Captains need opt-in dense search and package discovery
+  without live HTTP in CI.
+- **Decision:**
+  1. Ship `EmbeddingProvider` protocol with **fixture-only** dense backend
+     (`COMPASS_EMBEDDING_PROVIDER=fixture`); default remains TF-IDF (`tfidf`).
+  2. Dense index at `.agent/knowledge/embedding-index.json`; explicit rebuild via
+     `rebuild-knowledge-embedding-index.sh`.
+  3. **TF-IDF always remains fallback** when dense index missing or provider is
+     `tfidf`.
+  4. No OpenAI-compatible / live embedding HTTP in M11.
+  5. Ship `PackageRegistryFileTechnologyIntelligenceProvider` behind
+     `COMPASS_TI_PROVIDER=package-registry-file` (npm/PyPI-shaped fixtures).
+  6. Dedicated Skills `embedding-providers` and `package-registry-ti` (38 Skills).
+  7. Hosted vector DBs and live registry scrapers remain deferred.
+- **Consequences:** Semantic search can opt into dense fixture vectors safely;
+  package signals enter TI plans; CI/default stub TI + TF-IDF unchanged.
+
 ## ADR-026: External knowledge ingest and Hugging Face file TI (v1.14.0 M10)
 
 - **Status:** Accepted

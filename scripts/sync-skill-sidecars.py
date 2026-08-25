@@ -80,6 +80,37 @@ SKILLS: dict[str, dict] = {
             "documentation-agent",
         ],
     },
+    "embedding-providers": {
+        "categories": ["process", "knowledge", "orchestration", "ml"],
+        "tags": ["embeddings", "vector-search", "fixture", "tfidf-fallback"],
+        "capabilities_provided": [
+            "fixture-embedding-rebuild",
+            "dense-knowledge-query",
+            "embedding-provider-selection",
+        ],
+        "compatible_stacks": ["any"],
+        "security_sensitivity": "medium",
+        "agent_affinity": [
+            "knowledge-steward",
+            "python-ml",
+            "documentation-agent",
+        ],
+    },
+    "package-registry-ti": {
+        "categories": ["process", "discovery", "orchestration", "packages"],
+        "tags": ["npm", "pypi", "package-registry", "technology-intelligence"],
+        "capabilities_provided": [
+            "package-registry-file-ti",
+            "npm-pypi-discovery-signals",
+        ],
+        "compatible_stacks": ["any"],
+        "security_sensitivity": "medium",
+        "agent_affinity": [
+            "technology-intelligence-live",
+            "candidate-promotion",
+            "dependency-supply-chain",
+        ],
+    },
     "compass-evaluator": {
         "categories": ["process", "evaluation", "orchestration"],
         "tags": ["evaluator", "experiments", "comparison"],
