@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship v1.16.0 / M12 release (live embeddings + package-registry TI + soft-hook skip-env). Hosted vector DBs remain deferred.
+M12 / v1.16.0 shipped. Next: milestone planning when Captain is ready. Hosted vector DBs remain deferred.

@@ -33,6 +33,7 @@
 |---|---:|---|---|
 | 2026-08-24 | 0 | approved | Kickoff: issue #82, rollback, branch, decisions locked |
 | 2026-08-24 | 1 | pass | T-A–T-D impl; doctor + 153 unit + 40 evals + tests/run 114 |
+| 2026-08-24 | 2 | complete | Feature #83, release #84, tag v1.16.0, sandbox #33, closeout |
 
 ## Stop condition
 

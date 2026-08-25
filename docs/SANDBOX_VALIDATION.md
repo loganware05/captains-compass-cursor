@@ -179,3 +179,13 @@ Control mirror: `.agent/evidence/release-v1.14.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.15.0/post-tag-validation.md`
 
+### Live embeddings + package-registry TI + soft-hook skip-env (v1.16.0) — refresh complete 2026-08-24
+
+| Step | Result |
+|---|---|
+| Control release `v1.16.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.16.0 |
+| Sandbox refreshed to Compass 1.16.0 | Pass — [sandbox#33](https://github.com/loganware05/captain-compass-sandbox/pull/33) merged |
+| Live embeddings / package-registry TI smoke on sandbox | Pending interactive (optional) |
+
+Control mirror: `.agent/evidence/release-v1.16.0/post-tag-validation.md`
+
