@@ -2,17 +2,18 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: m11-embeddings-package-ti
 - Issue: [#78](https://github.com/loganware05/captains-compass-cursor/issues/78) — M11: Embedding provider protocol + package-registry file TI (v1.15.0)
-- Branch: `feature/78-m11-embeddings-package-ti`
-- Target release: **v1.15.0** (additive; non-breaking)
+- Branch: `feature/78-m11-embeddings-package-ti` (merged #79)
+- Target release: **v1.15.0** (released 2026-08-24)
 - Created: 2026-08-24
 - Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
 - Approved revision: v1.15.0; both embeddings+package TI; fixture+protocol only; TF-IDF always fallback; dedicated Skills embedding-providers + package-registry-ti
 - Rollback checkpoint: `rollback/pre-m11-embeddings-package-ti` @ `f9677bb`
+- Feature PR: [#79](https://github.com/loganware05/captains-compass-cursor/pull/79) (merged @ `46c3f53`)
 - Source documents:
   - Notion: [Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan](https://app.notion.com/p/3c1e6a901c4381c4bb5fdc91dc8b4d71)
   - Prior plans: M1–M10 COMPLETE (v1.5.0–v1.14.0)
@@ -33,7 +34,7 @@ Milestone 11: fixture EmbeddingProvider + package-registry file TI; TF-IDF alway
 - [x] `COMPASS_TI_PROVIDER=package-registry-file` wired; CI default unchanged (`stub`)
 - [x] Skills `embedding-providers` + `package-registry-ti`; ADR-027
 - [x] Doctor / install / tests / evals pass
-- [ ] Control-repo only; sandbox refresh after release
+- [ ] Control-repo only; sandbox refresh after release (closeout PR)
 
 ## Open Questions (Captain — resolved 2026-08-24)
 
@@ -51,3 +52,5 @@ Milestone 11: fixture EmbeddingProvider + package-registry file TI; TF-IDF alway
 - **Issue:** #78
 - **Branch:** feature/78-m11-embeddings-package-ti
 - **Rollback:** rollback/pre-m11-embeddings-package-ti @ f9677bb
+- **Feature PR:** #79 (merged)
+- **Release:** v1.15.0 (2026-08-24)
