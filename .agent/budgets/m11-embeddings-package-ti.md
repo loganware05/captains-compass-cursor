@@ -7,7 +7,7 @@
 - Branch: feature/78-m11-embeddings-package-ti
 - Created: 2026-08-24
 - Last updated: 2026-08-24
-- Status: ACTIVE
+- Status: COMPLETE
 
 ## Limits (from approved plan)
 
@@ -21,7 +21,7 @@
 
 ## Usage
 
-- Iterations used: 0
+- Iterations used: 2
 - Failed validation cycles: 0
 - Estimated cost used (USD): 0
 - Cost is estimate: true
@@ -33,6 +33,7 @@
 |---|---:|---|---|
 | 2026-08-24 | 0 | approved | Kickoff: issue #78, rollback, branch, decisions locked |
 | 2026-08-24 | 1 | pass | T-A–T-D impl; doctor + 147 unit + 39 evals + tests/run 114 |
+| 2026-08-24 | 2 | complete | Feature #79, release #80, tag v1.15.0, sandbox #32, closeout |
 
 ## Stop condition
 

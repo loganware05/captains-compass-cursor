@@ -169,3 +169,13 @@ Control mirror: `.agent/evidence/release-v1.13.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.14.0/post-tag-validation.md`
 
+### Fixture embeddings + package-registry file TI (v1.15.0) — refresh complete 2026-08-24
+
+| Step | Result |
+|---|---|
+| Control release `v1.15.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.15.0 |
+| Sandbox refreshed to Compass 1.15.0 | Pass — [sandbox#32](https://github.com/loganware05/captain-compass-sandbox/pull/32) merged |
+| Fixture embeddings / package-registry TI smoke on sandbox | Pending interactive (optional) |
+
+Control mirror: `.agent/evidence/release-v1.15.0/post-tag-validation.md`
+

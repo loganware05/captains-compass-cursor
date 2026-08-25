@@ -8,7 +8,7 @@
 - Branch: `feature/78-m11-embeddings-package-ti` (merged #79)
 - Target release: **v1.15.0** (released 2026-08-24)
 - Created: 2026-08-24
-- Last updated: 2026-08-24
+- Last updated: 2026-08-24 (closeout: sandbox #32)
 - Approved by: Captain
 - Approval date: 2026-08-24
 - Approved revision: v1.15.0; both embeddings+package TI; fixture+protocol only; TF-IDF always fallback; dedicated Skills embedding-providers + package-registry-ti
@@ -34,7 +34,7 @@ Milestone 11: fixture EmbeddingProvider + package-registry file TI; TF-IDF alway
 - [x] `COMPASS_TI_PROVIDER=package-registry-file` wired; CI default unchanged (`stub`)
 - [x] Skills `embedding-providers` + `package-registry-ti`; ADR-027
 - [x] Doctor / install / tests / evals pass
-- [ ] Control-repo only; sandbox refresh after release (closeout PR)
+- [x] Control-repo only; sandbox refresh after release ([sandbox#32](https://github.com/loganware05/captain-compass-sandbox/pull/32))
 
 ## Open Questions (Captain — resolved 2026-08-24)
 
