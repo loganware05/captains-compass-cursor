@@ -8,7 +8,7 @@
 - Branch: `feature/82-m12-live-embeddings-registry` (merged #83)
 - Target release: **v1.16.0** (released 2026-08-24)
 - Created: 2026-08-24
-- Last updated: 2026-08-24
+- Last updated: 2026-08-24 (closeout: sandbox #33)
 - Approved by: Captain
 - Approval date: 2026-08-24
 - Approved revision: v1.16.0; embeddings+live package TI; COMPASS_EMBEDDING_*; npm+PyPI; extend existing Skills; include soft-hook compass-skip.env
@@ -34,7 +34,7 @@ Milestone 12: live OpenAI-compatible embeddings + live npm/PyPI TI + soft-hook s
 - [x] Soft-hook `.agent/compass-skip.env` inheritance
 - [x] ADR-028; extend existing Skills only
 - [x] Doctor / install / tests / evals pass
-- [ ] Control-repo only; sandbox refresh after release (closeout PR)
+- [x] Control-repo only; sandbox refresh after release ([sandbox#33](https://github.com/loganware05/captain-compass-sandbox/pull/33))
 
 ## Open Questions (Captain — resolved 2026-08-24)
 
