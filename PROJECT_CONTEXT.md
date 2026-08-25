@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship v1.15.0 / M11 release (fixture embeddings + package-registry file TI). Hosted vector DBs remain deferred.
+M11 / v1.15.0 shipped. Next: Milestone 12 planning when Captain is ready. Hosted vector DBs remain deferred.

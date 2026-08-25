@@ -2,27 +2,27 @@
 
 ## Current status
 
-**M11 feature merged** — release prep for **v1.15.0** in progress.
+**M11 / v1.15.0 CLOSED** — fixture embeddings + package-registry file TI shipped.
 
-- Feature PR: [#79](https://github.com/loganware05/captains-compass-cursor/pull/79) (merged)
-- Release branch: `chore/78-release-v1.15.0`
+- Release: [v1.15.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.15.0)
+- Feature PR: [#79](https://github.com/loganware05/captains-compass-cursor/pull/79)
+- Release prep: [#80](https://github.com/loganware05/captains-compass-cursor/pull/80)
+- Sandbox refresh: [sandbox#32](https://github.com/loganware05/captain-compass-sandbox/pull/32)
 - Issue: [#78](https://github.com/loganware05/captains-compass-cursor/issues/78)
 
 ## Completed
 
-- v1.5.0–v1.14.0 / M1–M10 (#54–#77)
-- M11 feature: fixture embeddings, package-registry file TI, ADR-027 (#79)
+- v1.5.0–v1.15.0 / M1–M11 (#54–#80 + sandbox #32)
+- M11: fixture EmbeddingProvider, package-registry file TI, Skills embedding-providers + package-registry-ti, ADR-027
 
 ## In progress
 
-- v1.15.0 release prep (VERSION, CHANGELOG, evidence, plan COMPLETE)
+None (awaiting Captain direction for M12).
 
 ## Next
 
-1. Merge release prep PR
-2. Tag `v1.15.0` + GitHub release
-3. Sandbox refresh 1.14.0 → 1.15.0
-4. Closeout PR; close issue #78
+1. Milestone 12 planning when Captain is ready
+2. Optional: interactive sandbox smoke for fixture embeddings / package-registry TI
 
 ## Blockers
 
