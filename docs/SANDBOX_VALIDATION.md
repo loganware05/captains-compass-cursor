@@ -159,3 +159,13 @@ Control mirror: `.agent/evidence/release-v1.12.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.13.0/post-tag-validation.md`
 
+### External knowledge ingest + HF file TI (v1.14.0) — refresh complete 2026-08-24
+
+| Step | Result |
+|---|---|
+| Control release `v1.14.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.14.0 |
+| Sandbox refreshed to Compass 1.14.0 | Pass — [sandbox#31](https://github.com/loganware05/captain-compass-sandbox/pull/31) merged |
+| External knowledge / HF file TI smoke on sandbox | Pending interactive (optional) |
+
+Control mirror: `.agent/evidence/release-v1.14.0/post-tag-validation.md`
+

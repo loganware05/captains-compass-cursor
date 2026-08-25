@@ -8,7 +8,7 @@
 - Branch: `feature/74-m10-external-knowledge-ti` (merged #75)
 - Target release: **v1.14.0** (released 2026-08-24)
 - Created: 2026-08-24
-- Last updated: 2026-08-24
+- Last updated: 2026-08-24 (closeout: sandbox #31)
 - Approved by: Captain
 - Approval date: 2026-08-24
 - Approved revision: v1.14.0; both knowledge+HF TI; file export only; fetched_at + --if-stale; dedicated external-knowledge-ingest Skill
@@ -32,7 +32,7 @@ Milestone 10: file-export Notion/NotebookLM knowledge ingest + Hugging Face file
 - [x] TI cache `fetched_at` + `refresh-ti-cache.sh --if-stale <hours>`
 - [x] Skill `external-knowledge-ingest`; extend knowledge-steward + technology-intelligence-live; ADR-026
 - [x] Doctor / tests / evals pass (36 Skills)
-- [ ] Control-repo only; sandbox refresh after release (closeout PR)
+- [x] Control-repo only; sandbox refresh after release ([sandbox#31](https://github.com/loganware05/captain-compass-sandbox/pull/31))
 
 ## Open Questions (Captain — resolved 2026-08-24)
 
