@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.15.0 — 2026-08-24
+
 ### Added
 
 - Fixture `EmbeddingProvider` + dense embedding index (`COMPASS_EMBEDDING_PROVIDER=fixture`)
@@ -13,6 +15,7 @@
 
 ### Changed
 
+- VERSION `1.15.0`
 - `knowledge-steward` / `technology-intelligence-live` document embedding + package TI (#78)
 
 ## 1.14.0 — 2026-08-24
