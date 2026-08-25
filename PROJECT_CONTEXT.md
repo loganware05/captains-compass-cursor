@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-M11 / v1.15.0 shipped. Next: Milestone 12 planning when Captain is ready. Hosted vector DBs remain deferred.
+Ship Milestone 12 feature (live embeddings + package-registry TI + soft-hook skip-env). v1.15.0 / M11 fully closed. Hosted vector DBs remain deferred.

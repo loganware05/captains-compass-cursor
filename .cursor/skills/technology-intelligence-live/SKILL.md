@@ -62,17 +62,23 @@ during capability planning — not offline fixtures and not CI defaults.
      ./scripts/query-technology-intelligence.sh --query "schema validation"
    ```
 
+9. **Live package-registry TI** (Captain local — npm + PyPI):
+
+   ```bash
+   COMPASS_TI_PROVIDER=package-registry \
+     ./scripts/query-technology-intelligence.sh --query "schema validation"
+   ```
+
 ## Output
 
 - JSON list of normalized `CandidateCapability` payloads
 - Plan section **Technology Intelligence Candidates** when planning with
   `COMPASS_TI_PROVIDER=github-stars`, `github-stars-cached`, `huggingface-file`,
-  or `package-registry-file`
+  `package-registry-file`, or `package-registry`
 
 ## Prohibited actions
 
 - Running live TI in CI or as default provider
 - Setting `approved_for_execution: true`
 - Auto-cloning, installing, or executing external repositories
-- Live Hugging Face Hub or npm/PyPI registry network calls from this Skill
-  (file providers only)
+- Live Hugging Face Hub or npm/PyPI registry network calls from CI defaults

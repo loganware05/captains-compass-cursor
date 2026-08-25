@@ -23,7 +23,9 @@ Configured in `.cursor/hooks.json` (`beforeShellExecution` + `preToolUse`):
 1. **Process env:** `COMPASS_SKIP_FORMAT=1`, `COMPASS_SKIP_TESTS=1`, `COMPASS_SKIP_PR_EVIDENCE=1`
 2. **Command-string prefix/assignment** visible to the hook, e.g.
    `COMPASS_SKIP_TESTS=1 git push` (needed when Cursor does not forward shell exports)
-3. **Marker file:** create `.agent/COMPASS_SKIP_HOOKS` in the repo (remove when done)
+3. **Repo skip-env file (env inheritance):** `.agent/compass-skip.env` with lines like
+   `COMPASS_SKIP_FORMAT=1` (gitignored; use when Cursor does not forward process env)
+4. **Marker file:** create `.agent/COMPASS_SKIP_HOOKS` in the repo (remove when done)
 
 Shared helpers live in `_common.sh`. Hooks use `python3` for JSON.
 

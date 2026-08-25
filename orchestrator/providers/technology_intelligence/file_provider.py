@@ -56,6 +56,9 @@ def select_ti_provider(repo_root: Path | None = None):
     from orchestrator.providers.technology_intelligence.package_registry_file_provider import (
         PackageRegistryFileTechnologyIntelligenceProvider,
     )
+    from orchestrator.providers.technology_intelligence.package_registry_live_provider import (
+        PackageRegistryLiveTechnologyIntelligenceProvider,
+    )
     from orchestrator.providers.technology_intelligence.ti_cache import (
         CachedGithubStarsTechnologyIntelligenceProvider,
     )
@@ -71,6 +74,8 @@ def select_ti_provider(repo_root: Path | None = None):
         return CachedGithubStarsTechnologyIntelligenceProvider(repo_root)
     if name in {"huggingface-file", "hf-file", "huggingface"}:
         return HuggingFaceFileTechnologyIntelligenceProvider()
-    if name in {"package-registry-file", "package-registry", "npm-pypi-file"}:
+    if name in {"package-registry-file", "npm-pypi-file"}:
         return PackageRegistryFileTechnologyIntelligenceProvider()
+    if name in {"package-registry", "package-registry-live", "npm-pypi-live"}:
+        return PackageRegistryLiveTechnologyIntelligenceProvider()
     return StubTechnologyIntelligenceProvider()

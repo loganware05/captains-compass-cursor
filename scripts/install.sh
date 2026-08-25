@@ -212,6 +212,7 @@ if ! grep -q "Captain's Compass" "$GITIGNORE" 2>/dev/null; then
     echo ".agent/budgets/private/"
     echo ".agent/sessions/private/"
     echo ".agent/runs/"
+    echo ".agent/compass-skip.env"
     echo ".env"
     echo ".env.*"
     echo "!.env.example"
@@ -221,6 +222,7 @@ else
   ensure_gitignore_line ".agent/budgets/private/"
   ensure_gitignore_line ".agent/sessions/private/"
   ensure_gitignore_line ".agent/runs/"
+  ensure_gitignore_line ".agent/compass-skip.env"
 fi
 
 # Record installed version

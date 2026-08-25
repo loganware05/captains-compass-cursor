@@ -1,5 +1,28 @@
 # Decisions
 
+## ADR-028: Live OpenAI-compatible embeddings, live package-registry TI, soft-hook skip-env (v1.16.0 M12)
+
+- **Status:** Accepted
+- **Date:** 2026-08-24
+- **Context:** M11 shipped fixture embeddings and file package-registry TI. Captains
+  need opt-in live embedding HTTP and live npm/PyPI discovery without CI network.
+  Soft-hook skips needed durable env inheritance when Cursor does not forward
+  process env (ADR-015 follow-up beyond ADR-016 command-string/marker).
+- **Decision:**
+  1. Ship `OpenAICompatibleEmbeddingProvider` behind
+     `COMPASS_EMBEDDING_PROVIDER=openai-compatible` using
+     `COMPASS_EMBEDDING_API_KEY` / `BASE_URL` / `MODEL` (never commit keys).
+  2. CI tests use mocked HTTP only; defaults remain `tfidf` / stub TI.
+  3. TF-IDF remains fallback on missing dense index or live embed failure.
+  4. Ship `PackageRegistryLiveTechnologyIntelligenceProvider` behind
+     `COMPASS_TI_PROVIDER=package-registry` for npm + PyPI (Captain local).
+  5. Soft hooks honor `.agent/compass-skip.env` (`COMPASS_SKIP_*=1` lines;
+     gitignored) in addition to process env, command-string, and marker file.
+  6. Extend Skills `embedding-providers` and `package-registry-ti` (no new Skills).
+  7. Hosted vector DBs remain deferred.
+- **Consequences:** Captain-local live semantic search and package discovery;
+  CI stays offline-safe; soft-hook skips work without Cursor env forwarding.
+
 ## ADR-027: Fixture embedding protocol and package-registry file TI (v1.15.0 M11)
 
 - **Status:** Accepted

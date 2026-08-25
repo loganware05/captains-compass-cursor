@@ -58,15 +58,21 @@ def _keyword_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int
 
 
 def _dense_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int) -> dict[str, float]:
-    """Dense embedding scores when fixture provider + embedding index are active."""
+    """Dense embedding scores when embedding provider + embedding index are active."""
+    from orchestrator.knowledge.adapters.embeddings import EmbeddingProviderError
+
     provider = select_embedding_provider()
     if provider is None or not embedding_index_exists(repo_root):
         return {}
     items_by_id = {str(i["item_id"]): i for i in list_knowledge_items(repo_root)}
     ranked: dict[str, float] = {}
-    for item_id, score in query_embedding_scores(
-        repo_root, query, top_n=top_n * 3, provider=provider
-    ):
+    try:
+        scored = query_embedding_scores(
+            repo_root, query, top_n=top_n * 3, provider=provider
+        )
+    except EmbeddingProviderError:
+        return {}
+    for item_id, score in scored:
         item = items_by_id.get(item_id)
         if item is None:
             continue
@@ -99,9 +105,19 @@ def _vector_ranked(
     repo_root: Path, query: str, *, kind: str | None, top_n: int
 ) -> tuple[dict[str, float], str]:
     """Return vector scores and backend label. Dense first; TF-IDF always fallback."""
+    provider = select_embedding_provider()
     dense = _dense_ranked(repo_root, query, kind=kind, top_n=top_n)
     if dense:
-        return dense, "fixture-embedding"
+        name = getattr(provider, "name", "") if provider is not None else ""
+        if name == "openai-compatible":
+            backend = "openai-compatible"
+        elif name == "fixture":
+            backend = "fixture-embedding"
+        elif name:
+            backend = str(name)
+        else:
+            backend = "dense"
+        return dense, backend
     tfidf = _tfidf_ranked(repo_root, query, kind=kind, top_n=top_n)
     if tfidf:
         return tfidf, "tfidf"

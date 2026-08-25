@@ -2,27 +2,26 @@
 
 ## Current status
 
-**M11 / v1.15.0 CLOSED** — fixture embeddings + package-registry file TI shipped.
+**M12 implementation in progress** — live embeddings + package-registry TI + soft-hook skip-env → **v1.16.0**.
 
-- Release: [v1.15.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.15.0)
-- Feature PR: [#79](https://github.com/loganware05/captains-compass-cursor/pull/79)
-- Release prep: [#80](https://github.com/loganware05/captains-compass-cursor/pull/80)
-- Sandbox refresh: [sandbox#32](https://github.com/loganware05/captain-compass-sandbox/pull/32)
-- Issue: [#78](https://github.com/loganware05/captains-compass-cursor/issues/78)
+- Issue: [#82](https://github.com/loganware05/captains-compass-cursor/issues/82)
+- Branch: `feature/82-m12-live-embeddings-registry`
+- Plan: `m12-live-embeddings-registry` — **APPROVED** (Captain 2026-08-24)
+- Rollback: `rollback/pre-m12-live-embeddings-registry` @ `1f9d948`
 
 ## Completed
 
-- v1.5.0–v1.15.0 / M1–M11 (#54–#80 + sandbox #32)
-- M11: fixture EmbeddingProvider, package-registry file TI, Skills embedding-providers + package-registry-ti, ADR-027
+- v1.5.0–v1.15.0 / M1–M11 (#54–#81)
 
 ## In progress
 
-None (awaiting Captain direction for M12).
+- M12 implementation
 
 ## Next
 
-1. Milestone 12 planning when Captain is ready
-2. Optional: interactive sandbox smoke for fixture embeddings / package-registry TI
+1. Validation (doctor, unit tests, evals)
+2. Feature PR #82
+3. Release v1.16.0 + sandbox refresh
 
 ## Blockers
 

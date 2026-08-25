@@ -47,6 +47,7 @@ wandb/
 .agent/handoffs/
 .agent/capabilities/compiled/registry.json
 .agent/plans/
+.agent/compass-skip.env
 
 # Cloud state
 *.tfstate
