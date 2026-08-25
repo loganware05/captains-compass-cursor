@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 10 feature (external knowledge ingest + HF file TI). v1.13.0 / M9 fully closed.
+Ship v1.14.0 / M10 release (external knowledge ingest + HF file TI). Production embedding providers remain deferred.

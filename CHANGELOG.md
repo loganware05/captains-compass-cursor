@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.14.0 — 2026-08-24
+
 ### Added
 
 - File-export Notion + NotebookLM knowledge ingest (`--from-store notion,notebooklm`) (#74)
@@ -12,6 +14,7 @@
 
 ### Changed
 
+- VERSION `1.14.0`
 - `knowledge-steward` / `technology-intelligence-live` document external ingest + HF file TI (#74)
 - Stars cache envelope writes `fetched_at` (keeps `refreshed_at` alias) (#74)
 
