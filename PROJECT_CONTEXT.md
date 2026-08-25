@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship Milestone 12 feature (live embeddings + package-registry TI + soft-hook skip-env). v1.15.0 / M11 fully closed. Hosted vector DBs remain deferred.
+Ship v1.16.0 / M12 release (live embeddings + package-registry TI + soft-hook skip-env). Hosted vector DBs remain deferred.

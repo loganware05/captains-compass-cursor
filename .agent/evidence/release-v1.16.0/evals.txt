@@ -1,0 +1,54 @@
+=== eval: failClosed policy ===
+PASS: failClosed critical/soft split
+=== eval: plan-approval DRAFT vs APPROVED ===
+Reset branch 'feature/eval'
+PASS: eval denies DRAFT src edit
+PASS: eval allows APPROVED src edit
+=== eval: soft-hook command-string skip ===
+PASS: format skip via command string
+PASS: tests skip via command string
+PASS: pr-evidence skip via marker file
+PASS: pr-evidence skip via compass-skip.env
+=== eval: control assets present ===
+PASS: harness-gc skill
+PASS: dependency-supply-chain skill
+PASS: session note template
+PASS: structural-tests example
+PASS: capability-planning skill
+PASS: execution-telemetry skill
+PASS: candidate-promotion skill
+PASS: experience-skill-training skill
+PASS: compass-evaluator skill
+PASS: experience-routing skill
+PASS: compass-evaluator agent
+PASS: capability-plan.sh
+PASS: record-execution-run.sh
+PASS: run-evaluation.sh
+PASS: propose-experience-routing.sh
+PASS: technology-intelligence doc
+PASS: experience.schema.json
+PASS: evaluation.schema.json
+PASS: template has Required Capabilities
+PASS: template has Task Graph
+PASS: template has Proposed Agent Configuration
+PASS: template has Approval Boundary
+=== eval: orchestrator schemas present ===
+PASS: schema capability.schema.json
+PASS: schema task.schema.json
+PASS: schema agent-manifest.schema.json
+=== eval: stub TI provider isolation ===
+PASS: stub TI returns no candidates
+=== eval: file TI provider isolation ===
+PASS: file TI returns redacted candidates
+=== eval: routing proposal does not mutate weights ===
+PASS: routing proposal leaves WEIGHTS unchanged
+=== eval: record-execution-run smoke ===
+PASS: record-execution-run writes experience
+PASS: smoke run json exists
+PASS: smoke experience json exists
+=== eval: golden fixture determinism ===
+PASS: golden fixtures deterministic
+=== eval: M4 apply rejects without captain_approved ===
+PASS: apply rejects without captain flag
+
+Eval results: 40 passed, 0 failed

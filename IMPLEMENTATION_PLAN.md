@@ -2,17 +2,18 @@
 
 ## Metadata
 
-- Status: APPROVED
+- Status: COMPLETE
 - Plan ID: m12-live-embeddings-registry
 - Issue: [#82](https://github.com/loganware05/captains-compass-cursor/issues/82) — M12: Live OpenAI-compatible embeddings + package-registry TI + soft-hook skips (v1.16.0)
-- Branch: `feature/82-m12-live-embeddings-registry`
-- Target release: **v1.16.0** (additive; non-breaking)
+- Branch: `feature/82-m12-live-embeddings-registry` (merged #83)
+- Target release: **v1.16.0** (released 2026-08-24)
 - Created: 2026-08-24
 - Last updated: 2026-08-24
 - Approved by: Captain
 - Approval date: 2026-08-24
 - Approved revision: v1.16.0; embeddings+live package TI; COMPASS_EMBEDDING_*; npm+PyPI; extend existing Skills; include soft-hook compass-skip.env
 - Rollback checkpoint: `rollback/pre-m12-live-embeddings-registry` @ `1f9d948`
+- Feature PR: [#83](https://github.com/loganware05/captains-compass-cursor/pull/83) (merged @ `fbb3aee`)
 - Source documents:
   - Notion architecture plan; M11 ADR-027 deferrals
   - Baseline: **v1.15.0** (`1f9d948`)
@@ -33,7 +34,7 @@ Milestone 12: live OpenAI-compatible embeddings + live npm/PyPI TI + soft-hook s
 - [x] Soft-hook `.agent/compass-skip.env` inheritance
 - [x] ADR-028; extend existing Skills only
 - [x] Doctor / install / tests / evals pass
-- [ ] Control-repo only; sandbox refresh after release
+- [ ] Control-repo only; sandbox refresh after release (closeout PR)
 
 ## Open Questions (Captain — resolved 2026-08-24)
 
@@ -52,3 +53,5 @@ Milestone 12: live OpenAI-compatible embeddings + live npm/PyPI TI + soft-hook s
 - **Issue:** #82
 - **Branch:** feature/82-m12-live-embeddings-registry
 - **Rollback:** rollback/pre-m12-live-embeddings-registry @ 1f9d948
+- **Feature PR:** #83 (merged)
+- **Release:** v1.16.0 (2026-08-24)
