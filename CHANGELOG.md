@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.16.0 — 2026-08-24
+
 ### Added
 
 - OpenAI-compatible embedding provider (`COMPASS_EMBEDDING_PROVIDER=openai-compatible`,
@@ -12,6 +14,7 @@
 
 ### Changed
 
+- VERSION `1.16.0`
 - Skills `embedding-providers` / `package-registry-ti` document live paths (#82)
 - Soft-hook README documents compass-skip.env (#82)
 
