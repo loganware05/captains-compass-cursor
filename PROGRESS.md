@@ -2,27 +2,27 @@
 
 ## Current status
 
-**M10 feature merged** — release prep for **v1.14.0** in progress.
+**M10 / v1.14.0 CLOSED** — external knowledge ingest + HF file TI shipped.
 
-- Feature PR: [#75](https://github.com/loganware05/captains-compass-cursor/pull/75) (merged)
-- Release branch: `chore/74-release-v1.14.0`
+- Release: [v1.14.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.14.0)
+- Feature PR: [#75](https://github.com/loganware05/captains-compass-cursor/pull/75)
+- Release prep: [#76](https://github.com/loganware05/captains-compass-cursor/pull/76)
+- Sandbox refresh: [sandbox#31](https://github.com/loganware05/captain-compass-sandbox/pull/31)
 - Issue: [#74](https://github.com/loganware05/captains-compass-cursor/issues/74)
 
 ## Completed
 
-- v1.5.0–v1.13.0 / M1–M9 (#54–#73)
-- M10 feature: external knowledge ingest, HF file TI, cache freshness (#75)
+- v1.5.0–v1.14.0 / M1–M10 (#54–#76 + sandbox #31)
+- M10: Notion/NotebookLM file ingest, HF file TI, TI cache `fetched_at` / `--if-stale`, Skill `external-knowledge-ingest`, ADR-026
 
 ## In progress
 
-- v1.14.0 release prep (VERSION, CHANGELOG, evidence, plan COMPLETE)
+None (awaiting Captain direction for M11).
 
 ## Next
 
-1. Merge release prep PR
-2. Tag `v1.14.0` + GitHub release
-3. Sandbox refresh 1.13.0 → 1.14.0
-4. Closeout PR; close issue #74
+1. Milestone 11 planning when Captain is ready
+2. Optional: interactive sandbox smoke for external knowledge / HF file TI
 
 ## Blockers
 

@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-Ship v1.14.0 / M10 release (external knowledge ingest + HF file TI). Production embedding providers remain deferred.
+M10 / v1.14.0 shipped. Next: Milestone 11 planning when Captain is ready. Production embedding providers remain deferred.
