@@ -1,5 +1,30 @@
 # Decisions
 
+## ADR-029: Hosted pgvector/Neon knowledge vectors with namespaces (v1.17.0 M13)
+
+- **Status:** Accepted
+- **Date:** 2026-08-30
+- **Context:** M6–M12 shipped file TF-IDF and optional local dense embeddings.
+  Captains need hosted semantic search that scales beyond file indexes while
+  keeping CI offline-safe and TF-IDF fallback. Pinecone and Neon/pgvector were
+  evaluated on cost for Compass-scale workloads (~2k items, low query volume).
+- **Decision:**
+  1. Choose **Neon/pgvector** over Pinecone: both are $0 on free tiers today,
+     but Pinecone Standard has a **$50/month minimum** once Starter limits are
+     exceeded; Neon Launch is pay-as-you-go with no monthly floor.
+  2. Ship `PgvectorBackend` with `InMemoryPgvectorBackend` for CI and
+     `LivePgvectorBackend` (psycopg; Captain-local) behind
+     `COMPASS_VECTOR_PROVIDER=pgvector`.
+  3. **Single shared index, namespace per repo** via `COMPASS_VECTOR_NAMESPACE`
+     (default: repo directory name).
+  4. Explicit sync CLI `sync-knowledge-vector-db.sh`; never auto-sync on close.
+  5. Query order: hosted pgvector → file dense → TF-IDF fallback.
+  6. New Skill `hosted-vector-db`; extend `embedding-providers` cross-link.
+  7. Pinecone remains a viable future second adapter if requirements change.
+- **Consequences:** Captain-local hosted semantic search with predictable cost
+  curve; CI unchanged; TF-IDF always available. See
+  [`docs/integrations/hosted-vector-db.md`](docs/integrations/hosted-vector-db.md).
+
 ## ADR-028: Live OpenAI-compatible embeddings, live package-registry TI, soft-hook skip-env (v1.16.0 M12)
 
 - **Status:** Accepted

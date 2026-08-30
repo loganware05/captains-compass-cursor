@@ -56,6 +56,7 @@ keeping **TF-IDF as the always-on fallback**.
 
 - `.agent/knowledge/embedding-index.json` (dense; optional)
 - Existing `.agent/knowledge/vector-index.json` (TF-IDF; always rebuildable)
+- Optional hosted pgvector rows when Skill `hosted-vector-db` is active
 
 ## Prohibited actions
 

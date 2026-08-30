@@ -105,6 +105,7 @@ SKILLS=(
   skill-lifecycle
   external-knowledge-ingest
   embedding-providers
+  hosted-vector-db
   package-registry-ti
 )
 

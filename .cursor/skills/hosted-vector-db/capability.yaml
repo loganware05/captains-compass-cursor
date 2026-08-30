@@ -1,0 +1,21 @@
+id: hosted-vector-db
+categories:
+  - knowledge
+  - infrastructure
+  - search
+tags:
+  - pgvector
+  - neon
+  - vector-search
+  - embeddings
+capabilities_provided:
+  - hosted-vector-sync
+  - hosted-vector-query
+  - vector-namespace-isolation
+compatible_stacks:
+  - python
+  - postgres
+security_sensitivity: high
+agent_affinity:
+  - knowledge-steward
+  - implementation-agent
