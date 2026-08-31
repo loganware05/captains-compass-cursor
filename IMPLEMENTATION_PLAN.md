@@ -1,16 +1,18 @@
 # Implementation Plan — Post-Foundation Backlog (M13–M18)
 
-- Status: APPROVED — M13 in progress
+- Status: COMPLETE — M13 / v1.17.0 release prep
 - Plan ID: post-foundation-backlog
 - Issue: #86
 
 | Field | Value |
 |---|---|
 | **Plan ID** | `post-foundation-backlog` |
-| **Status** | **APPROVED** — M13 implementation in progress |
+| **Status** | **COMPLETE** — M13 / v1.17.0 shipped |
 | **Baseline** | v1.16.0 (`9d50de8`) |
-| **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13); M14–M18 issues TBD at each milestone |
-| **Branch** | `feature/86-m13-hosted-pgvector` |
+| **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13 closed) |
+| **Feature PR** | [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) (merged @ `40c84fc`) |
+| **Target release** | **v1.17.0** |
+| **Branch** | `chore/86-release-v1.17.0` |
 | **Rollback** | `rollback/pre-m13-hosted-pgvector` |
 | **Captain approval** | 2026-08-30 |
 
@@ -50,8 +52,8 @@ Pinecone remains a viable second adapter if requirements change.
 
 | Milestone | Version | Theme | Status |
 |---|---|---|---|
-| **M13** | v1.17.0 | Hosted pgvector/Neon adapter | **In progress** (#86) |
-| **M14** | v1.18.0 | Batch GitHub Star categorization ML | Planned |
+| **M13** | v1.17.0 | Hosted pgvector/Neon adapter | **Complete** (#87) |
+| **M14** | v1.18.0 | Batch GitHub Star categorization ML | **Next** |
 | **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | Planned |
 | **M16** | v1.20.0 | Live Hugging Face Hub TI | Planned |
 | **M17** | v1.21.0 | Stage 3: context selection → light decomposition | Planned |
@@ -59,7 +61,7 @@ Pinecone remains a viable second adapter if requirements change.
 
 ---
 
-# M13 — Hosted pgvector/Neon (v1.17.0) — IN PROGRESS
+# M13 — Hosted pgvector/Neon (v1.17.0) — COMPLETE
 
 ## Objective
 
@@ -74,7 +76,8 @@ explicit sync CLI, TF-IDF + file dense fallback preserved.
 - [x] Skill `hosted-vector-db` + docs + ADR-029
 - [x] Unit tests (`test_m13_pgvector_hosted.py`)
 - [x] Full `./tests/run.sh` validation evidence
-- [ ] PR → release v1.17.0 → sandbox refresh
+- [x] Feature PR [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) merged
+- [ ] Release tag v1.17.0 + sandbox refresh + closeout
 
 ## Env vars
 
