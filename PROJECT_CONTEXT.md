@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-M12 / v1.16.0 shipped. Post-foundation backlog **APPROVED** — M13 in progress (Neon/pgvector, namespaces). See `IMPLEMENTATION_PLAN.md`.
+M13 feature merged; v1.17.0 release prep in PR #88. Post-foundation backlog **APPROVED** — M14 next. See `IMPLEMENTATION_PLAN.md`.
