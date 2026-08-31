@@ -66,17 +66,21 @@ def _keyword_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int
 
 
 def _hosted_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int) -> dict[str, float]:
-    """Hosted pgvector scores when COMPASS_VECTOR_PROVIDER is set and embeddings are active."""
-    if select_hosted_vector_backend() is None:
-        return {}
-    items_by_id = {str(i["item_id"]): i for i in list_knowledge_items(repo_root)}
-    ranked: dict[str, float] = {}
+    """Hosted pgvector scores when COMPASS_VECTOR_PROVIDER is set and embeddings are active.
+
+    Any hosted-backend misconfig or live failure returns empty so dense/TF-IDF
+    fallback remains available (never crash plan Knowledge Context).
+    """
     try:
+        if select_hosted_vector_backend() is None:
+            return {}
         scored = query_hosted_vector_scores(
             repo_root, query, kind=kind, top_n=top_n * 3
         )
     except (HostedVectorError, EmbeddingProviderError):
         return {}
+    items_by_id = {str(i["item_id"]): i for i in list_knowledge_items(repo_root)}
+    ranked: dict[str, float] = {}
     for item_id, score in scored:
         if item_id not in items_by_id:
             continue
@@ -135,8 +139,12 @@ def _vector_ranked(
     provider = select_embedding_provider()
     hosted = _hosted_ranked(repo_root, query, kind=kind, top_n=top_n)
     if hosted:
-        backend = getattr(select_hosted_vector_backend(), "name", "pgvector") or "pgvector"
-        return hosted, backend
+        try:
+            selected = select_hosted_vector_backend()
+            backend = getattr(selected, "name", "pgvector") if selected else "pgvector"
+        except HostedVectorError:
+            backend = "pgvector"
+        return hosted, backend or "pgvector"
     dense = _dense_ranked(repo_root, query, kind=kind, top_n=top_n)
     if dense:
         name = getattr(provider, "name", "") if provider is not None else ""

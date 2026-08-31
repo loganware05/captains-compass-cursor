@@ -160,14 +160,22 @@ class LivePgvectorBackend:
             raise HostedVectorError(
                 "psycopg is required for live pgvector; install with: pip install 'psycopg[binary]'"
             ) from exc
-        return psycopg.connect(self._dsn)
+        try:
+            return psycopg.connect(self._dsn)
+        except Exception as exc:  # noqa: BLE001 — convert driver errors to HostedVectorError
+            raise HostedVectorError(f"pgvector connect failed: {exc}") from exc
 
     def ensure_schema(self, dimensions: int) -> None:
         sql = pgvector_schema_sql(dimensions)
-        with self._connect() as conn:
-            conn.autocommit = True
-            with conn.cursor() as cur:
-                cur.execute(sql)
+        try:
+            with self._connect() as conn:
+                conn.autocommit = True
+                with conn.cursor() as cur:
+                    cur.execute(sql)
+        except HostedVectorError:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            raise HostedVectorError(f"pgvector schema apply failed: {exc}") from exc
 
     def upsert_items(self, namespace: str, records: list[PgvectorRecord]) -> int:
         if not records:
@@ -181,20 +189,25 @@ class LivePgvectorBackend:
               updated_at = now()
         """
         count = 0
-        with self._connect() as conn:
-            with conn.cursor() as cur:
-                for record in records:
-                    cur.execute(
-                        upsert_sql,
-                        (
-                            namespace,
-                            record.item_id,
-                            record.kind,
-                            _vector_literal(record.embedding),
-                        ),
-                    )
-                    count += 1
-            conn.commit()
+        try:
+            with self._connect() as conn:
+                with conn.cursor() as cur:
+                    for record in records:
+                        cur.execute(
+                            upsert_sql,
+                            (
+                                namespace,
+                                record.item_id,
+                                record.kind,
+                                _vector_literal(record.embedding),
+                            ),
+                        )
+                        count += 1
+                conn.commit()
+        except HostedVectorError:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            raise HostedVectorError(f"pgvector upsert failed: {exc}") from exc
         return count
 
     def query(
@@ -225,10 +238,15 @@ class LivePgvectorBackend:
             """
             params = (literal, namespace, literal, top_n)
         ranked: list[tuple[str, float]] = []
-        with self._connect() as conn:
-            with conn.cursor() as cur:
-                cur.execute(sql, params)
-                rows = cur.fetchall()
+        try:
+            with self._connect() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(sql, params)
+                    rows = cur.fetchall()
+        except HostedVectorError:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            raise HostedVectorError(f"pgvector query failed: {exc}") from exc
         for item_id, score in rows:
             ranked.append((str(item_id), round(float(score), 4)))
         return ranked
@@ -338,7 +356,13 @@ def query_hosted_vector_scores(
     backend: PgvectorBackend | None = None,
     provider: EmbeddingProvider | None = None,
 ) -> list[tuple[str, float]]:
-    backend = backend or select_hosted_vector_backend()
+    """Query hosted vectors; raise HostedVectorError only for caller to handle.
+
+    Callers that must never crash (plan Knowledge Context) should catch
+    HostedVectorError and fall back to dense/TF-IDF.
+    """
+    if backend is None:
+        backend = select_hosted_vector_backend()
     if backend is None:
         return []
     provider = provider or select_embedding_provider()
@@ -351,4 +375,9 @@ def query_hosted_vector_scores(
     if not query_vec or all(v == 0.0 for v in query_vec):
         return []
     namespace = vector_namespace(repo_root)
-    return backend.query(namespace, query_vec, top_n=top_n, kind=kind)
+    try:
+        return backend.query(namespace, query_vec, top_n=top_n, kind=kind)
+    except HostedVectorError:
+        raise
+    except Exception as exc:  # noqa: BLE001 — any live/driver failure → fail closed for callers
+        raise HostedVectorError(f"hosted vector query failed: {exc}") from exc

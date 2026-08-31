@@ -35,6 +35,7 @@ class HostedPgvectorTests(unittest.TestCase):
         reset_mock_hosted_vector_backend()
         os.environ.pop("COMPASS_VECTOR_PROVIDER", None)
         os.environ.pop("COMPASS_VECTOR_NAMESPACE", None)
+        os.environ.pop("COMPASS_VECTOR_DATABASE_URL", None)
         os.environ.pop("COMPASS_EMBEDDING_PROVIDER", None)
 
     def test_default_file_provider_unchanged(self) -> None:
@@ -123,6 +124,68 @@ class HostedPgvectorTests(unittest.TestCase):
                 self.assertEqual(results[0].get("vector_backend"), "pgvector-mock")
             finally:
                 pass
+
+    def test_missing_dsn_falls_back_to_tfidf(self) -> None:
+        """Bugbot: pgvector without DSN must not crash; fall back to TF-IDF."""
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            write_knowledge_item(
+                repo,
+                _sample_item(
+                    "know-m13-routing",
+                    "Matcher routing weights",
+                    "Bounded autonomy and matcher tuning for experience routing",
+                ),
+            )
+            write_vector_index(repo)
+            os.environ["COMPASS_VECTOR_PROVIDER"] = "pgvector"
+            os.environ.pop("COMPASS_VECTOR_DATABASE_URL", None)
+            os.environ["COMPASS_EMBEDDING_PROVIDER"] = "fixture"
+            results = query_knowledge(repo, "matcher routing", mode="vector", top_n=5)
+            self.assertTrue(results)
+            self.assertEqual(results[0].get("vector_backend"), "tfidf")
+
+    def test_live_query_failure_falls_back_to_tfidf(self) -> None:
+        """Live connect/query errors must become HostedVectorError → TF-IDF."""
+        from orchestrator.knowledge.adapters.pgvector import LivePgvectorBackend
+
+        class BoomBackend(LivePgvectorBackend):
+            def query(self, namespace, vector, *, top_n, kind):  # type: ignore[no-untyped-def]
+                raise OSError("connection refused")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            write_knowledge_item(
+                repo,
+                _sample_item(
+                    "know-m13-routing",
+                    "Matcher routing weights",
+                    "Bounded autonomy and matcher tuning for experience routing",
+                ),
+            )
+            write_vector_index(repo)
+            os.environ["COMPASS_VECTOR_PROVIDER"] = "pgvector"
+            os.environ["COMPASS_VECTOR_DATABASE_URL"] = "postgresql://invalid"
+            os.environ["COMPASS_EMBEDDING_PROVIDER"] = "fixture"
+            from orchestrator.knowledge import query as query_mod
+            from orchestrator.knowledge.adapters import pgvector as pgvector_mod
+
+            boom = BoomBackend("postgresql://invalid")
+            original_select = pgvector_mod.select_hosted_vector_backend
+            original_query_select = query_mod.select_hosted_vector_backend
+
+            def _boom_select():
+                return boom
+
+            pgvector_mod.select_hosted_vector_backend = _boom_select  # type: ignore[assignment]
+            query_mod.select_hosted_vector_backend = _boom_select  # type: ignore[assignment]
+            try:
+                results = query_knowledge(repo, "matcher routing", mode="vector", top_n=5)
+                self.assertTrue(results)
+                self.assertEqual(results[0].get("vector_backend"), "tfidf")
+            finally:
+                pgvector_mod.select_hosted_vector_backend = original_select  # type: ignore[assignment]
+                query_mod.select_hosted_vector_backend = original_query_select  # type: ignore[assignment]
 
 
 if __name__ == "__main__":
