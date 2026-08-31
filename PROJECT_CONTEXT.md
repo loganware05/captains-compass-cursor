@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-M12 / v1.16.0 shipped. Next: milestone planning when Captain is ready. Hosted vector DBs remain deferred.
+M12 / v1.16.0 shipped. Post-foundation backlog **APPROVED** — M13 in progress (Neon/pgvector, namespaces). See `IMPLEMENTATION_PLAN.md`.

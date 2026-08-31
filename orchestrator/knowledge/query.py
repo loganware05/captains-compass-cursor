@@ -4,7 +4,15 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from orchestrator.knowledge.adapters.embeddings import select_embedding_provider
+from orchestrator.knowledge.adapters.embeddings import (
+    EmbeddingProviderError,
+    select_embedding_provider,
+)
+from orchestrator.knowledge.adapters.pgvector import (
+    HostedVectorError,
+    query_hosted_vector_scores,
+    select_hosted_vector_backend,
+)
 from orchestrator.knowledge.embedding_index import (
     embedding_index_exists,
     query_embedding_scores,
@@ -57,10 +65,33 @@ def _keyword_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int
     return ranked
 
 
+def _hosted_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int) -> dict[str, float]:
+    """Hosted pgvector scores when COMPASS_VECTOR_PROVIDER is set and embeddings are active.
+
+    Any hosted-backend misconfig or live failure returns empty so dense/TF-IDF
+    fallback remains available (never crash plan Knowledge Context).
+    """
+    try:
+        if select_hosted_vector_backend() is None:
+            return {}
+        scored = query_hosted_vector_scores(
+            repo_root, query, kind=kind, top_n=top_n * 3
+        )
+    except (HostedVectorError, EmbeddingProviderError):
+        return {}
+    items_by_id = {str(i["item_id"]): i for i in list_knowledge_items(repo_root)}
+    ranked: dict[str, float] = {}
+    for item_id, score in scored:
+        if item_id not in items_by_id:
+            continue
+        ranked[item_id] = score
+        if len(ranked) >= top_n:
+            break
+    return ranked
+
+
 def _dense_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int) -> dict[str, float]:
     """Dense embedding scores when embedding provider + embedding index are active."""
-    from orchestrator.knowledge.adapters.embeddings import EmbeddingProviderError
-
     provider = select_embedding_provider()
     if provider is None or not embedding_index_exists(repo_root):
         return {}
@@ -104,8 +135,16 @@ def _tfidf_ranked(repo_root: Path, query: str, *, kind: str | None, top_n: int) 
 def _vector_ranked(
     repo_root: Path, query: str, *, kind: str | None, top_n: int
 ) -> tuple[dict[str, float], str]:
-    """Return vector scores and backend label. Dense first; TF-IDF always fallback."""
+    """Return vector scores and backend label. Hosted pgvector, dense file, then TF-IDF."""
     provider = select_embedding_provider()
+    hosted = _hosted_ranked(repo_root, query, kind=kind, top_n=top_n)
+    if hosted:
+        try:
+            selected = select_hosted_vector_backend()
+            backend = getattr(selected, "name", "pgvector") if selected else "pgvector"
+        except HostedVectorError:
+            backend = "pgvector"
+        return hosted, backend or "pgvector"
     dense = _dense_ranked(repo_root, query, kind=kind, top_n=top_n)
     if dense:
         name = getattr(provider, "name", "") if provider is not None else ""

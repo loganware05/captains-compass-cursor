@@ -96,6 +96,18 @@ SKILLS: dict[str, dict] = {
             "documentation-agent",
         ],
     },
+    "hosted-vector-db": {
+        "categories": ["knowledge", "infrastructure", "search"],
+        "tags": ["pgvector", "neon", "vector-search", "embeddings"],
+        "capabilities_provided": [
+            "hosted-vector-sync",
+            "hosted-vector-query",
+            "vector-namespace-isolation",
+        ],
+        "compatible_stacks": ["python", "postgres"],
+        "security_sensitivity": "high",
+        "agent_affinity": ["knowledge-steward", "implementation-agent"],
+    },
     "package-registry-ti": {
         "categories": ["process", "discovery", "orchestration", "packages"],
         "tags": ["npm", "pypi", "package-registry", "technology-intelligence"],

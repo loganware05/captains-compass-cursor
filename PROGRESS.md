@@ -17,12 +17,15 @@
 
 ## In progress
 
-None (awaiting Captain direction for next milestone).
+**M13 / v1.17.0** — Hosted pgvector/Neon knowledge vectors ([#86](https://github.com/loganware05/captains-compass-cursor/issues/86), branch `feature/86-m13-hosted-pgvector`).
+
+Post-foundation backlog **APPROVED** (2026-08-30). Captain decisions locked in `IMPLEMENTATION_PLAN.md`.
 
 ## Next
 
-1. Next milestone planning when Captain is ready
-2. Optional: interactive sandbox smoke for live embeddings / package-registry TI
+1. Finish M13 validation + PR → v1.17.0 release
+2. M14 — Batch GitHub Star categorization ML (learn from manual labels)
+3. M15 — Live Notion MCP ingest (page ID allowlist)
 
 ## Blockers
 

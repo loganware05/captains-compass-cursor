@@ -1,57 +1,132 @@
-# Implementation Plan
+# Implementation Plan — Post-Foundation Backlog (M13–M18)
 
-## Metadata
+- Status: APPROVED — M13 in progress
+- Plan ID: post-foundation-backlog
+- Issue: #86
 
-- Status: COMPLETE
-- Plan ID: m12-live-embeddings-registry
-- Issue: [#82](https://github.com/loganware05/captains-compass-cursor/issues/82) — M12: Live OpenAI-compatible embeddings + package-registry TI + soft-hook skips (v1.16.0)
-- Branch: `feature/82-m12-live-embeddings-registry` (merged #83)
-- Target release: **v1.16.0** (released 2026-08-24)
-- Created: 2026-08-24
-- Last updated: 2026-08-24 (closeout: sandbox #33)
-- Approved by: Captain
-- Approval date: 2026-08-24
-- Approved revision: v1.16.0; embeddings+live package TI; COMPASS_EMBEDDING_*; npm+PyPI; extend existing Skills; include soft-hook compass-skip.env
-- Rollback checkpoint: `rollback/pre-m12-live-embeddings-registry` @ `1f9d948`
-- Feature PR: [#83](https://github.com/loganware05/captains-compass-cursor/pull/83) (merged @ `fbb3aee`)
-- Source documents:
-  - Notion architecture plan; M11 ADR-027 deferrals
-  - Baseline: **v1.15.0** (`1f9d948`)
-- Machine artifacts: `.agent/plans/m12-live-embeddings-registry/`
+| Field | Value |
+|---|---|
+| **Plan ID** | `post-foundation-backlog` |
+| **Status** | **APPROVED** — M13 implementation in progress |
+| **Baseline** | v1.16.0 (`9d50de8`) |
+| **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13); M14–M18 issues TBD at each milestone |
+| **Branch** | `feature/86-m13-hosted-pgvector` |
+| **Rollback** | `rollback/pre-m13-hosted-pgvector` |
+| **Captain approval** | 2026-08-30 |
 
-## Request
+## Captain decisions (locked)
 
-Milestone 12: live OpenAI-compatible embeddings + live npm/PyPI TI + soft-hook skip-env.
+| # | Topic | Decision |
+|---|---|---|
+| 1 | Hosted vector DB | **Neon/pgvector** (see cost analysis below) |
+| 2 | Index layout | Single shared index with **namespaces** per repo |
+| 3 | M14 labels | **Learn from existing manual labels** |
+| 4 | M15 Notion | **Allowlist of page IDs** |
+| 5 | M17 autonomy | **Context selection first**, then light decomposition |
+| 6 | M18 smokes | **Required** for release closeout |
 
-## Acceptance Criteria
+## Cost analysis — Pinecone vs Neon/pgvector
 
-- [x] `OpenAICompatibleEmbeddingProvider` implementing `EmbeddingProvider`
-- [x] Env contract `COMPASS_EMBEDDING_API_KEY` / `BASE_URL` / `MODEL`; secrets never logged
-- [x] Fail closed without key/URL; unknown providers fall back to TF-IDF
-- [x] CI tests use mocked HTTP only
-- [x] Dense rebuild + query; TF-IDF fallback on live failure
-- [x] Live package-registry TI (npm + PyPI); Skill updates
-- [x] Soft-hook `.agent/compass-skip.env` inheritance
-- [x] ADR-028; extend existing Skills only
-- [x] Doctor / install / tests / evals pass
-- [x] Control-repo only; sandbox refresh after release ([sandbox#33](https://github.com/loganware05/captain-compass-sandbox/pull/33))
+Estimated Compass workload: ~500–2,000 knowledge items, \<10k vector queries/month,
+embedding dims 32 (fixture) or 1536 (OpenAI-compatible).
 
-## Open Questions (Captain — resolved 2026-08-24)
+| Scenario | Pinecone | Neon/pgvector |
+|---|---|---|
+| Today (free tier) | **$0** — Starter: 2 GB, 1M RU, 2M WU | **$0** — Free: 0.5 GB, 100 CU-hrs |
+| 10× queries (~50k/mo) | **$0** — ~12.5k RU at 0.25 RU/query min | **$0–3** — likely still free or Launch PAYG |
+| Exceed Pinecone Starter | **$50/mo minimum** (Standard) + usage | **~$5–15/mo** PAYG (no floor) |
+| Ops complexity | Lower (managed vector API) | Medium (Postgres + pgvector DDL) |
+| Namespace isolation | Native | `namespace` column (Captain choice) |
+| Existing MCP | Pinecone MCP | Neon MCP |
 
-1. **v1.16.0**
-2. **Both** embeddings and live package-registry TI
-3. **`COMPASS_EMBEDDING_*`**
-4. **Both** npm and PyPI
-5. **Extend** existing Skills only
-6. **Include** soft-hook `compass-skip.env`
+**Choice: Neon/pgvector** — same $0 cost today, lower cost ceiling beyond free tier,
+namespaces via column, aligns with existing `postgres-prisma` Skill and Neon MCP.
 
-## Approval Record
+Pinecone remains a viable second adapter if requirements change.
 
-- **Approved by:** Captain
-- **Approval date:** 2026-08-24
-- **Approved revision:** as above
-- **Issue:** #82
-- **Branch:** feature/82-m12-live-embeddings-registry
-- **Rollback:** rollback/pre-m12-live-embeddings-registry @ 1f9d948
-- **Feature PR:** #83 (merged)
-- **Release:** v1.16.0 (2026-08-24)
+---
+
+## Roadmap
+
+| Milestone | Version | Theme | Status |
+|---|---|---|---|
+| **M13** | v1.17.0 | Hosted pgvector/Neon adapter | **In progress** (#86) |
+| **M14** | v1.18.0 | Batch GitHub Star categorization ML | Planned |
+| **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | Planned |
+| **M16** | v1.20.0 | Live Hugging Face Hub TI | Planned |
+| **M17** | v1.21.0 | Stage 3: context selection → light decomposition | Planned |
+| **M18** | v1.22.0 | Required interactive sandbox release smokes | Planned |
+
+---
+
+# M13 — Hosted pgvector/Neon (v1.17.0) — IN PROGRESS
+
+## Objective
+
+Hosted vector search via Neon/pgvector with namespace isolation, mock backend for CI,
+explicit sync CLI, TF-IDF + file dense fallback preserved.
+
+## Implementation checklist
+
+- [x] `orchestrator/knowledge/adapters/pgvector.py` — mock + live backends
+- [x] Query integration (hosted → dense file → TF-IDF)
+- [x] `scripts/sync-knowledge-vector-db.sh`, `scripts/init-pgvector-schema.sh`
+- [x] Skill `hosted-vector-db` + docs + ADR-029
+- [x] Unit tests (`test_m13_pgvector_hosted.py`)
+- [x] Full `./tests/run.sh` validation evidence
+- [ ] PR → release v1.17.0 → sandbox refresh
+
+## Env vars
+
+| Variable | Purpose |
+|---|---|
+| `COMPASS_VECTOR_PROVIDER` | `file` (default), `mock`, `pgvector` |
+| `COMPASS_VECTOR_DATABASE_URL` | Neon Postgres DSN (live only) |
+| `COMPASS_VECTOR_NAMESPACE` | Per-repo namespace (default: repo dir name) |
+| `COMPASS_VECTOR_DIMENSIONS` | Schema bootstrap dimensions (default 32) |
+
+---
+
+# M14 — Batch GitHub Star Categorization ML (v1.18.0)
+
+Offline batch pipeline; labels learned from **existing manual categories**; new
+`github-stars-categorized` TI provider; fixtures in CI.
+
+---
+
+# M15 — Live Notion MCP Knowledge Ingest (v1.19.0)
+
+Explicit CLI; **allowlist of Notion page IDs**; provenance `export_mode: mcp_live`;
+file-export path unchanged.
+
+---
+
+# M16 — Live Hugging Face Hub TI (v1.20.0)
+
+Live Hub provider mirroring M12 package-registry pattern; mocked HTTP in CI.
+
+---
+
+# M17 — Deeper Stage 3 Bounded Autonomy (v1.21.0)
+
+Priority order per Captain:
+
+1. **Context selection tuning** proposals (which knowledge/TI slices appear in plans)
+2. **Light decomposition hints** (finer matcher sub-capability weights)
+
+All proposal-only until `captain_approved: true`; budget-enforced.
+
+---
+
+# M18 — Interactive Sandbox Release Smokes (v1.22.0)
+
+Interactive smokes **required** for release closeout. Expand behavioral checklist,
+evidence templates, release-checklist integration; clear all pending sandbox rows.
+
+---
+
+## Approval record
+
+| Captain | Decision | Date |
+|---|---|---|
+| loganware | **APPROVED** — post-foundation backlog + Captain decisions above | 2026-08-30 |
