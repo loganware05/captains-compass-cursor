@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+## 1.17.0 — 2026-08-31
+
+### Added
+
+- Hosted pgvector/Neon knowledge vector adapter with namespace isolation (#86)
+- `COMPASS_VECTOR_PROVIDER=pgvector|mock` with explicit sync/schema CLIs (#86)
+- Skill `hosted-vector-db` (39 Skills) + integration docs (#86)
+- ADR-029 — Neon/pgvector over Pinecone on cost at scale (#86)
+
+### Changed
+
+- VERSION `1.17.0`
+- Query order: hosted pgvector → file dense → TF-IDF fallback (#86)
+- Hosted ranking fail-closes on misconfig/live errors (Bugbot #87) (#86)
+
 ## 1.16.0 — 2026-08-24
 
 ### Added
