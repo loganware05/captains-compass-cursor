@@ -1,13 +1,13 @@
 # Implementation Plan — Post-Foundation Backlog (M13–M18)
 
-- Status: COMPLETE — M17 / v1.21.0 release prep
+- Status: COMPLETE — M17 / v1.21.0 closed; M18 next
 - Plan ID: post-foundation-backlog
-- Issue: #102
+- Issue: #102 (closed)
 
 | Field | Value |
 |---|---|
 | **Plan ID** | `post-foundation-backlog` |
-| **Status** | **COMPLETE** — M17 / v1.21.0 release prep; M18 next |
+| **Status** | **COMPLETE** — M17 / v1.21.0 closed; M18 next |
 | **Baseline** | v1.16.0 (`9d50de8`) |
 | **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13 closed) |
 | **Feature PR** | [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) (merged @ `40c84fc`) |
@@ -159,7 +159,9 @@ All proposal-only until `captain_approved: true`; budget-enforced.
 - [x] Decomposition hints on routing proposals + bounded merge on apply
 - [x] ADR-033, docs, Skill extensions, tests
 - [x] Feature PR [#103](https://github.com/loganware05/captains-compass-cursor/pull/103) merged
-- [ ] Release tag v1.21.0 + sandbox refresh + closeout
+- [x] Release tag [v1.21.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.21.0)
+- [x] Sandbox refresh [sandbox#38](https://github.com/loganware05/captain-compass-sandbox/pull/38)
+- [x] Closeout + issue #102 closed
 
 ---
 
