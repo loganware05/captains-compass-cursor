@@ -17,6 +17,7 @@ tags:
   - ingest
 capabilities_provided:
   - external-notion-ingest
+  - external-notion-mcp-live-ingest
   - external-notebooklm-ingest
   - external-knowledge-query
 compatible_stacks:

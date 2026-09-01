@@ -1,13 +1,13 @@
 # Implementation Plan — Post-Foundation Backlog (M13–M18)
 
-- Status: COMPLETE — M14 / v1.18.0 closed; M15 next
+- Status: APPROVED — M15 / v1.19.0 in progress
 - Plan ID: post-foundation-backlog
-- Issue: #89 (closed)
+- Issue: #94
 
 | Field | Value |
 |---|---|
 | **Plan ID** | `post-foundation-backlog` |
-| **Status** | **COMPLETE** — M14 / v1.18.0 closed; M15 next |
+| **Status** | **APPROVED** — M15 / v1.19.0 in progress (#94) |
 | **Baseline** | v1.16.0 (`9d50de8`) |
 | **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13 closed) |
 | **Feature PR** | [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) (merged @ `40c84fc`) |
@@ -54,7 +54,7 @@ Pinecone remains a viable second adapter if requirements change.
 |---|---|---|---|
 | **M13** | v1.17.0 | Hosted pgvector/Neon adapter | **Complete** (#87) |
 | **M14** | v1.18.0 | Batch GitHub Star categorization ML | **Complete** (#91) |
-| **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | **Next** |
+| **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | **In progress** (#94) |
 | **M16** | v1.20.0 | Live Hugging Face Hub TI | Planned |
 | **M17** | v1.21.0 | Stage 3: context selection → light decomposition | Planned |
 | **M18** | v1.22.0 | Required interactive sandbox release smokes | Planned |
@@ -110,10 +110,17 @@ Offline batch pipeline; labels learned from **existing manual categories**; new
 
 ---
 
-# M15 — Live Notion MCP Knowledge Ingest (v1.19.0)
+# M15 — Live Notion MCP Knowledge Ingest (v1.19.0) — IN PROGRESS
 
 Explicit CLI; **allowlist of Notion page IDs**; provenance `export_mode: mcp_live`;
 file-export path unchanged.
+
+## Checklist
+
+- [x] Allowlist loader + page ID normalization
+- [x] `ingest-notion-live.sh` (cache / fixtures / live payload sources)
+- [x] ADR-031, docs, Skill extensions, tests
+- [ ] Feature PR + release
 
 ---
 

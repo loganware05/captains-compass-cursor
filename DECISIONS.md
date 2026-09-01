@@ -1,5 +1,24 @@
 # Decisions
 
+## ADR-031: Live Notion MCP knowledge ingest with page allowlist (v1.19.0 M15)
+
+- **Status:** Accepted
+- **Date:** 2026-08-31
+- **Context:** M10 shipped file-export Notion ingest (`export_mode: file`). Captains
+  with Notion MCP connected need durable ingest from live page fetches without
+  replacing repository authority for plans and approvals.
+- **Decision:**
+  1. Add explicit CLI `ingest-notion-live.sh` gated by **`.agent/knowledge/notion-allowlist.txt`**
+     (one page ID or URL per line).
+  2. Provenance **`export_mode: mcp_live`** with `notion_page_id`; file-export path
+     unchanged (`export_mode: file`).
+  3. Sources: **`cache`** (MCP-fetched markdown in `.agent/knowledge/external/notion-live/`),
+     **`fixtures`** (CI offline), **`live`** (JSON payload from Captain MCP session).
+  4. Never auto-ingest on workstream close; never ingest pages outside the allowlist.
+  5. Extend Skills `external-knowledge-ingest` and `notion-integration`; no new Skill.
+- **Consequences:** Captains can MCP-fetch allowlisted pages in Cursor, cache markdown,
+  and ingest durably for planning readback; CI remains offline-safe.
+
 ## ADR-030: Batch GitHub Star categorization ML pipeline (v1.18.0 M14)
 
 - **Status:** Accepted

@@ -1,0 +1,8 @@
+{
+  "pages": {
+    "3cae6a901c4381fd8482e9158ac9e6cc": {
+      "markdown": "# Compass planning approval gate\n\nLive Notion MCP fixture for Captain's Compass external knowledge ingest.\n\nKey constraint: product implementation must wait for `IMPLEMENTATION_PLAN.md`\nstatus `APPROVED`. Repository docs remain authoritative for approvals.\n\nSource: https://www.notion.so/example/compass-approval-gate-mcp-live\n",
+      "source_url": "https://www.notion.so/example/compass-approval-gate-mcp-live"
+    }
+  }
+}

@@ -27,6 +27,14 @@ Reading product requirements or research from Notion, or writing release summari
 3. After validation, optionally write a short release summary page/section.
 4. Mirror any durable decisions into DECISIONS.md in the repository.
 5. If Notion is unavailable, continue with repo docs only and report the gap.
+6. **Live knowledge ingest** (allowlist-gated — separate from file export):
+
+   - Maintain `.agent/knowledge/notion-allowlist.txt` with approved page IDs.
+   - Fetch allowlisted pages via `notion-fetch` MCP.
+   - Save markdown under `.agent/knowledge/external/notion-live/<page-id>.md`
+     or export a JSON payload for `./scripts/ingest-notion-live.sh --source live`.
+   - Run `./scripts/ingest-notion-live.sh` explicitly; provenance is `mcp_live`.
+   - Never ingest pages outside the allowlist.
 
 ## Prohibited actions
 
