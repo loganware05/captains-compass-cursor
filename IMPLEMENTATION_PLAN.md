@@ -1,13 +1,13 @@
 # Implementation Plan — Post-Foundation Backlog (M13–M18)
 
-- Status: COMPLETE — M15 / v1.19.0 release prep
+- Status: COMPLETE — M15 / v1.19.0 closed; M16 next
 - Plan ID: post-foundation-backlog
-- Issue: #94
+- Issue: #94 (closed)
 
 | Field | Value |
 |---|---|
 | **Plan ID** | `post-foundation-backlog` |
-| **Status** | **COMPLETE** — M15 / v1.19.0 release prep; M16 next |
+| **Status** | **COMPLETE** — M15 / v1.19.0 closed; M16 next |
 | **Baseline** | v1.16.0 (`9d50de8`) |
 | **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13 closed) |
 | **Feature PR** | [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) (merged @ `40c84fc`) |
@@ -121,7 +121,9 @@ file-export path unchanged.
 - [x] `ingest-notion-live.sh` (cache / fixtures / live payload sources)
 - [x] ADR-031, docs, Skill extensions, tests
 - [x] Feature PR [#95](https://github.com/loganware05/captains-compass-cursor/pull/95) merged
-- [ ] Release tag v1.19.0 + sandbox refresh + closeout
+- [x] Release tag [v1.19.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.19.0)
+- [x] Sandbox refresh [sandbox#36](https://github.com/loganware05/captain-compass-sandbox/pull/36)
+- [x] Closeout + issue #94 closed
 
 ---
 

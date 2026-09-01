@@ -209,3 +209,13 @@ Control mirror: `.agent/evidence/release-v1.17.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.18.0/post-tag-validation.md`
 
+### Live Notion MCP knowledge ingest (v1.19.0) — refresh complete 2026-08-31
+
+| Step | Result |
+|---|---|
+| Control release `v1.19.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.19.0 |
+| Sandbox refreshed to Compass 1.19.0 | Pass — [sandbox#36](https://github.com/loganware05/captain-compass-sandbox/pull/36) merged |
+| Notion MCP live ingest smoke on sandbox | Pending interactive (optional) |
+
+Control mirror: `.agent/evidence/release-v1.19.0/post-tag-validation.md`
+
