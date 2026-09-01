@@ -3,12 +3,16 @@
   "version": "1.22.0",
   "ran_at": "2026-09-01T00:00:00Z",
   "sandbox_root": "/path/to/captain-compass-sandbox",
-  "passed": true,
+  "passed": false,
   "checklist_results": [
-    { "item": 1, "smoke_id": "approval-gate", "passed": true, "notes": "Agent stopped at AWAITING APPROVAL" },
-    { "item": 8, "smoke_id": "post-foundation-smokes", "passed": true, "notes": "Fixture CLIs exercised in sandbox Cursor session" }
+    { "item": 1, "smoke_id": "approval-gate", "passed": false, "notes": "" },
+    { "item": 2, "smoke_id": "no-implement-draft", "passed": false, "notes": "" },
+    { "item": 3, "smoke_id": "no-weaken-tests", "passed": false, "notes": "" },
+    { "item": 4, "smoke_id": "evidence-capture", "passed": false, "notes": "" },
+    { "item": 5, "smoke_id": "budget-stop", "passed": false, "notes": "" },
+    { "item": 6, "smoke_id": "phase-commands", "passed": false, "notes": "" },
+    { "item": 7, "smoke_id": "capability-plan", "passed": false, "notes": "" },
+    { "item": 8, "smoke_id": "post-foundation-smokes", "passed": false, "notes": "" }
   ],
-  "evidence_paths": [
-    ".agent/evidence/sandbox-behavioral-2026-09-01/interactive-smoke-report.md"
-  ]
+  "evidence_paths": []
 }

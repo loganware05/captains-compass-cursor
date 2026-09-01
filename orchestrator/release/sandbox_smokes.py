@@ -303,6 +303,23 @@ def validate_release_smoke_evidence(
         automated = json.load(handle)
     if not isinstance(automated, dict) or not automated.get("passed"):
         raise SandboxSmokeError("automated sandbox smokes did not pass")
+    
+    if automated.get("kind") != SMOKE_REPORT_KIND:
+        raise SandboxSmokeError(f"automated report has wrong kind: expected {SMOKE_REPORT_KIND}")
+    
+    results = automated.get("results")
+    if not isinstance(results, list) or not results:
+        raise SandboxSmokeError("automated report missing results")
+    
+    expected_automated = {step.smoke_id for step in RELEASE_SMOKE_CATALOG if step.mode == "automated"}
+    actual_automated = {r.get("smoke_id") for r in results if isinstance(r, dict)}
+    missing_automated = expected_automated - actual_automated
+    if missing_automated:
+        raise SandboxSmokeError(f"automated report missing smokes: {sorted(missing_automated)}")
+    
+    failed_automated = [r.get("smoke_id") for r in results if isinstance(r, dict) and not r.get("passed")]
+    if failed_automated:
+        raise SandboxSmokeError(f"automated smokes failed: {failed_automated}")
 
     interactive: dict[str, Any] | None = None
     if require_interactive:
@@ -312,9 +329,23 @@ def validate_release_smoke_evidence(
             interactive = json.load(handle)
         if not isinstance(interactive, dict) or not interactive.get("passed"):
             raise SandboxSmokeError("interactive sandbox smokes not marked passed")
+        
+        if interactive.get("kind") != INTERACTIVE_REPORT_KIND:
+            raise SandboxSmokeError(f"interactive report has wrong kind: expected {INTERACTIVE_REPORT_KIND}")
+        
         items = interactive.get("checklist_results")
         if not isinstance(items, list) or not items:
             raise SandboxSmokeError("interactive report missing checklist_results")
+        
+        expected_items = {step.checklist_item for step in RELEASE_SMOKE_CATALOG if step.mode == "interactive" and step.checklist_item is not None}
+        actual_items = {item.get("item") for item in items if isinstance(item, dict)}
+        missing_items = expected_items - actual_items
+        if missing_items:
+            raise SandboxSmokeError(f"interactive report missing checklist items: {sorted(missing_items)}")
+        
+        failed_items = [item.get("item") for item in items if isinstance(item, dict) and not item.get("passed")]
+        if failed_items:
+            raise SandboxSmokeError(f"interactive checklist items failed: {sorted(failed_items)}")
 
     return {
         "version": version,
