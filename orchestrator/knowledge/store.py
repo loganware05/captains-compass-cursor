@@ -52,6 +52,7 @@ def ensure_store_layout(repo_root: Path) -> None:
         procedures_dir(repo_root) / "staging",
         procedures_dir(repo_root) / "approved",
         knowledge_root(repo_root) / "external" / "notion",
+        knowledge_root(repo_root) / "external" / "notion-live",
         knowledge_root(repo_root) / "external" / "notebooklm",
     ):
         path.mkdir(parents=True, exist_ok=True)

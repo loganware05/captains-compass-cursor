@@ -324,6 +324,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing executable scripts/ingest-knowledge.sh"
   fi
+  if [[ -x "$ROOT/scripts/ingest-notion-live.sh" ]]; then
+    ok "ingest-notion-live.sh"
+  else
+    fail "missing executable scripts/ingest-notion-live.sh"
+  fi
   if [[ -x "$ROOT/scripts/query-knowledge.sh" ]]; then
     ok "query-knowledge.sh"
   else
