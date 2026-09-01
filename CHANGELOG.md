@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 1.19.0 — 2026-08-31
+
+### Added
+
+- Live Notion MCP knowledge ingest with page allowlist (`ingest-notion-live.sh`) (#94)
+- Provenance `export_mode: mcp_live` for MCP-fetched Notion pages (#94)
+- ADR-031 (#94)
+
+### Changed
+
+- VERSION `1.19.0`
+- Skills `external-knowledge-ingest` and `notion-integration` document live MCP path (#94)
+
 ## 1.18.0 — 2026-08-31
 
 ### Added

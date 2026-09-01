@@ -1,13 +1,13 @@
 # Implementation Plan — Post-Foundation Backlog (M13–M18)
 
-- Status: APPROVED — M15 / v1.19.0 in progress
+- Status: COMPLETE — M15 / v1.19.0 release prep
 - Plan ID: post-foundation-backlog
 - Issue: #94
 
 | Field | Value |
 |---|---|
 | **Plan ID** | `post-foundation-backlog` |
-| **Status** | **APPROVED** — M15 / v1.19.0 in progress (#94) |
+| **Status** | **COMPLETE** — M15 / v1.19.0 release prep; M16 next |
 | **Baseline** | v1.16.0 (`9d50de8`) |
 | **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13 closed) |
 | **Feature PR** | [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) (merged @ `40c84fc`) |
@@ -54,8 +54,8 @@ Pinecone remains a viable second adapter if requirements change.
 |---|---|---|---|
 | **M13** | v1.17.0 | Hosted pgvector/Neon adapter | **Complete** (#87) |
 | **M14** | v1.18.0 | Batch GitHub Star categorization ML | **Complete** (#91) |
-| **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | **In progress** (#94) |
-| **M16** | v1.20.0 | Live Hugging Face Hub TI | Planned |
+| **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | **Complete** (#95) |
+| **M16** | v1.20.0 | Live Hugging Face Hub TI | **Next** |
 | **M17** | v1.21.0 | Stage 3: context selection → light decomposition | Planned |
 | **M18** | v1.22.0 | Required interactive sandbox release smokes | Planned |
 
@@ -110,7 +110,7 @@ Offline batch pipeline; labels learned from **existing manual categories**; new
 
 ---
 
-# M15 — Live Notion MCP Knowledge Ingest (v1.19.0) — IN PROGRESS
+# M15 — Live Notion MCP Knowledge Ingest (v1.19.0) — COMPLETE
 
 Explicit CLI; **allowlist of Notion page IDs**; provenance `export_mode: mcp_live`;
 file-export path unchanged.
@@ -120,7 +120,8 @@ file-export path unchanged.
 - [x] Allowlist loader + page ID normalization
 - [x] `ingest-notion-live.sh` (cache / fixtures / live payload sources)
 - [x] ADR-031, docs, Skill extensions, tests
-- [ ] Feature PR + release
+- [x] Feature PR [#95](https://github.com/loganware05/captains-compass-cursor/pull/95) merged
+- [ ] Release tag v1.19.0 + sandbox refresh + closeout
 
 ---
 
