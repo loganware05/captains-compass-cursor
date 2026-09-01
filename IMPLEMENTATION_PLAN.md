@@ -1,13 +1,13 @@
 # Implementation Plan — Post-Foundation Backlog (M13–M18)
 
-- Status: COMPLETE — M17 / v1.21.0 closed; **M18 in progress**
+- Status: COMPLETE — M18 feature merged; **v1.22.0 release prep**
 - Plan ID: post-foundation-backlog
 - Issue: #102 (closed)
 
 | Field | Value |
 |---|---|
 | **Plan ID** | `post-foundation-backlog` |
-| **Status** | **COMPLETE** — M17 / v1.21.0 closed; M18 next |
+| **Status** | **COMPLETE** — M18 feature merged; v1.22.0 release prep |
 | **Baseline** | v1.16.0 (`9d50de8`) |
 | **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13 closed) |
 | **Feature PR** | [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) (merged @ `40c84fc`) |
@@ -57,7 +57,7 @@ Pinecone remains a viable second adapter if requirements change.
 | **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | **Complete** (#95) |
 | **M16** | v1.20.0 | Live Hugging Face Hub TI | **Complete** (#99) |
 | **M17** | v1.21.0 | Stage 3: context selection → light decomposition | **Complete** (#103) |
-| **M18** | v1.22.0 | Required interactive sandbox release smokes | **In progress** (#106) |
+| **M18** | v1.22.0 | Required interactive sandbox release smokes | **Release prep** (#107) |
 
 ---
 
@@ -165,7 +165,7 @@ All proposal-only until `captain_approved: true`; budget-enforced.
 
 ---
 
-# M18 — Interactive Sandbox Release Smokes (v1.22.0) — IN PROGRESS
+# M18 — Interactive Sandbox Release Smokes (v1.22.0) — RELEASE PREP
 
 Interactive smokes **required** for release closeout. Expand behavioral checklist,
 evidence templates, release-checklist integration; clear all pending sandbox rows.
@@ -179,7 +179,8 @@ evidence templates, release-checklist integration; clear all pending sandbox row
 - [x] `docs/RELEASE_CHECKLIST.md` step 12 smoke gate
 - [x] Consolidate pending rows in `docs/SANDBOX_VALIDATION.md`
 - [x] ADR-034, tests (`test_m18_sandbox_release_smokes.py`)
-- [ ] Feature PR, release closeout v1.22.0
+- [x] Feature PR [#107](https://github.com/loganware05/captains-compass-cursor/pull/107) merged
+- [ ] Release tag v1.22.0, sandbox refresh, closeout
 
 ---
 

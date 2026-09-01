@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+## 1.22.0 — 2026-09-01
+
+### Added
+
+- Required sandbox release smoke runner (`run-sandbox-release-smokes.sh`) (#106)
+- Release closeout smoke validator (`validate-sandbox-release-smokes.sh`) (#106)
+- Evidence templates under `.agent/evidence/_templates/sandbox-release-smoke/` (#106)
+- Behavioral checklist item 8 (post-foundation M13–M17 fixture smokes) (#106)
+- ADR-034 (#106)
+
+### Changed
+
+- VERSION `1.22.0`
+- `docs/RELEASE_CHECKLIST.md` step 12 gates closeout on smoke evidence (#106)
+- Consolidated pending sandbox validation rows (v1.6.0–v1.21.0) (#106)
+- Skill `testing-validation` documents release smoke gate (#106)
+
 ## 1.21.0 — 2026-09-01
 
 ### Added
