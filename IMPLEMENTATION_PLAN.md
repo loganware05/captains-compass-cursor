@@ -92,10 +92,18 @@ explicit sync CLI, TF-IDF + file dense fallback preserved.
 
 ---
 
-# M14 — Batch GitHub Star Categorization ML (v1.18.0)
+# M14 — Batch GitHub Star Categorization ML (v1.18.0) — IN PROGRESS
 
 Offline batch pipeline; labels learned from **existing manual categories**; new
 `github-stars-categorized` TI provider; fixtures in CI.
+
+## Checklist
+
+- [x] Manual label fixtures from curated Stars fixtures
+- [x] Naive Bayes batch pipeline + `categorize-github-stars.sh`
+- [x] `github-stars-categorized` TI provider
+- [x] ADR-030, docs, Skill extension, tests
+- [ ] PR → release v1.18.0
 
 ---
 

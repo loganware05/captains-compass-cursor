@@ -47,6 +47,9 @@ class FileTechnologyIntelligenceProvider:
 def select_ti_provider(repo_root: Path | None = None):
     """Return TI provider from COMPASS_TI_PROVIDER (default stub)."""
     from orchestrator.providers.technology_intelligence import StubTechnologyIntelligenceProvider
+    from orchestrator.providers.technology_intelligence.github_stars_categorized_provider import (
+        GithubStarsCategorizedTechnologyIntelligenceProvider,
+    )
     from orchestrator.providers.technology_intelligence.github_stars_provider import (
         GithubStarsTechnologyIntelligenceProvider,
     )
@@ -68,6 +71,8 @@ def select_ti_provider(repo_root: Path | None = None):
         return StubTechnologyIntelligenceProvider()
     if name == "file":
         return FileTechnologyIntelligenceProvider()
+    if name in {"github-stars-categorized", "stars-categorized", "categorized-stars"}:
+        return GithubStarsCategorizedTechnologyIntelligenceProvider(repo_root)
     if name in {"github-stars", "github", "live"}:
         return GithubStarsTechnologyIntelligenceProvider()
     if name in {"github-stars-cached", "cached", "stars-cached"}:

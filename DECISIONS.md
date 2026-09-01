@@ -1,5 +1,26 @@
 # Decisions
 
+## ADR-030: Batch GitHub Star categorization ML pipeline (v1.18.0 M14)
+
+- **Status:** Accepted
+- **Date:** 2026-08-31
+- **Context:** M7 shipped live Stars TI; M8 shipped offline cache. Captains need
+  batch categorization of starred repos for richer planning signals without live
+  ML in CI or auto-execution of candidates.
+- **Decision:**
+  1. Train a lightweight **multinomial Naive Bayes** classifier from **manual label
+     fixtures** (`tests/fixtures/ti/github-stars-labels/manual-labels.json`)
+     derived from existing curated Stars fixtures.
+  2. Batch CLI `categorize-github-stars.sh` writes
+     `.agent/ti/github-stars-categorized/categorized.json` (explicit only).
+  3. New TI provider `COMPASS_TI_PROVIDER=github-stars-categorized` reads batch
+     output offline; never auto-runs batch in hooks/CI.
+  4. Categories include `frontend-ui`, `backend-library`, `devtool`, `ml-data`,
+     `other`; extensible via manual labels file.
+  5. Extend Skill `technology-intelligence-live`; no new Skill required.
+- **Consequences:** TI plans can surface category-enriched starred-repo candidates;
+  CI uses fixtures; Captain extends manual labels as curation grows.
+
 ## ADR-029: Hosted pgvector/Neon knowledge vectors with namespaces (v1.17.0 M13)
 
 - **Status:** Accepted

@@ -9,7 +9,7 @@ PROVIDER="${COMPASS_TI_PROVIDER:-stub}"
 
 usage() {
   cat <<'USAGE'
-Usage: query-technology-intelligence.sh --query TEXT [--top N] [--provider stub|file|github-stars|github-stars-cached|huggingface-file]
+Usage: query-technology-intelligence.sh --query TEXT [--top N] [--provider stub|file|github-stars|github-stars-cached|github-stars-categorized|huggingface-file]
 
 Read-only Technology Intelligence discovery. Does not install or execute external repos.
 Default provider is stub. Use github-stars for live gh; github-stars-cached reads

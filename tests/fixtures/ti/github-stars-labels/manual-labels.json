@@ -1,0 +1,34 @@
+[
+  {
+    "full_name": "example-org/accessible-react-forms",
+    "category": "frontend-ui",
+    "label_source": "manual-fixture",
+    "description": "Accessible React form patterns with ARIA live regions",
+    "topics": ["react", "accessibility", "forms"],
+    "notes": "Curated from stars-redacted-accessible-forms capabilities_provided"
+  },
+  {
+    "full_name": "example-org/pdf-toolkit-lite",
+    "category": "backend-library",
+    "label_source": "manual-fixture",
+    "description": "REDACTED sample for PDF parsing discovery signals",
+    "topics": ["pdf", "parsing"],
+    "notes": "Curated from stars-redacted-pdf-kit capabilities_provided"
+  },
+  {
+    "full_name": "example-org/pdf-kit-node",
+    "category": "backend-library",
+    "label_source": "manual-fixture",
+    "description": "PDF generation utilities for Node.js services",
+    "topics": ["nodejs", "pdf", "utilities"],
+    "notes": "Derived from github-stars-recorded fixture"
+  },
+  {
+    "full_name": "example-org/unrelated-quantum",
+    "category": "ml-data",
+    "label_source": "manual-fixture",
+    "description": "Quantum circuit simulation library",
+    "topics": ["quantum", "simulation"],
+    "notes": "Derived from github-stars-recorded fixture"
+  }
+]
