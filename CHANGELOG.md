@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 1.20.0 — 2026-09-01
+
+### Added
+
+- Live Hugging Face Hub TI provider (`COMPASS_TI_PROVIDER=huggingface-hub`) (#98)
+- Optional `COMPASS_HF_HUB_TOKEN` for authenticated Hub requests (#98)
+- ADR-032 (#98)
+
+### Changed
+
+- VERSION `1.20.0`
+- Skill `technology-intelligence-live` documents live Hub path (#98)
+
 ## 1.19.0 — 2026-08-31
 
 ### Added
