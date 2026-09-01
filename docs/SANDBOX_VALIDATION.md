@@ -229,3 +229,13 @@ Control mirror: `.agent/evidence/release-v1.19.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.20.0/post-tag-validation.md`
 
+### Stage 3 bounded autonomy (v1.21.0) — refresh complete 2026-09-01
+
+| Step | Result |
+|---|---|
+| Control release `v1.21.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.21.0 |
+| Sandbox refreshed to Compass 1.21.0 | Pass — [sandbox#38](https://github.com/loganware05/captain-compass-sandbox/pull/38) merged |
+| Context selection / decomposition smoke on sandbox | Pending interactive (optional) |
+
+Control mirror: `.agent/evidence/release-v1.21.0/post-tag-validation.md`
+
