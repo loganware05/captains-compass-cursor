@@ -29,14 +29,16 @@ def normalize_page_id(raw: str) -> str:
     raw = raw.strip()
     if not raw:
         raise NotionLiveError("empty Notion page id")
-    compact = re.sub(r"[^a-f0-9]", "", raw.lower())
+    # Strip query parameters and fragments to prevent corruption
+    clean = raw.split('?')[0].split('#')[0]
+    compact = re.sub(r"[^a-f0-9]", "", clean.lower())
     if len(compact) == 32:
         return compact
     if len(compact) > 32:
         tail = compact[-32:]
         if _PAGE_ID_HEX.fullmatch(tail):
             return tail
-    match = _PAGE_ID_HEX.search(raw.replace("-", ""))
+    match = _PAGE_ID_HEX.search(clean.replace("-", ""))
     if match:
         return match.group(0).lower()
     raise NotionLiveError(f"invalid Notion page id: {raw!r}")
