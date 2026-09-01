@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.local/schemas/sandbox-release-smoke-report.schema.json",
+  "title": "SandboxReleaseSmokeReport",
+  "type": "object",
+  "required": ["kind", "ran_at", "control_root", "sandbox_root", "passed", "results"],
+  "properties": {
+    "kind": { "const": "sandbox-release-smoke-report" },
+    "ran_at": { "type": "string" },
+    "control_root": { "type": "string" },
+    "sandbox_root": { "type": "string" },
+    "passed": { "type": "boolean" },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["smoke_id", "passed"],
+        "properties": {
+          "smoke_id": { "type": "string" },
+          "passed": { "type": "boolean" },
+          "detail": { "type": "string" }
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

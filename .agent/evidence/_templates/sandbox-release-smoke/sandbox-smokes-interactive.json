@@ -1,0 +1,14 @@
+{
+  "kind": "sandbox-interactive-smoke-report",
+  "version": "1.22.0",
+  "ran_at": "2026-09-01T00:00:00Z",
+  "sandbox_root": "/path/to/captain-compass-sandbox",
+  "passed": true,
+  "checklist_results": [
+    { "item": 1, "smoke_id": "approval-gate", "passed": true, "notes": "Agent stopped at AWAITING APPROVAL" },
+    { "item": 8, "smoke_id": "post-foundation-smokes", "passed": true, "notes": "Fixture CLIs exercised in sandbox Cursor session" }
+  ],
+  "evidence_paths": [
+    ".agent/evidence/sandbox-behavioral-2026-09-01/interactive-smoke-report.md"
+  ]
+}

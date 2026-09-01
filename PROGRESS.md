@@ -17,7 +17,10 @@
 
 ## In progress
 
-**M18 / v1.22.0** — Required interactive sandbox release smokes
+**M18 / v1.22.0** — Required interactive sandbox release smokes (feature branch `feature/103-m18-sandbox-release-smokes`, issue [#106](https://github.com/loganware05/captains-compass-cursor/issues/106))
+
+- Smoke runner + closeout validator implemented; ADR-034; 9 unit tests passing
+- Automated smokes pass against sandbox (`run-sandbox-release-smokes.sh --no-write`)
 
 ## Next
 

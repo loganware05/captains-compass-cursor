@@ -265,6 +265,19 @@ PY
 )"
 assert_contains "apply rejects without captain flag" '^ok$' "$m4_out"
 
+echo "=== eval: M18 sandbox smoke catalog ==="
+m18_out="$(PYTHONPATH="$ROOT" python3 - "$ROOT" <<'PY'
+from orchestrator.release.sandbox_smokes import RELEASE_SMOKE_CATALOG, interactive_smoke_catalog
+
+automated = [s for s in RELEASE_SMOKE_CATALOG if s.mode == "automated"]
+interactive = interactive_smoke_catalog()
+assert len(automated) >= 8
+assert len(interactive) == 8
+print("ok")
+PY
+)"
+assert_contains "M18 smoke catalog present" '^ok$' "$m18_out"
+
 echo
 echo "Eval results: $PASS passed, $FAIL failed"
 if [[ "$FAIL" -gt 0 ]]; then

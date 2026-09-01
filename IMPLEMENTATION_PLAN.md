@@ -1,6 +1,6 @@
 # Implementation Plan — Post-Foundation Backlog (M13–M18)
 
-- Status: COMPLETE — M17 / v1.21.0 closed; M18 next
+- Status: COMPLETE — M17 / v1.21.0 closed; **M18 in progress**
 - Plan ID: post-foundation-backlog
 - Issue: #102 (closed)
 
@@ -57,7 +57,7 @@ Pinecone remains a viable second adapter if requirements change.
 | **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | **Complete** (#95) |
 | **M16** | v1.20.0 | Live Hugging Face Hub TI | **Complete** (#99) |
 | **M17** | v1.21.0 | Stage 3: context selection → light decomposition | **Complete** (#103) |
-| **M18** | v1.22.0 | Required interactive sandbox release smokes | **Next** |
+| **M18** | v1.22.0 | Required interactive sandbox release smokes | **In progress** (#106) |
 
 ---
 
@@ -165,10 +165,21 @@ All proposal-only until `captain_approved: true`; budget-enforced.
 
 ---
 
-# M18 — Interactive Sandbox Release Smokes (v1.22.0)
+# M18 — Interactive Sandbox Release Smokes (v1.22.0) — IN PROGRESS
 
 Interactive smokes **required** for release closeout. Expand behavioral checklist,
 evidence templates, release-checklist integration; clear all pending sandbox rows.
+
+## Implementation checklist
+
+- [x] `orchestrator/release/sandbox_smokes.py` — catalog, runner, validation
+- [x] `scripts/run-sandbox-release-smokes.sh`, `scripts/validate-sandbox-release-smokes.sh`
+- [x] Evidence templates under `.agent/evidence/_templates/sandbox-release-smoke/`
+- [x] Expand `docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md` (item 8 post-foundation)
+- [x] `docs/RELEASE_CHECKLIST.md` step 12 smoke gate
+- [x] Consolidate pending rows in `docs/SANDBOX_VALIDATION.md`
+- [x] ADR-034, tests (`test_m18_sandbox_release_smokes.py`)
+- [ ] Feature PR, release closeout v1.22.0
 
 ---
 

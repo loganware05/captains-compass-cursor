@@ -324,6 +324,21 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing executable scripts/apply-context-selection-proposal.sh"
   fi
+  if [[ -x "$ROOT/scripts/run-sandbox-release-smokes.sh" ]]; then
+    ok "run-sandbox-release-smokes.sh"
+  else
+    fail "missing executable scripts/run-sandbox-release-smokes.sh"
+  fi
+  if [[ -x "$ROOT/scripts/validate-sandbox-release-smokes.sh" ]]; then
+    ok "validate-sandbox-release-smokes.sh"
+  else
+    fail "missing executable scripts/validate-sandbox-release-smokes.sh"
+  fi
+  if [[ -f "$ROOT/orchestrator/release/sandbox_smokes.py" ]]; then
+    ok "sandbox release smokes module"
+  else
+    fail "missing orchestrator/release/sandbox_smokes.py"
+  fi
   if [[ -f "$ROOT/.agent/knowledge/.gitkeep" ]]; then
     ok ".agent/knowledge layout"
   else

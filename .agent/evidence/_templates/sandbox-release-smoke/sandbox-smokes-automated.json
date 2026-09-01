@@ -1,0 +1,11 @@
+{
+  "kind": "sandbox-release-smoke-report",
+  "ran_at": "2026-09-01T00:00:00Z",
+  "control_root": "/path/to/captains-compass-cursor",
+  "sandbox_root": "/path/to/captain-compass-sandbox",
+  "passed": true,
+  "results": [
+    { "smoke_id": "doctor-sandbox", "passed": true, "detail": "..." },
+    { "smoke_id": "compass-version", "passed": true, "detail": "control=1.22.0 sandbox=1.22.0" }
+  ]
+}

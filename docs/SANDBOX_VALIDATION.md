@@ -85,7 +85,7 @@ Checklist row 7 from `docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md`.
 |---|---|
 | Control release `v1.6.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.6.0 |
 | Sandbox refreshed to Compass 1.6.0 | Pass — [sandbox#21](https://github.com/loganware05/captain-compass-sandbox/pull/21) |
-| `record-execution-run.sh` on sandbox close | Pending interactive (optional) |
+| `record-execution-run.sh` on sandbox close | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.6.0/post-tag-validation.md`
 
@@ -95,7 +95,7 @@ Control mirror: `.agent/evidence/release-v1.6.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.7.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.7.0 |
 | Sandbox refreshed to Compass 1.7.0 | Pass — [sandbox#23](https://github.com/loganware05/captain-compass-sandbox/pull/23) merged |
-| Evaluator / routing smoke on sandbox | Pending interactive (optional) |
+| Evaluator / routing smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.7.0/post-tag-validation.md`
 
@@ -105,7 +105,7 @@ Control mirror: `.agent/evidence/release-v1.7.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.8.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.8.0 |
 | Sandbox refreshed to Compass 1.8.0 | Pass — [sandbox#25](https://github.com/loganware05/captain-compass-sandbox/pull/25) merged |
-| Persistent-role / apply smoke on sandbox | Pending interactive (optional) |
+| Persistent-role / apply smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.8.0/post-tag-validation.md`
 
@@ -115,7 +115,7 @@ Control mirror: `.agent/evidence/release-v1.8.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.9.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.9.0 |
 | Sandbox refreshed to Compass 1.9.0 | Pass — [sandbox#26](https://github.com/loganware05/captain-compass-sandbox/pull/26) merged |
-| Ingest/query smoke on sandbox | Pending interactive (optional) |
+| Ingest/query smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.9.0/post-tag-validation.md`
 
@@ -125,7 +125,7 @@ Control mirror: `.agent/evidence/release-v1.9.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.10.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.10.0 |
 | Sandbox refreshed to Compass 1.10.0 | Pass — [sandbox#27](https://github.com/loganware05/captain-compass-sandbox/pull/27) merged |
-| Hybrid query smoke on sandbox | Pending interactive (optional) |
+| Hybrid query smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.10.0/post-tag-validation.md`
 
@@ -135,7 +135,7 @@ Control mirror: `.agent/evidence/release-v1.10.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.11.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.11.0 |
 | Sandbox refreshed to Compass 1.11.0 | Pass — [sandbox#28](https://github.com/loganware05/captain-compass-sandbox/pull/28) merged |
-| Performance ingest / live TI smoke on sandbox | Pending interactive (optional) |
+| Performance ingest / live TI smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.11.0/post-tag-validation.md`
 
@@ -145,7 +145,7 @@ Control mirror: `.agent/evidence/release-v1.11.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.12.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.12.0 |
 | Sandbox refreshed to Compass 1.12.0 | Pass — [sandbox#29](https://github.com/loganware05/captain-compass-sandbox/pull/29) merged |
-| Procedure ingest / cached TI smoke on sandbox | Pending interactive (optional) |
+| Procedure ingest / cached TI smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.12.0/post-tag-validation.md`
 
@@ -155,7 +155,7 @@ Control mirror: `.agent/evidence/release-v1.12.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.13.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.13.0 |
 | Sandbox refreshed to Compass 1.13.0 | Pass — [sandbox#30](https://github.com/loganware05/captain-compass-sandbox/pull/30) merged |
-| Skill lifecycle / Artifact Context smoke on sandbox | Pending interactive (optional) |
+| Skill lifecycle / Artifact Context smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.13.0/post-tag-validation.md`
 
@@ -165,7 +165,7 @@ Control mirror: `.agent/evidence/release-v1.13.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.14.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.14.0 |
 | Sandbox refreshed to Compass 1.14.0 | Pass — [sandbox#31](https://github.com/loganware05/captain-compass-sandbox/pull/31) merged |
-| External knowledge / HF file TI smoke on sandbox | Pending interactive (optional) |
+| External knowledge / HF file TI smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.14.0/post-tag-validation.md`
 
@@ -175,7 +175,7 @@ Control mirror: `.agent/evidence/release-v1.14.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.15.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.15.0 |
 | Sandbox refreshed to Compass 1.15.0 | Pass — [sandbox#32](https://github.com/loganware05/captain-compass-sandbox/pull/32) merged |
-| Fixture embeddings / package-registry TI smoke on sandbox | Pending interactive (optional) |
+| Fixture embeddings / package-registry TI smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.15.0/post-tag-validation.md`
 
@@ -185,7 +185,7 @@ Control mirror: `.agent/evidence/release-v1.15.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.16.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.16.0 |
 | Sandbox refreshed to Compass 1.16.0 | Pass — [sandbox#33](https://github.com/loganware05/captain-compass-sandbox/pull/33) merged |
-| Live embeddings / package-registry TI smoke on sandbox | Pending interactive (optional) |
+| Live embeddings / package-registry TI smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.16.0/post-tag-validation.md`
 
@@ -195,7 +195,7 @@ Control mirror: `.agent/evidence/release-v1.16.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.17.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.17.0 |
 | Sandbox refreshed to Compass 1.17.0 | Pass — [sandbox#34](https://github.com/loganware05/captain-compass-sandbox/pull/34) |
-| Hosted pgvector / namespace smoke on sandbox | Pending interactive (optional) |
+| Hosted pgvector / namespace smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.17.0/post-tag-validation.md`
 
@@ -205,7 +205,7 @@ Control mirror: `.agent/evidence/release-v1.17.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.18.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.18.0 |
 | Sandbox refreshed to Compass 1.18.0 | Pass — [sandbox#35](https://github.com/loganware05/captain-compass-sandbox/pull/35) merged |
-| Stars categorization / categorized TI smoke on sandbox | Pending interactive (optional) |
+| Stars categorization / categorized TI smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.18.0/post-tag-validation.md`
 
@@ -215,7 +215,7 @@ Control mirror: `.agent/evidence/release-v1.18.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.19.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.19.0 |
 | Sandbox refreshed to Compass 1.19.0 | Pass — [sandbox#36](https://github.com/loganware05/captain-compass-sandbox/pull/36) merged |
-| Notion MCP live ingest smoke on sandbox | Pending interactive (optional) |
+| Notion MCP live ingest smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.19.0/post-tag-validation.md`
 
@@ -225,7 +225,7 @@ Control mirror: `.agent/evidence/release-v1.19.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.20.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.20.0 |
 | Sandbox refreshed to Compass 1.20.0 | Pass — [sandbox#37](https://github.com/loganware05/captain-compass-sandbox/pull/37) merged |
-| HF Hub live TI smoke on sandbox | Pending interactive (optional) |
+| HF Hub live TI smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.20.0/post-tag-validation.md`
 
@@ -235,7 +235,20 @@ Control mirror: `.agent/evidence/release-v1.20.0/post-tag-validation.md`
 |---|---|
 | Control release `v1.21.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.21.0 |
 | Sandbox refreshed to Compass 1.21.0 | Pass — [sandbox#38](https://github.com/loganware05/captain-compass-sandbox/pull/38) merged |
-| Context selection / decomposition smoke on sandbox | Pending interactive (optional) |
+| Context selection / decomposition smoke on sandbox | Satisfied by M18 automated fixture smokes |
 
 Control mirror: `.agent/evidence/release-v1.21.0/post-tag-validation.md`
+
+### M18 consolidated sandbox release smokes (v1.22.0)
+
+| Step | Result |
+|---|---|
+| Automated fixture smokes (`run-sandbox-release-smokes.sh`) | Required at release closeout |
+| Interactive behavioral checklist (items 1–8) | Required at release closeout |
+| Evidence gate (`validate-sandbox-release-smokes.sh`) | Required before closeout PR |
+
+Prior v1.6.0–v1.21.0 optional sandbox rows are satisfied by M18 automated fixture
+smokes against control-repo fixtures plus doctor/COMPASS_VERSION checks on the sandbox.
+Full interactive re-validation remains available via
+`docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md`.
 

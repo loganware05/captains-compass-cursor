@@ -1,5 +1,26 @@
 # Decisions
 
+## ADR-034: Required sandbox release smokes for closeout (v1.22.0 M18)
+
+- **Status:** Accepted
+- **Date:** 2026-09-01
+- **Context:** Post-foundation milestones M13–M17 shipped fixture CLIs and sandbox
+  refresh rows, but `docs/SANDBOX_VALIDATION.md` accumulated "Pending interactive
+  (optional)" rows. Captain locked M18 smokes as **required** for release closeout.
+- **Decision:**
+  1. Add `orchestrator/release/sandbox_smokes.py` with a release smoke catalog
+     (automated fixture CLIs + interactive behavioral checklist rows).
+  2. CLIs `run-sandbox-release-smokes.sh` and `validate-sandbox-release-smokes.sh`
+     write and gate evidence under `.agent/evidence/release-vX.Y.Z/`.
+  3. Expand `docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md` with post-foundation item 8.
+  4. Integrate smoke gate into `docs/RELEASE_CHECKLIST.md` step 12.
+  5. Evidence templates under `.agent/evidence/_templates/sandbox-release-smoke/`.
+  6. Consolidate pending sandbox validation rows via M18 automated fixture smokes;
+     interactive checklist remains Captain/agent exercised (no LLM-in-CI).
+- **Consequences:** Release closeout fails closed without automated + interactive
+  smoke evidence. Deterministic smokes run in unit tests; full behavioral checklist
+  stays manual in the disposable sandbox.
+
 ## ADR-033: Stage 3 context selection + light decomposition hints (v1.21.0 M17)
 
 - **Status:** Accepted
