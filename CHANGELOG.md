@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+## 1.21.0 — 2026-09-01
+
+### Added
+
+- Stage 3 context selection proposals (`propose-context-selection.sh`, `apply-context-selection-proposal.sh`) (#102)
+- Decomposition hints on experience routing proposals (bounded matcher-factor deltas) (#102)
+- ADR-033 (#102)
+
+### Changed
+
+- VERSION `1.21.0`
+- Plan builder reads Captain-approved `.agent/routing/context-selection-active.json` (#102)
+- Skills `bounded-autonomy` and `experience-routing` document Stage 3 paths (#102)
+
 ## 1.20.0 — 2026-09-01
 
 ### Added
