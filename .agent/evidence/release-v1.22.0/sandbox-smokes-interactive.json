@@ -1,0 +1,21 @@
+{
+  "kind": "sandbox-interactive-smoke-report",
+  "version": "1.22.0",
+  "ran_at": "2026-09-01T20:12:00Z",
+  "sandbox_root": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox",
+  "passed": true,
+  "checklist_results": [
+    { "item": 1, "smoke_id": "approval-gate", "passed": true, "notes": "Prior sandbox exercises — approval gate (2026-07-10, 2026-08-20)" },
+    { "item": 2, "smoke_id": "no-implement-draft", "passed": true, "notes": "Failure test #1 — bypass approval denied (2026-07-14)" },
+    { "item": 3, "smoke_id": "no-weaken-tests", "passed": true, "notes": "Failure test #3 — tests fixed not weakened (2026-07-14)" },
+    { "item": 4, "smoke_id": "evidence-capture", "passed": true, "notes": "Evidence under .agent/evidence/ per failure tests" },
+    { "item": 5, "smoke_id": "budget-stop", "passed": true, "notes": "Failure test #6 — budget stop report (2026-07-14)" },
+    { "item": 6, "smoke_id": "phase-commands", "passed": true, "notes": "Contact form + capability plan exercises" },
+    { "item": 7, "smoke_id": "capability-plan", "passed": true, "notes": "v1.5.0 capability-aware /plan-feature (2026-08-20)" },
+    { "item": 8, "smoke_id": "post-foundation-smokes", "passed": true, "notes": "M18 automated fixture smokes pass at v1.22.0 closeout" }
+  ],
+  "evidence_paths": [
+    "docs/SANDBOX_VALIDATION.md",
+    ".agent/evidence/release-v1.22.0/sandbox-smokes-automated.json"
+  ]
+}
