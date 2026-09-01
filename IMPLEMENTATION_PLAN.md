@@ -1,13 +1,13 @@
 # Implementation Plan — Post-Foundation Backlog (M13–M18)
 
-- Status: COMPLETE — M16 / v1.20.0 release prep
+- Status: COMPLETE — M16 / v1.20.0 closed; M17 next
 - Plan ID: post-foundation-backlog
-- Issue: #98
+- Issue: #98 (closed)
 
 | Field | Value |
 |---|---|
 | **Plan ID** | `post-foundation-backlog` |
-| **Status** | **COMPLETE** — M16 / v1.20.0 release prep; M17 next |
+| **Status** | **COMPLETE** — M16 / v1.20.0 closed; M17 next |
 | **Baseline** | v1.16.0 (`9d50de8`) |
 | **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13 closed) |
 | **Feature PR** | [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) (merged @ `40c84fc`) |
@@ -137,7 +137,9 @@ Live Hub provider mirroring M12 package-registry pattern; mocked HTTP in CI.
 - [x] `COMPASS_TI_PROVIDER=huggingface-hub` selection + optional `COMPASS_HF_HUB_TOKEN`
 - [x] ADR-032, docs, Skill extension, tests
 - [x] Feature PR [#99](https://github.com/loganware05/captains-compass-cursor/pull/99) merged
-- [ ] Release tag v1.20.0 + sandbox refresh + closeout
+- [x] Release tag [v1.20.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.20.0)
+- [x] Sandbox refresh [sandbox#37](https://github.com/loganware05/captain-compass-sandbox/pull/37)
+- [x] Closeout + issue #98 closed
 
 ---
 

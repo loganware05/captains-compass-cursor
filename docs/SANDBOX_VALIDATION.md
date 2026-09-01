@@ -219,3 +219,13 @@ Control mirror: `.agent/evidence/release-v1.18.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.19.0/post-tag-validation.md`
 
+### Live Hugging Face Hub TI (v1.20.0) — refresh complete 2026-09-01
+
+| Step | Result |
+|---|---|
+| Control release `v1.20.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.20.0 |
+| Sandbox refreshed to Compass 1.20.0 | Pass — [sandbox#37](https://github.com/loganware05/captain-compass-sandbox/pull/37) merged |
+| HF Hub live TI smoke on sandbox | Pending interactive (optional) |
+
+Control mirror: `.agent/evidence/release-v1.20.0/post-tag-validation.md`
+
