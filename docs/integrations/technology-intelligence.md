@@ -61,7 +61,7 @@ with `TechnologyIntelligenceValidationError`.
 
 | Env var | Values | Default |
 |---|---|---|
-| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` \| `huggingface-file` \| `package-registry-file` \| `package-registry` | `stub` |
+| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` \| `github-stars-categorized` \| `huggingface-file` \| `package-registry-file` \| `package-registry` | `stub` |
 | `COMPASS_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/` |
 | `COMPASS_EMBEDDING_PROVIDER` | `tfidf` \| `fixture` \| `openai-compatible` | `tfidf` |
 | `COMPASS_EMBEDDING_API_KEY` | API key for openai-compatible | (required when live) |
@@ -93,6 +93,10 @@ COMPASS_TI_PROVIDER=github-stars ./scripts/query-technology-intelligence.sh --qu
 ./scripts/refresh-ti-cache.sh
 ./scripts/refresh-ti-cache.sh --if-stale 24
 COMPASS_TI_PROVIDER=github-stars-cached ./scripts/query-technology-intelligence.sh --query "react forms"
+
+# Batch categorized stars (offline ML from manual labels — M14)
+./scripts/categorize-github-stars.sh --source fixtures
+COMPASS_TI_PROVIDER=github-stars-categorized ./scripts/query-technology-intelligence.sh --query "react forms"
 COMPASS_TI_PROVIDER=huggingface-file ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
 COMPASS_TI_PROVIDER=package-registry-file ./scripts/query-technology-intelligence.sh --query "schema validation"
 COMPASS_TI_PROVIDER=package-registry ./scripts/query-technology-intelligence.sh --query "schema validation"
@@ -124,6 +128,7 @@ manifests, or install targets.
 | `FileTechnologyIntelligenceProvider` | Shipped — redacted Stars-shaped fixtures |
 | `GithubStarsTechnologyIntelligenceProvider` | Shipped — live starred repos via `gh` (opt-in) |
 | `CachedGithubStarsTechnologyIntelligenceProvider` | Shipped — offline cache via `github-stars-cached` (M8) |
+| `GithubStarsCategorizedTechnologyIntelligenceProvider` | Shipped — batch ML categories via `github-stars-categorized` (M14) |
 | `refresh-ti-cache.sh` | Shipped — explicit cache refresh CLI (M8); `--if-stale` (M10) |
 | `HuggingFaceFileTechnologyIntelligenceProvider` | Shipped — offline HF model cards via `huggingface-file` (M10) |
 | `PackageRegistryFileTechnologyIntelligenceProvider` | Shipped — offline npm/PyPI via `package-registry-file` (M11) |

@@ -69,12 +69,22 @@ during capability planning — not offline fixtures and not CI defaults.
      ./scripts/query-technology-intelligence.sh --query "schema validation"
    ```
 
+10. **Batch categorized Stars** (offline ML from manual labels — no live training in CI):
+
+   ```bash
+   ./scripts/categorize-github-stars.sh --source fixtures   # offline test path
+   # or after refresh-ti-cache.sh:
+   ./scripts/categorize-github-stars.sh --source ti-cache
+   COMPASS_TI_PROVIDER=github-stars-categorized \
+     ./scripts/query-technology-intelligence.sh --query "react forms"
+   ```
+
 ## Output
 
 - JSON list of normalized `CandidateCapability` payloads
 - Plan section **Technology Intelligence Candidates** when planning with
-  `COMPASS_TI_PROVIDER=github-stars`, `github-stars-cached`, `huggingface-file`,
-  `package-registry-file`, or `package-registry`
+  `COMPASS_TI_PROVIDER=github-stars`, `github-stars-cached`, `github-stars-categorized`,
+  `huggingface-file`, `package-registry-file`, or `package-registry`
 
 ## Prohibited actions
 
