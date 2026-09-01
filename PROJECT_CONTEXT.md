@@ -124,4 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-M13 feature merged; v1.17.0 release prep in PR #88. Post-foundation backlog **APPROVED** — M14 next. See `IMPLEMENTATION_PLAN.md`.
+M13 / v1.17.0 shipped. M14 in progress (GitHub Star categorization ML). See `IMPLEMENTATION_PLAN.md`.
