@@ -132,5 +132,20 @@ Use this for Captain's Compass version tags.
    ./scripts/update.sh /path/to/captain-compass-sandbox
    ./scripts/doctor.sh /path/to/captain-compass-sandbox
    ```
-12. Update `PROGRESS.md` and save release/validation evidence, including raw
+12. Run required sandbox release smokes (M18 — automated + interactive evidence):
+   ```bash
+   ./scripts/run-sandbox-release-smokes.sh \
+     --sandbox /path/to/captain-compass-sandbox \
+     --version "$RELEASE_VERSION"
+   ```
+   Complete `docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md` in the sandbox Cursor
+   session. Copy the interactive attestation template from
+   `.agent/evidence/_templates/sandbox-release-smoke/sandbox-smokes-interactive.json`
+   into `.agent/evidence/release-v${RELEASE_VERSION}/sandbox-smokes-interactive.json`
+   with `passed: true` and per-item `checklist_results`.
+   Gate closeout:
+   ```bash
+   ./scripts/validate-sandbox-release-smokes.sh --version "$RELEASE_VERSION"
+   ```
+13. Update `PROGRESS.md` and save release/validation evidence, including raw
     scrubbed command transcripts.

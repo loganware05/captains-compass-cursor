@@ -25,8 +25,10 @@ Validating an implemented change, preparing a PR, or verifying Definition of Don
 5. Capture screenshots and logs under .agent/evidence/.
 6. Confirm build succeeds when applicable.
 7. Review rollback instructions against the change.
-8. If tests fail, fix implementation or report a blocker—never weaken tests to pass.
-9. Stop and report if budget limits are exceeded.
+8. For release closeout, run `./scripts/run-sandbox-release-smokes.sh` and gate with
+   `./scripts/validate-sandbox-release-smokes.sh --version X.Y.Z` (M18).
+9. If tests fail, fix implementation or report a blocker—never weaken tests to pass.
+10. Stop and report if budget limits are exceeded.
 
 ## Output
 
