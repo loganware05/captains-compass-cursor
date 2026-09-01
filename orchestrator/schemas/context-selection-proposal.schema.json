@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/context-selection-proposal.schema.json",
+  "title": "ContextSelectionProposal",
+  "description": "Experience-based plan context slice tuning. auto_apply stays false; Captain-flagged apply via apply-context-selection-proposal.sh (M17).",
+  "type": "object",
+  "required": [
+    "proposal_id",
+    "kind",
+    "based_on_experiences",
+    "context_profile_suggestions",
+    "auto_apply"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "proposal_id": { "type": "string", "minLength": 1 },
+    "kind": { "type": "string", "const": "context-selection-proposal" },
+    "based_on_experiences": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "context_profile_suggestions": {
+      "type": "object",
+      "required": ["profile_id", "slices"],
+      "properties": {
+        "profile_id": { "type": "string" },
+        "slices": { "type": "object" },
+        "source": { "type": "string" },
+        "updated_at": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "auto_apply": { "type": "boolean", "const": false },
+    "captain_approved": {
+      "type": "boolean",
+      "description": "Must be true before apply-context-selection-proposal.sh will apply profile"
+    },
+    "notes": { "type": "string" },
+    "created_at": { "type": "string", "minLength": 1 },
+    "captain_approval_required": { "type": "boolean", "const": true }
+  }
+}

@@ -10,6 +10,7 @@ from typing import Any
 from uuid import uuid4
 
 from orchestrator.matcher.score import get_weights
+from orchestrator.routing.decomposition import build_decomposition_hints, merge_decomposition_hints
 from orchestrator.schemas.validate import validate_document
 
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,120}$")
@@ -79,12 +80,16 @@ def build_routing_proposal(
             }
         )
 
+    decomposition_hints = build_decomposition_hints(experiences)
+    weight_suggestions = merge_decomposition_hints(get_weights(), decomposition_hints)
+
     return {
         "proposal_id": proposal_id or f"route-{uuid4().hex[:12]}",
         "kind": "routing-proposal",
         "based_on_experiences": experience_ids,
         "skill_confidence_deltas": deltas,
-        "matcher_weight_suggestions": get_weights(),
+        "decomposition_hints": decomposition_hints,
+        "matcher_weight_suggestions": weight_suggestions,
         "auto_apply": False,
         "captain_approved": False,
         "notes": notes

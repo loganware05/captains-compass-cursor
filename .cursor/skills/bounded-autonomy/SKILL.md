@@ -29,8 +29,18 @@ matcher weight suggestions under an autonomy budget (Milestone 4 Level 3).
      --budget .agent/budgets/<plan-id>.md
    ```
 
-4. Review audit under `.agent/routing/applied/` and re-run evals.
-5. Rollback if needed by restoring `orchestrator/matcher/weights.json` defaults
+4. **Context selection apply** (M17 — which plan slices appear):
+
+   ```bash
+   ./scripts/propose-context-selection.sh --experiences tests/fixtures/experience/contact-counter.json
+   # Captain sets captain_approved: true on the context-selection proposal
+   ./scripts/apply-context-selection-proposal.sh \
+     --proposal .agent/routing/proposals/<ctxsel-id>.json \
+     --budget .agent/budgets/<plan-id>.md
+   ```
+
+5. Review audit under `.agent/routing/applied/` and re-run evals.
+6. Rollback if needed by restoring `orchestrator/matcher/weights.json` defaults
    (or `rollback/pre-m4-persistent-roles-bounded-autonomy`).
 
 ## Output

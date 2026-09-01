@@ -49,96 +49,135 @@ def build_capability_plan(
     manifests = build_manifests(task_graph, registry, plan_id=plan_id)
 
     ti_provider = select_ti_provider(repo_root)
-    candidates = [
-        item.to_dict()
-        for item in ti_provider.discover_candidates(objective, context)
-    ]
-    validate_ti_candidates(candidates)
-
     experience_signals: list[dict] = []
-    for folder in (
-        repo_root / "tests" / "fixtures" / "experience",
-        repo_root / ".agent" / "experience",
-    ):
-        if not folder.is_dir():
-            continue
-        for path in sorted(folder.glob("*.json"))[:5]:
-            try:
-                with path.open(encoding="utf-8") as handle:
-                    doc = json.load(handle)
-                if isinstance(doc, dict) and doc.get("experience_id"):
-                    experience_signals.append(
-                        {
-                            "experience_id": doc.get("experience_id"),
-                            "outcome": doc.get("outcome"),
-                            "skills_used": list(doc.get("skills_used") or [])[:8],
-                        }
-                    )
-            except (OSError, json.JSONDecodeError):
-                continue
-
     knowledge_context: list[dict] = []
     knowledge_search_mode = "keyword"
-    try:
-        from orchestrator.knowledge.query import query_knowledge
-        from orchestrator.knowledge.vector_index import select_knowledge_search_mode
-
-        knowledge_search_mode = select_knowledge_search_mode(repo_root)
-        knowledge_context = query_knowledge(
-            repo_root,
-            objective,
-            top_n=5,
-            rebuild_index=False,
-            mode=knowledge_search_mode,
-        )
-    except Exception:
-        knowledge_context = []
-        knowledge_search_mode = "keyword"
-
     performance_context: list[dict] = []
-    try:
-        from orchestrator.knowledge.query import query_knowledge
-
-        performance_context = query_knowledge(
-            repo_root,
-            objective,
-            kind="performance",
-            top_n=5,
-            rebuild_index=False,
-            mode=knowledge_search_mode,
-        )
-    except Exception:
-        performance_context = []
-
     procedure_context: list[dict] = []
-    try:
-        from orchestrator.knowledge.query import query_knowledge
-
-        procedure_context = query_knowledge(
-            repo_root,
-            objective,
-            kind="procedure",
-            top_n=5,
-            rebuild_index=False,
-            mode=knowledge_search_mode,
-        )
-    except Exception:
-        procedure_context = []
-
     artifact_context: list[dict] = []
-    try:
-        from orchestrator.knowledge.query import query_knowledge
+    candidates: list[dict] = []
 
-        artifact_context = query_knowledge(
-            repo_root,
-            objective,
-            kind="artifact",
-            top_n=5,
-            rebuild_index=False,
-            mode=knowledge_search_mode,
-        )
+    try:
+        from orchestrator.planning.context_selection import fetch_plan_context_slices, load_active_context_profile
+
+        active_profile = load_active_context_profile(repo_root)
+        slices = fetch_plan_context_slices(repo_root, objective, profile=active_profile)
+        knowledge_context = list(slices.get("knowledge_context") or [])
+        knowledge_search_mode = str(slices.get("knowledge_search_mode") or "keyword")
+        performance_context = list(slices.get("performance_context") or [])
+        procedure_context = list(slices.get("procedure_context") or [])
+        artifact_context = list(slices.get("artifact_context") or [])
+        candidates = list(slices.get("technology_intelligence_candidates") or [])
+        experience_signals = list(slices.get("experience_signals") or [])
     except Exception:
-        artifact_context = []
+        from orchestrator.planning.context_selection import load_active_context_profile
+
+        try:
+            active_profile = load_active_context_profile(repo_root)
+            profile_slices = active_profile["slices"]
+        except Exception:
+            from orchestrator.planning.context_selection import DEFAULT_SLICE_CONFIG
+
+            profile_slices = DEFAULT_SLICE_CONFIG
+        if profile_slices["technology_intelligence"]["enabled"]:
+            ti_top = profile_slices["technology_intelligence"]["top_n"]
+            candidates = [
+                item.to_dict()
+                for item in ti_provider.discover_candidates(objective, context)
+            ][:ti_top]
+
+        if profile_slices["experience_signals"]["enabled"]:
+            exp_top = profile_slices["experience_signals"]["top_n"]
+            for folder in (
+                repo_root / "tests" / "fixtures" / "experience",
+                repo_root / ".agent" / "experience",
+            ):
+                if not folder.is_dir():
+                    continue
+                for path in sorted(folder.glob("*.json")):
+                    if len(experience_signals) >= exp_top:
+                        break
+                    try:
+                        with path.open(encoding="utf-8") as handle:
+                            doc = json.load(handle)
+                        if isinstance(doc, dict) and doc.get("experience_id"):
+                            experience_signals.append(
+                                {
+                                    "experience_id": doc.get("experience_id"),
+                                    "outcome": doc.get("outcome"),
+                                    "skills_used": list(doc.get("skills_used") or [])[:8],
+                                }
+                            )
+                    except (OSError, json.JSONDecodeError):
+                        continue
+
+        try:
+            from orchestrator.knowledge.vector_index import select_knowledge_search_mode
+
+            knowledge_search_mode = select_knowledge_search_mode(repo_root)
+        except Exception:
+            knowledge_search_mode = "keyword"
+
+        if profile_slices["knowledge"]["enabled"] and profile_slices["knowledge"]["top_n"] > 0:
+            try:
+                from orchestrator.knowledge.query import query_knowledge
+
+                knowledge_context = query_knowledge(
+                    repo_root,
+                    objective,
+                    top_n=profile_slices["knowledge"]["top_n"],
+                    rebuild_index=False,
+                    mode=knowledge_search_mode,
+                )
+            except Exception:
+                knowledge_context = []
+
+        if profile_slices["performance"]["enabled"] and profile_slices["performance"]["top_n"] > 0:
+            try:
+                from orchestrator.knowledge.query import query_knowledge
+
+                performance_context = query_knowledge(
+                    repo_root,
+                    objective,
+                    kind="performance",
+                    top_n=profile_slices["performance"]["top_n"],
+                    rebuild_index=False,
+                    mode=knowledge_search_mode,
+                )
+            except Exception:
+                performance_context = []
+
+        if profile_slices["procedure"]["enabled"] and profile_slices["procedure"]["top_n"] > 0:
+            try:
+                from orchestrator.knowledge.query import query_knowledge
+
+                procedure_context = query_knowledge(
+                    repo_root,
+                    objective,
+                    kind="procedure",
+                    top_n=profile_slices["procedure"]["top_n"],
+                    rebuild_index=False,
+                    mode=knowledge_search_mode,
+                )
+            except Exception:
+                procedure_context = []
+
+        if profile_slices["artifact"]["enabled"] and profile_slices["artifact"]["top_n"] > 0:
+            try:
+                from orchestrator.knowledge.query import query_knowledge
+
+                artifact_context = query_knowledge(
+                    repo_root,
+                    objective,
+                    kind="artifact",
+                    top_n=profile_slices["artifact"]["top_n"],
+                    rebuild_index=False,
+                    mode=knowledge_search_mode,
+                )
+            except Exception:
+                artifact_context = []
+
+    validate_ti_candidates(candidates)
 
     plans_dir = repo_root / ".agent" / "plans" / plan_id
     plans_dir.mkdir(parents=True, exist_ok=True)

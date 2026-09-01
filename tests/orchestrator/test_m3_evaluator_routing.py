@@ -67,7 +67,11 @@ class RoutingProposalTests(unittest.TestCase):
         experiences = load_experiences([EXPERIENCE_FIXTURE])
         proposal = build_routing_proposal(experiences)
         self.assertFalse(proposal["auto_apply"])
-        self.assertEqual(proposal["matcher_weight_suggestions"], dict(WEIGHTS))
+        self.assertIn("decomposition_hints", proposal)
+        self.assertGreaterEqual(
+            proposal["matcher_weight_suggestions"]["capability_overlap"],
+            WEIGHTS["capability_overlap"],
+        )
         self.assertFalse(proposal.get("captain_approved"))
         with tempfile.TemporaryDirectory() as tmp:
             path = write_routing_proposal(Path(tmp), proposal)

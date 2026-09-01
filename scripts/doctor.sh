@@ -314,6 +314,16 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing executable scripts/apply-routing-proposal.sh"
   fi
+  if [[ -x "$ROOT/scripts/propose-context-selection.sh" ]]; then
+    ok "propose-context-selection.sh"
+  else
+    fail "missing executable scripts/propose-context-selection.sh"
+  fi
+  if [[ -x "$ROOT/scripts/apply-context-selection-proposal.sh" ]]; then
+    ok "apply-context-selection-proposal.sh"
+  else
+    fail "missing executable scripts/apply-context-selection-proposal.sh"
+  fi
   if [[ -f "$ROOT/.agent/knowledge/.gitkeep" ]]; then
     ok ".agent/knowledge layout"
   else

@@ -1,5 +1,28 @@
 # Decisions
 
+## ADR-033: Stage 3 context selection + light decomposition hints (v1.21.0 M17)
+
+- **Status:** Accepted
+- **Date:** 2026-09-01
+- **Context:** M4 shipped Captain-flagged matcher weight apply from Experience routing
+  proposals. Plans always included fixed knowledge/TI/experience slices (top_n=5).
+  Captains need tunable plan context selection and finer matcher hints without
+  auto-apply or unsupervised self-modification.
+- **Decision:**
+  1. Add **context selection proposals** (`context-selection-proposal`) tuning which
+     plan slices appear (knowledge, performance, procedure, artifact, TI, experiences)
+     with per-slice `enabled` and `top_n`.
+  2. Captain-approved profile stored at `.agent/routing/context-selection-active.json`;
+     `build_capability_plan` reads it via `fetch_plan_context_slices`.
+  3. CLIs `propose-context-selection.sh` and `apply-context-selection-proposal.sh`
+     (explicit only; `captain_approved: true` required).
+  4. Add **decomposition hints** on routing proposals — bounded matcher-factor deltas
+     (±0.03) derived from successful Experience skill usage; merged on apply.
+  5. Share autonomy budget weight-apply counter for context-selection apply.
+  6. Extend Skills `bounded-autonomy` and `experience-routing`; no new Skill.
+- **Consequences:** Captains can tune plan context slices and light matcher decomposition
+  under budget; defaults unchanged until Captain applies proposals.
+
 ## ADR-032: Live Hugging Face Hub Technology Intelligence (v1.20.0 M16)
 
 - **Status:** Accepted
