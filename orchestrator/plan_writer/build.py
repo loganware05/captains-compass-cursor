@@ -94,7 +94,9 @@ def build_capability_plan(
             ):
                 if not folder.is_dir():
                     continue
-                for path in sorted(folder.glob("*.json"))[:exp_top]:
+                for path in sorted(folder.glob("*.json")):
+                    if len(experience_signals) >= exp_top:
+                        break
                     try:
                         with path.open(encoding="utf-8") as handle:
                             doc = json.load(handle)
