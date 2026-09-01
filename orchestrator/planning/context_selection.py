@@ -288,13 +288,17 @@ def fetch_plan_context_slices(
     }
 
     try:
-        from orchestrator.knowledge.query import query_knowledge
         from orchestrator.knowledge.vector_index import select_knowledge_search_mode
 
         knowledge_search_mode = select_knowledge_search_mode(repo_root)
         result["knowledge_search_mode"] = knowledge_search_mode
+    except Exception:
+        pass
 
-        if slices["knowledge"]["enabled"] and slices["knowledge"]["top_n"] > 0:
+    if slices["knowledge"]["enabled"] and slices["knowledge"]["top_n"] > 0:
+        try:
+            from orchestrator.knowledge.query import query_knowledge
+
             result["knowledge_context"] = query_knowledge(
                 repo_root,
                 objective,
@@ -302,7 +306,13 @@ def fetch_plan_context_slices(
                 rebuild_index=False,
                 mode=knowledge_search_mode,
             )
-        if slices["performance"]["enabled"] and slices["performance"]["top_n"] > 0:
+        except Exception:
+            pass
+
+    if slices["performance"]["enabled"] and slices["performance"]["top_n"] > 0:
+        try:
+            from orchestrator.knowledge.query import query_knowledge
+
             result["performance_context"] = query_knowledge(
                 repo_root,
                 objective,
@@ -311,7 +321,13 @@ def fetch_plan_context_slices(
                 rebuild_index=False,
                 mode=knowledge_search_mode,
             )
-        if slices["procedure"]["enabled"] and slices["procedure"]["top_n"] > 0:
+        except Exception:
+            pass
+
+    if slices["procedure"]["enabled"] and slices["procedure"]["top_n"] > 0:
+        try:
+            from orchestrator.knowledge.query import query_knowledge
+
             result["procedure_context"] = query_knowledge(
                 repo_root,
                 objective,
@@ -320,7 +336,13 @@ def fetch_plan_context_slices(
                 rebuild_index=False,
                 mode=knowledge_search_mode,
             )
-        if slices["artifact"]["enabled"] and slices["artifact"]["top_n"] > 0:
+        except Exception:
+            pass
+
+    if slices["artifact"]["enabled"] and slices["artifact"]["top_n"] > 0:
+        try:
+            from orchestrator.knowledge.query import query_knowledge
+
             result["artifact_context"] = query_knowledge(
                 repo_root,
                 objective,
@@ -329,13 +351,12 @@ def fetch_plan_context_slices(
                 rebuild_index=False,
                 mode=knowledge_search_mode,
             )
-    except Exception:
-        pass
+        except Exception:
+            pass
 
     if slices["technology_intelligence"]["enabled"]:
         try:
             from orchestrator.providers.technology_intelligence.file_provider import select_ti_provider
-            from orchestrator.providers.technology_intelligence.validate import validate_ti_candidates
 
             ti_top = int(slices["technology_intelligence"]["top_n"])
             provider = select_ti_provider(repo_root)
@@ -343,10 +364,13 @@ def fetch_plan_context_slices(
                 item.to_dict()
                 for item in provider.discover_candidates(objective, {})
             ][:ti_top]
-            validate_ti_candidates(candidates)
-            result["technology_intelligence_candidates"] = candidates
         except Exception:
-            result["technology_intelligence_candidates"] = []
+            candidates = []
+
+        from orchestrator.providers.technology_intelligence.validate import validate_ti_candidates
+
+        validate_ti_candidates(candidates)
+        result["technology_intelligence_candidates"] = candidates
 
     if slices["experience_signals"]["enabled"]:
         max_items = int(slices["experience_signals"]["top_n"])
