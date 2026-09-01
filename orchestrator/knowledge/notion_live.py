@@ -29,6 +29,15 @@ def normalize_page_id(raw: str) -> str:
     raw = raw.strip()
     if not raw:
         raise NotionLiveError("empty Notion page id")
+    # Extract p= parameter for database peek URLs before stripping query string
+    if '?' in raw:
+        query = raw.split('?', 1)[1].split('#')[0]
+        for param in query.split('&'):
+            if '=' in param:
+                key, value = param.split('=', 1)
+                if key == 'p':
+                    raw = value
+                    break
     # Strip query parameters and fragments to prevent corruption
     clean = raw.split('?')[0].split('#')[0]
     compact = re.sub(r"[^a-f0-9]", "", clean.lower())
