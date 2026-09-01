@@ -1,5 +1,24 @@
 # Decisions
 
+## ADR-032: Live Hugging Face Hub Technology Intelligence (v1.20.0 M16)
+
+- **Status:** Accepted
+- **Date:** 2026-08-31
+- **Context:** M10 shipped offline HF model-card TI (`huggingface-file`); M12 shipped
+  live npm/PyPI registry TI. Captains need live Hub discovery for ML planning signals
+  without live Hub calls in CI or auto-execution of external models.
+- **Decision:**
+  1. Add `HuggingFaceHubLiveTechnologyIntelligenceProvider` behind explicit
+     `COMPASS_TI_PROVIDER=huggingface-hub` (aliases `huggingface-live`, `hf-hub`).
+  2. Query the public Hub models API (`/api/models?search=…`); optional
+     `COMPASS_HF_HUB_TOKEN` for authenticated requests.
+  3. Map Hub JSON to existing `candidate_from_huggingface_shaped` records with
+     `discovery_signal: huggingface-hub-live:<model_id>`.
+  4. Unit tests inject `http_get`; never call live Hub in CI defaults.
+  5. Extend Skill `technology-intelligence-live`; offline `huggingface-file` unchanged.
+- **Consequences:** Captains can query live Hub models locally for planning; CI stays
+  offline-safe; candidates remain NOT APPROVED FOR EXECUTION.
+
 ## ADR-031: Live Notion MCP knowledge ingest with page allowlist (v1.19.0 M15)
 
 - **Status:** Accepted

@@ -79,12 +79,21 @@ during capability planning — not offline fixtures and not CI defaults.
      ./scripts/query-technology-intelligence.sh --query "react forms"
    ```
 
+11. **Live Hugging Face Hub TI** (Captain local — Hub models API):
+
+   ```bash
+   COMPASS_TI_PROVIDER=huggingface-hub \
+     ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
+   # optional auth for gated models:
+   # COMPASS_HF_HUB_TOKEN=hf_... COMPASS_TI_PROVIDER=huggingface-hub ...
+   ```
+
 ## Output
 
 - JSON list of normalized `CandidateCapability` payloads
 - Plan section **Technology Intelligence Candidates** when planning with
   `COMPASS_TI_PROVIDER=github-stars`, `github-stars-cached`, `github-stars-categorized`,
-  `huggingface-file`, `package-registry-file`, or `package-registry`
+  `huggingface-file`, `huggingface-hub`, `package-registry-file`, or `package-registry`
 
 ## Prohibited actions
 
