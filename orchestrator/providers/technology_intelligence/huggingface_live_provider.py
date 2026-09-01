@@ -55,7 +55,7 @@ def _score_candidate(objective: str, candidate: CandidateCapability) -> float:
 
 def _query_terms(objective: str, limit: int = 3) -> list[str]:
     tokens = [t for t in _tokenize(objective) if len(t) >= 3]
-    tokens.sort(key=len, reverse=True)
+    tokens.sort(key=lambda t: (-len(t), t))
     return tokens[:limit] or ["transformers"]
 
 
@@ -63,7 +63,7 @@ def _infer_caps(model_id: str, pipeline_tag: str, tags: list[str]) -> list[str]:
     text = f"{model_id} {pipeline_tag} {' '.join(tags)}".lower()
     seen: set[str] = set()
     caps: list[str] = []
-    for token in _tokenize(text):
+    for token in sorted(_tokenize(text)):
         if token in seen:
             continue
         seen.add(token)
