@@ -61,7 +61,7 @@ with `TechnologyIntelligenceValidationError`.
 
 | Env var | Values | Default |
 |---|---|---|
-| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` \| `github-stars-categorized` \| `huggingface-file` \| `package-registry-file` \| `package-registry` | `stub` |
+| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` \| `github-stars-categorized` \| `huggingface-file` \| `huggingface-hub` \| `package-registry-file` \| `package-registry` | `stub` |
 | `COMPASS_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/` |
 | `COMPASS_EMBEDDING_PROVIDER` | `tfidf` \| `fixture` \| `openai-compatible` | `tfidf` |
 | `COMPASS_EMBEDDING_API_KEY` | API key for openai-compatible | (required when live) |
@@ -69,6 +69,7 @@ with `TechnologyIntelligenceValidationError`.
 | `COMPASS_EMBEDDING_MODEL` | embedding model id | `text-embedding-3-small` |
 | `COMPASS_PACKAGE_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/package-registry/` |
 | `COMPASS_PACKAGE_TI_ECOSYSTEMS` | `npm,pypi` | `npm,pypi` |
+| `COMPASS_HF_HUB_TOKEN` | optional Hub auth token | (unset) |
 
 `orchestrator/plan_writer/build.py` calls `select_ti_provider()`. CI and default
 installs stay on **stub** (empty list). Set `COMPASS_TI_PROVIDER=file` for local
@@ -81,6 +82,8 @@ demos using redacted Stars-shaped fixtures under
 `./scripts/refresh-ti-cache.sh`; optional `--if-stale HOURS` skips when
 `fetched_at` is fresh). Set `COMPASS_TI_PROVIDER=huggingface-file` for offline
 Hugging Face model-card fixtures (no Hub network in CI). Set
+`COMPASS_TI_PROVIDER=huggingface-hub` for **live Hub model search** (Captain local
+only; mocked HTTP in CI). Set
 `COMPASS_TI_PROVIDER=package-registry-file` for offline npm/PyPI-shaped package
 fixtures (no registry network in CI). Dense knowledge embeddings are separate
 (`COMPASS_EMBEDDING_PROVIDER=fixture`; Skill `embedding-providers`) — TF-IDF
@@ -98,6 +101,7 @@ COMPASS_TI_PROVIDER=github-stars-cached ./scripts/query-technology-intelligence.
 ./scripts/categorize-github-stars.sh --source fixtures
 COMPASS_TI_PROVIDER=github-stars-categorized ./scripts/query-technology-intelligence.sh --query "react forms"
 COMPASS_TI_PROVIDER=huggingface-file ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
+COMPASS_TI_PROVIDER=huggingface-hub ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
 COMPASS_TI_PROVIDER=package-registry-file ./scripts/query-technology-intelligence.sh --query "schema validation"
 COMPASS_TI_PROVIDER=package-registry ./scripts/query-technology-intelligence.sh --query "schema validation"
 ```
@@ -131,6 +135,7 @@ manifests, or install targets.
 | `GithubStarsCategorizedTechnologyIntelligenceProvider` | Shipped — batch ML categories via `github-stars-categorized` (M14) |
 | `refresh-ti-cache.sh` | Shipped — explicit cache refresh CLI (M8); `--if-stale` (M10) |
 | `HuggingFaceFileTechnologyIntelligenceProvider` | Shipped — offline HF model cards via `huggingface-file` (M10) |
+| `HuggingFaceHubLiveTechnologyIntelligenceProvider` | Shipped — live Hub via `huggingface-hub` (M16; Captain local) |
 | `PackageRegistryFileTechnologyIntelligenceProvider` | Shipped — offline npm/PyPI via `package-registry-file` (M11) |
 | `PackageRegistryLiveTechnologyIntelligenceProvider` | Shipped — live npm+PyPI via `package-registry` (M12; Captain local) |
 | Fixture `EmbeddingProvider` + dense index | Shipped — `COMPASS_EMBEDDING_PROVIDER=fixture` (M11); TF-IDF fallback |
