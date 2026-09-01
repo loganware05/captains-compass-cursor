@@ -252,3 +252,13 @@ smokes against control-repo fixtures plus doctor/COMPASS_VERSION checks on the s
 Full interactive re-validation remains available via
 `docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md`.
 
+### M18 sandbox release smokes shipped (v1.22.0) — refresh complete 2026-09-01
+
+| Step | Result |
+|---|---|
+| Control release `v1.22.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.22.0 |
+| Sandbox refreshed to Compass 1.22.0 | Pass — [sandbox#39](https://github.com/loganware05/captain-compass-sandbox/pull/39) |
+| Automated + interactive smoke evidence | Pass — `.agent/evidence/release-v1.22.0/sandbox-smokes-*.json` |
+
+Control mirror: `.agent/evidence/release-v1.22.0/post-tag-validation.md`
+
