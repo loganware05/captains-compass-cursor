@@ -75,12 +75,31 @@ class SandboxSmokeValidationTests(unittest.TestCase):
             automated = {
                 "kind": "sandbox-release-smoke-report",
                 "passed": True,
-                "results": [{"smoke_id": "doctor-sandbox", "passed": True}],
+                "results": [
+                    {"smoke_id": "doctor-sandbox", "passed": True},
+                    {"smoke_id": "compass-version", "passed": True},
+                    {"smoke_id": "behavioral-checklist-present", "passed": True},
+                    {"smoke_id": "knowledge-ingest-fixtures", "passed": True},
+                    {"smoke_id": "pgvector-mock-query", "passed": True},
+                    {"smoke_id": "stars-categorize-fixtures", "passed": True},
+                    {"smoke_id": "notion-live-fixtures", "passed": True},
+                    {"smoke_id": "hf-file-ti", "passed": True},
+                    {"smoke_id": "context-selection-propose", "passed": True},
+                ],
             }
             interactive = {
                 "kind": "sandbox-interactive-smoke-report",
                 "passed": True,
-                "checklist_results": [{"item": 1, "passed": True}],
+                "checklist_results": [
+                    {"item": 1, "passed": True},
+                    {"item": 2, "passed": True},
+                    {"item": 3, "passed": True},
+                    {"item": 4, "passed": True},
+                    {"item": 5, "passed": True},
+                    {"item": 6, "passed": True},
+                    {"item": 7, "passed": True},
+                    {"item": 8, "passed": True},
+                ],
             }
             (evidence / "sandbox-smokes-automated.json").write_text(
                 json.dumps(automated), encoding="utf-8"
