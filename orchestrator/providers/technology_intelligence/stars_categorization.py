@@ -95,6 +95,7 @@ def train_naive_bayes(
         if tokens:
             category_docs[category].append(tokens)
 
+    category_docs = {cat: docs for cat, docs in category_docs.items() if docs}
     total_docs = sum(len(docs) for docs in category_docs.values()) or 1
     vocab: set[str] = set()
     token_counts: dict[str, dict[str, int]] = {cat: {} for cat in category_docs}
@@ -111,7 +112,7 @@ def train_naive_bayes(
 
     vocab_size = max(len(vocab), 1)
     log_priors = {
-        cat: math.log(max(len(docs), 1) / total_docs) for cat, docs in category_docs.items()
+        cat: math.log(len(docs) / total_docs) for cat, docs in category_docs.items()
     }
     log_likelihoods: dict[str, dict[str, float]] = {}
     for cat in category_docs:
