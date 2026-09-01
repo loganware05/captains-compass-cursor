@@ -199,3 +199,13 @@ Control mirror: `.agent/evidence/release-v1.16.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.17.0/post-tag-validation.md`
 
+### Batch GitHub Star categorization ML (v1.18.0) — refresh complete 2026-08-31
+
+| Step | Result |
+|---|---|
+| Control release `v1.18.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.18.0 |
+| Sandbox refreshed to Compass 1.18.0 | Pass — [sandbox#35](https://github.com/loganware05/captain-compass-sandbox/pull/35) merged |
+| Stars categorization / categorized TI smoke on sandbox | Pending interactive (optional) |
+
+Control mirror: `.agent/evidence/release-v1.18.0/post-tag-validation.md`
+
