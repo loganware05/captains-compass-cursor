@@ -30,7 +30,16 @@ routing improvements based on historical outcomes.
 5. To apply weights (Milestone 4 Level 3), Captain sets `captain_approved: true`
    on the proposal JSON, then use Skill `bounded-autonomy` /
    `./scripts/apply-routing-proposal.sh` under an autonomy budget.
-6. Optionally record subagent proficiency metadata after Skill training:
+   Routing proposals include **decomposition hints** (bounded matcher-factor deltas;
+   M17) merged on apply.
+6. For **context selection tuning** (M17 — which knowledge/TI slices appear in plans):
+
+   ```bash
+   ./scripts/propose-context-selection.sh --experiences tests/fixtures/experience/contact-counter.json
+   ```
+
+   Captain sets `captain_approved: true`, then `./scripts/apply-context-selection-proposal.sh`.
+7. Optionally record subagent proficiency metadata after Skill training:
 
    ```bash
    ./scripts/record-agent-proficiency.sh \

@@ -1,13 +1,13 @@
 # Implementation Plan — Post-Foundation Backlog (M13–M18)
 
-- Status: COMPLETE — M16 / v1.20.0 closed; M17 next
+- Status: APPROVED — M17 / v1.21.0 in progress
 - Plan ID: post-foundation-backlog
-- Issue: #98 (closed)
+- Issue: #102
 
 | Field | Value |
 |---|---|
 | **Plan ID** | `post-foundation-backlog` |
-| **Status** | **COMPLETE** — M16 / v1.20.0 closed; M17 next |
+| **Status** | **APPROVED** — M17 / v1.21.0 in progress (#102) |
 | **Baseline** | v1.16.0 (`9d50de8`) |
 | **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13 closed) |
 | **Feature PR** | [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) (merged @ `40c84fc`) |
@@ -56,7 +56,7 @@ Pinecone remains a viable second adapter if requirements change.
 | **M14** | v1.18.0 | Batch GitHub Star categorization ML | **Complete** (#91) |
 | **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | **Complete** (#95) |
 | **M16** | v1.20.0 | Live Hugging Face Hub TI | **Complete** (#99) |
-| **M17** | v1.21.0 | Stage 3: context selection → light decomposition | **Next** |
+| **M17** | v1.21.0 | Stage 3: context selection → light decomposition | **In progress** (#102) |
 | **M18** | v1.22.0 | Required interactive sandbox release smokes | Planned |
 
 ---
@@ -143,7 +143,7 @@ Live Hub provider mirroring M12 package-registry pattern; mocked HTTP in CI.
 
 ---
 
-# M17 — Deeper Stage 3 Bounded Autonomy (v1.21.0)
+# M17 — Deeper Stage 3 Bounded Autonomy (v1.21.0) — IN PROGRESS
 
 Priority order per Captain:
 
@@ -151,6 +151,14 @@ Priority order per Captain:
 2. **Light decomposition hints** (finer matcher sub-capability weights)
 
 All proposal-only until `captain_approved: true`; budget-enforced.
+
+## Checklist
+
+- [x] Context selection profile + propose/apply CLIs
+- [x] Plan builder reads active context profile
+- [x] Decomposition hints on routing proposals + bounded merge on apply
+- [x] ADR-033, docs, Skill extensions, tests
+- [ ] Feature PR + release
 
 ---
 
