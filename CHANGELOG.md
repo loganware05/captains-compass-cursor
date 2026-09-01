@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+## 1.18.0 — 2026-08-31
+
+### Added
+
+- Batch GitHub Star categorization ML pipeline (`categorize-github-stars.sh`) (#89)
+- `COMPASS_TI_PROVIDER=github-stars-categorized` offline TI provider (#89)
+- Manual label fixtures for Naive Bayes training (#89)
+- ADR-030 (#89)
+
+### Changed
+
+- VERSION `1.18.0`
+- Skill `technology-intelligence-live` documents categorized Stars path (#89)
+
 ## 1.17.0 — 2026-08-31
 
 ### Added
