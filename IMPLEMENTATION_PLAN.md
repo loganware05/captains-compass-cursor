@@ -1,13 +1,13 @@
 # Implementation Plan — Post-Foundation Backlog (M13–M18)
 
-- Status: COMPLETE — M13 / v1.17.0 release prep
+- Status: COMPLETE — M13 / v1.17.0 closed
 - Plan ID: post-foundation-backlog
-- Issue: #86
+- Issue: #86 (closed)
 
 | Field | Value |
 |---|---|
 | **Plan ID** | `post-foundation-backlog` |
-| **Status** | **COMPLETE** — M13 / v1.17.0 shipped |
+| **Status** | **COMPLETE** — M13 / v1.17.0 closed; M14 in progress (#89) |
 | **Baseline** | v1.16.0 (`9d50de8`) |
 | **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13 closed) |
 | **Feature PR** | [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) (merged @ `40c84fc`) |
@@ -53,7 +53,7 @@ Pinecone remains a viable second adapter if requirements change.
 | Milestone | Version | Theme | Status |
 |---|---|---|---|
 | **M13** | v1.17.0 | Hosted pgvector/Neon adapter | **Complete** (#87) |
-| **M14** | v1.18.0 | Batch GitHub Star categorization ML | **Next** |
+| **M14** | v1.18.0 | Batch GitHub Star categorization ML | **In progress** (#89) |
 | **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | Planned |
 | **M16** | v1.20.0 | Live Hugging Face Hub TI | Planned |
 | **M17** | v1.21.0 | Stage 3: context selection → light decomposition | Planned |
@@ -77,7 +77,9 @@ explicit sync CLI, TF-IDF + file dense fallback preserved.
 - [x] Unit tests (`test_m13_pgvector_hosted.py`)
 - [x] Full `./tests/run.sh` validation evidence
 - [x] Feature PR [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) merged
-- [ ] Release tag v1.17.0 + sandbox refresh + closeout
+- [x] Release tag [v1.17.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.17.0)
+- [x] Sandbox refresh [sandbox#34](https://github.com/loganware05/captain-compass-sandbox/pull/34)
+- [x] Closeout + issue #86 closed
 
 ## Env vars
 

@@ -2,29 +2,28 @@
 
 ## Current status
 
-**M13 / v1.17.0** — feature merged ([#87](https://github.com/loganware05/captains-compass-cursor/pull/87)); release prep open ([#88](https://github.com/loganware05/captains-compass-cursor/pull/88)).
+**M13 / v1.17.0 CLOSED** — hosted pgvector/Neon knowledge vectors shipped.
 
-- Feature PR: [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) (merged @ `40c84fc`)
-- Release prep: [#88](https://github.com/loganware05/captains-compass-cursor/pull/88) — **awaiting merge**
+- Release: [v1.17.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.17.0)
+- Feature PR: [#87](https://github.com/loganware05/captains-compass-cursor/pull/87)
+- Release prep: [#88](https://github.com/loganware05/captains-compass-cursor/pull/88)
+- Sandbox refresh: [sandbox#34](https://github.com/loganware05/captain-compass-sandbox/pull/34)
 - Issue: [#86](https://github.com/loganware05/captains-compass-cursor/issues/86)
-- Rollback: `rollback/pre-m13-hosted-pgvector`
 
 ## Completed
 
-- v1.5.0–v1.16.0 / M1–M12 (#54–#84 + sandbox #33)
-- M13 feature: hosted pgvector/Neon adapter, ADR-029, Skill `hosted-vector-db` (#87)
+- v1.5.0–v1.17.0 / M1–M13 (#54–#88 + sandbox #34)
+- M13: hosted pgvector/Neon adapter, ADR-029, Skill `hosted-vector-db` (#87)
 
 ## In progress
 
-1. Merge release prep #88 → tag **v1.17.0** → sandbox refresh → closeout
-2. **M14** — Batch GitHub Star categorization ML (next after M13 closeout)
+**M14 / v1.18.0** — Batch GitHub Star categorization ML ([#89](https://github.com/loganware05/captains-compass-cursor/issues/89))
 
 ## Next
 
-1. Captain merges [#88](https://github.com/loganware05/captains-compass-cursor/pull/88)
-2. Tag v1.17.0, GitHub release, sandbox 1.16.0 → 1.17.0, close issue #86
-3. Begin M14 on `feature/<issue>-m14-github-stars-categorization-ml`
+1. M14 feature PR → v1.18.0 release
+2. M15 — Live Notion MCP ingest (page ID allowlist)
 
 ## Blockers
 
-None (release prep merge is the gate before tag).
+None.
