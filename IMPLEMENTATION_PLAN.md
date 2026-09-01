@@ -1,13 +1,13 @@
 # Implementation Plan — Post-Foundation Backlog (M13–M18)
 
-- Status: COMPLETE — M13 / v1.17.0 closed
+- Status: COMPLETE — M14 / v1.18.0 release prep
 - Plan ID: post-foundation-backlog
-- Issue: #86 (closed)
+- Issue: #89
 
 | Field | Value |
 |---|---|
 | **Plan ID** | `post-foundation-backlog` |
-| **Status** | **COMPLETE** — M13 / v1.17.0 closed; M14 in progress (#89) |
+| **Status** | **COMPLETE** — M14 / v1.18.0 release prep; M15 next |
 | **Baseline** | v1.16.0 (`9d50de8`) |
 | **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13 closed) |
 | **Feature PR** | [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) (merged @ `40c84fc`) |
@@ -53,8 +53,8 @@ Pinecone remains a viable second adapter if requirements change.
 | Milestone | Version | Theme | Status |
 |---|---|---|---|
 | **M13** | v1.17.0 | Hosted pgvector/Neon adapter | **Complete** (#87) |
-| **M14** | v1.18.0 | Batch GitHub Star categorization ML | **In progress** (#89) |
-| **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | Planned |
+| **M14** | v1.18.0 | Batch GitHub Star categorization ML | **Complete** (#91) |
+| **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | **Next** |
 | **M16** | v1.20.0 | Live Hugging Face Hub TI | Planned |
 | **M17** | v1.21.0 | Stage 3: context selection → light decomposition | Planned |
 | **M18** | v1.22.0 | Required interactive sandbox release smokes | Planned |
@@ -92,7 +92,7 @@ explicit sync CLI, TF-IDF + file dense fallback preserved.
 
 ---
 
-# M14 — Batch GitHub Star Categorization ML (v1.18.0) — IN PROGRESS
+# M14 — Batch GitHub Star Categorization ML (v1.18.0) — COMPLETE
 
 Offline batch pipeline; labels learned from **existing manual categories**; new
 `github-stars-categorized` TI provider; fixtures in CI.
@@ -103,7 +103,8 @@ Offline batch pipeline; labels learned from **existing manual categories**; new
 - [x] Naive Bayes batch pipeline + `categorize-github-stars.sh`
 - [x] `github-stars-categorized` TI provider
 - [x] ADR-030, docs, Skill extension, tests
-- [ ] PR → release v1.18.0
+- [x] Feature PR [#91](https://github.com/loganware05/captains-compass-cursor/pull/91) merged
+- [ ] Release tag v1.18.0 + sandbox refresh + closeout
 
 ---
 
