@@ -1,193 +1,245 @@
-# Implementation Plan — Post-Foundation Backlog (M13–M18)
+# Implementation Plan — Autonomous Skill Learning Loop (M19+)
 
-- Status: **COMPLETE** — M18 / v1.22.0 closed; post-foundation backlog finished
-- Plan ID: post-foundation-backlog
-- Issue: #102 (closed)
+- Status: **AWAITING APPROVAL**
+- Plan ID: `m19-autonomous-skill-learning`
+- Issue: TBD (create after approval)
+- Baseline: v1.22.0 (`3c4455e` on `main`)
+- Prior backlog: M13–M18 / post-foundation **COMPLETE**
 
 | Field | Value |
 |---|---|
-| **Plan ID** | `post-foundation-backlog` |
-| **Status** | **COMPLETE** — M18 / v1.22.0 closed |
-| **Baseline** | v1.16.0 (`9d50de8`) |
-| **Issue** | [#86](https://github.com/loganware05/captains-compass-cursor/issues/86) (M13 closed) |
-| **Feature PR** | [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) (merged @ `40c84fc`) |
-| **Target release** | **v1.17.0** |
-| **Branch** | `chore/86-release-v1.17.0` |
-| **Rollback** | `rollback/pre-m13-hosted-pgvector` |
-| **Captain approval** | 2026-08-30 |
+| **Plan ID** | `m19-autonomous-skill-learning` |
+| **Status** | **AWAITING APPROVAL** |
+| **Baseline** | v1.22.0 (`3c4455e`) |
+| **Issue** | TBD after approval |
+| **Target release** | **v1.23.0** (M19); optional follow-ons v1.24.0+ |
+| **Branch** | `cursor/m19-autonomous-skill-learning-9568` (plan); feature branch after approval |
+| **Rollback** | Tag `rollback/pre-m19-skill-learning` at approval time |
+| **Captain approval** | — |
 
-## Captain decisions (locked)
+## Problem statement
 
-| # | Topic | Decision |
-|---|---|---|
-| 1 | Hosted vector DB | **Neon/pgvector** (see cost analysis below) |
-| 2 | Index layout | Single shared index with **namespaces** per repo |
-| 3 | M14 labels | **Learn from existing manual labels** |
-| 4 | M15 Notion | **Allowlist of page IDs** |
-| 5 | M17 autonomy | **Context selection first**, then light decomposition |
-| 6 | M18 smokes | **Required** for release closeout |
+M13–M18 shipped the pieces of a learning system in isolation:
 
-## Cost analysis — Pinecone vs Neon/pgvector
+- **M14** batch-categorizes GitHub Stars (`categorize-github-stars.sh` → `github-stars-categorized`)
+- **candidate-promotion** / **skill-lifecycle** advance candidates through `SANDBOX_TESTED` → `PROVEN_SKILL`
+- **experience-skill-training** drafts Skills from Experiences
+- **M18** release smokes prove fixture CLIs exist
 
-Estimated Compass workload: ~500–2,000 knowledge items, \<10k vector queries/month,
-embedding dims 32 (fixture) or 1536 (OpenAI-compatible).
+What is missing is a **closed, Captain-gated loop** that uses categorized Stars inside the disposable sandbox to:
 
-| Scenario | Pinecone | Neon/pgvector |
-|---|---|---|
-| Today (free tier) | **$0** — Starter: 2 GB, 1M RU, 2M WU | **$0** — Free: 0.5 GB, 100 CU-hrs |
-| 10× queries (~50k/mo) | **$0** — ~12.5k RU at 0.25 RU/query min | **$0–3** — likely still free or Launch PAYG |
-| Exceed Pinecone Starter | **$50/mo minimum** (Standard) + usage | **~$5–15/mo** PAYG (no floor) |
-| Ops complexity | Lower (managed vector API) | Medium (Postgres + pgvector DDL) |
-| Namespace isolation | Native | `namespace` column (Captain choice) |
-| Existing MCP | Pinecone MCP | Neon MCP |
+1. Select high-signal candidates by category
+2. Export them to staging
+3. Run a **sandbox candidate / draft-Skill test** (evidence-backed)
+4. Emit unified Skill drafts
+5. Stop for Captain review before any live Skill install
 
-**Choice: Neon/pgvector** — same $0 cost today, lower cost ceiling beyond free tier,
-namespaces via column, aligns with existing `postgres-prisma` Skill and Neon MCP.
+Today an operator must manually glue those CLIs. There is no TI → staging export, no per-candidate sandbox harness, and no shared “learning run” artifact. Draft quality is asymmetric (`promote --draft-skill` writes `capability.yaml` only; Experience training writes full `SKILL.md`).
 
-Pinecone remains a viable second adapter if requirements change.
+## Desired behavior
+
+After Captain-approved implementation:
+
+1. Explicit CLI (e.g. `./scripts/run-skill-learning-loop.sh`) orchestrates, from fixtures or TI cache:
+   - categorize Stars (reuse M14)
+   - select top-N candidates by category + objective match
+   - export schema-valid staging candidate JSON
+   - run sandbox candidate harness → evidence under `.agent/evidence/candidate-sandbox-test/`
+   - advance to `SANDBOX_TESTED` when evidence passes
+   - emit unified draft (`SKILL.md` + `capability.yaml` + provenance) under `skill-drafts/`
+   - **stop** — never auto-advance past Captain gates
+2. Sandbox behavioral checklist gains an item for the skill-learning loop exercise.
+3. M18-style automated smoke covers the fixture path of the loop (no LLM in CI).
+4. Docs/ADR state clearly: **automated staging ≠ auto-install**.
+
+## Non-goals (prohibited)
+
+- Auto-merge or auto-copy into `.cursor/skills/`
+- Setting `approved_for_execution: true`
+- Cloning or executing starred/external repositories
+- Running the full loop from hooks, workstream close, or CI defaults
+- Weakening `--captain-approved` for `APPROVED` / `AVAILABLE_SKILL` / `PROVEN_SKILL`
+- Live Stars / live Hub network calls in CI
+
+## Captain decisions (need lock)
+
+| # | Topic | Options | Recommendation |
+|---|---|---|---|
+| 1 | Autonomy meaning | **A)** Automated staging + sandbox evidence only (still Captain for live Skills) · **B)** Also auto-apply routing/context proposals under budget · **C)** Auto-install drafts into sandbox Skills dir (still not control-repo live) | **A** — matches ADR-018/025/030 safety model |
+| 2 | Roadmap shape | **A)** Single M19 / v1.23.0 · **B)** Split M19 (orchestrator + export + harness) then M20 (Experience bridge + PROVEN feedback) | **B** if scope feels large; **A** if Captain wants one cohesive ship |
+| 3 | Learning target | **A)** Draft **new** Skills from categorized star candidates · **B)** Improve **existing** Compass Skills (routing/proficiency) using category signals · **C)** Both (new drafts primary; category→routing proposals secondary) | **A** for M19; **C** deferred to M20 if split |
+| 4 | Sandbox harness depth | **A)** Fixture-only candidate exercise (doctor + draft validation + evidence template) · **B)** Full interactive product exercise per candidate in disposable sandbox | **A** automated + interactive checklist row for Captain review (same pattern as M18) |
+| 5 | Default input source | **A)** `fixtures` in CI / smokes · **B)** `ti-cache` when present · Captain may pass `--source live` locally | **A** for defaults; support all three sources like categorize CLI |
 
 ---
 
-## Roadmap
+## Roadmap (proposed)
 
 | Milestone | Version | Theme | Status |
 |---|---|---|---|
-| **M13** | v1.17.0 | Hosted pgvector/Neon adapter | **Complete** (#87) |
-| **M14** | v1.18.0 | Batch GitHub Star categorization ML | **Complete** (#91) |
-| **M15** | v1.19.0 | Live Notion MCP ingest (page allowlist) | **Complete** (#95) |
-| **M16** | v1.20.0 | Live Hugging Face Hub TI | **Complete** (#99) |
-| **M17** | v1.21.0 | Stage 3: context selection → light decomposition | **Complete** (#103) |
-| **M18** | v1.22.0 | Required interactive sandbox release smokes | **Complete** (#107) |
+| **M19** | v1.23.0 | Skill learning orchestrator + TI staging export + sandbox candidate harness + unified drafts | **Proposed** |
+| **M20** *(optional)* | v1.24.0 | Experience bridge: learning-run → record Experiences → PROVEN path + category-informed routing proposals | Deferred pending Captain decision #2/#3 |
+| **M21** *(optional)* | v1.25.0 | Sandbox interactive skill-improvement exercise + release-smoke expansion | Deferred |
 
 ---
 
-# M13 — Hosted pgvector/Neon (v1.17.0) — COMPLETE
+# M19 — Autonomous Skill Learning Loop (v1.23.0) — PROPOSED
 
 ## Objective
 
-Hosted vector search via Neon/pgvector with namespace isolation, mock backend for CI,
-explicit sync CLI, TF-IDF + file dense fallback preserved.
+Close the Captain-gated loop from **categorized GitHub Stars → sandbox-tested staging candidates → unified Skill drafts**, with fixture-safe automation and no weakening of promotion safety gates.
 
-## Implementation checklist
+## Current behavior (evidence)
 
-- [x] `orchestrator/knowledge/adapters/pgvector.py` — mock + live backends
-- [x] Query integration (hosted → dense file → TF-IDF)
-- [x] `scripts/sync-knowledge-vector-db.sh`, `scripts/init-pgvector-schema.sh`
-- [x] Skill `hosted-vector-db` + docs + ADR-029
-- [x] Unit tests (`test_m13_pgvector_hosted.py`)
-- [x] Full `./tests/run.sh` validation evidence
-- [x] Feature PR [#87](https://github.com/loganware05/captains-compass-cursor/pull/87) merged
-- [x] Release tag [v1.17.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.17.0)
-- [x] Sandbox refresh [sandbox#34](https://github.com/loganware05/captain-compass-sandbox/pull/34)
-- [x] Closeout + issue #86 closed
+| Piece | Exists | Gap |
+|---|---|---|
+| `categorize-github-stars.sh` | Yes (M14) | Not chained |
+| `github-stars-categorized` TI | Yes | Query does not write staging JSON |
+| `promote-candidate.sh` | Yes | Needs pre-existing candidate file + manual evidence |
+| `train-skill-from-experience.sh` | Yes | Disconnected from Stars path |
+| Sandbox release smokes | Yes (M18) | Only asserts categorize CLI, not full loop |
+| `SANDBOX_TESTED` semantics | Evidence path gate | No harness that produces that evidence |
 
-## Env vars
+## Acceptance criteria
 
-| Variable | Purpose |
+1. Explicit `./scripts/run-skill-learning-loop.sh` (name finalizable) runs end-to-end on `--source fixtures` and exits 0 with artifacts under `.agent/`.
+2. Loop writes staging candidates, sandbox-test evidence, and unified skill drafts; does **not** write under `.cursor/skills/`.
+3. Promotion past `SANDBOX_TESTED` still requires `--captain-approved`.
+4. `approved_for_execution` remains `false` on all candidates.
+5. Unit tests cover fail-closed cases (missing evidence, attempt to install live, empty categorize output).
+6. Automated smoke step registered for the fixture learning loop.
+7. Behavioral checklist item for interactive Captain review of drafts.
+8. ADR + Skill docs + TI integration doc (fix stale “Batch ML Deferred” row).
+9. `./scripts/doctor.sh` and `./tests/run.sh` pass; evidence under `.agent/evidence/`.
+
+## Affected systems
+
+- `orchestrator/learning/` (new) — loop orchestration
+- `orchestrator/promotion/` — TI→staging export; richer draft emitter
+- `orchestrator/training/` — share draft writer with promotion path
+- `orchestrator/providers/technology_intelligence/` — categorized selection helpers (read-only reuse)
+- `orchestrator/release/sandbox_smokes.py` — new automated smoke
+- `scripts/` — new CLI(s)
+- `.cursor/skills/` — new Skill `skill-learning-loop` (or extend `candidate-promotion` + `experience-skill-training`; Captain choice)
+- `docs/`, `DECISIONS.md`, `TESTING.md`, `docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md`
+- Sandbox refresh PR after control-repo release (pattern M13–M18)
+
+## Independent workstreams
+
+| ID | Stream | Files (approx) | Parallel? |
+|---|---|---|---|
+| W1 | Learning-run model + CLI orchestrator | `orchestrator/learning/*`, `scripts/run-skill-learning-loop.sh` | After W2 interface sketched |
+| W2 | TI → staging export + unified draft emitter | `orchestrator/promotion/`, `orchestrator/training/` | Yes with W1 once contracts fixed |
+| W3 | Sandbox candidate harness + evidence templates | `orchestrator/learning/sandbox_harness.py`, `.agent/evidence/_templates/` | Yes with W1 |
+| W4 | Smokes, tests, docs, Skill, ADR | `tests/`, `docs/`, `.cursor/skills/`, `DECISIONS.md` | After W1–W3 |
+
+## Implementation checklist (post-approval)
+
+- [ ] Record approval; set status APPROVED; create GitHub issue
+- [ ] Rollback tag `rollback/pre-m19-skill-learning`
+- [ ] Feature branch `feature/<issue>-m19-skill-learning-loop`
+- [ ] Learning-run schema/artifact under `.agent/learning-runs/`
+- [ ] TI categorized → staging export helper
+- [ ] Sandbox candidate harness (fixture-safe)
+- [ ] Unified `SKILL.md` + `capability.yaml` draft emitter (Stars + Experience parity)
+- [ ] `run-skill-learning-loop.sh` orchestrator (explicit only)
+- [ ] Skill docs + ADR-035 (proposed number)
+- [ ] Unit tests + M18 smoke catalog extension
+- [ ] Behavioral checklist item 9
+- [ ] Fix stale TI doc M14 status row
+- [ ] Validation evidence + adversarial review
+- [ ] Feature PR → release v1.23.0 → sandbox refresh
+
+## Required capabilities (from `capability-plan.sh`)
+
+Domains detected: `test`, `github`. No capability gaps for inferred requirements.
+
+Top reusable Skills: `testing-validation`, `github-integration`, `pull-request-preparation`, plus learning stack `candidate-promotion`, `skill-lifecycle`, `experience-skill-training`, `technology-intelligence-live`, `compass-evaluator`, `bounded-autonomy`, `autonomy-budget`.
+
+Machine artifacts: `.agent/plans/m19-autonomous-skill-learning/{resolve,task-graph,manifests}.json`
+
+## Technology Intelligence Candidates
+
+> **NOT APPROVED FOR EXECUTION** — discovery signals only.
+
+Planning used stub TI (CI default). Post-approval local demos should use:
+
+```bash
+./scripts/categorize-github-stars.sh --source fixtures
+COMPASS_TI_PROVIDER=github-stars-categorized \
+  ./scripts/capability-plan.sh --plan-id m19-demo "react forms accessibility"
+```
+
+## Task graph
+
+| Task ID | Objective | Dependencies |
+|---|---|---|
+| `task-discovery` | Confirm promotion/training/categorize contracts | — |
+| `task-architecture` | Learning-run schema, harness contract, ADR | task-discovery |
+| `task-implementation` | Orchestrator, export, harness, drafts, CLI, Skill | task-architecture |
+| `task-validation` | Unit tests, doctor, smokes, fail-closed cases | task-implementation |
+| `task-documentation` | ADR, TI docs, checklist, PROGRESS, CHANGELOG | task-validation |
+
+## Evaluation strategy
+
+- Fixture learning-loop smoke green
+- Fail-closed: no write to `.cursor/skills/`; captain gate intact
+- Doctor + full `./tests/run.sh`
+- Adversarial review of auto-install / execution-approval regressions
+- Interactive sandbox checklist attestation for draft review
+
+## Learning plan
+
+Retain `.agent/plans/m19-autonomous-skill-learning/` artifacts. After M19 ships, first successful learning runs become fixtures for M20 Experience bridge (if approved).
+
+## Autonomy budget (post-approval)
+
+Track in `.agent/budgets/m19-autonomous-skill-learning.md`:
+
+| Limit | Proposed |
 |---|---|
-| `COMPASS_VECTOR_PROVIDER` | `file` (default), `mock`, `pgvector` |
-| `COMPASS_VECTOR_DATABASE_URL` | Neon Postgres DSN (live only) |
-| `COMPASS_VECTOR_NAMESPACE` | Per-repo namespace (default: repo dir name) |
-| `COMPASS_VECTOR_DIMENSIONS` | Schema bootstrap dimensions (default 32) |
+| Max implementation iterations | 8 |
+| Max weight-apply ops | 0 (unless Captain picks decision #1B) |
+| Cost / time | Stop on budget; write Budget Stop Report |
+
+## Migration / rollback
+
+- No DB migrations
+- New artifacts under `.agent/` only (gitignored runtime ok; fixtures committed)
+- Rollback: tag `rollback/pre-m19-skill-learning`; revert feature PR; sandbox can stay on 1.22.0 until refresh
+
+## Risks
+
+| Risk | Mitigation |
+|---|---|
+| “Autonomous” misread as auto-install | ADR + Skill prohibited actions + tests asserting no live Skill writes |
+| Draft quality too thin to be useful | Unify with Experience training template; include category + discovery_signal provenance |
+| Scope creep into M20 routing | Decision #2/#3 locks; return to approval gate if expanded |
+| Live Stars unavailable in cloud agents | Fixture + ti-cache sources; `live` Captain-local only |
+
+## Assumptions
+
+1. Disposable sandbox remains the interactive validation venue; control-repo owns orchestrator code.
+2. M14 Naive Bayes + manual labels remain the categorization source (no new ML model in M19).
+3. Captain will review Skill drafts via PR before any live `.cursor/skills/` install.
+4. Cloud agent `gh` token cannot list user starred repos (403); CI/fixtures path is authoritative.
+
+## Open questions for Captain
+
+1. Lock decisions #1–#5 above.
+2. Prefer **new Skill** `skill-learning-loop` vs extending existing Skills only?
+3. Should M19 include a control-repo **demo fixture learning-run** committed under `tests/fixtures/learning/`?
 
 ---
 
-# M14 — Batch GitHub Star Categorization ML (v1.18.0) — COMPLETE
+## Approval boundary
 
-Offline batch pipeline; labels learned from **existing manual categories**; new
-`github-stars-categorized` TI provider; fixtures in CI.
+**Implementation must not begin until the Captain explicitly approves this plan** (and locks the Captain decisions table).
 
-## Checklist
-
-- [x] Manual label fixtures from curated Stars fixtures
-- [x] Naive Bayes batch pipeline + `categorize-github-stars.sh`
-- [x] `github-stars-categorized` TI provider
-- [x] ADR-030, docs, Skill extension, tests
-- [x] Feature PR [#91](https://github.com/loganware05/captains-compass-cursor/pull/91) merged
-- [x] Release tag [v1.18.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.18.0)
-- [x] Sandbox refresh [sandbox#35](https://github.com/loganware05/captain-compass-sandbox/pull/35)
-- [x] Closeout + issue #89 closed
-
----
-
-# M15 — Live Notion MCP Knowledge Ingest (v1.19.0) — COMPLETE
-
-Explicit CLI; **allowlist of Notion page IDs**; provenance `export_mode: mcp_live`;
-file-export path unchanged.
-
-## Checklist
-
-- [x] Allowlist loader + page ID normalization
-- [x] `ingest-notion-live.sh` (cache / fixtures / live payload sources)
-- [x] ADR-031, docs, Skill extensions, tests
-- [x] Feature PR [#95](https://github.com/loganware05/captains-compass-cursor/pull/95) merged
-- [x] Release tag [v1.19.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.19.0)
-- [x] Sandbox refresh [sandbox#36](https://github.com/loganware05/captain-compass-sandbox/pull/36)
-- [x] Closeout + issue #94 closed
-
----
-
-# M16 — Live Hugging Face Hub TI (v1.20.0) — COMPLETE
-
-Live Hub provider mirroring M12 package-registry pattern; mocked HTTP in CI.
-
-## Checklist
-
-- [x] `HuggingFaceHubLiveTechnologyIntelligenceProvider` + Hub models API
-- [x] `COMPASS_TI_PROVIDER=huggingface-hub` selection + optional `COMPASS_HF_HUB_TOKEN`
-- [x] ADR-032, docs, Skill extension, tests
-- [x] Feature PR [#99](https://github.com/loganware05/captains-compass-cursor/pull/99) merged
-- [x] Release tag [v1.20.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.20.0)
-- [x] Sandbox refresh [sandbox#37](https://github.com/loganware05/captain-compass-sandbox/pull/37)
-- [x] Closeout + issue #98 closed
-
----
-
-# M17 — Deeper Stage 3 Bounded Autonomy (v1.21.0) — COMPLETE
-
-Priority order per Captain:
-
-1. **Context selection tuning** proposals (which knowledge/TI slices appear in plans)
-2. **Light decomposition hints** (finer matcher sub-capability weights)
-
-All proposal-only until `captain_approved: true`; budget-enforced.
-
-## Checklist
-
-- [x] Context selection profile + propose/apply CLIs
-- [x] Plan builder reads active context profile
-- [x] Decomposition hints on routing proposals + bounded merge on apply
-- [x] ADR-033, docs, Skill extensions, tests
-- [x] Feature PR [#103](https://github.com/loganware05/captains-compass-cursor/pull/103) merged
-- [x] Release tag [v1.21.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.21.0)
-- [x] Sandbox refresh [sandbox#38](https://github.com/loganware05/captain-compass-sandbox/pull/38)
-- [x] Closeout + issue #102 closed
-
----
-
-# M18 — Interactive Sandbox Release Smokes (v1.22.0) — COMPLETE
-
-Interactive smokes **required** for release closeout. Expand behavioral checklist,
-evidence templates, release-checklist integration; clear all pending sandbox rows.
-
-## Implementation checklist
-
-- [x] `orchestrator/release/sandbox_smokes.py` — catalog, runner, validation
-- [x] `scripts/run-sandbox-release-smokes.sh`, `scripts/validate-sandbox-release-smokes.sh`
-- [x] Evidence templates under `.agent/evidence/_templates/sandbox-release-smoke/`
-- [x] Expand `docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md` (item 8 post-foundation)
-- [x] `docs/RELEASE_CHECKLIST.md` step 12 smoke gate
-- [x] Consolidate pending rows in `docs/SANDBOX_VALIDATION.md`
-- [x] ADR-034, tests (`test_m18_sandbox_release_smokes.py`)
-- [x] Feature PR [#107](https://github.com/loganware05/captains-compass-cursor/pull/107) merged
-- [x] Release tag [v1.22.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.22.0)
-- [x] Sandbox refresh [sandbox#39](https://github.com/loganware05/captain-compass-sandbox/pull/39)
-- [x] Closeout + issue #106 closed
-
----
+Machine-generated capability matches and agent manifests are proposals only.
 
 ## Approval record
 
 | Captain | Decision | Date |
 |---|---|---|
-| loganware | **APPROVED** — post-foundation backlog + Captain decisions above | 2026-08-30 |
+| — | AWAITING APPROVAL | — |
