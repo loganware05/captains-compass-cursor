@@ -1,6 +1,28 @@
 # Decisions
 
+## ADR-036: Experience bridge and Captain-gated Skill improvement apply (v1.24.0 M20)
+
+- **Status:** Accepted
+- **Date:** 2026-09-03
+- **Context:** M19 stages categorized Stars into drafts and improvement
+  proposals but does not record Experiences or apply live Skill edits. Captains
+  need a PROVEN path from learning runs and a gated way to fold similar-process
+  lessons into existing Skills.
+- **Decision:**
+  1. Explicit `bridge-learning-experiences.sh` records ExecutionRun + Experience
+     per learning-run result (`source_instance` control-test/live). Optional
+     `--record-experiences` on `run-skill-learning-loop.sh`.
+  2. `PROVEN_SKILL` remains `--captain-approved` plus the existing Experience
+     success threshold (default ≥2).
+  3. `apply-skill-improvement.sh --captain-approved` writes an improved draft
+     under `skill-drafts/<slug>-from-learning/`. `--apply-live` appends a marked
+     learned section to the live Skill and writes `.agent/learning-applied/` audit.
+  4. Refuse `auto_apply`, excluded/meta Skills, and missing captain approval.
+- **Consequences:** Learning runs can graduate Skills toward PROVEN without
+  auto-install; existing Skills improve only when the Captain applies.
+
 ## ADR-035: Autonomous skill learning loop with Captain live-install gate (v1.23.0 M19)
+
 
 - **Status:** Accepted
 - **Date:** 2026-09-03

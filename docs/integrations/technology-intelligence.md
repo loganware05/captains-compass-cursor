@@ -170,6 +170,8 @@ Scripts:
 - `./scripts/promote-candidate.sh`
 - `./scripts/train-skill-from-experience.sh` (product Experience → control draft)
 - `./scripts/run-skill-learning-loop.sh` (categorized Stars → staging/harness/drafts; M19)
+- `./scripts/bridge-learning-experiences.sh` (learning-run → Experiences; M20)
+- `./scripts/apply-skill-improvement.sh` (Captain-gated improvement apply; M20)
 
 ## Implementing a future live provider
 
