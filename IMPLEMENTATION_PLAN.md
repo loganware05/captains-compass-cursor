@@ -64,8 +64,8 @@ propose Skill improvements.
 
 | Milestone | Version | Theme | Status |
 |---|---|---|---|
-| **M19** | v1.23.0 | Learning orchestrator, staging export, fixture harness, unified drafts, similarity improvement **proposals**, Skill `skill-learning-loop` | **PR #112** (ready for review) |
-| **M20** | v1.24.0 | Experience bridge → PROVEN path; Captain-gated apply of existing-Skill improvements | **In progress** (#113) |
+| **M19** | v1.23.0 | Learning orchestrator, staging export, fixture harness, unified drafts, similarity improvement **proposals**, Skill `skill-learning-loop` | **Merged** (#112) |
+| **M20** | v1.24.0 | Experience bridge → PROVEN path; Captain-gated apply of existing-Skill improvements | **Landing on main** (#114 was stacked) |
 
 ---
 
