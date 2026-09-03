@@ -124,5 +124,5 @@ gh auth status
 
 ## Current Priorities
 
-M19 autonomous skill learning loop (v1.23.0) in progress — issue #111. M20
-(Experience bridge / deeper Skill improvement apply) deferred.
+M19 autonomous skill learning loop (v1.23.0) ready for review (#112). M20
+Experience bridge + Captain-gated improvement apply in progress (#113).

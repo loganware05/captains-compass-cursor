@@ -2,25 +2,23 @@
 
 ## Current status
 
-**M19 / v1.23.0 IN PROGRESS** — Autonomous skill learning loop (approved).
+**M19** ready for review ([#112](https://github.com/loganware05/captains-compass-cursor/pull/112)). **M20** in progress (#113).
 
-- Issue: [#111](https://github.com/loganware05/captains-compass-cursor/issues/111)
-- Plan: `m19-autonomous-skill-learning` **APPROVED** 2026-09-03
-- Branch: `feature/111-m19-skill-learning-loop`
-- Rollback: `rollback/pre-m19-skill-learning`
+- Plan PR: [#110](https://github.com/loganware05/captains-compass-cursor/pull/110) (ready)
+- M19 implementation: [#112](https://github.com/loganware05/captains-compass-cursor/pull/112) (ready)
+- M20 issue: [#113](https://github.com/loganware05/captains-compass-cursor/issues/113)
+- Branch: `feature/113-m20-experience-bridge` (stacked on M19)
 
 ## Completed
 
 - v1.5.0–v1.22.0 / M1–M18 (#54–#108)
-- M18: sandbox release smokes, ADR-034 (#107)
-- Post-foundation backlog (M13–M18) **complete**
-- M19 plan approved with Captain decisions locked
+- M19 implementation on `feature/111-m19-skill-learning-loop`
 
 ## Next
 
-1. Finish M19 validation evidence + feature PR merge
-2. Release prep v1.23.0 + sandbox refresh
-3. M20: Experience bridge → PROVEN + deeper existing-Skill improvement apply
+1. Captain review/merge #110 then #112 (or #112 alone)
+2. Review/merge M20 PR
+3. Release prep v1.23.0 / v1.24.0 + sandbox refresh
 
 ## Blockers
 

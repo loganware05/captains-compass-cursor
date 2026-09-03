@@ -70,7 +70,7 @@ safety-critical Skills are excluded from automatic targeting.
 
 1. Review the proposal JSON (suggested procedure lessons + provenance).
 2. Captain decides whether to fold lessons into the existing Skill via PR.
-3. Do **not** auto-apply proposals.
+3. Do **not** auto-apply proposals. Use Skill procedure **F** with `--captain-approved`.
 
 ### D. Captain gate for live promotion
 
@@ -84,6 +84,41 @@ safety-critical Skills are excluded from automatic targeting.
 
 Then open a Captain-reviewed PR to install. Never set `approved_for_execution: true`.
 
+### E. Experience bridge → PROVEN (M20)
+
+```bash
+./scripts/run-skill-learning-loop.sh --source fixtures \
+  --objective "accessible react forms" --record-experiences
+
+./scripts/bridge-learning-experiences.sh \
+  --run .agent/learning-runs/<run-id>.json
+
+./scripts/bridge-learning-experiences.sh \
+  --run .agent/learning-runs/<run-id>.json \
+  --promote-proven \
+  --candidate .agent/capabilities/candidates/staging/<id>.json \
+  --skill-slug react-engineering \
+  --evidence .agent/evidence/candidate-sandbox-test/<id>/sandbox-test.json \
+  --captain-approved
+```
+
+PROVEN still needs ≥2 successful Experiences and `--captain-approved`.
+
+### F. Apply an improvement proposal (M20)
+
+```bash
+# Draft only (default)
+./scripts/apply-skill-improvement.sh \
+  --proposal .agent/capabilities/candidates/skill-improvement-proposals/<slug>/from-<id>.json \
+  --captain-approved
+
+# Append learned section to the live Skill (Captain only)
+./scripts/apply-skill-improvement.sh \
+  --proposal .agent/capabilities/candidates/skill-improvement-proposals/<slug>/from-<id>.json \
+  --captain-approved \
+  --apply-live
+```
+
 ## Output
 
 - Learning-run JSON report
@@ -94,7 +129,7 @@ Then open a Captain-reviewed PR to install. Never set `approved_for_execution: t
 ## Prohibited actions
 
 - Auto-installing into `.cursor/skills/`
-- Auto-applying improvement proposals to live Skills
+- Auto-applying improvement proposals to live Skills (M20 apply requires `--captain-approved`)
 - Setting `approved_for_execution: true`
 - Cloning or executing starred/external repositories
 - Running the loop from hooks, workstream close, or CI defaults

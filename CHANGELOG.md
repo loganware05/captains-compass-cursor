@@ -10,6 +10,9 @@
 - Behavioral checklist item 9 (skill learning loop) (#111)
 - Automated release smoke `skill-learning-loop-fixtures` (#111)
 - ADR-035 (#111)
+- Experience bridge from learning runs (`bridge-learning-experiences.sh`, `--record-experiences`) (#113)
+- Captain-gated Skill improvement apply (`apply-skill-improvement.sh`) (#113)
+- ADR-036 (#113)
 
 ### Changed
 
