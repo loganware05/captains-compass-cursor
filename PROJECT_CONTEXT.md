@@ -124,4 +124,6 @@ gh auth status
 
 ## Current Priorities
 
-M13 / v1.17.0 shipped. M14 in progress (GitHub Star categorization ML). See `IMPLEMENTATION_PLAN.md`.
+M13–M18 / v1.17.0–v1.22.0 shipped (post-foundation backlog complete). Next: M19
+autonomous skill learning loop (GitHub Stars categorizer → sandbox test → Skill
+drafts) — see `IMPLEMENTATION_PLAN.md` (AWAITING APPROVAL).

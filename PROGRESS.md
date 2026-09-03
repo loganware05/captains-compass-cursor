@@ -2,13 +2,11 @@
 
 ## Current status
 
-**M18 / v1.22.0 CLOSED** — Required sandbox release smokes shipped (final post-foundation milestone).
+**M18 / v1.22.0 CLOSED.** Next roadmap proposed: **M19 autonomous skill learning loop** — plan **AWAITING APPROVAL**.
 
-- Release: [v1.22.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.22.0)
-- Feature PR: [#107](https://github.com/loganware05/captains-compass-cursor/pull/107)
-- Release prep: [#108](https://github.com/loganware05/captains-compass-cursor/pull/108)
-- Sandbox refresh: [sandbox#39](https://github.com/loganware05/captain-compass-sandbox/pull/39)
-- Issue: [#106](https://github.com/loganware05/captains-compass-cursor/issues/106)
+- Active plan: [`IMPLEMENTATION_PLAN.md`](IMPLEMENTATION_PLAN.md) (`m19-autonomous-skill-learning`)
+- Plan branch: `cursor/m19-autonomous-skill-learning-9568`
+- Baseline: v1.22.0
 
 ## Completed
 
@@ -18,8 +16,10 @@
 
 ## Next
 
-1. Define next roadmap beyond post-foundation backlog
+1. Captain locks M19 decisions and approves `IMPLEMENTATION_PLAN.md`
+2. After approval: issue, rollback tag, feature branch, implement skill-learning loop
+3. Optional M20/M21 (Experience bridge / interactive skill improvement) per plan decisions
 
 ## Blockers
 
-None.
+Awaiting Captain approval on M19 plan (decisions #1–#5).
