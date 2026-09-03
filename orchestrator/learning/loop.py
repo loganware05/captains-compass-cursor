@@ -159,7 +159,8 @@ def run_skill_learning_loop(
             # Prefer improving the top match; still emit a draft for review.
             top = similar[0]
             entry["target_skill_slug"] = top["skill_slug"]
-            drafts = write_unified_skill_draft(repo_root, candidate, draft_slug)
+            stage = "SANDBOX_TESTED" if promote_sandbox else "ANALYZED"
+            drafts = write_unified_skill_draft(repo_root, candidate, draft_slug, stage)
             harness = run_fixture_sandbox_harness(
                 repo_root,
                 candidate,
@@ -177,7 +178,8 @@ def run_skill_learning_loop(
             entry["draft"] = {k: str(v) for k, v in drafts.items()}
             entry["harness"] = harness
         else:
-            drafts = write_unified_skill_draft(repo_root, candidate, draft_slug)
+            stage = "SANDBOX_TESTED" if promote_sandbox else "ANALYZED"
+            drafts = write_unified_skill_draft(repo_root, candidate, draft_slug, stage)
             harness = run_fixture_sandbox_harness(
                 repo_root,
                 candidate,

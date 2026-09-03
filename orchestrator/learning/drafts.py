@@ -62,7 +62,9 @@ def draft_skill_markdown_from_candidate(candidate: dict, skill_slug: str) -> str
     )
 
 
-def draft_capability_yaml_from_candidate(candidate: dict, skill_slug: str) -> str:
+def draft_capability_yaml_from_candidate(
+    candidate: dict, skill_slug: str, lifecycle_stage: str = "SANDBOX_TESTED"
+) -> str:
     caps = list(candidate.get("capabilities_provided") or [])
     if not caps:
         category = str((candidate.get("provenance") or {}).get("star_category") or "other")
@@ -74,7 +76,7 @@ def draft_capability_yaml_from_candidate(candidate: dict, skill_slug: str) -> st
         "source:",
         "  type: compass-skill",
         f"  path: .cursor/skills/{skill_slug}/SKILL.md",
-        "lifecycle_stage: SANDBOX_TESTED",
+        f"lifecycle_stage: {lifecycle_stage}",
         "capabilities_provided:",
     ]
     for cap in caps:
@@ -100,6 +102,7 @@ def write_unified_skill_draft(
     repo_root: Path,
     candidate: dict,
     skill_slug: str,
+    lifecycle_stage: str = "SANDBOX_TESTED",
 ) -> dict[str, Path]:
     """Write SKILL.md + capability.yaml + source candidate under skill-drafts/."""
     if not _SAFE_SLUG.match(skill_slug):
@@ -116,7 +119,7 @@ def write_unified_skill_draft(
     skill_md.write_text(
         draft_skill_markdown_from_candidate(candidate, skill_slug), encoding="utf-8"
     )
-    yaml_text = draft_capability_yaml_from_candidate(candidate, skill_slug)
+    yaml_text = draft_capability_yaml_from_candidate(candidate, skill_slug, lifecycle_stage)
     load_simple_yaml(yaml_text)
     capability_yaml.write_text(yaml_text, encoding="utf-8")
     source_candidate.write_text(

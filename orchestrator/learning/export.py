@@ -34,7 +34,7 @@ def suggest_skill_slug_from_candidate(candidate: dict) -> str:
     slug = _SAFE.sub("-", raw.lower()).strip("-") or "candidate"
     if not slug.startswith("from-stars-"):
         slug = f"from-stars-{slug}"
-    return slug[:80]
+    return slug[:80].rstrip("-")
 
 
 def enrich_candidate_with_category(candidate: dict, repo: dict) -> dict:
