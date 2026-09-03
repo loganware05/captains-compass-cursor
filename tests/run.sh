@@ -79,6 +79,8 @@ assert_true "record-execution-run script in control" test -f "$ROOT/scripts/reco
 assert_true "promote-candidate script in control" test -f "$ROOT/scripts/promote-candidate.sh"
 assert_true "train-skill-from-experience script in control" test -f "$ROOT/scripts/train-skill-from-experience.sh"
 assert_true "run-skill-learning-loop script in control" test -f "$ROOT/scripts/run-skill-learning-loop.sh"
+assert_true "bridge-learning-experiences script in control" test -f "$ROOT/scripts/bridge-learning-experiences.sh"
+assert_true "apply-skill-improvement script in control" test -f "$ROOT/scripts/apply-skill-improvement.sh"
 assert_true "experience layout in control" test -f "$ROOT/.agent/experience/.gitkeep"
 
 echo "=== doctor on control repo ==="

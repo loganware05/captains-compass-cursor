@@ -138,6 +138,8 @@ SKILLS: dict[str, dict] = {
             "sandbox-candidate-harness",
             "skill-improvement-proposal",
             "unified-skill-draft-emission",
+            "learning-experience-bridge",
+            "captain-gated-skill-improvement-apply",
         ],
         "compatible_stacks": ["any"],
         "security_sensitivity": "high",
