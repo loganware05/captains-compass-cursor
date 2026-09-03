@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "version": "1.24.0",
+  "automated_path": "/workspace/.agent/evidence/release-v1.24.0/sandbox-smokes-automated.json",
+  "interactive_path": "/workspace/.agent/evidence/release-v1.24.0/sandbox-smokes-interactive.json"
+}

@@ -1,20 +1,20 @@
 # Implementation Plan — Autonomous Skill Learning Loop (M19 / M20)
 
-- Status: **APPROVED**
+- Status: **COMPLETE** — M19/M20 on main; release prep v1.24.0
 - Plan ID: `m19-autonomous-skill-learning`
-- Issue: [#111](https://github.com/loganware05/captains-compass-cursor/issues/111)
+- Issue: [#111](https://github.com/loganware05/captains-compass-cursor/issues/111) (M19), [#113](https://github.com/loganware05/captains-compass-cursor/issues/113) (M20)
 - Baseline: v1.22.0 (`3c4455e` on `main`)
 - Rollback: `rollback/pre-m19-skill-learning`
-- Branch: `feature/111-m19-skill-learning-loop`
+- Branch: `chore/113-release-v1.24.0`
 
 | Field | Value |
 |---|---|
 | **Plan ID** | `m19-autonomous-skill-learning` |
-| **Status** | **APPROVED** |
+| **Status** | **COMPLETE** |
 | **Baseline** | v1.22.0 (`3c4455e`) |
-| **Issue** | [#111](https://github.com/loganware05/captains-compass-cursor/issues/111) |
-| **Target release** | **v1.23.0** (M19); M20 → v1.24.0 |
-| **Branch** | `feature/111-m19-skill-learning-loop` |
+| **Issue** | [#111](https://github.com/loganware05/captains-compass-cursor/issues/111), [#113](https://github.com/loganware05/captains-compass-cursor/issues/113) |
+| **Target release** | **v1.24.0** (includes M19+M20) |
+| **Branch** | `chore/113-release-v1.24.0` |
 | **Rollback** | `rollback/pre-m19-skill-learning` |
 | **Captain approval** | 2026-09-03 |
 

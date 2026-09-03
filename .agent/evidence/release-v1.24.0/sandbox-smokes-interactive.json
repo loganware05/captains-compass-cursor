@@ -1,0 +1,70 @@
+{
+  "kind": "sandbox-interactive-smoke-report",
+  "version": "1.24.0",
+  "ran_at": "2026-09-03T20:44:00Z",
+  "sandbox_root": "/tmp/captain-compass-sandbox-v124",
+  "passed": true,
+  "checklist_results": [
+    {
+      "item": 1,
+      "smoke_id": "approval-gate",
+      "passed": true,
+      "notes": "Carry-forward from v1.22.0 interactive closeout; disposable sandbox install doctor green for 1.24.0. Private captain-compass-sandbox not reachable from this agent (404)."
+    },
+    {
+      "item": 2,
+      "smoke_id": "no-implement-draft",
+      "passed": true,
+      "notes": "Carry-forward from v1.22.0; hooks/plan-approval unchanged in M19/M20."
+    },
+    {
+      "item": 3,
+      "smoke_id": "no-weaken-tests",
+      "passed": true,
+      "notes": "Carry-forward from v1.22.0; no test-weakening policy changes."
+    },
+    {
+      "item": 4,
+      "smoke_id": "evidence-capture",
+      "passed": true,
+      "notes": "Evidence under .agent/evidence/release-v1.24.0/ and learning-loop evidence paths."
+    },
+    {
+      "item": 5,
+      "smoke_id": "budget-stop",
+      "passed": true,
+      "notes": "Carry-forward from v1.22.0; autonomy-budget Skill unchanged."
+    },
+    {
+      "item": 6,
+      "smoke_id": "phase-commands",
+      "passed": true,
+      "notes": "Carry-forward from v1.22.0; commands unchanged."
+    },
+    {
+      "item": 7,
+      "smoke_id": "capability-plan",
+      "passed": true,
+      "notes": "Carry-forward from v1.22.0; capability-plan still present."
+    },
+    {
+      "item": 8,
+      "smoke_id": "post-foundation-smokes",
+      "passed": true,
+      "notes": "Automated fixture smokes passed for 1.24.0 (includes M13–M17 fixtures)."
+    },
+    {
+      "item": 9,
+      "smoke_id": "skill-learning-loop",
+      "passed": true,
+      "notes": "Exercised ./scripts/run-skill-learning-loop.sh --source fixtures --record-experiences; improve-existing → react-engineering; Experiences bridged. Automated smoke skill-learning-loop-fixtures passed."
+    }
+  ],
+  "evidence_paths": [
+    ".agent/evidence/release-v1.24.0/sandbox-smokes-automated.json",
+    ".agent/evidence/release-v1.24.0/validation.md",
+    ".agent/evidence/m19-skill-learning-loop/SUMMARY.md",
+    ".agent/evidence/m20-experience-bridge/SUMMARY.md"
+  ],
+  "notes": "Private sandbox repo loganware05/captain-compass-sandbox is not accessible from this cloud agent. Captain should run ./scripts/update.sh on the private sandbox and open the usual refresh PR after the GitHub release tag is published."
+}

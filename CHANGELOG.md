@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.24.0 — 2026-09-03
+
 ### Added
 
 - Skill learning loop orchestrator (`run-skill-learning-loop.sh`, `orchestrator/learning/`) (#111)
@@ -16,8 +18,10 @@
 
 ### Changed
 
-- TI docs: mark M14 batch Stars ML as shipped; document M19 learning loop (#111)
+- VERSION `1.24.0` (includes M19 / v1.23.0 scope + M20)
+- TI docs: mark M14 batch Stars ML as shipped; document M19/M20 learning loop (#111, #113)
 - Skill `technology-intelligence-live` cross-links skill learning loop (#111)
+- Skill `skill-lifecycle` cross-links learning-run Experiences (#113)
 
 ## 1.22.0 — 2026-09-01
 

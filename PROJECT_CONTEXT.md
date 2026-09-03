@@ -124,5 +124,5 @@ gh auth status
 
 ## Current Priorities
 
-M19 / v1.23.0 skill learning loop merged (#112). M20 Experience bridge landing
-on main after stacked #114. Release prep next.
+M19–M20 complete on main. Release prep **v1.24.0** (includes skill learning loop +
+Experience bridge). Private sandbox refresh is Captain-local.
