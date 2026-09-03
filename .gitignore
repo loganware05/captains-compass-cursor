@@ -55,6 +55,7 @@ wandb/
 .agent/plans/
 .agent/learning-runs/*
 !.agent/learning-runs/.gitkeep
+.agent/learning-applied/
 .agent/compass-skip.env
 
 # Cloud state

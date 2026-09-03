@@ -86,6 +86,10 @@ Skill learning loop (M19 — fixtures default; ti-cache/live Captain-local):
 ```bash
 ./scripts/run-skill-learning-loop.sh --source fixtures --objective "accessible react forms"
 ./scripts/run-skill-learning-loop.sh --source ti-cache --objective "schema validation"
+./scripts/run-skill-learning-loop.sh --source fixtures --record-experiences \
+  --objective "accessible react forms"
+./scripts/bridge-learning-experiences.sh --run .agent/learning-runs/<id>.json
+./scripts/apply-skill-improvement.sh --proposal path/to/proposal.json --captain-approved
 ```
 
 Persistent-role proposal (staging + PR only):

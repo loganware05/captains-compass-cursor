@@ -64,8 +64,8 @@ propose Skill improvements.
 
 | Milestone | Version | Theme | Status |
 |---|---|---|---|
-| **M19** | v1.23.0 | Learning orchestrator, staging export, fixture harness, unified drafts, similarity improvement **proposals**, Skill `skill-learning-loop` | **In progress** |
-| **M20** | v1.24.0 | Experience bridge → PROVEN path; deeper apply of existing-Skill improvements under Captain gate | Deferred |
+| **M19** | v1.23.0 | Learning orchestrator, staging export, fixture harness, unified drafts, similarity improvement **proposals**, Skill `skill-learning-loop` | **Merged** (#112) |
+| **M20** | v1.24.0 | Experience bridge → PROVEN path; Captain-gated apply of existing-Skill improvements | **Landing on main** (#114 was stacked) |
 
 ---
 
@@ -111,3 +111,30 @@ See `.agent/budgets/m19-autonomous-skill-learning.md`.
 | Captain | Decision | Date |
 |---|---|---|
 | loganware | **APPROVED** — decisions #1–#6 locked | 2026-09-03 |
+
+---
+
+# M20 — Experience bridge + Captain-gated improvement apply (v1.24.0)
+
+Issue: [#113](https://github.com/loganware05/captains-compass-cursor/issues/113)
+Branch: `feature/113-m20-experience-bridge`
+Rollback: `rollback/pre-m19-skill-learning` (M19 baseline) until M19 merges; then tag `rollback/pre-m20-experience-bridge`
+
+## Acceptance criteria
+
+1. `./scripts/bridge-learning-experiences.sh --run <learning-run.json>` writes Experiences.
+2. `./scripts/run-skill-learning-loop.sh --record-experiences` attaches an experience-bridge section.
+3. PROVEN still requires `--captain-approved` and ≥2 successful Experiences.
+4. `./scripts/apply-skill-improvement.sh --proposal … --captain-approved` writes an improved draft; does **not** mutate live Skills unless `--apply-live`.
+5. Excluded/meta Skills cannot be live-applied.
+6. `approved_for_execution` remains false.
+
+## Checklist
+
+- [x] Experience bridge module + CLI
+- [x] Optional `--record-experiences` on learning loop
+- [x] PROVEN helper with captain + threshold gates
+- [x] Apply-improvement CLI (draft default; `--apply-live` Captain-only)
+- [x] Tests
+- [x] Docs / ADR / Skill / PR
+

@@ -66,7 +66,8 @@ For earlier stages (`DISCOVERED → SANDBOX_TESTED`) use Skill `candidate-promot
    Override threshold with `COMPASS_PROVEN_SUCCESS_THRESHOLD` if needed.
 
 5. Optional training draft from Experience: Skill `experience-skill-training`
-   (`./scripts/train-skill-from-experience.sh`).
+   (`./scripts/train-skill-from-experience.sh`). Learning-run Experiences: Skill
+   `skill-learning-loop` (`bridge-learning-experiences.sh`).
 6. Re-run `./scripts/compile-capability-registry.sh` after any live Skill PR merges.
 
 ## Output

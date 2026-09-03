@@ -12,6 +12,7 @@ TOP_N=3
 CATEGORY=""
 THRESHOLD=""
 SKIP_CATEGORIZE=0
+RECORD_EXPERIENCES=0
 
 usage() {
   cat <<'USAGE'
@@ -26,6 +27,7 @@ Options:
   --category NAME          Optional star_category filter
   --similarity-threshold F Jaccard threshold for existing-Skill matches (default: 0.22)
   --skip-categorize        Reuse existing categorized.json
+  --record-experiences     Also write ExecutionRun + Experience (M20)
 
 Explicit CLI only — never auto-runs on hooks/close/CI defaults.
 Live Skill install still requires Captain approval (promote-candidate --captain-approved).
@@ -41,13 +43,14 @@ while [[ $# -gt 0 ]]; do
     --category) CATEGORY="$2"; shift 2 ;;
     --similarity-threshold) THRESHOLD="$2"; shift 2 ;;
     --skip-categorize) SKIP_CATEGORIZE=1; shift ;;
+    --record-experiences) RECORD_EXPERIENCES=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "error: unknown argument: $1" >&2; usage >&2; exit 1 ;;
   esac
 done
 
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python3 - "$ROOT" "$REPO_ROOT" "$SOURCE" "$OBJECTIVE" "$TOP_N" "$CATEGORY" "$THRESHOLD" "$SKIP_CATEGORIZE" <<'PY'
+python3 - "$ROOT" "$REPO_ROOT" "$SOURCE" "$OBJECTIVE" "$TOP_N" "$CATEGORY" "$THRESHOLD" "$SKIP_CATEGORIZE" "$RECORD_EXPERIENCES" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -62,6 +65,7 @@ top_n = int(sys.argv[5])
 category = sys.argv[6].strip() or None
 threshold_raw = sys.argv[7].strip()
 skip = sys.argv[8].strip() == "1"
+record_experiences = sys.argv[9].strip() == "1"
 kwargs = {
     "objective": objective,
     "source": source,
@@ -69,6 +73,7 @@ kwargs = {
     "category_filter": category,
     "control_root": control,
     "skip_categorize": skip,
+    "record_experiences": record_experiences,
 }
 if threshold_raw:
     kwargs["similarity_threshold"] = float(threshold_raw)

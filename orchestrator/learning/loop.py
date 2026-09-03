@@ -79,6 +79,7 @@ def run_skill_learning_loop(
     control_root: Path | None = None,
     run_id: str | None = None,
     skip_categorize: bool = False,
+    record_experiences: bool = False,
 ) -> dict:
     """
     Run the explicit skill learning loop and stop before live Skill install.
@@ -218,4 +219,14 @@ def run_skill_learning_loop(
     report_path = out_dir / f"{run_id}.json"
     report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     report["report_path"] = str(report_path)
+    if record_experiences:
+        from orchestrator.learning.experience_bridge import bridge_learning_run_to_experiences
+
+        source_instance = "control-test" if source.strip().lower() == "fixtures" else "control-live"
+        report["experience_bridge"] = bridge_learning_run_to_experiences(
+            repo_root,
+            report,
+            source_instance=source_instance,
+        )
+        report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return report
