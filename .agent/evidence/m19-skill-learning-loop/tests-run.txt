@@ -205,7 +205,7 @@ added: docs/integrations/multi-runtime-agents.md
 added: docs/integrations/technology-intelligence.md
 
 Captain's Compass v1.22.0 installed into:
-  /tmp/compass-install-McHCzk
+  /tmp/compass-install-QMrs5p
 
 Next steps:
   1. Fill in PROJECT_CONTEXT.md for this product.
@@ -280,7 +280,7 @@ keep: docs/integrations/multi-runtime-agents.md (already exists; not overwritten
 keep: docs/integrations/technology-intelligence.md (already exists; not overwritten)
 
 Captain's Compass v1.22.0 installed into:
-  /tmp/compass-install-McHCzk
+  /tmp/compass-install-QMrs5p
 
 Next steps:
   1. Fill in PROJECT_CONTEXT.md for this product.
@@ -298,7 +298,7 @@ PASS: force keeps customized CLAUDE.md
 PASS: critical hooks failClosed true / soft false
 === doctor on installed product ===
 Captain's Compass doctor
-Root: /tmp/compass-install-McHCzk
+Root: /tmp/compass-install-QMrs5p
 
   ok: COMPASS_VERSION=1.22.0 (installed product)
   ok: AGENTS.md
@@ -392,7 +392,7 @@ keep: docs/integrations/multi-runtime-agents.md (already exists; not overwritten
 keep: docs/integrations/technology-intelligence.md (already exists; not overwritten)
 
 Captain's Compass v1.22.0 installed into:
-  /tmp/compass-install-McHCzk
+  /tmp/compass-install-QMrs5p
 
 Next steps:
   1. Fill in PROJECT_CONTEXT.md for this product.
@@ -411,7 +411,7 @@ PASS: force still refreshes skills
 PASS: non-git target fails
 === update.sh refreshes version ===
 Captain's Compass update
-  target:  /tmp/compass-install-McHCzk
+  target:  /tmp/compass-install-QMrs5p
   from:    0.0.0-test
   to:      1.22.0
 
@@ -428,7 +428,7 @@ keep: docs/integrations/multi-runtime-agents.md (already exists; not overwritten
 keep: docs/integrations/technology-intelligence.md (already exists; not overwritten)
 
 Captain's Compass v1.22.0 installed into:
-  /tmp/compass-install-McHCzk
+  /tmp/compass-install-QMrs5p
 
 Next steps:
   1. Fill in PROJECT_CONTEXT.md for this product.
@@ -448,14 +448,14 @@ PASS: update wrote new version
 PASS: update kept PROJECT_CONTEXT marker
 === uninstall.sh removes cursor package ===
 PASS: uninstall requires --yes
-Uninstalling Captain's Compass from /tmp/compass-install-McHCzk
+Uninstalling Captain's Compass from /tmp/compass-install-QMrs5p
 Uninstall complete. Product source code was not modified.
 PASS: uninstall --yes succeeds
 PASS: uninstall removed rules
 PASS: uninstall kept PROJECT_CONTEXT
 === orchestrator schema tests ===
 ----------------------------------------------------------------------
-Ran 197 tests in 0.779s
+Ran 198 tests in 0.807s
 
 OK
 PASS: orchestrator unittest

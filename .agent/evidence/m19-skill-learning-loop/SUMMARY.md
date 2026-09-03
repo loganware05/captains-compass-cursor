@@ -30,6 +30,11 @@ PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m19_skill_learning_loop
 - `AVAILABLE_SKILL` still requires `--captain-approved`
 - Improvement proposals are proposal-only under `.agent/capabilities/candidates/skill-improvement-proposals/`
 
-## Rollback
+## Adversarial follow-ups addressed
 
-`rollback/pre-m19-skill-learning` @ `3c4455e`
+- Registry: registered `skill-learning-loop` + `hosted-vector-db` (40 Skills)
+- Similarity: stopwords, category hints, exclude meta/security Skills; threshold 0.28
+- Live source: fixture harness does **not** stamp `SANDBOX_TESTED` for `--source live`
+- Refuse `--repo-root` under `.cursor/skills/`
+- Draft sidecar lifecycle `SANDBOX_TESTED` (not AVAILABLE until Captain promote)
+- Tests assert live Skill bytes unchanged + react-engineering targeting

@@ -103,27 +103,6 @@ class SkillLearningLoopTests(unittest.TestCase):
             advance_lifecycle(candidate, target_stage="AVAILABLE_SKILL", evidence_paths=["e.md"])
         self.assertIn("captain-approved", str(ctx.exception).lower().replace("_", "-"))
 
-    def test_full_loop_fixtures_no_live_skill_write(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            repo = Path(tmp)
-            report = run_skill_learning_loop(
-                repo,
-                objective="accessible react forms",
-                source="fixtures",
-                top_n=2,
-                control_root=ROOT,
-            )
-            self.assertEqual(report["kind"], "skill-learning-run")
-            self.assertGreaterEqual(report["candidate_count"], 1)
-            self.assertFalse(report["auto_install"])
-            # No from-stars live skills created under control repo
-            for entry in report["results"]:
-                draft = entry.get("draft") or {}
-                skill_md = draft.get("skill_md")
-                self.assertTrue(skill_md and Path(skill_md).is_file())
-                self.assertIn("/skill-drafts/", skill_md)
-                self.assertNotIn("/.cursor/skills/from-stars-", skill_md)
-
     def test_export_requires_categorized(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaises(LearningExportError):
@@ -148,11 +127,55 @@ class SkillLearningLoopTests(unittest.TestCase):
                 "star_category": "frontend-ui",
                 "topics": ["react", "accessibility", "forms"],
             },
-            threshold=0.05,
+            threshold=0.2,
             top_k=5,
         )
-        # Should find at least one process/react-related skill in the control repo
-        self.assertTrue(isinstance(matches, list))
+        slugs = {m["skill_slug"] for m in matches}
+        self.assertIn("react-engineering", slugs)
+        self.assertNotIn("skill-learning-loop", slugs)
+        self.assertNotIn("security-review", slugs)
+
+    def test_full_loop_fixtures_no_live_skill_write(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            before = {
+                p.name: (p / "SKILL.md").read_text(encoding="utf-8")
+                for p in (ROOT / ".cursor" / "skills").iterdir()
+                if (p / "SKILL.md").is_file()
+            }
+            report = run_skill_learning_loop(
+                repo,
+                objective="accessible react forms",
+                source="fixtures",
+                top_n=1,
+                control_root=ROOT,
+            )
+            self.assertEqual(report["kind"], "skill-learning-run")
+            self.assertGreaterEqual(report["candidate_count"], 1)
+            self.assertFalse(report["auto_install"])
+            after = {
+                p.name: (p / "SKILL.md").read_text(encoding="utf-8")
+                for p in (ROOT / ".cursor" / "skills").iterdir()
+                if (p / "SKILL.md").is_file()
+            }
+            self.assertEqual(before, after)
+            entry = report["results"][0]
+            draft = entry.get("draft") or {}
+            skill_md = draft.get("skill_md")
+            self.assertTrue(skill_md and Path(skill_md).is_file())
+            self.assertIn("/skill-drafts/", skill_md)
+            if entry["mode"] == "improve-existing":
+                self.assertIn("skill-improvement-proposals", entry.get("improvement_proposal", ""))
+                self.assertEqual(entry.get("target_skill_slug"), "react-engineering")
+
+    def test_refuse_repo_root_under_skills(self) -> None:
+        with self.assertRaises(LearningLoopError):
+            run_skill_learning_loop(
+                ROOT / ".cursor" / "skills",
+                objective="x",
+                source="fixtures",
+                control_root=ROOT,
+            )
 
     def test_loop_unsupported_source(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

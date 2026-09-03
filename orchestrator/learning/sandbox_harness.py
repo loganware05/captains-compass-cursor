@@ -28,6 +28,7 @@ def run_fixture_sandbox_harness(
     *,
     skill_slug: str,
     control_root: Path | None = None,
+    promote_to_sandbox_tested: bool = True,
 ) -> dict:
     """
     Validate a staged candidate + draft Skill without cloning external repos.
@@ -36,9 +37,15 @@ def run_fixture_sandbox_harness(
     - approved_for_execution is false
     - draft SKILL.md + capability.yaml exist under skill-drafts
     - new from-stars-* drafts are not installed under .cursor/skills/
+
+    When promote_to_sandbox_tested is False (e.g. --source live), evidence is
+    written but lifecycle stays below SANDBOX_TESTED until Captain security review.
     """
     control = Path(control_root or repo_root).resolve()
     repo_root = Path(repo_root).resolve()
+    skills_root = (control / ".cursor" / "skills").resolve()
+    if repo_root == skills_root or skills_root in repo_root.parents:
+        raise SandboxHarnessError("refuse --repo-root under .cursor/skills/")
 
     if candidate.get("approved_for_execution") is not False:
         raise SandboxHarnessError(
@@ -70,11 +77,13 @@ def run_fixture_sandbox_harness(
     evid.mkdir(parents=True, exist_ok=True)
     report = {
         "kind": "candidate-sandbox-test",
+        "harness_kind": "fixture-file-checks",
         "ran_at": _utc_now(),
         "candidate_id": candidate.get("id"),
         "skill_slug": skill_slug,
         "passed": True,
         "approved_for_execution": False,
+        "promote_to_sandbox_tested": promote_to_sandbox_tested,
         "checks": {
             "draft_skill_md": str(skill_md),
             "draft_capability_yaml": str(capability_yaml),
@@ -95,6 +104,7 @@ def run_fixture_sandbox_harness(
     summary_path.write_text(
         f"# Candidate sandbox test — `{candidate.get('id')}`\n\n"
         f"- Passed: true\n"
+        f"- Harness: fixture-file-checks\n"
         f"- Skill slug: `{skill_slug}`\n"
         f"- Evidence: `{report_path}`\n"
         f"- Live install: **not performed** (Captain gate)\n",
@@ -102,26 +112,28 @@ def run_fixture_sandbox_harness(
     )
 
     evidence_paths = [str(report_path), str(summary_path)]
+    stage = "SANDBOX_TESTED" if promote_to_sandbox_tested else "ANALYZED"
     staging = write_staging_candidate(
         repo_root,
         candidate,
-        target_stage="SANDBOX_TESTED",
-        evidence_paths=evidence_paths,
+        target_stage=stage,
+        evidence_paths=evidence_paths if promote_to_sandbox_tested else None,
         skill_slug=skill_slug,
     )
-    # Ensure lifecycle helper stays exercised for callers that only hold the dict
-    advance_lifecycle(
-        candidate,
-        target_stage="SANDBOX_TESTED",
-        evidence_paths=evidence_paths,
-        skill_slug=skill_slug,
-        repo_root=repo_root,
-    )
+    if promote_to_sandbox_tested:
+        advance_lifecycle(
+            candidate,
+            target_stage="SANDBOX_TESTED",
+            evidence_paths=evidence_paths,
+            skill_slug=skill_slug,
+            repo_root=repo_root,
+        )
     return {
         "passed": True,
         "evidence_dir": str(evid),
         "report_path": str(report_path),
         "summary_path": str(summary_path),
         "staging_candidate": str(staging),
-        "lifecycle_stage": "SANDBOX_TESTED",
+        "lifecycle_stage": stage,
+        "harness_kind": "fixture-file-checks",
     }

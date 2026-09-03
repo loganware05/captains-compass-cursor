@@ -92,8 +92,13 @@ def run_skill_learning_loop(
     """
     repo_root = Path(repo_root).resolve()
     control = Path(control_root or repo_root).resolve()
+    skills_root = (control / ".cursor" / "skills").resolve()
+    if repo_root == skills_root or skills_root in repo_root.parents:
+        raise LearningLoopError("refuse --repo-root under .cursor/skills/")
     if not objective.strip():
         raise LearningLoopError("objective is required")
+
+    promote_sandbox = source.strip().lower() != "live"
 
     if not skip_categorize:
         try:
@@ -160,6 +165,7 @@ def run_skill_learning_loop(
                 candidate,
                 skill_slug=draft_slug,
                 control_root=control,
+                promote_to_sandbox_tested=promote_sandbox,
             )
             proposal = write_improvement_proposal(
                 repo_root,
@@ -177,6 +183,7 @@ def run_skill_learning_loop(
                 candidate,
                 skill_slug=draft_slug,
                 control_root=control,
+                promote_to_sandbox_tested=promote_sandbox,
             )
             entry["draft"] = {k: str(v) for k, v in drafts.items()}
             entry["harness"] = harness

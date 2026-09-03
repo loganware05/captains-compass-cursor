@@ -63,9 +63,10 @@ before copying into `.cursor/skills/`.
 
 ### C. Improve existing Skills when processes are similar
 
-When Jaccard similarity between the candidate and a live Skill exceeds the
-threshold (default `0.22`), the loop writes a **skill-improvement-proposal**
-targeting that Skill. Proposals never mutate live `SKILL.md`.
+When Jaccard/overlap similarity between the candidate and a live Skill exceeds the
+threshold (default `0.28`), the loop writes a **skill-improvement-proposal**
+targeting that Skill. Proposals never mutate live `SKILL.md`. Meta and
+safety-critical Skills are excluded from automatic targeting.
 
 1. Review the proposal JSON (suggested procedure lessons + provenance).
 2. Captain decides whether to fold lessons into the existing Skill via PR.

@@ -74,18 +74,20 @@ def draft_capability_yaml_from_candidate(candidate: dict, skill_slug: str) -> st
         "source:",
         "  type: compass-skill",
         f"  path: .cursor/skills/{skill_slug}/SKILL.md",
-        "lifecycle_stage: AVAILABLE_SKILL",
+        "lifecycle_stage: SANDBOX_TESTED",
         "capabilities_provided:",
     ]
     for cap in caps:
         lines.append(f"  - {cap}")
+    discovery = str(candidate.get("discovery_signal") or "").replace('"', "'")
+    from_candidate = str(candidate.get("id") or "").replace('"', "'")
     lines.extend(
         [
             "security_sensitivity: medium",
             "provenance:",
             "  inferred: false",
-            f"  from_candidate: {candidate.get('id')}",
-            f"  discovery_signal: {candidate.get('discovery_signal') or ''}",
+            f'  from_candidate: "{from_candidate}"',
+            f'  discovery_signal: "{discovery}"',
             "  captain_approval_required: true",
             "notes: Draft from skill-learning-loop — requires Captain-approved PR",
             "",
