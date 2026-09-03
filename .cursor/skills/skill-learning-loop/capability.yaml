@@ -1,0 +1,35 @@
+id: skill-learning-loop
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/skill-learning-loop/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, learning, orchestration, promotion]
+tags:
+  - skill-learning
+  - github-stars
+  - categorization
+  - sandbox
+  - improvement-proposals
+capabilities_provided:
+  - skill-learning-loop-orchestration
+  - stars-candidate-staging-export
+  - sandbox-candidate-harness
+  - skill-improvement-proposal
+  - unified-skill-draft-emission
+compatible_stacks:
+  - any
+security_sensitivity: high
+agent_affinity:
+  - candidate-promotion
+  - skill-lifecycle
+  - experience-skill-training
+  - technology-intelligence-live
+  - documentation-agent
+maturity: available
+confidence: 0.85

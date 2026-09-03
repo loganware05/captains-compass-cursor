@@ -46,7 +46,15 @@ wandb/
 !.agent/agents/proficiency/.gitkeep
 .agent/handoffs/
 .agent/capabilities/compiled/registry.json
+.agent/capabilities/candidates/staging/
+.agent/capabilities/candidates/skill-drafts/
+.agent/capabilities/candidates/skill-improvement-proposals/
+.agent/capabilities/candidates/available-proposals/
+.agent/evidence/candidate-sandbox-test/
+.agent/ti/
 .agent/plans/
+.agent/learning-runs/*
+!.agent/learning-runs/.gitkeep
 .agent/compass-skip.env
 
 # Cloud state

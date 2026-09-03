@@ -123,6 +123,32 @@ SKILLS: dict[str, dict] = {
             "dependency-supply-chain",
         ],
     },
+    "skill-learning-loop": {
+        "categories": ["process", "learning", "orchestration", "promotion"],
+        "tags": [
+            "skill-learning",
+            "github-stars",
+            "categorization",
+            "sandbox",
+            "improvement-proposals",
+        ],
+        "capabilities_provided": [
+            "skill-learning-loop-orchestration",
+            "stars-candidate-staging-export",
+            "sandbox-candidate-harness",
+            "skill-improvement-proposal",
+            "unified-skill-draft-emission",
+        ],
+        "compatible_stacks": ["any"],
+        "security_sensitivity": "high",
+        "agent_affinity": [
+            "candidate-promotion",
+            "skill-lifecycle",
+            "experience-skill-training",
+            "technology-intelligence-live",
+            "documentation-agent",
+        ],
+    },
     "compass-evaluator": {
         "categories": ["process", "evaluation", "orchestration"],
         "tags": ["evaluator", "experiments", "comparison"],

@@ -70,6 +70,7 @@ assert_true "capability-planning skill in control" test -f "$ROOT/.cursor/skills
 assert_true "execution-telemetry skill in control" test -f "$ROOT/.cursor/skills/execution-telemetry/SKILL.md"
 assert_true "candidate-promotion skill in control" test -f "$ROOT/.cursor/skills/candidate-promotion/SKILL.md"
 assert_true "experience-skill-training skill in control" test -f "$ROOT/.cursor/skills/experience-skill-training/SKILL.md"
+assert_true "skill-learning-loop skill in control" test -f "$ROOT/.cursor/skills/skill-learning-loop/SKILL.md"
 assert_true "compass-evaluator skill in control" test -f "$ROOT/.cursor/skills/compass-evaluator/SKILL.md"
 assert_true "experience-routing skill in control" test -f "$ROOT/.cursor/skills/experience-routing/SKILL.md"
 assert_true "compass-evaluator agent in control" test -f "$ROOT/.cursor/agents/compass-evaluator.md"
@@ -77,6 +78,7 @@ assert_true "capability-plan script in control" test -f "$ROOT/scripts/capabilit
 assert_true "record-execution-run script in control" test -f "$ROOT/scripts/record-execution-run.sh"
 assert_true "promote-candidate script in control" test -f "$ROOT/scripts/promote-candidate.sh"
 assert_true "train-skill-from-experience script in control" test -f "$ROOT/scripts/train-skill-from-experience.sh"
+assert_true "run-skill-learning-loop script in control" test -f "$ROOT/scripts/run-skill-learning-loop.sh"
 assert_true "experience layout in control" test -f "$ROOT/.agent/experience/.gitkeep"
 
 echo "=== doctor on control repo ==="

@@ -49,7 +49,7 @@ agentic engineering process across multiple product repositories.
 
 1. AGENTS.md operating contract
 2. Five always-applied core rules
-3. Thirty-eight Skills (including embedding-providers, package-registry-ti, external-knowledge-ingest, skill-lifecycle, procedure-playbooks, knowledge-steward, technology-intelligence-live, persistent-role-promotion, bounded-autonomy, compass-evaluator, experience-routing, capability-planning, execution-telemetry, candidate-promotion, experience-skill-training)
+3. Thirty-nine Skills (including skill-learning-loop, embedding-providers, package-registry-ti, external-knowledge-ingest, skill-lifecycle, procedure-playbooks, knowledge-steward, technology-intelligence-live, persistent-role-promotion, bounded-autonomy, compass-evaluator, experience-routing, capability-planning, execution-telemetry, candidate-promotion, experience-skill-training)
 4. Ten specialist subagents (including `compass-evaluator`, `knowledge-steward`)
 5. Seven safety hooks (three critical fail-closed; four soft fail-open with multi-path skips)
 6. Six Cursor phase commands under `.cursor/commands/`
@@ -124,4 +124,5 @@ gh auth status
 
 ## Current Priorities
 
-M13 / v1.17.0 shipped. M14 in progress (GitHub Star categorization ML). See `IMPLEMENTATION_PLAN.md`.
+M19 autonomous skill learning loop (v1.23.0) in progress — issue #111. M20
+(Experience bridge / deeper Skill improvement apply) deferred.
