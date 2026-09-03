@@ -27,9 +27,9 @@ class SandboxSmokeCatalogTests(unittest.TestCase):
 
     def test_interactive_catalog_matches_checklist(self) -> None:
         items = interactive_smoke_catalog()
-        self.assertEqual(len(items), 8)
+        self.assertEqual(len(items), 9)
         self.assertEqual(items[0]["checklist_item"], 1)
-        self.assertEqual(items[-1]["smoke_id"], "post-foundation-smokes")
+        self.assertEqual(items[-1]["smoke_id"], "skill-learning-loop")
 
 
 class SandboxSmokeRunnerTests(unittest.TestCase):
@@ -82,6 +82,7 @@ class SandboxSmokeValidationTests(unittest.TestCase):
                     {"smoke_id": "knowledge-ingest-fixtures", "passed": True},
                     {"smoke_id": "pgvector-mock-query", "passed": True},
                     {"smoke_id": "stars-categorize-fixtures", "passed": True},
+                    {"smoke_id": "skill-learning-loop-fixtures", "passed": True},
                     {"smoke_id": "notion-live-fixtures", "passed": True},
                     {"smoke_id": "hf-file-ti", "passed": True},
                     {"smoke_id": "context-selection-propose", "passed": True},
@@ -99,6 +100,7 @@ class SandboxSmokeValidationTests(unittest.TestCase):
                     {"item": 6, "passed": True},
                     {"item": 7, "passed": True},
                     {"item": 8, "passed": True},
+                    {"item": 9, "passed": True},
                 ],
             }
             (evidence / "sandbox-smokes-automated.json").write_text(

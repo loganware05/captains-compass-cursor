@@ -81,6 +81,13 @@ Promote candidate / train from Experience (staging drafts only):
 ./scripts/train-skill-from-experience.sh --experience path/to/experience.json --skill-slug draft-slug
 ```
 
+Skill learning loop (M19 — fixtures default; ti-cache/live Captain-local):
+
+```bash
+./scripts/run-skill-learning-loop.sh --source fixtures --objective "accessible react forms"
+./scripts/run-skill-learning-loop.sh --source ti-cache --objective "schema validation"
+```
+
 Persistent-role proposal (staging + PR only):
 
 ```bash

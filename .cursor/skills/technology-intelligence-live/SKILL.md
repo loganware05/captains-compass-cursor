@@ -79,7 +79,19 @@ during capability planning — not offline fixtures and not CI defaults.
      ./scripts/query-technology-intelligence.sh --query "react forms"
    ```
 
-11. **Live Hugging Face Hub TI** (Captain local — Hub models API):
+11. **Skill learning loop** (M19 — staging + harness + drafts / improvement proposals):
+
+   ```bash
+   ./scripts/run-skill-learning-loop.sh \
+     --source fixtures \
+     --objective "accessible react forms"
+   ```
+
+   Review drafts under `.agent/capabilities/candidates/skill-drafts/` and
+   improvement proposals under `skill-improvement-proposals/`. Live install still
+   requires Captain approval (`skill-learning-loop` Skill).
+
+12. **Live Hugging Face Hub TI** (Captain local — Hub models API):
 
    ```bash
    COMPASS_TI_PROVIDER=huggingface-hub \

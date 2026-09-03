@@ -1,0 +1,1 @@
+registry written: /workspace/.agent/capabilities/compiled/registry.json

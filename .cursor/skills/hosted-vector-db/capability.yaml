@@ -1,4 +1,14 @@
 id: hosted-vector-db
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/hosted-vector-db/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+lifecycle_stage: AVAILABLE_SKILL
 categories:
   - knowledge
   - infrastructure
@@ -19,3 +29,5 @@ security_sensitivity: high
 agent_affinity:
   - knowledge-steward
   - implementation-agent
+maturity: available
+confidence: 0.85

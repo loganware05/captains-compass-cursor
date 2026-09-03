@@ -1,6 +1,30 @@
 # Decisions
 
+## ADR-035: Autonomous skill learning loop with Captain live-install gate (v1.23.0 M19)
+
+- **Status:** Accepted
+- **Date:** 2026-09-03
+- **Context:** M14 shipped Stars categorization; promotion and Experience training
+  existed as separate CLIs. Captains need a closed sandbox loop that stages
+  categorized candidates, runs fixture harness evidence, drafts Skills, and
+  proposes improvements to similar existing Skills — without auto-install.
+- **Decision:**
+  1. Ship explicit CLI `run-skill-learning-loop.sh` and orchestrator
+     `orchestrator/learning/` (categorize → staging export → similarity check →
+     unified drafts and/or improvement proposals → fixture harness →
+     `SANDBOX_TESTED`).
+  2. New Skill `skill-learning-loop` documents new-draft and improve-existing paths.
+  3. Improvement proposals write under
+     `.agent/capabilities/candidates/skill-improvement-proposals/` — never mutate
+     live `.cursor/skills/` automatically.
+  4. Live Skill promotion still requires `--captain-approved` / Captain-reviewed PR.
+  5. Defaults use `--source fixtures`; `ti-cache` / `live` are Captain-local.
+  6. M20 deferred for Experience→PROVEN bridge and deeper improvement apply.
+- **Consequences:** Sandbox can exercise skill learning end-to-end with evidence;
+  Captain remains the live-install gate; CI stays fixture-safe.
+
 ## ADR-034: Required sandbox release smokes for closeout (v1.22.0 M18)
+
 
 - **Status:** Accepted
 - **Date:** 2026-09-01

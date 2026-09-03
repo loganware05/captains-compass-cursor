@@ -113,6 +113,7 @@ assert_true "capability-planning skill" test -f "$ROOT/.cursor/skills/capability
 assert_true "execution-telemetry skill" test -f "$ROOT/.cursor/skills/execution-telemetry/SKILL.md"
 assert_true "candidate-promotion skill" test -f "$ROOT/.cursor/skills/candidate-promotion/SKILL.md"
 assert_true "experience-skill-training skill" test -f "$ROOT/.cursor/skills/experience-skill-training/SKILL.md"
+assert_true "skill-learning-loop skill" test -f "$ROOT/.cursor/skills/skill-learning-loop/SKILL.md"
 assert_true "compass-evaluator skill" test -f "$ROOT/.cursor/skills/compass-evaluator/SKILL.md"
 assert_true "experience-routing skill" test -f "$ROOT/.cursor/skills/experience-routing/SKILL.md"
 assert_true "compass-evaluator agent" test -f "$ROOT/.cursor/agents/compass-evaluator.md"
@@ -271,8 +272,8 @@ from orchestrator.release.sandbox_smokes import RELEASE_SMOKE_CATALOG, interacti
 
 automated = [s for s in RELEASE_SMOKE_CATALOG if s.mode == "automated"]
 interactive = interactive_smoke_catalog()
-assert len(automated) >= 8
-assert len(interactive) == 8
+assert len(automated) >= 9
+assert len(interactive) == 9
 print("ok")
 PY
 )"

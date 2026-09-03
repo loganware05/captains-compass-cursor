@@ -33,6 +33,7 @@ RELEASE_SMOKE_CATALOG: tuple[SmokeStep, ...] = (
     SmokeStep("knowledge-ingest-fixtures", "Knowledge ingest fixtures CLI", "automated"),
     SmokeStep("pgvector-mock-query", "Mock pgvector knowledge query", "automated"),
     SmokeStep("stars-categorize-fixtures", "Stars categorization fixtures CLI", "automated"),
+    SmokeStep("skill-learning-loop-fixtures", "Skill learning loop fixtures CLI", "automated"),
     SmokeStep("notion-live-fixtures", "Notion live ingest fixtures CLI", "automated"),
     SmokeStep("hf-file-ti", "Hugging Face file TI query", "automated"),
     SmokeStep("context-selection-propose", "Context selection proposal CLI", "automated"),
@@ -44,6 +45,7 @@ RELEASE_SMOKE_CATALOG: tuple[SmokeStep, ...] = (
     SmokeStep("phase-commands", "/plan-feature and /implement-approved-plan", "interactive", 6),
     SmokeStep("capability-plan", "Capability-aware /plan-feature sections", "interactive", 7),
     SmokeStep("post-foundation-smokes", "Post-foundation fixture smokes (M13–M17)", "interactive", 8),
+    SmokeStep("skill-learning-loop", "Skill learning loop drafts + improvement proposals", "interactive", 9),
 )
 
 
@@ -158,6 +160,28 @@ def _step_stars_categorize(control_root: Path, sandbox_root: Path) -> dict[str, 
     }
 
 
+def _step_skill_learning_loop(control_root: Path, sandbox_root: Path) -> dict[str, Any]:
+    del sandbox_root
+    proc = _run_script(
+        control_root,
+        "run-skill-learning-loop.sh",
+        "--source",
+        "fixtures",
+        "--objective",
+        "accessible react forms",
+        "--top",
+        "1",
+        "--repo-root",
+        str(control_root),
+    )
+    passed = proc.returncode == 0 and "skill-learning-run" in proc.stdout
+    return {
+        "smoke_id": "skill-learning-loop-fixtures",
+        "passed": passed,
+        "detail": proc.stdout[:300] or proc.stderr[:300],
+    }
+
+
 def _step_notion_live(control_root: Path, sandbox_root: Path) -> dict[str, Any]:
     del sandbox_root
     try:
@@ -226,6 +250,7 @@ AUTOMATED_STEPS: dict[str, Callable[[Path, Path], dict[str, Any]]] = {
     "knowledge-ingest-fixtures": _step_knowledge_ingest,
     "pgvector-mock-query": _step_pgvector_mock,
     "stars-categorize-fixtures": _step_stars_categorize,
+    "skill-learning-loop-fixtures": _step_skill_learning_loop,
     "notion-live-fixtures": _step_notion_live,
     "hf-file-ti": _step_hf_file_ti,
     "context-selection-propose": _step_context_selection,

@@ -107,6 +107,7 @@ SKILLS=(
   embedding-providers
   hosted-vector-db
   package-registry-ti
+  skill-learning-loop
 )
 
 for s in "${SKILLS[@]}"; do

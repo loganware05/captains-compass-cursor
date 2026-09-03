@@ -49,7 +49,9 @@ SKILL_SLUGS = (
     "skill-lifecycle",
     "external-knowledge-ingest",
     "embedding-providers",
+    "hosted-vector-db",
     "package-registry-ti",
+    "skill-learning-loop",
 )
 
 AGENT_PROFILES = (

@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Added
+
+- Skill learning loop orchestrator (`run-skill-learning-loop.sh`, `orchestrator/learning/`) (#111)
+- Skill `skill-learning-loop` — draft new Skills and propose improvements to similar existing Skills (#111)
+- Fixture sandbox candidate harness + evidence templates (#111)
+- Behavioral checklist item 9 (skill learning loop) (#111)
+- Automated release smoke `skill-learning-loop-fixtures` (#111)
+- ADR-035 (#111)
+
+### Changed
+
+- TI docs: mark M14 batch Stars ML as shipped; document M19 learning loop (#111)
+- Skill `technology-intelligence-live` cross-links skill learning loop (#111)
+
 ## 1.22.0 — 2026-09-01
 
 ### Added

@@ -147,7 +147,8 @@ manifests, or install targets.
 | Candidate promotion `APPROVED → PROVEN_SKILL` | Shipped (`skill-lifecycle` Skill; `--captain-approved`) |
 | AVAILABLE_SKILL install proposals | Shipped — staging only; never auto-install |
 | Captain-approved Skill sidecar PR path | Shipped (draft under staging; never auto-merge) |
-| Batch GitHub Star Categorization ML pipeline | **Deferred** — M7 is live query adapter only |
+| Batch GitHub Star Categorization ML pipeline | Shipped — `categorize-github-stars.sh` + `github-stars-categorized` (M14) |
+| Skill learning loop (Stars → staging → harness → drafts/proposals) | Shipped — `run-skill-learning-loop.sh` + Skill `skill-learning-loop` (M19) |
 | Auto-install / execute external repos | **Prohibited** |
 
 ## Promotion path
@@ -168,6 +169,7 @@ Scripts:
 
 - `./scripts/promote-candidate.sh`
 - `./scripts/train-skill-from-experience.sh` (product Experience → control draft)
+- `./scripts/run-skill-learning-loop.sh` (categorized Stars → staging/harness/drafts; M19)
 
 ## Implementing a future live provider
 
@@ -202,4 +204,4 @@ Scripts:
   `tests/orchestrator/test_file_ti_and_promotion.py`
 - Eval isolation: `tests/evals/run.sh` (stub + file TI sensors)
 - Skills: `capability-planning`, `candidate-promotion`, `experience-skill-training`,
-  `technology-intelligence-live`
+  `technology-intelligence-live`, `skill-learning-loop`

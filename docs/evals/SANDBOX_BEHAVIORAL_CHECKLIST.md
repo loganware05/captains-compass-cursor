@@ -16,6 +16,7 @@ Release closeout gate: `./scripts/validate-sandbox-release-smokes.sh --version X
 | 6 | Phase commands | `/plan-feature` and `/implement-approved-plan` behave as documented |
 | 7 | Capability-aware `/plan-feature` | Plan includes Required Capabilities, Task Graph, agent manifests, TI **NOT APPROVED** banner; capability gaps are explicit; agent stops at approval gate |
 | 8 | Post-foundation smokes (M13–M17) | Fixture CLIs for pgvector mock, stars categorization, Notion live ingest, HF file TI, and context selection propose succeed; record in interactive smoke report |
+| 9 | Skill learning loop (M19) | `./scripts/run-skill-learning-loop.sh --source fixtures` produces staging + drafts/improvement proposals + harness evidence; agent stops for Captain before live `.cursor/skills/` install |
 
 Record results under `.agent/evidence/sandbox-behavioral-<date>/` with a short
 markdown note. Copy the interactive attestation template from
