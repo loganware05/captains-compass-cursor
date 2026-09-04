@@ -1,140 +1,109 @@
-# Implementation Plan — Autonomous Skill Learning Loop (M19 / M20)
+# Implementation Plan — Post-M20 Roadmap Options (M21+)
 
-- Status: **COMPLETE** — v1.24.0 released
-- Plan ID: `m19-autonomous-skill-learning`
-- Issue: [#111](https://github.com/loganware05/captains-compass-cursor/issues/111) (M19), [#113](https://github.com/loganware05/captains-compass-cursor/issues/113) (M20)
-- Baseline: v1.22.0 (`3c4455e` on `main`)
-- Rollback: `rollback/pre-m19-skill-learning`
-- Release: [v1.24.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.24.0)
+- Status: **AWAITING APPROVAL**
+- Plan ID: `m21-roadmap-options`
+- Issue: *pending — create after Captain picks a path*
+- Baseline: v1.24.0 (`cb79190` on `main`)
+- Rollback: N/A (planning only until a path is approved)
 
 | Field | Value |
 |---|---|
-| **Plan ID** | `m19-autonomous-skill-learning` |
-| **Status** | **COMPLETE** |
-| **Baseline** | v1.22.0 (`3c4455e`) |
-| **Issue** | [#111](https://github.com/loganware05/captains-compass-cursor/issues/111), [#113](https://github.com/loganware05/captains-compass-cursor/issues/113) |
-| **Target release** | **v1.24.0** (includes M19+M20) |
-| **Release** | [v1.24.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.24.0) |
-| **Rollback** | `rollback/pre-m19-skill-learning` |
-| **Captain approval** | 2026-09-03 |
-
-## Captain decisions (locked 2026-09-03)
-
-| # | Topic | Decision |
-|---|---|---|
-| 1 | Autonomy | Automate staging + evidence; **Captain approval gate** when promoting a Skill to go live |
-| 2 | Roadmap shape | **Split M19 / M20** |
-| 3 | Learning target | Draft **new** Skills **and** improve **existing** Skills from categorized stars (when processes are similar) |
-| 4 | Sandbox harness | **Fixture harness + interactive checklist** |
-| 5 | Default input | **Fixtures** in CI; `ti-cache` / `live` Captain-local |
-| 6 | Skill packaging | New Skill **`skill-learning-loop`** — learning loop for new drafts **and** improve existing Skills when processes are similar |
+| **Plan ID** | `m21-roadmap-options` |
+| **Status** | **AWAITING APPROVAL** |
+| **Baseline** | v1.24.0 (`cb79190`) |
+| **Issue** | TBD after Captain decision |
+| **Target release** | TBD (likely v1.25.0+) |
+| **Rollback** | Per chosen milestone |
 
 ## Problem statement
 
-M13–M18 shipped learning pieces in isolation (Stars categorization, promotion,
-Experience training, release smokes) without a closed Captain-gated loop that
-uses categorized Stars in the sandbox to stage candidates, test drafts, and
-propose Skill improvements.
+M19–M20 shipped as **v1.24.0** (skill learning loop + Experience bridge +
+Captain-gated Skill improvement apply). There is no locked next milestone.
+Private sandbox refresh to 1.24.0 is still pending because this cloud agent
+cannot access `loganware05/captain-compass-sandbox` (GitHub App installation
+is control-repo only).
 
-## Desired behavior (M19)
+## Immediate unblock (sandbox refresh — not a product change)
 
-1. Explicit `./scripts/run-skill-learning-loop.sh` orchestrates (fixtures default):
-   - categorize Stars (M14)
-   - select top-N candidates by category + objective
-   - export staging candidate JSON
-   - run fixture sandbox harness → evidence
-   - advance to `SANDBOX_TESTED` when evidence passes
-   - emit unified drafts **or** improvement proposals for similar existing Skills
-   - **stop** — live install requires Captain (`--captain-approved` / PR)
-2. New Skill `skill-learning-loop` documents both paths.
-3. Automated smoke + behavioral checklist item 9.
-4. ADR: automated staging ≠ auto-install.
+**Blocked here:** GitHub App / environment repos = `captains-compass-cursor` only.
 
-## Non-goals
+**Captain options (pick one):**
 
-- Auto-merge / auto-copy into `.cursor/skills/`
-- `approved_for_execution: true`
-- Cloning or executing starred repos
-- Hook/CI auto-run of the full loop
-- Weakening Captain gates for live promotion
+1. **Grant access** — add `loganware05/captain-compass-sandbox` to Cursor GitHub
+   App repository access + this Cloud Agent environment repos, then reply so the
+   agent can clone, `update.sh`, doctor, and open the refresh PR.
+2. **Local refresh** — run:
 
----
+```bash
+cd /path/to/captains-compass-cursor && git checkout main && git pull
+./scripts/update.sh /path/to/captain-compass-sandbox
+./scripts/doctor.sh /path/to/captain-compass-sandbox
+cd /path/to/captain-compass-sandbox
+git checkout -b chore/refresh-compass-1.24.0
+git add -A && git commit -m "chore: refresh Captain Compass to 1.24.0"
+git push -u origin HEAD
+gh pr create --title "chore: refresh Captain Compass to 1.24.0" \
+  --body "Refresh private sandbox to Compass v1.24.0 (M19/M20)."
+```
 
-## Roadmap
+Paste the sandbox PR URL back so control-repo validation docs can be updated.
 
-| Milestone | Version | Theme | Status |
+## Captain decision needed — next milestone
+
+Choose **one primary path** for M21 (or approve a sequenced backlog):
+
+| Option | Theme | Scope (invasive?) | Why |
 |---|---|---|---|
-| **M19** | v1.23.0 | Learning orchestrator, staging export, fixture harness, unified drafts, similarity improvement **proposals**, Skill `skill-learning-loop` | **Merged** (#112) |
-| **M20** | v1.24.0 | Experience bridge → PROVEN path; Captain-gated apply of existing-Skill improvements | **Landing on main** (#114 was stacked) |
+| **A** | **Live skill-learning in private sandbox** | Medium — wire Stars categorize + learning loop against real sandbox `ti-cache`/live; checklist item 9 live path; evidence under release/sandbox | Completes the M19/M20 story outside fixtures |
+| **B** | **Pinecone (or second) vector adapter** | Medium — new hosted adapter beside Neon/pgvector; env + doctor + smoke | ADR left Pinecone as future second adapter |
+| **C** | **Harness / hygiene debt** | Low–medium — close stale issues (e.g. #50 M4 already shipped), soft-hook skip-env inheritance, stacked-PR guardrails, doctor coverage | Stabilize before new surface area |
+| **D** | **First Mate orchestration polish** | Medium–high — better multi-worktree / parallel-agent playbooks, budget stop UX, review-fix loop defaults | Moves toward design “command center” without new data stores |
+| **E** | **Captain-specified** | TBD | You name the objective |
 
----
+### Recommended default
 
-# M19 — Autonomous Skill Learning Loop (v1.23.0)
+**A then C:** finish live sandbox learning evidence after the 1.24.0 refresh PR,
+then a small hygiene sweep (close #50, doc drift). Defer B/D until you want more
+platform surface.
 
-## Acceptance criteria
+## Desired behavior (after approval of a path)
 
-1. `./scripts/run-skill-learning-loop.sh --source fixtures` exits 0 with artifacts under `.agent/`.
-2. Writes staging candidates, harness evidence, drafts and/or improvement proposals; does **not** write under `.cursor/skills/` (except the new committed Skill itself).
-3. Promotion past `SANDBOX_TESTED` still requires `--captain-approved`.
-4. `approved_for_execution` remains `false`.
-5. Similar existing Skills get improvement proposals (not silent mutation).
-6. Unit tests cover fail-closed cases.
-7. Automated smoke for fixture learning loop; checklist item 9.
-8. ADR + docs; TI doc M14 row fixed.
-9. `./scripts/doctor.sh` and `./tests/run.sh` pass.
+1. Create GitHub issue + feature branch for the chosen option.
+2. Replace this plan with a concrete milestone plan (APPROVED) before product edits.
+3. Ship target release with sandbox smokes + private sandbox refresh PR.
 
-## Implementation checklist
+## Assumptions
 
-- [x] Record approval; issue #111; rollback tag; feature branch
-- [x] Learning-run model + CLI orchestrator
-- [x] TI → staging export
-- [x] Fixture sandbox harness + evidence templates
-- [x] Unified `SKILL.md` + `capability.yaml` drafts
-- [x] Similarity matcher → improvement proposals
-- [x] Skill `skill-learning-loop`
-- [x] Smokes, tests, ADR, checklist, docs
-- [x] Validation evidence + PR
+- v1.24.0 remains the baseline until the next release PR.
+- Private sandbox stays private; cloud agent needs explicit repo grant to operate there.
+- No product implementation starts from *this* plan — only a path selection.
+
+## Risks
+
+- Choosing B/D before A leaves learning loop fixture-only in the private sandbox.
+- Without sandbox App access, release closeout rows for private refresh stay Captain-manual.
+
+## Acceptance criteria (for this planning PR)
+
+- [x] Sandbox refresh blocker documented with grant + local commands
+- [ ] Captain selects option A–E (or sequenced backlog)
+- [ ] Follow-up issue + concrete IMPLEMENTATION_PLAN created for that path
 
 ## Autonomy budget
 
-See `.agent/budgets/m19-autonomous-skill-learning.md`.
-
 | Limit | Value |
 |---|---|
-| Max iterations | 8 |
-| Max failed validation cycles | 3 |
-| Max weight-apply ops | 0 |
-| Stop on scope change | true |
+| Iterations | 3 |
+| Wall time | N/A (planning) |
+| Cost | Minimal |
 
-## Approval record
+## Capability planning
 
-| Captain | Decision | Date |
-|---|---|---|
-| loganware | **APPROVED** — decisions #1–#6 locked | 2026-09-03 |
+Artifacts: `.agent/plans/m21-roadmap-options/` (`resolve.json`, `task-graph.json`, `manifests.json`).
 
----
+## Approval Boundary
 
-# M20 — Experience bridge + Captain-gated improvement apply (v1.24.0)
+**Do not implement a new milestone until the Captain picks a path and a concrete
+follow-up plan is APPROVED.**
 
-Issue: [#113](https://github.com/loganware05/captains-compass-cursor/issues/113)
-Branch: `feature/113-m20-experience-bridge`
-Rollback: `rollback/pre-m19-skill-learning` (M19 baseline) until M19 merges; then tag `rollback/pre-m20-experience-bridge`
-
-## Acceptance criteria
-
-1. `./scripts/bridge-learning-experiences.sh --run <learning-run.json>` writes Experiences.
-2. `./scripts/run-skill-learning-loop.sh --record-experiences` attaches an experience-bridge section.
-3. PROVEN still requires `--captain-approved` and ≥2 successful Experiences.
-4. `./scripts/apply-skill-improvement.sh --proposal … --captain-approved` writes an improved draft; does **not** mutate live Skills unless `--apply-live`.
-5. Excluded/meta Skills cannot be live-applied.
-6. `approved_for_execution` remains false.
-
-## Checklist
-
-- [x] Experience bridge module + CLI
-- [x] Optional `--record-experiences` on learning loop
-- [x] PROVEN helper with captain + threshold gates
-- [x] Apply-improvement CLI (draft default; `--apply-live` Captain-only)
-- [x] Tests
-- [x] Docs / ADR / Skill / PR
-
+Reply with: sandbox access/PR URL **and** roadmap option **A / B / C / D / E**.
