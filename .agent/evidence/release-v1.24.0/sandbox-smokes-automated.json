@@ -1,0 +1,59 @@
+{
+  "control_root": "/workspace",
+  "kind": "sandbox-release-smoke-report",
+  "passed": true,
+  "ran_at": "2026-09-03T20:43:04Z",
+  "results": [
+    {
+      "detail": "lity-reviewer.md\n  ok: agent adversarial-reviewer.md\n  ok: agent documentation-agent.md\n  ok: agent compass-evaluator.md\n  ok: agent knowledge-steward.md\n  ok: hooks.json\n  ok: hook secret-protection.sh\n  ok: hook protected-branch.sh\n  ok: hook plan-approval-check.sh\n  ok: hook branch-name-validation.sh\n  ok: hook pre-commit-formatting.sh\n  ok: hook pre-push-tests.sh\n  ok: hook pr-evidence-validation.sh\n  ok: hooks _common.sh\n  ok: .agent/budgets directory\n\nDoctor passed: 0 errors, 0 warning(s)\n",
+      "passed": true,
+      "smoke_id": "doctor-sandbox"
+    },
+    {
+      "detail": "control=1.24.0 sandbox=1.24.0",
+      "passed": true,
+      "smoke_id": "compass-version"
+    },
+    {
+      "detail": "/workspace/docs/evals/SANDBOX_BEHAVIORAL_CHECKLIST.md",
+      "passed": true,
+      "smoke_id": "behavioral-checklist-present"
+    },
+    {
+      "detail": "{\n  \"audit\": {\n    \"batch_id\": \"ingest-d33273871c64\",\n    \"kind\": \"knowledge-ingest\",\n    \"sources\": [\n      \"tests/fixtures/knowledge/procedures/bounded-autonomy-apply/playbook.md\"\n    ],\n    \"item_count\": 1,\n    \"item_ids\": [\n      \"know-proc-bounded-autonomy-apply\"\n    ],\n    \"ingested_at\": \"2026",
+      "passed": true,
+      "smoke_id": "knowledge-ingest-fixtures"
+    },
+    {
+      "detail": "{\n  \"query\": \"matcher routing\",\n  \"mode\": \"vector\",\n  \"results\": []\n}\n",
+      "passed": true,
+      "smoke_id": "pgvector-mock-query"
+    },
+    {
+      "detail": "{\n  \"categorized_path\": \"/workspace/.agent/ti/github-stars-categorized/categorized.json\",\n  \"record_count\": 3,\n  \"trained_from\": 4,\n  \"categories_seen\": [\n    \"backend-library\",\n    \"frontend-ui\",\n    \"ml-data\"\n  ]\n}\n",
+      "passed": true,
+      "smoke_id": "stars-categorize-fixtures"
+    },
+    {
+      "detail": "{\n  \"kind\": \"skill-learning-run\",\n  \"run_id\": \"learning-20260903T204303Z\",\n  \"ran_at\": \"2026-09-03T20:43:03Z\",\n  \"objective\": \"accessible react forms\",\n  \"source\": \"fixtures\",\n  \"top_n\": 1,\n  \"category_filter\": null,\n  \"similarity_threshold\": 0.28,\n  \"approved_for_execution\": false,\n  \"captain_appro",
+      "passed": true,
+      "smoke_id": "skill-learning-loop-fixtures"
+    },
+    {
+      "detail": "{\"count\": 1}",
+      "passed": true,
+      "smoke_id": "notion-live-fixtures"
+    },
+    {
+      "detail": "{\n  \"query\": \"sentence embeddings\",\n  \"provider\": \"huggingface-file\",\n  \"candidates\": [\n    {\n      \"id\": \"hf-sentence-transformers-all-minilm\",\n      \"version\": \"0.1.0\",\n      \"kind\": \"candidate\",\n      \"source\": {\n        \"type\": \"external-candidate\",\n        \"path\": \"sentence-transformers/all-Min",
+      "passed": true,
+      "smoke_id": "hf-file-ti"
+    },
+    {
+      "detail": "{\n  \"proposal\": \"/workspace/.agent/routing/proposals/ctxsel-6454c275631b.json\",\n  \"auto_apply\": false\n}\n",
+      "passed": true,
+      "smoke_id": "context-selection-propose"
+    }
+  ],
+  "sandbox_root": "/tmp/captain-compass-sandbox-v124"
+}

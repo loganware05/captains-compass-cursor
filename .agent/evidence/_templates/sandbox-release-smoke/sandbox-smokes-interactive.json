@@ -1,7 +1,7 @@
 {
   "kind": "sandbox-interactive-smoke-report",
-  "version": "1.22.0",
-  "ran_at": "2026-09-01T00:00:00Z",
+  "version": "X.Y.Z",
+  "ran_at": "YYYY-MM-DDTHH:MM:SSZ",
   "sandbox_root": "/path/to/captain-compass-sandbox",
   "passed": false,
   "checklist_results": [
@@ -12,7 +12,8 @@
     { "item": 5, "smoke_id": "budget-stop", "passed": false, "notes": "" },
     { "item": 6, "smoke_id": "phase-commands", "passed": false, "notes": "" },
     { "item": 7, "smoke_id": "capability-plan", "passed": false, "notes": "" },
-    { "item": 8, "smoke_id": "post-foundation-smokes", "passed": false, "notes": "" }
+    { "item": 8, "smoke_id": "post-foundation-smokes", "passed": false, "notes": "" },
+    { "item": 9, "smoke_id": "skill-learning-loop", "passed": false, "notes": "" }
   ],
   "evidence_paths": []
 }
