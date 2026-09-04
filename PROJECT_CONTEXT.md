@@ -124,5 +124,4 @@ gh auth status
 
 ## Current Priorities
 
-M19–M20 complete on main. Release prep **v1.24.0** (includes skill learning loop +
-Experience bridge). Private sandbox refresh is Captain-local.
+M19–M20 complete. Released as **v1.24.0**. Private sandbox refresh is Captain-local.
