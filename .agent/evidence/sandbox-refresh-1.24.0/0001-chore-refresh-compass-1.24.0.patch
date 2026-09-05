@@ -1,0 +1,277 @@
+From 344c2b25849470446231eae31acf8ced7dff05f2 Mon Sep 17 00:00:00 2001
+From: Cursor Agent <cursoragent@cursor.com>
+Date: Sat, 5 Sep 2026 21:30:14 +0000
+Subject: [PATCH] chore: refresh Captain's Compass to v1.24.0
+
+Bring sandbox from 1.22.0 to 1.24.0 (M19 skill learning loop + M20
+experience bridge / Captain-gated Skill improvement apply).
+---
+ .agent/COMPASS_VERSION                        |   2 +-
+ .../skills/hosted-vector-db/capability.yaml   |  12 ++
+ .cursor/skills/skill-learning-loop/SKILL.md   | 136 ++++++++++++++++++
+ .../skill-learning-loop/capability.yaml       |  37 +++++
+ .cursor/skills/skill-lifecycle/SKILL.md       |   3 +-
+ .../technology-intelligence-live/SKILL.md     |  14 +-
+ 6 files changed, 201 insertions(+), 3 deletions(-)
+ create mode 100644 .cursor/skills/skill-learning-loop/SKILL.md
+ create mode 100644 .cursor/skills/skill-learning-loop/capability.yaml
+
+diff --git a/.agent/COMPASS_VERSION b/.agent/COMPASS_VERSION
+index 57807d6..53cc1a6 100644
+--- a/.agent/COMPASS_VERSION
++++ b/.agent/COMPASS_VERSION
+@@ -1 +1 @@
+-1.22.0
++1.24.0
+diff --git a/.cursor/skills/hosted-vector-db/capability.yaml b/.cursor/skills/hosted-vector-db/capability.yaml
+index 2705a7e..62af295 100644
+--- a/.cursor/skills/hosted-vector-db/capability.yaml
++++ b/.cursor/skills/hosted-vector-db/capability.yaml
+@@ -1,4 +1,14 @@
+ id: hosted-vector-db
++version: "1.0.0"
++kind: skill
++source:
++  type: compass-skill
++  path: .cursor/skills/hosted-vector-db/SKILL.md
++provenance:
++  authored_by: compass
++  inferred: false
++  confidence: 0.85
++lifecycle_stage: AVAILABLE_SKILL
+ categories:
+   - knowledge
+   - infrastructure
+@@ -19,3 +29,5 @@ security_sensitivity: high
+ agent_affinity:
+   - knowledge-steward
+   - implementation-agent
++maturity: available
++confidence: 0.85
+diff --git a/.cursor/skills/skill-learning-loop/SKILL.md b/.cursor/skills/skill-learning-loop/SKILL.md
+new file mode 100644
+index 0000000..9f17f43
+--- /dev/null
++++ b/.cursor/skills/skill-learning-loop/SKILL.md
+@@ -0,0 +1,136 @@
++---
++name: skill-learning-loop
++description: Runs categorized Stars skill learning loop — drafts new Skills and proposes improvements to similar existing Skills (Captain-gated live install)
++---
++
++# Skill Learning Loop
++
++## Use this Skill when
++
++The Captain wants to **learn from categorized GitHub Stars** inside the disposable
++sandbox (or control-repo fixtures) to:
++
++1. Draft **new** Skills from high-signal categorized candidates
++2. **Improve existing** Compass Skills when candidate processes are similar
++3. Capture sandbox-test evidence through `SANDBOX_TESTED`
++4. Stop for **Captain approval** before any live `.cursor/skills/` install
++
++## Prerequisites
++
++- Compass ≥ 1.23.0 (M19)
++- Explicit CLI only — never from hooks or CI defaults
++- Understanding: staging + evidence ≠ auto-install
++
++## Inputs
++
++- Objective text (for ranking)
++- Source: `fixtures` (CI default), `ti-cache`, or `live` (Captain-local `gh`)
++- Optional category filter and similarity threshold
++
++## Procedure
++
++### A. Run the learning loop (staging + evidence)
++
++```bash
++./scripts/run-skill-learning-loop.sh \
++  --source fixtures \
++  --objective "accessible react forms"
++```
++
++Captain-local cache / live Stars:
++
++```bash
++./scripts/refresh-ti-cache.sh
++./scripts/run-skill-learning-loop.sh --source ti-cache --objective "schema validation"
++# or:
++./scripts/run-skill-learning-loop.sh --source live --objective "schema validation"
++```
++
++Artifacts:
++
++- Staging candidates: `.agent/capabilities/candidates/staging/`
++- Unified drafts: `.agent/capabilities/candidates/skill-drafts/<slug>/`
++- Improvement proposals (when similar): `.agent/capabilities/candidates/skill-improvement-proposals/<existing-slug>/`
++- Harness evidence: `.agent/evidence/candidate-sandbox-test/`
++- Learning-run report: `.agent/learning-runs/`
++
++### B. New Skill drafts
++
++When no existing Skill is similar enough, the loop emits `SKILL.md` +
++`capability.yaml` under `skill-drafts/`. Review with the Captain, then promote
++via Skills `candidate-promotion` / `skill-lifecycle` with `--captain-approved`
++before copying into `.cursor/skills/`.
++
++### C. Improve existing Skills when processes are similar
++
++When Jaccard/overlap similarity between the candidate and a live Skill exceeds the
++threshold (default `0.28`), the loop writes a **skill-improvement-proposal**
++targeting that Skill. Proposals never mutate live `SKILL.md`. Meta and
++safety-critical Skills are excluded from automatic targeting.
++
++1. Review the proposal JSON (suggested procedure lessons + provenance).
++2. Captain decides whether to fold lessons into the existing Skill via PR.
++3. Do **not** auto-apply proposals. Use Skill procedure **F** with `--captain-approved`.
++
++### D. Captain gate for live promotion
++
++```bash
++./scripts/promote-candidate.sh --candidate <staging.json> \
++  --stage AVAILABLE_SKILL \
++  --evidence .agent/evidence/candidate-sandbox-test/<id>/sandbox-test.json \
++  --captain-approved \
++  --skill-slug <slug>
++```
++
++Then open a Captain-reviewed PR to install. Never set `approved_for_execution: true`.
++
++### E. Experience bridge → PROVEN (M20)
++
++```bash
++./scripts/run-skill-learning-loop.sh --source fixtures \
++  --objective "accessible react forms" --record-experiences
++
++./scripts/bridge-learning-experiences.sh \
++  --run .agent/learning-runs/<run-id>.json
++
++./scripts/bridge-learning-experiences.sh \
++  --run .agent/learning-runs/<run-id>.json \
++  --promote-proven \
++  --candidate .agent/capabilities/candidates/staging/<id>.json \
++  --skill-slug react-engineering \
++  --evidence .agent/evidence/candidate-sandbox-test/<id>/sandbox-test.json \
++  --captain-approved
++```
++
++PROVEN still needs ≥2 successful Experiences and `--captain-approved`.
++
++### F. Apply an improvement proposal (M20)
++
++```bash
++# Draft only (default)
++./scripts/apply-skill-improvement.sh \
++  --proposal .agent/capabilities/candidates/skill-improvement-proposals/<slug>/from-<id>.json \
++  --captain-approved
++
++# Append learned section to the live Skill (Captain only)
++./scripts/apply-skill-improvement.sh \
++  --proposal .agent/capabilities/candidates/skill-improvement-proposals/<slug>/from-<id>.json \
++  --captain-approved \
++  --apply-live
++```
++
++## Output
++
++- Learning-run JSON report
++- Staging candidates at `SANDBOX_TESTED`
++- New Skill drafts and/or improvement proposals
++- Evidence suitable for promotion gates
++
++## Prohibited actions
++
++- Auto-installing into `.cursor/skills/`
++- Auto-applying improvement proposals to live Skills (M20 apply requires `--captain-approved`)
++- Setting `approved_for_execution: true`
++- Cloning or executing starred/external repositories
++- Running the loop from hooks, workstream close, or CI defaults
++- Advancing past `SANDBOX_TESTED` without `--captain-approved`
+diff --git a/.cursor/skills/skill-learning-loop/capability.yaml b/.cursor/skills/skill-learning-loop/capability.yaml
+new file mode 100644
+index 0000000..0ea8b72
+--- /dev/null
++++ b/.cursor/skills/skill-learning-loop/capability.yaml
+@@ -0,0 +1,37 @@
++id: skill-learning-loop
++version: "1.0.0"
++kind: skill
++source:
++  type: compass-skill
++  path: .cursor/skills/skill-learning-loop/SKILL.md
++provenance:
++  authored_by: compass
++  inferred: false
++  confidence: 0.85
++lifecycle_stage: AVAILABLE_SKILL
++categories: [process, learning, orchestration, promotion]
++tags:
++  - skill-learning
++  - github-stars
++  - categorization
++  - sandbox
++  - improvement-proposals
++capabilities_provided:
++  - skill-learning-loop-orchestration
++  - stars-candidate-staging-export
++  - sandbox-candidate-harness
++  - skill-improvement-proposal
++  - unified-skill-draft-emission
++  - learning-experience-bridge
++  - captain-gated-skill-improvement-apply
++compatible_stacks:
++  - any
++security_sensitivity: high
++agent_affinity:
++  - candidate-promotion
++  - skill-lifecycle
++  - experience-skill-training
++  - technology-intelligence-live
++  - documentation-agent
++maturity: available
++confidence: 0.85
+diff --git a/.cursor/skills/skill-lifecycle/SKILL.md b/.cursor/skills/skill-lifecycle/SKILL.md
+index d5a8a25..859c4b3 100644
+--- a/.cursor/skills/skill-lifecycle/SKILL.md
++++ b/.cursor/skills/skill-lifecycle/SKILL.md
+@@ -66,7 +66,8 @@ For earlier stages (`DISCOVERED → SANDBOX_TESTED`) use Skill `candidate-promot
+    Override threshold with `COMPASS_PROVEN_SUCCESS_THRESHOLD` if needed.
+ 
+ 5. Optional training draft from Experience: Skill `experience-skill-training`
+-   (`./scripts/train-skill-from-experience.sh`).
++   (`./scripts/train-skill-from-experience.sh`). Learning-run Experiences: Skill
++   `skill-learning-loop` (`bridge-learning-experiences.sh`).
+ 6. Re-run `./scripts/compile-capability-registry.sh` after any live Skill PR merges.
+ 
+ ## Output
+diff --git a/.cursor/skills/technology-intelligence-live/SKILL.md b/.cursor/skills/technology-intelligence-live/SKILL.md
+index 4e83f50..714a6c7 100644
+--- a/.cursor/skills/technology-intelligence-live/SKILL.md
++++ b/.cursor/skills/technology-intelligence-live/SKILL.md
+@@ -79,7 +79,19 @@ during capability planning — not offline fixtures and not CI defaults.
+      ./scripts/query-technology-intelligence.sh --query "react forms"
+    ```
+ 
+-11. **Live Hugging Face Hub TI** (Captain local — Hub models API):
++11. **Skill learning loop** (M19 — staging + harness + drafts / improvement proposals):
++
++   ```bash
++   ./scripts/run-skill-learning-loop.sh \
++     --source fixtures \
++     --objective "accessible react forms"
++   ```
++
++   Review drafts under `.agent/capabilities/candidates/skill-drafts/` and
++   improvement proposals under `skill-improvement-proposals/`. Live install still
++   requires Captain approval (`skill-learning-loop` Skill).
++
++12. **Live Hugging Face Hub TI** (Captain local — Hub models API):
+ 
+    ```bash
+    COMPASS_TI_PROVIDER=huggingface-hub \
+-- 
+2.43.0
+

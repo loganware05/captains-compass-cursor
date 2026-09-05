@@ -22,10 +22,10 @@
 
 ## Next
 
-1. **Private sandbox refresh to 1.24.0** — blocked for cloud agent (404). Captain: grant GitHub App access to `captain-compass-sandbox` **or** open the refresh PR locally and paste the URL.
+1. **Sandbox refresh to 1.24.0** — local update+doctor+commit done (`chore/refresh-compass-1.24.0` @ `344c2b2`); **push still 403** for `cursor[bot]`. Captain: grant Cursor GitHub App **write** on `captain-compass-sandbox` (not just public), **or** apply patch `.agent/evidence/sandbox-refresh-1.24.0/` and open the PR.
 2. **Captain picks M21 path** (see `IMPLEMENTATION_PLAN.md` options A–E).
 3. Hygiene: close stale shipped issue [#50](https://github.com/loganware05/captains-compass-cursor/issues/50) (M4 / v1.8.0 already shipped).
 
 ## Blockers
 
-Private sandbox `loganware05/captain-compass-sandbox` is not in the Cursor GitHub App installation for this environment (control repo only). Cannot open the sandbox refresh PR from this agent until access is granted.
+Sandbox repo is readable (public) but **not** in the Cursor GitHub App installation with write — `git push` returns `Permission denied to cursor[bot]`. Need App write access (or Captain-local push of ready commit/patch).

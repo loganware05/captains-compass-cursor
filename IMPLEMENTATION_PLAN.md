@@ -19,31 +19,36 @@
 
 M19–M20 shipped as **v1.24.0** (skill learning loop + Experience bridge +
 Captain-gated Skill improvement apply). There is no locked next milestone.
-Private sandbox refresh to 1.24.0 is still pending because this cloud agent
-cannot access `loganware05/captain-compass-sandbox` (GitHub App installation
-is control-repo only).
+Sandbox refresh to 1.24.0 is **prepared** (update + doctor + commit) but **not
+pushed** — GitHub App can read the now-public sandbox, yet `cursor[bot]` has no
+write permission (`git push` → 403). Installation repos remain control-only.
 
 ## Immediate unblock (sandbox refresh — not a product change)
 
-**Blocked here:** GitHub App / environment repos = `captains-compass-cursor` only.
+**Done locally:** `1.22.0 → 1.24.0`, doctor green, 21/21 tests, commit
+`344c2b2` on branch `chore/refresh-compass-1.24.0`, patch under
+`.agent/evidence/sandbox-refresh-1.24.0/`.
+
+**Still blocked:** push / open PR (need write).
 
 **Captain options (pick one):**
 
-1. **Grant access** — add `loganware05/captain-compass-sandbox` to Cursor GitHub
-   App repository access + this Cloud Agent environment repos, then reply so the
-   agent can clone, `update.sh`, doctor, and open the refresh PR.
-2. **Local refresh** — run:
+1. **Grant write** — GitHub → Applications → Cursor → Configure → add
+   `loganware05/captain-compass-sandbox` with write; add it to this Cloud Agent
+   environment repos; reply so the agent can push and open the PR.
+2. **Captain push** — from a clone with your credentials:
 
 ```bash
-cd /path/to/captains-compass-cursor && git checkout main && git pull
-./scripts/update.sh /path/to/captain-compass-sandbox
-./scripts/doctor.sh /path/to/captain-compass-sandbox
 cd /path/to/captain-compass-sandbox
+git fetch origin
+# Option 2a: apply the ready patch from control repo
 git checkout -b chore/refresh-compass-1.24.0
-git add -A && git commit -m "chore: refresh Captain Compass to 1.24.0"
+git am /path/to/captains-compass-cursor/.agent/evidence/sandbox-refresh-1.24.0/0001-chore-refresh-compass-1.24.0.patch
+# Option 2b: re-run update from control main
+# /path/to/captains-compass-cursor/scripts/update.sh .
 git push -u origin HEAD
-gh pr create --title "chore: refresh Captain Compass to 1.24.0" \
-  --body "Refresh private sandbox to Compass v1.24.0 (M19/M20)."
+gh pr create --title "chore: refresh Captain's Compass to v1.24.0" \
+  --body "Refresh sandbox 1.22.0 → 1.24.0 (M19/M20). Doctor green; 21/21 tests."
 ```
 
 Paste the sandbox PR URL back so control-repo validation docs can be updated.
