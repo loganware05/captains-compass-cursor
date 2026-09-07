@@ -1,16 +1,17 @@
 # Sandbox refresh — Compass v1.24.0
 
-Prepared 2026-09-05 by cloud agent after sandbox became publicly readable.
+Prepared by cloud agent. Push blocked for `cursor[bot]` until Cursor GitHub App
+has write on `loganware05/captain-compass-sandbox`.
 
 | Item | Value |
 |---|---|
 | From | 1.22.0 |
 | To | 1.24.0 |
 | Branch | `chore/refresh-compass-1.24.0` |
-| Commit | `344c2b25849470446231eae31acf8ced7dff05f2` |
+| Commit | `a9a7f0c571501bb188a57f19e245ac154bddae73` |
 | Doctor | Pass (see `doctor.txt`) |
 | Tests | 21/21 (see `npm-test.txt`) |
-| Push | **Blocked** — `Permission denied to cursor[bot]` (App installation is control-repo only) |
+| Push | **Blocked** — Permission denied to cursor[bot] |
 
 ## Apply (Captain)
 
@@ -24,4 +25,5 @@ gh pr create --title "chore: refresh Captain's Compass to v1.24.0" \
   --body "Refresh sandbox 1.22.0 → 1.24.0 (M19/M20). Doctor green; 21/21 tests."
 ```
 
-Or grant Cursor GitHub App **write** on `loganware05/captain-compass-sandbox` and ask the agent to push.
+Or grant Cursor GitHub App **write** on the sandbox + add it to the Cloud Agent
+environment repos, then ask the agent to push.
