@@ -1,0 +1,10 @@
+{
+  "event_id": "lin-fixture-1",
+  "event_type": "objective",
+  "project": "NorthStar",
+  "issue": "NS-21",
+  "title": "M21 parent initiative",
+  "status": "Backlog",
+  "actor_id": "captain-linear",
+  "product_name": "Captains Compass"
+}

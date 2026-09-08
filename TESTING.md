@@ -92,6 +92,16 @@ Skill learning loop (M19 — fixtures default; ti-cache/live Captain-local):
 ./scripts/apply-skill-improvement.sh --proposal path/to/proposal.json --captain-approved
 ```
 
+NorthStar connected routine (M21 — fixture adapters; no live credentials):
+
+```bash
+./scripts/run-northstar-routine.sh --demo
+./scripts/run-northstar-routine.sh --demo --approve --advance-to-review
+./scripts/run-northstar-routine.sh --event tests/fixtures/northstar/slack-objective.json --provider slack
+./scripts/reconcile-northstar-run.sh --run .agent/evidence/<run_id>/run.json
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m21_northstar -v
+```
+
 Persistent-role proposal (staging + PR only):
 
 ```bash

@@ -1,4 +1,8 @@
-# GitHub Integration (Stage 1)
+# GitHub Integration (Stage 1 / NorthStar authority)
+
+**NorthStar** (formerly Captain's Compass) uses GitHub as the engineering and
+approval source of truth. Slack and Linear may record intent; they cannot
+independently authorize Cursor execution.
 
 Captain's Compass Stage 1 enables issue and pull-request workflows without automatic merges.
 

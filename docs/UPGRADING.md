@@ -1,4 +1,8 @@
-# Upgrading Captain's Compass
+# Upgrading NorthStar (Captain's Compass)
+
+> **Product name:** **NorthStar** is canonical from v1.25.0. Captain's Compass
+> remains a compatibility alias. Repository slug `captains-compass-cursor` and
+> machine paths (`.agent/`, `.cursor/`, Skill IDs, env vars) stay stable.
 
 ## How version selection works
 

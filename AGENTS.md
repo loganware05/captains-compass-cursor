@@ -1,4 +1,7 @@
-# Captain's Compass Agent Instructions
+# NorthStar Agent Instructions
+
+> **NorthStar** is the canonical product name (formerly Captain's Compass).
+> Governance terms **Captain** and **First Mate** are unchanged.
 
 ## Authority
 

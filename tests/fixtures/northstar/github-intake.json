@@ -1,0 +1,13 @@
+{
+  "event_id": "gh-fixture-1",
+  "event_type": "objective",
+  "delivery_id": "gh-fixture-1",
+  "repository": "loganware05/captains-compass-cursor",
+  "issue": "local/m21-northstar-connected-operations",
+  "label": "northstar",
+  "intake": true,
+  "title": "NorthStar M21",
+  "body": "Connected operations",
+  "actor_id": "captain-github",
+  "product_name": "NorthStar"
+}

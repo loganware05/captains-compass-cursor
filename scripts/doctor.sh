@@ -108,6 +108,7 @@ SKILLS=(
   hosted-vector-db
   package-registry-ti
   skill-learning-loop
+  northstar-connected-routine
 )
 
 for s in "${SKILLS[@]}"; do

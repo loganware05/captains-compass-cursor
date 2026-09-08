@@ -1,0 +1,10 @@
+{
+  "event_id": "cur-fixture-1",
+  "event_type": "checkpoint",
+  "agent_id": "bc-05d4594d-fac7-4378-b595-c20e3c006044",
+  "checkpoint": "validation-complete",
+  "evidence_path": ".agent/evidence/fixture",
+  "state_hint": "REVIEW_READY",
+  "actor_id": "bc-05d4594d-fac7-4378-b595-c20e3c006044",
+  "role": "agent"
+}

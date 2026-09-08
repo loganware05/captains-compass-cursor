@@ -1,5 +1,28 @@
 # Decisions
 
+## ADR-037: NorthStar identity and connected operating routine (v1.25.0 M21)
+
+- **Status:** Accepted
+- **Date:** 2026-09-08
+- **Context:** After M20, the Captain needs a single product identity (NorthStar)
+  and a fail-closed routine that coordinates Slack, Linear, GitHub, and Cursor
+  without letting external events bypass approval.
+- **Decision:**
+  1. Canonical product name is **NorthStar**; Captain's Compass remains a
+     compatibility alias via one branding registry (`orchestrator/branding.py`).
+  2. GitHub + approved plan digest are the engineering/approval source of truth.
+     Slack is intake/notify; Linear is a ledger; Cursor is the execution runtime.
+  3. Ship fixture-backed adapters, state machine, idempotency, reconcile, and
+     CLIs under `orchestrator/integrations/` + `scripts/run-northstar-routine.sh`.
+  4. Only Cursor agent `bc-05d4594d-fac7-4378-b595-c20e3c006044` may supply M21
+     integration checkpoints (`BLOCKED_AGENT_IDENTITY` otherwise).
+  5. No automatic merge, release, live Skill install, or destructive production
+     action. Missing GitHub stops the routine; other connectors follow documented
+     fallbacks.
+- **Consequences:** New human-facing output uses NorthStar; historical artifacts
+  and machine IDs stay stable. Connected routine is testable in CI without live
+  credentials.
+
 ## ADR-036: Experience bridge and Captain-gated Skill improvement apply (v1.24.0 M20)
 
 - **Status:** Accepted

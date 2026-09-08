@@ -1,7 +1,7 @@
-# Claude Code adapter (Captain's Compass)
+# Claude Code adapter (NorthStar)
 
-This repository uses **Captain's Compass**. Canonical agent policy is in
-[`AGENTS.md`](AGENTS.md) — read and follow it.
+This repository uses **NorthStar** (formerly Captain's Compass). Canonical agent
+policy is in [`AGENTS.md`](AGENTS.md) — read and follow it.
 
 ## Required startup
 
