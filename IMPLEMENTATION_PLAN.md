@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED — IMPLEMENTATION COMPLETE (awaiting merge)** |
+| Status | **COMPLETE** — released as v1.25.0 |
 | Plan ID | `m21-northstar-connected-operations` |
 | Product | **NorthStar** |
 | Former name | Captain's Compass |
@@ -12,7 +12,7 @@
 | Baseline | `v1.24.0` at `13b5879475a7288958ca7fe60b0fc7c0b71ad984` |
 | Integration runtime | Cursor cloud agent `bc-05d4594d-fac7-4378-b595-c20e3c006044` |
 | Prepared | 2026-09-08 |
-| Start gate | Open — Captain approved 2026-09-08 |
+| Start gate | Closed — merged #121; tagged v1.25.0 |
 | Issue | `local/m21-northstar-connected-operations` (GitHub issue create blocked on read-only `gh`) |
 | Branch | `cursor/m21-northstar-connected-operations-6044` |
 | Rollback | `rollback/pre-m21-northstar` (`13b5879`) |
