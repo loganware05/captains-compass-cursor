@@ -124,7 +124,7 @@ gh auth status
 
 ## Current Priorities
 
-M19–M20 complete. Released as **v1.24.0**. Private sandbox refresh to 1.24.0
-opened as [sandbox#40](https://github.com/loganware05/captain-compass-sandbox/pull/40).
-Post-M20 roadmap options in `IMPLEMENTATION_PLAN.md` (`m21-roadmap-options`)
-are parked; Captain drafts M21 separately.
+M19–M20 complete. Released as **v1.24.0**. Sandbox refresh
+[sandbox#40](https://github.com/loganware05/captain-compass-sandbox/pull/40) merged.
+**M21 NorthStar connected operations** plan is in `IMPLEMENTATION_PLAN.md`
+(`m21-northstar-connected-operations`) at **AWAITING CAPTAIN APPROVAL**.
