@@ -124,4 +124,6 @@ gh auth status
 
 ## Current Priorities
 
-M19–M20 complete. Released as **v1.24.0**. Private sandbox refresh is Captain-local.
+M19–M20 complete. Released as **v1.24.0**. Private sandbox refresh to 1.24.0
+pending (cloud agent lacks sandbox repo access). Post-M20 roadmap options in
+`IMPLEMENTATION_PLAN.md` (`m21-roadmap-options`) await Captain path selection.

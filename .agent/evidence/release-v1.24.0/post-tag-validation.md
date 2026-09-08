@@ -7,7 +7,7 @@
 | Automated sandbox smokes | Pass — `sandbox-smokes-automated.json` |
 | Interactive smoke attestation | Pass — `sandbox-smokes-interactive.json` (item 9 fixture path; items 1–8 carry-forward) |
 | Smoke evidence gate | Pass — `validate-sandbox-release-smokes.sh --version 1.24.0` |
-| Private sandbox refresh | **Pending Captain** — `captain-compass-sandbox` not reachable from cloud agent (404) |
+| Private sandbox refresh | **Pending push** — local refresh prepared (`a9a7f0c`, doctor green); `cursor[bot]` push → 403 until GitHub App write access |
 | Doctor on disposable sandbox | Pass — `/tmp/captain-compass-sandbox-v124` @ 1.24.0 |
 
 Date: 2026-09-04
