@@ -1,0 +1,11 @@
+{
+  "event_id": "slack-fixture-1",
+  "event_type": "objective",
+  "ts": "1700000000.1",
+  "thread_ts": "1700000000.1",
+  "channel": "northstar",
+  "text": "@NorthStar implement connected operations",
+  "mentions": ["NorthStar"],
+  "user_id": "U-fixture",
+  "product_name": "Captain's Compass"
+}

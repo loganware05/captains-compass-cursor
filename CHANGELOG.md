@@ -2,6 +2,26 @@
 
 ## Unreleased
 
+## 1.25.0 — 2026-09-08
+
+### Added
+
+- **NorthStar** product identity with branding registry and legacy Captain's Compass aliases (`orchestrator/branding.py`)
+- Connected operating routine across Slack, Linear, GitHub, and Cursor (`orchestrator/integrations/`)
+- Fixture adapters for all four providers (no live credentials in CI)
+- State machine, idempotency store, reconcile helpers, and work-packet dispatch with M21 agent identity enforcement
+- Scripts `run-northstar-routine.sh`, `reconcile-northstar-run.sh`
+- Skill `northstar-connected-routine`
+- Docs `docs/integrations/slack.md` (+ GitHub/Linear NorthStar authority notes)
+- ADR-037
+- Fixture pack `tests/fixtures/northstar/` + `tests/orchestrator/test_m21_northstar.py`
+
+### Changed
+
+- VERSION `1.25.0` (M21 NorthStar connected operations)
+- Doctor skill list includes `northstar-connected-routine`
+- Human-facing new output prefers NorthStar; machine IDs (repo slug, Skill paths, env vars) remain stable
+
 ## 1.24.0 — 2026-09-03
 
 ### Added

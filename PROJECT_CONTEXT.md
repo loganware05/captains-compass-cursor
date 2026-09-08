@@ -2,9 +2,11 @@
 
 ## Product Summary
 
-Captain's Compass is a reusable Cursor IDE engineering workflow template.
-It is a control repository: it owns rules, Skills, subagents, hooks, document
-templates, and installation scripts. Product application code does not live here.
+Captain's Compass is a reusable Cursor IDE engineering workflow template,
+rebranded for M21+ as **NorthStar** (Captain's Compass remains the compatibility
+alias). It is a control repository: it owns rules, Skills, subagents, hooks,
+document templates, and installation scripts. Product application code does not
+live here.
 
 ## Intended Users
 
@@ -49,7 +51,7 @@ agentic engineering process across multiple product repositories.
 
 1. AGENTS.md operating contract
 2. Five always-applied core rules
-3. Thirty-nine Skills (including skill-learning-loop, embedding-providers, package-registry-ti, external-knowledge-ingest, skill-lifecycle, procedure-playbooks, knowledge-steward, technology-intelligence-live, persistent-role-promotion, bounded-autonomy, compass-evaluator, experience-routing, capability-planning, execution-telemetry, candidate-promotion, experience-skill-training)
+3. Forty Skills (including northstar-connected-routine, skill-learning-loop, embedding-providers, package-registry-ti, external-knowledge-ingest, skill-lifecycle, procedure-playbooks, knowledge-steward, technology-intelligence-live, persistent-role-promotion, bounded-autonomy, compass-evaluator, experience-routing, capability-planning, execution-telemetry, candidate-promotion, experience-skill-training)
 4. Ten specialist subagents (including `compass-evaluator`, `knowledge-steward`)
 5. Seven safety hooks (three critical fail-closed; four soft fail-open with multi-path skips)
 6. Six Cursor phase commands under `.cursor/commands/`
@@ -124,7 +126,6 @@ gh auth status
 
 ## Current Priorities
 
-M19–M20 complete. Released as **v1.24.0**. Sandbox refresh
+M21 NorthStar connected operations implementing toward **v1.25.0**.
+Prior: M19–M20 shipped as **v1.24.0**; sandbox refresh
 [sandbox#40](https://github.com/loganware05/captain-compass-sandbox/pull/40) merged.
-**M21 NorthStar connected operations** plan is in `IMPLEMENTATION_PLAN.md`
-(`m21-northstar-connected-operations`) at **AWAITING CAPTAIN APPROVAL**.

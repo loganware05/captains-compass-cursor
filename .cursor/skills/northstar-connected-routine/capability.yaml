@@ -1,0 +1,36 @@
+id: northstar-connected-routine
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/northstar-connected-routine/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, orchestration, integrations]
+tags:
+  - northstar
+  - slack
+  - linear
+  - github
+  - cursor
+  - connected-routine
+capabilities_provided:
+  - northstar-connected-routine
+  - multi-provider-event-normalization
+  - fail-closed-approval-gate
+  - connector-reconciliation
+  - cursor-work-packet-dispatch
+compatible_stacks:
+  - any
+security_sensitivity: high
+agent_affinity:
+  - implementation-planning
+  - github-integration
+  - linear-integration
+  - autonomy-budget
+  - testing-validation
+maturity: available
+confidence: 0.85

@@ -108,6 +108,7 @@ SKILLS=(
   hosted-vector-db
   package-registry-ti
   skill-learning-loop
+  northstar-connected-routine
 )
 
 for s in "${SKILLS[@]}"; do
@@ -334,6 +335,16 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "validate-sandbox-release-smokes.sh"
   else
     fail "missing executable scripts/validate-sandbox-release-smokes.sh"
+  fi
+  if [[ -x "$ROOT/scripts/run-northstar-routine.sh" ]]; then
+    ok "run-northstar-routine.sh"
+  else
+    fail "missing executable scripts/run-northstar-routine.sh"
+  fi
+  if [[ -x "$ROOT/scripts/reconcile-northstar-run.sh" ]]; then
+    ok "reconcile-northstar-run.sh"
+  else
+    fail "missing executable scripts/reconcile-northstar-run.sh"
   fi
   if [[ -f "$ROOT/orchestrator/release/sandbox_smokes.py" ]]; then
     ok "sandbox release smokes module"
