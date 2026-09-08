@@ -12,7 +12,7 @@ from orchestrator.integrations.adapters.cursor import CursorAdapter
 from orchestrator.integrations.adapters.github import GitHubAdapter
 from orchestrator.integrations.adapters.linear import LinearAdapter
 from orchestrator.integrations.adapters.slack import SlackAdapter
-from orchestrator.integrations.events import sha256_hex
+from orchestrator.integrations.events import IdempotencyStore, sha256_hex
 from orchestrator.integrations.reconcile import persist_run, reconcile_run
 from orchestrator.integrations.state_machine import (
     StateTransitionError,
@@ -77,6 +77,10 @@ def run_northstar_routine(
     evidence.mkdir(parents=True, exist_ok=True)
     store = evidence / "connectors"
     store.mkdir(parents=True, exist_ok=True)
+    # Repo-global idempotency so replays cannot fork across run_ids.
+    global_idem = IdempotencyStore(
+        repo_root / ".agent" / "northstar" / "idempotency.json"
+    )
 
     if not connected.get("github", True):
         raise NorthStarRoutineError("missing GitHub stops the entire engineering routine")
@@ -90,7 +94,7 @@ def run_northstar_routine(
     cursor = CursorAdapter(store_dir=store / "cursor", connected=connected.get("cursor", True))
 
     event = primary.normalize_event(raw_event)
-    if not primary.deduplicate(event["event_id"], event["idempotency_key"]):
+    if not global_idem.remember(event["event_id"], event["idempotency_key"]):
         return {
             "ok": True,
             "duplicate": True,
@@ -195,10 +199,13 @@ def run_northstar_routine(
             {
                 "event_id": f"chk-{rid}",
                 "agent_id": cursor.allowed_agent_id,
+                "run_id": rid,
+                "packet_digest": packet.get("packet_digest"),
                 "checkpoint": "validation-complete",
                 "evidence_path": str(evidence),
                 "state_hint": "REVIEW_READY",
-            }
+            },
+            run=run,
         )
     except StateTransitionError as exc:
         run = transition_run(

@@ -18,19 +18,31 @@ _NORMAL_EDGES: dict[str, frozenset[str]] = {
         {"DISPATCHED", "BLOCKED_APPROVAL", "CANCELLED", "SUPERSEDED"}
     ),
     "DISPATCHED": frozenset(
-        {"IN_PROGRESS", "BLOCKED_AGENT_IDENTITY", "BLOCKED_CONNECTION", "CANCELLED"}
+        {
+            "IN_PROGRESS",
+            "BLOCKED_AGENT_IDENTITY",
+            "BLOCKED_CONNECTION",
+            "CANCELLED",
+        }
     ),
     "IN_PROGRESS": frozenset(
         {
             "VALIDATING",
             "BLOCKED_SCOPE",
+            "BLOCKED_AGENT_IDENTITY",
             "BUDGET_STOPPED",
             "VALIDATION_FAILED",
             "CANCELLED",
         }
     ),
     "VALIDATING": frozenset(
-        {"REVIEW_READY", "VALIDATION_FAILED", "BUDGET_STOPPED", "CANCELLED"}
+        {
+            "REVIEW_READY",
+            "VALIDATION_FAILED",
+            "BUDGET_STOPPED",
+            "BLOCKED_AGENT_IDENTITY",
+            "CANCELLED",
+        }
     ),
     "REVIEW_READY": frozenset({"AWAITING_MERGE", "VALIDATION_FAILED", "CANCELLED"}),
     "AWAITING_MERGE": frozenset({"COMPLETED", "CANCELLED", "SUPERSEDED"}),
@@ -121,6 +133,18 @@ def transition_run(
             f"illegal transition {current} -> {next_state}; allowed={sorted(allowed)}"
         )
 
+    if next_state == "DISPATCHED":
+        if not run.get("plan_approved"):
+            raise StateTransitionError("DISPATCHED requires plan_approved=True")
+        if not run.get("github_approval_ref"):
+            raise StateTransitionError("DISPATCHED requires github_approval_ref")
+        if not str(run.get("github_approval_ref", "")).startswith("github:"):
+            raise StateTransitionError(
+                "DISPATCHED requires github_approval_ref starting with 'github:'"
+            )
+        if plan_digest is None and not run.get("plan_digest"):
+            raise StateTransitionError("DISPATCHED requires plan_digest")
+
     now = utc_now()
     entry = {
         "at": now,
@@ -171,6 +195,10 @@ def mark_plan_approved(
         raise StateTransitionError("canonical approval requires verified_role=captain")
     if not github_approval_ref:
         raise StateTransitionError("canonical approval requires github_approval_ref")
+    if not str(github_approval_ref).startswith("github:"):
+        raise StateTransitionError(
+            "canonical approval ref must start with 'github:' (issue/PR record)"
+        )
     run = dict(run)
     run["plan_id"] = plan_id
     run["plan_digest"] = plan_digest

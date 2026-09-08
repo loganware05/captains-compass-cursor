@@ -360,25 +360,25 @@ Each provider adapter implements:
 
 ## Acceptance criteria
 
-- [ ] All new human-facing output uses NorthStar.
-- [ ] Legacy product names resolve to the same NorthStar project and run.
-- [ ] Rebranding cannot duplicate Slack threads, Linear issues, GitHub work, or Cursor runs.
-- [ ] Existing installations and historical identifiers continue to work.
-- [ ] One objective creates exactly one correlated run.
-- [ ] Duplicate and replayed events have no duplicate side effects.
-- [ ] No Cursor execution occurs before canonical Captain approval.
-- [ ] Only cloud agent `bc-05d4594d-fac7-4378-b595-c20e3c006044` is accepted for M21 integration checkpoints.
-- [ ] Cursor can resume entirely from the approved work packet.
-- [ ] GitHub remains the engineering and approval source of truth.
-- [ ] Linear dependencies and statuses reconcile after retries and out-of-order events.
-- [ ] Slack messages are threaded and transition-only.
-- [ ] Connector loss follows the documented fallback policy.
-- [ ] Unit tests cover branding, normalization, identity, deduplication, transitions, approvals, retries, and redaction.
-- [ ] Integration tests use recorded fixtures for all four providers.
-- [ ] An end-to-end fixture run reaches `REVIEW_READY` with complete evidence.
-- [ ] Security and adversarial review pass.
-- [ ] `./scripts/doctor.sh` and `./tests/run.sh` pass.
-- [ ] Upgrade, rollback, testing, decision, progress, and release documentation are updated.
+- [x] All new human-facing output uses NorthStar.
+- [x] Legacy product names resolve to the same NorthStar project and run.
+- [x] Rebranding cannot duplicate Slack threads, Linear issues, GitHub work, or Cursor runs.
+- [x] Existing installations and historical identifiers continue to work.
+- [x] One objective creates exactly one correlated run.
+- [x] Duplicate and replayed events have no duplicate side effects.
+- [x] No Cursor execution occurs before canonical Captain approval.
+- [x] Only cloud agent `bc-05d4594d-fac7-4378-b595-c20e3c006044` is accepted for M21 integration checkpoints.
+- [x] Cursor can resume entirely from the approved work packet.
+- [x] GitHub remains the engineering and approval source of truth.
+- [x] Linear dependencies and statuses reconcile after retries and out-of-order events.
+- [x] Slack messages are threaded and transition-only.
+- [x] Connector loss follows the documented fallback policy.
+- [x] Unit tests cover branding, normalization, identity, deduplication, transitions, approvals, retries, and redaction.
+- [x] Integration tests use recorded fixtures for all four providers.
+- [x] An end-to-end fixture run reaches `REVIEW_READY` with complete evidence.
+- [x] Security and adversarial review pass.
+- [x] `./scripts/doctor.sh` and `./tests/run.sh` pass.
+- [x] Upgrade, rollback, testing, decision, progress, and release documentation are updated.
 
 ## Recommended defaults awaiting approval
 

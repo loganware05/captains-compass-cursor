@@ -83,4 +83,8 @@ class GitHubAdapter(FixtureAdapterBase):
         return updated
 
     def verify_plan_digest(self, run: dict[str, Any], expected_digest: str) -> bool:
-        return bool(run.get("plan_approved")) and run.get("plan_digest") == expected_digest
+        return (
+            bool(run.get("plan_approved"))
+            and run.get("plan_digest") == expected_digest
+            and str(run.get("github_approval_ref") or "").startswith("github:")
+        )

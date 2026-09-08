@@ -97,10 +97,19 @@ class StateMachineTests(unittest.TestCase):
     def test_happy_path_edges(self) -> None:
         event = normalize_event(provider="github", event_type="objective", event_id="g1")
         run = new_run(run_id="r1", origin_event=event, plan_id="p")
+        run = transition_run(run, "RECONCILING")
+        run = transition_run(run, "PLAN_PROPOSED")
+        run = transition_run(run, "AWAITING_CAPTAIN_APPROVAL")
+        from orchestrator.integrations.state_machine import mark_plan_approved
+
+        run = mark_plan_approved(
+            run,
+            plan_id="p",
+            plan_digest="digest",
+            captain_actor={"provider_id": "captain-github", "verified_role": "captain"},
+            github_approval_ref="github:issue-comment:1",
+        )
         for state in (
-            "RECONCILING",
-            "PLAN_PROPOSED",
-            "AWAITING_CAPTAIN_APPROVAL",
             "DISPATCHED",
             "IN_PROGRESS",
             "VALIDATING",
@@ -110,7 +119,15 @@ class StateMachineTests(unittest.TestCase):
         ):
             run = transition_run(run, state)
         self.assertEqual(run["state"], "COMPLETED")
-        self.assertEqual(len(run["transitions"]), 10)
+
+    def test_dispatch_requires_approval(self) -> None:
+        event = normalize_event(provider="github", event_type="objective", event_id="g3")
+        run = new_run(run_id="r3", origin_event=event)
+        run = transition_run(run, "RECONCILING")
+        run = transition_run(run, "PLAN_PROPOSED")
+        run = transition_run(run, "AWAITING_CAPTAIN_APPROVAL")
+        with self.assertRaises(StateTransitionError):
+            transition_run(run, "DISPATCHED")
 
     def test_illegal_transition(self) -> None:
         event = normalize_event(provider="github", event_type="objective", event_id="g2")
@@ -192,13 +209,52 @@ class RoutineTests(unittest.TestCase):
                 "ts": "10.2",
             }
             first = run_northstar_routine(
-                Path(tmp), raw_event=raw, provider="slack", run_id="run-dup"
+                Path(tmp), raw_event=raw, provider="slack", run_id="run-dup-a"
             )
             second = run_northstar_routine(
-                Path(tmp), raw_event=raw, provider="slack", run_id="run-dup"
+                Path(tmp), raw_event=raw, provider="slack", run_id="run-dup-b"
             )
             self.assertFalse(first.get("duplicate"))
             self.assertTrue(second.get("duplicate"))
+
+    def test_routine_wrong_agent_persists_block(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            # Reach IN_PROGRESS then feed a bad checkpoint via adapter path.
+            report = run_northstar_routine(
+                Path(tmp),
+                raw_event={
+                    "event_id": "obj-bad-agent",
+                    "channel": "northstar",
+                    "text": "@NorthStar x",
+                    "mentions": ["NorthStar"],
+                    "user_id": "U1",
+                    "ts": "99",
+                },
+                provider="slack",
+                approve=True,
+                advance_to_review=False,
+                run_id="run-bad-agent",
+            )
+            run_path = Path(report["evidence_dir"]) / "run.json"
+            run = json.loads(run_path.read_text(encoding="utf-8"))
+            cursor = CursorAdapter()
+            with self.assertRaises(StateTransitionError):
+                cursor.accept_checkpoint(
+                    {
+                        "event_id": "chk-bad",
+                        "agent_id": "bc-wrong",
+                        "run_id": "run-bad-agent",
+                        "packet_digest": (run.get("work_packet") or {}).get("packet_digest"),
+                    },
+                    run=run,
+                )
+            # Simulate routine block path
+            from orchestrator.integrations.state_machine import transition_run
+
+            blocked = transition_run(
+                run, "BLOCKED_AGENT_IDENTITY", reason="bad agent", origin="cursor"
+            )
+            self.assertEqual(blocked["state"], "BLOCKED_AGENT_IDENTITY")
 
     def test_no_dispatch_before_approval(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

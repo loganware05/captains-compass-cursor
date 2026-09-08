@@ -66,6 +66,12 @@ class CursorAdapter(FixtureAdapterBase):
         return packet
 
     def dispatch(self, run: dict[str, Any], work_packet: dict[str, Any]) -> dict[str, Any]:
+        if not run.get("plan_approved"):
+            raise StateTransitionError("cannot dispatch before canonical approval")
+        if not str(run.get("github_approval_ref") or "").startswith("github:"):
+            raise StateTransitionError("dispatch requires github_approval_ref")
+        if work_packet.get("plan_digest") != run.get("plan_digest"):
+            raise StateTransitionError("work packet plan_digest mismatch")
         if not self.connected:
             # Missing Cursor: leave launch-ready packet and stop.
             return {
@@ -83,12 +89,29 @@ class CursorAdapter(FixtureAdapterBase):
         self._write_json(f"dispatch-{run.get('run_id')}.json", record)
         return {"ok": True, "dispatch": record, "work_packet": work_packet}
 
-    def accept_checkpoint(self, raw_checkpoint: dict[str, Any]) -> dict[str, Any]:
+    def accept_checkpoint(
+        self,
+        raw_checkpoint: dict[str, Any],
+        *,
+        run: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
         agent_id = raw_checkpoint.get("agent_id")
         if agent_id != self.allowed_agent_id:
             raise StateTransitionError(
                 f"BLOCKED_AGENT_IDENTITY: expected {self.allowed_agent_id}, got {agent_id!r}"
             )
+        if run is not None:
+            state = run.get("state")
+            if state not in {"DISPATCHED", "IN_PROGRESS", "VALIDATING"}:
+                raise StateTransitionError(
+                    f"checkpoint rejected for run state {state!r}"
+                )
+            if raw_checkpoint.get("run_id") != run.get("run_id"):
+                raise StateTransitionError("checkpoint requires matching run_id")
+            packet = run.get("work_packet") or {}
+            expected_digest = packet.get("packet_digest")
+            if not expected_digest or raw_checkpoint.get("packet_digest") != expected_digest:
+                raise StateTransitionError("checkpoint packet_digest mismatch")
         event = self.normalize_event(
             {
                 **raw_checkpoint,
