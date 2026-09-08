@@ -270,7 +270,7 @@ Control mirror: `.agent/evidence/release-v1.22.0/post-tag-validation.md`
 | Disposable sandbox install 1.24.0 | Pass — `/tmp/captain-compass-sandbox-v124` doctor green |
 | Automated release smokes | Pass — `.agent/evidence/release-v1.24.0/sandbox-smokes-automated.json` |
 | Checklist item 9 (skill learning loop fixtures) | Pass — fixture CLI + automated smoke |
-| Private sandbox refresh PR | **Pending push** — local refresh prepared (doctor green; patch `.agent/evidence/sandbox-refresh-1.24.0/`); `cursor[bot]` push 403 until GitHub App write access |
+| Private sandbox refresh PR | Pass — [sandbox#40](https://github.com/loganware05/captain-compass-sandbox/pull/40) (doctor green; 21/21 tests; commit `026f72a`) |
 
 Control mirror: `.agent/evidence/release-v1.24.0/post-tag-validation.md`
 

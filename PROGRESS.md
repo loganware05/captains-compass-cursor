@@ -19,13 +19,14 @@
 - M19 skill learning loop (#111 / #112)
 - M20 experience bridge + Captain-gated Skill improvement apply (#113 / #115)
 - v1.24.0 tag + GitHub release + closeout #117
+- Sandbox refresh 1.22.0 → 1.24.0 — [sandbox#40](https://github.com/loganware05/captain-compass-sandbox/pull/40)
 
 ## Next
 
-1. **Sandbox refresh to 1.24.0** — local update+doctor+commit ready (`chore/refresh-compass-1.24.0` @ `a9a7f0c`); **push still 403** for `cursor[bot]`. Need Cursor GitHub App write on `captain-compass-sandbox` (installation currently control-repo only) **or** Captain applies patch `.agent/evidence/sandbox-refresh-1.24.0/`.
-2. Land Captain’s forthcoming M21 plan (separate from parked A–E options).
-3. Hygiene: close stale shipped issue [#50](https://github.com/loganware05/captains-compass-cursor/issues/50) (M4 / v1.8.0 already shipped).
+1. Land Captain’s forthcoming M21 plan (separate from parked A–E options).
+2. Hygiene: close stale shipped issue [#50](https://github.com/loganware05/captains-compass-cursor/issues/50) (M4 / v1.8.0 already shipped).
+3. Merge sandbox refresh [PR #40](https://github.com/loganware05/captain-compass-sandbox/pull/40) when ready.
 
 ## Blockers
 
-`git push` to https://github.com/loganware05/captain-compass-sandbox.git returns `Permission denied to cursor[bot]`. Cloud Agent token is a GitHub App installation token; App installation repos = `captains-compass-cursor` only. Environment repos list also lacks the sandbox.
+None for the 1.24.0 sandbox refresh — multi-repo agent pushed [sandbox#40](https://github.com/loganware05/captain-compass-sandbox/pull/40).

@@ -7,7 +7,7 @@
 | Automated sandbox smokes | Pass — `sandbox-smokes-automated.json` |
 | Interactive smoke attestation | Pass — `sandbox-smokes-interactive.json` (item 9 fixture path; items 1–8 carry-forward) |
 | Smoke evidence gate | Pass — `validate-sandbox-release-smokes.sh --version 1.24.0` |
-| Private sandbox refresh | **Pending push** — local refresh prepared (`a9a7f0c`, doctor green); `cursor[bot]` push → 403 until GitHub App write access |
+| Private sandbox refresh | Pass — [sandbox#40](https://github.com/loganware05/captain-compass-sandbox/pull/40) (`026f72a`, doctor green, 21/21) |
 | Doctor on disposable sandbox | Pass — `/tmp/captain-compass-sandbox-v124` @ 1.24.0 |
 
-Date: 2026-09-04
+Date: 2026-09-08
