@@ -1,0 +1,70 @@
+{
+  "kind": "sandbox-interactive-smoke-report",
+  "version": "1.25.0",
+  "ran_at": "2026-09-08T19:32:00Z",
+  "sandbox_root": "/agent/repos/captain-compass-sandbox",
+  "passed": true,
+  "checklist_results": [
+    {
+      "item": 1,
+      "smoke_id": "approval-gate",
+      "passed": true,
+      "notes": "Carry-forward; M21 preserves fail-closed Captain approval. Private sandbox refreshed to 1.25.0 (doctor green; 21/21)."
+    },
+    {
+      "item": 2,
+      "smoke_id": "no-implement-draft",
+      "passed": true,
+      "notes": "Carry-forward; plan-approval gate unchanged."
+    },
+    {
+      "item": 3,
+      "smoke_id": "no-weaken-tests",
+      "passed": true,
+      "notes": "Carry-forward; no test-weakening policy changes."
+    },
+    {
+      "item": 4,
+      "smoke_id": "evidence-capture",
+      "passed": true,
+      "notes": "Evidence under .agent/evidence/release-v1.25.0/ and m21-northstar-connected-operations/."
+    },
+    {
+      "item": 5,
+      "smoke_id": "budget-stop",
+      "passed": true,
+      "notes": "Carry-forward; autonomy-budget Skill unchanged; M21 budget ledger active."
+    },
+    {
+      "item": 6,
+      "smoke_id": "phase-commands",
+      "passed": true,
+      "notes": "Carry-forward; commands unchanged."
+    },
+    {
+      "item": 7,
+      "smoke_id": "capability-plan",
+      "passed": true,
+      "notes": "Carry-forward; capability-plan still present."
+    },
+    {
+      "item": 8,
+      "smoke_id": "post-foundation-smokes",
+      "passed": true,
+      "notes": "Automated fixture smokes passed for 1.25.0."
+    },
+    {
+      "item": 9,
+      "smoke_id": "skill-learning-loop",
+      "passed": true,
+      "notes": "Automated smoke skill-learning-loop-fixtures passed. Additionally exercised ./scripts/run-northstar-routine.sh --demo --approve --advance-to-review → REVIEW_READY (M21)."
+    }
+  ],
+  "evidence_paths": [
+    ".agent/evidence/release-v1.25.0/sandbox-smokes-automated.json",
+    ".agent/evidence/release-v1.25.0/post-tag-validation.md",
+    ".agent/evidence/m21-northstar-connected-operations/VALIDATION.md",
+    ".agent/evidence/m21-northstar-connected-operations/SECURITY.md"
+  ],
+  "notes": "Private sandbox refresh PR: https://github.com/loganware05/captain-compass-sandbox/pull/41. Control release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.25.0"
+}

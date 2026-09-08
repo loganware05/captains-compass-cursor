@@ -1,0 +1,4 @@
+{
+  "passed": false,
+  "error": "missing interactive smoke evidence: /agent/repos/captains-compass-cursor/.agent/evidence/release-v1.25.0/sandbox-smokes-interactive.json"
+}

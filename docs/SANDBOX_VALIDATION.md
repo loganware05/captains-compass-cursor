@@ -274,3 +274,15 @@ Control mirror: `.agent/evidence/release-v1.22.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.24.0/post-tag-validation.md`
 
+### M21 NorthStar connected operations (v1.25.0) — refresh open 2026-09-08
+
+| Step | Result |
+|---|---|
+| Control release `v1.25.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.25.0 |
+| Feature PR | Pass — [#121](https://github.com/loganware05/captains-compass-cursor/pull/121) |
+| Automated release smokes | Pass — `.agent/evidence/release-v1.25.0/sandbox-smokes-automated.json` |
+| Private sandbox refresh PR | Pass — [sandbox#41](https://github.com/loganware05/captain-compass-sandbox/pull/41) (doctor green; 21/21) |
+| NorthStar routine fixture | Pass — `./scripts/run-northstar-routine.sh --demo --approve --advance-to-review` → `REVIEW_READY` |
+
+Control mirror: `.agent/evidence/release-v1.25.0/post-tag-validation.md`
+
