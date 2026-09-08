@@ -1,5 +1,5 @@
 Captain's Compass doctor
-Root: /tmp/captain-compass-sandbox
+Root: /agent/repos/captain-compass-sandbox
 
   ok: COMPASS_VERSION=1.24.0 (installed product)
   ok: AGENTS.md
