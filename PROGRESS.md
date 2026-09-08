@@ -4,25 +4,25 @@
 
 **M21 CLOSED** — shipped as **NorthStar v1.25.0**.
 
-- Release: [v1.25.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.25.0)
-- Feature PR: [#121](https://github.com/loganware05/captains-compass-cursor/pull/121)
-- Plan PR: [#120](https://github.com/loganware05/captains-compass-cursor/pull/120)
-- Sandbox refresh: [sandbox#41](https://github.com/loganware05/captain-compass-sandbox/pull/41) (merged)
-- Rollback: `rollback/pre-m21-northstar` (`13b5879`)
-- Integration runtime: `bc-05d4594d-fac7-4378-b595-c20e3c006044`
+**Next plan (draft):** `issue-50-northstar-m4-bridge` — close shipped M4 issue
+[#50](https://github.com/loganware05/captains-compass-cursor/issues/50) and bridge
+persistent-role / bounded autonomy into the NorthStar routine with Notion as a
+non-authoritative research/summary surface. Status:
+**AWAITING CAPTAIN APPROVAL** in `IMPLEMENTATION_PLAN.md`.
 
 ## Completed
 
 - v1.5.0–v1.25.0 / M1–M21
-- M19–M20 as v1.24.0
-- M21 NorthStar connected operations (branding + Slack/Linear/GitHub/Cursor routine)
-- Sandbox refresh 1.24.0 → 1.25.0
+- M21 NorthStar connected operations
+- Sandbox refresh 1.24.0 → 1.25.0 ([sandbox#41](https://github.com/loganware05/captain-compass-sandbox/pull/41) merged)
 
 ## Next
 
-1. Define next roadmap beyond M21
-2. Hygiene (optional): close stale shipped issue [#50](https://github.com/loganware05/captains-compass-cursor/issues/50)
+1. Captain: approve / revise `issue-50-northstar-m4-bridge`
+2. After approval: implement bridge + close #50 per plan
+3. Optional: authenticate Notion MCP if live ingest/summary checks are desired
 
 ## Blockers
 
-None.
+Bridge implementation blocked on explicit Captain approval.
+Notion MCP in this environment is currently `needsAuth` (non-blocking if fixture-only).
