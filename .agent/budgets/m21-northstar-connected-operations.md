@@ -22,7 +22,7 @@
 
 ## Usage
 
-- Iterations used: 1
+- Iterations used: 2
 - Failed validation cycles: 0
 - Estimated cost used (USD): 0
 - Cost is estimate: true
@@ -34,6 +34,7 @@
 <!-- One line per cycle: date | iteration N | result | notes -->
 
 | 2026-09-08 | iteration 1 | pass | M21A–E implementation; doctor + tests/run.sh 121/121; demo REVIEW_READY |
+| 2026-09-08 | iteration 2 | pass | Adversarial harden: approval/identity/idempotency; doctor+tests green |
 
 ## Stop condition
 
