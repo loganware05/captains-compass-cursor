@@ -127,4 +127,4 @@ gh auth status
 ## Current Priorities
 
 M21 complete. Released as **NorthStar v1.25.0**. Sandbox refresh
-[sandbox#41](https://github.com/loganware05/captain-compass-sandbox/pull/41) open.
+[sandbox#41](https://github.com/loganware05/captain-compass-sandbox/pull/41) merged.
