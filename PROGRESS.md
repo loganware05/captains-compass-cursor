@@ -2,27 +2,27 @@
 
 ## Current status
 
-**M21 CLOSED** — shipped as **NorthStar v1.25.0**.
+**Issue #50 / NorthStar M4 bridge** implementing toward **v1.26.0**
+(`issue-50-northstar-m4-bridge`, **APPROVED**).
 
-- Release: [v1.25.0](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.25.0)
-- Feature PR: [#121](https://github.com/loganware05/captains-compass-cursor/pull/121)
-- Plan PR: [#120](https://github.com/loganware05/captains-compass-cursor/pull/120)
-- Sandbox refresh: [sandbox#41](https://github.com/loganware05/captain-compass-sandbox/pull/41) (merged)
-- Rollback: `rollback/pre-m21-northstar` (`13b5879`)
-- Integration runtime: `bc-05d4594d-fac7-4378-b595-c20e3c006044`
+- Branch: `cursor/issue-50-northstar-m4-bridge-6044`
+- Rollback: `rollback/pre-issue-50-m4-bridge`
+- Close #50 when this bridge ships (Captain decision)
+- Notion live MCP: awaiting Cursor desktop auth (fixture path green; live skips with explicit note)
+
+Prior: **M21 CLOSED** as **NorthStar v1.25.0**.
 
 ## Completed
 
 - v1.5.0–v1.25.0 / M1–M21
-- M19–M20 as v1.24.0
-- M21 NorthStar connected operations (branding + Slack/Linear/GitHub/Cursor routine)
-- Sandbox refresh 1.24.0 → 1.25.0
+- M4 original acceptance (v1.8.0 / ADR-020) — issue #50 still open until bridge ships
 
 ## Next
 
-1. Define next roadmap beyond M21
-2. Hygiene (optional): close stale shipped issue [#50](https://github.com/loganware05/captains-compass-cursor/issues/50)
+1. Land v1.26.0 bridge PR; close #50
+2. Captain: authenticate Notion MCP in desktop for live checks
+3. Define roadmap beyond M21 / #50 bridge
 
 ## Blockers
 
-None.
+Notion MCP interactive auth unavailable in Cloud Agent — desktop action requested.

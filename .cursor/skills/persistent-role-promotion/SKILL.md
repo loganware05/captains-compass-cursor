@@ -32,6 +32,17 @@ role** draft prepared for a PR into `.cursor/agents/`.
 5. After merge, optionally record the role in
    `.agent/agents/promotions/registry.json` so the assembler can prefer it.
 
+## NorthStar bridge
+
+From a NorthStar run that has reached `REVIEW_READY`:
+
+```bash
+./scripts/run-northstar-routine.sh --demo --approve --advance-to-review --propose-roles
+```
+
+This only stages drafts via `orchestrator/integrations/m4_bridge.py`. It does
+not write `.cursor/agents/` or auto-merge.
+
 ## Output
 
 - Promotion proposal JSON

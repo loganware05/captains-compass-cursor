@@ -17,3 +17,10 @@ Use Skill `.cursor/skills/notion-integration/SKILL.md`.
 ## Authority rule
 
 Do **not** store implementation-critical approvals only in Notion. Approved plans and decisions must remain in the repository (`IMPLEMENTATION_PLAN.md`, `DECISIONS.md`).
+
+## NorthStar bridge
+
+NorthStar may attach Notion research context / summary mirrors after
+`REVIEW_READY` via `--notion-mode fixtures|live`. This is visibility only —
+GitHub remains the engineering and approval source of truth (ADR-037 / ADR-038).
+Live MCP auth must be completed in Cursor desktop for Cloud Agents.

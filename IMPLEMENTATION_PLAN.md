@@ -1,463 +1,175 @@
-# NorthStar M21 Integration Plan
+# Implementation Plan — #50 closeout + NorthStar M4 bridge
 
-## Plan metadata
+## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **COMPLETE** — released as v1.25.0 |
-| Plan ID | `m21-northstar-connected-operations` |
-| Product | **NorthStar** |
-| Former name | Captain's Compass |
-| Repository | `loganware05/captains-compass-cursor` |
-| Baseline | `v1.24.0` at `13b5879475a7288958ca7fe60b0fc7c0b71ad984` |
-| Integration runtime | Cursor cloud agent `bc-05d4594d-fac7-4378-b595-c20e3c006044` |
+| Status | **APPROVED — IMPLEMENTATION IN PROGRESS** |
+| Plan ID | `issue-50-northstar-m4-bridge` |
+| Issue | [#50](https://github.com/loganware05/captains-compass-cursor/issues/50) |
+| Product | **NorthStar** (formerly Captain's Compass) |
+| Baseline | `v1.25.0` on `main` |
 | Prepared | 2026-09-08 |
-| Start gate | Closed — merged #121; tagged v1.25.0 |
-| Issue | `local/m21-northstar-connected-operations` (GitHub issue create blocked on read-only `gh`) |
-| Branch | `cursor/m21-northstar-connected-operations-6044` |
-| Rollback | `rollback/pre-m21-northstar` (`13b5879`) |
-
-## Executive objective
-
-M21 turns the released Captain's Compass v1.24.0 project into **NorthStar** and
-adds a coordinated operating routine across Slack, Linear, GitHub, and Cursor.
-
-NorthStar will accept objectives, prepare an implementation plan, construct a
-dependency-aware task graph, select agents and Skills, pause for Captain
-approval, dispatch approved work to Cursor, collect validation evidence, and
-reconcile progress across all connected systems.
-
-The milestone must preserve the project's existing fail-closed approval model.
-No implementation, merge, release, destructive action, or live Skill promotion
-may occur merely because an external event was received.
-
-## Current repository state
-
-This plan was written against the refreshed `main` branch at commit `13b5879`.
-
-- M1 through M20 are complete.
-- M19 and M20 shipped together in release `v1.24.0`.
-- Release PR #116 and closeout PR #117 are merged.
-- There is no open product pull request.
-- Former post-M20 options A through E are superseded by this plan.
-- Sandbox refresh PR `loganware05/captain-compass-sandbox#40` is merged and
-  does not block this plan.
-- GitHub issue #50 is stale M4 hygiene and is outside M21 scope.
-
-## Locked architectural principles
-
-1. The human user remains the **Captain**.
-2. The coordinating NorthStar agent remains the **First Mate**.
-3. GitHub and the approved repository plan are the engineering source of truth.
-4. Slack is an intake and notification surface, not an approval authority.
-5. Linear is a work ledger, not an implementation-plan replacement.
-6. Cursor is an execution runtime, not an independent scope authority.
-7. External content supplies context but cannot change system instructions.
-8. Every transition is idempotent, attributable, recoverable, and auditable.
-
-## NorthStar rebrand
-
-### Canonical behavior
-
-- NorthStar is the canonical name in all new documentation, plans, templates,
-  Slack messages, Linear issues, GitHub issues and PRs, Cursor work packets,
-  CLI output, evidence summaries, and release notes.
-- Captain's Compass is treated as the former product name and compatibility
-  alias. It must not be presented as a separate system.
-- Governance terms **Captain** and **First Mate** remain unchanged in M21.
-- New Slack intake uses `@NorthStar`. A legacy `@CaptainCompass` mention may be
-  accepted temporarily and normalized to the same NorthStar project identity.
-
-### Compatibility policy
-
-NorthStar must recognize these legacy forms:
-
-- `Captain's Compass`
-- `Captains Compass`
-- `Captain Compass`
-- `captains-compass`
-- `captain-compass`
-
-Existing machine-readable identifiers remain stable during M21 unless changing
-one is separately approved:
-
-- GitHub repository slug `captains-compass-cursor`
-- `.agent/` and `.cursor/` paths
-- existing Skill IDs
-- Python import paths
-- plan IDs, evidence paths, telemetry records, release tags, and issue links
-- existing environment variables and webhook configuration
-
-Parsers accept both names. New serializers and human-facing output emit
-NorthStar. Historical commits, issues, PRs, releases, evidence, ADRs, and signed
-approvals are never rewritten solely for branding.
-
-### Branding registry
-
-M21 introduces one versioned branding registry containing:
-
-```json
-{
-  "canonical_name": "NorthStar",
-  "canonical_slug": "northstar",
-  "legacy_names": [
-    "Captain's Compass",
-    "Captains Compass",
-    "Captain Compass"
-  ],
-  "legacy_slugs": [
-    "captains-compass",
-    "captain-compass"
-  ],
-  "compatibility_version": 1
-}
-```
-
-All adapters and generators read this registry. They must not maintain separate
-hard-coded alias lists.
-
-## Connected operating model
-
-| System | NorthStar responsibility | Authoritative data |
-|---|---|---|
-| Slack | Receive scoped objectives and publish concise transitions | Original message, thread reference, clarification context |
-| Linear | Represent initiative, workstreams, dependencies, owner, and status | Planning ledger and workstream state |
-| GitHub | Hold issue, approved plan, code, checks, evidence, review, PR, rollback | Engineering and approval record |
-| Cursor | Execute approved work and emit structured checkpoints | Runtime progress and validation results |
-| First Mate | Reconcile events, select capabilities and agents, enforce gates | Normalized NorthStar run state |
-| Captain | Approve plans, scope changes, merge, release, and sensitive actions | Human authority decisions |
-
-## End-to-end routine
-
-### Phase 1: Intake
-
-NorthStar receives an objective from one of four allowlisted origins:
-
-1. Slack message explicitly mentioning `@NorthStar`.
-2. Linear issue in the configured NorthStar project.
-3. GitHub issue carrying the configured NorthStar intake label.
-4. Explicit Captain instruction to the configured Cursor integration agent.
-
-The First Mate creates a stable `run_id`, event digest, idempotency key, and
-origin reference. Replayed or cross-project events are rejected.
-
-### Phase 2: Context and task design
-
-The First Mate:
-
-1. Reads `AGENTS.md`, `PROJECT_CONTEXT.md`, `DECISIONS.md`, `PROGRESS.md`,
-   `TESTING.md`, current Git state, active issue, and active plan.
-2. Correlates all existing Slack, Linear, GitHub, and Cursor references.
-3. Normalizes legacy Captain's Compass references to NorthStar.
-4. Infers required executable capabilities.
-5. Queries approved Technology Intelligence and Knowledge sources.
-6. Produces a dependency-aware task graph.
-7. Dynamically assembles leadership, specialist, and evaluator agents.
-8. Creates the proposed implementation and validation plan.
-9. Publishes linked summaries to available systems.
-10. Enters `AWAITING_CAPTAIN_APPROVAL` and stops.
-
-### Phase 3: Approval
-
-The canonical approval record consists of:
-
-- an explicit Captain decision attached to the GitHub issue or PR; and
-- the matching approved plan ID, content digest, and repository state.
-
-Slack and Linear may record approval intent, but cannot independently authorize
-Cursor execution. Conflicting, stale, ambiguous, or identity-unverified approval
-events move the run to `BLOCKED_APPROVAL`.
-
-### Phase 4: Dispatch
-
-After approval, the First Mate:
-
-1. Creates or confirms the GitHub issue.
-2. Creates the rollback reference.
-3. Creates a feature branch and isolated worktree.
-4. Creates Linear workstream issues and dependency links.
-5. Builds the signed Cursor work packet.
-6. Dispatches or resumes only cloud agent
-   `bc-05d4594d-fac7-4378-b595-c20e3c006044`.
-7. Verifies the returned agent identity before accepting a checkpoint.
-8. Moves the run to `IN_PROGRESS`.
-
-If the agent identity does not match, NorthStar stops in
-`BLOCKED_AGENT_IDENTITY`. A previous release agent must never be resumed or
-silently substituted for the M21 integration runtime.
-
-### Phase 5: Execution and evidence
-
-Cursor receives only the approved work packet and implements the approved task
-graph. It writes evidence under `.agent/evidence/<run_id>/`, updates meaningful
-checkpoints, and stops when scope, budget, validation, or permission boundaries
-are reached.
-
-NorthStar publishes only these Slack transitions:
-
-- work received
-- plan awaiting approval
-- execution started
-- blocked or budget stopped
-- review ready
-- completed
-
-Linear and GitHub receive durable status updates. Internal reasoning and noisy
-per-command updates are not copied between systems.
-
-### Phase 6: Review and closeout
-
-1. Run the selected evaluator and adversarial-review agents.
-2. Complete required static, unit, integration, end-to-end, security,
-   accessibility, build, deployment, and rollback validation.
-3. Open or update the GitHub pull request.
-4. Link the PR and evidence to Linear workstreams.
-5. Enter `AWAITING_MERGE` and stop for Captain approval.
-6. After merge, reconcile GitHub and Linear state.
-7. Publish the Slack completion summary.
-8. Record execution telemetry and Experience artifacts.
-9. Send any Skill improvement through the existing Captain-gated learning flow.
-
-## State model
-
-Normal states:
-
-`RECEIVED -> RECONCILING -> PLAN_PROPOSED -> AWAITING_CAPTAIN_APPROVAL -> DISPATCHED -> IN_PROGRESS -> VALIDATING -> REVIEW_READY -> AWAITING_MERGE -> COMPLETED`
-
-Exception states:
-
-- `BLOCKED_CONNECTION`
-- `BLOCKED_APPROVAL`
-- `BLOCKED_AGENT_IDENTITY`
-- `BLOCKED_SCOPE`
-- `BUDGET_STOPPED`
-- `VALIDATION_FAILED`
-- `CANCELLED`
-- `SUPERSEDED`
-
-Every state transition is append-only and includes the actor, origin, timestamp,
-previous state, next state, event digest, plan digest, and correlation IDs.
-
-## Normalized event contract
-
-```json
-{
-  "event_id": "provider-event-id",
-  "provider": "slack|linear|github|cursor",
-  "event_type": "objective|work_item_changed|pull_request_changed|checkpoint|approval",
-  "occurred_at": "RFC3339",
-  "actor": {
-    "provider_id": "provider-actor-id",
-    "verified_role": "captain|first_mate|agent|collaborator"
-  },
-  "product": {
-    "name": "NorthStar",
-    "legacy_alias_received": null
-  },
-  "project": {
-    "repository": "loganware05/captains-compass-cursor"
-  },
-  "references": {
-    "slack_thread": null,
-    "linear_issue": null,
-    "github_issue": null,
-    "github_pull_request": null,
-    "cursor_agent": "bc-05d4594d-fac7-4378-b595-c20e3c006044"
-  },
-  "payload_digest": "sha256",
-  "idempotency_key": "sha256"
-}
-```
-
-## Connector interface
-
-Each provider adapter implements:
-
-- `healthcheck()`
-- `normalize_event(raw_event)`
-- `read_context(reference)`
-- `verify_identity(actor)`
-- `deduplicate(event_id, idempotency_key)`
-- `create_or_update_work_item(run)`
-- `publish_transition(run, transition)`
-- `link_artifacts(run)`
-- `reconcile(run)`
-
-## Proposed implementation surface
-
-- `orchestrator/branding.py`
-- `orchestrator/integrations/contracts.py`
-- `orchestrator/integrations/events.py`
-- `orchestrator/integrations/state_machine.py`
-- `orchestrator/integrations/reconcile.py`
-- `orchestrator/integrations/adapters/github.py`
-- `orchestrator/integrations/adapters/linear.py`
-- `orchestrator/integrations/adapters/slack.py`
-- `orchestrator/integrations/adapters/cursor.py`
-- `scripts/run-northstar-routine.sh`
-- `scripts/reconcile-northstar-run.sh`
-- `.cursor/skills/northstar-connected-routine/SKILL.md`
-- `docs/integrations/slack.md`
-- updates to active templates, agent manifests, integration docs, security docs,
-  `UPGRADING.md`, `DECISIONS.md`, `PROGRESS.md`, `TESTING.md`, and changelog
-- recorded fixtures for all four adapters with no live credentials in CI
-
-## Delivery workstreams
-
-### M21A: Identity, contracts, and state
-
-- NorthStar branding registry and legacy aliases
-- normalized event and work-packet schemas
-- idempotency and correlation store
-- state-transition validator
-- fixture adapters
-
-### M21B: GitHub and Cursor bridge
-
-- authoritative GitHub adapter
-- plan digest and approval verification
-- cloud-agent work packet
-- agent identity enforcement for
-  `bc-05d4594d-fac7-4378-b595-c20e3c006044`
-- checkpoint and evidence ingestion
-
-### M21C: Linear ledger
-
-- parent initiative and child workstreams
-- dependencies, statuses, owners, acceptance criteria, and PR links
-- retry and out-of-order reconciliation
-- GitHub issue fallback
-
-### M21D: Slack edge
-
-- allowlisted channel intake
-- `@NorthStar` mention requirement
-- temporary legacy mention compatibility
-- threaded transition notifications
-- identity-aware approval intent without independent execution authority
-
-### M21E: Hardening and release
-
-- adversarial event and prompt-injection fixtures
-- replay, stale-event, redaction, and connector-loss tests
-- existing-installation and rollback tests
-- sandbox end-to-end smoke
-- documentation and release closeout
-
-## Safety and fallback rules
-
-- Connector scopes must be least privilege and project allowlisted.
-- Secrets never enter prompts, logs, Slack, Linear, GitHub, evidence, or fixtures.
-- Captain identity is verified per provider before recording approval intent.
-- No automatic merge, release, live Skill install, permission change, or
-  destructive production action.
-- Missing Linear falls back to GitHub issues.
-- Missing Slack suppresses conversation notifications without blocking GitHub
-  and Linear status.
-- Missing Cursor produces a launch-ready work packet and stops.
-- Missing GitHub stops the entire engineering routine.
-- Conflicting system state is reconciled from GitHub and the approved plan.
+| Start gate | Open — Captain approved 2026-09-08 |
+| Branch | `cursor/issue-50-northstar-m4-bridge-6044` |
+| Rollback | `rollback/pre-issue-50-m4-bridge` |
+| Target release | **v1.26.0** |
+
+## Request
+
+Tackle open issue #50. Original M4 acceptance already shipped in **v1.8.0**; the
+Captain wants the remaining hygiene **and** alignment with Notion plus the M21
+NorthStar connected routine.
+
+## Problem statement
+
+1. Issue #50 remains **OPEN** even though persistent-role promotion and bounded
+   Level 3 autonomy shipped (ADR-020, PRs historically under #50 / v1.8.0).
+2. M21’s NorthStar routine (`orchestrator/integrations/`) does **not** invoke
+   M4 promotion or weight-apply paths.
+3. Notion is research/summary only today; it is **not** a NorthStar provider and
+   must not gain approval authority. Notion MCP currently needs authentication
+   in this environment.
+
+## Current-state analysis (evidence)
+
+| Surface | Status |
+|---|---|
+| `propose-persistent-role.sh` / `persistent-role-promotion` Skill | Shipped (M4) |
+| `apply-routing-proposal.sh` / `bounded-autonomy` Skill | Shipped (M4; extended M17) |
+| `tests/orchestrator/test_m4_persistent_roles_autonomy.py` | Present |
+| ADR-020 | Accepted |
+| NorthStar routine providers | `slack`, `linear`, `github`, `cursor` only |
+| Notion | `notion-integration` Skill + `ingest-notion-live.sh`; no M21 adapter |
+| Linear | M21 work ledger (already) |
+
+## Desired outcome
+
+1. **Close #50** as completed for original M4 acceptance, with a clear comment
+   linking v1.8.0 / ADR-020.
+2. **Bridge M4 into NorthStar** as a Captain-gated routine extension:
+   - After review-ready / closeout phases (never before canonical GitHub
+     approval), optionally propose persistent roles from proficiency evidence.
+   - Surface pending routing proposals for Captain-flagged apply; never
+     auto-apply weights.
+   - Create Linear child workstreams for promotion / apply follow-ups when
+     Linear is connected.
+3. **Notion (optional, non-authoritative):**
+   - Ingest allowlisted research pages that inform role/autonomy rationale
+     (`ingest-notion-live.sh`).
+   - Optionally write a release/summary mirror after successful bridge runs.
+   - Never store approvals only in Notion; never add Notion to approval
+     providers.
 
 ## Acceptance criteria
 
-- [x] All new human-facing output uses NorthStar.
-- [x] Legacy product names resolve to the same NorthStar project and run.
-- [x] Rebranding cannot duplicate Slack threads, Linear issues, GitHub work, or Cursor runs.
-- [x] Existing installations and historical identifiers continue to work.
-- [x] One objective creates exactly one correlated run.
-- [x] Duplicate and replayed events have no duplicate side effects.
-- [x] No Cursor execution occurs before canonical Captain approval.
-- [x] Only cloud agent `bc-05d4594d-fac7-4378-b595-c20e3c006044` is accepted for M21 integration checkpoints.
-- [x] Cursor can resume entirely from the approved work packet.
-- [x] GitHub remains the engineering and approval source of truth.
-- [x] Linear dependencies and statuses reconcile after retries and out-of-order events.
-- [x] Slack messages are threaded and transition-only.
-- [x] Connector loss follows the documented fallback policy.
-- [x] Unit tests cover branding, normalization, identity, deduplication, transitions, approvals, retries, and redaction.
-- [x] Integration tests use recorded fixtures for all four providers.
-- [x] An end-to-end fixture run reaches `REVIEW_READY` with complete evidence.
-- [x] Security and adversarial review pass.
-- [x] `./scripts/doctor.sh` and `./tests/run.sh` pass.
-- [x] Upgrade, rollback, testing, decision, progress, and release documentation are updated.
+### A — Issue #50 hygiene
 
-## Recommended defaults awaiting approval
+- [ ] GitHub issue #50 closed with completion comment citing v1.8.0 / ADR-020
+      and this follow-on plan ID.
+- [x] `PROGRESS.md` no longer lists “close #50” as open hygiene.
 
-1. Use an allowlisted Slack channel and explicit `@NorthStar` mention.
-2. Use one Linear M21 parent issue, child workstreams, and a `northstar` label.
-3. Require explicit Captain dispatch to the configured Cursor agent after plan approval.
-4. Use a GitHub approval record plus matching plan digest as canonical approval.
-5. Send Slack notifications only for meaningful state transitions.
-6. Retain the repository slug, `.agent/`, `.cursor/`, existing Skill IDs, and
-   historical machine identifiers during M21.
-7. Use an autonomy budget of eight iterations and three failed validation cycles.
-8. Target the next minor release after `v1.24.0`.
+### B — NorthStar ↔ M4 bridge
+
+- [x] Fixture-safe routine option (e.g. `--propose-roles` / `--surface-routing`)
+      can emit persistent-role proposals and list pending routing proposals
+      without mutating live `.cursor/agents/` or weights.
+- [x] Weight apply remains behind existing `captain_approved` + budget gates;
+      NorthStar GitHub plan approval does **not** silently apply weights.
+- [x] Wrong Cursor agent / missing GitHub still fail closed (M21 rules preserved).
+- [x] Linear children created for promotion/apply follow-ups when connected;
+      GitHub fallback when Linear missing.
+- [x] Unit/fixture tests cover bridge paths; `doctor.sh` + `tests/run.sh` pass.
+- [x] Skills `northstar-connected-routine`, `persistent-role-promotion`,
+      `bounded-autonomy`, and `notion-integration` cross-link the bridge.
+- [x] Docs: Notion + Linear + NorthStar authority boundaries updated; ADR added.
+
+### C — Notion surface
+
+- [x] Documented procedure for allowlisted Notion ingest as **context only**.
+- [x] Optional fixture-mode “release summary” payload for Notion write (no live
+      credential required in CI).
+- [x] If Notion MCP remains unauthenticated, bridge still works; Notion steps
+      are skipped with an explicit non-fatal note.
 
 ## Non-goals
 
-- Renaming or transferring the GitHub repository during M21
-- Rewriting historical artifacts
-- Automatic merging or releasing
-- Automatic live Skill installation
-- Replacing the Captain approval gate with Slack or Linear reactions
-- Allowing arbitrary Cursor agents to join an active run
-- Closing stale issue #50 or merging sandbox PR #40 as part of product scope
+- Re-implementing M4 from scratch
+- Adding Notion as a NorthStar approval or dispatch authority
+- Auto-merging persistent-role PRs or auto-applying routing weights
+- Renaming the repository
+- Live Skill install
+- Closing unrelated issues
+
+## Proposed architecture
+
+```
+NorthStar routine (existing)
+  └─ after REVIEW_READY / closeout hooks (Captain flags)
+       ├─ persistent-role: propose-only → staging + Linear child
+       ├─ bounded autonomy: list pending proposals; apply only if
+       │    captain_approved on proposal JSON + budget
+       └─ Notion (optional): ingest research / emit summary mirror
+```
+
+### Implementation surface (proposed)
+
+- `orchestrator/integrations/m4_bridge.py` — propose roles + surface/apply routing
+  under explicit flags
+- Extend `orchestrator/integrations/routine.py` +
+  `scripts/run-northstar-routine.sh`
+- Fixture tests in `tests/orchestrator/test_m21_northstar.py` or
+  `test_issue50_m4_bridge.py`
+- Docs: `docs/integrations/{notion,linear,slack}.md`, Skill updates, ADR-038
+- Issue #50 close comment + PROGRESS update
+
+## Workstreams
+
+| ID | Scope | Depends |
+|---|---|---|
+| W1 | Close #50 comment + PROGRESS hygiene | — |
+| W2 | `m4_bridge` module + routine/CLI flags + tests | — |
+| W3 | Linear children + Slack transition notes for bridge events | W2 |
+| W4 | Notion optional ingest/summary fixtures + Skill/doc updates | W2 |
+| W5 | ADR + doctor/tests green + PR | W1–W4 |
+
+## Safety and authority
+
+- GitHub + plan digest remain canonical approval (ADR-037).
+- Slack notify only; Linear ledger only; Notion research/summary only.
+- Persistent roles: staging + PR only (ADR-020).
+- Weight apply: Captain flag per apply + autonomy budget (ADR-020 / M17).
+- Secrets never enter Notion mirrors, Slack, or fixtures.
 
 ## Autonomy budget (proposed; activates on approval)
 
 | Limit | Value |
 |---|---|
-| Maximum iterations | 8 |
+| Maximum iterations | 6 |
 | Maximum failed validation cycles | 3 |
-| Stop on scope change | true |
-| Stop on destructive operation | true |
-| Stop on unresolved security high | true |
+| Maximum weight-apply operations | 0 in CI fixtures (Captain-gated only in live) |
+| Stop on scope change / destructive / unresolved security high | true |
 
-Ledger path after approval: `.agent/budgets/m21-northstar-connected-operations.md`
+## Captain decisions (2026-09-08)
 
-## Capability planning appendix (machine-generated; proposals only)
+1. Close #50 **when the bridge ships** (not before).
+2. Authenticate Notion MCP for live checking (desktop IDE required; cloud cannot
+   complete interactive MCP auth — live path implemented; skip with explicit note
+   until desktop auth is done).
+3. Target release **v1.26.0**.
+4. Do **not** auto-apply routing weights from NorthStar approval alone.
 
-Generated 2026-09-08 via `./scripts/capability-plan.sh --plan-id m21-northstar-connected-operations`.
+## Capability planning appendix (proposals only)
 
-**Authoritative delivery order remains M21A → M21E above.** The generic
-discovery → architecture → implementation → validation → documentation graph
-below is supporting context only.
+Top Skills: `implementation-planning`, `github-integration`,
+`persistent-role-promotion`, `bounded-autonomy`, `notion-integration`,
+`northstar-connected-routine`, `linear-integration`, `testing-validation`,
+`autonomy-budget`.
 
-### Required Capabilities
-
-- implementation-plan-authoring
-- approval-gate-enforcement
-- scope-definition
-- rollback-planning
-- github-issue-create
-- github-pr-create
-- pr-description-assembly
-
-**Domains detected:** plan, github
-
-### Reusable Capabilities Found (top)
-
-| Skill | Score | Notes |
-|---|---:|---|
-| `implementation-planning` | 0.5571 | capability_overlap=0.2571 |
-| `github-integration` | 0.4286 | lifecycle_stage=0.15 |
-| `pull-request-preparation` | 0.3643 | lifecycle_stage=0.15 |
-| `linear-integration` | 0.3 | lifecycle_stage=0.15 |
-| `security-review` | 0.3 | lifecycle_stage=0.15 |
-| `testing-validation` | 0.3 | lifecycle_stage=0.15 |
-| `autonomy-budget` | 0.3 | lifecycle_stage=0.15 |
-| `capability-planning` | 0.3 | lifecycle_stage=0.15 |
-| `worktree-orchestration` | 0.3 | lifecycle_stage=0.15 |
-
-Capability gaps: none detected for inferred requirements.
-
-Artifacts (gitignored): `.agent/plans/m21-northstar-connected-operations/{resolve,task-graph,manifests}.json`
+No capability gaps detected for inferred plan-domain requirements.
 
 ## Approval record
 
 | Captain | Decision | Date |
 |---|---|---|
-| Captain | **APPROVED** — implement `m21-northstar-connected-operations` | 2026-09-08 |
-
-Approved plan digest baseline: repository state at approval branch
-`cursor/m21-northstar-connected-operations-6044` continuing from plan docs at
-`5398b55` / main `13b5879`.
+| Captain | **APPROVED** — implement `issue-50-northstar-m4-bridge` (close #50 on ship; Notion live auth; v1.26.0) | 2026-09-08 |

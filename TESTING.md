@@ -97,9 +97,12 @@ NorthStar connected routine (M21 — fixture adapters; no live credentials):
 ```bash
 ./scripts/run-northstar-routine.sh --demo
 ./scripts/run-northstar-routine.sh --demo --approve --advance-to-review
+./scripts/run-northstar-routine.sh --demo --approve --advance-to-review \
+  --propose-roles --surface-routing --notion-mode fixtures
 ./scripts/run-northstar-routine.sh --event tests/fixtures/northstar/slack-objective.json --provider slack
 ./scripts/reconcile-northstar-run.sh --run .agent/evidence/<run_id>/run.json
 PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m21_northstar -v
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_issue50*.py' -v
 ```
 
 Persistent-role proposal (staging + PR only):

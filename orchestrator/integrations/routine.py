@@ -57,6 +57,12 @@ def run_northstar_routine(
     advance_to_review: bool = False,
     connected: dict[str, bool] | None = None,
     run_id: str | None = None,
+    propose_roles: bool = False,
+    surface_routing: bool = False,
+    notion_mode: str | None = None,
+    apply_routing_path: str | Path | None = None,
+    allow_weight_apply: bool = False,
+    budget_path: str | Path | None = None,
 ) -> dict[str, Any]:
     """
     Execute the NorthStar routine against fixture adapters.
@@ -64,7 +70,10 @@ def run_northstar_routine(
     When approve=False, stops at AWAITING_CAPTAIN_APPROVAL.
     When approve=True, records canonical GitHub approval and may dispatch.
     When advance_to_review=True (and approve), drives fixture execution to REVIEW_READY.
+    M4 bridge flags (propose_roles / surface_routing / notion_mode) run only after
+    REVIEW_READY and never apply weights unless allow_weight_apply is set.
     """
+    from orchestrator.integrations.m4_bridge import run_m4_bridge
     repo_root = Path(repo_root)
     connected = connected or {
         "slack": True,
@@ -231,6 +240,26 @@ def run_northstar_routine(
     report["checkpoint"] = checkpoint["event_id"]
     report["message"] = "fixture run reached REVIEW_READY"
     report["reconcile"] = reconcile_run(run, github=github, linear=linear, slack=slack, cursor=cursor)
+
+    if propose_roles or surface_routing or notion_mode or apply_routing_path:
+        bridge = run_m4_bridge(
+            repo_root,
+            run,
+            propose_roles=propose_roles,
+            surface_routing=surface_routing,
+            apply_routing_path=Path(apply_routing_path) if apply_routing_path else None,
+            allow_weight_apply=allow_weight_apply,
+            budget_path=Path(budget_path) if budget_path else None,
+            notion_mode=notion_mode,
+            linear=linear if connected.get("linear", True) else None,
+            slack=slack if connected.get("slack", True) else None,
+        )
+        report["m4_bridge"] = bridge
+        (evidence / "m4-bridge.json").write_text(
+            json.dumps(bridge, indent=2) + "\n", encoding="utf-8"
+        )
+        persist_run(run, evidence / "run.json")
+
     (evidence / "routine-report.json").write_text(
         json.dumps(report, indent=2) + "\n", encoding="utf-8"
     )

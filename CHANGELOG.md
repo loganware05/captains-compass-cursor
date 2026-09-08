@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+## 1.26.0 — 2026-09-08
+
+### Added
+
+- NorthStar ↔ M4 bridge (`orchestrator/integrations/m4_bridge.py`) for persistent-role
+  propose-only and routing proposal surfacing after `REVIEW_READY` (#50)
+- CLI flags `--propose-roles`, `--surface-routing`, `--notion-mode` on
+  `run-northstar-routine.sh` (#50)
+- Notion fixture research pack + non-authoritative summary mirror payload (#50)
+- ADR-038 (#50)
+
+### Changed
+
+- VERSION `1.26.0`
+- Skills `northstar-connected-routine`, `persistent-role-promotion`,
+  `bounded-autonomy`, and `notion-integration` cross-link the bridge (#50)
+- Docs clarify Notion remains research/summary only; GitHub stays approval truth
+
 ## 1.25.0 — 2026-09-08
 
 ### Added
