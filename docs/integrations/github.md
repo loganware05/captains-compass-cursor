@@ -49,6 +49,13 @@ See Skill: `.cursor/skills/github-integration/SKILL.md`.
 | Control (workflow) | https://github.com/loganware05/captains-compass-cursor | Private |
 | Sandbox (validation) | https://github.com/loganware05/captain-compass-sandbox | Private |
 
+## NorthStar live ops (M22)
+
+GitHub remains the engineering and approval source of truth. Unattended webhook
+ingress verifies `X-Hub-Signature-256` and accepts Captain approval only via
+`NORTHSTAR_APPROVE plan_digest=<64-hex>`. Product dispatch is sandbox-allowlist
+only. See `docs/integrations/northstar-live-ops.md`.
+
 ## Enable as GitHub template
 
 **Status:** Enabled (2026-07-10) on https://github.com/loganware05/captains-compass-cursor

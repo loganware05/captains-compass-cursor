@@ -1,0 +1,15 @@
+{
+  "action": "opened",
+  "issue": {
+    "number": 42,
+    "title": "NorthStar live intake",
+    "body": "Unattended ops objective",
+    "labels": [{"name": "northstar"}]
+  },
+  "repository": {
+    "full_name": "loganware05/captain-compass-sandbox"
+  },
+  "sender": {
+    "login": "captain-github"
+  }
+}

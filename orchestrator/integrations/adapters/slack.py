@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from typing import Any
 
 from orchestrator.integrations.adapters.base import FixtureAdapterBase
@@ -38,11 +39,18 @@ class SlackAdapter(FixtureAdapterBase):
             or "CaptainCompass" in mentions
         )
         if raw_event.get("event_type", "objective") == "objective" and not mention_ok:
-            raise ValueError("slack objective requires @NorthStar mention (or legacy @CaptainCompass)")
+            raise ValueError(
+                "slack objective requires @NorthStar mention (or legacy @CaptainCompass)"
+            )
 
-        product_name = "Captain's Compass" if (
-            "@CaptainCompass" in text or "CaptainCompass" in mentions
-        ) and "@NorthStar" not in text else raw_event.get("product_name")
+        product_name = (
+            "Captain's Compass"
+            if (
+                ("@CaptainCompass" in text or "CaptainCompass" in mentions)
+                and "@NorthStar" not in text
+            )
+            else raw_event.get("product_name")
+        )
 
         actor = self.verify_identity(
             {
@@ -57,6 +65,9 @@ class SlackAdapter(FixtureAdapterBase):
             occurred_at=raw_event.get("occurred_at"),
             actor=actor,
             product_name_received=product_name,
+            repository=raw_event.get("repository")
+            or self.product_repository
+            or "loganware05/captains-compass-cursor",
             references={"slack_thread": raw_event.get("thread_ts") or raw_event.get("ts")},
             payload=redact_secrets(
                 {
@@ -85,9 +96,27 @@ class SlackAdapter(FixtureAdapterBase):
             "state": run.get("state"),
             "thread_ts": thread,
             "text": f"NorthStar: {transition.replace('_', ' ')} ({run.get('state')})",
+            "mode": self.mode,
         }
         self.published.append(msg)
         self._write_json(f"slack-{run.get('run_id')}-{transition}.json", msg)
+
+        if self.mode == "live" and self.transport is not None:
+            from orchestrator.integrations.adapters.live import slack_api
+
+            token = (os.environ.get("NORTHSTAR_SLACK_BOT_TOKEN") or "").strip()
+            channel = next(iter(self.channel_allowlist), "northstar")
+            slack_api(
+                self.transport,
+                method="POST",
+                path="/chat.postMessage",
+                token=token,
+                body={
+                    "channel": channel,
+                    "text": msg["text"],
+                    "thread_ts": thread,
+                },
+            )
         return msg
 
     def record_approval_intent(
@@ -105,4 +134,5 @@ class SlackAdapter(FixtureAdapterBase):
             "run_id": run.get("run_id"),
             "actor": actor,
             "accepted": actor.get("verified_role") == "captain",
+            "provider": "slack",
         }

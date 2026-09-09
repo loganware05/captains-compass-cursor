@@ -126,7 +126,7 @@ gh auth status
 
 ## Current Priorities
 
-**v1.26.0 closed** — issue #50 NorthStar M4 bridge + Notion research mirror.
-Sandbox [sandbox#42](https://github.com/loganware05/captain-compass-sandbox/pull/42)
-and closeout [#126](https://github.com/loganware05/captains-compass-cursor/pull/126) merged.
-Next: roadmap beyond M21 / #50.
+**M22 → v1.27.0 (pending merge)** — NorthStar unattended live ops (GitHub
+ingress + live adapters, sandbox-only). Fixture mode remains CI default.
+Prior **v1.26.0** closed (sandbox#42 + #126/#127). M23 TI/skill flywheel follows
+after M22 ships when Captain directs.
