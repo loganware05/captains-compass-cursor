@@ -126,5 +126,6 @@ gh auth status
 
 ## Current Priorities
 
-Implementing **v1.26.0** — issue #50 NorthStar M4 bridge (persistent-role /
-bounded autonomy + Notion research mirror). M21 complete at **v1.25.0**.
+**v1.26.0 released** — issue #50 NorthStar M4 bridge + Notion research mirror.
+Await Captain merge of [sandbox#42](https://github.com/loganware05/captain-compass-sandbox/pull/42).
+Next: roadmap beyond M21 / #50.

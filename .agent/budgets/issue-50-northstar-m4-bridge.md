@@ -6,8 +6,8 @@
 - Issue: #50
 - Branch: cursor/issue-50-northstar-m4-bridge-6044
 - Created: 2026-09-08
-- Last updated: 2026-09-08
-- Status: ACTIVE
+- Last updated: 2026-09-09
+- Status: CLOSED — shipped as v1.26.0
 
 ## Limits (from approved plan)
 
@@ -32,6 +32,7 @@
 ## Cycle log
 
 | 2026-09-08 | iteration 1 | pass | M4 bridge + Notion fixtures; doctor/tests green; live Notion auth blocked on desktop |
+| 2026-09-09 | closeout | pass | Tag/release v1.26.0; sandbox refresh #42; smoke gate green |
 
 ## Stop condition
 
