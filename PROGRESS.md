@@ -2,16 +2,17 @@
 
 ## Current status
 
-**Next plan awaiting approval:** `m22-m23-northstar-ops-ti-flywheel`
+**M22 IN PROGRESS** — NorthStar unattended connected ops → **v1.27.0**
 
 | Item | Value |
 |---|---|
-| Plan | `IMPLEMENTATION_PLAN.md` — **AWAITING CAPTAIN APPROVAL** |
+| Plan | `IMPLEMENTATION_PLAN.md` — **APPROVED — M22 IMPLEMENTATION IN PROGRESS** |
+| Plan ID | `m22-m23-northstar-ops-ti-flywheel` |
 | Baseline | `v1.26.0` |
-| Targets | **v1.27.0** (M22 live ops), **v1.28.0** (M23 TI/skill flywheel) |
-| Product scope | Sandbox only |
-
-Prior: **v1.26.0 CLOSED** — NorthStar M4 bridge + Notion research mirror.
+| Target | **v1.27.0** (M22); M23 → v1.28.0 deferred |
+| Branch | `cursor/m22-northstar-unattended-ops-6044` |
+| Rollback | `rollback/pre-m22-northstar-ops` |
+| Product scope | Sandbox only (`loganware05/captain-compass-sandbox`) |
 
 ## Completed
 
@@ -19,12 +20,15 @@ Prior: **v1.26.0 CLOSED** — NorthStar M4 bridge + Notion research mirror.
 - M21 NorthStar connected operations (fixture routine)
 - Sandbox refresh through Compass **1.26.0** (sandbox#40–#42)
 - Issue #50 closed; Notion MCP desktop auth for research
+- Captain APPROVED M22/M23 plan 2026-09-09
 
 ## Next
 
-1. Captain approve / revise `m22-m23-northstar-ops-ti-flywheel`
-2. After approval: M22 unattended GitHub+Linear (+ Slack), then M23 TI scorecard + sandbox UI experiments
+1. Finish M22: live adapters + GitHub ingress + sandbox allowlist + tests/docs
+2. Validate (`doctor`, M22/M21/M4 unit tests, `tests/run.sh`) + evidence
+3. Sandbox refresh to Compass **1.27.0** + tag/release after merge
+4. Then M23 (TI scorecard + skill flywheel) under same plan
 
 ## Blockers
 
-Bridge implementation blocked on explicit Captain approval of the new plan.
+None — start gate open for M22.

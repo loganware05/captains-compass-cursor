@@ -1,8 +1,25 @@
 # Changelog
 
-## Unreleased
+## 1.27.0 — 2026-09-09
+
+### Added
+
+- M22 NorthStar unattended live ops: injectable `HttpTransport`, sandbox product
+  allowlist, stdlib GitHub webhook ingress, live adapter factory
+- Scripts `serve-northstar-ingress.sh`; routine flags `--mode`, `--product-repo`
+- Docs `docs/integrations/northstar-live-ops.md` + ADR-039
+- Tests `tests/orchestrator/test_m22_northstar_live.py` + webhook fixtures
+
+### Changed
+
+- VERSION `1.27.0`
+- Adapters report `mode` in healthchecks; live outbound via transport
+- Live `--approve` shortcut refused (GitHub plan_digest path only)
+- Doctor checks ingress script + ingress module import
+- Skill `northstar-connected-routine` documents live mode
 
 ## 1.26.0 — 2026-09-08
+
 
 ### Added
 

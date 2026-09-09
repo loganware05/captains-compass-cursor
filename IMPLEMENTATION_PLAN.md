@@ -4,13 +4,14 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING CAPTAIN APPROVAL** |
+| Status | **APPROVED — M22 IMPLEMENTATION IN PROGRESS** |
 | Plan ID | `m22-m23-northstar-ops-ti-flywheel` |
 | Supersedes | `issue-50-northstar-m4-bridge` (CLOSED — shipped as v1.26.0) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
 | Baseline | `v1.26.0` on `main` |
 | Prepared | 2026-09-09 |
-| Start gate | Closed until Captain explicitly approves this plan |
+| Start gate | Open — Captain approved 2026-09-09 |
+| Branch | `cursor/m22-northstar-unattended-ops-6044` |
 | Target releases | **v1.27.0** (M22), **v1.28.0** (M23) |
 | Product target | `loganware05/captain-compass-sandbox` **only** |
 | Rollback tags | `rollback/pre-m22-northstar-ops`, `rollback/pre-m23-ti-flywheel` |
@@ -236,10 +237,9 @@ greenfield surface.
 
 | Captain | Decision | Date |
 |---|---|---|
-| Pending | **AWAITING APPROVAL** | — |
+| Captain | **APPROVED** — M22 implementation in progress (M23 deferred) | 2026-09-09 |
 
-**Implementation must not begin until the Captain explicitly approves this plan.**
-
-After approval, First Mate will: create/track issues, feature branches, rollback
-checkpoints, worktrees as needed, then implement M22 → release v1.27.0 → M23 →
-release v1.28.0 per this plan.
+Captain approved plan `m22-m23-northstar-ops-ti-flywheel` on 2026-09-09.
+Rollback tag: `rollback/pre-m22-northstar-ops`. Branch:
+`cursor/m22-northstar-unattended-ops-6044`. Implement M22 → v1.27.0 first;
+M23 remains planned for v1.28.0 after M22 ships.

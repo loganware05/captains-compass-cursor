@@ -4,10 +4,17 @@ from __future__ import annotations
 
 from typing import Any, Protocol, runtime_checkable
 
-# Only this Cursor cloud agent may be accepted for M21 integration checkpoints.
+# Only this Cursor cloud agent may be accepted for M21+ integration checkpoints.
 M21_INTEGRATION_AGENT_ID = "bc-05d4594d-fac7-4378-b595-c20e3c006044"
 
 DEFAULT_REPOSITORY = "loganware05/captains-compass-cursor"
+
+# M22 product dispatch allowlist (sandbox only). Canonical definition lives in
+# product_allowlist.py; re-exported here for contract discoverability.
+from orchestrator.integrations.product_allowlist import (  # noqa: E402
+    DEFAULT_PRODUCT_REPOSITORY,
+    PRODUCT_DISPATCH_ALLOWLIST,
+)
 
 NORMAL_STATES = (
     "RECEIVED",

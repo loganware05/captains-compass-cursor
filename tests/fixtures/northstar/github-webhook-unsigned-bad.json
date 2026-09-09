@@ -1,0 +1,15 @@
+{
+  "action": "opened",
+  "issue": {
+    "number": 99,
+    "title": "Should be rejected without signature",
+    "body": "unsigned",
+    "labels": [{"name": "northstar"}]
+  },
+  "repository": {
+    "full_name": "loganware05/captain-compass-sandbox"
+  },
+  "sender": {
+    "login": "attacker"
+  }
+}

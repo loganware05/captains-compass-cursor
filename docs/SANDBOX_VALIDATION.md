@@ -298,3 +298,13 @@ Control mirror: `.agent/evidence/release-v1.25.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.26.0/post-tag-validation.md`
 
+### M22 NorthStar unattended live ops (v1.27.0) — pending sandbox refresh
+
+| Step | Result |
+|---|---|
+| Control release `v1.27.0` | Pending merge/tag |
+| Feature branch | `cursor/m22-northstar-unattended-ops-6044` |
+| Automated unit tests | Pending evidence under `.agent/evidence/m22-northstar-unattended-ops/` |
+| Private sandbox refresh PR | Pending Compass **1.27.0** |
+| Live doubles (no credentials) | `tests.orchestrator.test_m22_northstar_live` |
+
