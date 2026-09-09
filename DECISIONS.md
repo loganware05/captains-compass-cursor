@@ -9,16 +9,17 @@
   bounded autonomy. Captains also want Notion visibility without weakening
   GitHub approval.
 - **Decision:**
-  1. Close #50 when this bridge ships; cite ADR-020 for original M4 acceptance.
+  1. Close #50 when the bridge ships; cite ADR-020 for original M4 acceptance.
+     (Captain closed #50 via plan docs #124; product bridge remains on #125.)
   2. After `REVIEW_READY`, optional flags may propose persistent roles (staging
      + PR only) and surface pending routing proposals.
   3. NorthStar GitHub plan approval **never** applies matcher weights; apply
      remains `apply-routing-proposal.sh` with `captain_approved` + budget.
   4. Notion is optional research ingest / summary mirror only — not a provider
-     in the approval or dispatch path. Live MCP requires desktop auth; CI uses
-     fixtures and explicit skip when unauthenticated.
+     in the approval or dispatch path. Live mode reads allowlisted MCP cache;
+     CI fixtures remain; missing allowlist/cache skips with an explicit note.
 - **Consequences:** Connected ops can prepare M4 follow-ups without silent
-  autonomy. Notion MCP auth is an environment prerequisite for live checks.
+  autonomy. Desktop Notion MCP auth unlocks live research checks.
 
 ## ADR-037: NorthStar identity and connected operating routine (v1.25.0 M21)
 
