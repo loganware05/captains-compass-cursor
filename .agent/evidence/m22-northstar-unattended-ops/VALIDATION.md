@@ -2,9 +2,10 @@
 
 **Date:** 2026-09-09  
 **Branch:** `cursor/m22-northstar-unattended-ops-6044`  
-**Commit:** `79962fa` (implementation); evidence commit on same branch  
+**Commit:** `8690f6f` (security hardening on `79962fa`)  
 **Plan:** `m22-m23-northstar-ops-ti-flywheel` (Captain APPROVED 2026-09-09)  
 **Rollback:** `rollback/pre-m22-northstar-ops`
+**PR:** https://github.com/loganware05/captains-compass-cursor/pull/129
 
 ## Commands
 
@@ -12,14 +13,9 @@
 ./scripts/doctor.sh
 # Doctor passed: 0 errors, 0 warning(s)
 
-PYTHONPATH=. python3 -m unittest \
-  tests.orchestrator.test_m22_northstar_live \
-  tests.orchestrator.test_m21_northstar \
-  tests.orchestrator.test_issue50_m4_bridge -v
-# Ran 56 tests in ~3.1s — OK
-#   M22: 29
-#   M21: 22
-#   #50 M4 bridge: 5
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m22_northstar_live -v
+# Ran 31 tests — OK
+#   (includes empty-digest + fixture-captain allowlist regressions)
 
 ./tests/run.sh
 # Results: 121 passed, 0 failed
@@ -31,6 +27,9 @@ PYTHONPATH=. python3 -m unittest \
 - HMAC signature reject (401); fixture webhook 503
 - Sandbox-only product allowlist (`BLOCKED_SCOPE`)
 - Slack/Linear `authoritative: false`
+- Live approval requires 64-hex `plan_digest` (empty digest → `BLOCKED_APPROVAL`)
+- Fixture `captain-github` not trusted in live mode unless `NORTHSTAR_CAPTAIN_GITHUB_IDS` allowlists it
+- Live ack posts to `/repos/{repo}/issues/{n}/comments`
 - Wrong Cursor agent → `BLOCKED_AGENT_IDENTITY`
 - Secrets redacted (`webhook_secret`, signatures, `NORTHSTAR_*` tokens)
 - No live credentials in CI (`RecordingTransport` only)
