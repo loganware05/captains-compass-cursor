@@ -37,6 +37,20 @@ FIXTURES = ROOT / "tests" / "fixtures" / "northstar"
 SANDBOX = "loganware05/captain-compass-sandbox"
 
 
+class _LiveCaptainEnv(unittest.TestCase):
+    """Live-mode tests must explicitly allowlist the fixture captain id."""
+
+    def setUp(self) -> None:
+        self._prev_captains = os.environ.get("NORTHSTAR_CAPTAIN_GITHUB_IDS")
+        os.environ["NORTHSTAR_CAPTAIN_GITHUB_IDS"] = "captain-github"
+
+    def tearDown(self) -> None:
+        if self._prev_captains is None:
+            os.environ.pop("NORTHSTAR_CAPTAIN_GITHUB_IDS", None)
+        else:
+            os.environ["NORTHSTAR_CAPTAIN_GITHUB_IDS"] = self._prev_captains
+
+
 def _sign(body: bytes, secret: str) -> str:
     digest = hmac.new(secret.encode("utf-8"), body, hashlib.sha256).hexdigest()
     return "sha256=" + digest
@@ -148,7 +162,7 @@ class AllowlistTests(unittest.TestCase):
         self.assertIn("BLOCKED_SCOPE", str(ctx.exception))
 
 
-class LiveGitHubAdapterTests(unittest.TestCase):
+class LiveGitHubAdapterTests(_LiveCaptainEnv):
     def test_intake_normalize_allowlisted(self) -> None:
         gh = GitHubAdapter(mode="live", transport=RecordingTransport(), product_repository=SANDBOX)
         event = gh.normalize_event(
@@ -440,7 +454,7 @@ class IngressTests(unittest.TestCase):
         self.assertEqual(len(raw["plan_digest"]), 64)
 
 
-class RoutineLiveModeTests(unittest.TestCase):
+class RoutineLiveModeTests(_LiveCaptainEnv):
     def tearDown(self) -> None:
         for key in (
             "NORTHSTAR_GITHUB_TOKEN",
@@ -580,6 +594,78 @@ class RoutineLiveModeTests(unittest.TestCase):
             self.assertEqual(built["github"].mode, "live")
             self.assertEqual(built["github"].healthcheck()["mode"], "live")
             self.assertEqual(built["linear"].healthcheck()["mode"], "live")
+
+    def test_empty_live_approval_digest_blocked(self) -> None:
+        os.environ["NORTHSTAR_GITHUB_TOKEN"] = "t"
+        os.environ["NORTHSTAR_LINEAR_API_KEY"] = "t"
+        transport = RecordingTransport()
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(NorthStarRoutineError) as ctx:
+                run_northstar_routine(
+                    Path(tmp),
+                    raw_event={
+                        "event_id": "m22-empty-digest",
+                        "event_type": "approval",
+                        "repository": SANDBOX,
+                        "issue": "1",
+                        "actor_id": "captain-github",
+                    },
+                    provider="github",
+                    mode="live",
+                    product_repository=SANDBOX,
+                    transport=transport,
+                    live_approval={
+                        "event_type": "approval",
+                        "plan_digest": "",
+                        "actor_id": "captain-github",
+                        "repository": SANDBOX,
+                        "issue": "1",
+                        "delivery_id": "d-empty",
+                    },
+                    connected={"github": True, "linear": True, "slack": False, "cursor": True},
+                )
+            self.assertIn("64-hex plan_digest", str(ctx.exception))
+
+    def test_fixture_captain_not_trusted_without_env(self) -> None:
+        os.environ.pop("NORTHSTAR_CAPTAIN_GITHUB_IDS", None)
+        os.environ["NORTHSTAR_GITHUB_TOKEN"] = "t"
+        os.environ["NORTHSTAR_LINEAR_API_KEY"] = "t"
+        transport = RecordingTransport()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            # Direct adapter construction in live mode must not include fixture id.
+            gh = GitHubAdapter(
+                mode="live",
+                transport=transport,
+                product_repository=SANDBOX,
+                store_dir=root / "gh",
+            )
+            self.assertNotIn("captain-github", gh.captain_ids)
+            with self.assertRaises(NorthStarRoutineError) as ctx:
+                run_northstar_routine(
+                    root,
+                    raw_event={
+                        "event_id": "m22-no-fixture-captain",
+                        "event_type": "approval",
+                        "repository": SANDBOX,
+                        "issue": "9",
+                        "actor_id": "captain-github",
+                    },
+                    provider="github",
+                    mode="live",
+                    product_repository=SANDBOX,
+                    transport=transport,
+                    live_approval={
+                        "event_type": "approval",
+                        "plan_digest": "a" * 64,
+                        "actor_id": "captain-github",
+                        "repository": SANDBOX,
+                        "issue": "9",
+                        "delivery_id": "d-fix",
+                    },
+                    connected={"github": True, "linear": True, "slack": False, "cursor": True},
+                )
+            self.assertIn("not a verified Captain", str(ctx.exception))
 
 
 if __name__ == "__main__":

@@ -18,15 +18,24 @@ class GitHubAdapter(FixtureAdapterBase):
     provider = "github"
 
     def __init__(self, **kwargs: Any) -> None:
-        kwargs.setdefault("captain_ids", {"captain-github"})
-        # Allow env-provided captain ids in live mode.
-        env_ids = (os.environ.get("NORTHSTAR_CAPTAIN_GITHUB_IDS") or "").strip()
+        mode = str(kwargs.get("mode") or "fixtures").strip().lower()
+        env_ids = {
+            part.strip()
+            for part in (os.environ.get("NORTHSTAR_CAPTAIN_GITHUB_IDS") or "").split(",")
+            if part.strip()
+        }
+        if mode == "live":
+            # Live mode: never implicitly trust the fixture captain id.
+            # Use env allowlist and/or explicitly passed captain_ids only.
+            if "captain_ids" not in kwargs:
+                kwargs["captain_ids"] = set(env_ids)
+            else:
+                kwargs["captain_ids"] = set(kwargs["captain_ids"]) | set(env_ids)
+        else:
+            kwargs.setdefault("captain_ids", {"captain-github"})
+            if env_ids:
+                kwargs["captain_ids"] = set(kwargs["captain_ids"]) | set(env_ids)
         super().__init__(**kwargs)
-        if env_ids:
-            for part in env_ids.split(","):
-                pid = part.strip()
-                if pid:
-                    self.captain_ids.add(pid)
         self.approvals: list[dict[str, Any]] = []
 
     def normalize_event(self, raw_event: dict[str, Any]) -> dict[str, Any]:
@@ -90,6 +99,7 @@ class GitHubAdapter(FixtureAdapterBase):
         plan_digest: str,
         actor_id: str,
         approval_ref: str,
+        issue_number: Any | None = None,
     ) -> dict[str, Any]:
         actor = self.verify_identity({"provider_id": actor_id, "verified_role": "captain"})
         if actor["verified_role"] != "captain":
@@ -110,6 +120,7 @@ class GitHubAdapter(FixtureAdapterBase):
             "approval_ref": approval_ref,
             "actor": actor,
             "mode": self.mode,
+            "issue_number": issue_number,
         }
         self.approvals.append(record)
         self._write_json(f"approval-{run.get('run_id')}.json", record)
@@ -118,24 +129,33 @@ class GitHubAdapter(FixtureAdapterBase):
             from orchestrator.integrations.adapters.live import github_api
 
             token = (os.environ.get("NORTHSTAR_GITHUB_TOKEN") or "").strip()
-            # Best-effort live comment acknowledgement; missing token fails closed.
             repo = (
                 self.product_repository
                 or (run.get("origin_event") or {}).get("project", {}).get("repository")
             )
-            if repo:
-                require_allowed_repository(str(repo))
-                github_api(
-                    self.transport,
-                    method="POST",
-                    path=f"/repos/{repo}/issues/comments",
-                    token=token,
-                    body={
-                        "body": (
-                            f"NorthStar recorded Captain approval for plan_digest={plan_digest}"
-                        )
-                    },
+            issue = issue_number or (run.get("origin_event") or {}).get("references", {}).get(
+                "github_issue"
+            )
+            if not repo:
+                raise StateTransitionError(
+                    "BLOCKED_CONNECTION: live approval ack requires repository"
                 )
+            if not issue:
+                raise StateTransitionError(
+                    "BLOCKED_CONNECTION: live approval ack requires issue number"
+                )
+            require_allowed_repository(str(repo))
+            github_api(
+                self.transport,
+                method="POST",
+                path=f"/repos/{repo}/issues/{issue}/comments",
+                token=token,
+                body={
+                    "body": (
+                        f"NorthStar recorded Captain approval for plan_digest={plan_digest}"
+                    )
+                },
+            )
         return updated
 
     def create_or_update_work_item(self, run: dict[str, Any]) -> dict[str, Any]:

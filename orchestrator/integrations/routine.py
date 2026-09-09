@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Any
 from uuid import uuid4
@@ -157,7 +158,20 @@ def run_northstar_routine(
         slack = SlackAdapter(store_dir=store / "slack", connected=connected.get("slack", True))
         cursor = CursorAdapter(store_dir=store / "cursor", connected=connected.get("cursor", True))
 
-    github.captain_ids.add(captain_github_id)
+    if mode_n == "live":
+        # Live mode: do not inject the fixture default captain id unless it is
+        # already present via NORTHSTAR_CAPTAIN_GITHUB_IDS / explicit allowlist.
+        env_ids = {
+            part.strip()
+            for part in (os.environ.get("NORTHSTAR_CAPTAIN_GITHUB_IDS") or "").split(",")
+            if part.strip()
+        }
+        if captain_github_id in env_ids or (
+            captain_github_id and captain_github_id != "captain-github"
+        ):
+            github.captain_ids.add(captain_github_id)
+    else:
+        github.captain_ids.add(captain_github_id)
 
     # Ensure product repository is stamped onto objective events when provided.
     if product_repo and not raw_event.get("repository"):
@@ -307,23 +321,41 @@ def _apply_live_approval(
     run_id: str,
 ) -> dict[str, Any]:
     """Apply a GitHub NORTHSTAR_APPROVE delivery to a pending run (or create one)."""
-    digest = str(live_approval.get("plan_digest") or "").lower()
-    actor_id = str(live_approval.get("actor_id") or captain_github_id)
+    import re
+
+    digest = str(live_approval.get("plan_digest") or "").strip().lower()
+    if not re.fullmatch(r"[0-9a-f]{64}", digest):
+        raise NorthStarRoutineError(
+            "BLOCKED_APPROVAL: live approval requires a 64-hex plan_digest"
+        )
+
+    actor_id = str(live_approval.get("actor_id") or "").strip()
+    if not actor_id:
+        raise NorthStarRoutineError(
+            "BLOCKED_APPROVAL: live approval requires a non-empty actor_id"
+        )
+    if mode == "live" and actor_id not in github.captain_ids:
+        raise NorthStarRoutineError(
+            "BLOCKED_APPROVAL: actor_id is not a verified Captain for live mode"
+        )
+
     approval_ref = str(
-        live_approval.get("approval_ref") or f"github:issue-comment:{live_approval.get('delivery_id')}"
+        live_approval.get("approval_ref")
+        or f"github:issue-comment:{live_approval.get('delivery_id')}"
     )
+    issue_number = live_approval.get("issue")
 
     # Find a pending run with matching plan_digest under evidence tree; else create intake+approve.
     pending, pending_evidence = _find_pending_run(repo_root, plan_digest=digest)
     if pending is not None and pending_evidence is not None:
         evidence = pending_evidence
     if pending is None:
-        # No pending run — still fail closed if digest empty; otherwise create run then approve.
+        # No matching pending run — create intake then approve only if digests match.
         intake = {
             "event_id": f"approval-origin-{live_approval.get('delivery_id') or run_id}",
             "event_type": "objective",
             "repository": live_approval.get("repository") or product_repository,
-            "issue": live_approval.get("issue"),
+            "issue": issue_number,
             "label": "northstar",
             "intake": True,
             "title": live_approval.get("title") or "NorthStar live approval",
@@ -340,21 +372,23 @@ def _apply_live_approval(
             approve=False,
             mode=mode,
             product_repository=product_repository,
-            transport=github.transport if isinstance(github.transport, (RecordingTransport, UrllibTransport)) or github.transport else None,
+            transport=github.transport
+            if isinstance(github.transport, (RecordingTransport, UrllibTransport))
+            or github.transport
+            else None,
             run_id=run_id,
             connected=connected,
         )
         pending_path = Path(created["evidence_dir"]) / "run.json"
         pending = json.loads(pending_path.read_text(encoding="utf-8"))
         evidence = Path(created["evidence_dir"])
-        digest_expected = created.get("plan_digest")
-        if digest and digest != digest_expected:
+        digest_expected = str(created.get("plan_digest") or "")
+        if digest != digest_expected:
             pending = transition_run(
                 pending, "BLOCKED_APPROVAL", reason="plan digest mismatch"
             )
             persist_run(pending, evidence / "run.json")
             raise NorthStarRoutineError("BLOCKED_APPROVAL: plan digest mismatch")
-        digest = digest_expected
 
     if pending.get("plan_digest") != digest:
         pending = transition_run(pending, "BLOCKED_APPROVAL", reason="plan digest mismatch")
@@ -368,6 +402,9 @@ def _apply_live_approval(
             plan_digest=digest,
             actor_id=actor_id,
             approval_ref=approval_ref,
+            issue_number=issue_number or (pending.get("origin_event") or {})
+            .get("references", {})
+            .get("github_issue"),
         )
     except StateTransitionError as exc:
         raise NorthStarRoutineError(str(exc)) from exc
