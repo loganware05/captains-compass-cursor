@@ -6,7 +6,7 @@
 |---|---|
 | Status | **APPROVED — IMPLEMENTATION IN PROGRESS** |
 | Plan ID | `issue-50-northstar-m4-bridge` |
-| Issue | [#50](https://github.com/loganware05/captains-compass-cursor/issues/50) |
+| Issue | [#50](https://github.com/loganware05/captains-compass-cursor/issues/50) (closed via [#124](https://github.com/loganware05/captains-compass-cursor/pull/124)) |
 | Product | **NorthStar** (formerly Captain's Compass) |
 | Baseline | `v1.25.0` on `main` |
 | Prepared | 2026-09-08 |
@@ -23,13 +23,13 @@ NorthStar connected routine.
 
 ## Problem statement
 
-1. Issue #50 remains **OPEN** even though persistent-role promotion and bounded
-   Level 3 autonomy shipped (ADR-020, PRs historically under #50 / v1.8.0).
-2. M21’s NorthStar routine (`orchestrator/integrations/`) does **not** invoke
+1. Issue #50 was open even though persistent-role promotion and bounded Level 3
+   autonomy shipped (ADR-020, PRs historically under #50 / v1.8.0). Hygienic
+   close landed via plan docs PR #124; product bridge remains on PR #125.
+2. M21’s NorthStar routine (`orchestrator/integrations/`) did **not** invoke
    M4 promotion or weight-apply paths.
-3. Notion is research/summary only today; it is **not** a NorthStar provider and
-   must not gain approval authority. Notion MCP currently needs authentication
-   in this environment.
+3. Notion is research/summary only; it is **not** a NorthStar provider and must
+   not gain approval authority.
 
 ## Current-state analysis (evidence)
 
@@ -46,7 +46,7 @@ NorthStar connected routine.
 ## Desired outcome
 
 1. **Close #50** as completed for original M4 acceptance, with a clear comment
-   linking v1.8.0 / ADR-020.
+   linking v1.8.0 / ADR-020. (**Done** via #124.)
 2. **Bridge M4 into NorthStar** as a Captain-gated routine extension:
    - After review-ready / closeout phases (never before canonical GitHub
      approval), optionally propose persistent roles from proficiency evidence.
@@ -65,8 +65,8 @@ NorthStar connected routine.
 
 ### A — Issue #50 hygiene
 
-- [ ] GitHub issue #50 closed with completion comment citing v1.8.0 / ADR-020
-      and this follow-on plan ID.
+- [x] GitHub issue #50 closed with completion comment citing v1.8.0 / ADR-020
+      and this follow-on plan ID. (Closed via #124 merge.)
 - [x] `PROGRESS.md` no longer lists “close #50” as open hygiene.
 
 ### B — NorthStar ↔ M4 bridge
@@ -89,8 +89,9 @@ NorthStar connected routine.
 - [x] Documented procedure for allowlisted Notion ingest as **context only**.
 - [x] Optional fixture-mode “release summary” payload for Notion write (no live
       credential required in CI).
-- [x] If Notion MCP remains unauthenticated, bridge still works; Notion steps
-      are skipped with an explicit non-fatal note.
+- [x] If Notion MCP remains unauthenticated or live cache is empty, bridge still
+      works; Notion steps are skipped with an explicit non-fatal note.
+- [x] After desktop Notion MCP auth: live fetch + allowlist/cache path verified.
 
 ## Non-goals
 
@@ -152,10 +153,9 @@ NorthStar routine (existing)
 
 ## Captain decisions (2026-09-08)
 
-1. Close #50 **when the bridge ships** (not before).
-2. Authenticate Notion MCP for live checking (desktop IDE required; cloud cannot
-   complete interactive MCP auth — live path implemented; skip with explicit note
-   until desktop auth is done).
+1. Close #50 **when the bridge ships** (not before). Captain later closed #50 via
+   docs PR **#124**; product bridge remains on **#125**.
+2. Authenticate Notion MCP for live checking (desktop IDE) — **completed**.
 3. Target release **v1.26.0**.
 4. Do **not** auto-apply routing weights from NorthStar approval alone.
 

@@ -5,24 +5,29 @@
 **Issue #50 / NorthStar M4 bridge** implementing toward **v1.26.0**
 (`issue-50-northstar-m4-bridge`, **APPROVED**).
 
-- Branch: `cursor/issue-50-northstar-m4-bridge-6044`
+- Branch: `cursor/issue-50-northstar-m4-bridge-6044` (PR #125)
 - Rollback: `rollback/pre-issue-50-m4-bridge`
-- Close #50 when this bridge ships (Captain decision)
-- Notion live MCP: awaiting Cursor desktop auth (fixture path green; live skips with explicit note)
+- Issue [#50](https://github.com/loganware05/captains-compass-cursor/issues/50)
+  closed via plan docs [#124](https://github.com/loganware05/captains-compass-cursor/pull/124)
+- Notion MCP: authenticated (desktop); live allowlist/cache path verified
 
 Prior: **M21 CLOSED** as **NorthStar v1.25.0**.
 
 ## Completed
 
 - v1.5.0–v1.25.0 / M1–M21
-- M4 original acceptance (v1.8.0 / ADR-020) — issue #50 still open until bridge ships
+- M21 NorthStar connected operations
+- Sandbox refresh 1.24.0 → 1.25.0 ([sandbox#41](https://github.com/loganware05/captain-compass-sandbox/pull/41) merged)
+- M4 original acceptance (v1.8.0 / ADR-020) — issue #50 closed via #124
+- Notion MCP desktop auth for live research checks
 
 ## Next
 
-1. Land v1.26.0 bridge PR; close #50
-2. Captain: authenticate Notion MCP in desktop for live checks
-3. Define roadmap beyond M21 / #50 bridge
+1. Resolve/land v1.26.0 bridge PR #125 (rebase after #124)
+2. Tag/release **v1.26.0** after merge
+3. Sandbox refresh when Captain requests
+4. Define roadmap beyond M21 / #50 bridge
 
 ## Blockers
 
-Notion MCP interactive auth unavailable in Cloud Agent — desktop action requested.
+None for Notion MCP auth. PR #125 merge conflicts with `main` after #124 (in progress).

@@ -3,9 +3,10 @@
 | Check | Result |
 |---|---|
 | `test_issue50_m4_bridge` | Pass (5/5) |
-| `test_m21_northstar` regression | Pass |
-| Doctor | Pending full suite |
-| Notion live MCP | Skipped — desktop auth required; fixture + live-skip path covered |
+| Doctor | Pass |
+| Notion live MCP | Authenticated; allowlist + cache live path green |
+| Merge with `main` after #124 | Conflicts resolved in `IMPLEMENTATION_PLAN.md` / `PROGRESS.md` |
+| Issue #50 | Closed via #124 |
 | Target | v1.26.0 |
 
-Date: 2026-09-08
+Date: 2026-09-09

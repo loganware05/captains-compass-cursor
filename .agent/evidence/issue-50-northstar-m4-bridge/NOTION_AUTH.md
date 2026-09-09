@@ -1,11 +1,16 @@
 # Notion MCP live auth status
 
-Captain requested live Notion checking. Cloud Agents cannot complete interactive
-MCP authentication (`mcp_auth` requires Cursor desktop IDE).
+Captain completed Notion MCP desktop authentication (2026-09-09).
 
-- Environment action requested: `notion-mcp-auth`
-- Bridge behavior: `--notion-mode live` returns explicit
-  `notion_mcp_unauthenticated` skip without failing the routine
-- Fixture mode (`--notion-mode fixtures`) is green in CI
+| Check | Result |
+|---|---|
+| `notion-fetch` id=`self` | Authenticated — Logan Ware’s Space |
+| `notion-search` | Available (ai_search plan_required) |
+| Allowlisted pages fetched | `3cae6a901c4381fd8482e9158ac9e6cc`, `3c1e6a901c4381c4bb5fdc91dc8b4d71` |
+| Live cache | `.agent/knowledge/external/notion-live/<page-id>.md` |
+| `notion_research_context(..., mode="live")` | `skipped=false`, count=2 |
+| Authority | Research/summary only — approvals remain GitHub-only |
 
-After desktop auth, re-run with `--notion-mode live` against an allowlisted page.
+Bridge live mode now reads the allowlisted cache (populated via MCP fetch).
+If allowlist or cache is missing, the routine skips Notion with an explicit
+non-fatal reason (`notion_allowlist_missing` / `notion_live_cache_missing`).

@@ -71,9 +71,28 @@ class M4BridgeUnitTests(unittest.TestCase):
         fixtures = notion_research_context(ROOT, mode="fixtures")
         self.assertFalse(fixtures["authoritative"])
         self.assertGreaterEqual(fixtures["count"], 1)
-        live = notion_research_context(ROOT, mode="live")
-        self.assertTrue(live.get("skipped"))
-        self.assertEqual(live.get("reason"), "notion_mcp_unauthenticated")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            live_missing = notion_research_context(repo, mode="live")
+            self.assertTrue(live_missing.get("skipped"))
+            self.assertEqual(live_missing.get("reason"), "notion_allowlist_missing")
+
+            allowlist = repo / ".agent" / "knowledge" / "notion-allowlist.txt"
+            allowlist.parent.mkdir(parents=True)
+            page_id = "3cae6a901c4381fd8482e9158ac9e6cc"
+            allowlist.write_text(f"{page_id}\n", encoding="utf-8")
+            live_empty = notion_research_context(repo, mode="live")
+            self.assertTrue(live_empty.get("skipped"))
+            self.assertEqual(live_empty.get("reason"), "notion_live_cache_missing")
+
+            cache = repo / ".agent" / "knowledge" / "external" / "notion-live"
+            cache.mkdir(parents=True)
+            (cache / f"{page_id}.md").write_text("# research\n", encoding="utf-8")
+            live_ok = notion_research_context(repo, mode="live")
+            self.assertFalse(live_ok.get("skipped"))
+            self.assertEqual(live_ok.get("count"), 1)
+            self.assertEqual(live_ok["items"][0]["page_id"], page_id)
 
 
 class M4BridgeRoutineTests(unittest.TestCase):

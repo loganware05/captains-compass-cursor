@@ -22,6 +22,12 @@ from orchestrator.agents.promote import (
 )
 from orchestrator.branding import display_name
 from orchestrator.integrations.events import redact_secrets
+from orchestrator.knowledge.notion_live import (
+    NotionLiveError,
+    load_allowlist,
+    normalize_page_id,
+    notion_live_cache_dir,
+)
 from orchestrator.routing.apply import ApplyError, apply_routing_proposal, load_proposal
 
 
@@ -173,28 +179,85 @@ def notion_research_context(
         }
 
     if mode == "live":
-        # Cloud agents cannot complete interactive Notion MCP auth. Detect and skip.
-        allowlist = repo_root / ".agent" / "knowledge" / "notion-allowlist.txt"
-        allowlisted = []
-        if allowlist.is_file():
-            allowlisted = [
-                line.strip()
-                for line in allowlist.read_text(encoding="utf-8").splitlines()
-                if line.strip() and not line.strip().startswith("#")
-            ]
+        # Live path reads MCP-fetched markdown from the allowlisted cache.
+        # Agents populate cache via Notion MCP (notion-fetch) + ingest-notion-live.sh.
+        try:
+            allowlisted = load_allowlist(repo_root)
+        except NotionLiveError as exc:
+            return {
+                "kind": "northstar-notion-context",
+                "product": display_name(),
+                "mode": "live",
+                "authoritative": False,
+                "skipped": True,
+                "reason": "notion_allowlist_missing",
+                "message": (
+                    f"{exc}. Maintain .agent/knowledge/notion-allowlist.txt, then "
+                    "fetch allowlisted pages via Notion MCP into "
+                    ".agent/knowledge/external/notion-live/. Approvals remain GitHub-only."
+                ),
+                "allowlisted_page_ids": [],
+                "at": _utc_now(),
+            }
+
+        targets = allowlisted
         if page_ids:
-            allowlisted = [pid for pid in page_ids if pid in set(allowlisted) or not allowlisted]
+            requested = [normalize_page_id(pid) for pid in page_ids]
+            allow_set = set(allowlisted)
+            targets = [pid for pid in requested if pid in allow_set]
+            if not targets:
+                return {
+                    "kind": "northstar-notion-context",
+                    "product": display_name(),
+                    "mode": "live",
+                    "authoritative": False,
+                    "skipped": True,
+                    "reason": "notion_page_ids_not_allowlisted",
+                    "message": (
+                        "Requested page_ids are not in the Notion allowlist. "
+                        "Approvals remain GitHub-only."
+                    ),
+                    "allowlisted_page_ids": allowlisted,
+                    "at": _utc_now(),
+                }
+
+        cache_dir = notion_live_cache_dir(repo_root)
+        for page_id in targets:
+            cache_path = cache_dir / f"{page_id}.md"
+            if cache_path.is_file() and cache_path.stat().st_size > 0:
+                evidence.append(
+                    {
+                        "page_id": page_id,
+                        "path": str(cache_path.relative_to(repo_root)),
+                        "source": "notion_live_cache",
+                    }
+                )
+
+        if evidence:
+            return {
+                "kind": "northstar-notion-context",
+                "product": display_name(),
+                "mode": "live",
+                "authoritative": False,
+                "skipped": False,
+                "count": len(evidence),
+                "items": evidence,
+                "allowlisted_page_ids": allowlisted,
+                "at": _utc_now(),
+            }
+
         return {
             "kind": "northstar-notion-context",
             "product": display_name(),
             "mode": "live",
             "authoritative": False,
             "skipped": True,
-            "reason": "notion_mcp_unauthenticated",
+            "reason": "notion_live_cache_missing",
             "message": (
-                "Notion MCP interactive auth is unavailable in this Cloud Agent "
-                "environment. Authenticate Notion in Cursor desktop, then re-run "
-                "with --notion-mode live. Approvals remain GitHub-only."
+                "Notion allowlist is present but live cache is empty. Fetch "
+                "allowlisted pages with Notion MCP (notion-fetch), write markdown "
+                "under .agent/knowledge/external/notion-live/<page-id>.md, then "
+                "re-run with --notion-mode live. Approvals remain GitHub-only."
             ),
             "allowlisted_page_ids": allowlisted,
             "at": _utc_now(),
