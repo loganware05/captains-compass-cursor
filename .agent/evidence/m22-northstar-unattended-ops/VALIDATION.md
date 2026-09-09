@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-09  
 **Branch:** `cursor/m22-northstar-unattended-ops-6044`  
-**Commit:** `79962fa`  
+**Commit:** `79962fa` (implementation); evidence commit on same branch  
 **Plan:** `m22-m23-northstar-ops-ti-flywheel` (Captain APPROVED 2026-09-09)  
 **Rollback:** `rollback/pre-m22-northstar-ops`
 
