@@ -1,0 +1,79 @@
+Captain's Compass doctor
+Root: /agent/repos/captain-compass-sandbox
+
+  ok: COMPASS_VERSION=1.26.0 (installed product)
+  ok: AGENTS.md
+  ok: PROJECT_CONTEXT.md
+  ok: IMPLEMENTATION_PLAN.md
+  ok: DECISIONS.md
+  ok: PROGRESS.md
+  ok: TESTING.md
+  ok: CHANGELOG.md
+  ok: rule 00-core-operating-model.mdc
+  ok: rule 01-plan-approval-gate.mdc
+  ok: rule 02-git-worktree-policy.mdc
+  ok: rule 03-validation-definition-of-done.mdc
+  ok: rule 04-documentation-memory.mdc
+  ok: skill repository-discovery
+  ok: skill implementation-planning
+  ok: skill worktree-orchestration
+  ok: skill testing-validation
+  ok: skill security-review
+  ok: skill accessibility-review
+  ok: skill pull-request-preparation
+  ok: skill github-integration
+  ok: skill react-engineering
+  ok: skill playwright-browser-validation
+  ok: skill node-engineering
+  ok: skill postgres-prisma
+  ok: skill docker-cloud
+  ok: skill linear-integration
+  ok: skill notion-integration
+  ok: skill python-ml
+  ok: skill ios-engineering
+  ok: skill source-code-context
+  ok: skill code-structure-cleanup
+  ok: skill review-fix-loop
+  ok: skill autonomy-budget
+  ok: skill harness-gc
+  ok: skill dependency-supply-chain
+  ok: skill capability-planning
+  ok: skill execution-telemetry
+  ok: skill candidate-promotion
+  ok: skill experience-skill-training
+  ok: skill compass-evaluator
+  ok: skill experience-routing
+  ok: skill persistent-role-promotion
+  ok: skill bounded-autonomy
+  ok: skill knowledge-steward
+  ok: skill technology-intelligence-live
+  ok: skill procedure-playbooks
+  ok: skill skill-lifecycle
+  ok: skill external-knowledge-ingest
+  ok: skill embedding-providers
+  ok: skill hosted-vector-db
+  ok: skill package-registry-ti
+  ok: skill skill-learning-loop
+  ok: skill northstar-connected-routine
+  ok: agent repository-scout.md
+  ok: agent architecture-agent.md
+  ok: agent implementation-agent.md
+  ok: agent test-engineer.md
+  ok: agent security-reviewer.md
+  ok: agent accessibility-reviewer.md
+  ok: agent adversarial-reviewer.md
+  ok: agent documentation-agent.md
+  ok: agent compass-evaluator.md
+  ok: agent knowledge-steward.md
+  ok: hooks.json
+  ok: hook secret-protection.sh
+  ok: hook protected-branch.sh
+  ok: hook plan-approval-check.sh
+  ok: hook branch-name-validation.sh
+  ok: hook pre-commit-formatting.sh
+  ok: hook pre-push-tests.sh
+  ok: hook pr-evidence-validation.sh
+  ok: hooks _common.sh
+  ok: .agent/budgets directory
+
+Doctor passed: 0 errors, 0 warning(s)

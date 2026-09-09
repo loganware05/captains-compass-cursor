@@ -286,3 +286,15 @@ Control mirror: `.agent/evidence/release-v1.24.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.25.0/post-tag-validation.md`
 
+### #50 NorthStar M4 bridge (v1.26.0) — refresh opened 2026-09-09
+
+| Step | Result |
+|---|---|
+| Control release `v1.26.0` | Pass — https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.26.0 |
+| Feature PR | Pass — [#125](https://github.com/loganware05/captains-compass-cursor/pull/125) |
+| Automated release smokes | Pass — `.agent/evidence/release-v1.26.0/sandbox-smokes-automated.json` |
+| Private sandbox refresh PR | Pass — [sandbox#42](https://github.com/loganware05/captain-compass-sandbox/pull/42) (doctor green; 21/21; commit `6aa90b5`) |
+| NorthStar M4 bridge fixture | Pass — `./scripts/run-northstar-routine.sh --demo --approve --advance-to-review --propose-roles --surface-routing --notion-mode fixtures` → `REVIEW_READY` |
+
+Control mirror: `.agent/evidence/release-v1.26.0/post-tag-validation.md`
+

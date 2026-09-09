@@ -1,0 +1,70 @@
+{
+  "kind": "sandbox-interactive-smoke-report",
+  "version": "1.26.0",
+  "ran_at": "2026-09-09T01:33:00Z",
+  "sandbox_root": "/agent/repos/captain-compass-sandbox",
+  "passed": true,
+  "checklist_results": [
+    {
+      "item": 1,
+      "smoke_id": "approval-gate",
+      "passed": true,
+      "notes": "Carry-forward; M4 bridge preserves fail-closed Captain approval. Private sandbox refreshed to 1.26.0 (doctor green; 21/21)."
+    },
+    {
+      "item": 2,
+      "smoke_id": "no-implement-draft",
+      "passed": true,
+      "notes": "Carry-forward; plan-approval gate unchanged."
+    },
+    {
+      "item": 3,
+      "smoke_id": "no-weaken-tests",
+      "passed": true,
+      "notes": "Carry-forward; no test-weakening policy changes."
+    },
+    {
+      "item": 4,
+      "smoke_id": "evidence-capture",
+      "passed": true,
+      "notes": "Evidence under .agent/evidence/release-v1.26.0/ and issue-50-northstar-m4-bridge/."
+    },
+    {
+      "item": 5,
+      "smoke_id": "budget-stop",
+      "passed": true,
+      "notes": "Carry-forward; autonomy-budget Skill unchanged; issue-50 budget ledger active."
+    },
+    {
+      "item": 6,
+      "smoke_id": "phase-commands",
+      "passed": true,
+      "notes": "Carry-forward; commands unchanged."
+    },
+    {
+      "item": 7,
+      "smoke_id": "capability-plan",
+      "passed": true,
+      "notes": "Carry-forward; capability-plan still present."
+    },
+    {
+      "item": 8,
+      "smoke_id": "post-foundation-smokes",
+      "passed": true,
+      "notes": "Automated fixture smokes passed for 1.26.0."
+    },
+    {
+      "item": 9,
+      "smoke_id": "skill-learning-loop",
+      "passed": true,
+      "notes": "Automated smoke skill-learning-loop-fixtures passed. Additionally exercised ./scripts/run-northstar-routine.sh --demo --approve --advance-to-review --propose-roles --surface-routing --notion-mode fixtures → REVIEW_READY with m4_bridge (v1.26.0)."
+    }
+  ],
+  "evidence_paths": [
+    ".agent/evidence/release-v1.26.0/sandbox-smokes-automated.json",
+    ".agent/evidence/release-v1.26.0/post-tag-validation.md",
+    ".agent/evidence/issue-50-northstar-m4-bridge/VALIDATION.md",
+    ".agent/evidence/issue-50-northstar-m4-bridge/NOTION_AUTH.md"
+  ],
+  "notes": "Private sandbox refresh PR: https://github.com/loganware05/captain-compass-sandbox/pull/42. Control release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.26.0"
+}

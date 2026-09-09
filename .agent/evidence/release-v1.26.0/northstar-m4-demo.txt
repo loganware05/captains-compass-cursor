@@ -1,0 +1,138 @@
+{
+  "ok": true,
+  "product": "NorthStar",
+  "run_id": "ns-1d7e3ea17c",
+  "state": "REVIEW_READY",
+  "plan_id": "m21-northstar-connected-operations",
+  "plan_digest": "0e133e1fdf8a3ac74dc06d2b4309dba079d78221141906f70434710900a4715b",
+  "evidence_dir": "/agent/repos/captains-compass-cursor/.agent/evidence/ns-1d7e3ea17c",
+  "duplicate": false,
+  "work_packet": {
+    "kind": "northstar-work-packet",
+    "run_id": "ns-1d7e3ea17c",
+    "plan_id": "m21-northstar-connected-operations",
+    "plan_digest": "0e133e1fdf8a3ac74dc06d2b4309dba079d78221141906f70434710900a4715b",
+    "repository": "loganware05/captains-compass-cursor",
+    "allowed_agent_id": "bc-05d4594d-fac7-4378-b595-c20e3c006044",
+    "github_approval_ref": "github:issue-comment:ns-1d7e3ea17c",
+    "objective": "@NorthStar refresh connected operations docs",
+    "created_at": "2026-09-09T01:32:56Z",
+    "packet_digest": "918f9b3305547d21bcfc55c99fdba4e9397a6a61b257c787a0065fcf3a1ef64c"
+  },
+  "checkpoint": "chk-ns-1d7e3ea17c",
+  "message": "fixture run reached REVIEW_READY",
+  "reconcile": {
+    "at": "2026-09-09T01:32:56Z",
+    "run_id": "ns-1d7e3ea17c",
+    "providers": {
+      "github": {
+        "provider": "github",
+        "run_id": "ns-1d7e3ea17c",
+        "state": "REVIEW_READY",
+        "ok": true
+      },
+      "linear": {
+        "provider": "linear",
+        "ok": true,
+        "run_id": "ns-1d7e3ea17c",
+        "state": "REVIEW_READY"
+      },
+      "slack": {
+        "provider": "slack",
+        "run_id": "ns-1d7e3ea17c",
+        "state": "REVIEW_READY",
+        "ok": true
+      },
+      "cursor": {
+        "provider": "cursor",
+        "run_id": "ns-1d7e3ea17c",
+        "state": "REVIEW_READY",
+        "ok": true
+      }
+    },
+    "authority": {
+      "engineering": "github",
+      "plan_digest": "0e133e1fdf8a3ac74dc06d2b4309dba079d78221141906f70434710900a4715b",
+      "plan_approved": true,
+      "state": "REVIEW_READY"
+    },
+    "ok": true
+  },
+  "m4_bridge": {
+    "kind": "northstar-m4-bridge",
+    "product": "NorthStar",
+    "run_id": "ns-1d7e3ea17c",
+    "at": "2026-09-09T01:32:56Z",
+    "roles": {
+      "kind": "northstar-m4-role-proposals",
+      "product": "NorthStar",
+      "at": "2026-09-09T01:32:56Z",
+      "proposed_count": 0,
+      "proposed": [],
+      "skipped": []
+    },
+    "routing": {
+      "kind": "northstar-m4-routing-surface",
+      "product": "NorthStar",
+      "at": "2026-09-09T01:32:56Z",
+      "count": 2,
+      "proposals": [
+        {
+          "path": "/agent/repos/captains-compass-cursor/.agent/routing/proposals/ctxsel-72acd1f877c0.json",
+          "proposal_id": "ctxsel-72acd1f877c0",
+          "captain_approved": false,
+          "auto_apply": false,
+          "kind": "context-selection-proposal"
+        },
+        {
+          "path": "/agent/repos/captains-compass-cursor/.agent/routing/proposals/ctxsel-c7079d5982e7.json",
+          "proposal_id": "ctxsel-c7079d5982e7",
+          "captain_approved": false,
+          "auto_apply": false,
+          "kind": "context-selection-proposal"
+        }
+      ],
+      "note": "NorthStar plan approval does not apply weights; use captain_approved on proposal + apply flag"
+    },
+    "notion": {
+      "kind": "northstar-notion-context",
+      "product": "NorthStar",
+      "mode": "fixtures",
+      "authoritative": false,
+      "count": 3,
+      "items": [
+        {
+          "path": "tests/fixtures/notion/role-research.md",
+          "source": "fixture_or_cache"
+        },
+        {
+          "path": ".agent/knowledge/external/notion-live/3c1e6a901c4381c4bb5fdc91dc8b4d71.md",
+          "source": "fixture_or_cache"
+        },
+        {
+          "path": ".agent/knowledge/external/notion-live/3cae6a901c4381fd8482e9158ac9e6cc.md",
+          "source": "fixture_or_cache"
+        }
+      ],
+      "at": "2026-09-09T01:32:56Z"
+    },
+    "notion_summary_mirror": {
+      "kind": "northstar-notion-summary-mirror",
+      "product": "NorthStar",
+      "authoritative": false,
+      "title": "NorthStar run ns-1d7e3ea17c \u2014 M4 bridge summary",
+      "run_id": "ns-1d7e3ea17c",
+      "state": "REVIEW_READY",
+      "plan_id": "m21-northstar-connected-operations",
+      "plan_approved": true,
+      "github_approval_ref": "github:issue-comment:ns-1d7e3ea17c",
+      "bridge": {
+        "roles_proposed": 0,
+        "routing_pending": 2,
+        "notion_mode": "fixtures"
+      },
+      "authority_note": "Mirror only. Canonical approval remains GitHub + plan digest.",
+      "at": "2026-09-09T01:32:56Z"
+    }
+  }
+}
