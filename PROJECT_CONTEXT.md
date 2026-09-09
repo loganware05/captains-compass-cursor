@@ -126,6 +126,13 @@ gh auth status
 
 ## Current Priorities
 
+<<<<<<< HEAD
 **M22 in progress → v1.27.0** — NorthStar unattended live ops (GitHub ingress +
 live adapters, sandbox-only). Fixture mode remains CI default. M23 TI/skill
 flywheel follows after M22 ships. Prior: **v1.26.0** #50 M4 bridge.
+=======
+**v1.26.0 closed** — issue #50 NorthStar M4 bridge + Notion research mirror.
+Sandbox [sandbox#42](https://github.com/loganware05/captain-compass-sandbox/pull/42)
+and closeout [#126](https://github.com/loganware05/captains-compass-cursor/pull/126) merged.
+Next: roadmap beyond M21 / #50.
+>>>>>>> origin/main
