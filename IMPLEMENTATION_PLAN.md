@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED — IMPLEMENTATION IN PROGRESS** |
+| Status | **CLOSED — SHIPPED as v1.26.0** |
 | Plan ID | `issue-50-northstar-m4-bridge` |
 | Issue | [#50](https://github.com/loganware05/captains-compass-cursor/issues/50) (closed via [#124](https://github.com/loganware05/captains-compass-cursor/pull/124)) |
 | Product | **NorthStar** (formerly Captain's Compass) |

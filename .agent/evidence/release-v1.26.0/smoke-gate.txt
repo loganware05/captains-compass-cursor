@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "version": "1.26.0",
+  "automated_path": "/agent/repos/captains-compass-cursor/.agent/evidence/release-v1.26.0/sandbox-smokes-automated.json",
+  "interactive_path": "/agent/repos/captains-compass-cursor/.agent/evidence/release-v1.26.0/sandbox-smokes-interactive.json"
+}
