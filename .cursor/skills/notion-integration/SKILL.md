@@ -36,6 +36,12 @@ Reading product requirements or research from Notion, or writing release summari
    - Run `./scripts/ingest-notion-live.sh` explicitly; provenance is `mcp_live`.
    - Never ingest pages outside the allowlist.
 
+7. **NorthStar bridge (non-authoritative):** after `REVIEW_READY`,
+   `./scripts/run-northstar-routine.sh ... --notion-mode fixtures|live` may
+   gather research context and write a summary mirror under
+   `.agent/evidence/<run_id>/notion-summary-mirror.json`. Live mode requires
+   Notion MCP authentication (Cursor desktop). Approvals stay on GitHub.
+
 ## Prohibited actions
 
 - Do not store implementation-critical approvals only in Notion

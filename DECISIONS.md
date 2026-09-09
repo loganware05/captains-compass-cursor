@@ -1,5 +1,26 @@
 # Decisions
 
+## ADR-038: NorthStar M4 bridge + Notion research mirror (#50 / v1.26.0)
+
+- **Status:** Accepted
+- **Date:** 2026-09-08
+- **Context:** Issue #50’s original M4 acceptance shipped in v1.8.0, but the
+  NorthStar connected routine did not invoke persistent-role promotion or
+  bounded autonomy. Captains also want Notion visibility without weakening
+  GitHub approval.
+- **Decision:**
+  1. Close #50 when the bridge ships; cite ADR-020 for original M4 acceptance.
+     (Captain closed #50 via plan docs #124; product bridge remains on #125.)
+  2. After `REVIEW_READY`, optional flags may propose persistent roles (staging
+     + PR only) and surface pending routing proposals.
+  3. NorthStar GitHub plan approval **never** applies matcher weights; apply
+     remains `apply-routing-proposal.sh` with `captain_approved` + budget.
+  4. Notion is optional research ingest / summary mirror only — not a provider
+     in the approval or dispatch path. Live mode reads allowlisted MCP cache;
+     CI fixtures remain; missing allowlist/cache skips with an explicit note.
+- **Consequences:** Connected ops can prepare M4 follow-ups without silent
+  autonomy. Desktop Notion MCP auth unlocks live research checks.
+
 ## ADR-037: NorthStar identity and connected operating routine (v1.25.0 M21)
 
 - **Status:** Accepted

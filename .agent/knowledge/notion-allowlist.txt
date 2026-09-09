@@ -1,0 +1,9 @@
+# Captain-maintained Notion page allowlist for NorthStar research context.
+# One UUID or Notion URL per line. Lines starting with # are comments.
+# Approvals remain GitHub-only — Notion is never an approval authority.
+
+# Captain's Compass: Cursor → Core → Platform
+3cae6a901c4381fd8482e9158ac9e6cc
+
+# Captain Compass Multi-Agent Orchestration OS — Architecture & Production Plan
+3c1e6a901c4381c4bb5fdc91dc8b4d71

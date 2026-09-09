@@ -1,0 +1,3 @@
+# Example Notion page allowlist (copy to .agent/knowledge/notion-allowlist.txt)
+# page-id-one
+# page-id-two

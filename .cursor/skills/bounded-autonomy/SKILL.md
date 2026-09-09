@@ -29,6 +29,10 @@ matcher weight suggestions under an autonomy budget (Milestone 4 Level 3).
      --budget .agent/budgets/<plan-id>.md
    ```
 
+   NorthStar connected routine may **surface** pending proposals after
+   `REVIEW_READY` (`--surface-routing`) but never applies weights from plan
+   approval alone. See Skill `northstar-connected-routine`.
+
 4. **Context selection apply** (M17 — which plan slices appear):
 
    ```bash

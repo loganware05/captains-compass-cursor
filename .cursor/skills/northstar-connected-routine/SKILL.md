@@ -43,8 +43,16 @@ truth, and Cursor execution under the NorthStar M21 connected operating model.
 ```bash
 ./scripts/run-northstar-routine.sh --demo
 ./scripts/run-northstar-routine.sh --demo --approve --advance-to-review
+./scripts/run-northstar-routine.sh --demo --approve --advance-to-review \
+  --propose-roles --surface-routing --notion-mode fixtures
 ./scripts/reconcile-northstar-run.sh --run .agent/evidence/<run_id>/run.json
 ```
+
+After `REVIEW_READY`, `--propose-roles` stages persistent-role drafts only
+(Captain PR required). `--surface-routing` lists pending routing proposals and
+does **not** apply weights. Use `./scripts/apply-routing-proposal.sh` with
+`captain_approved` for bounded apply. `--notion-mode fixtures|live` gathers
+non-authoritative research context / summary mirrors.
 
 ## Safety
 
