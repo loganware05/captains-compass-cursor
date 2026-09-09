@@ -2,32 +2,29 @@
 
 ## Current status
 
-**v1.26.0 RELEASED** — NorthStar M4 bridge + Notion research mirror shipped.
+**Next plan awaiting approval:** `m22-m23-northstar-ops-ti-flywheel`
 
-| Item | Link / result |
+| Item | Value |
 |---|---|
-| Release | https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.26.0 |
-| Feature PR | [#125](https://github.com/loganware05/captains-compass-cursor/pull/125) merged |
-| Issue #50 | Closed via [#124](https://github.com/loganware05/captains-compass-cursor/pull/124) |
-| Sandbox refresh | [sandbox#42](https://github.com/loganware05/captain-compass-sandbox/pull/42) |
-| Rollback | `rollback/pre-issue-50-m4-bridge` |
-| Smoke gate | Pass — `.agent/evidence/release-v1.26.0/` |
+| Plan | `IMPLEMENTATION_PLAN.md` — **AWAITING CAPTAIN APPROVAL** |
+| Baseline | `v1.26.0` |
+| Targets | **v1.27.0** (M22 live ops), **v1.28.0** (M23 TI/skill flywheel) |
+| Product scope | Sandbox only |
 
-Prior: **M21 CLOSED** as **NorthStar v1.25.0**.
+Prior: **v1.26.0 CLOSED** — NorthStar M4 bridge + Notion research mirror.
 
 ## Completed
 
 - v1.5.0–v1.26.0 / M1–M21 + #50 M4 bridge
-- M21 NorthStar connected operations
-- Sandbox refresh 1.24.0 → 1.25.0 → 1.26.0 (sandbox#40–#42)
-- M4 original acceptance (v1.8.0 / ADR-020) — issue #50 closed via #124
-- Notion MCP desktop auth for live research checks
+- M21 NorthStar connected operations (fixture routine)
+- Sandbox refresh through Compass **1.26.0** (sandbox#40–#42)
+- Issue #50 closed; Notion MCP desktop auth for research
 
 ## Next
 
-1. Captain merge sandbox#42 when ready
-2. Define roadmap beyond M21 / #50 bridge
+1. Captain approve / revise `m22-m23-northstar-ops-ti-flywheel`
+2. After approval: M22 unattended GitHub+Linear (+ Slack), then M23 TI scorecard + sandbox UI experiments
 
 ## Blockers
 
-None.
+Bridge implementation blocked on explicit Captain approval of the new plan.

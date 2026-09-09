@@ -1,175 +1,245 @@
-# Implementation Plan — #50 closeout + NorthStar M4 bridge
+# Implementation Plan — M22/M23 NorthStar live ops + TI skill flywheel
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **CLOSED — SHIPPED as v1.26.0** |
-| Plan ID | `issue-50-northstar-m4-bridge` |
-| Issue | [#50](https://github.com/loganware05/captains-compass-cursor/issues/50) (closed via [#124](https://github.com/loganware05/captains-compass-cursor/pull/124)) |
-| Product | **NorthStar** (formerly Captain's Compass) |
-| Baseline | `v1.25.0` on `main` |
-| Prepared | 2026-09-08 |
-| Start gate | Open — Captain approved 2026-09-08 |
-| Branch | `cursor/issue-50-northstar-m4-bridge-6044` |
-| Rollback | `rollback/pre-issue-50-m4-bridge` |
-| Target release | **v1.26.0** |
+| Status | **AWAITING CAPTAIN APPROVAL** |
+| Plan ID | `m22-m23-northstar-ops-ti-flywheel` |
+| Supersedes | `issue-50-northstar-m4-bridge` (CLOSED — shipped as v1.26.0) |
+| Product | **NorthStar** (Captain's Compass compatibility alias) |
+| Baseline | `v1.26.0` on `main` |
+| Prepared | 2026-09-09 |
+| Start gate | Closed until Captain explicitly approves this plan |
+| Target releases | **v1.27.0** (M22), **v1.28.0** (M23) |
+| Product target | `loganware05/captain-compass-sandbox` **only** |
+| Rollback tags | `rollback/pre-m22-northstar-ops`, `rollback/pre-m23-ti-flywheel` |
 
-## Request
+## Request (Captain-level)
 
-Tackle open issue #50. Original M4 acceptance already shipped in **v1.8.0**; the
-Captain wants the remaining hygiene **and** alignment with Notion plus the M21
-NorthStar connected routine.
+With M21 / #50 complete, begin using the full coordinated operating routine across
+GitHub, Linear, Slack, and Cursor — starting with **unattended** bots/webhooks —
+while continuing product work in the sandbox. In parallel, improve NorthStar Skills
+via GitHub Stars categorization and sandbox learning, including deeper
+security/supply-chain judgment and fixed usefulness labels before any Skill draft
+(example intent: starred design repos such as `pbakaus/impeccable` → categorize →
+secure → usefulness labels → sandbox UI experiments → Captain-gated Skill promotion).
+
+## Captain decisions (locked)
+
+1. **Connector order:** GitHub + Linear first; then Slack intake/notify.
+2. **Runtime:** Unattended webhooks/bots (not Captain-local sessions only).
+3. **Product scope:** Sandbox only for these milestones.
+4. **TI entry:** External repos **must be starred** to enter Technology Intelligence.
+5. **Skill draft gate:** Deeper dependency/supply-chain review **before** any Skill draft.
+6. **Usefulness:** Fixed labels (e.g. `frontend-ui`, `design-system`, …).
+7. **Sandbox learning:** Bounded UI experiments inside `captain-compass-sandbox`.
+8. **Cadence:** Two milestones (M22 then M23).
 
 ## Problem statement
 
-1. Issue #50 was open even though persistent-role promotion and bounded Level 3
-   autonomy shipped (ADR-020, PRs historically under #50 / v1.8.0). Hygienic
-   close landed via plan docs PR #124; product bridge remains on PR #125.
-2. M21’s NorthStar routine (`orchestrator/integrations/`) did **not** invoke
-   M4 promotion or weight-apply paths.
-3. Notion is research/summary only; it is **not** a NorthStar provider and must
-   not gain approval authority.
+1. NorthStar connected routine is **fixture-proven** but does not yet run live
+   unattended Slack/Linear/GitHub/Cursor traffic behind
+   `scripts/run-northstar-routine.sh`.
+2. There is **no webhook/bot ingress** today — only fixture adapters + CLI.
+3. Stars TI can categorize starred repos, but lacks a first-class
+   **security + supply-chain + usefulness-label** scorecard before Skill drafts.
+4. Skill learning loop can propose improvements, but does not yet enforce the
+   deeper gates above, and does not drive bounded sandbox UI experiments as
+   evidence for design-oriented Skills.
 
-## Current-state analysis (evidence)
+## Current-state summary
 
-| Surface | Status |
+| Surface | Today |
 |---|---|
-| `propose-persistent-role.sh` / `persistent-role-promotion` Skill | Shipped (M4) |
-| `apply-routing-proposal.sh` / `bounded-autonomy` Skill | Shipped (M4; extended M17) |
-| `tests/orchestrator/test_m4_persistent_roles_autonomy.py` | Present |
-| ADR-020 | Accepted |
-| NorthStar routine providers | `slack`, `linear`, `github`, `cursor` only |
-| Notion | `notion-integration` Skill + `ingest-notion-live.sh`; no M21 adapter |
-| Linear | M21 work ledger (already) |
+| Routine | `orchestrator/integrations/` + fixture adapters; ADR-037/038 |
+| Approval | GitHub + plan digest only (fail-closed) |
+| Linear / Slack | Fixture ledger / notify; never approval |
+| TI Stars | Live/fixture categorize; labels: `frontend-ui`, `backend-library`, `devtool`, `ml-data`, `other` |
+| Learning | M19/M20 loop + Captain-gated apply; sandbox harness does not clone external repos |
+| Sandbox | Vite React app; refresh through Compass 1.26.0 |
 
-## Desired outcome
+## Desired outcomes
 
-1. **Close #50** as completed for original M4 acceptance, with a clear comment
-   linking v1.8.0 / ADR-020. (**Done** via #124.)
-2. **Bridge M4 into NorthStar** as a Captain-gated routine extension:
-   - After review-ready / closeout phases (never before canonical GitHub
-     approval), optionally propose persistent roles from proficiency evidence.
-   - Surface pending routing proposals for Captain-flagged apply; never
-     auto-apply weights.
-   - Create Linear child workstreams for promotion / apply follow-ups when
-     Linear is connected.
-3. **Notion (optional, non-authoritative):**
-   - Ingest allowlisted research pages that inform role/autonomy rationale
-     (`ingest-notion-live.sh`).
-   - Optionally write a release/summary mirror after successful bridge runs.
-   - Never store approvals only in Notion; never add Notion to approval
-     providers.
+### M22 — NorthStar Unattended Connected Ops → **v1.27.0**
+
+Unattended GitHub + Linear (then Slack notify/intake) feed the existing NorthStar
+routine without weakening fail-closed approval. Sandbox is the only product
+dispatch/allowlist target.
+
+### M23 — TI Scorecard + Skill Flywheel → **v1.28.0**
+
+Starred-only TI → fixed usefulness labels → mandatory security + supply-chain
+evidence → Skill drafts → bounded sandbox UI experiments → Captain-gated
+Skill/procedure promotion.
 
 ## Acceptance criteria
 
-### A — Issue #50 hygiene
+### M22 (v1.27.0)
 
-- [x] GitHub issue #50 closed with completion comment citing v1.8.0 / ADR-020
-      and this follow-on plan ID. (Closed via #124 merge.)
-- [x] `PROGRESS.md` no longer lists “close #50” as open hygiene.
+- [ ] Unattended ingress (webhook/bot worker) accepts GitHub deliveries with
+      signature verification + idempotent `delivery_id` handling.
+- [ ] Live GitHub path advances/records Captain approval via plan digest only;
+      missing/invalid approval fail-closes (`AWAITING_CAPTAIN_APPROVAL` / stop).
+- [ ] Live Linear ledger create/update/link works; Linear **cannot** approve or
+      dispatch.
+- [ ] Slack notify (and intake if capacity) ships **after** GitHub+Linear health;
+      Slack **cannot** approve or dispatch.
+- [ ] Fixture mode remains CI default; live mode requires explicit Captain-gated
+      config/secrets (never committed).
+- [ ] Cursor agent identity pin preserved (`BLOCKED_AGENT_IDENTITY` on mismatch)
+      unless Captain revises via ADR.
+- [ ] No auto-merge, auto-release, live Skill install, or weight auto-apply.
+- [ ] Secrets redacted in logs/events/evidence; doctor + docs updated for live ops.
+- [ ] `docs/SANDBOX_VALIDATION.md` row for Compass **1.27.0**; sandbox refresh PR.
+- [ ] Tests: fixture suite green; live paths covered with injected doubles (no
+      live credentials in CI).
+- [ ] Tag/release **v1.27.0** + rollback tag `rollback/pre-m22-northstar-ops`.
 
-### B — NorthStar ↔ M4 bridge
+### M23 (v1.28.0)
 
-- [x] Fixture-safe routine option (e.g. `--propose-roles` / `--surface-routing`)
-      can emit persistent-role proposals and list pending routing proposals
-      without mutating live `.cursor/agents/` or weights.
-- [x] Weight apply remains behind existing `captain_approved` + budget gates;
-      NorthStar GitHub plan approval does **not** silently apply weights.
-- [x] Wrong Cursor agent / missing GitHub still fail closed (M21 rules preserved).
-- [x] Linear children created for promotion/apply follow-ups when connected;
-      GitHub fallback when Linear missing.
-- [x] Unit/fixture tests cover bridge paths; `doctor.sh` + `tests/run.sh` pass.
-- [x] Skills `northstar-connected-routine`, `persistent-role-promotion`,
-      `bounded-autonomy`, and `notion-integration` cross-link the bridge.
-- [x] Docs: Notion + Linear + NorthStar authority boundaries updated; ADR added.
-
-### C — Notion surface
-
-- [x] Documented procedure for allowlisted Notion ingest as **context only**.
-- [x] Optional fixture-mode “release summary” payload for Notion write (no live
-      credential required in CI).
-- [x] If Notion MCP remains unauthenticated or live cache is empty, bridge still
-      works; Notion steps are skipped with an explicit non-fatal note.
-- [x] After desktop Notion MCP auth: live fetch + allowlist/cache path verified.
+- [ ] Fixed usefulness/category label set extended at least with **`design-system`**
+      (and any Captain-confirmed additions) in `DEFAULT_CATEGORIES`, manual labels,
+      docs, and tests.
+- [ ] TI paths enforce **starred provenance** for external repo entry (reject
+      non-starred feeds).
+- [ ] Before any Skill draft: required **security-review** +
+      **dependency-supply-chain** evidence artifacts; fail closed if missing.
+- [ ] `skill-learning-loop` / `apply-skill-improvement` document and enforce the
+      new gates; live apply remains `--captain-approved` only.
+- [ ] At least one **bounded UI experiment** lands only in
+      `captain-compass-sandbox` with Playwright/a11y evidence linked from control
+      validation docs.
+- [ ] Example path supported for a **starred** design repo (e.g. impeccable once
+      starred): categorize → scorecard → draft proposal (no auto Skill install).
+- [ ] `approved_for_execution` stays false for TI candidates; no clone/exec of
+      starred repos from learning/TI.
+- [ ] Sandbox refresh + smoke gate for **1.28.0**.
+- [ ] Tag/release **v1.28.0** + rollback tag `rollback/pre-m23-ti-flywheel`.
 
 ## Non-goals
 
-- Re-implementing M4 from scratch
-- Adding Notion as a NorthStar approval or dispatch authority
-- Auto-merging persistent-role PRs or auto-applying routing weights
-- Renaming the repository
-- Live Skill install
-- Closing unrelated issues
+- Moving approval authority to Slack, Linear, or Notion
+- Auto-merge / auto-release / unattended live Skill install
+- Installing Compass into non-sandbox product repos in these milestones
+- Arbitrary non-starred URL ingest into TI
+- Cloning or executing third-party repos inside the control learning loop
+- Reopening closed #50 / v1.26.0 scope
+- Multi-tenant hosted SaaS control plane
 
 ## Proposed architecture
 
-```
-NorthStar routine (existing)
-  └─ after REVIEW_READY / closeout hooks (Captain flags)
-       ├─ persistent-role: propose-only → staging + Linear child
-       ├─ bounded autonomy: list pending proposals; apply only if
-       │    captain_approved on proposal JSON + budget
-       └─ Notion (optional): ingest research / emit summary mirror
+```text
+M22:
+  GitHub webhook/bot ──► ingress (verify + idempotency)
+  Linear API/bot     ──► ledger mirror
+  Slack bot (later)  ──► intake/notify
+         │
+         ▼
+  NorthStar routine (existing state machine)
+         │
+         ├─ Captain approval: GitHub + plan digest ONLY
+         └─ Cursor execution: pinned agent, sandbox allowlist
+
+M23:
+  Starred repos ──► TI categorize (fixed labels)
+                 ──► security-review + supply-chain evidence
+                 ──► usefulness labels / scorecard
+                 ──► skill-learning-loop drafts (staging)
+                 ──► bounded sandbox UI experiment evidence
+                 ──► Captain-gated Skill apply / PR
 ```
 
-### Implementation surface (proposed)
+### Implementation surfaces (proposed)
 
-- `orchestrator/integrations/m4_bridge.py` — propose roles + surface/apply routing
-  under explicit flags
-- Extend `orchestrator/integrations/routine.py` +
-  `scripts/run-northstar-routine.sh`
-- Fixture tests in `tests/orchestrator/test_m21_northstar.py` or
-  `test_issue50_m4_bridge.py`
-- Docs: `docs/integrations/{notion,linear,slack}.md`, Skill updates, ADR-038
-- Issue #50 close comment + PROGRESS update
+**M22**
+- New ingress worker/receiver (greenfield) feeding
+  `orchestrator/integrations/events.py` + routine
+- Live adapter modes beside fixtures for GitHub / Linear / Slack
+- Secrets via environment / secret store (never committed)
+- Docs: `docs/integrations/{github,linear,slack}.md`, Skill
+  `northstar-connected-routine`
+
+**M23**
+- Extend `DEFAULT_CATEGORIES` + manual labels (+ `design-system`)
+- Scorecard artifact schema + promote/learning gates
+- Wire `security-review` + `dependency-supply-chain` before draft write
+- Sandbox UI experiment + `docs/SANDBOX_VALIDATION.md` / checklist attachment
+- Example scorecard evidence for one starred design-oriented repo
 
 ## Workstreams
 
-| ID | Scope | Depends |
+| ID | Milestone | Scope |
 |---|---|---|
-| W1 | Close #50 comment + PROGRESS hygiene | — |
-| W2 | `m4_bridge` module + routine/CLI flags + tests | — |
-| W3 | Linear children + Slack transition notes for bridge events | W2 |
-| W4 | Notion optional ingest/summary fixtures + Skill/doc updates | W2 |
-| W5 | ADR + doctor/tests green + PR | W1–W4 |
+| W22A | M22 | Ingress design (hosting choice, signatures, allowlists) |
+| W22B | M22 | Live GitHub adapter + approval verify |
+| W22C | M22 | Live Linear ledger |
+| W22D | M22 | Slack notify/intake after GH+Linear |
+| W22E | M22 | Docs, doctor, CI fixtures, sandbox refresh, release |
+| W23A | M23 | Label taxonomy (`design-system`, …) |
+| W23B | M23 | Starred-only TI enforcement |
+| W23C | M23 | Security + supply-chain gate before Skill draft |
+| W23D | M23 | Learning-loop / apply-improvement alignment |
+| W23E | M23 | Bounded sandbox UI experiment + validation/release |
 
 ## Safety and authority
 
-- GitHub + plan digest remain canonical approval (ADR-037).
-- Slack notify only; Linear ledger only; Notion research/summary only.
-- Persistent roles: staging + PR only (ADR-020).
-- Weight apply: Captain flag per apply + autonomy budget (ADR-020 / M17).
-- Secrets never enter Notion mirrors, Slack, or fixtures.
+- GitHub + plan digest remain the sole engineering approval authority (ADR-037).
+- Slack / Linear / Notion are never approval or dispatch authorities.
+- No auto-merge, auto-release, or unattended live Skill install.
+- Secrets never enter prompts, logs, Slack, Linear, GitHub mirrors, or fixtures.
+- TI candidates remain non-executable (`approved_for_execution: false`); no
+  third-party clone/exec from TI/learning.
+- Wrong Cursor agent → fail closed.
+- Sandbox-only product target for M22/M23.
+- Routing weight apply and live Skill apply remain explicit Captain gates.
 
-## Autonomy budget (proposed; activates on approval)
+## Autonomy budget (activates only after plan approval)
 
 | Limit | Value |
 |---|---|
-| Maximum iterations | 6 |
+| Maximum iterations per milestone | 8 |
 | Maximum failed validation cycles | 3 |
-| Maximum weight-apply operations | 0 in CI fixtures (Captain-gated only in live) |
+| Live credential usage in CI | 0 (doubles/fixtures only) |
+| Weight-apply / live Skill apply without Captain flag | 0 |
 | Stop on scope change / destructive / unresolved security high | true |
 
-## Captain decisions (2026-09-08)
+## Defaults for remaining choices (override on approval if desired)
 
-1. Close #50 **when the bridge ships** (not before). Captain later closed #50 via
-   docs PR **#124**; product bridge remains on **#125**.
-2. Authenticate Notion MCP for live checking (desktop IDE) — **completed**.
-3. Target release **v1.26.0**.
-4. Do **not** auto-apply routing weights from NorthStar approval alone.
+| Topic | Default if Captain silent |
+|---|---|
+| Ingress hosting | GitHub App / webhook receiver as smallest always-on worker (Captain picks host) |
+| Slack timing | Notify-only at end of M22; richer intake polish in M23 if needed |
+| Label set | Keep existing four + add `design-system` (six total with `other`) |
+| Cursor agent pin | Keep current M21 allowlisted agent id |
+| First UI experiment | Design-system / craft tokens demo in sandbox inspired by starred `frontend-ui`/`design-system` repos (not a vendor install) |
+
+## Open questions (optional overrides)
+
+1. Preferred ingress host (GitHub Actions+App vs Render/Fly worker vs other)?
+2. Confirm full fixed label list beyond adding `design-system`.
+3. Preferred first sandbox UI experiment theme if not the default above?
+4. Keep sole M21 agent pin for unattended dispatch, or expand under a new ADR?
 
 ## Capability planning appendix (proposals only)
 
-Top Skills: `implementation-planning`, `github-integration`,
-`persistent-role-promotion`, `bounded-autonomy`, `notion-integration`,
-`northstar-connected-routine`, `linear-integration`, `testing-validation`,
-`autonomy-budget`.
+Top Skills: `implementation-planning`, `northstar-connected-routine`,
+`github-integration`, `linear-integration`, `technology-intelligence-live`,
+`skill-learning-loop`, `candidate-promotion`, `security-review`,
+`dependency-supply-chain`, `sandbox-validation`, `react-engineering`,
+`playwright-browser-validation`.
 
-No capability gaps detected for inferred plan-domain requirements.
+No hard capability gaps detected for planning; M22 ingress hosting is the main
+greenfield surface.
 
 ## Approval record
 
 | Captain | Decision | Date |
 |---|---|---|
-| Captain | **APPROVED** — implement `issue-50-northstar-m4-bridge` (close #50 on ship; Notion live auth; v1.26.0) | 2026-09-08 |
+| Pending | **AWAITING APPROVAL** | — |
+
+**Implementation must not begin until the Captain explicitly approves this plan.**
+
+After approval, First Mate will: create/track issues, feature branches, rollback
+checkpoints, worktrees as needed, then implement M22 → release v1.27.0 → M23 →
+release v1.28.0 per this plan.
