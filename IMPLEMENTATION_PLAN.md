@@ -237,7 +237,7 @@ greenfield surface.
 
 | Captain | Decision | Date |
 |---|---|---|
-| Pending | **AWAITING APPROVAL** | — |
+| Captain | **APPROVED** — M22 implementation via #129; M23 deferred until directed | 2026-09-09 |
 
 **Implementation must not begin until the Captain explicitly approves this plan.**
 
