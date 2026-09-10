@@ -176,6 +176,7 @@ Scripts:
 - `./scripts/example-design-repo-scorecard.sh` (starred design-repo scorecard → draft; M23)
 - `./scripts/bridge-learning-experiences.sh` (learning-run → Experiences; M20)
 - `./scripts/apply-skill-improvement.sh` (Captain-gated improvement apply; M20/M23)
+- `docs/guides/starred-repos-to-skills.md` (Captain playbook: Stars → Skills; M23)
 
 ## Implementing a future live provider
 
