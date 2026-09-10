@@ -1,5 +1,32 @@
 # Decisions
 
+## ADR-040: TI scorecard + skill flywheel with starred-only gates (v1.28.0 M23)
+
+- **Status:** Accepted
+- **Date:** 2026-09-10
+- **Context:** M22 shipped unattended NorthStar ops. Captains need a fail-closed
+  path from starred GitHub repos to Skill drafts: fixed usefulness labels,
+  deeper security/supply-chain judgment, and sandbox learning — without
+  auto-install or third-party clone/exec.
+- **Decision:**
+  1. Extend fixed TI categories with `design-system`
+     (`frontend-ui`, `design-system`, `backend-library`, `devtool`, `ml-data`,
+     `other`).
+  2. External repos **must** carry starred provenance to enter TI
+     categorization, cache/live export, and the skill learning loop; non-starred
+     feeds fail closed.
+  3. Before any Skill draft (learning loop, sidecar draft, improvement apply
+     draft path): require on-disk **security-review** +
+     **dependency-supply-chain** evidence artifacts; fail closed if missing.
+  4. Scorecards are metadata-only — no clone/exec of starred repos; TI
+     candidates keep `approved_for_execution: false`.
+  5. Live Skill apply remains `--captain-approved` only; Slack/Linear never
+     approve; no auto-merge.
+  6. Bounded UI experiments for design-oriented learning land only in
+     `captain-compass-sandbox` (not vendor installs).
+- **Consequences:** Skill drafts are gated by scorecard evidence. Sandbox craft
+  tokens demo validates design-system learning. M22 live-ops behavior preserved.
+
 ## ADR-039: NorthStar unattended live ops with fail-closed ingress (v1.27.0 M22)
 
 - **Status:** Accepted

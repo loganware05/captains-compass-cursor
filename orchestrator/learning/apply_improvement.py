@@ -9,6 +9,10 @@ from pathlib import Path
 
 from orchestrator.learning.drafts import skill_drafts_dir
 from orchestrator.learning.similarity import EXCLUDED_IMPROVEMENT_TARGETS, _SAFE_SLUG
+from orchestrator.promotion.draft_gates import (
+    SkillDraftGateError,
+    require_skill_draft_evidence,
+)
 
 MARKER_BEGIN = "<!-- compass-learned-from-stars:begin -->"
 MARKER_END = "<!-- compass-learned-from-stars:end -->"
@@ -90,6 +94,15 @@ def apply_skill_improvement_proposal(
         raise ImprovementApplyError("proposal must keep approved_for_execution=false")
     if proposal.get("auto_apply") is True:
         raise ImprovementApplyError("refuse auto_apply=true proposals")
+
+    # M23: improved Skill drafts require security-review + supply-chain evidence.
+    proposal_evidence = list(proposal.get("evidence_paths") or [])
+    try:
+        require_skill_draft_evidence(
+            proposal_evidence, context="apply-skill-improvement"
+        )
+    except SkillDraftGateError as exc:
+        raise ImprovementApplyError(str(exc)) from exc
 
     slug = str(proposal.get("target_skill_slug") or "")
     if not _SAFE_SLUG.match(slug):

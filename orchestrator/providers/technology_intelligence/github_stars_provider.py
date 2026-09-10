@@ -14,6 +14,10 @@ from orchestrator.providers.technology_intelligence.mapper import (
     candidate_from_stars_shaped,
     repo_record_from_github_api,
 )
+from orchestrator.providers.technology_intelligence.starred_provenance import (
+    assert_starred_provenance,
+    stamp_starred_provenance,
+)
 from orchestrator.providers.technology_intelligence.validate import validate_ti_candidates
 
 _TOKEN = re.compile(r"[a-z0-9]{3,}", re.I)
@@ -98,19 +102,24 @@ def discover_candidates_from_records(
     objective: str,
     *,
     top_n: int = _DEFAULT_TOP_N,
+    source: str = "github-stars",
 ) -> list[CandidateCapability]:
     """Rank GitHub API-shaped repo records into TI candidates."""
     if not raw_repos:
         return []
+    stamped = stamp_starred_provenance(list(raw_repos), source=source)
+    assert_starred_provenance(
+        stamped, source=source, context="github-stars-discover"
+    )
     objective_tokens = _tokenize(objective)
     ranked: list[tuple[float, dict]] = []
-    for repo in raw_repos:
+    for repo in stamped:
         score = _score_repo(objective_tokens, repo)
         if score <= 0 and objective_tokens:
             continue
         ranked.append((score if objective_tokens else 1.0, repo))
     ranked.sort(key=lambda pair: (-pair[0], str(pair[1].get("full_name") or "")))
-    selected = [repo for _, repo in ranked[:top_n]] if objective_tokens else raw_repos[:top_n]
+    selected = [repo for _, repo in ranked[:top_n]] if objective_tokens else stamped[:top_n]
     candidates: list[CandidateCapability] = []
     for repo in selected:
         shaped = repo_record_from_github_api(repo)
@@ -148,5 +157,6 @@ def load_recorded_starred_fixtures(fixtures_dir: Path) -> list[dict]:
     with path.open(encoding="utf-8") as handle:
         payload = json.load(handle)
     if isinstance(payload, list):
-        return [item for item in payload if isinstance(item, dict)]
+        rows = [item for item in payload if isinstance(item, dict)]
+        return stamp_starred_provenance(rows, source="fixtures:github-stars-recorded")
     return []

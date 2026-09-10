@@ -15,6 +15,10 @@ Usage: apply-skill-improvement.sh --proposal PATH --captain-approved [--apply-li
 Default: write improved SKILL.md under skill-drafts/<slug>-from-learning/.
 --apply-live also appends the learned section to the live Skill (Captain only).
 Never auto-applies; never sets approved_for_execution.
+
+M23: proposal must include evidence_paths for security-review and
+dependency-supply-chain artifacts (fail closed if missing).
+Live apply still requires --captain-approved.
 USAGE
 }
 

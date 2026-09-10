@@ -299,13 +299,25 @@ Control mirror: `.agent/evidence/release-v1.25.0/post-tag-validation.md`
 
 Control mirror: `.agent/evidence/release-v1.26.0/post-tag-validation.md`
 
-### M22 NorthStar unattended live ops (v1.27.0) — pending sandbox refresh
+### M22 NorthStar unattended live ops (v1.27.0) — refresh complete
 
 | Step | Result |
 |---|---|
-| Control release `v1.27.0` | Pending merge/tag |
+| Control release `v1.27.0` | Pass — merged [#129](https://github.com/loganware05/captains-compass-cursor/pull/129) |
 | Feature branch | `cursor/m22-northstar-unattended-ops-6044` |
-| Automated unit tests | Pending evidence under `.agent/evidence/m22-northstar-unattended-ops/` |
-| Private sandbox refresh PR | Pending Compass **1.27.0** |
+| Automated unit tests | Pass — `.agent/evidence/m22-northstar-unattended-ops/VALIDATION.md` |
+| Private sandbox refresh PR | Pass — [sandbox#43](https://github.com/loganware05/captain-compass-sandbox/pull/43) (Compass **1.27.0**) |
 | Live doubles (no credentials) | `tests.orchestrator.test_m22_northstar_live` |
+
+### M23 TI scorecard + skill flywheel (v1.28.0) — in progress
+
+| Step | Result |
+|---|---|
+| Control branch | `cursor/m23-ti-skill-flywheel-6044` |
+| Starred provenance + `design-system` + draft gates | Pass — unit suite `test_m23_ti_skill_flywheel` |
+| Example design-repo scorecard | Pass — `./scripts/example-design-repo-scorecard.sh` |
+| Bounded sandbox UI experiment (craft tokens) | See sandbox `.agent/evidence/m23-craft-tokens/` |
+| Control validation | `.agent/evidence/m23-ti-skill-flywheel/VALIDATION.md` |
+| Private sandbox refresh PR | Branch `cursor/refresh-compass-1.28.0-6044` pushed (`990e3de`); PR pending parent |
+| Bounded craft-tokens UI + a11y | Pass — sandbox `.agent/evidence/m23-craft-tokens/VALIDATION.md` (24/24 vitest) |
 

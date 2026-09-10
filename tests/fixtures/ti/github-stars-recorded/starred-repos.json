@@ -5,7 +5,8 @@
     "html_url": "https://github.com/example-org/accessible-react-forms",
     "description": "Accessible React form patterns with ARIA live regions",
     "topics": ["react", "accessibility", "forms"],
-    "stargazers_count": 128
+    "stargazers_count": 128,
+    "starred": true
   },
   {
     "id": 202,
@@ -13,7 +14,8 @@
     "html_url": "https://github.com/example-org/pdf-kit-node",
     "description": "PDF generation utilities for Node.js services",
     "topics": ["nodejs", "pdf", "utilities"],
-    "stargazers_count": 89
+    "stargazers_count": 89,
+    "starred": true
   },
   {
     "id": 303,
@@ -21,6 +23,16 @@
     "html_url": "https://github.com/example-org/unrelated-quantum",
     "description": "Quantum circuit simulation library",
     "topics": ["quantum", "simulation"],
-    "stargazers_count": 42
+    "stargazers_count": 42,
+    "starred": true
+  },
+  {
+    "id": 404,
+    "full_name": "example-org/craft-design-tokens",
+    "html_url": "https://github.com/example-org/craft-design-tokens",
+    "description": "Craft design tokens and UI primitives for consistent product surfaces",
+    "topics": ["design-system", "tokens", "css", "frontend"],
+    "stargazers_count": 256,
+    "starred": true
   }
 ]

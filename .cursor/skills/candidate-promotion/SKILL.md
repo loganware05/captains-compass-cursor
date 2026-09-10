@@ -38,7 +38,9 @@ or the Captain wants a **draft Skill sidecar** prepared for an approved PR into
      --evidence .agent/evidence/sandbox-test.md
    ```
 
-3. Optionally draft a Skill sidecar proposal (still **not** live):
+3. Optionally draft a Skill sidecar proposal (still **not** live). **M23:** the
+   candidate must already carry `security-review` + `dependency-supply-chain`
+   evidence paths (from the TI scorecard) or the draft fails closed:
 
    ```bash
    ./scripts/promote-candidate.sh --candidate <path.json> --draft-skill <slug>
@@ -51,6 +53,7 @@ or the Captain wants a **draft Skill sidecar** prepared for an approved PR into
 6. Re-run `./scripts/compile-capability-registry.sh` and tests after merge.
 7. For **live** starred-repo discovery (Captain local only), use Skill
    `technology-intelligence-live` with `COMPASS_TI_PROVIDER=github-stars`.
+   External repos must be starred; non-starred feeds are rejected.
 
 ## Output
 
@@ -62,5 +65,7 @@ or the Captain wants a **draft Skill sidecar** prepared for an approved PR into
 - Advancing candidates past `SANDBOX_TESTED` via this Skill without following
   `skill-lifecycle` Captain gates
 - Auto-installing candidates into the Skill registry
+- Drafting Skills without security-review + dependency-supply-chain evidence
 - Setting `approved_for_execution: true`
 - Executing or cloning external repositories as part of promotion
+- Ingesting non-starred external repos into TI

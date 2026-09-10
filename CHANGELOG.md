@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.28.0 — 2026-09-10
+
+### Added
+
+- M23 TI scorecard + skill flywheel: `design-system` usefulness category
+- Starred-provenance gate for external-repo TI entry (fail closed)
+- Metadata-only TI scorecard writers (`security-review` +
+  `dependency-supply-chain`) required before any Skill draft
+- Script `example-design-repo-scorecard.sh` (categorize → scorecard → draft;
+  no auto Skill install)
+- ADR-040; tests `tests/orchestrator/test_m23_ti_skill_flywheel.py`
+- Budget `.agent/budgets/m23-ti-skill-flywheel.md` + evidence pack
+
+### Changed
+
+- VERSION `1.28.0`
+- Skills `skill-learning-loop`, `candidate-promotion` document M23 gates
+- `apply-skill-improvement` enforces draft evidence + `--captain-approved`
+- Learning loop writes scorecard evidence before drafts/proposals
+- Docs: technology-intelligence, SANDBOX_VALIDATION, TESTING, PROGRESS
+
 ## 1.27.0 — 2026-09-09
 
 ### Added

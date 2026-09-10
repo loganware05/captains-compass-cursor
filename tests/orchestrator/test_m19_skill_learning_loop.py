@@ -17,6 +17,7 @@ from orchestrator.learning.sandbox_harness import (
     SandboxHarnessError,
     run_fixture_sandbox_harness,
 )
+from orchestrator.learning.scorecard import write_ti_scorecard_evidence
 from orchestrator.learning.similarity import find_similar_skills, jaccard, tokenize
 from orchestrator.providers.technology_intelligence.github_stars_provider import (
     load_recorded_starred_fixtures,
@@ -46,7 +47,18 @@ class SkillLearningLoopTests(unittest.TestCase):
             candidate = exported[0]["candidate"]
             self.assertIs(candidate["approved_for_execution"], False)
             slug = exported[0]["skill_slug"]
-            drafts = write_unified_skill_draft(repo, candidate, slug)
+            scorecard = write_ti_scorecard_evidence(
+                repo,
+                repo=exported[0]["repo"],
+                candidate=candidate,
+                category=str(exported[0].get("star_category") or ""),
+            )
+            drafts = write_unified_skill_draft(
+                repo,
+                candidate,
+                slug,
+                evidence_paths=scorecard["evidence_paths"],
+            )
             self.assertTrue(drafts["skill_md"].is_file())
             self.assertTrue(drafts["capability_yaml"].is_file())
             result = run_fixture_sandbox_harness(

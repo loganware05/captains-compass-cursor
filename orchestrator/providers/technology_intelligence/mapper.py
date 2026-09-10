@@ -99,12 +99,21 @@ def repo_record_from_github_api(item: dict) -> dict:
         "html_url": str(item.get("html_url") or ""),
         "description": str(item.get("description") or ""),
         "star_signal": f"github-stars:live:{full_name}",
+        "starred": True,
+        "starred_provenance": True,
+        "from_github_stars": True,
         "topics_redacted": list(topics)[:10],
         "capabilities_provided": _infer_capabilities(full_name, item.get("description") or "", topics),
         "source": {
             "type": "external-candidate",
             "path": full_name or slug,
             "provenance_url": str(item.get("html_url") or ""),
+            "starred": True,
+        },
+        "provenance": {
+            "starred": True,
+            "starred_provenance": True,
+            "source": "gh api user/starred",
         },
         "notes": "Live GitHub starred repo — NOT APPROVED FOR EXECUTION",
     }

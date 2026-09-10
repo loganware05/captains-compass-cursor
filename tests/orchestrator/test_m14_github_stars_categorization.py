@@ -30,10 +30,11 @@ STARRED = ROOT / "tests" / "fixtures" / "ti" / "github-stars-recorded"
 class StarsCategorizationTests(unittest.TestCase):
     def test_manual_labels_load(self) -> None:
         labels = load_manual_labels(LABELS)
-        self.assertEqual(len(labels), 4)
+        self.assertEqual(len(labels), 5)
         categories = {row["category"] for row in labels}
         self.assertIn("frontend-ui", categories)
         self.assertIn("backend-library", categories)
+        self.assertIn("design-system", categories)
 
     def test_train_and_predict_fixture_repos(self) -> None:
         labels = load_manual_labels(LABELS)
@@ -44,6 +45,7 @@ class StarsCategorizationTests(unittest.TestCase):
         self.assertEqual(by_name["example-org/accessible-react-forms"]["star_category"], "frontend-ui")
         self.assertEqual(by_name["example-org/pdf-kit-node"]["star_category"], "backend-library")
         self.assertEqual(by_name["example-org/unrelated-quantum"]["star_category"], "ml-data")
+        self.assertEqual(by_name["example-org/craft-design-tokens"]["star_category"], "design-system")
 
     def test_batch_write_and_provider(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -55,7 +57,8 @@ class StarsCategorizationTests(unittest.TestCase):
                 labels_path=LABELS,
                 source="fixtures:test",
             )
-            self.assertEqual(report["record_count"], 3)
+            self.assertEqual(report["record_count"], 4)
+            self.assertIn("design-system", report["default_categories"])
             self.assertTrue(read_categorized_records(repo))
 
             os.environ["COMPASS_TI_PROVIDER"] = "github-stars-categorized"

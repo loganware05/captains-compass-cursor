@@ -98,7 +98,7 @@ class PerformanceContextTests(unittest.TestCase):
 class GithubStarsTiTests(unittest.TestCase):
     def test_recorded_fixtures_map_to_candidates(self) -> None:
         recorded = load_recorded_starred_fixtures(STARRED_FIXTURES)
-        self.assertEqual(len(recorded), 3)
+        self.assertEqual(len(recorded), 4)
 
         def fetch(**kwargs):
             del kwargs

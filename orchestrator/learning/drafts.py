@@ -1,4 +1,4 @@
-"""Unified Skill draft emitter for Stars candidates (M19)."""
+"""Unified Skill draft emitter for Stars candidates (M19/M23)."""
 
 from __future__ import annotations
 
@@ -6,6 +6,10 @@ import json
 import re
 from pathlib import Path
 
+from orchestrator.promotion.draft_gates import (
+    SkillDraftGateError,
+    require_skill_draft_evidence,
+)
 from orchestrator.registry.yaml_simple import load_simple_yaml
 
 _SAFE_SLUG = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -32,6 +36,8 @@ def draft_skill_markdown_from_candidate(candidate: dict, skill_slug: str) -> str
     caps = ", ".join(candidate.get("capabilities_provided") or []) or "(none inferred)"
     signal = str(candidate.get("discovery_signal") or "")
     source = candidate.get("source") if isinstance(candidate.get("source"), dict) else {}
+    evidence = candidate.get("evidence_paths") or []
+    evidence_lines = "\n".join(f"- `{path}`" for path in evidence) or "- (none)"
     return (
         f"---\n"
         f"name: {skill_slug}\n"
@@ -47,10 +53,14 @@ def draft_skill_markdown_from_candidate(candidate: dict, skill_slug: str) -> str
         f"- Source path: `{source.get('path')}`\n"
         f"- Provenance URL: `{source.get('provenance_url')}`\n"
         f"- Star category: `{category or 'other'}`\n"
+        f"- Starred provenance: required\n"
         f"- Capabilities: {caps}\n\n"
+        f"## Required draft gates (M23)\n\n"
+        f"{evidence_lines}\n\n"
         f"## Notes from discovery\n\n{notes}\n\n"
         f"## Procedure\n\n"
-        f"1. Review provenance and category with the Captain.\n"
+        f"1. Review provenance, category, security-review, and supply-chain evidence "
+        f"with the Captain.\n"
         f"2. Adapt steps to the current repository context — do not clone or execute "
         f"the starred repository.\n"
         f"3. Run control-repo `./scripts/doctor.sh` and tests before proposing promotion.\n"
@@ -59,6 +69,7 @@ def draft_skill_markdown_from_candidate(candidate: dict, skill_slug: str) -> str
         f"- Do not auto-merge this draft into live Skills\n"
         f"- Do not set `approved_for_execution: true`\n"
         f"- Do not clone or execute external starred repositories from this draft\n"
+        f"- Do not draft without security-review + dependency-supply-chain evidence\n"
     )
 
 
@@ -91,6 +102,7 @@ def draft_capability_yaml_from_candidate(
             f'  from_candidate: "{from_candidate}"',
             f'  discovery_signal: "{discovery}"',
             "  captain_approval_required: true",
+            "  starred_provenance_required: true",
             "notes: Draft from skill-learning-loop — requires Captain-approved PR",
             "",
         ]
@@ -103,12 +115,27 @@ def write_unified_skill_draft(
     candidate: dict,
     skill_slug: str,
     lifecycle_stage: str = "SANDBOX_TESTED",
+    *,
+    evidence_paths: list[str] | None = None,
 ) -> dict[str, Path]:
-    """Write SKILL.md + capability.yaml + source candidate under skill-drafts/."""
+    """Write SKILL.md + capability.yaml + source candidate under skill-drafts/.
+
+    M23: requires security-review + dependency-supply-chain evidence artifacts.
+    """
     if not _SAFE_SLUG.match(skill_slug):
         raise LearningDraftError(f"invalid skill slug: {skill_slug!r}")
     if candidate.get("approved_for_execution") is not False:
         raise LearningDraftError("candidates must keep approved_for_execution=false")
+
+    paths = list(evidence_paths or candidate.get("evidence_paths") or [])
+    try:
+        require_skill_draft_evidence(paths, context=f"skill-draft:{skill_slug}")
+    except SkillDraftGateError as exc:
+        raise LearningDraftError(str(exc)) from exc
+
+    out = dict(candidate)
+    out["approved_for_execution"] = False
+    out["evidence_paths"] = paths
 
     out_dir = skill_drafts_dir(repo_root, skill_slug)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -117,13 +144,13 @@ def write_unified_skill_draft(
     source_candidate = out_dir / "source-candidate.json"
 
     skill_md.write_text(
-        draft_skill_markdown_from_candidate(candidate, skill_slug), encoding="utf-8"
+        draft_skill_markdown_from_candidate(out, skill_slug), encoding="utf-8"
     )
-    yaml_text = draft_capability_yaml_from_candidate(candidate, skill_slug, lifecycle_stage)
+    yaml_text = draft_capability_yaml_from_candidate(out, skill_slug, lifecycle_stage)
     load_simple_yaml(yaml_text)
     capability_yaml.write_text(yaml_text, encoding="utf-8")
     source_candidate.write_text(
-        json.dumps(candidate, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        json.dumps(out, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     return {
         "skill_md": skill_md,

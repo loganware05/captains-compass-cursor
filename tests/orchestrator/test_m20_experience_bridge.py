@@ -23,6 +23,16 @@ from orchestrator.telemetry.record import record_workstream
 ROOT = Path(__file__).resolve().parents[2]
 
 
+def _write_draft_gate_evidence(repo: Path) -> list[str]:
+    evidence_dir = repo / ".agent" / "evidence" / "ti-scorecards" / "m20-test"
+    evidence_dir.mkdir(parents=True, exist_ok=True)
+    security = evidence_dir / "security-review.md"
+    supply = evidence_dir / "dependency-supply-chain.md"
+    security.write_text("# Security review\n\nPass (fixture).\n", encoding="utf-8")
+    supply.write_text("# Dependency supply-chain\n\nPass (fixture).\n", encoding="utf-8")
+    return [str(security), str(supply)]
+
+
 class M20ExperienceBridgeTests(unittest.TestCase):
     def test_bridge_records_experiences(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -121,6 +131,7 @@ class M20ImprovementApplyTests(unittest.TestCase):
     def test_apply_requires_captain(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             repo = Path(tmp)
+            evidence = _write_draft_gate_evidence(repo)
             proposal = repo / "proposal.json"
             proposal.write_text(
                 json.dumps(
@@ -130,6 +141,7 @@ class M20ImprovementApplyTests(unittest.TestCase):
                         "candidate_id": "c1",
                         "approved_for_execution": False,
                         "auto_apply": False,
+                        "evidence_paths": evidence,
                         "suggested_changes": [{"source_notes": "lesson"}],
                     }
                 ),
@@ -145,6 +157,7 @@ class M20ImprovementApplyTests(unittest.TestCase):
             control = self._temp_control_with_skill(Path(tmp) / "control")
             repo = Path(tmp) / "repo"
             repo.mkdir()
+            evidence = _write_draft_gate_evidence(repo)
             original = (
                 control / ".cursor" / "skills" / "react-engineering" / "SKILL.md"
             ).read_text(encoding="utf-8")
@@ -159,6 +172,7 @@ class M20ImprovementApplyTests(unittest.TestCase):
                         "auto_apply": False,
                         "star_category": "frontend-ui",
                         "similarity": 0.5,
+                        "evidence_paths": evidence,
                         "suggested_changes": [{"source_notes": "Fold accessible form patterns."}],
                     }
                 ),
@@ -185,6 +199,7 @@ class M20ImprovementApplyTests(unittest.TestCase):
             control = self._temp_control_with_skill(Path(tmp) / "control")
             repo = Path(tmp) / "repo"
             repo.mkdir()
+            evidence = _write_draft_gate_evidence(repo)
             proposal = repo / "proposal.json"
             proposal.write_text(
                 json.dumps(
@@ -194,6 +209,7 @@ class M20ImprovementApplyTests(unittest.TestCase):
                         "candidate_id": "c-live",
                         "approved_for_execution": False,
                         "auto_apply": False,
+                        "evidence_paths": evidence,
                         "suggested_changes": [{"source_notes": "live lesson"}],
                     }
                 ),
@@ -220,6 +236,7 @@ class M20ImprovementApplyTests(unittest.TestCase):
             )
             repo = Path(tmp) / "repo"
             repo.mkdir()
+            evidence = _write_draft_gate_evidence(repo)
             proposal = repo / "proposal.json"
             proposal.write_text(
                 json.dumps(
@@ -229,6 +246,7 @@ class M20ImprovementApplyTests(unittest.TestCase):
                         "candidate_id": "c1",
                         "approved_for_execution": False,
                         "auto_apply": False,
+                        "evidence_paths": evidence,
                     }
                 ),
                 encoding="utf-8",

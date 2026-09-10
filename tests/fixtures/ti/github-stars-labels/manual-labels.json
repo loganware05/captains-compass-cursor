@@ -8,6 +8,14 @@
     "notes": "Curated from stars-redacted-accessible-forms capabilities_provided"
   },
   {
+    "full_name": "example-org/craft-design-tokens",
+    "category": "design-system",
+    "label_source": "manual-fixture",
+    "description": "Craft design tokens and UI primitives for consistent product surfaces",
+    "topics": ["design-system", "tokens", "css", "frontend"],
+    "notes": "M23 design-system usefulness label fixture (starred-only TI)"
+  },
+  {
     "full_name": "example-org/pdf-toolkit-lite",
     "category": "backend-library",
     "label_source": "manual-fixture",
