@@ -126,6 +126,7 @@ gh auth status
 
 ## Current Priorities
 
-**M23 → v1.28.0 (in progress)** — TI scorecard + skill flywheel (`design-system`
-category, starred-only provenance, security/supply-chain draft gates, sandbox
-craft-tokens experiment). Prior **v1.27.0** (M22) shipped (#129 + sandbox#43).
+**Idle (post-M23)** — **v1.28.0** shipped (TI scorecard + skill flywheel). M22
+**v1.27.0** live ops also tagged. No next plan queued — Captain uses
+`docs/guides/starred-repos-to-skills.md` until a new `IMPLEMENTATION_PLAN.md` is
+approved.

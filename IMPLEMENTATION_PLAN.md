@@ -4,19 +4,19 @@
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED — M23 IMPLEMENTATION COMPLETE (pending merge/tag)** |
+| Status | **CLOSED — SHIPPED** (M22 → v1.27.0, M23 → v1.28.0) |
 | Plan ID | `m22-m23-northstar-ops-ti-flywheel` |
 | Supersedes | `issue-50-northstar-m4-bridge` (CLOSED — shipped as v1.26.0) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
-| Baseline | `v1.27.0` on `main` (M22 shipped) |
+| Baseline | `v1.26.0` at plan start; shipped through `v1.28.0` |
 | Prepared | 2026-09-09 |
-| Start gate | Open — Captain approved 2026-09-09; M23 start directed after #129 + sandbox#43 |
-| Branch | `cursor/m23-ti-skill-flywheel-6044` (M23); M22 was `cursor/m22-northstar-unattended-ops-6044` |
-| M22 | [#129](https://github.com/loganware05/captains-compass-cursor/pull/129) + sandbox [#43](https://github.com/loganware05/captain-compass-sandbox/pull/43) merged |
-| M23 PR | [#130](https://github.com/loganware05/captains-compass-cursor/pull/130) |
-| Target releases | **v1.27.0** (M22 — shipped), **v1.28.0** (M23) |
+| Closed | 2026-09-10 — tags `v1.27.0`, `v1.28.0` + sandbox #43/#44 |
+| M22 | [#129](https://github.com/loganware05/captains-compass-cursor/pull/129) + sandbox [#43](https://github.com/loganware05/captain-compass-sandbox/pull/43) |
+| M23 | [#130](https://github.com/loganware05/captains-compass-cursor/pull/130) + sandbox [#44](https://github.com/loganware05/captain-compass-sandbox/pull/44) |
+| Releases | https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.28.0 |
 | Product target | `loganware05/captain-compass-sandbox` **only** |
 | Rollback tags | `rollback/pre-m22-northstar-ops`, `rollback/pre-m23-ti-flywheel` |
+| Captain guide | `docs/guides/starred-repos-to-skills.md` |
 
 ## Request (Captain-level)
 
@@ -78,28 +78,28 @@ Skill/procedure promotion.
 
 ## Acceptance criteria
 
-### M22 (v1.27.0)
+### M22 (v1.27.0) — met
 
-- [ ] Unattended ingress (webhook/bot worker) accepts GitHub deliveries with
+- [x] Unattended ingress (webhook/bot worker) accepts GitHub deliveries with
       signature verification + idempotent `delivery_id` handling.
-- [ ] Live GitHub path advances/records Captain approval via plan digest only;
+- [x] Live GitHub path advances/records Captain approval via plan digest only;
       missing/invalid approval fail-closes (`AWAITING_CAPTAIN_APPROVAL` / stop).
-- [ ] Live Linear ledger create/update/link works; Linear **cannot** approve or
+- [x] Live Linear ledger create/update/link works; Linear **cannot** approve or
       dispatch.
-- [ ] Slack notify (and intake if capacity) ships **after** GitHub+Linear health;
+- [x] Slack notify (and intake if capacity) ships **after** GitHub+Linear health;
       Slack **cannot** approve or dispatch.
-- [ ] Fixture mode remains CI default; live mode requires explicit Captain-gated
+- [x] Fixture mode remains CI default; live mode requires explicit Captain-gated
       config/secrets (never committed).
-- [ ] Cursor agent identity pin preserved (`BLOCKED_AGENT_IDENTITY` on mismatch)
+- [x] Cursor agent identity pin preserved (`BLOCKED_AGENT_IDENTITY` on mismatch)
       unless Captain revises via ADR.
-- [ ] No auto-merge, auto-release, live Skill install, or weight auto-apply.
-- [ ] Secrets redacted in logs/events/evidence; doctor + docs updated for live ops.
-- [ ] `docs/SANDBOX_VALIDATION.md` row for Compass **1.27.0**; sandbox refresh PR.
-- [ ] Tests: fixture suite green; live paths covered with injected doubles (no
+- [x] No auto-merge, auto-release, live Skill install, or weight auto-apply.
+- [x] Secrets redacted in logs/events/evidence; doctor + docs updated for live ops.
+- [x] `docs/SANDBOX_VALIDATION.md` row for Compass **1.27.0**; sandbox refresh PR.
+- [x] Tests: fixture suite green; live paths covered with injected doubles (no
       live credentials in CI).
-- [ ] Tag/release **v1.27.0** + rollback tag `rollback/pre-m22-northstar-ops`.
+- [x] Tag/release **v1.27.0** + rollback tag `rollback/pre-m22-northstar-ops`.
 
-### M23 (v1.28.0)
+### M23 (v1.28.0) — met
 
 - [x] Fixed usefulness/category label set extended at least with **`design-system`**
       (and any Captain-confirmed additions) in `DEFAULT_CATEGORIES`, manual labels,
@@ -117,9 +117,8 @@ Skill/procedure promotion.
       starred): categorize → scorecard → draft proposal (no auto Skill install).
 - [x] `approved_for_execution` stays false for TI candidates; no clone/exec of
       starred repos from learning/TI.
-- [x] Sandbox refresh + smoke gate for **1.28.0** (branch
-      `cursor/refresh-compass-1.28.0-6044`; PR pending parent).
-- [ ] Tag/release **v1.28.0** + rollback tag `rollback/pre-m23-ti-flywheel`.
+- [x] Sandbox refresh + smoke gate for **1.28.0** (sandbox [#44](https://github.com/loganware05/captain-compass-sandbox/pull/44)).
+- [x] Tag/release **v1.28.0** + rollback tag `rollback/pre-m23-ti-flywheel`.
 
 ## Non-goals
 

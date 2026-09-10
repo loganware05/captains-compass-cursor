@@ -2,34 +2,35 @@
 
 ## Current status
 
-**M23 IMPLEMENTATION COMPLETE (pending merge/tag)** — TI scorecard + skill
-flywheel → **v1.28.0**. Sandbox refresh branch pushed.
+**M23 SHIPPED** — TI scorecard + skill flywheel → **v1.28.0** tagged and released.
+Sandbox refresh merged. No next milestone queued.
 
 | Item | Value |
 |---|---|
-| Plan | `IMPLEMENTATION_PLAN.md` — **APPROVED — M23 IMPLEMENTATION COMPLETE** |
+| Plan | `IMPLEMENTATION_PLAN.md` — **CLOSED — SHIPPED as v1.28.0** |
 | Plan ID | `m22-m23-northstar-ops-ti-flywheel` |
-| Baseline | `v1.27.0` (M22 + sandbox#43) |
-| Target | **v1.28.0** (M23) |
-| Branch | `cursor/m23-ti-skill-flywheel-6044` |
+| Releases | **v1.27.0** (M22), **v1.28.0** (M23) |
+| Control PRs | [#129](https://github.com/loganware05/captains-compass-cursor/pull/129), [#130](https://github.com/loganware05/captains-compass-cursor/pull/130) |
+| Sandbox PRs | [#43](https://github.com/loganware05/captain-compass-sandbox/pull/43), [#44](https://github.com/loganware05/captain-compass-sandbox/pull/44) |
 | Rollback | `rollback/pre-m23-ti-flywheel` |
-| Product scope | Sandbox only (`loganware05/captain-compass-sandbox`) |
-| Evidence | `.agent/evidence/m23-ti-skill-flywheel/VALIDATION.md` |
-| Budget | `.agent/budgets/m23-ti-skill-flywheel.md` |
-| Sandbox | `cursor/refresh-compass-1.28.0-6044` (`990e3de`) |
+| Evidence | `.agent/evidence/release-v1.28.0/` |
+| Captain guide | `docs/guides/starred-repos-to-skills.md` |
 
 ## Completed
 
-- v1.5.0–v1.27.0 / M1–M22 + #50 M4 bridge
+- v1.5.0–v1.28.0 / M1–M23 + #50 M4 bridge
+- M22: unattended live ops + ingress (v1.27.0)
 - M23: `design-system` category, starred provenance, draft evidence gates,
   scorecard path, skill/docs, ADR-040, VERSION 1.28.0
 - Sandbox craft-tokens UI experiment + a11y vitest evidence
-- Doctor + `./tests/run.sh` **121/121**
+- Doctor + `./tests/run.sh` **121/121** on release closeout
+- Tags/releases: `v1.27.0` (retroactive), `v1.28.0`
 
 ## Next
 
-1. Merge M23 control PR; tag/release **v1.28.0**
-2. Open/merge sandbox refresh PR for Compass **1.28.0**
+Nothing queued. Captain: use `docs/guides/starred-repos-to-skills.md` to start
+learning from starred repos. Approve a new `IMPLEMENTATION_PLAN.md` when ready
+for the next milestone.
 
 ## Blockers
 
