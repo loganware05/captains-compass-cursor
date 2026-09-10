@@ -43,6 +43,8 @@ def enrich_candidate_with_category(candidate: dict, repo: dict) -> dict:
     category = str(repo.get("star_category") or "")
     confidence = repo.get("star_category_confidence")
     provenance = dict(out.get("provenance") or {})
+    provenance["starred"] = True
+    provenance["starred_provenance"] = True
     if category:
         provenance["star_category"] = category
         if confidence is not None:
@@ -54,6 +56,8 @@ def enrich_candidate_with_category(candidate: dict, repo: dict) -> dict:
         if "category:" not in signal:
             out["discovery_signal"] = f"{signal}|category:{category}"
     out["provenance"] = provenance
+    out["starred"] = True
+    out["starred_provenance"] = True
     out["approved_for_execution"] = False
     return out
 
@@ -71,11 +75,23 @@ def select_categorized_candidates(
     Requires prior categorize-github-stars output under
     `.agent/ti/github-stars-categorized/categorized.json`.
     """
+    from orchestrator.providers.technology_intelligence.starred_provenance import (
+        assert_starred_provenance,
+        stamp_starred_provenance,
+    )
+
     records = read_categorized_records(repo_root)
     if not records:
         raise LearningExportError(
             "no categorized Stars records; run categorize-github-stars.sh first"
         )
+    records = stamp_starred_provenance(records, source="github-stars-categorized")
+    try:
+        assert_starred_provenance(
+            records, source="github-stars-categorized", context="learning-export"
+        )
+    except Exception as exc:  # StarredProvenanceError
+        raise LearningExportError(str(exc)) from exc
     if category_filter:
         records = [
             r for r in records if str(r.get("star_category") or "") == category_filter
@@ -85,7 +101,9 @@ def select_categorized_candidates(
                 f"no categorized records for category {category_filter!r}"
             )
 
-    ranked = discover_candidates_from_records(records, objective, top_n=top_n)
+    ranked = discover_candidates_from_records(
+        records, objective, top_n=top_n, source="github-stars-categorized"
+    )
     by_name = {str(r.get("full_name") or ""): r for r in records}
     pairs: list[tuple[dict, dict]] = []
     for cand in ranked:
@@ -100,6 +118,8 @@ def select_categorized_candidates(
                 "full_name": cand.source_path,
                 "description": cand.notes,
                 "star_category": "",
+                "starred": True,
+                "starred_provenance": True,
             }
         enriched = enrich_candidate_with_category(cand.to_dict(), repo)
         pairs.append((enriched, repo))

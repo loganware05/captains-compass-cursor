@@ -92,6 +92,13 @@ class PromotionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             repo = Path(tmp)
             candidate = load_candidate_json(FIXTURE_CANDIDATE)
+            evidence_dir = repo / ".agent" / "evidence" / "ti-scorecards" / "promo"
+            evidence_dir.mkdir(parents=True)
+            security = evidence_dir / "security-review.md"
+            supply = evidence_dir / "dependency-supply-chain.md"
+            security.write_text("# Security review\n\nPass.\n", encoding="utf-8")
+            supply.write_text("# Dependency supply-chain\n\nPass.\n", encoding="utf-8")
+            candidate["evidence_paths"] = [str(security), str(supply)]
             staging = write_staging_candidate(repo, candidate)
             self.assertTrue(staging.is_file())
             draft = write_skill_sidecar_draft(repo, candidate, "accessible-forms-patterns")

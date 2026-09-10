@@ -51,6 +51,7 @@ wandb/
 .agent/capabilities/candidates/skill-improvement-proposals/
 .agent/capabilities/candidates/available-proposals/
 .agent/evidence/candidate-sandbox-test/
+.agent/evidence/ti-scorecards/
 .agent/ti/
 .agent/plans/
 .agent/learning-runs/*

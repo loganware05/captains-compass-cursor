@@ -86,6 +86,9 @@ Skill learning loop (M19 — fixtures default; ti-cache/live Captain-local):
 ```bash
 ./scripts/run-skill-learning-loop.sh --source fixtures --objective "accessible react forms"
 ./scripts/run-skill-learning-loop.sh --source ti-cache --objective "schema validation"
+./scripts/run-skill-learning-loop.sh --source fixtures --category design-system \
+  --objective "design system craft tokens"
+./scripts/example-design-repo-scorecard.sh
 ./scripts/run-skill-learning-loop.sh --source fixtures --record-experiences \
   --objective "accessible react forms"
 ./scripts/bridge-learning-experiences.sh --run .agent/learning-runs/<id>.json

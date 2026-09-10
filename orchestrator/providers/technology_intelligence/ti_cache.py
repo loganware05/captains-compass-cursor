@@ -14,6 +14,9 @@ from orchestrator.providers.technology_intelligence.github_stars_provider import
     discover_candidates_from_records,
     fetch_starred_repos,
 )
+from orchestrator.providers.technology_intelligence.starred_provenance import (
+    stamp_starred_provenance,
+)
 
 _DEFAULT_LIMIT = 100
 
@@ -57,7 +60,8 @@ def read_ti_cache(repo_root: Path) -> list[dict]:
         return []
     records = envelope.get("records")
     if isinstance(records, list):
-        return [item for item in records if isinstance(item, dict)]
+        rows = [item for item in records if isinstance(item, dict)]
+        return stamp_starred_provenance(rows, source="ti-cache:starred-repos.json")
     return []
 
 
@@ -101,12 +105,14 @@ def write_ti_cache(repo_root: Path, records: list[dict]) -> Path:
     cache_dir.mkdir(parents=True, exist_ok=True)
     path = ti_cache_path(repo_root)
     now = _utc_now()
+    stamped = stamp_starred_provenance(list(records), source="gh api user/starred")
     envelope = {
         "fetched_at": now,
         "refreshed_at": now,  # backward-compatible alias
         "source": "gh api user/starred",
-        "record_count": len(records),
-        "records": records,
+        "starred_provenance_required": True,
+        "record_count": len(stamped),
+        "records": stamped,
     }
     with path.open("w", encoding="utf-8") as handle:
         json.dump(envelope, handle, indent=2, sort_keys=True)

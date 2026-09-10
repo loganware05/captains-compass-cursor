@@ -12,10 +12,16 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 
+from orchestrator.providers.technology_intelligence.starred_provenance import (
+    assert_starred_provenance,
+    stamp_starred_provenance,
+)
+
 _TOKEN = re.compile(r"[a-z0-9]{2,}", re.I)
 
 DEFAULT_CATEGORIES = (
     "frontend-ui",
+    "design-system",
     "backend-library",
     "devtool",
     "ml-data",
@@ -161,10 +167,19 @@ def categorize_records(
     *,
     model: dict | None = None,
     labels: list[dict] | None = None,
+    source: str | None = None,
 ) -> list[dict]:
-    """Attach predicted category metadata to repo records."""
+    """Attach predicted category metadata to repo records.
+
+    External repos must carry starred provenance (M23 fail-closed gate).
+    """
     labels = labels if labels is not None else load_manual_labels()
     model = model if model is not None else train_naive_bayes(labels)
+    assert_starred_provenance(
+        [r for r in repos if isinstance(r, dict)],
+        source=source,
+        context="stars-categorization",
+    )
     categorized: list[dict] = []
     for repo in repos:
         if not isinstance(repo, dict):
@@ -174,6 +189,8 @@ def categorize_records(
         row["star_category"] = category
         row["star_category_confidence"] = confidence
         row["star_category_model"] = "naive-bayes-manual-labels-v1"
+        row["starred"] = True
+        row["starred_provenance"] = True
         categorized.append(row)
     return categorized
 
@@ -231,11 +248,18 @@ def run_batch_categorization(
     if not labels:
         raise RuntimeError("batch categorization requires manual labels fixture")
     model = train_naive_bayes(labels)
-    categorized = categorize_records(repos, model=model, labels=labels)
+    # Stamp + gate: only starred feeds may enter TI categorization.
+    stamped = stamp_starred_provenance(list(repos), source=source)
+    assert_starred_provenance(stamped, source=source, context="stars-batch-categorization")
+    categorized = categorize_records(
+        stamped, model=model, labels=labels, source=source
+    )
     path = write_categorized_envelope(repo_root, categorized, model=model, source=source)
     return {
         "categorized_path": str(path),
         "record_count": len(categorized),
         "trained_from": model.get("trained_from"),
         "categories_seen": sorted({str(r.get("star_category") or "") for r in categorized}),
+        "default_categories": list(DEFAULT_CATEGORIES),
+        "starred_provenance_required": True,
     }

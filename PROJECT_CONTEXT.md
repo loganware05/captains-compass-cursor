@@ -126,7 +126,6 @@ gh auth status
 
 ## Current Priorities
 
-**M22 → v1.27.0 (pending merge)** — NorthStar unattended live ops (GitHub
-ingress + live adapters, sandbox-only). Fixture mode remains CI default.
-Prior **v1.26.0** closed (sandbox#42 + #126/#127). M23 TI/skill flywheel follows
-after M22 ships when Captain directs.
+**M23 → v1.28.0 (in progress)** — TI scorecard + skill flywheel (`design-system`
+category, starred-only provenance, security/supply-chain draft gates, sandbox
+craft-tokens experiment). Prior **v1.27.0** (M22) shipped (#129 + sandbox#43).

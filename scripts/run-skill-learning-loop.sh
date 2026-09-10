@@ -31,6 +31,9 @@ Options:
 
 Explicit CLI only — never auto-runs on hooks/close/CI defaults.
 Live Skill install still requires Captain approval (promote-candidate --captain-approved).
+M23: starred provenance required; Skill drafts require security-review +
+dependency-supply-chain scorecard evidence (auto-written by the loop).
+Categories: frontend-ui, design-system, backend-library, devtool, ml-data, other.
 USAGE
 }
 

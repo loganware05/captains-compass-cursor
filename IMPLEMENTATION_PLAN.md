@@ -4,15 +4,15 @@
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED — M22 IMPLEMENTATION IN PROGRESS** |
+| Status | **APPROVED — M23 IMPLEMENTATION IN PROGRESS** |
 | Plan ID | `m22-m23-northstar-ops-ti-flywheel` |
 | Supersedes | `issue-50-northstar-m4-bridge` (CLOSED — shipped as v1.26.0) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
-| Baseline | `v1.26.0` on `main` |
+| Baseline | `v1.27.0` on `main` (M22 shipped) |
 | Prepared | 2026-09-09 |
-| Start gate | Open — Captain approved 2026-09-09 |
-| Branch | `cursor/m22-northstar-unattended-ops-6044` |
-| Target releases | **v1.27.0** (M22), **v1.28.0** (M23) |
+| Start gate | Open — Captain approved 2026-09-09; M23 start directed after #129 + sandbox#43 |
+| Branch | `cursor/m23-ti-skill-flywheel-6044` (M23); M22 was `cursor/m22-northstar-unattended-ops-6044` |
+| Target releases | **v1.27.0** (M22 — shipped), **v1.28.0** (M23) |
 | Product target | `loganware05/captain-compass-sandbox` **only** |
 | Rollback tags | `rollback/pre-m22-northstar-ops`, `rollback/pre-m23-ti-flywheel` |
 
@@ -99,21 +99,21 @@ Skill/procedure promotion.
 
 ### M23 (v1.28.0)
 
-- [ ] Fixed usefulness/category label set extended at least with **`design-system`**
+- [x] Fixed usefulness/category label set extended at least with **`design-system`**
       (and any Captain-confirmed additions) in `DEFAULT_CATEGORIES`, manual labels,
       docs, and tests.
-- [ ] TI paths enforce **starred provenance** for external repo entry (reject
+- [x] TI paths enforce **starred provenance** for external repo entry (reject
       non-starred feeds).
-- [ ] Before any Skill draft: required **security-review** +
+- [x] Before any Skill draft: required **security-review** +
       **dependency-supply-chain** evidence artifacts; fail closed if missing.
-- [ ] `skill-learning-loop` / `apply-skill-improvement` document and enforce the
+- [x] `skill-learning-loop` / `apply-skill-improvement` document and enforce the
       new gates; live apply remains `--captain-approved` only.
 - [ ] At least one **bounded UI experiment** lands only in
       `captain-compass-sandbox` with Playwright/a11y evidence linked from control
       validation docs.
-- [ ] Example path supported for a **starred** design repo (e.g. impeccable once
+- [x] Example path supported for a **starred** design repo (e.g. impeccable once
       starred): categorize → scorecard → draft proposal (no auto Skill install).
-- [ ] `approved_for_execution` stays false for TI candidates; no clone/exec of
+- [x] `approved_for_execution` stays false for TI candidates; no clone/exec of
       starred repos from learning/TI.
 - [ ] Sandbox refresh + smoke gate for **1.28.0**.
 - [ ] Tag/release **v1.28.0** + rollback tag `rollback/pre-m23-ti-flywheel`.
@@ -238,8 +238,8 @@ greenfield surface.
 | Captain | Decision | Date |
 |---|---|---|
 | Captain | **APPROVED** — M22 implementation in progress (M23 deferred) | 2026-09-09 |
+| Captain | **APPROVED** — M23 start after #129 + sandbox#43 merged | 2026-09-10 |
 
 Captain approved plan `m22-m23-northstar-ops-ti-flywheel` on 2026-09-09.
-Rollback tag: `rollback/pre-m22-northstar-ops`. Branch:
-`cursor/m22-northstar-unattended-ops-6044`. Implement M22 → v1.27.0 first;
-M23 remains planned for v1.28.0 after M22 ships.
+M22 shipped as v1.27.0 (#129). Rollback tag for M23: `rollback/pre-m23-ti-flywheel`.
+Branch: `cursor/m23-ti-skill-flywheel-6044`. Implement M23 → v1.28.0.

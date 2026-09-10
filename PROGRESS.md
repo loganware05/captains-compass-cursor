@@ -2,38 +2,36 @@
 
 ## Current status
 
-**M22 IMPLEMENTATION COMPLETE (pending merge/tag)** — NorthStar unattended
-connected ops → **v1.27.0**. Prior **v1.26.0** closed (sandbox#42 + #126/#127).
+**M23 IMPLEMENTATION IN PROGRESS** — TI scorecard + skill flywheel → **v1.28.0**.
+Prior **v1.27.0** (M22) merged via [#129](https://github.com/loganware05/captains-compass-cursor/pull/129); sandbox#43 refresh landed.
 
 | Item | Value |
 |---|---|
-| Plan | `IMPLEMENTATION_PLAN.md` — **APPROVED — M22 IMPLEMENTATION IN PROGRESS** |
+| Plan | `IMPLEMENTATION_PLAN.md` — **APPROVED — M23 IMPLEMENTATION IN PROGRESS** |
 | Plan ID | `m22-m23-northstar-ops-ti-flywheel` |
-| Baseline | `v1.26.0` (sandbox#42 merged) |
-| Target | **v1.27.0** (M22); M23 → v1.28.0 deferred |
-| Branch | `cursor/m22-northstar-unattended-ops-6044` |
-| PR | [#129](https://github.com/loganware05/captains-compass-cursor/pull/129) |
-| Rollback | `rollback/pre-m22-northstar-ops` |
+| Baseline | `v1.27.0` (M22 + sandbox#43) |
+| Target | **v1.28.0** (M23) |
+| Branch | `cursor/m23-ti-skill-flywheel-6044` |
+| Rollback | `rollback/pre-m23-ti-flywheel` |
 | Product scope | Sandbox only (`loganware05/captain-compass-sandbox`) |
-| Evidence | `.agent/evidence/m22-northstar-unattended-ops/VALIDATION.md` |
+| Evidence | `.agent/evidence/m23-ti-skill-flywheel/VALIDATION.md` |
+| Budget | `.agent/budgets/m23-ti-skill-flywheel.md` |
 
 ## Completed
 
-- v1.5.0–v1.26.0 / M1–M21 + #50 M4 bridge
-- M21 NorthStar connected operations (fixture routine)
-- Sandbox refresh 1.24.0 → 1.25.0 → 1.26.0 (sandbox#40–#42 merged)
-- M4 original acceptance (v1.8.0 / ADR-020) — issue #50 closed via #124
-- Notion MCP desktop auth for live research checks
-- Closeout #126 + hygiene #127 merged
-- Captain APPROVED M22/M23 plan 2026-09-09
-- M22 code: transport, ingress, live adapters, allowlist, tests, docs, ADR-039
+- v1.5.0–v1.27.0 / M1–M22 + #50 M4 bridge
+- M22 NorthStar unattended connected ops (ingress, live adapters, allowlist)
+- Sandbox refresh through Compass **1.27.0** (sandbox#43)
+- Captain APPROVED M22/M23 plan 2026-09-09; directed M23 start after #129 + sandbox#43
+- M23 code: `design-system` category, starred provenance gate, draft evidence gates,
+  scorecard path, skill/docs updates
 
 ## Next
 
-1. Merge [#129](https://github.com/loganware05/captains-compass-cursor/pull/129); tag/release **v1.27.0**
-2. Sandbox refresh to Compass **1.27.0**
-3. Start M23 (TI scorecard + skill flywheel) under the same plan when Captain directs
+1. Finish sandbox craft-tokens UI experiment + a11y evidence
+2. Sandbox refresh to Compass **1.28.0**
+3. Merge M23 PR; tag/release **v1.28.0**
 
 ## Blockers
 
-None for M22 merge. Slack richer intake polish deferred (notify path shipped).
+None.

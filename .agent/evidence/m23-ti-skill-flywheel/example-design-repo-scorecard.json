@@ -1,0 +1,44 @@
+{
+  "approved_for_execution": false,
+  "auto_install": false,
+  "categorization": {
+    "categories_seen": [
+      "backend-library",
+      "design-system",
+      "frontend-ui",
+      "ml-data"
+    ],
+    "categorized_path": "/agent/repos/captains-compass-cursor/.agent/ti/github-stars-categorized/categorized.json",
+    "default_categories": [
+      "frontend-ui",
+      "design-system",
+      "backend-library",
+      "devtool",
+      "ml-data",
+      "other"
+    ],
+    "record_count": 4,
+    "starred_provenance_required": true,
+    "trained_from": 5
+  },
+  "category_filter": "design-system",
+  "kind": "m23-design-repo-scorecard-example",
+  "notes": "Example path only. No live Skill install. Captain must approve any promotion via promote-candidate.sh --captain-approved.",
+  "objective": "design system craft tokens ui primitives",
+  "results": [
+    {
+      "approved_for_execution": false,
+      "auto_install": false,
+      "clone_or_exec": false,
+      "draft_skill_md": "/agent/repos/captains-compass-cursor/.agent/capabilities/candidates/skill-drafts/from-stars-example-org-craft-design-tokens/SKILL.md",
+      "evidence_paths": [
+        "/agent/repos/captains-compass-cursor/.agent/evidence/ti-scorecards/github-stars-example-org-craft-design-tokens/security-review.md",
+        "/agent/repos/captains-compass-cursor/.agent/evidence/ti-scorecards/github-stars-example-org-craft-design-tokens/dependency-supply-chain.md"
+      ],
+      "full_name": "example-org/craft-design-tokens",
+      "scorecard_path": "/agent/repos/captains-compass-cursor/.agent/evidence/ti-scorecards/github-stars-example-org-craft-design-tokens/scorecard.json",
+      "staging_path": "/agent/repos/captains-compass-cursor/.agent/capabilities/candidates/staging/github-stars-example-org-craft-design-tokens.json",
+      "star_category": "design-system"
+    }
+  ]
+}

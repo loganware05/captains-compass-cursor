@@ -149,6 +149,9 @@ manifests, or install targets.
 | Captain-approved Skill sidecar PR path | Shipped (draft under staging; never auto-merge) |
 | Batch GitHub Star Categorization ML pipeline | Shipped — `categorize-github-stars.sh` + `github-stars-categorized` (M14) |
 | Skill learning loop (Stars → staging → harness → drafts/proposals) | Shipped — `run-skill-learning-loop.sh` + Skill `skill-learning-loop` (M19) |
+| Starred-only TI provenance gate | Shipped — reject non-starred external feeds (M23) |
+| Fixed usefulness labels + `design-system` | Shipped — `DEFAULT_CATEGORIES` (M23) |
+| TI scorecard before Skill draft | Shipped — security-review + dependency-supply-chain evidence (M23) |
 | Auto-install / execute external repos | **Prohibited** |
 
 ## Promotion path
@@ -169,9 +172,10 @@ Scripts:
 
 - `./scripts/promote-candidate.sh`
 - `./scripts/train-skill-from-experience.sh` (product Experience → control draft)
-- `./scripts/run-skill-learning-loop.sh` (categorized Stars → staging/harness/drafts; M19)
+- `./scripts/run-skill-learning-loop.sh` (categorized Stars → staging/harness/drafts; M19/M23)
+- `./scripts/example-design-repo-scorecard.sh` (starred design-repo scorecard → draft; M23)
 - `./scripts/bridge-learning-experiences.sh` (learning-run → Experiences; M20)
-- `./scripts/apply-skill-improvement.sh` (Captain-gated improvement apply; M20)
+- `./scripts/apply-skill-improvement.sh` (Captain-gated improvement apply; M20/M23)
 
 ## Implementing a future live provider
 

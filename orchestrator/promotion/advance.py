@@ -14,6 +14,10 @@ import json
 import os
 from pathlib import Path
 
+from orchestrator.promotion.draft_gates import (
+    SkillDraftGateError,
+    require_skill_draft_evidence,
+)
 from orchestrator.providers.technology_intelligence.validate import (
     TechnologyIntelligenceValidationError,
     validate_ti_candidates,
@@ -318,7 +322,15 @@ def draft_skill_sidecar_proposal(candidate: dict, skill_slug: str) -> dict:
 
 
 def write_skill_sidecar_draft(repo_root: Path, candidate: dict, skill_slug: str) -> Path:
-    """Write draft capability.yaml under staging/skills/<slug>/ (not live Skills)."""
+    """Write draft capability.yaml under staging/skills/<slug>/ (not live Skills).
+
+    M23: requires security-review + dependency-supply-chain evidence artifacts.
+    """
+    paths = list(candidate.get("evidence_paths") or [])
+    try:
+        require_skill_draft_evidence(paths, context=f"skill-sidecar-draft:{skill_slug}")
+    except SkillDraftGateError as exc:
+        raise PromotionError(str(exc)) from exc
     draft = draft_skill_sidecar_proposal(candidate, skill_slug)
     out_dir = (
         Path(repo_root)

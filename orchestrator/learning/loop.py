@@ -12,6 +12,7 @@ from orchestrator.learning.export import (
     export_categorized_to_staging,
 )
 from orchestrator.learning.sandbox_harness import run_fixture_sandbox_harness
+from orchestrator.learning.scorecard import ScorecardError, write_ti_scorecard_evidence
 from orchestrator.learning.similarity import (
     DEFAULT_SIMILARITY_THRESHOLD,
     find_similar_skills,
@@ -85,11 +86,12 @@ def run_skill_learning_loop(
     Run the explicit skill learning loop and stop before live Skill install.
 
     Steps:
-      1. Categorize Stars (unless skip_categorize)
+      1. Categorize Stars (unless skip_categorize) — starred provenance required
       2. Export top-N candidates to staging
-      3. For each: similarity check → improvement proposal and/or new draft
-      4. Fixture sandbox harness → SANDBOX_TESTED + evidence
-      5. Write learning-run report; never write .cursor/skills/ drafts as live
+      3. For each: TI scorecard (security-review + supply-chain) → draft gate
+      4. Similarity check → improvement proposal and/or new draft
+      5. Fixture sandbox harness → SANDBOX_TESTED + evidence
+      6. Write learning-run report; never write .cursor/skills/ drafts as live
     """
     repo_root = Path(repo_root).resolve()
     control = Path(control_root or repo_root).resolve()
@@ -140,6 +142,20 @@ def run_skill_learning_loop(
         candidate = item["candidate"]
         repo = item["repo"]
         draft_slug = item["skill_slug"]
+        try:
+            scorecard = write_ti_scorecard_evidence(
+                repo_root,
+                repo=repo,
+                candidate=candidate,
+                category=str(item.get("star_category") or ""),
+            )
+        except ScorecardError as exc:
+            raise LearningLoopError(str(exc)) from exc
+        evidence_paths = list(scorecard["evidence_paths"])
+        candidate = dict(candidate)
+        candidate["evidence_paths"] = evidence_paths
+        candidate["approved_for_execution"] = False
+
         similar = find_similar_skills(
             control,
             candidate,
@@ -152,6 +168,7 @@ def run_skill_learning_loop(
             "full_name": item["full_name"],
             "star_category": item["star_category"],
             "staging_path": item["staging_path"],
+            "scorecard": scorecard,
             "similar_skills": similar,
             "mode": "improve-existing" if similar else "draft-new",
         }
@@ -161,7 +178,13 @@ def run_skill_learning_loop(
             top = similar[0]
             entry["target_skill_slug"] = top["skill_slug"]
             stage = "SANDBOX_TESTED" if promote_sandbox else "ANALYZED"
-            drafts = write_unified_skill_draft(repo_root, candidate, draft_slug, stage)
+            drafts = write_unified_skill_draft(
+                repo_root,
+                candidate,
+                draft_slug,
+                stage,
+                evidence_paths=evidence_paths,
+            )
             harness = run_fixture_sandbox_harness(
                 repo_root,
                 candidate,
@@ -173,14 +196,24 @@ def run_skill_learning_loop(
                 repo_root,
                 candidate,
                 top,
-                evidence_paths=[harness["report_path"], harness["summary_path"]],
+                evidence_paths=[
+                    harness["report_path"],
+                    harness["summary_path"],
+                    *evidence_paths,
+                ],
             )
             entry["improvement_proposal"] = str(proposal)
             entry["draft"] = {k: str(v) for k, v in drafts.items()}
             entry["harness"] = harness
         else:
             stage = "SANDBOX_TESTED" if promote_sandbox else "ANALYZED"
-            drafts = write_unified_skill_draft(repo_root, candidate, draft_slug, stage)
+            drafts = write_unified_skill_draft(
+                repo_root,
+                candidate,
+                draft_slug,
+                stage,
+                evidence_paths=evidence_paths,
+            )
             harness = run_fixture_sandbox_harness(
                 repo_root,
                 candidate,
@@ -209,11 +242,14 @@ def run_skill_learning_loop(
         "approved_for_execution": False,
         "captain_approval_required_for_live_skills": True,
         "auto_install": False,
+        "starred_provenance_required": True,
+        "draft_requires_security_and_supply_chain": True,
         "candidate_count": len(results),
         "results": results,
         "notes": (
             "Staging + evidence only. Promote live Skills with "
-            "promote-candidate.sh --captain-approved after Captain review."
+            "promote-candidate.sh --captain-approved after Captain review. "
+            "Skill drafts require security-review + dependency-supply-chain evidence."
         ),
     }
     report_path = out_dir / f"{run_id}.json"
