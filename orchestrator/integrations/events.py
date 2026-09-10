@@ -162,11 +162,28 @@ def redact_secrets(value: Any) -> Any:
         "password",
         "webhook_secret",
         "private_key",
+        "x-hub-signature-256",
+        "x_hub_signature_256",
+        "northstar_github_token",
+        "northstar_linear_api_key",
+        "northstar_slack_bot_token",
+        "northstar_github_webhook_secret",
+        "github_token",
+        "linear_api_key",
+        "slack_bot_token",
     }
     if isinstance(value, dict):
         out: dict[str, Any] = {}
         for key, item in value.items():
-            if key.casefold() in secret_keys or key.casefold().endswith("_token"):
+            key_cf = key.casefold()
+            if (
+                key_cf in secret_keys
+                or key_cf.endswith("_token")
+                or key_cf.endswith("_secret")
+                or key_cf.startswith("northstar_")
+                and ("token" in key_cf or "secret" in key_cf or "key" in key_cf)
+                or "signature" in key_cf
+            ):
                 out[key] = "[REDACTED]"
             else:
                 out[key] = redact_secrets(item)

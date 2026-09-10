@@ -1,7 +1,8 @@
-"""Linear adapter — work ledger with GitHub fallback."""
+"""Linear adapter — work ledger with GitHub fallback (never an approval authority)."""
 
 from __future__ import annotations
 
+import os
 from typing import Any
 
 from orchestrator.integrations.adapters.base import FixtureAdapterBase
@@ -36,6 +37,8 @@ class LinearAdapter(FixtureAdapterBase):
             occurred_at=raw_event.get("occurred_at"),
             actor=actor,
             product_name_received=raw_event.get("product_name"),
+            repository=raw_event.get("repository") or self.product_repository
+            or "loganware05/captains-compass-cursor",
             references={"linear_issue": raw_event.get("issue")},
             payload={
                 "title": raw_event.get("title"),
@@ -47,6 +50,7 @@ class LinearAdapter(FixtureAdapterBase):
         )
 
     def create_or_update_work_item(self, run: dict[str, Any]) -> dict[str, Any]:
+        # Linear never sets plan_approved / never calls mark_plan_approved.
         if not self.connected:
             return {
                 "ok": False,
@@ -61,9 +65,9 @@ class LinearAdapter(FixtureAdapterBase):
             "label": "northstar",
             "state": run.get("state"),
             "title": f"NorthStar run {run.get('run_id')}",
+            "mode": self.mode,
         }
         self.work_items.append(parent)
-        # Child workstreams mirror delivery streams when present on the run.
         for stream in run.get("workstreams") or []:
             child = {
                 "provider": "linear",
@@ -78,6 +82,20 @@ class LinearAdapter(FixtureAdapterBase):
             }
             self.children.append(child)
         self._write_json(f"linear-parent-{run.get('run_id')}.json", parent)
+
+        if self.mode == "live" and self.transport is not None:
+            from orchestrator.integrations.adapters.live import linear_graphql
+
+            api_key = (os.environ.get("NORTHSTAR_LINEAR_API_KEY") or "").strip()
+            linear_graphql(
+                self.transport,
+                query=(
+                    "mutation CreateIssue($title: String!) {"
+                    " issueCreate(input: {title: $title}) { success } }"
+                ),
+                variables={"title": parent["title"]},
+                api_key=api_key,
+            )
         return parent
 
     def reconcile(self, run: dict[str, Any]) -> dict[str, Any]:
@@ -88,9 +106,27 @@ class LinearAdapter(FixtureAdapterBase):
                 "fallback": "github",
                 "run_id": run.get("run_id"),
             }
-        # Out-of-order safe: last observed run state wins for children.
         for child in self.children:
             if child.get("run_id") == run.get("run_id"):
                 child["status"] = run.get("state")
                 child["pr"] = (run.get("references") or {}).get("github_pull_request")
-        return {"provider": "linear", "ok": True, "run_id": run.get("run_id"), "state": run.get("state")}
+        return {
+            "provider": "linear",
+            "ok": True,
+            "run_id": run.get("run_id"),
+            "state": run.get("state"),
+            "mode": self.mode,
+        }
+
+    def record_approval_intent(self, run: dict[str, Any], *, actor_id: str) -> dict[str, Any]:
+        """Linear may record intent only — never authorizes Cursor."""
+        actor = self.verify_identity({"provider_id": actor_id, "verified_role": "captain"})
+        return {
+            "kind": "approval_intent",
+            "authoritative": False,
+            "requires_github_approval": True,
+            "run_id": run.get("run_id"),
+            "actor": actor,
+            "accepted": False,
+            "provider": "linear",
+        }

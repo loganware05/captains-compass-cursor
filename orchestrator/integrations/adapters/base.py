@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from orchestrator.integrations.events import IdempotencyStore, redact_secrets, utc_now
+from orchestrator.integrations.transport import HttpTransport
 
 
 class FixtureAdapterBase:
@@ -21,7 +22,18 @@ class FixtureAdapterBase:
         allowlist: set[str] | None = None,
         captain_ids: set[str] | None = None,
         connected: bool = True,
+        mode: str = "fixtures",
+        transport: HttpTransport | None = None,
+        product_repository: str | None = None,
     ) -> None:
+        mode_n = (mode or "fixtures").strip().lower()
+        if mode_n in {"fixture", "fixtures"}:
+            mode_n = "fixtures"
+        elif mode_n != "live":
+            raise ValueError(f"unknown adapter mode: {mode!r}")
+        self.mode = mode_n
+        self.transport = transport
+        self.product_repository = product_repository
         self.store_dir = Path(store_dir) if store_dir else None
         self.allowlist = allowlist or set()
         self.captain_ids = captain_ids or set()
@@ -33,12 +45,16 @@ class FixtureAdapterBase:
         self.work_items: list[dict[str, Any]] = []
         if self.store_dir:
             self.store_dir.mkdir(parents=True, exist_ok=True)
+        if self.mode == "live" and self.transport is None:
+            raise RuntimeError(
+                f"BLOCKED_CONNECTION: {self.provider} live mode requires transport"
+            )
 
     def healthcheck(self) -> dict[str, Any]:
         return {
             "provider": self.provider,
             "ok": bool(self.connected),
-            "mode": "fixture",
+            "mode": self.mode,
             "checked_at": utc_now(),
         }
 
@@ -114,7 +130,11 @@ class FixtureAdapterBase:
         }
 
     def read_context(self, reference: dict[str, Any]) -> dict[str, Any]:
-        return {"provider": self.provider, "reference": reference, "mode": "fixture"}
+        return {
+            "provider": self.provider,
+            "reference": reference,
+            "mode": self.mode,
+        }
 
     def normalize_event(self, raw_event: dict[str, Any]) -> dict[str, Any]:
         raise NotImplementedError

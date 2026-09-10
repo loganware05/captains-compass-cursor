@@ -4,14 +4,22 @@
 
 | Field | Value |
 |---|---|
+<<<<<<< HEAD
 | Status | **APPROVED — M22 IMPLEMENTATION IN #129** |
+=======
+| Status | **APPROVED — M22 IMPLEMENTATION IN PROGRESS** |
+>>>>>>> origin/main
 | Plan ID | `m22-m23-northstar-ops-ti-flywheel` |
 | Supersedes | `issue-50-northstar-m4-bridge` (CLOSED — shipped as v1.26.0) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
 | Baseline | `v1.26.0` on `main` |
 | Prepared | 2026-09-09 |
 | Start gate | Open — Captain approved 2026-09-09 |
+<<<<<<< HEAD
 | Implementation | [#129](https://github.com/loganware05/captains-compass-cursor/pull/129) (`cursor/m22-northstar-unattended-ops-6044`) |
+=======
+| Branch | `cursor/m22-northstar-unattended-ops-6044` |
+>>>>>>> origin/main
 | Target releases | **v1.27.0** (M22), **v1.28.0** (M23) |
 | Product target | `loganware05/captain-compass-sandbox` **only** |
 | Rollback tags | `rollback/pre-m22-northstar-ops`, `rollback/pre-m23-ti-flywheel` |
@@ -237,6 +245,7 @@ greenfield surface.
 
 | Captain | Decision | Date |
 |---|---|---|
+<<<<<<< HEAD
 | Captain | **APPROVED** — M22 implementation via #129; M23 deferred until directed | 2026-09-09 |
 
 **Implementation must not begin until the Captain explicitly approves this plan.**
@@ -244,3 +253,11 @@ greenfield surface.
 After approval, First Mate will: create/track issues, feature branches, rollback
 checkpoints, worktrees as needed, then implement M22 → release v1.27.0 → M23 →
 release v1.28.0 per this plan.
+=======
+| Captain | **APPROVED** — M22 implementation in progress (M23 deferred) | 2026-09-09 |
+
+Captain approved plan `m22-m23-northstar-ops-ti-flywheel` on 2026-09-09.
+Rollback tag: `rollback/pre-m22-northstar-ops`. Branch:
+`cursor/m22-northstar-unattended-ops-6044`. Implement M22 → v1.27.0 first;
+M23 remains planned for v1.28.0 after M22 ships.
+>>>>>>> origin/main

@@ -1,0 +1,20 @@
+{
+  "action": "created",
+  "issue": {
+    "number": 42,
+    "title": "NorthStar live intake",
+    "body": "Unattended ops objective",
+    "labels": [{"name": "northstar"}]
+  },
+  "comment": {
+    "id": 1001,
+    "body": "NORTHSTAR_APPROVE plan_digest=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "user": {"login": "captain-github"}
+  },
+  "repository": {
+    "full_name": "loganware05/captain-compass-sandbox"
+  },
+  "sender": {
+    "login": "captain-github"
+  }
+}

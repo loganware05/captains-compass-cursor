@@ -41,3 +41,9 @@ See `.cursor/skills/northstar-connected-routine/SKILL.md`.
 ./scripts/run-northstar-routine.sh --demo
 ./scripts/run-northstar-routine.sh --event tests/fixtures/northstar/slack-objective.json --provider slack
 ```
+
+## Live notify (M22)
+
+After GitHub + Linear health, Slack may notify allowlisted transitions in live
+mode via `NORTHSTAR_SLACK_BOT_TOKEN`. Slack remains non-authoritative. See
+`docs/integrations/northstar-live-ops.md`.

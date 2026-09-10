@@ -1,6 +1,34 @@
 # Decisions
 
+## ADR-039: NorthStar unattended live ops with fail-closed ingress (v1.27.0 M22)
+
+- **Status:** Accepted
+- **Date:** 2026-09-09
+- **Context:** M21 shipped a fixture-proven connected routine. Captains need
+  unattended GitHub (+ Linear, then Slack notify) traffic without weakening
+  GitHub+digest approval or expanding product scope beyond the sandbox.
+- **Decision:**
+  1. Fixture mode remains CI/default; live requires explicit `--mode live` +
+     environment secrets (never committed).
+  2. Ingress is stdlib HTTP (`serve-northstar-ingress.sh`); GitHub webhooks
+     require HMAC-SHA256 (`X-Hub-Signature-256`); unsigned deliveries are
+     rejected.
+  3. Product dispatch allowlist is sandbox-only
+     (`orchestrator/integrations/product_allowlist.py` →
+     `loganware05/captain-compass-sandbox`).
+  4. Slack/Linear never approve or dispatch; GitHub + matching `plan_digest`
+     remains sole engineering approval authority. Live `--approve` CLI shortcut
+     is refused.
+  5. Injectable `HttpTransport` (`UrllibTransport` / `RecordingTransport`); CI
+     uses recording doubles only.
+  6. Preserve `M21_INTEGRATION_AGENT_ID` pin; no auto-merge, auto-release, live
+     Skill install, or weight auto-apply.
+- **Consequences:** NorthStar can run unattended against the sandbox with the
+  same fail-closed gates as M21. M23 TI/skill flywheel remains a separate
+  milestone under the same plan.
+
 ## ADR-038: NorthStar M4 bridge + Notion research mirror (#50 / v1.26.0)
+
 
 - **Status:** Accepted
 - **Date:** 2026-09-08

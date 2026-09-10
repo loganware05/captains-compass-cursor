@@ -1,0 +1,13 @@
+
+> captain-compass-sandbox@0.0.0 test
+> vitest run
+
+
+ RUN  v4.1.10 /agent/repos/captain-compass-sandbox
+
+
+ Test Files  2 passed (2)
+      Tests  21 passed (21)
+   Start at  22:57:24
+   Duration  1.41s (transform 117ms, setup 105ms, import 155ms, tests 662ms, environment 949ms)
+

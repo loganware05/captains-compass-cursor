@@ -7,6 +7,10 @@ from typing import Any
 from orchestrator.integrations.adapters.base import FixtureAdapterBase
 from orchestrator.integrations.contracts import M21_INTEGRATION_AGENT_ID
 from orchestrator.integrations.events import normalize_event, sha256_hex, utc_now
+from orchestrator.integrations.product_allowlist import (
+    PRODUCT_DISPATCH_ALLOWLIST,
+    require_allowed_repository,
+)
 from orchestrator.integrations.state_machine import StateTransitionError
 
 
@@ -36,6 +40,9 @@ class CursorAdapter(FixtureAdapterBase):
             occurred_at=raw_event.get("occurred_at"),
             actor=actor,
             product_name_received=raw_event.get("product_name"),
+            repository=raw_event.get("repository")
+            or self.product_repository
+            or "loganware05/captains-compass-cursor",
             references={"cursor_agent": agent_id},
             payload={
                 "checkpoint": raw_event.get("checkpoint"),
@@ -48,19 +55,31 @@ class CursorAdapter(FixtureAdapterBase):
     def build_work_packet(self, run: dict[str, Any]) -> dict[str, Any]:
         if not run.get("plan_approved"):
             raise StateTransitionError("cannot build work packet before canonical approval")
+        repository = (run.get("origin_event") or {}).get("project", {}).get("repository")
+        if self.product_repository:
+            repository = self.product_repository
+        # Enforce sandbox allowlist for live mode or explicit product dispatch.
+        if self.mode == "live" or (
+            repository and repository in PRODUCT_DISPATCH_ALLOWLIST
+        ) or self.product_repository:
+            if not repository:
+                raise StateTransitionError("BLOCKED_SCOPE: missing product repository")
+            try:
+                require_allowed_repository(str(repository))
+            except Exception as exc:
+                raise StateTransitionError(str(exc)) from exc
         packet = {
             "kind": "northstar-work-packet",
             "run_id": run.get("run_id"),
             "plan_id": run.get("plan_id"),
             "plan_digest": run.get("plan_digest"),
-            "repository": (run.get("origin_event") or {}).get("project", {}).get(
-                "repository"
-            ),
+            "repository": repository,
             "allowed_agent_id": self.allowed_agent_id,
             "github_approval_ref": run.get("github_approval_ref"),
             "objective": ((run.get("origin_event") or {}).get("payload") or {}).get("title")
             or ((run.get("origin_event") or {}).get("payload") or {}).get("text"),
             "created_at": utc_now(),
+            "mode": self.mode,
         }
         packet["packet_digest"] = sha256_hex(packet)
         return packet
@@ -72,8 +91,13 @@ class CursorAdapter(FixtureAdapterBase):
             raise StateTransitionError("dispatch requires github_approval_ref")
         if work_packet.get("plan_digest") != run.get("plan_digest"):
             raise StateTransitionError("work packet plan_digest mismatch")
+        repo = work_packet.get("repository")
+        if self.mode == "live" or self.product_repository:
+            try:
+                require_allowed_repository(str(repo or ""))
+            except Exception as exc:
+                raise StateTransitionError(str(exc)) from exc
         if not self.connected:
-            # Missing Cursor: leave launch-ready packet and stop.
             return {
                 "ok": False,
                 "reason": "cursor_unavailable",
@@ -83,6 +107,8 @@ class CursorAdapter(FixtureAdapterBase):
             "run_id": run.get("run_id"),
             "agent_id": self.allowed_agent_id,
             "packet_digest": work_packet.get("packet_digest"),
+            "repository": repo,
+            "mode": self.mode,
             "at": utc_now(),
         }
         self.dispatched.append(record)

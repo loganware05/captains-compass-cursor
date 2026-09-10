@@ -24,3 +24,9 @@ When unavailable, use GitHub issues or `local/<slug>` placeholders (same fallbac
 `IMPLEMENTATION_PLAN.md` in the product repository remains the approval gate.
 Linear is a **work ledger** for NorthStar — it tracks workstreams and does not
 replace Captain approval or GitHub engineering truth.
+
+## Live ledger (M22)
+
+Live Linear create/update/link runs over the injectable transport when
+`--mode live`. Linear still cannot approve or dispatch. See
+`docs/integrations/northstar-live-ops.md`.
