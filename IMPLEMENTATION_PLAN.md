@@ -12,6 +12,8 @@
 | Prepared | 2026-09-09 |
 | Start gate | Open — Captain approved 2026-09-09; M23 start directed after #129 + sandbox#43 |
 | Branch | `cursor/m23-ti-skill-flywheel-6044` (M23); M22 was `cursor/m22-northstar-unattended-ops-6044` |
+| M22 | [#129](https://github.com/loganware05/captains-compass-cursor/pull/129) + sandbox [#43](https://github.com/loganware05/captain-compass-sandbox/pull/43) merged |
+| M23 PR | [#130](https://github.com/loganware05/captains-compass-cursor/pull/130) |
 | Target releases | **v1.27.0** (M22 — shipped), **v1.28.0** (M23) |
 | Product target | `loganware05/captain-compass-sandbox` **only** |
 | Rollback tags | `rollback/pre-m22-northstar-ops`, `rollback/pre-m23-ti-flywheel` |
