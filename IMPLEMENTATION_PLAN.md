@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED — M23 IMPLEMENTATION IN PROGRESS** |
+| Status | **APPROVED — M23 IMPLEMENTATION COMPLETE (pending merge/tag)** |
 | Plan ID | `m22-m23-northstar-ops-ti-flywheel` |
 | Supersedes | `issue-50-northstar-m4-bridge` (CLOSED — shipped as v1.26.0) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
@@ -108,14 +108,15 @@ Skill/procedure promotion.
       **dependency-supply-chain** evidence artifacts; fail closed if missing.
 - [x] `skill-learning-loop` / `apply-skill-improvement` document and enforce the
       new gates; live apply remains `--captain-approved` only.
-- [ ] At least one **bounded UI experiment** lands only in
+- [x] At least one **bounded UI experiment** lands only in
       `captain-compass-sandbox` with Playwright/a11y evidence linked from control
       validation docs.
 - [x] Example path supported for a **starred** design repo (e.g. impeccable once
       starred): categorize → scorecard → draft proposal (no auto Skill install).
 - [x] `approved_for_execution` stays false for TI candidates; no clone/exec of
       starred repos from learning/TI.
-- [ ] Sandbox refresh + smoke gate for **1.28.0**.
+- [x] Sandbox refresh + smoke gate for **1.28.0** (branch
+      `cursor/refresh-compass-1.28.0-6044`; PR pending parent).
 - [ ] Tag/release **v1.28.0** + rollback tag `rollback/pre-m23-ti-flywheel`.
 
 ## Non-goals

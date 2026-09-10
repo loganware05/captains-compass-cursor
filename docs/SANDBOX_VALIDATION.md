@@ -318,5 +318,6 @@ Control mirror: `.agent/evidence/release-v1.26.0/post-tag-validation.md`
 | Example design-repo scorecard | Pass — `./scripts/example-design-repo-scorecard.sh` |
 | Bounded sandbox UI experiment (craft tokens) | See sandbox `.agent/evidence/m23-craft-tokens/` |
 | Control validation | `.agent/evidence/m23-ti-skill-flywheel/VALIDATION.md` |
-| Private sandbox refresh PR | Pending Compass **1.28.0** (`cursor/refresh-compass-1.28.0-6044`) |
+| Private sandbox refresh PR | Branch `cursor/refresh-compass-1.28.0-6044` pushed (`990e3de`); PR pending parent |
+| Bounded craft-tokens UI + a11y | Pass — sandbox `.agent/evidence/m23-craft-tokens/VALIDATION.md` (24/24 vitest) |
 
