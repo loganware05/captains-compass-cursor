@@ -22,11 +22,11 @@
 
 ## Usage
 
-- Iterations used: 1
+- Iterations used: 2
 - Failed validation cycles: 0
 - Estimated cost used (USD): 0
 - Cost is estimate: true
-- Elapsed minutes: 90
+- Elapsed minutes: 120
 - Weight-apply operations used: 0
 
 ## Cycle log
@@ -34,6 +34,7 @@
 | Date | Iteration | Result | Notes |
 |---|---|---|---|
 | 2026-09-10 | iteration 1 | in_progress | M23 implementation after Captain directed start |
+| 2026-09-10 | iteration 2 | pass | doctor + tests/run.sh 121/121; draft_gates moved to promotion |
 
 ## Stop condition
 

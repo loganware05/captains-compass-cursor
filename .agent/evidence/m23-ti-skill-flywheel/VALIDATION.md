@@ -25,7 +25,9 @@ PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m23_ti_skill_flywheel -
 | Scorecard → draft keeps `approved_for_execution: false` | Pass |
 | Learning loop `--category design-system` | Pass |
 | Example design-repo scorecard script | Pass — see `example-design-repo-scorecard.json` |
-| Focused related suites (m14/m19/m20/promotion) | Pass (37) |
+| Focused related suites (m14/m19/m20/promotion/m7) | Pass |
+| `./scripts/doctor.sh` | Pass — 0 errors, 0 warnings |
+| `./tests/run.sh` | Pass — **121 passed, 0 failed** |
 
 ## Fail-closed checks
 
