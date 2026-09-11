@@ -15,8 +15,9 @@
 
 ## In flight (Captain-directed)
 
-1. M26 Cursor Cloud wakeability probe — PR in flight (`cursor/m26-cloud-wakeability-probe-05fd`)
-2. New Skill learning run **NS-SKILL-002** (after M26 commit)
+1. M26 Cursor Cloud wakeability probe — [PR #137](https://github.com/loganware05/captains-compass-cursor/pull/137)
+2. **NS-SKILL-002** accessible React forms — Linear [OVA-20](https://linear.app/ovaltechnologysolutions/issue/OVA-20); sandbox [PR #50](https://github.com/loganware05/captain-compass-sandbox/pull/50); **stopped at Captain gate (OVA-28)**
+3. v1.29.1 VERSION bump onto main — [PR #136](https://github.com/loganware05/captains-compass-cursor/pull/136) (tag already published)
 
 ## Completed
 
