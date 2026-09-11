@@ -1,5 +1,24 @@
 # Decisions
 
+## ADR-043: Cursor Cloud live wakeability probe (M26)
+
+- **Status:** Accepted
+- **Date:** 2026-09-11
+- **Context:** M25 capped declared availability by registry wakeability, but
+  OVA-17 showed stale pins can still look wakeable in the registry after Cloud
+  expiry. MCP `list-cloud-agents` exposes live lifecycle statuses.
+- **Decision:**
+  1. Add snapshot-backed probe
+     `orchestrator/routing/cloud_wakeability_probe.py`.
+  2. Map Cloud lifecycle: IDLE/RUNNING/NOT_YET_STARTED/WAITING_FOR_BACKGROUND_WORK
+     → wakeable; EXPIRED/ARCHIVED → expired; ERROR → unreachable.
+  3. CLI `--cloud-agents-json` enables `prefer_probe=True` so live snapshots
+     override stale registry `wakeability_status`.
+  4. Probe does not open network sockets itself — First Mate / operators supply
+     MCP (or exported) JSON for hermetic tests.
+- **Consequences:** Routing can fail closed on expired Cloud pins without
+  hardcoding a dispatcher. Missing snapshot entries remain `unknown` (0.25 cap).
+
 ## ADR-042: Agent router wakeability gate (M25 / OVA-19)
 
 - **Status:** Accepted

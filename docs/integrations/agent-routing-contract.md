@@ -63,3 +63,17 @@ proxy with **dual attribution** (selected vs executing agent ids).
 
 - Linear: OVA-19 (M25), OVA-17 Experience
 - Evidence: `.agent/evidence/m25-agent-router-wakeability/`
+
+## Live Cloud probe (M26)
+
+Supply a Cursor Cloud agent list snapshot (MCP `list-cloud-agents` dump):
+
+```bash
+"$CONTROL/scripts/northstar" skills route-agents \
+  --registry "$SANDBOX/.agent/agents/registry.json" \
+  --objective /tmp/objective.json \
+  --cloud-agents-json /tmp/cloud-agents.json
+```
+
+When `--cloud-agents-json` is set, live probe is preferred over stale registry
+`wakeability_status`. Missing snapshot entries map to `unknown` (0.25 cap).

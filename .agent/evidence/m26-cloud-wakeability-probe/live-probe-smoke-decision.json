@@ -1,0 +1,75 @@
+{
+  "router_version": "northstar.agent_router.v1",
+  "objective": {
+    "title": "M26 live probe smoke",
+    "category": "design-system",
+    "target_repository": "loganware05/captain-compass-sandbox",
+    "required_skills": [
+      "craft-tokens-design-system"
+    ],
+    "skill_scope": "sandbox",
+    "context_agent_id": null
+  },
+  "weights": {
+    "skill_match": 0.3,
+    "category_match": 0.2,
+    "repository_familiarity": 0.15,
+    "historical_success": 0.15,
+    "context_continuity": 0.1,
+    "availability": 0.1
+  },
+  "agents": [
+    {
+      "agent_id": "bc-05d4594d-fac7-4378-b595-c20e3c006044",
+      "eligible": false,
+      "filter_failures": [
+        "effective_availability<=0"
+      ],
+      "components": null,
+      "score": null,
+      "declared_availability": 1.0,
+      "effective_availability": 0.0,
+      "wakeability_status": "expired",
+      "wakeability_source": "live_probe"
+    },
+    {
+      "agent_id": "bc-registry-stub-control-only-0001",
+      "eligible": false,
+      "filter_failures": [
+        "repository_not_allowlisted",
+        "category_unsupported",
+        "skill_scope_mismatch"
+      ],
+      "components": null,
+      "score": null,
+      "declared_availability": 1.0,
+      "effective_availability": 0.25,
+      "wakeability_status": "unknown",
+      "wakeability_source": "live_probe"
+    },
+    {
+      "agent_id": "bc-registry-stub-inactive-0002",
+      "eligible": false,
+      "filter_failures": [
+        "status!=active",
+        "effective_availability<=0"
+      ],
+      "components": null,
+      "score": null,
+      "declared_availability": 0.0,
+      "effective_availability": 0.0,
+      "wakeability_status": "unknown",
+      "wakeability_source": "live_probe"
+    }
+  ],
+  "eligible_agent_ids": [],
+  "selected_agent_id": null,
+  "selection_rationale": "No eligible agents after hard filters (including wakeability).",
+  "dispatch_ready": false,
+  "notes": "Fail closed: do not hardcode a dispatcher.",
+  "live_probe": {
+    "enabled": true,
+    "cloud_agents_json": "/tmp/m26-live/cloud-agents.json",
+    "prefer_probe": true
+  }
+}
