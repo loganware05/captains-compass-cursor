@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+# northstar — topology-free launcher for control-plane Skills operations (M24).
+#
+# Agents and runbooks should prefer:
+#   northstar skills refresh --repo <sandbox>
+#   northstar skills learn --repo <sandbox> --objective "..." [--category ...]
+#   northstar skills promote --repo <sandbox> --candidate <path> ...
+#
+# Scripts always live in this control repository. Product/sandbox checkouts do
+# not contain ./scripts/run-skill-learning-loop.sh (or siblings).
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export PATH="$ROOT/scripts:$PATH"
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  northstar skills refresh [--repo PATH] [refresh-ti-cache.sh options]
+  northstar skills learn   --repo PATH --objective TEXT [run-skill-learning-loop.sh options]
+  northstar skills promote --repo PATH --candidate PATH [promote-candidate.sh options]
+  northstar skills sync-ledger --run PATH [--mode fixtures|link] [options]
+  northstar help
+
+Topology:
+  CONTROL  = directory containing this launcher (captains-compass-cursor)
+  --repo   = product/sandbox repository root (maps to --repo-root on underlying scripts)
+
+Never clones or executes starred repositories. Never installs Skills without
+--captain-approved on promote. Linear sync never originates Captain approval.
+USAGE
+}
+
+# Translate agent-facing --repo into underlying --repo-root without dropping other flags.
+map_repo_flag() {
+  local -a out=()
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --repo)
+        if [[ $# -lt 2 ]]; then
+          echo "error: --repo requires a path" >&2
+          exit 2
+        fi
+        out+=(--repo-root "$2")
+        shift 2
+        ;;
+      --repo=*)
+        out+=(--repo-root "${1#--repo=}")
+        shift
+        ;;
+      *)
+        out+=("$1")
+        shift
+        ;;
+    esac
+  done
+  printf '%s\0' "${out[@]}"
+}
+
+require_repo_root() {
+  local has_repo=0
+  local arg
+  for arg in "$@"; do
+    if [[ "$arg" == "--repo-root" ]]; then
+      has_repo=1
+      break
+    fi
+  done
+  if [[ "$has_repo" -ne 1 ]]; then
+    echo "error: --repo <sandbox-or-product-root> is required for this command" >&2
+    exit 2
+  fi
+}
+
+if [[ $# -lt 1 ]]; then
+  usage
+  exit 2
+fi
+
+cmd="$1"
+shift
+
+case "$cmd" in
+  help|-h|--help)
+    usage
+    exit 0
+    ;;
+  skills)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      refresh)
+        exec "$ROOT/scripts/refresh-ti-cache.sh" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      learn)
+        require_repo_root "${mapped[@]+"${mapped[@]}"}"
+        exec "$ROOT/scripts/run-skill-learning-loop.sh" "${mapped[@]}"
+        ;;
+      promote)
+        require_repo_root "${mapped[@]+"${mapped[@]}"}"
+        exec "$ROOT/scripts/promote-candidate.sh" "${mapped[@]}"
+        ;;
+      sync-ledger)
+        exec "$ROOT/scripts/sync-skill-learning-ledger.sh" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown skills subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  *)
+    echo "error: unknown command: $cmd" >&2
+    usage >&2
+    exit 2
+    ;;
+esac

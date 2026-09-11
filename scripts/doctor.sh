@@ -351,6 +351,16 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing executable scripts/example-design-repo-scorecard.sh"
   fi
+  if [[ -x "$ROOT/scripts/northstar" ]]; then
+    ok "northstar launcher"
+  else
+    fail "missing executable scripts/northstar"
+  fi
+  if [[ -x "$ROOT/scripts/sync-skill-learning-ledger.sh" ]]; then
+    ok "sync-skill-learning-ledger.sh"
+  else
+    fail "missing executable scripts/sync-skill-learning-ledger.sh"
+  fi
   if PYTHONPATH="$ROOT" python3 -c "import orchestrator.integrations.ingress" 2>/dev/null; then
     ok "orchestrator.integrations.ingress import"
   else

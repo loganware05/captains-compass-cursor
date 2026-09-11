@@ -17,12 +17,39 @@ sandbox (or control-repo fixtures) to:
 
 ## Prerequisites
 
-- Compass ≥ 1.28.0 (M23 gates; M19/M20 loop retained)
+- Compass ≥ 1.28.0 (M23 gates; M19/M20 loop retained); M24 launcher recommended
 - Explicit CLI only — never from hooks or CI defaults
 - Understanding: staging + evidence ≠ auto-install
 - External repos **must be starred** to enter TI
 - Before any Skill draft: **security-review** + **dependency-supply-chain**
   evidence artifacts (fail closed if missing)
+
+## Topology (required)
+
+Learning CLIs live only in the **control** repository. Product / sandbox
+checkouts do **not** contain `scripts/run-skill-learning-loop.sh`,
+`scripts/refresh-ti-cache.sh`, `scripts/promote-candidate.sh`, or
+`scripts/northstar`.
+
+```bash
+CONTROL=/path/to/captains-compass-cursor
+SANDBOX=/path/to/captain-compass-sandbox
+```
+
+Prefer the topology-free launcher (maps `--repo` → `--repo-root`):
+
+```bash
+"$CONTROL/scripts/northstar" skills learn --repo "$SANDBOX" ...
+```
+
+Equivalent direct script form:
+
+```bash
+"$CONTROL/scripts/run-skill-learning-loop.sh" --repo-root "$SANDBOX" ...
+```
+
+Never run bare `./scripts/...` from inside the sandbox and expect these tools
+to exist there.
 
 ## Inputs
 
@@ -36,7 +63,20 @@ sandbox (or control-repo fixtures) to:
 ### A. Run the learning loop (staging + evidence)
 
 ```bash
-./scripts/run-skill-learning-loop.sh \
+CONTROL=/path/to/captains-compass-cursor
+SANDBOX=/path/to/captain-compass-sandbox
+
+"$CONTROL/scripts/northstar" skills learn \
+  --repo "$SANDBOX" \
+  --source fixtures \
+  --objective "accessible react forms"
+```
+
+Equivalent:
+
+```bash
+"$CONTROL/scripts/run-skill-learning-loop.sh" \
+  --repo-root "$SANDBOX" \
   --source fixtures \
   --objective "accessible react forms"
 ```
@@ -44,9 +84,10 @@ sandbox (or control-repo fixtures) to:
 Design-system / craft tokens example (starred fixtures):
 
 ```bash
-./scripts/example-design-repo-scorecard.sh
+"$CONTROL/scripts/example-design-repo-scorecard.sh"
 # or:
-./scripts/run-skill-learning-loop.sh \
+"$CONTROL/scripts/northstar" skills learn \
+  --repo "$SANDBOX" \
   --source fixtures \
   --objective "design system tokens" \
   --category design-system
@@ -55,13 +96,15 @@ Design-system / craft tokens example (starred fixtures):
 Captain-local cache / live Stars:
 
 ```bash
-./scripts/refresh-ti-cache.sh
-./scripts/run-skill-learning-loop.sh --source ti-cache --objective "schema validation"
+"$CONTROL/scripts/northstar" skills refresh --repo "$SANDBOX"
+"$CONTROL/scripts/northstar" skills learn \
+  --repo "$SANDBOX" --source ti-cache --objective "schema validation"
 # or:
-./scripts/run-skill-learning-loop.sh --source live --objective "schema validation"
+"$CONTROL/scripts/northstar" skills learn \
+  --repo "$SANDBOX" --source live --objective "schema validation"
 ```
 
-Artifacts:
+Artifacts (under `--repo` / sandbox or control root as configured):
 
 - Staging candidates: `.agent/capabilities/candidates/staging/`
 - TI scorecards: `.agent/evidence/ti-scorecards/<id>/`
@@ -69,7 +112,7 @@ Artifacts:
 - Unified drafts: `.agent/capabilities/candidates/skill-drafts/<slug>/`
 - Improvement proposals (when similar): `.agent/capabilities/candidates/skill-improvement-proposals/<existing-slug>/`
 - Harness evidence: `.agent/evidence/candidate-sandbox-test/`
-- Learning-run report: `.agent/learning-runs/`
+- Learning-run report: `.agent/learning-runs/` (includes additive `ledger` block)
 
 ### B. New Skill drafts
 
@@ -92,7 +135,20 @@ safety-critical Skills are excluded from automatic targeting.
 ### D. Captain gate for live promotion
 
 ```bash
-./scripts/promote-candidate.sh --candidate <staging.json> \
+"$CONTROL/scripts/northstar" skills promote \
+  --repo "$SANDBOX" \
+  --candidate <staging.json> \
+  --stage AVAILABLE_SKILL \
+  --evidence .agent/evidence/candidate-sandbox-test/<id>/sandbox-test.json,.agent/evidence/ti-scorecards/<id>/security-review.md,.agent/evidence/ti-scorecards/<id>/dependency-supply-chain.md \
+  --captain-approved \
+  --skill-slug <slug>
+```
+
+Equivalent:
+
+```bash
+"$CONTROL/scripts/promote-candidate.sh" --repo-root "$SANDBOX" \
+  --candidate <staging.json> \
   --stage AVAILABLE_SKILL \
   --evidence .agent/evidence/candidate-sandbox-test/<id>/sandbox-test.json,.agent/evidence/ti-scorecards/<id>/security-review.md,.agent/evidence/ti-scorecards/<id>/dependency-supply-chain.md \
   --captain-approved \
@@ -104,13 +160,14 @@ Then open a Captain-reviewed PR to install. Never set `approved_for_execution: t
 ### E. Experience bridge → PROVEN (M20)
 
 ```bash
-./scripts/run-skill-learning-loop.sh --source fixtures \
+"$CONTROL/scripts/northstar" skills learn \
+  --repo "$SANDBOX" --source fixtures \
   --objective "accessible react forms" --record-experiences
 
-./scripts/bridge-learning-experiences.sh \
+"$CONTROL/scripts/bridge-learning-experiences.sh" \
   --run .agent/learning-runs/<run-id>.json
 
-./scripts/bridge-learning-experiences.sh \
+"$CONTROL/scripts/bridge-learning-experiences.sh" \
   --run .agent/learning-runs/<run-id>.json \
   --promote-proven \
   --candidate .agent/capabilities/candidates/staging/<id>.json \
@@ -125,12 +182,12 @@ PROVEN still needs ≥2 successful Experiences and `--captain-approved`.
 
 ```bash
 # Draft only (default) — requires --captain-approved AND scorecard evidence_paths
-./scripts/apply-skill-improvement.sh \
+"$CONTROL/scripts/apply-skill-improvement.sh" \
   --proposal .agent/capabilities/candidates/skill-improvement-proposals/<slug>/from-<id>.json \
   --captain-approved
 
 # Append learned section to the live Skill (Captain only)
-./scripts/apply-skill-improvement.sh \
+"$CONTROL/scripts/apply-skill-improvement.sh" \
   --proposal .agent/capabilities/candidates/skill-improvement-proposals/<slug>/from-<id>.json \
   --captain-approved \
   --apply-live
@@ -139,9 +196,25 @@ PROVEN still needs ≥2 successful Experiences and `--captain-approved`.
 Live apply remains `--captain-approved` only. Proposals must carry
 `security-review` + `dependency-supply-chain` evidence paths.
 
+### G. Linear ledger sync (M24 — optional)
+
+```bash
+"$CONTROL/scripts/northstar" skills sync-ledger \
+  --run .agent/learning-runs/<run-id>.json \
+  --mode fixtures
+# or link an existing Linear parent (never invents CAPTAIN_APPROVED):
+"$CONTROL/scripts/northstar" skills sync-ledger \
+  --run .agent/learning-runs/<run-id>.json \
+  --mode link \
+  --parent-issue-id OVA-5
+```
+
+See `docs/integrations/linear-skills-learning-loop.md`. Linear never originates
+Captain approval.
+
 ## Output
 
-- Learning-run JSON report
+- Learning-run JSON report (with `ledger` linkage block)
 - Staging candidates at `SANDBOX_TESTED`
 - New Skill drafts and/or improvement proposals
 - TI scorecard evidence suitable for draft + promotion gates
@@ -156,3 +229,5 @@ Live apply remains `--captain-approved` only. Proposals must carry
 - Cloning or executing starred/external repositories
 - Running the loop from hooks, workstream close, or CI defaults
 - Advancing past `SANDBOX_TESTED` without `--captain-approved`
+- Assuming learning scripts exist inside product/sandbox checkouts
+- Treating Linear status as Captain approval

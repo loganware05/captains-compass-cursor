@@ -1,5 +1,35 @@
 # Decisions
 
+## ADR-041: Linear Skills Learning Loop flight recorder (v1.29.0 M24)
+
+- **Status:** Accepted
+- **Date:** 2026-09-11
+- **Context:** Stars→Skills learning (M19–M23) lacked a durable operational
+  ledger. Agents also ran bare `./scripts/...` from product checkouts even though
+  learning CLIs live only in the control repo. Linear MCP was available for a
+  permanent Skills Learning Loop project without becoming an approval authority.
+- **Decision:**
+  1. Linear is a **flight recorder / coordination ledger only** for Skill
+     learning. GitHub + Captain (`IMPLEMENTATION_PLAN` digest /
+     `--captain-approved`) remain approval authority; Linear never originates
+     `CAPTAIN_APPROVED`.
+  2. One durable Linear project: **NorthStar Skills Learning Loop**
+     (`c62f65bf-a376-4716-b958-0d874730a391`) with milestones M0–M7 and parent
+     Learning Run + gated sub-issues 01–13.
+  3. Ship topology-free launcher `scripts/northstar` (`skills refresh|learn|
+     promote|sync-ledger`) that resolves control root and maps `--repo` →
+     `--repo-root`. Product/sandbox checkouts do not contain these scripts.
+  4. Learning runs attach an additive `ledger` block (SHAs + nullable Linear IDs);
+     minimal sync is fixture-safe by default and allowlists the Skills project.
+  5. Sandbox-first promotion policy: install/prove in
+     `captain-compass-sandbox` before any optional control-repo upstream.
+  6. Agent router **scores eligible** Cursor agents after verified Captain
+     approval; `bc-05d4594d-fac7-4378-b595-c20e3c006044` is the initial known
+     candidate only (not a hardcoded dispatcher mandate).
+- **Consequences:** Reconstructable Learning Runs across Linear ↔ GitHub ↔
+  evidence. Topology docs prevent sandbox `./scripts` confusion. Full M1–M7
+  automated transition sync may follow beyond the v1.29.0 minimal slice.
+
 ## ADR-040: TI scorecard + skill flywheel with starred-only gates (v1.28.0 M23)
 
 - **Status:** Accepted

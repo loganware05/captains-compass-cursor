@@ -15,7 +15,12 @@ class LinearAdapter(FixtureAdapterBase):
     def __init__(self, *, project_allowlist: set[str] | None = None, **kwargs: Any) -> None:
         kwargs.setdefault("captain_ids", {"captain-linear"})
         super().__init__(**kwargs)
-        self.project_allowlist = project_allowlist or {"NorthStar", "northstar"}
+        self.project_allowlist = project_allowlist or {
+            "NorthStar",
+            "northstar",
+            "NorthStar Skills Learning Loop",
+            "northstar-skills-learning-loop",
+        }
         self.children: list[dict[str, Any]] = []
 
     def normalize_event(self, raw_event: dict[str, Any]) -> dict[str, Any]:
