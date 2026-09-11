@@ -20,6 +20,7 @@ Usage:
   northstar skills learn   --repo PATH --objective TEXT [run-skill-learning-loop.sh options]
   northstar skills promote --repo PATH --candidate PATH [promote-candidate.sh options]
   northstar skills sync-ledger --run PATH [--mode fixtures|link] [options]
+  northstar skills route-agents --registry PATH --objective PATH [--out PATH]
   northstar help
 
 Topology:
@@ -111,6 +112,9 @@ case "$cmd" in
         ;;
       sync-ledger)
         exec "$ROOT/scripts/sync-skill-learning-ledger.sh" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      route-agents)
+        exec "$ROOT/scripts/score-agent-routing.sh" "${mapped[@]+"${mapped[@]}"}"
         ;;
       *)
         echo "error: unknown skills subcommand: $sub" >&2

@@ -132,9 +132,23 @@ Skills. Refuses sync when the learning-run already has
 ## Agent routing
 
 After verified Captain approval and sandbox install, NorthStar scores **eligible**
-agents (Agent Routing Contract v1). It does not hardcode a single dispatcher.
+agents (`northstar.agent_router.v1` / Agent Routing Contract). It does not
+hardcode a single dispatcher.
 
-Initial known candidate only (not a mandate):
+Wakeability (M25 / OVA-17): declared registry `availability` is capped by
+`wakeability_status` / `cloud_status` / optional live probe. `expired` and
+`unreachable` fail closed (`effective_availability=0`). `dispatch_ready` requires
+`wakeability=wakeable`.
+
+```bash
+"$CONTROL/scripts/northstar" skills route-agents \
+  --registry "$SANDBOX/.agent/agents/registry.json" \
+  --objective /tmp/objective.json
+```
+
+Contract: `docs/integrations/agent-routing-contract.md`
+
+Initial known historical candidate (not a mandate; may be expired):
 
 `bc-05d4594d-fac7-4378-b595-c20e3c006044`
 

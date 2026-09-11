@@ -361,6 +361,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing executable scripts/sync-skill-learning-ledger.sh"
   fi
+  if [[ -x "$ROOT/scripts/score-agent-routing.sh" ]]; then
+    ok "score-agent-routing.sh"
+  else
+    fail "missing executable scripts/score-agent-routing.sh"
+  fi
   if PYTHONPATH="$ROOT" python3 -c "import orchestrator.integrations.ingress" 2>/dev/null; then
     ok "orchestrator.integrations.ingress import"
   else
