@@ -2,33 +2,31 @@
 
 ## Current status
 
-**M25 IN PROGRESS** — Agent router live wakeability re-check (OVA-19 / OVA-17).
+**M25 SHIPPED** — Agent router wakeability gate (OVA-19 / OVA-17 learning).
 
 | Item | Value |
 |---|---|
-| Shipped | **v1.29.0** (tag + GitHub release) — M24 Linear Skills Learning Loop |
-| Active plan | `m25-agent-router-wakeability` (**APPROVED** by Captain 2026-09-11) |
-| Linear | [OVA-19](https://linear.app/ovaltechnologysolutions/issue/OVA-19) |
-| Branch | `cursor/ova-19-m25-agent-router-wakeability-05fd` |
+| Release baseline | **v1.29.0** (M24) |
+| M25 control PR | https://github.com/loganware05/captains-compass-cursor/pull/134 (**merged**) |
+| M25 merge commit | `69e949413adb87d608dcce62beaeacc17ee63bda` |
+| Sandbox registry PR | https://github.com/loganware05/captain-compass-sandbox/pull/48 (**merged**) |
+| Sandbox merge commit | `7404066a7db43752c2e71a0748d568d9cdc615ca` |
+| Linear | OVA-19 Done |
 | Evidence | `.agent/evidence/m25-agent-router-wakeability/VALIDATION.md` |
 
 ## Completed
 
 - v1.5.0–v1.29.0 / M1–M24
-- M24 Linear flight recorder + `northstar` launcher + ledger sync
-- Run 001 `NS-SKILL-001` closed **retain**; sandbox PR #46/#47 merged
+- M24 Linear Skills Learning Loop flight recorder + `northstar` launcher
+- Run 001 `NS-SKILL-001` closed **retain**; sandbox Skill `craft-tokens-design-system` AVAILABLE
+- M25: `northstar.agent_router.v1` wakeability fail-closed; historical pin marked expired in sandbox registry
 - Tag/release `v1.29.0`
 
-## In progress
+## Next (optional, Captain-directed)
 
-1. Land M25 wakeability router module + tests + docs (this branch)
-2. Update sandbox agent registry wakeability for historical pin
-3. PR review / merge
-
-## Next
-
-1. Merge M25; optionally cut patch notes under Unreleased → next tag when Captain asks
-2. Optional: live Cursor Cloud probe adapter (still injectable; not required for M25)
+1. Cut a patch tag (e.g. `v1.29.1`) if you want M25 called out on a release artifact (currently under CHANGELOG Unreleased on main)
+2. Optional live Cursor Cloud probe adapter (injectable hook already supported)
+3. New Skill learning run / additional Experiences toward prove
 
 ## Blockers
 
