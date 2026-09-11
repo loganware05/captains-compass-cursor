@@ -2,19 +2,18 @@
 
 ## Current status
 
-**M23 SHIPPED** — TI scorecard + skill flywheel → **v1.28.0** tagged and released.
-Sandbox refresh merged. No next milestone queued.
+**M24 PLAN AWAITING APPROVAL** — Linear Skills Learning Loop flight recorder
+(plus topology launcher + ledger linkage + README housekeep).
 
 | Item | Value |
 |---|---|
-| Plan | `IMPLEMENTATION_PLAN.md` — **CLOSED — SHIPPED as v1.28.0** |
-| Plan ID | `m22-m23-northstar-ops-ti-flywheel` |
-| Releases | **v1.27.0** (M22), **v1.28.0** (M23) |
-| Control PRs | [#129](https://github.com/loganware05/captains-compass-cursor/pull/129), [#130](https://github.com/loganware05/captains-compass-cursor/pull/130) |
-| Sandbox PRs | [#43](https://github.com/loganware05/captain-compass-sandbox/pull/43), [#44](https://github.com/loganware05/captain-compass-sandbox/pull/44) |
-| Rollback | `rollback/pre-m23-ti-flywheel` |
-| Evidence | `.agent/evidence/release-v1.28.0/` |
-| Captain guide | `docs/guides/starred-repos-to-skills.md` |
+| Plan | `IMPLEMENTATION_PLAN.md` — **AWAITING APPROVAL** |
+| Plan ID | `m24-linear-skills-ledger` |
+| Prior release | **v1.28.0** (M23 TI scorecard + skill flywheel) |
+| Plan branch | `cursor/m24-linear-skills-ledger-05fd` |
+| Capability artifacts | `.agent/plans/m24-linear-skills-ledger/` |
+| Linear MCP | Authenticated; team `Ovaltechnologysolutions`; no Skills Learning Loop project yet |
+| Captain guide (current) | `docs/guides/starred-repos-to-skills.md` |
 
 ## Completed
 
@@ -25,13 +24,16 @@ Sandbox refresh merged. No next milestone queued.
 - Sandbox craft-tokens UI experiment + a11y vitest evidence
 - Doctor + `./tests/run.sh` **121/121** on release closeout
 - Tags/releases: `v1.27.0` (retroactive), `v1.28.0`
+- M24 discovery: confirmed `./scripts` topology mismatch in Skills/guide;
+  `--repo-root` already on learning CLIs; learning-run JSON lacks `ledger`;
+  README still says 1.7.0
 
 ## Next
 
-Nothing queued. Captain: use `docs/guides/starred-repos-to-skills.md` to start
-learning from starred repos. Approve a new `IMPLEMENTATION_PLAN.md` when ready
-for the next milestone.
+1. Captain reviews/approves `IMPLEMENTATION_PLAN.md` (confirm ship scope open question).
+2. After approval: issue + rollback tag + implement H0→H3→M0→minimal sync.
+3. Do **not** bootstrap the Linear project or change product Skills until approved.
 
 ## Blockers
 
-None.
+Awaiting Captain approval of M24 plan.

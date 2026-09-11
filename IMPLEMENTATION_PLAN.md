@@ -1,247 +1,396 @@
-# Implementation Plan — M22/M23 NorthStar live ops + TI skill flywheel
+# Implementation Plan — M24 Linear Skills Learning Loop flight recorder
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **CLOSED — SHIPPED** (M22 → v1.27.0, M23 → v1.28.0) |
-| Plan ID | `m22-m23-northstar-ops-ti-flywheel` |
-| Supersedes | `issue-50-northstar-m4-bridge` (CLOSED — shipped as v1.26.0) |
+| Status | **AWAITING APPROVAL** |
+| Plan ID | `m24-linear-skills-ledger` |
+| Supersedes | `m22-m23-northstar-ops-ti-flywheel` (CLOSED — shipped as v1.27.0 / v1.28.0) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
-| Baseline | `v1.26.0` at plan start; shipped through `v1.28.0` |
-| Prepared | 2026-09-09 |
-| Closed | 2026-09-10 — tags `v1.27.0`, `v1.28.0` + sandbox #43/#44 |
-| M22 | [#129](https://github.com/loganware05/captains-compass-cursor/pull/129) + sandbox [#43](https://github.com/loganware05/captain-compass-sandbox/pull/43) |
-| M23 | [#130](https://github.com/loganware05/captains-compass-cursor/pull/130) + sandbox [#44](https://github.com/loganware05/captain-compass-sandbox/pull/44) |
-| Releases | https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.28.0 |
-| Product target | `loganware05/captain-compass-sandbox` **only** |
-| Rollback tags | `rollback/pre-m22-northstar-ops`, `rollback/pre-m23-ti-flywheel` |
-| Captain guide | `docs/guides/starred-repos-to-skills.md` |
+| Baseline | `v1.28.0` / `main` @ plan start |
+| Prepared | 2026-09-11 |
+| Product target | `loganware05/captain-compass-sandbox` **only** for execution Experiences |
+| Control repo | `loganware05/captains-compass-cursor` |
+| Linear team | `Ovaltechnologysolutions` |
+| Linear MCP | Authenticated in this session (ready for M0 after approval) |
+| Existing Linear project | **None** matching “NorthStar Skills Learning Loop” |
+| Cursor execution agent | `bc-05d4594d-fac7-4378-b595-c20e3c006044` (M21 pin; unchanged) |
+| Proposed release | **v1.29.0** (single milestone ship; phased workstreams below) |
+| Rollback tag (post-approval) | `rollback/pre-m24-linear-skills-ledger` |
+| Branch (plan only) | `cursor/m24-linear-skills-ledger-05fd` |
+| Issue | *TBD after approval* |
+| Approved by | |
+| Approval date | |
+| Approved revision | |
 
 ## Request (Captain-level)
 
-With M21 / #50 complete, begin using the full coordinated operating routine across
-GitHub, Linear, Slack, and Cursor — starting with **unattended** bots/webhooks —
-while continuing product work in the sandbox. In parallel, improve NorthStar Skills
-via GitHub Stars categorization and sandbox learning, including deeper
-security/supply-chain judgment and fixed usefulness labels before any Skill draft
-(example intent: starred design repos such as `pbakaus/impeccable` → categorize →
-secure → usefulness labels → sandbox UI experiments → Captain-gated Skill promotion).
+Continue the GitHub Stars → Skills flywheel by making **Linear** NorthStar’s
+**flight recorder** for Skill learning — without inventing a new authority layer.
+Preserve the Captain model: Linear may record and coordinate; only GitHub +
+Captain (plan digest / `--captain-approved`) authorize advancement past
+`SANDBOX_TESTED`.
 
-## Captain decisions (locked)
+Also fix production runbook topology before automating Linear, introduce a
+stable `northstar skills …` launcher so agents do not need control/sandbox path
+knowledge, add two-way ledger linkage on learning runs, and housekeep README
+version drift (`VERSION` = 1.28.0 vs README “1.7.0”).
 
-1. **Connector order:** GitHub + Linear first; then Slack intake/notify.
-2. **Runtime:** Unattended webhooks/bots (not Captain-local sessions only).
-3. **Product scope:** Sandbox only for these milestones.
-4. **TI entry:** External repos **must be starred** to enter Technology Intelligence.
-5. **Skill draft gate:** Deeper dependency/supply-chain review **before** any Skill draft.
-6. **Usefulness:** Fixed labels (e.g. `frontend-ui`, `design-system`, …).
-7. **Sandbox learning:** Bounded UI experiments inside `captain-compass-sandbox`.
-8. **Cadence:** Two milestones (M22 then M23).
+## Captain decisions (proposed locks — confirm on approval)
+
+1. **One durable Linear project:** `NorthStar Skills Learning Loop` (not one
+   project per Star or per run).
+2. **Object model:** Skill Learning Run = parent issue + 13 gated sub-issues;
+   project milestones M0–M7 mirror the lifecycle.
+3. **Authority:** GitHub remains engineering truth; repo evidence remains
+   technical truth; Captain remains approval authority; Linear records state only.
+4. **Agent identity:** Linear-facing agent = **NorthStar First Mate** (never
+   “NorthStar Captain”). Human Captain remains assignee/owner on approval-bearing
+   work; agent may be delegated without replacing ownership.
+5. **Execution split:** Linear First Mate = ledger/orchestrator; Cursor Cloud
+   Agent = coding worker (sandbox only; M21 agent pin).
+6. **Topology:** Learning CLIs live in the **control** repo and target the
+   **sandbox** via `--repo-root` (or the new launcher). Product Skills must not
+   imply `./scripts/...` exists inside the sandbox checkout.
+7. **Pre-Linear fix order:** topology/docs + launcher + ledger schema **before**
+   live Skill Learning Run automation against Linear.
+8. **Housekeeping:** README header version tracks `VERSION` (separate small
+   doc fix inside this plan, not a blocking Linear dependency).
 
 ## Problem statement
 
-1. NorthStar connected routine is **fixture-proven** but does not yet run live
-   unattended Slack/Linear/GitHub/Cursor traffic behind
-   `scripts/run-northstar-routine.sh`.
-2. There is **no webhook/bot ingress** today — only fixture adapters + CLI.
-3. Stars TI can categorize starred repos, but lacks a first-class
-   **security + supply-chain + usefulness-label** scorecard before Skill drafts.
-4. Skill learning loop can propose improvements, but does not yet enforce the
-   deeper gates above, and does not drive bounded sandbox UI experiments as
-   evidence for design-oriented Skills.
+1. Stars→Skills learning exists (M19–M23) but has **no durable, reconstructable
+   operational ledger** answering *why* a capability was trusted months later.
+2. Installed Skills and guides still tell agents to run `./scripts/...` from the
+   **product** checkout; those executables live only in the control repo
+   (`--repo-root` already works).
+3. Learning-run JSON has no Linear linkage (`project_id`, parent issue, milestone,
+   control/product SHAs, delegated agent).
+4. Agents (Linear ↔ Cursor) need a **topology-free** launcher:
+   `northstar skills refresh|learn|promote`.
+5. README still advertises **1.7.0** while `VERSION` is **1.28.0**.
+6. Linear MCP is connected, but the Skills Learning Loop project/docs/templates
+   do not exist yet.
 
 ## Current-state summary
 
 | Surface | Today |
 |---|---|
-| Routine | `orchestrator/integrations/` + fixture adapters; ADR-037/038 |
-| Approval | GitHub + plan digest only (fail-closed) |
-| Linear / Slack | Fixture ledger / notify; never approval |
-| TI Stars | Live/fixture categorize; labels: `frontend-ui`, `backend-library`, `devtool`, `ml-data`, `other` |
-| Learning | M19/M20 loop + Captain-gated apply; sandbox harness does not clone external repos |
-| Sandbox | Vite React app; refresh through Compass 1.26.0 |
+| Authority | ADR-037/039/040: GitHub + digest / `--captain-approved`; Linear never approves |
+| Linear adapter | `orchestrator/integrations/adapters/linear.py` — generic NorthStar run ledger; allowlist `NorthStar` / `northstar`; **not** Skills Learning Run–aware |
+| Learning loop | `scripts/run-skill-learning-loop.sh` + `orchestrator/learning/`; writes `.agent/learning-runs/<run_id>.json` **without** `ledger` |
+| Scripts | `refresh-ti-cache`, `run-skill-learning-loop`, `promote-candidate`, etc. support `--repo-root` |
+| Skills / guide | `skill-learning-loop`, `technology-intelligence-live`, `docs/guides/starred-repos-to-skills.md` use bare `./scripts/...` |
+| Launcher | No `northstar skills` abstraction |
+| Linear workspace | Team `Ovaltechnologysolutions`; **0** templates; **0** matching Skills projects |
+| Version docs | `VERSION` = `1.28.0`; README header = `1.7.0` |
 
 ## Desired outcomes
 
-### M22 — NorthStar Unattended Connected Ops → **v1.27.0**
+### Authority chain (recorded in Linear; never originated by Linear)
 
-Unattended GitHub + Linear (then Slack notify/intake) feed the existing NorthStar
-routine without weakening fail-closed approval. Sandbox is the only product
-dispatch/allowlist target.
+```
+GitHub Star → TI Candidate → Evidence → Skill Draft → Captain Decision
+  → Promotion PR → Installed Skill → Delegated Agent → Execution Experience
+  → Skill confidence
+```
 
-### M23 — TI Scorecard + Skill Flywheel → **v1.28.0**
+State machine (visual ledger only):
 
-Starred-only TI → fixed usefulness labels → mandatory security + supply-chain
-evidence → Skill drafts → bounded sandbox UI experiments → Captain-gated
-Skill/procedure promotion.
+```
+STARRED → TI_REFRESHED → CANDIDATE_SELECTED → SECURITY_REVIEWED
+  → SUPPLY_CHAIN_REVIEWED → SANDBOX_TESTED
+  ────── HUMAN BOUNDARY ──────
+  → CAPTAIN_APPROVED → AVAILABLE_SKILL → PR_REVIEWED → INSTALLED
+  → AGENT_DELEGATED → EXPERIENCE_RECORDED → PROVEN / IMPROVE / RETIRE
+```
+
+`CAPTAIN_APPROVED` may be **displayed** in Linear; Linear Agent may **notice** it;
+Linear must **never create** it. Canonical approval remains GitHub Captain
+decision (+ matching plan digest / `--captain-approved` as today).
+
+### Workstreams (phased)
+
+| Phase | Name | Outcome |
+|---|---|---|
+| **H0** | Doc housekeep | README / Skill counts / version align to `VERSION` |
+| **H1** | Topology runbook | Skills + Stars guide + Linear docs use control/`--repo-root` or launcher |
+| **H2** | `northstar skills` launcher | Stable agent-facing CLI wrapping control scripts |
+| **H3** | Ledger linkage | `ledger` block on learning-run JSON (+ optional `ledger.json`) |
+| **M0** | Linear ledger bootstrap | Project, milestones M0–M7, Ledger Contract doc, run template guidance, labels, First Mate guidance |
+| **M1–M3** | Sync pre-human gates | Create/update Learning Run parent + sub-issues 01–07 from loop transitions |
+| **M4–M5** | Captain gate + promote | Record approval **references** only; promote/PR linkage; never invent approval |
+| **M6–M7** | Execute + learn | Cursor work-packet dispatch metadata + Experience / retrospective recording |
+
+Ship target for this plan: **H0–H3 + M0 + minimal sync (create Learning Run + link SHAs)** as **v1.29.0**. Full automated transition sync through M7 may land as follow-on if budget requires — Captain may expand approval to include full M1–M7 in one release.
 
 ## Acceptance criteria
 
-### M22 (v1.27.0) — met
+### H0 — Version housekeep
 
-- [x] Unattended ingress (webhook/bot worker) accepts GitHub deliveries with
-      signature verification + idempotent `delivery_id` handling.
-- [x] Live GitHub path advances/records Captain approval via plan digest only;
-      missing/invalid approval fail-closes (`AWAITING_CAPTAIN_APPROVAL` / stop).
-- [x] Live Linear ledger create/update/link works; Linear **cannot** approve or
-      dispatch.
-- [x] Slack notify (and intake if capacity) ships **after** GitHub+Linear health;
-      Slack **cannot** approve or dispatch.
-- [x] Fixture mode remains CI default; live mode requires explicit Captain-gated
-      config/secrets (never committed).
-- [x] Cursor agent identity pin preserved (`BLOCKED_AGENT_IDENTITY` on mismatch)
-      unless Captain revises via ADR.
-- [x] No auto-merge, auto-release, live Skill install, or weight auto-apply.
-- [x] Secrets redacted in logs/events/evidence; doctor + docs updated for live ops.
-- [x] `docs/SANDBOX_VALIDATION.md` row for Compass **1.27.0**; sandbox refresh PR.
-- [x] Tests: fixture suite green; live paths covered with injected doubles (no
-      live credentials in CI).
-- [x] Tag/release **v1.27.0** + rollback tag `rollback/pre-m22-northstar-ops`.
+- [ ] Control `README.md` “Current version” matches `VERSION` (and Skill/subagent counts are not wildly stale).
+- [ ] No other docs treat README version as authoritative over `VERSION`.
 
-### M23 (v1.28.0) — met
+### H1 — Topology runbook
 
-- [x] Fixed usefulness/category label set extended at least with **`design-system`**
-      (and any Captain-confirmed additions) in `DEFAULT_CATEGORIES`, manual labels,
-      docs, and tests.
-- [x] TI paths enforce **starred provenance** for external repo entry (reject
-      non-starred feeds).
-- [x] Before any Skill draft: required **security-review** +
-      **dependency-supply-chain** evidence artifacts; fail closed if missing.
-- [x] `skill-learning-loop` / `apply-skill-improvement` document and enforce the
-      new gates; live apply remains `--captain-approved` only.
-- [x] At least one **bounded UI experiment** lands only in
-      `captain-compass-sandbox` with Playwright/a11y evidence linked from control
-      validation docs.
-- [x] Example path supported for a **starred** design repo (e.g. impeccable once
-      starred): categorize → scorecard → draft proposal (no auto Skill install).
-- [x] `approved_for_execution` stays false for TI candidates; no clone/exec of
-      starred repos from learning/TI.
-- [x] Sandbox refresh + smoke gate for **1.28.0** (sandbox [#44](https://github.com/loganware05/captain-compass-sandbox/pull/44)).
-- [x] Tag/release **v1.28.0** + rollback tag `rollback/pre-m23-ti-flywheel`.
+- [ ] `skill-learning-loop` (control source) documents control vs execution roots; no implication that `./scripts/run-skill-learning-loop.sh` lives in the sandbox.
+- [ ] `docs/guides/starred-repos-to-skills.md` uses launcher **or** explicit `CONTROL=…` / `--repo-root` form.
+- [ ] Related TI Skills that teach `./scripts/refresh-ti-cache.sh` from product context are corrected the same way (at least `technology-intelligence-live`).
+- [ ] Sandbox refresh after ship picks up Skill text (no divergent sandbox-only Skill edits as source of truth).
+
+### H2 — Launcher
+
+- [ ] Control ships `scripts/northstar` (or equivalent) supporting at least:
+  - `northstar skills refresh [--repo PATH]`
+  - `northstar skills learn --repo PATH --objective "…" [--category …] [--source …]`
+  - `northstar skills promote …` (thin wrap of `promote-candidate.sh`)
+- [ ] Launcher resolves control root from its own location; `--repo` defaults documented; never clones external Stars.
+- [ ] Doctor checks launcher exists and is executable.
+- [ ] Unit/smoke tests cover help + dry wiring (no live Stars required).
+
+### H3 — Ledger artifact
+
+- [ ] Learning-run report includes (or writes sibling):
+
+```json
+{
+  "ledger": {
+    "provider": "linear",
+    "project_id": null,
+    "parent_issue_id": null,
+    "milestone": null,
+    "last_synced_at": null,
+    "control_revision": "<sha>",
+    "product_revision": "<sha>",
+    "delegated_agent": null
+  }
+}
+```
+
+- [ ] Control + product SHAs always recorded when known; Linear IDs nullable until sync.
+- [ ] Fixture learning-loop tests still green; new assertions for `ledger` keys.
+
+### M0 — Linear bootstrap (after approval; MCP or documented Captain steps)
+
+- [ ] Project **NorthStar Skills Learning Loop** exists on team `Ovaltechnologysolutions`.
+- [ ] Milestones in order: M0–M7 with meanings from Captain brief.
+- [ ] Project document **NorthStar Skills — Ledger Contract** with the 12 invariants.
+- [ ] Reusable Learning Run structure documented (issue template if Linear API/UI allows; else First Mate playbook + saved parent description template in control docs).
+- [ ] Sub-issue checklist 01–13 and gating rules documented in project + control docs.
+- [ ] Project allowlist in Linear adapter updated to include this project name/id.
+- [ ] Agent guidance: First Mate READ/WRITE/TRIGGER/NEVER matrix from Captain brief.
+- [ ] Linear templates list was empty at plan time — if MCP cannot create issue/project templates, document Captain UI steps and keep machine-readable template under `docs/integrations/linear-skills-learning-loop.md`.
+
+### Sync slice (v1.29.0 minimum)
+
+- [ ] Optional/explicit CLI or loop flag can create/update a Linear parent Learning Run + child stubs (or link existing) and write IDs into `ledger`.
+- [ ] Sync **never** sets Captain approval, `approved_for_execution`, merge, or install.
+- [ ] Fixture mode remains CI default; live Linear requires credentials / MCP (never committed secrets).
+- [ ] Disagreement rule documented: GitHub/repo evidence wins over Linear.
+
+### Hard non-regressions
+
+- [ ] No auto-install into `.cursor/skills/`.
+- [ ] No clone/exec of Starred repos.
+- [ ] No Linear-originated `CAPTAIN_APPROVED`.
+- [ ] M21 agent identity pin unchanged unless separate ADR.
+- [ ] `./scripts/doctor.sh` + `./tests/run.sh` green; evidence under `.agent/evidence/`.
 
 ## Non-goals
 
-- Moving approval authority to Slack, Linear, or Notion
-- Auto-merge / auto-release / unattended live Skill install
-- Installing Compass into non-sandbox product repos in these milestones
-- Arbitrary non-starred URL ingest into TI
-- Cloning or executing third-party repos inside the control learning loop
-- Reopening closed #50 / v1.26.0 scope
-- Multi-tenant hosted SaaS control plane
+- Replacing GitHub approval with Linear approval
+- Installing a Linear agent identity named “NorthStar Captain”
+- One Linear project per Star or per learning run
+- Cloning or executing external Starred repositories
+- Auto-merge of promotion PRs
+- Expanding product dispatch allowlist beyond sandbox
+- Slack changes (unless needed for notify copy only)
+- Full Linear Project Template export automation (document as follow-on once M0 stable)
+
+## Assumptions
+
+1. Captain remains Logan Ware; Linear assignee for approval-bearing issues stays human.
+2. Control and sandbox checkouts are available side-by-side for real runs.
+3. Linear MCP (this session) or `NORTHSTAR_LINEAR_API_KEY` will be available for M0/live sync.
+4. Issue templates may require Captain UI if MCP lacks create-template APIs (confirmed: `list_templates` returned `[]`; no create-template tool in MCP catalog).
+5. Sandbox Skill refresh continues via control `update.sh` after control merge.
+
+## Open questions (Captain)
+
+1. **Ship scope:** Approve **H0–H3 + M0 + minimal sync** as v1.29.0, or require **full M1–M7 automated transition sync** in the same release?
+2. **Linear issue template:** Accept control-repo markdown template + First Mate procedure if Linear UI template creation is manual?
+3. **Housekeeping issue:** Prefer a separate GitHub issue for README drift, or fold entirely into this plan (recommended: fold into H0)?
+4. **Project lead / labels:** Any preferred Linear labels beyond Skills / Learning-Run / Gate / Experience?
 
 ## Proposed architecture
 
-```text
-M22:
-  GitHub webhook/bot ──► ingress (verify + idempotency)
-  Linear API/bot     ──► ledger mirror
-  Slack bot (later)  ──► intake/notify
+```
+Control repo                         Sandbox (execution)
+────────────                         ───────────────────
+scripts/northstar  ──skills learn──► --repo sandbox
+orchestrator/learning/               .agent/learning-runs/<id>.json
+  + ledger block                     .agent/evidence/...
+orchestrator/integrations/           (no control scripts copied)
+  linear skills-ledger sync
          │
          ▼
-  NorthStar routine (existing state machine)
-         │
-         ├─ Captain approval: GitHub + plan digest ONLY
-         └─ Cursor execution: pinned agent, sandbox allowlist
-
-M23:
-  Starred repos ──► TI categorize (fixed labels)
-                 ──► security-review + supply-chain evidence
-                 ──► usefulness labels / scorecard
-                 ──► skill-learning-loop drafts (staging)
-                 ──► bounded sandbox UI experiment evidence
-                 ──► Captain-gated Skill apply / PR
+Linear project: NorthStar Skills Learning Loop
+  milestones M0–M7
+  parent: NS-SKILL-RUN: <objective>
+  children 01–13 (gates)
+  doc: Ledger Contract
 ```
 
-### Implementation surfaces (proposed)
+**First Mate (Linear)** may: inspect, create/update children, record evidence
+paths, update non-authoritative status, prepare commands/work packets, link
+PRs, dispatch Cursor **only after** verified GitHub Captain approval.
 
-**M22**
-- New ingress worker/receiver (greenfield) feeding
-  `orchestrator/integrations/events.py` + routine
-- Live adapter modes beside fixtures for GitHub / Linear / Slack
-- Secrets via environment / secret store (never committed)
-- Docs: `docs/integrations/{github,linear,slack}.md`, Skill
-  `northstar-connected-routine`
+**First Mate may never:** approve, fabricate evidence, merge, auto-install,
+execute Stars, set `approved_for_execution=true`, close a run solely because an
+agent claimed success.
 
-**M23**
-- Extend `DEFAULT_CATEGORIES` + manual labels (+ `design-system`)
-- Scorecard artifact schema + promote/learning gates
-- Wire `security-review` + `dependency-supply-chain` before draft write
-- Sandbox UI experiment + `docs/SANDBOX_VALIDATION.md` / checklist attachment
-- Example scorecard evidence for one starred design-oriented repo
+## Required Capabilities
 
-## Workstreams
+See `.agent/plans/m24-linear-skills-ledger/` (capability-plan artifacts).
 
-| ID | Milestone | Scope |
+Relevant Skills: `implementation-planning`, `linear-integration`,
+`skill-learning-loop`, `candidate-promotion`, `skill-lifecycle`,
+`northstar-connected-routine`, `github-integration`, `security-review`,
+`dependency-supply-chain`, `testing-validation`.
+
+## Technology Intelligence Candidates
+
+> External candidates are **NOT APPROVED FOR EXECUTION**.
+
+None required for this milestone (Linear MCP + existing control code).
+
+## Task Graph
+
+| Task ID | Objective | Dependencies |
 |---|---|---|
-| W22A | M22 | Ingress design (hosting choice, signatures, allowlists) |
-| W22B | M22 | Live GitHub adapter + approval verify |
-| W22C | M22 | Live Linear ledger |
-| W22D | M22 | Slack notify/intake after GH+Linear |
-| W22E | M22 | Docs, doctor, CI fixtures, sandbox refresh, release |
-| W23A | M23 | Label taxonomy (`design-system`, …) |
-| W23B | M23 | Starred-only TI enforcement |
-| W23C | M23 | Security + supply-chain gate before Skill draft |
-| W23D | M23 | Learning-loop / apply-improvement alignment |
-| W23E | M23 | Bounded sandbox UI experiment + validation/release |
+| `task-discovery` | Confirm topology, Linear workspace, learning-run shape | — |
+| `task-architecture` | Ledger contract, launcher surface, sync boundaries | discovery |
+| `task-implementation` | H0–H3 + M0 docs/bootstrap helpers + minimal sync | architecture |
+| `task-validation` | Doctor, unit/integration, fixture Linear doubles | implementation |
+| `task-documentation` | ADR, guide, Linear integration doc, PROGRESS, CHANGELOG | validation |
 
-## Safety and authority
+## Workstreams (file boundaries)
 
-- GitHub + plan digest remain the sole engineering approval authority (ADR-037).
-- Slack / Linear / Notion are never approval or dispatch authorities.
-- No auto-merge, auto-release, or unattended live Skill install.
-- Secrets never enter prompts, logs, Slack, Linear, GitHub mirrors, or fixtures.
-- TI candidates remain non-executable (`approved_for_execution: false`); no
-  third-party clone/exec from TI/learning.
-- Wrong Cursor agent → fail closed.
-- Sandbox-only product target for M22/M23.
-- Routing weight apply and live Skill apply remain explicit Captain gates.
+| Stream | Owner files | Notes |
+|---|---|---|
+| A — Docs/Skills topology | `.cursor/skills/skill-learning-loop/`, `technology-intelligence-live/`, `docs/guides/starred-repos-to-skills.md`, `README.md`, `docs/integrations/linear*.md` | No orchestrator behavior change |
+| B — Launcher | `scripts/northstar`, doctor hooks, tests | Thin wrap only |
+| C — Ledger schema | `orchestrator/learning/loop.py`, tests | Additive JSON fields |
+| D — Linear sync | `orchestrator/integrations/` (+ skills ledger module), fixtures | Fail-closed; never approve |
+| E — Linear M0 bootstrap | MCP + `docs/integrations/linear-skills-learning-loop.md` | After approval |
 
-## Autonomy budget (activates only after plan approval)
+## Files expected to change (control)
+
+- `IMPLEMENTATION_PLAN.md`, `PROGRESS.md`, `DECISIONS.md` (new ADR), `CHANGELOG.md`, `VERSION` (on ship)
+- `README.md` (H0)
+- `.cursor/skills/skill-learning-loop/SKILL.md` (+ related Skills)
+- `docs/guides/starred-repos-to-skills.md`
+- `docs/integrations/linear.md` + new `linear-skills-learning-loop.md`
+- `scripts/northstar` (+ optional `scripts/northstar-skills.sh`)
+- `scripts/doctor.sh`
+- `orchestrator/learning/loop.py` (+ maybe small ledger helper)
+- `orchestrator/integrations/adapters/linear.py` (allowlist + skills-run helpers)
+- `tests/orchestrator/test_m19_skill_learning_loop.py` (+ new ledger/launcher tests)
+- `.agent/plans/m24-linear-skills-ledger/` (already seeded)
+- `.agent/budgets/m24-linear-skills-ledger.md` (after approval)
+- `.agent/evidence/` (validation)
+
+Sandbox: refresh PR after control ship (Skill text + VERSION), no independent Skill authorship.
+
+## Testing strategy
+
+- Doctor + `./tests/run.sh` (+ evals if hooks touched)
+- Unit: learning-run `ledger` keys; launcher help/dispatch; Linear sync with recording transport / fixtures
+- No live Stars or live Linear credentials in CI
+- Manual M0 evidence: Linear project URL, milestone list screenshot or API dump under `.agent/evidence/m24-linear-skills-ledger/`
+- Security review Skill: confirm Linear cannot approve / no secret leakage in issue bodies
+
+## Security review
+
+- Preserve ADR-037/039/040 gates
+- Redact tokens from Linear descriptions/comments
+- Link evidence paths; do not paste secret-bearing logs
+- Explicit tests that sync refuses to mark issue 08 approved without GitHub reference
+
+## Accessibility review
+
+Not applicable (no UI product change). Sandbox UI untouched except optional later Experience run.
+
+## Migration plan
+
+- Additive ledger fields; old learning-run JSON remains readable
+- Launcher is new; old script paths remain for humans who know topology
+- Linear project created once; no migration of historical runs required for v1.29.0
+
+## Rollback plan
+
+1. Tag `rollback/pre-m24-linear-skills-ledger` before implementation commits.
+2. Revert control merge / restore tag.
+3. Archive or leave Linear project (ledger-only; safe to retain).
+4. Sandbox: re-install prior Compass VERSION if Skill text must roll back.
+
+## Risks and mitigations
+
+| Risk | Mitigation |
+|---|---|
+| Linear treated as approval authority | Docs + code asserts; issue 08 cannot be agent-approved |
+| MCP cannot create issue templates | Control-repo template doc + Captain UI checklist |
+| Agents still run `./scripts` in sandbox | H1+H2 before live Learning Runs |
+| Scope creep to full M1–M7 automation | Open question #1; default ship slice H0–H3+M0+minimal sync |
+| Adapter allowlist too broad | Allowlist exact project name/id |
+
+## Autonomy budget (post-approval)
 
 | Limit | Value |
 |---|---|
-| Maximum iterations per milestone | 8 |
-| Maximum failed validation cycles | 3 |
-| Live credential usage in CI | 0 (doubles/fixtures only) |
-| Weight-apply / live Skill apply without Captain flag | 0 |
-| Stop on scope change / destructive / unresolved security high | true |
+| Max iterations | 8 |
+| Max additional deps | 0 (stdlib + existing Linear transport) |
+| Max files touched | ~40 |
+| Stop | Budget Stop Report under `.agent/evidence/` |
 
-## Defaults for remaining choices (override on approval if desired)
+## Evaluation strategy
 
-| Topic | Default if Captain silent |
-|---|---|
-| Ingress hosting | GitHub App / webhook receiver as smallest always-on worker (Captain picks host) |
-| Slack timing | Notify-only at end of M22; richer intake polish in M23 if needed |
-| Label set | Keep existing four + add `design-system` (six total with `other`) |
-| Cursor agent pin | Keep current M21 allowlisted agent id |
-| First UI experiment | Design-system / craft tokens demo in sandbox inspired by starred `frontend-ui`/`design-system` repos (not a vendor install) |
+Reconstructability test: given one fixture learning run + synced Linear parent,
+an agent can answer: control SHA, sandbox SHA, evidence paths, whether Captain
+approval exists (and from where), and next gate — without trusting Linear over
+repo state.
 
-## Open questions (optional overrides)
+## Learning plan
 
-1. Preferred ingress host (GitHub Actions+App vs Render/Fly worker vs other)?
-2. Confirm full fixed label list beyond adding `design-system`.
-3. Preferred first sandbox UI experiment theme if not the default above?
-4. Keep sole M21 agent pin for unattended dispatch, or expand under a new ADR?
+Retain under `.agent/plans/m24-linear-skills-ledger/` and release evidence.
+First real Learning Run after M0 uses Linear as ledger only; feed Experience
+back per M7 when an installed Skill is exercised.
 
-## Capability planning appendix (proposals only)
+## Approval Boundary
 
-Top Skills: `implementation-planning`, `northstar-connected-routine`,
-`github-integration`, `linear-integration`, `technology-intelligence-live`,
-`skill-learning-loop`, `candidate-promotion`, `security-review`,
-`dependency-supply-chain`, `sandbox-validation`, `react-engineering`,
-`playwright-browser-validation`.
+**No product implementation, Linear project creation, or launcher commits beyond
+this plan branch until the Captain explicitly approves this plan** (status →
+`APPROVED` with name/date/revision).
 
-No hard capability gaps detected for planning; M22 ingress hosting is the main
-greenfield surface.
+Discovery completed this session:
 
-## Approval record
+- Linear MCP authenticated
+- Team `Ovaltechnologysolutions` identified
+- Confirmed no existing Skills Learning Loop project
+- Confirmed control scripts already support `--repo-root`
+- Confirmed README version drift (1.7.0 vs 1.28.0)
+- Confirmed learning-run JSON lacks `ledger`
 
-| Captain | Decision | Date |
-|---|---|---|
-| Captain | **APPROVED** — M22 implementation in progress (M23 deferred) | 2026-09-09 |
-| Captain | **APPROVED** — M23 start after #129 + sandbox#43 merged | 2026-09-10 |
+---
 
-Captain approved plan `m22-m23-northstar-ops-ti-flywheel` on 2026-09-09.
-M22 shipped as v1.27.0 (#129). Rollback tag for M23: `rollback/pre-m23-ti-flywheel`.
-Branch: `cursor/m23-ti-skill-flywheel-6044`. Implement M23 → v1.28.0.
+## Captain approval block
+
+```text
+Status: APPROVED
+Approved by: <Captain name>
+Approval date: <ISO date>
+Approved revision: <git SHA of this plan>
+Ship scope: <H0–H3+M0+minimal sync | full M1–M7>
+Notes: <optional>
+```
