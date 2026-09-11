@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.29.0 — unreleased / in progress
+## 1.29.0 — 2026-09-11
 
 ### Added
 
@@ -12,6 +12,8 @@
   `docs/templates/linear/northstar-skill-learning-run.md`
 - ADR-041; tests `tests/orchestrator/test_m24_skills_ledger.py`
 - Doctor checks for `northstar` + `sync-skill-learning-ledger.sh` executables
+- Closeout evidence `.agent/evidence/m24-linear-skills-ledger/VALIDATION.md`
+  (doctor/tests green; Run 001 retain via sandbox PR #46)
 
 ### Changed
 
@@ -21,6 +23,7 @@
   `SANDBOX`, northstar or `--repo-root`); product checkouts do not contain
   learning CLIs
 - Linear adapter allowlist includes project **NorthStar Skills Learning Loop**
+- PROGRESS: M24 marked shipped; Run 001 closed retained
 
 ## 1.28.0 — 2026-09-10
 
