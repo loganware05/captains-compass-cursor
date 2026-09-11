@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.29.1 — 2026-09-11
+
 ### Added
 
 - M25 agent router wakeability gate (`orchestrator/routing/agent_router.py`,
@@ -10,6 +12,13 @@
 - CLI: `northstar skills route-agents` → `scripts/score-agent-routing.sh`
 - Docs: `docs/integrations/agent-routing-contract.md`
 - Tests: `tests/orchestrator/test_m25_agent_router_wakeability.py`
+- Doctor check for `score-agent-routing.sh`
+- ADR-042; evidence `.agent/evidence/m25-agent-router-wakeability/VALIDATION.md`
+
+### Changed
+
+- VERSION `1.29.1`
+- PROGRESS: M25 marked shipped (OVA-19)
 
 ## 1.29.0 — 2026-09-11
 
