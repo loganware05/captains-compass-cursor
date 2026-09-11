@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING APPROVAL** |
+| Status | **APPROVED** |
 | Plan ID | `m24-linear-skills-ledger` |
 | Supersedes | `m22-m23-northstar-ops-ti-flywheel` (CLOSED — shipped as v1.27.0 / v1.28.0) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
@@ -20,9 +20,10 @@
 | Rollback tag (post-approval) | `rollback/pre-m24-linear-skills-ledger` |
 | Branch (plan only) | `cursor/m24-linear-skills-ledger-05fd` |
 | Issue | *TBD after approval* |
-| Approved by | |
-| Approval date | |
-| Approved revision | |
+| Approved by | Logan Ware |
+| Approval date | 2026-09-11 |
+| Approved revision | 7c9fd53 (plan); implementation on `cursor/m24-linear-skills-ledger-05fd` |
+| Linear M0 | **Captain-completed** — project `c62f65bf-a376-4716-b958-0d874730a391`, milestones M0–M7, Ledger + Agent Routing contracts, Run 001 OVA-5 |
 
 ## Request (Captain-level)
 
@@ -388,9 +389,17 @@ Discovery completed this session:
 
 ```text
 Status: APPROVED
-Approved by: <Captain name>
-Approval date: <ISO date>
-Approved revision: <git SHA of this plan>
-Ship scope: <H0–H3+M0+minimal sync | full M1–M7>
-Notes: <optional>
+Approved by: Logan Ware
+Approval date: 2026-09-11
+Approved revision: 7c9fd53 (plan); implementation continues on cursor/m24-linear-skills-ledger-05fd
+Ship scope: H0–H3 + M0 + minimal sync as v1.29.0
+Notes: Linear project already bootstrapped by Captain (NorthStar Skills Learning Loop). Issue templates: use control-repo markdown unless MCP gains create-template. Labels: defaults only. Run 001 OVA-5 live; implement OVA-6..OVA-12 next; stop before OVA-13 Captain Gate.
 ```
+
+### Linear bootstrap status (Captain-completed M0)
+
+- Project: NorthStar Skills Learning Loop (`c62f65bf-a376-4716-b958-0d874730a391`)
+- Run 001 parent: OVA-5 NS-SKILL-001
+- Lifecycle children: OVA-6 … OVA-18
+- Governance docs attached in Linear (Ledger Contract + Agent Routing Contract)
+

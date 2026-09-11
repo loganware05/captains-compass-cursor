@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.29.0 — unreleased / in progress
+
+### Added
+
+- M24 Linear Skills Learning Loop flight recorder (H0–H3 + M0 + minimal sync)
+- Topology-free launcher `scripts/northstar` (`skills refresh|learn|promote|sync-ledger`)
+- Learning-run `ledger` linkage (`orchestrator/integrations/skills_ledger.py`) +
+  `scripts/sync-skill-learning-ledger.sh`
+- Docs: `docs/integrations/linear-skills-learning-loop.md`,
+  `docs/templates/linear/northstar-skill-learning-run.md`
+- ADR-041; tests `tests/orchestrator/test_m24_skills_ledger.py`
+- Doctor checks for `northstar` + `sync-skill-learning-ledger.sh` executables
+
+### Changed
+
+- VERSION `1.29.0`
+- Skills `skill-learning-loop`, `technology-intelligence-live` and guide
+  `starred-repos-to-skills` lead with control/sandbox topology (`CONTROL` /
+  `SANDBOX`, northstar or `--repo-root`); product checkouts do not contain
+  learning CLIs
+- Linear adapter allowlist includes project **NorthStar Skills Learning Loop**
+
 ## 1.28.0 — 2026-09-10
 
 ### Added

@@ -230,6 +230,8 @@ def run_skill_learning_loop(
     run_id = run_id or f"learning-{_utc_now().replace(':', '').replace('-', '')}"
     out_dir = learning_runs_dir(repo_root)
     out_dir.mkdir(parents=True, exist_ok=True)
+    from orchestrator.integrations.skills_ledger import build_ledger_for_run
+
     report = {
         "kind": "skill-learning-run",
         "run_id": run_id,
@@ -252,6 +254,11 @@ def run_skill_learning_loop(
             "Skill drafts require security-review + dependency-supply-chain evidence."
         ),
     }
+    report["ledger"] = build_ledger_for_run(
+        report,
+        control_root=control,
+        product_root=repo_root,
+    )
     report_path = out_dir / f"{run_id}.json"
     report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     report["report_path"] = str(report_path)

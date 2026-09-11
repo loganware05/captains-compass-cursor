@@ -21,6 +21,31 @@ during capability planning — not offline fixtures and not CI defaults.
 - Natural-language objective (same as capability planning)
 - Optional `--top N` for result limit
 
+## Topology (required)
+
+TI refresh / learning CLIs live only in the **control** repository. Product /
+sandbox checkouts do **not** contain `scripts/refresh-ti-cache.sh`,
+`scripts/run-skill-learning-loop.sh`, or `scripts/northstar`.
+
+```bash
+CONTROL=/path/to/captains-compass-cursor
+SANDBOX=/path/to/captain-compass-sandbox
+```
+
+Prefer:
+
+```bash
+"$CONTROL/scripts/northstar" skills refresh --repo "$SANDBOX"
+"$CONTROL/scripts/northstar" skills learn --repo "$SANDBOX" --objective "…"
+```
+
+Equivalent:
+
+```bash
+"$CONTROL/scripts/refresh-ti-cache.sh" --repo-root "$SANDBOX"
+"$CONTROL/scripts/run-skill-learning-loop.sh" --repo-root "$SANDBOX" --objective "…"
+```
+
 ## Procedure
 
 1. Verify `gh auth status` succeeds locally.
@@ -28,7 +53,7 @@ during capability planning — not offline fixtures and not CI defaults.
 
    ```bash
    COMPASS_TI_PROVIDER=github-stars \
-     ./scripts/query-technology-intelligence.sh --query "accessible react forms"
+     "$CONTROL/scripts/query-technology-intelligence.sh" --query "accessible react forms"
    ```
 
 3. Review JSON candidates — each has `approved_for_execution: false` and
@@ -40,10 +65,13 @@ during capability planning — not offline fixtures and not CI defaults.
 6. **Offline cache** (optional — separate provider):
 
    ```bash
-   ./scripts/refresh-ti-cache.sh
-   ./scripts/refresh-ti-cache.sh --if-stale 24
+   "$CONTROL/scripts/northstar" skills refresh --repo "$SANDBOX"
+   "$CONTROL/scripts/northstar" skills refresh --repo "$SANDBOX" --if-stale 24
+   # equivalent:
+   "$CONTROL/scripts/refresh-ti-cache.sh" --repo-root "$SANDBOX"
+   "$CONTROL/scripts/refresh-ti-cache.sh" --repo-root "$SANDBOX" --if-stale 24
    COMPASS_TI_PROVIDER=github-stars-cached \
-     ./scripts/query-technology-intelligence.sh --query "accessible react forms"
+     "$CONTROL/scripts/query-technology-intelligence.sh" --query "accessible react forms"
    ```
 
    Cache envelope includes `fetched_at` (and legacy `refreshed_at`).
@@ -51,7 +79,7 @@ during capability planning — not offline fixtures and not CI defaults.
 
    ```bash
    COMPASS_TI_PROVIDER=huggingface-file \
-     ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
+     "$CONTROL/scripts/query-technology-intelligence.sh" --query "sentence embeddings"
    ```
 
 8. **Package-registry file TI** (npm/PyPI-shaped fixtures — no registry network in CI):
@@ -59,30 +87,36 @@ during capability planning — not offline fixtures and not CI defaults.
 
    ```bash
    COMPASS_TI_PROVIDER=package-registry-file \
-     ./scripts/query-technology-intelligence.sh --query "schema validation"
+     "$CONTROL/scripts/query-technology-intelligence.sh" --query "schema validation"
    ```
 
 9. **Live package-registry TI** (Captain local — npm + PyPI):
 
    ```bash
    COMPASS_TI_PROVIDER=package-registry \
-     ./scripts/query-technology-intelligence.sh --query "schema validation"
+     "$CONTROL/scripts/query-technology-intelligence.sh" --query "schema validation"
    ```
 
 10. **Batch categorized Stars** (offline ML from manual labels — no live training in CI):
 
    ```bash
-   ./scripts/categorize-github-stars.sh --source fixtures   # offline test path
-   # or after refresh-ti-cache.sh:
-   ./scripts/categorize-github-stars.sh --source ti-cache
+   "$CONTROL/scripts/categorize-github-stars.sh" --source fixtures   # offline test path
+   # or after refresh:
+   "$CONTROL/scripts/categorize-github-stars.sh" --source ti-cache
    COMPASS_TI_PROVIDER=github-stars-categorized \
-     ./scripts/query-technology-intelligence.sh --query "react forms"
+     "$CONTROL/scripts/query-technology-intelligence.sh" --query "react forms"
    ```
 
-11. **Skill learning loop** (M19 — staging + harness + drafts / improvement proposals):
+11. **Skill learning loop** (M19/M24 — staging + harness + drafts / improvement proposals):
 
    ```bash
-   ./scripts/run-skill-learning-loop.sh \
+   "$CONTROL/scripts/northstar" skills learn \
+     --repo "$SANDBOX" \
+     --source fixtures \
+     --objective "accessible react forms"
+   # equivalent:
+   "$CONTROL/scripts/run-skill-learning-loop.sh" \
+     --repo-root "$SANDBOX" \
      --source fixtures \
      --objective "accessible react forms"
    ```
@@ -95,7 +129,7 @@ during capability planning — not offline fixtures and not CI defaults.
 
    ```bash
    COMPASS_TI_PROVIDER=huggingface-hub \
-     ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
+     "$CONTROL/scripts/query-technology-intelligence.sh" --query "sentence embeddings"
    # optional auth for gated models:
    # COMPASS_HF_HUB_TOKEN=hf_... COMPASS_TI_PROVIDER=huggingface-hub ...
    ```
@@ -113,3 +147,4 @@ during capability planning — not offline fixtures and not CI defaults.
 - Setting `approved_for_execution: true`
 - Auto-cloning, installing, or executing external repositories
 - Live Hugging Face Hub or npm/PyPI registry network calls from CI defaults
+- Assuming TI/learning scripts exist inside product/sandbox checkouts
