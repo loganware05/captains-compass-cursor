@@ -1,5 +1,23 @@
 # Decisions
 
+## ADR-042: Agent router wakeability gate (M25 / OVA-19)
+
+- **Status:** Accepted
+- **Date:** 2026-09-11
+- **Context:** NS-SKILL-001 / OVA-17 scored a historical Cursor pin at
+  `availability=1.0`, but live MCP wake failed; First Mate proxy executed with
+  dual attribution.
+- **Decision:**
+  1. Canonical router `northstar.agent_router.v1` computes
+     `effective_availability` from declared availability × wakeability cap.
+  2. `expired` / `unreachable` fail closed (cap 0). `unknown` caps at 0.25.
+  3. `dispatch_ready` requires selected agent `wakeability=wakeable`.
+  4. Optional injectable live probe; registry fields preferred when present.
+  5. Do not hardcode a dispatcher; Captain may authorize First Mate proxy with
+     dual attribution when the selected agent is not wakeable.
+- **Consequences:** Expired pins cannot silently win routing. Registry authors
+  should set `wakeability_status` / `cloud_status` for historical pins.
+
 ## ADR-041: Linear Skills Learning Loop flight recorder (v1.29.0 M24)
 
 - **Status:** Accepted

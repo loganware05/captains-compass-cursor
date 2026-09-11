@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- M25 agent router wakeability gate (`orchestrator/routing/agent_router.py`,
+  `northstar.agent_router.v1`) — expired/unreachable pins cannot remain
+  dispatch-ready when declared `availability=1.0` (OVA-17 learning / OVA-19)
+- CLI: `northstar skills route-agents` → `scripts/score-agent-routing.sh`
+- Docs: `docs/integrations/agent-routing-contract.md`
+- Tests: `tests/orchestrator/test_m25_agent_router_wakeability.py`
+
 ## 1.29.0 — 2026-09-11
 
 ### Added
