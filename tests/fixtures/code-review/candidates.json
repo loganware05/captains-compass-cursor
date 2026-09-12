@@ -1,0 +1,37 @@
+{
+  "findings": [
+    {
+      "id": "sec-hardcoded-key",
+      "title": "Hardcoded API key introduced in session helper",
+      "detail": "New assignment writes a live-looking API key into session payload.",
+      "severity": "high",
+      "confidence": 0.93,
+      "skill": "security-review",
+      "category": "secrets",
+      "evidence_paths": ["src/auth/session.py"],
+      "suggested_fix": "Remove hardcoded secret; load from environment; rotate if exposed."
+    },
+    {
+      "id": "intent-ac-check",
+      "title": "Confirm acceptance criteria still covered",
+      "detail": "Plan lists evidence-only reviews; ensure no GitHub posting was added.",
+      "severity": "medium",
+      "confidence": 0.66,
+      "skill": "code-reviewer",
+      "category": "intent",
+      "evidence_paths": ["IMPLEMENTATION_PLAN.md", "src/auth/session.py"],
+      "suggested_fix": "Keep GitHub posting out of MVP; document evidence path."
+    },
+    {
+      "id": "noise-naming",
+      "title": "Variable rename preference",
+      "detail": "Style-only preference without behavioral impact.",
+      "severity": "low",
+      "confidence": 0.2,
+      "skill": "code-reviewer",
+      "category": "noise",
+      "evidence_paths": [],
+      "suggested_fix": ""
+    }
+  ]
+}

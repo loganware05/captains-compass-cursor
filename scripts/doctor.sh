@@ -109,6 +109,7 @@ SKILLS=(
   package-registry-ti
   skill-learning-loop
   northstar-connected-routine
+  code-reviewer
 )
 
 for s in "${SKILLS[@]}"; do
@@ -136,6 +137,7 @@ AGENTS=(
   documentation-agent.md
   compass-evaluator.md
   knowledge-steward.md
+  code-reviewer.md
 )
 
 for a in "${AGENTS[@]}"; do
@@ -365,6 +367,21 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "score-agent-routing.sh"
   else
     fail "missing executable scripts/score-agent-routing.sh"
+  fi
+  if [[ -x "$ROOT/scripts/run-code-review.sh" ]]; then
+    ok "run-code-review.sh"
+  else
+    fail "missing executable scripts/run-code-review.sh"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/code-review-report.schema.json" ]]; then
+    ok "code-review-report schema"
+  else
+    fail "missing orchestrator/schemas/code-review-report.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/reference-profiles/code-reviewer.json" ]]; then
+    ok "code-reviewer reference profile"
+  else
+    fail "missing orchestrator/reference-profiles/code-reviewer.json"
   fi
   if PYTHONPATH="$ROOT" python3 -c "import orchestrator.integrations.ingress" 2>/dev/null; then
     ok "orchestrator.integrations.ingress import"

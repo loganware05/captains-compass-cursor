@@ -1,0 +1,22 @@
+{
+  "run_id": "sandbox-m27-dry-run",
+  "report_path": "/agent/repos/captain-compass-sandbox/.agent/evidence/code-review/sandbox-m27-dry-run/report.json",
+  "summary": {
+    "domains": [
+      "python",
+      "security"
+    ],
+    "skills_invoked": [
+      "code-reviewer",
+      "testing-validation",
+      "security-review",
+      "review-fix-loop"
+    ],
+    "findings_total": 3,
+    "verified": 1,
+    "unverified": 1,
+    "discarded": 1,
+    "intent_artifact": "tests/fixtures/code-review/plan.md"
+  },
+  "github_review_posted": false
+}

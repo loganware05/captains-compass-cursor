@@ -1,0 +1,32 @@
+{
+  "changed_paths": [
+    "src/auth/session.py"
+  ],
+  "diff": "diff --git a/src/auth/session.py b/src/auth/session.py\nindex 111..222 100644\n--- a/src/auth/session.py\n+++ b/src/auth/session.py\n@@ -1,5 +1,8 @@\n def create_session(user_id: str) -> dict:\n-    return {\"user_id\": user_id}\n+    api_key = \"sk_live_example_secret_value_do_not_commit\"\n+    return {\"user_id\": user_id, \"api_key\": api_key}\n",
+  "domains": [
+    "python",
+    "security"
+  ],
+  "file_snippets": {},
+  "intent": {
+    "acceptance_criteria": [
+      "Evidence-only code review reports",
+      "Verified findings require evidence paths"
+    ],
+    "excerpt": "# Fixture plan\n\n## Acceptance Criteria\n\n- Evidence-only code review reports\n- Verified findings require evidence paths\n\n## Non-Goals\n\n- Auto-posting GitHub reviews\n- Pull request webhook automation",
+    "non_goals": [
+      "Auto-posting GitHub reviews",
+      "Pull request webhook automation"
+    ],
+    "plan_path": "tests/fixtures/code-review/plan.md"
+  },
+  "related_paths": [],
+  "related_snippets": {},
+  "repository": "/agent/repos/captains-compass-cursor",
+  "skills_suggested": [
+    "code-reviewer",
+    "testing-validation",
+    "security-review",
+    "review-fix-loop"
+  ]
+}

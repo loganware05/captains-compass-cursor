@@ -12,6 +12,7 @@ change of that type. Add more when risk is higher.
 | Schema / migration | Migration/rollback notes + relevant test results | `postgres-prisma` (or stack Skill), `testing-validation` |
 | Security-sensitive | Security review notes (authz, secrets, injection) | `security-review` |
 | Harness / Compass workflow | Doctor + control `./tests/run.sh`; note VERSION bump | `testing-validation` |
+| Code review (NorthStar reviewer) | Schema-valid `.agent/evidence/code-review/<run-id>/report.json` + `report.md`; note `github_review_posted: false` | `code-reviewer`, `security-review`, `testing-validation` |
 
 ## How to use
 
