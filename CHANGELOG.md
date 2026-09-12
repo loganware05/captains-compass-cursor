@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Added
+
+- M26 Cursor Cloud wakeability probe adapter
+  (`orchestrator/routing/cloud_wakeability_probe.py`) — snapshot/live list from
+  MCP `list-cloud-agents` maps IDLE/RUNNING→wakeable, EXPIRED/ARCHIVED→expired
+- `score-agent-routing.sh --cloud-agents-json PATH` prefers live probe over
+  stale registry `wakeability_status` (OVA-17 learning)
+- Tests: `tests/orchestrator/test_m26_cloud_wakeability_probe.py`
+
 ## 1.29.1 — 2026-09-11
 
 ### Added

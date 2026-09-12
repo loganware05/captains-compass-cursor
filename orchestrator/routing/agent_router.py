@@ -93,11 +93,19 @@ def resolve_wakeability(
     agent: Mapping[str, Any],
     *,
     probe: WakeabilityProbe | None = None,
+    prefer_probe: bool = False,
 ) -> tuple[str, str]:
     """Return ``(wakeability_status, source)``.
 
-    Preference: ``wakeability_status`` → ``cloud_status`` → live probe → unknown.
+    Default preference: ``wakeability_status`` → ``cloud_status`` → probe → unknown.
+
+    When ``prefer_probe`` is true and a probe is supplied (M26 live Cloud check),
+    the probe runs first so a fresh Cursor Cloud snapshot can override a stale
+    registry pin (OVA-17 learning).
     """
+
+    if prefer_probe and probe is not None:
+        return normalize_wakeability(probe(agent)), "live_probe"
 
     explicit = agent.get("wakeability_status")
     if explicit:
@@ -212,13 +220,16 @@ def score_agent(
     *,
     weights: Mapping[str, float] | None = None,
     probe: WakeabilityProbe | None = None,
+    prefer_probe: bool = False,
 ) -> AgentScorecard:
     merged_weights = dict(DEFAULT_WEIGHTS)
     if weights:
         merged_weights.update({k: float(v) for k, v in weights.items()})
 
     declared = float(agent.get("availability") if agent.get("availability") is not None else 0.0)
-    wake_status, wake_source = resolve_wakeability(agent, probe=probe)
+    wake_status, wake_source = resolve_wakeability(
+        agent, probe=probe, prefer_probe=prefer_probe
+    )
     eff = effective_availability(declared, wake_status)
     failures = hard_filter_failures(agent, objective, effective_avail=eff)
     agent_id = str(agent.get("id") or "")
@@ -264,8 +275,18 @@ def route_agents(
     *,
     weights: Mapping[str, float] | None = None,
     probe: WakeabilityProbe | None = None,
+    prefer_probe: bool = False,
 ) -> RoutingDecision:
-    cards = [score_agent(agent, objective, weights=weights, probe=probe) for agent in agents]
+    cards = [
+        score_agent(
+            agent,
+            objective,
+            weights=weights,
+            probe=probe,
+            prefer_probe=prefer_probe,
+        )
+        for agent in agents
+    ]
     eligible = [card for card in cards if card.eligible and card.score is not None]
     eligible.sort(key=lambda card: (-(card.score or 0.0), card.agent_id))
     selected = eligible[0] if eligible else None

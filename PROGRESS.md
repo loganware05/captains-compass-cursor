@@ -2,31 +2,29 @@
 
 ## Current status
 
-**M25 SHIPPED** — Agent router wakeability gate (OVA-19 / OVA-17 learning).
+**Release baseline: v1.29.1** — M24 + M25 on `main`.
 
 | Item | Value |
 |---|---|
-| Release baseline | **v1.29.1** (M24+M25) |
-| M25 control PR | https://github.com/loganware05/captains-compass-cursor/pull/134 (**merged**) |
-| M25 merge commit | `69e949413adb87d608dcce62beaeacc17ee63bda` |
-| Sandbox registry PR | https://github.com/loganware05/captain-compass-sandbox/pull/48 (**merged**) |
-| Sandbox merge commit | `7404066a7db43752c2e71a0748d568d9cdc615ca` |
+| Release | **v1.29.1** |
+| M24 | Linear Skills Learning Loop (v1.29.0) |
+| M25 | Agent router wakeability gate (OVA-19) — included in v1.29.1 |
+| Control M25 merge | `69e949413adb87d608dcce62beaeacc17ee63bda` (#134) |
+| Sandbox registry merge | `7404066a7db43752c2e71a0748d568d9cdc615ca` (#48) |
 | Linear | OVA-19 Done |
-| Evidence | `.agent/evidence/m25-agent-router-wakeability/VALIDATION.md` |
+
+## In flight (Captain-directed)
+
+1. M26 Cursor Cloud wakeability probe — [PR #137](https://github.com/loganware05/captains-compass-cursor/pull/137)
+2. **NS-SKILL-002** accessible React forms — Linear [OVA-20](https://linear.app/ovaltechnologysolutions/issue/OVA-20); sandbox [PR #50](https://github.com/loganware05/captain-compass-sandbox/pull/50); **stopped at Captain gate (OVA-28)**
+3. v1.29.1 VERSION bump onto main — [PR #136](https://github.com/loganware05/captains-compass-cursor/pull/136) (tag already published)
 
 ## Completed
 
-- v1.5.0–v1.29.0 / M1–M24
-- M24 Linear Skills Learning Loop flight recorder + `northstar` launcher
-- Run 001 `NS-SKILL-001` closed **retain**; sandbox Skill `craft-tokens-design-system` AVAILABLE
-- M25: `northstar.agent_router.v1` wakeability fail-closed; historical pin marked expired in sandbox registry
-- Tag/release `v1.29.0`
-
-## Next (optional, Captain-directed)
-
-1. Cut a patch tag (e.g. `v1.29.1`) if you want M25 on a release artifact (currently CHANGELOG Unreleased on main)
-2. Optional live Cursor Cloud probe adapter (injectable hook already supported)
-3. New Skill learning run / additional Experiences toward prove
+- v1.5.0–v1.29.1 / M1–M25
+- Run 001 `NS-SKILL-001` retained (`craft-tokens-design-system`)
+- Tag/release `v1.29.0`, patch `v1.29.1`
+- M26 probe adapter + CLI `--cloud-agents-json` + tests (pending merge)
 
 ## Blockers
 

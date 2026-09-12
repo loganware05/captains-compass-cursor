@@ -20,7 +20,7 @@ Usage:
   northstar skills learn   --repo PATH --objective TEXT [run-skill-learning-loop.sh options]
   northstar skills promote --repo PATH --candidate PATH [promote-candidate.sh options]
   northstar skills sync-ledger --run PATH [--mode fixtures|link] [options]
-  northstar skills route-agents --registry PATH --objective PATH [--out PATH]
+  northstar skills route-agents --registry PATH --objective PATH [--out PATH] [--cloud-agents-json PATH]
   northstar help
 
 Topology:
