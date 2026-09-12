@@ -15,7 +15,10 @@
 
 ## In flight (Captain-directed)
 
-None.
+- **M27 NorthStar Code Reviewer MVP** — `IMPLEMENTATION_PLAN.md` status
+  **AWAITING APPROVAL** (`m27-northstar-code-reviewer`, branch
+  `cursor/m27-northstar-code-reviewer-3b10`). Plan-only; no product
+  implementation until Captain approval.
 
 ## Completed
 

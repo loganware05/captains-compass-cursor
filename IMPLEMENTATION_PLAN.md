@@ -1,405 +1,411 @@
-# Implementation Plan — M24 Linear Skills Learning Loop flight recorder
+# Implementation Plan — M27 NorthStar Code Reviewer MVP
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
-| Plan ID | `m24-linear-skills-ledger` |
-| Supersedes | `m22-m23-northstar-ops-ti-flywheel` (CLOSED — shipped as v1.27.0 / v1.28.0) |
+| Status | **AWAITING APPROVAL** |
+| Plan ID | `m27-northstar-code-reviewer` |
+| Supersedes | `m24-linear-skills-ledger` (CLOSED — shipped as v1.29.0 / v1.29.1) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
-| Baseline | `v1.28.0` / `main` @ plan start |
-| Prepared | 2026-09-11 |
-| Product target | `loganware05/captain-compass-sandbox` **only** for execution Experiences |
+| Baseline | `v1.29.1` / `main` @ `6d78312` |
+| Prepared | 2026-09-12 |
+| Design source | ChatGPT NorthStar Code Reviewer brief (uploaded); copy planned under `docs/design/NorthStar_Code_Reviewer.md` after approval |
+| Product target | `loganware05/captain-compass-sandbox` for dry-run evidence only |
 | Control repo | `loganware05/captains-compass-cursor` |
-| Linear team | `Ovaltechnologysolutions` |
-| Linear MCP | Authenticated in this session (ready for M0 after approval) |
-| Existing Linear project | **None** matching “NorthStar Skills Learning Loop” |
-| Cursor execution agent | `bc-05d4594d-fac7-4378-b595-c20e3c006044` (M21 pin; unchanged) |
-| Proposed release | **v1.29.0** (single milestone ship; phased workstreams below) |
-| Rollback tag (post-approval) | `rollback/pre-m24-linear-skills-ledger` |
-| Branch (plan only) | `cursor/m24-linear-skills-ledger-05fd` |
+| Proposed release | **v1.30.0** (MVP slice; phased follow-ons deferred) |
+| Rollback tag (post-approval) | `rollback/pre-m27-northstar-code-reviewer` |
+| Branch (plan only) | `cursor/m27-northstar-code-reviewer-3b10` |
 | Issue | *TBD after approval* |
-| Approved by | Logan Ware |
-| Approval date | 2026-09-11 |
-| Approved revision | 7c9fd53 (plan); implementation on `cursor/m24-linear-skills-ledger-05fd` |
-| Linear M0 | **Captain-completed** — project `c62f65bf-a376-4716-b958-0d874730a391`, milestones M0–M7, Ledger + Agent Routing contracts, Run 001 OVA-5 |
+| Approved by | *pending* |
+| Approval date | *pending* |
+| Approved revision | *pending* |
 
 ## Request (Captain-level)
 
-Continue the GitHub Stars → Skills flywheel by making **Linear** NorthStar’s
-**flight recorder** for Skill learning — without inventing a new authority layer.
-Preserve the Captain model: Linear may record and coordinate; only GitHub +
-Captain (plan digest / `--captain-approved`) authorize advancement past
-`SANDBOX_TESTED`.
-
-Also fix production runbook topology before automating Linear, introduce a
-stable `northstar skills …` launcher so agents do not need control/sandbox path
-knowledge, add two-way ledger linkage on learning runs, and housekeep README
-version drift (`VERSION` = 1.28.0 vs README “1.7.0”).
-
-## Captain decisions (proposed locks — confirm on approval)
-
-1. **One durable Linear project:** `NorthStar Skills Learning Loop` (not one
-   project per Star or per run).
-2. **Object model:** Skill Learning Run = parent issue + 13 gated sub-issues;
-   project milestones M0–M7 mirror the lifecycle.
-3. **Authority:** GitHub remains engineering truth; repo evidence remains
-   technical truth; Captain remains approval authority; Linear records state only.
-4. **Agent identity:** Linear-facing agent = **NorthStar First Mate** (never
-   “NorthStar Captain”). Human Captain remains assignee/owner on approval-bearing
-   work; agent may be delegated without replacing ownership.
-5. **Execution split:** Linear First Mate = ledger/orchestrator; Cursor Cloud
-   Agent = coding worker (sandbox only; M21 agent pin).
-6. **Topology:** Learning CLIs live in the **control** repo and target the
-   **sandbox** via `--repo-root` (or the new launcher). Product Skills must not
-   imply `./scripts/...` exists inside the sandbox checkout.
-7. **Pre-Linear fix order:** topology/docs + launcher + ledger schema **before**
-   live Skill Learning Run automation against Linear.
-8. **Housekeeping:** README header version tracks `VERSION` (separate small
-   doc fix inside this plan, not a blocking Linear dependency).
+Begin creating and integrating a **NorthStar Code Reviewer** capability aligned with
+the ChatGPT architecture brief: not “another CodeRabbit,” but a
+**Detection → Investigation → Verification → Review** pipeline that understands the
+engineering system that produced the change (intent vs implementation), composes
+existing NorthStar Skills/agents, and keeps false positives low by verifying before
+emitting findings.
 
 ## Problem statement
 
-1. Stars→Skills learning exists (M19–M23) but has **no durable, reconstructable
-   operational ledger** answering *why* a capability was trusted months later.
-2. Installed Skills and guides still tell agents to run `./scripts/...` from the
-   **product** checkout; those executables live only in the control repo
-   (`--repo-root` already works).
-3. Learning-run JSON has no Linear linkage (`project_id`, parent issue, milestone,
-   control/product SHAs, delegated agent).
-4. Agents (Linear ↔ Cursor) need a **topology-free** launcher:
-   `northstar skills refresh|learn|promote`.
-5. README still advertises **1.7.0** while `VERSION` is **1.28.0**.
-6. Linear MCP is connected, but the Skills Learning Loop project/docs/templates
-   do not exist yet.
+1. NorthStar already has review **building blocks** (adversarial/security/a11y
+   agents, `testing-validation`, `review-fix-loop`, `compass-evaluator`, GitHub
+   Stage 1) but **no orchestrated code-review capability**.
+2. Commercial reviewers compete on context + verification + signal-to-noise.
+   NorthStar’s unusual advantage is **intent-aware** review:
+   `IMPLEMENTATION_PLAN` / issue / Skills used / commits → PR — not only old vs new
+   code.
+3. GitHub ingress today supports **issues intake + approve comments only**;
+   `pull_request` events are unsupported. There is no review-report schema, CLI, or
+   Skill that runs the four-stage pipeline.
+4. Without a deliberate MVP, agents will keep reinventing one-off review prompts,
+   posting noisy comments, or skipping verification.
 
 ## Current-state summary
 
 | Surface | Today |
 |---|---|
-| Authority | ADR-037/039/040: GitHub + digest / `--captain-approved`; Linear never approves |
-| Linear adapter | `orchestrator/integrations/adapters/linear.py` — generic NorthStar run ledger; allowlist `NorthStar` / `northstar`; **not** Skills Learning Run–aware |
-| Learning loop | `scripts/run-skill-learning-loop.sh` + `orchestrator/learning/`; writes `.agent/learning-runs/<run_id>.json` **without** `ledger` |
-| Scripts | `refresh-ti-cache`, `run-skill-learning-loop`, `promote-candidate`, etc. support `--repo-root` |
-| Skills / guide | `skill-learning-loop`, `technology-intelligence-live`, `docs/guides/starred-repos-to-skills.md` use bare `./scripts/...` |
-| Launcher | No `northstar skills` abstraction |
-| Linear workspace | Team `Ovaltechnologysolutions`; **0** templates; **0** matching Skills projects |
-| Version docs | `VERSION` = `1.28.0`; README header = `1.7.0` |
+| Review agents | `adversarial-reviewer`, `security-reviewer`, `accessibility-reviewer` (manual) |
+| Review Skills | `security-review`, `accessibility-review`, `review-fix-loop` (consumes external feedback), `testing-validation` |
+| Judge | `compass-evaluator` (evaluations under `.agent/evaluations/`) |
+| GitHub | Stage 1 via `github-integration`; webhook: `ping` / `issues` / `issue_comment` only |
+| CI | Control `.github/workflows/ci.yml` = doctor + tests; no PR review bot |
+| Reputation | Experience → RoutingProposal confidence deltas (Captain-gated); **no finding precision** |
+| Gap | No `orchestrator/review/`, no `code-reviewer` Skill, no report schema, no `northstar review` CLI |
 
 ## Desired outcomes
 
-### Authority chain (recorded in Linear; never originated by Linear)
+### MVP pipeline (this plan)
 
 ```
-GitHub Star → TI Candidate → Evidence → Skill Draft → Captain Decision
-  → Promotion PR → Installed Skill → Delegated Agent → Execution Experience
-  → Skill confidence
+PR / branch / local diff
+        ↓
+ Review Orchestrator (CLI + Skill)
+        ↓
+ Detect domains + load intent (plan / issue / AC)
+        ↓
+ Investigate (diff + related files + callers + tests)
+        ↓
+ Deterministic tools (lint/type/test when available — optional, fail-soft)
+        ↓
+ Multi-skill findings (compose existing review Skills/agents as procedures)
+        ↓
+ Verify / Judge (discard unverified / low-confidence)
+        ↓
+ Evidence report only (.agent/evidence/code-review/<id>/)
 ```
 
-State machine (visual ledger only):
+### Differentiators locked for MVP
 
-```
-STARRED → TI_REFRESHED → CANDIDATE_SELECTED → SECURITY_REVIEWED
-  → SUPPLY_CHAIN_REVIEWED → SANDBOX_TESTED
-  ────── HUMAN BOUNDARY ──────
-  → CAPTAIN_APPROVED → AVAILABLE_SKILL → PR_REVIEWED → INSTALLED
-  → AGENT_DELEGATED → EXPERIENCE_RECORDED → PROVEN / IMPROVE / RETIRE
-```
+1. **Intent vs implementation** — load approved `IMPLEMENTATION_PLAN.md` (and optional
+   issue body) and score findings that cite unmet acceptance criteria / scope drift.
+2. **Compose, don’t reimplement** — route through existing Skills/agents rather than
+   a monolithic “LLM reviews the diff” prompt.
+3. **Evidence-first** — default output is a structured report + Markdown summary;
+   **no automatic GitHub review comments** in MVP.
+4. **Verification gate** — findings below confidence threshold or lacking evidence
+   paths are discarded or marked `unverified` (not posted).
 
-`CAPTAIN_APPROVED` may be **displayed** in Linear; Linear Agent may **notice** it;
-Linear must **never create** it. Canonical approval remains GitHub Captain
-decision (+ matching plan digest / `--captain-approved` as today).
+### Deferred (explicit non-goals for v1.30.0)
 
-### Workstreams (phased)
-
-| Phase | Name | Outcome |
-|---|---|---|
-| **H0** | Doc housekeep | README / Skill counts / version align to `VERSION` |
-| **H1** | Topology runbook | Skills + Stars guide + Linear docs use control/`--repo-root` or launcher |
-| **H2** | `northstar skills` launcher | Stable agent-facing CLI wrapping control scripts |
-| **H3** | Ledger linkage | `ledger` block on learning-run JSON (+ optional `ledger.json`) |
-| **M0** | Linear ledger bootstrap | Project, milestones M0–M7, Ledger Contract doc, run template guidance, labels, First Mate guidance |
-| **M1–M3** | Sync pre-human gates | Create/update Learning Run parent + sub-issues 01–07 from loop transitions |
-| **M4–M5** | Captain gate + promote | Record approval **references** only; promote/PR linkage; never invent approval |
-| **M6–M7** | Execute + learn | Cursor work-packet dispatch metadata + Experience / retrospective recording |
-
-Ship target for this plan: **H0–H3 + M0 + minimal sync (create Learning Run + link SHAs)** as **v1.29.0**. Full automated transition sync through M7 may land as follow-on if budget requires — Captain may expand approval to include full M1–M7 in one release.
+- Auto-posting GitHub Pull Request Reviews / inline comments
+- Webhook `pull_request` event handling
+- Auto-spawn repair agent / FIND→FIX→TEST→SUBMIT loop
+- First-class skill-precision reputation store (TP/FP ledger)
+- Multi-forge (GitLab/Bitbucket) or commercial multi-tenant SaaS
 
 ## Acceptance criteria
 
-### H0 — Version housekeep
-
-- [ ] Control `README.md` “Current version” matches `VERSION` (and Skill/subagent counts are not wildly stale).
-- [ ] No other docs treat README version as authoritative over `VERSION`.
-
-### H1 — Topology runbook
-
-- [ ] `skill-learning-loop` (control source) documents control vs execution roots; no implication that `./scripts/run-skill-learning-loop.sh` lives in the sandbox.
-- [ ] `docs/guides/starred-repos-to-skills.md` uses launcher **or** explicit `CONTROL=…` / `--repo-root` form.
-- [ ] Related TI Skills that teach `./scripts/refresh-ti-cache.sh` from product context are corrected the same way (at least `technology-intelligence-live`).
-- [ ] Sandbox refresh after ship picks up Skill text (no divergent sandbox-only Skill edits as source of truth).
-
-### H2 — Launcher
-
-- [ ] Control ships `scripts/northstar` (or equivalent) supporting at least:
-  - `northstar skills refresh [--repo PATH]`
-  - `northstar skills learn --repo PATH --objective "…" [--category …] [--source …]`
-  - `northstar skills promote …` (thin wrap of `promote-candidate.sh`)
-- [ ] Launcher resolves control root from its own location; `--repo` defaults documented; never clones external Stars.
-- [ ] Doctor checks launcher exists and is executable.
-- [ ] Unit/smoke tests cover help + dry wiring (no live Stars required).
-
-### H3 — Ledger artifact
-
-- [ ] Learning-run report includes (or writes sibling):
-
-```json
-{
-  "ledger": {
-    "provider": "linear",
-    "project_id": null,
-    "parent_issue_id": null,
-    "milestone": null,
-    "last_synced_at": null,
-    "control_revision": "<sha>",
-    "product_revision": "<sha>",
-    "delegated_agent": null
-  }
-}
-```
-
-- [ ] Control + product SHAs always recorded when known; Linear IDs nullable until sync.
-- [ ] Fixture learning-loop tests still green; new assertions for `ledger` keys.
-
-### M0 — Linear bootstrap (after approval; MCP or documented Captain steps)
-
-- [ ] Project **NorthStar Skills Learning Loop** exists on team `Ovaltechnologysolutions`.
-- [ ] Milestones in order: M0–M7 with meanings from Captain brief.
-- [ ] Project document **NorthStar Skills — Ledger Contract** with the 12 invariants.
-- [ ] Reusable Learning Run structure documented (issue template if Linear API/UI allows; else First Mate playbook + saved parent description template in control docs).
-- [ ] Sub-issue checklist 01–13 and gating rules documented in project + control docs.
-- [ ] Project allowlist in Linear adapter updated to include this project name/id.
-- [ ] Agent guidance: First Mate READ/WRITE/TRIGGER/NEVER matrix from Captain brief.
-- [ ] Linear templates list was empty at plan time — if MCP cannot create issue/project templates, document Captain UI steps and keep machine-readable template under `docs/integrations/linear-skills-learning-loop.md`.
-
-### Sync slice (v1.29.0 minimum)
-
-- [ ] Optional/explicit CLI or loop flag can create/update a Linear parent Learning Run + child stubs (or link existing) and write IDs into `ledger`.
-- [ ] Sync **never** sets Captain approval, `approved_for_execution`, merge, or install.
-- [ ] Fixture mode remains CI default; live Linear requires credentials / MCP (never committed secrets).
-- [ ] Disagreement rule documented: GitHub/repo evidence wins over Linear.
-
-### Hard non-regressions
-
-- [ ] No auto-install into `.cursor/skills/`.
-- [ ] No clone/exec of Starred repos.
-- [ ] No Linear-originated `CAPTAIN_APPROVED`.
-- [ ] M21 agent identity pin unchanged unless separate ADR.
-- [ ] `./scripts/doctor.sh` + `./tests/run.sh` green; evidence under `.agent/evidence/`.
+1. New Skill `.cursor/skills/code-reviewer/` (+ capability sidecar) documents the
+   four-stage procedure and when to invoke it.
+2. Optional subagent `.cursor/agents/code-reviewer.md` + reference profile exist and
+   are doctor-listed.
+3. `orchestrator/review/` implements hermetic stages:
+   - **detect** — domain hints from paths/diff + intent artifacts
+   - **investigate** — assemble context pack (diff, related paths, plan excerpt)
+   - **verify** — filter/rank candidate findings with confidence + evidence refs
+   - **report** — write JSON (schema-validated) + Markdown under
+     `.agent/evidence/code-review/<run-id>/`
+4. Schema `orchestrator/schemas/code-review-report.schema.json` validates reports
+   (findings with severity, confidence, evidence paths, skill provenance, status
+   `verified|unverified|discarded`).
+5. CLI `scripts/run-code-review.sh` and launcher `northstar review …` run against a
+   local git range or fixture pack without network.
+6. Unit tests cover detect/investigate/verify/report with fixtures under
+   `tests/fixtures/code-review/`.
+7. Sandbox dry-run: produce at least one evidence report against
+   `captain-compass-sandbox` (fixture branch or `main…HEAD` synthetic pack) without
+   posting to GitHub.
+8. Docs: integration note + EVIDENCE_MATRIX row; PROGRESS/CHANGELOG/DECISIONS updated
+   on ship.
+9. Doctor + `./tests/run.sh` green; no secrets committed.
+10. Default posture remains **no auto-merge** and **no auto GitHub review posts**.
 
 ## Non-goals
 
-- Replacing GitHub approval with Linear approval
-- Installing a Linear agent identity named “NorthStar Captain”
-- One Linear project per Star or per learning run
-- Cloning or executing external Starred repositories
-- Auto-merge of promotion PRs
-- Expanding product dispatch allowlist beyond sandbox
-- Slack changes (unless needed for notify copy only)
-- Full Linear Project Template export automation (document as follow-on once M0 stable)
+- Replacing Cursor Bugbot / CodeRabbit commercially
+- Training a custom coding model
+- Posting review comments without a later Captain-approved phase
+- Expanding product allowlist beyond sandbox for live ingress
+- Auto-applying matcher weight changes from review outcomes
 
 ## Assumptions
 
-1. Captain remains Logan Ware; Linear assignee for approval-bearing issues stays human.
-2. Control and sandbox checkouts are available side-by-side for real runs.
-3. Linear MCP (this session) or `NORTHSTAR_LINEAR_API_KEY` will be available for M0/live sync.
-4. Issue templates may require Captain UI if MCP lacks create-template APIs (confirmed: `list_templates` returned `[]`; no create-template tool in MCP catalog).
-5. Sandbox Skill refresh continues via control `update.sh` after control merge.
+1. Control repo remains source of truth for Skills/orchestrator; sandbox is the
+   dry-run target (ADR-041 topology).
+2. MVP may use **heuristic + structured LLM-ready packs** in Python; live model
+   calls are optional behind an explicit flag and default **off** in CI (fixtures
+   supply candidate findings for verify/report tests).
+3. Captain approval of this plan authorizes control-repo scaffolding + sandbox
+   evidence dry-run only.
+4. Capability-plan machine output for this objective over-weighted React UI; the
+   **human task graph below supersedes** that inference.
 
-## Open questions (Captain)
+## Open questions (Captain decisions requested)
 
-1. **Ship scope:** Approve **H0–H3 + M0 + minimal sync** as v1.29.0, or require **full M1–M7 automated transition sync** in the same release?
-2. **Linear issue template:** Accept control-repo markdown template + First Mate procedure if Linear UI template creation is manual?
-3. **Housekeeping issue:** Prefer a separate GitHub issue for README drift, or fold entirely into this plan (recommended: fold into H0)?
-4. **Project lead / labels:** Any preferred Linear labels beyond Skills / Learning-Run / Gate / Experience?
+1. **MVP model invocation:** Keep CI fully hermetic (fixture findings only), or allow
+   an opt-in `--invoke-model` path for local Captain runs?
+2. **Naming:** Skill slug `code-reviewer` vs `northstar-code-review`?
+   *(Recommendation: `code-reviewer`.)*
+3. **Phase B priority after MVP:** (a) GitHub review posting, (b) PR webhook detect,
+   (c) precision/reputation ledger, (d) repair-agent loop?
+4. **Issue tracker:** Create GitHub issue only, or also a Linear parent under an
+   existing project?
+
+## Current-state analysis
+
+Discovery (2026-09-12) confirmed:
+
+- Strong manual review stack; weak orchestration.
+- Ingress deliberately narrow — extending webhooks is a material scope expand.
+- Experience/Evaluation schemas can store lessons today; precision metrics need a
+  dedicated schema later.
+- Best MVP posture: **CLI + Skill + schema + hermetic pipeline**, compose existing
+  reviewers, evidence-only.
 
 ## Proposed architecture
 
 ```
-Control repo                         Sandbox (execution)
-────────────                         ───────────────────
-scripts/northstar  ──skills learn──► --repo sandbox
-orchestrator/learning/               .agent/learning-runs/<id>.json
-  + ledger block                     .agent/evidence/...
-orchestrator/integrations/           (no control scripts copied)
-  linear skills-ledger sync
-         │
-         ▼
-Linear project: NorthStar Skills Learning Loop
-  milestones M0–M7
-  parent: NS-SKILL-RUN: <objective>
-  children 01–13 (gates)
-  doc: Ledger Contract
+scripts/run-code-review.sh
+        │
+        ▼
+orchestrator/review/
+  ├── detect.py          # domains, intent artifacts, changed paths
+  ├── investigate.py     # context pack (diff, neighbors, plan/AC excerpt)
+  ├── verify.py          # confidence filter, evidence requirements
+  ├── report.py          # JSON + Markdown writers
+  └── pipeline.py        # stage orchestration
+        │
+        ▼
+.agent/evidence/code-review/<run-id>/
+  ├── report.json        # schema: code-review-report
+  ├── report.md
+  └── context-pack.json  # optional debug
 ```
 
-**First Mate (Linear)** may: inspect, create/update children, record evidence
-paths, update non-authoritative status, prepare commands/work packets, link
-PRs, dispatch Cursor **only after** verified GitHub Captain approval.
+**Skill `code-reviewer`** instructs agents to:
 
-**First Mate may never:** approve, fabricate evidence, merge, auto-install,
-execute Stars, set `approved_for_execution=true`, close a run solely because an
-agent claimed success.
+1. Run the CLI (or equivalent stages) against the active branch/PR.
+2. Load plan/issue intent.
+3. Optionally dispatch specialist agents (`security-reviewer`, `adversarial-reviewer`,
+   `accessibility-reviewer`) and fold their findings into `verify`.
+4. Hand verified findings to humans or to `review-fix-loop` — never auto-merge.
+
+**Intent check (MVP):** extract acceptance criteria / non-goals from
+`IMPLEMENTATION_PLAN.md` when present; emit `scope-drift` / `unmet-criterion`
+candidate findings when diff clearly contradicts them (heuristic + optional model).
 
 ## Required Capabilities
 
-See `.agent/plans/m24-linear-skills-ledger/` (capability-plan artifacts).
+Human-corrected for this objective (machine plan over-inferred React UI):
 
-Relevant Skills: `implementation-planning`, `linear-integration`,
-`skill-learning-loop`, `candidate-promotion`, `skill-lifecycle`,
-`northstar-connected-routine`, `github-integration`, `security-review`,
-`dependency-supply-chain`, `testing-validation`.
+- implementation-plan-authoring / approval-gate-enforcement
+- repository-discovery / source-code-context
+- github-integration (read PR/diff metadata; no review post in MVP)
+- security-review / testing-validation / review-fix-loop
+- compass-evaluator (judge patterns)
+- execution-telemetry (optional Experience writeback)
+- autonomy-budget / worktree-orchestration
+- node-engineering / python orchestrator patterns (control CLI)
+
+Machine artifact retained: `.agent/plans/m27-northstar-code-reviewer/resolve.json`
+
+## Reusable Capabilities Found
+
+Highest-relevance approved Skills (from capability-plan + discovery):
+
+| Skill | Role in MVP |
+|---|---|
+| `repository-discovery` | Investigation context |
+| `source-code-context` | Cross-file / API truth |
+| `security-review` | Security specialist findings |
+| `testing-validation` | Deterministic verification hooks |
+| `accessibility-review` | UI-change path |
+| `review-fix-loop` | Downstream consumer of verified findings |
+| `github-integration` | Diff/PR metadata (read) |
+| `pull-request-preparation` | Evidence packaging adjacency |
+| `compass-evaluator` | Judge / arbitration patterns |
+| `execution-telemetry` | Optional run/Experience records |
+| `experience-routing` | Future reputation (deferred apply) |
+| `implementation-planning` | Intent artifact authoring |
+| `capability-planning` | Domain → Skill selection |
+
+### Capability Gaps
+
+No blocking gap for scaffolding. **New capability to introduce:** orchestrated
+`code-review` (Skill + module). Deferred gaps: GitHub review API wrapper,
+finding-precision ledger, PR webhook detect.
 
 ## Technology Intelligence Candidates
 
-> External candidates are **NOT APPROVED FOR EXECUTION**.
+> **NOT APPROVED FOR EXECUTION** — discovery signals only.
 
-None required for this milestone (Linear MCP + existing control code).
+*No external candidates queried (TI provider: stub). Future learning may ingest
+Semgrep/OWASP/React review procedures via the existing Stars→Skills flywheel —
+out of MVP scope.*
 
 ## Task Graph
 
-| Task ID | Objective | Dependencies |
+**Human-authored** (supersedes machine `task-impl-frontend` graph):
+
+| Task ID | Objective | Dependencies | Parallelizable |
+|---|---|---|---|
+| `task-discovery` | Confirm file boundaries, schemas, doctor hooks, fixture strategy | — | no |
+| `task-architecture` | Lock report schema + pipeline contracts + rollback | task-discovery | no |
+| `task-impl-pipeline` | Implement `orchestrator/review/` + schema + CLI + launcher | task-architecture | no |
+| `task-impl-skill` | Add Skill, agent, reference profile, doctor/registry wiring | task-architecture | yes (with pipeline after schema freeze) |
+| `task-validation` | Unit tests + doctor + control tests + sandbox dry-run evidence | task-impl-pipeline, task-impl-skill | no |
+| `task-documentation` | Docs, ADR, PROGRESS, CHANGELOG, EVIDENCE_MATRIX | task-validation | no |
+
+## Proposed Agent Configuration
+
+| Task | Profile | Skills |
 |---|---|---|
-| `task-discovery` | Confirm topology, Linear workspace, learning-run shape | — |
-| `task-architecture` | Ledger contract, launcher surface, sync boundaries | discovery |
-| `task-implementation` | H0–H3 + M0 docs/bootstrap helpers + minimal sync | architecture |
-| `task-validation` | Doctor, unit/integration, fixture Linear doubles | implementation |
-| `task-documentation` | ADR, guide, Linear integration doc, PROGRESS, CHANGELOG | validation |
+| `task-discovery` | `repository-scout` | `repository-discovery`, `capability-planning` |
+| `task-architecture` | `architecture-agent` | `capability-planning`, `security-review` |
+| `task-impl-pipeline` | `implementation-agent` | `node-engineering` (CLI), `testing-validation`, `autonomy-budget` |
+| `task-impl-skill` | `implementation-agent` | `skill-lifecycle`, `code-structure-cleanup` |
+| `task-validation` | `test-engineer` + `adversarial-reviewer` | `testing-validation`, `security-review` |
+| `task-documentation` | `documentation-agent` | `pull-request-preparation`, `github-integration` |
 
-## Workstreams (file boundaries)
+## Workstreams
 
-| Stream | Owner files | Notes |
-|---|---|---|
-| A — Docs/Skills topology | `.cursor/skills/skill-learning-loop/`, `technology-intelligence-live/`, `docs/guides/starred-repos-to-skills.md`, `README.md`, `docs/integrations/linear*.md` | No orchestrator behavior change |
-| B — Launcher | `scripts/northstar`, doctor hooks, tests | Thin wrap only |
-| C — Ledger schema | `orchestrator/learning/loop.py`, tests | Additive JSON fields |
-| D — Linear sync | `orchestrator/integrations/` (+ skills ledger module), fixtures | Fail-closed; never approve |
-| E — Linear M0 bootstrap | MCP + `docs/integrations/linear-skills-learning-loop.md` | After approval |
+1. **WS-A — Contracts:** schema + fixtures + pipeline interfaces
+2. **WS-B — Orchestrator + CLI:** detect/investigate/verify/report + `northstar review`
+3. **WS-C — Skill/agent packaging:** installable Compass surface + doctor
+4. **WS-D — Validation & docs:** tests, sandbox dry-run, memory docs
 
-## Files expected to change (control)
+WS-B and WS-C may proceed in parallel after schema freeze.
 
-- `IMPLEMENTATION_PLAN.md`, `PROGRESS.md`, `DECISIONS.md` (new ADR), `CHANGELOG.md`, `VERSION` (on ship)
-- `README.md` (H0)
-- `.cursor/skills/skill-learning-loop/SKILL.md` (+ related Skills)
-- `docs/guides/starred-repos-to-skills.md`
-- `docs/integrations/linear.md` + new `linear-skills-learning-loop.md`
-- `scripts/northstar` (+ optional `scripts/northstar-skills.sh`)
-- `scripts/doctor.sh`
-- `orchestrator/learning/loop.py` (+ maybe small ledger helper)
-- `orchestrator/integrations/adapters/linear.py` (allowlist + skills-run helpers)
-- `tests/orchestrator/test_m19_skill_learning_loop.py` (+ new ledger/launcher tests)
-- `.agent/plans/m24-linear-skills-ledger/` (already seeded)
-- `.agent/budgets/m24-linear-skills-ledger.md` (after approval)
-- `.agent/evidence/` (validation)
+## Parallelization Plan
 
-Sandbox: refresh PR after control ship (Skill text + VERSION), no independent Skill authorship.
+Use one worktree on `cursor/m27-northstar-code-reviewer-3b10` unless WS-B/C conflict;
+prefer sequential commits on a single branch for MVP cohesion.
+
+## Files expected to change (post-approval)
+
+| Path | Change |
+|---|---|
+| `orchestrator/review/**` | New pipeline module |
+| `orchestrator/schemas/code-review-report.schema.json` | New |
+| `scripts/run-code-review.sh` | New |
+| `scripts/northstar` | Add `review` subcommand |
+| `.cursor/skills/code-reviewer/**` | New Skill + sidecar |
+| `.cursor/agents/code-reviewer.md` | New |
+| `orchestrator/reference-profiles/code-reviewer.json` | New |
+| `scripts/doctor.sh` / registry compile inputs | List new agent/skill |
+| `tests/orchestrator/test_*code_review*.py` | New |
+| `tests/fixtures/code-review/**` | New |
+| `docs/integrations/code-reviewer.md` (or design note) | New |
+| `docs/design/NorthStar_Code_Reviewer.md` | Design source archive |
+| `docs/EVIDENCE_MATRIX.md` | New row |
+| `DECISIONS.md` / `PROGRESS.md` / `CHANGELOG.md` / `PROJECT_CONTEXT.md` | Memory |
+| `VERSION` | Bump to `1.30.0` on ship |
+
+Sandbox: evidence only under `.agent/evidence/…` unless a separate approved demo
+plan requires product code changes.
 
 ## Testing strategy
 
-- Doctor + `./tests/run.sh` (+ evals if hooks touched)
-- Unit: learning-run `ledger` keys; launcher help/dispatch; Linear sync with recording transport / fixtures
-- No live Stars or live Linear credentials in CI
-- Manual M0 evidence: Linear project URL, milestone list screenshot or API dump under `.agent/evidence/m24-linear-skills-ledger/`
-- Security review Skill: confirm Linear cannot approve / no secret leakage in issue bodies
+| Layer | Plan |
+|---|---|
+| Unit | Pipeline stages with fixture diffs + candidate findings |
+| Schema | `validate.py` / unittest against valid & invalid reports |
+| Control | `./scripts/doctor.sh` + `./tests/run.sh` |
+| Integration | CLI end-to-end on fixture pack (no network) |
+| Sandbox dry-run | Evidence report path recorded under `.agent/evidence/m27-northstar-code-reviewer/` |
+| Security | Review CLI for path traversal / secret leakage in context packs |
+| Accessibility | N/A (no UI) |
+| Adversarial | Fresh-context pass on pipeline + Skill prose |
 
 ## Security review
 
-- Preserve ADR-037/039/040 gates
-- Redact tokens from Linear descriptions/comments
-- Link evidence paths; do not paste secret-bearing logs
-- Explicit tests that sync refuses to mark issue 08 approved without GitHub reference
+- Context packs must redact secrets (reuse ingress/event redaction patterns).
+- No webhook secret handling in MVP.
+- Fixture mode must not shell out to untrusted paths.
+- Report paths confined under repo `.agent/evidence/`.
 
 ## Accessibility review
 
-Not applicable (no UI product change). Sandbox UI untouched except optional later Experience run.
+Not applicable (no UI surfaces).
 
 ## Migration plan
 
-- Additive ledger fields; old learning-run JSON remains readable
-- Launcher is new; old script paths remain for humans who know topology
-- Linear project created once; no migration of historical runs required for v1.29.0
+Additive only. Existing Skills/agents unchanged in behavior. Installer picks up new
+Skill/agent on next install/update into product repos.
+
+## Deployment plan
+
+1. Merge control PR → tag `v1.30.0`
+2. Optional sandbox install/update to receive Skill
+3. Phase B (GitHub posting) requires a **new** approved plan
 
 ## Rollback plan
 
-1. Tag `rollback/pre-m24-linear-skills-ledger` before implementation commits.
-2. Revert control merge / restore tag.
-3. Archive or leave Linear project (ledger-only; safe to retain).
-4. Sandbox: re-install prior Compass VERSION if Skill text must roll back.
+1. Tag `rollback/pre-m27-northstar-code-reviewer` at approval start
+2. Revert merge commit / restore prior VERSION
+3. Remove Skill via update from previous tag if installed into sandbox
+4. No data migrations; delete evidence directories if undesired
 
 ## Risks and mitigations
 
 | Risk | Mitigation |
 |---|---|
-| Linear treated as approval authority | Docs + code asserts; issue 08 cannot be agent-approved |
-| MCP cannot create issue templates | Control-repo template doc + Captain UI checklist |
-| Agents still run `./scripts` in sandbox | H1+H2 before live Learning Runs |
-| Scope creep to full M1–M7 automation | Open question #1; default ship slice H0–H3+M0+minimal sync |
-| Adapter allowlist too broad | Allowlist exact project name/id |
-
-## Autonomy budget (post-approval)
-
-| Limit | Value |
-|---|---|
-| Max iterations | 8 |
-| Max additional deps | 0 (stdlib + existing Linear transport) |
-| Max files touched | ~40 |
-| Stop | Budget Stop Report under `.agent/evidence/` |
+| Noisy false positives | Verification gate; evidence required; default no GitHub posts |
+| Scope creep into Bugbot clone | Hard non-goals; Phase B gated |
+| Model nondeterminism in CI | Hermetic fixtures; model opt-in only |
+| Topology confusion | CLI in control; `--repo` / `northstar review --repo` |
+| Planner React misfire | Human task graph supersedes machine graph |
 
 ## Evaluation strategy
 
-Reconstructability test: given one fixture learning run + synced Linear parent,
-an agent can answer: control SHA, sandbox SHA, evidence paths, whether Captain
-approval exists (and from where), and next gate — without trusting Linear over
-repo state.
+- Schema + unit tests green
+- Fixture run produces ≥1 verified and ≥1 discarded finding (proves filter)
+- Sandbox dry-run evidence committed or summarized
+- Adversarial review: no CRITICAL/HIGH unresolved
+- Doctor clean
 
 ## Learning plan
 
-Retain under `.agent/plans/m24-linear-skills-ledger/` and release evidence.
-First real Learning Run after M0 uses Linear as ledger only; feed Experience
-back per M7 when an installed Skill is exercised.
+- Retain `.agent/plans/m27-northstar-code-reviewer/`
+- Optional Experience write for dry-run (proposal-only routing)
+- Phase C may feed precision into skill reputation (not this plan)
+
+## Autonomy budget
+
+After approval, create `.agent/budgets/m27-northstar-code-reviewer.md`.
+
+| Limit | Value |
+|---|---|
+| Maximum iterations | 12 |
+| Maximum wall-clock (agent) | Stop at budget; write Budget Stop Report |
+| Maximum cost | Track qualitatively; stop if thrashing on fixtures |
+| Max scope expands | 0 without returning to approval gate |
 
 ## Approval Boundary
 
-**No product implementation, Linear project creation, or launcher commits beyond
-this plan branch until the Captain explicitly approves this plan** (status →
-`APPROVED` with name/date/revision).
+**Implementation must not begin until the Captain explicitly approves this plan.**
 
-Discovery completed this session:
+Machine-generated capability matches are proposals only. The Captain may approve,
+revise scope (especially Open Questions), or reject.
 
-- Linear MCP authenticated
-- Team `Ovaltechnologysolutions` identified
-- Confirmed no existing Skills Learning Loop project
-- Confirmed control scripts already support `--repo-root`
-- Confirmed README version drift (1.7.0 vs 1.28.0)
-- Confirmed learning-run JSON lacks `ledger`
+## Definition of Done
+
+- Acceptance criteria 1–10 satisfied
+- Validation evidence under `.agent/evidence/m27-northstar-code-reviewer/`
+- Docs/memory updated
+- PR ready against `main`
+- First Mate adversarial inspection complete
 
 ---
 
-## Captain approval block
+## Captain approval checklist
 
-```text
-Status: APPROVED
-Approved by: Logan Ware
-Approval date: 2026-09-11
-Approved revision: 7c9fd53 (plan); implementation continues on cursor/m24-linear-skills-ledger-05fd
-Ship scope: H0–H3 + M0 + minimal sync as v1.29.0
-Notes: Linear project already bootstrapped by Captain (NorthStar Skills Learning Loop). Issue templates: use control-repo markdown unless MCP gains create-template. Labels: defaults only. Run 001 OVA-5 live; implement OVA-6..OVA-12 next; stop before OVA-13 Captain Gate.
-```
+Please reply with approval (and any locks on Open Questions), for example:
 
-### Linear bootstrap status (Captain-completed M0)
-
-- Project: NorthStar Skills Learning Loop (`c62f65bf-a376-4716-b958-0d874730a391`)
-- Run 001 parent: OVA-5 NS-SKILL-001
-- Lifecycle children: OVA-6 … OVA-18
-- Governance docs attached in Linear (Ledger Contract + Agent Routing Contract)
-
+> Approved — M27 NorthStar Code Reviewer MVP as written.
+> Locks: hermetic CI (no model in CI); Skill slug `code-reviewer`; Phase B = GitHub posting next; GitHub issue only.
