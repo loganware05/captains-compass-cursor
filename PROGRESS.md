@@ -2,24 +2,32 @@
 
 ## Current status
 
-**Release baseline: v1.29.1** — M24 + M25 on `main`.
+**Release candidate: v1.30.0** — M27 NorthStar Code Reviewer MVP on branch
+`cursor/m27-northstar-code-reviewer-3b10` (issue #141).
 
 | Item | Value |
 |---|---|
-| Release | **v1.29.1** |
-| M24 | Linear Skills Learning Loop (v1.29.0) |
-| M25 | Agent router wakeability gate (OVA-19) — included in v1.29.1 |
-| Control M25 merge | `69e949413adb87d608dcce62beaeacc17ee63bda` (#134) |
-| Sandbox registry merge | `7404066a7db43752c2e71a0748d568d9cdc615ca` (#48) |
-| Linear | OVA-19 Done |
+| Release | **v1.30.0** (pending merge) |
+| M27 | NorthStar Code Reviewer MVP |
+| Issue | [#141](https://github.com/loganware05/captains-compass-cursor/issues/141) |
+| Rollback | `rollback/pre-m27-northstar-code-reviewer` |
+| Prior baseline | v1.29.1 / M24 + M25 (+ M26 probe) |
 
 ## In flight (Captain-directed)
 
-None.
+- M27 PR #140 conflict resolved; awaiting Captain merge, then Next-6 sequence
+  (install into bitcoin-data-collector → NS-SKILL-003 → M28 specialist composition → …)
 
 ## Completed
 
-- v1.5.0–v1.29.1 / M1–M25
+- M27 plan approved with locks (hermetic CI; Skill `code-reviewer`; Phase B =
+  GitHub posting later; GitHub issue only)
+- Pipeline + schema + CLI + Skill/agent + doctor wiring landed
+- Sandbox + bitcoin-data-collector dry-run evidence under
+  `.agent/evidence/m27-northstar-code-reviewer/`
+- Captain Continuation Roadmap published
+  (`docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md`); Next-6 moves approved
+- v1.5.0–v1.29.1 / M1–M26
 - Run 001 `NS-SKILL-001` retained (`craft-tokens-design-system`)
 - Run 002 `NS-SKILL-002` retained (`react-engineering` accessible forms) — Linear [OVA-20](https://linear.app/ovaltechnologysolutions/issue/OVA-20) / [OVA-33](https://linear.app/ovaltechnologysolutions/issue/OVA-33); sandbox exec [#53](https://github.com/loganware05/captain-compass-sandbox/pull/53) + retain docs [#54](https://github.com/loganware05/captain-compass-sandbox/pull/54) + control PROGRESS [#138](https://github.com/loganware05/captains-compass-cursor/pull/138) merged
 - Tag/release `v1.29.0`, patch `v1.29.1`

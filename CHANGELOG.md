@@ -11,6 +11,24 @@
   stale registry `wakeability_status` (OVA-17 learning)
 - Tests: `tests/orchestrator/test_m26_cloud_wakeability_probe.py`
 
+## 1.30.0 — 2026-09-12
+
+### Added
+
+- **M27 NorthStar Code Reviewer MVP** — Detection → Investigation → Verification →
+  Review pipeline (`orchestrator/review/`) with hermetic CLI
+  (`scripts/run-code-review.sh`, `northstar review`)
+- Schema `code-review-report.schema.json`; Skill/agent `code-reviewer`; reference profile
+- Evidence-only reports under `.agent/evidence/code-review/<run-id>/` (no GitHub posts)
+- Fixtures + tests: `tests/orchestrator/test_m27_code_review.py`
+- Docs: `docs/integrations/code-reviewer.md`, design archive
+- ADR-044; issue #141; rollback tag `rollback/pre-m27-northstar-code-reviewer`
+
+### Changed
+
+- VERSION `1.30.0`
+- Doctor lists `code-reviewer` Skill/agent + review CLI/schema checks
+
 ## 1.29.1 — 2026-09-11
 
 ### Added

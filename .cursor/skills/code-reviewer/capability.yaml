@@ -1,0 +1,31 @@
+id: code-reviewer
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/code-reviewer/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: AVAILABLE_SKILL
+categories: [quality, review, validation]
+tags:
+  - code-review
+  - verification
+  - intent
+  - evidence
+capabilities_provided:
+  - code-review-orchestration
+  - intent-vs-implementation-check
+  - review-finding-verification
+  - code-review-evidence-report
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - code-reviewer
+  - adversarial-reviewer
+  - security-reviewer
+maturity: available
+confidence: 0.9

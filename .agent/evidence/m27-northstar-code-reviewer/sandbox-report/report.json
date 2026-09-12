@@ -1,0 +1,81 @@
+{
+  "base_ref": "",
+  "context_pack_path": ".agent/evidence/code-review/sandbox-m27-dry-run/context-pack.json",
+  "created_at": "2026-09-12T20:55:05Z",
+  "findings": [
+    {
+      "category": "secrets",
+      "confidence": 0.93,
+      "detail": "New assignment writes a live-looking API key into session payload.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "src/auth/session.py"
+      ],
+      "id": "sec-hardcoded-key",
+      "severity": "high",
+      "skill": "security-review",
+      "status": "verified",
+      "suggested_fix": "Remove hardcoded secret; load from environment; rotate if exposed.",
+      "title": "Hardcoded API key introduced in session helper"
+    },
+    {
+      "category": "intent",
+      "confidence": 0.66,
+      "detail": "Plan lists evidence-only reviews; ensure no GitHub posting was added.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "IMPLEMENTATION_PLAN.md",
+        "src/auth/session.py"
+      ],
+      "id": "intent-ac-check",
+      "severity": "medium",
+      "skill": "code-reviewer",
+      "status": "unverified",
+      "suggested_fix": "Keep GitHub posting out of MVP; document evidence path.",
+      "title": "Confirm acceptance criteria still covered"
+    },
+    {
+      "category": "noise",
+      "confidence": 0.2,
+      "detail": "Style-only preference without behavioral impact.",
+      "discard_reason": "missing_evidence_paths",
+      "evidence_paths": [],
+      "id": "noise-naming",
+      "severity": "low",
+      "skill": "code-reviewer",
+      "status": "discarded",
+      "suggested_fix": "",
+      "title": "Variable rename preference"
+    }
+  ],
+  "head_ref": "HEAD",
+  "plan_id": "m27-northstar-code-reviewer",
+  "provenance": {
+    "candidates_source": "fixtures",
+    "github_review_posted": false,
+    "hermetic": true,
+    "invoke_model": false,
+    "pipeline": "northstar.review.v1"
+  },
+  "repository": "/agent/repos/captain-compass-sandbox",
+  "run_id": "sandbox-m27-dry-run",
+  "schema_version": "northstar.code_review_report.v1",
+  "status": "completed",
+  "summary": {
+    "discarded": 1,
+    "domains": [
+      "python",
+      "security"
+    ],
+    "findings_total": 3,
+    "intent_artifact": "tests/fixtures/code-review/plan.md",
+    "skills_invoked": [
+      "code-reviewer",
+      "testing-validation",
+      "security-review",
+      "review-fix-loop"
+    ],
+    "unverified": 1,
+    "verified": 1
+  }
+}

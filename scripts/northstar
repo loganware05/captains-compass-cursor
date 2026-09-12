@@ -21,6 +21,7 @@ Usage:
   northstar skills promote --repo PATH --candidate PATH [promote-candidate.sh options]
   northstar skills sync-ledger --run PATH [--mode fixtures|link] [options]
   northstar skills route-agents --registry PATH --objective PATH [--out PATH] [--cloud-agents-json PATH]
+  northstar review --repo PATH [run-code-review.sh options]
   northstar help
 
 Topology:
@@ -29,6 +30,7 @@ Topology:
 
 Never clones or executes starred repositories. Never installs Skills without
 --captain-approved on promote. Linear sync never originates Captain approval.
+Code review (M27) is evidence-only — never auto-posts GitHub reviews.
 USAGE
 }
 
@@ -122,6 +124,15 @@ case "$cmd" in
         exit 2
         ;;
     esac
+    ;;
+  review)
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    require_repo_root "${mapped[@]+"${mapped[@]}"}"
+    exec "$ROOT/scripts/run-code-review.sh" "${mapped[@]}"
     ;;
   *)
     echo "error: unknown command: $cmd" >&2

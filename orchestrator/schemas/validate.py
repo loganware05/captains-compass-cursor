@@ -24,6 +24,7 @@ SCHEMA_FILES = (
     "procedure-promotion.schema.json",
     "vector-index.schema.json",
     "embedding-index.schema.json",
+    "code-review-report.schema.json",
 )
 
 

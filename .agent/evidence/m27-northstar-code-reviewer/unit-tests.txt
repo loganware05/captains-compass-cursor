@@ -1,0 +1,11 @@
+test_run_code_review_cli (tests.orchestrator.test_m27_code_review.CliTests.test_run_code_review_cli) ... ok
+test_parse_paths_and_domains (tests.orchestrator.test_m27_code_review.DetectTests.test_parse_paths_and_domains) ... ok
+test_fixture_pipeline_writes_schema_valid_report (tests.orchestrator.test_m27_code_review.PipelineTests.test_fixture_pipeline_writes_schema_valid_report) ... ok
+test_investigate_includes_neighbors (tests.orchestrator.test_m27_code_review.PipelineTests.test_investigate_includes_neighbors) ... ok
+test_non_hermetic_rejected (tests.orchestrator.test_m27_code_review.PipelineTests.test_non_hermetic_rejected) ... ok
+test_verify_discards_noise_and_keeps_high_signal (tests.orchestrator.test_m27_code_review.VerifyTests.test_verify_discards_noise_and_keeps_high_signal) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.074s
+
+OK

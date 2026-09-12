@@ -163,6 +163,19 @@ SKILLS: dict[str, dict] = {
         "security_sensitivity": "medium",
         "agent_affinity": ["compass-evaluator", "adversarial-reviewer"],
     },
+    "code-reviewer": {
+        "categories": ["quality", "review", "validation"],
+        "tags": ["code-review", "verification", "intent", "evidence"],
+        "capabilities_provided": [
+            "code-review-orchestration",
+            "intent-vs-implementation-check",
+            "review-finding-verification",
+            "code-review-evidence-report",
+        ],
+        "compatible_stacks": ["any"],
+        "security_sensitivity": "medium",
+        "agent_affinity": ["code-reviewer", "adversarial-reviewer", "security-reviewer"],
+    },
     "code-structure-cleanup": {
         "categories": ["refactoring", "quality"],
         "tags": ["cleanup", "refactor", "services"],
@@ -483,6 +496,17 @@ PROFILES: dict[str, dict] = {
             "accessibility-evidence-capture",
         ],
         "agent_affinity": ["accessibility-reviewer"],
+    },
+    "code-reviewer": {
+        "categories": ["quality", "review", "validation"],
+        "tags": ["code-review", "verification", "intent"],
+        "capabilities_provided": [
+            "code-review-orchestration",
+            "intent-vs-implementation-check",
+            "review-finding-verification",
+            "code-review-evidence-report",
+        ],
+        "agent_affinity": ["code-reviewer", "adversarial-reviewer", "security-reviewer"],
     },
     "adversarial-reviewer": {
         "categories": ["quality", "review", "validation"],

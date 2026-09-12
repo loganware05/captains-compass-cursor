@@ -1,0 +1,28 @@
+{
+  "id": "code-reviewer",
+  "kind": "agent-profile",
+  "version": "1.0.0",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "maturity": "available",
+  "confidence": 0.9,
+  "categories": ["quality", "review", "validation"],
+  "tags": ["code-review", "verification", "intent"],
+  "capabilities_provided": [
+    "code-review-orchestration",
+    "intent-vs-implementation-check",
+    "review-finding-verification",
+    "code-review-evidence-report"
+  ],
+  "compatible_stacks": ["any"],
+  "security_sensitivity": "medium",
+  "agent_affinity": ["code-reviewer", "adversarial-reviewer", "security-reviewer"],
+  "source": {
+    "type": "compass-agent",
+    "path": ".cursor/agents/code-reviewer.md"
+  },
+  "provenance": {
+    "authored_by": "compass",
+    "inferred": false,
+    "confidence": 0.9
+  }
+}

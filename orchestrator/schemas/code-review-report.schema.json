@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/code-review-report.schema.json",
+  "title": "CodeReviewReport",
+  "description": "NorthStar Code Reviewer evidence report (M27). Evidence-only; no auto GitHub posts.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "run_id",
+    "created_at",
+    "repository",
+    "status",
+    "summary",
+    "findings",
+    "provenance"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "northstar.code_review_report.v1"
+    },
+    "run_id": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "repository": { "type": "string", "minLength": 1 },
+    "base_ref": { "type": "string" },
+    "head_ref": { "type": "string" },
+    "plan_id": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["completed", "partial", "failed", "cancelled"]
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "domains",
+        "findings_total",
+        "verified",
+        "unverified",
+        "discarded"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "domains": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "skills_invoked": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "findings_total": { "type": "integer", "minimum": 0 },
+        "verified": { "type": "integer", "minimum": 0 },
+        "unverified": { "type": "integer", "minimum": 0 },
+        "discarded": { "type": "integer", "minimum": 0 },
+        "intent_artifact": { "type": "string" }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "severity",
+          "confidence",
+          "status",
+          "skill",
+          "evidence_paths"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "detail": { "type": "string" },
+          "severity": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low", "info"]
+          },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "status": {
+            "type": "string",
+            "enum": ["verified", "unverified", "discarded"]
+          },
+          "skill": { "type": "string", "minLength": 1 },
+          "category": { "type": "string" },
+          "evidence_paths": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "suggested_fix": { "type": "string" },
+          "discard_reason": { "type": "string" }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["pipeline", "hermetic"],
+      "additionalProperties": true,
+      "properties": {
+        "pipeline": {
+          "type": "string",
+          "const": "northstar.review.v1"
+        },
+        "hermetic": { "type": "boolean" },
+        "invoke_model": { "type": "boolean" },
+        "github_review_posted": {
+          "type": "boolean",
+          "const": false
+        },
+        "candidates_source": { "type": "string" },
+        "control_sha": { "type": "string" }
+      }
+    },
+    "context_pack_path": { "type": "string" }
+  }
+}

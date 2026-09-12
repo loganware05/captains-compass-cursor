@@ -1,5 +1,23 @@
 # Decisions
 
+## ADR-044: NorthStar Code Reviewer MVP (M27)
+
+- **Status:** Accepted
+- **Date:** 2026-09-12
+- **Context:** ChatGPT NorthStar Code Reviewer brief proposed Detection →
+  Investigation → Verification → Review. NorthStar already had specialist
+  review Skills/agents but no orchestrated, intent-aware, low-noise pipeline.
+- **Decision:**
+  1. Ship hermetic `orchestrator/review/` pipeline + `code-reviewer` Skill/agent.
+  2. Evidence-only output under `.agent/evidence/code-review/<run-id>/`.
+  3. Default path uses fixtures/heuristics only — **no model calls in CI**.
+  4. **No GitHub review posting** in M27 (Phase B requires a new plan).
+  5. Intent loaded from `IMPLEMENTATION_PLAN.md` acceptance criteria / non-goals.
+  6. Captain locks: Skill slug `code-reviewer`; GitHub issue tracker only (#141).
+- **Consequences:** Review becomes a first-class NorthStar capability without
+  noisy bot comments. Phase B can add optional GitHub posting behind a new
+  approval gate.
+
 ## ADR-043: Cursor Cloud live wakeability probe (M26)
 
 - **Status:** Accepted

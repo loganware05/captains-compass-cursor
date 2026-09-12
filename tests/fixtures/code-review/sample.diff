@@ -1,0 +1,9 @@
+diff --git a/src/auth/session.py b/src/auth/session.py
+index 111..222 100644
+--- a/src/auth/session.py
++++ b/src/auth/session.py
+@@ -1,5 +1,8 @@
+ def create_session(user_id: str) -> dict:
+-    return {"user_id": user_id}
++    api_key = "sk_live_example_secret_value_do_not_commit"
++    return {"user_id": user_id, "api_key": api_key}
