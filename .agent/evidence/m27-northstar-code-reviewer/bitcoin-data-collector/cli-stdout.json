@@ -1,0 +1,22 @@
+{
+  "run_id": "bitcoin-data-collector-m27-enriched",
+  "report_path": "/tmp/northstar-reviews/bitcoin-data-collector/.agent/evidence/code-review/bitcoin-data-collector-m27-enriched/report.json",
+  "summary": {
+    "domains": [
+      "docs",
+      "python",
+      "tests"
+    ],
+    "skills_invoked": [
+      "code-reviewer",
+      "testing-validation",
+      "review-fix-loop"
+    ],
+    "findings_total": 7,
+    "verified": 6,
+    "unverified": 0,
+    "discarded": 1,
+    "intent_artifact": "/tmp/btc-review-plan.md"
+  },
+  "github_review_posted": false
+}

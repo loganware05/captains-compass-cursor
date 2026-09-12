@@ -1,0 +1,148 @@
+{
+  "base_ref": "959de85",
+  "context_pack_path": ".agent/evidence/code-review/bitcoin-data-collector-m27-enriched/context-pack.json",
+  "created_at": "2026-09-12T21:55:52Z",
+  "findings": [
+    {
+      "category": "secrets",
+      "confidence": 0.86,
+      "detail": "kalshi_client.py reads KALSHI_API_KEY_ID and KALSHI_PRIVATE_KEY_PATH from the environment. Pattern is sound if private key files stay untracked, but the repo should document required .gitignore entries and refuse to start when the key path resolves inside the git worktree without being ignored.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "kalshi_client.py"
+      ],
+      "id": "sec-secrets-via-env",
+      "severity": "medium",
+      "skill": "security-review",
+      "status": "verified",
+      "suggested_fix": "Document env vars; assert private key path is outside the repo or gitignored; add a doctor/preflight check.",
+      "title": "Kalshi credentials loaded from env/paths \u2014 confirm key material never committed"
+    },
+    {
+      "category": "error-handling",
+      "confidence": 0.84,
+      "detail": "live_runner.py and hourly_event_scanner.py catch bare Exception in collection/decision loops (sometimes with pass). In a market-intel loop this can silently degrade into stale or empty decisions.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "live_runner.py",
+        "hourly_event_scanner.py"
+      ],
+      "id": "sec-broad-except-live",
+      "severity": "medium",
+      "skill": "security-review",
+      "status": "verified",
+      "suggested_fix": "Catch expected errors narrowly; fail closed to NO TRADE on collector/auth failures; never pass silently on auth errors.",
+      "title": "Broad Exception swallowing in live/hourly runners can hide auth and data failures"
+    },
+    {
+      "category": "coverage",
+      "confidence": 0.82,
+      "detail": "tests/ includes fair value, strike probability, orderbook guardrails, event target parsing. Missing hermetic tests for auth-missing client mode, subprocess collector failure, and NO TRADE fail-closed behavior.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "tests/test_fair_value_engine.py",
+        "tests/test_orderbook_guardrails.py",
+        "kalshi_client.py",
+        "live_runner.py"
+      ],
+      "id": "test-gap-client-live",
+      "severity": "medium",
+      "skill": "testing-validation",
+      "status": "verified",
+      "suggested_fix": "Add fixture-based client tests and live_runner fail-closed tests without network.",
+      "title": "Unit tests cover parsers/engines but not kalshi_client/live_runner failure paths"
+    },
+    {
+      "category": "reliability",
+      "confidence": 0.8,
+      "detail": "hourly_event_scanner.collect_snapshot and live_runner._collect_snapshot_via_subprocess run the collector as a subprocess with check=False, then scrape newest JSON. Non-zero exits can be ignored until file absence raises later.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "hourly_event_scanner.py",
+        "live_runner.py"
+      ],
+      "id": "arch-subprocess-collector",
+      "severity": "medium",
+      "skill": "code-reviewer",
+      "status": "verified",
+      "suggested_fix": "Use check=True or inspect returncode; surface stderr; prefer an in-process API boundary.",
+      "title": "Collector invoked via subprocess with check=False"
+    },
+    {
+      "category": "repo-hygiene",
+      "confidence": 0.88,
+      "detail": "live_outputs/kalshi_scans and snapshot JSON files are present in the recent diff (~50k insertions). This bloats history and risks leaking market/session metadata.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "live_outputs/kalshi_scans/scan_20260527T005222Z.json",
+        ".gitignore"
+      ],
+      "id": "data-large-artifacts-tracked",
+      "severity": "low",
+      "skill": "code-reviewer",
+      "status": "verified",
+      "suggested_fix": "Gitignore live_outputs/outputs; keep only tiny fixtures under tests/fixtures/.",
+      "title": "Large scan/snapshot JSON artifacts appear tracked in git"
+    },
+    {
+      "category": "intent",
+      "confidence": 0.78,
+      "detail": "README states recommendations only / no trade execution. Recent hourly modules appear scan/rank oriented; confirm no accidental order endpoints are called in kalshi_client or scanners.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "README.md",
+        "kalshi_client.py",
+        "hourly_event_scanner.py"
+      ],
+      "id": "intent-no-autotrade",
+      "severity": "info",
+      "skill": "code-reviewer",
+      "status": "verified",
+      "suggested_fix": "Keep order APIs behind an explicit --enable-execution flag defaulting false; assert in tests.",
+      "title": "README non-goal (no trade execution) still holds \u2014 keep order placement out of scanners"
+    },
+    {
+      "category": "noise",
+      "confidence": 0.15,
+      "detail": "Style-only preference without behavioral impact.",
+      "discard_reason": "missing_evidence_paths",
+      "evidence_paths": [],
+      "id": "noise-rename",
+      "severity": "low",
+      "skill": "code-reviewer",
+      "status": "discarded",
+      "suggested_fix": "",
+      "title": "Prefer slightly different helper names"
+    }
+  ],
+  "head_ref": "HEAD",
+  "plan_id": "btc-kalshi-hourly-event-scan",
+  "provenance": {
+    "candidates_source": "fixtures",
+    "github_review_posted": false,
+    "hermetic": true,
+    "invoke_model": false,
+    "pipeline": "northstar.review.v1"
+  },
+  "repository": "/tmp/northstar-reviews/bitcoin-data-collector",
+  "run_id": "bitcoin-data-collector-m27-enriched",
+  "schema_version": "northstar.code_review_report.v1",
+  "status": "completed",
+  "summary": {
+    "discarded": 1,
+    "domains": [
+      "docs",
+      "python",
+      "tests"
+    ],
+    "findings_total": 7,
+    "intent_artifact": "/tmp/btc-review-plan.md",
+    "skills_invoked": [
+      "code-reviewer",
+      "testing-validation",
+      "review-fix-loop"
+    ],
+    "unverified": 0,
+    "verified": 6
+  }
+}
