@@ -6,7 +6,7 @@
 
 | Item | Value |
 |---|---|
-| Release baseline | **v1.29.0** (M24) |
+| Release baseline | **v1.29.1** (M24+M25) |
 | M25 control PR | https://github.com/loganware05/captains-compass-cursor/pull/134 (**merged**) |
 | M25 merge commit | `69e949413adb87d608dcce62beaeacc17ee63bda` |
 | Sandbox registry PR | https://github.com/loganware05/captain-compass-sandbox/pull/48 (**merged**) |
@@ -24,7 +24,7 @@
 
 ## Next (optional, Captain-directed)
 
-1. Cut a patch tag (e.g. `v1.29.1`) if you want M25 called out on a release artifact (currently under CHANGELOG Unreleased on main)
+1. Cut a patch tag (e.g. `v1.29.1`) if you want M25 on a release artifact (currently CHANGELOG Unreleased on main)
 2. Optional live Cursor Cloud probe adapter (injectable hook already supported)
 3. New Skill learning run / additional Experiences toward prove
 
