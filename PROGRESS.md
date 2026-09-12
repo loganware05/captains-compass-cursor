@@ -15,16 +15,16 @@
 
 ## In flight (Captain-directed)
 
-1. M26 Cursor Cloud wakeability probe — [PR #137](https://github.com/loganware05/captains-compass-cursor/pull/137)
-2. **NS-SKILL-002** accessible React forms — Linear [OVA-20](https://linear.app/ovaltechnologysolutions/issue/OVA-20); sandbox [PR #50](https://github.com/loganware05/captain-compass-sandbox/pull/50); **stopped at Captain gate (OVA-28)**
-3. v1.29.1 VERSION bump onto main — [PR #136](https://github.com/loganware05/captains-compass-cursor/pull/136) (tag already published)
+None.
 
 ## Completed
 
 - v1.5.0–v1.29.1 / M1–M25
 - Run 001 `NS-SKILL-001` retained (`craft-tokens-design-system`)
+- Run 002 `NS-SKILL-002` retained (`react-engineering` accessible forms) — Linear [OVA-20](https://linear.app/ovaltechnologysolutions/issue/OVA-20) / [OVA-33](https://linear.app/ovaltechnologysolutions/issue/OVA-33); sandbox exec [PR #53](https://github.com/loganware05/captain-compass-sandbox/pull/53) merged
 - Tag/release `v1.29.0`, patch `v1.29.1`
-- M26 probe adapter + CLI `--cloud-agents-json` + tests (pending merge)
+- M26 probe adapter + CLI `--cloud-agents-json` + tests ([PR #137](https://github.com/loganware05/captains-compass-cursor/pull/137) merged)
+- v1.29.1 VERSION bump ([PR #136](https://github.com/loganware05/captains-compass-cursor/pull/136) merged)
 
 ## Blockers
 
