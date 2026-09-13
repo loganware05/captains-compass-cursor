@@ -373,6 +373,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing executable scripts/run-code-review.sh"
   fi
+  if [[ -f "$ROOT/orchestrator/review/specialists.py" ]]; then
+    ok "review specialists composition module"
+  else
+    fail "missing orchestrator/review/specialists.py"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/code-review-report.schema.json" ]]; then
     ok "code-review-report schema"
   else

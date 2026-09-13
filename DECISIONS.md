@@ -1,5 +1,22 @@
 # Decisions
 
+## ADR-045: Code Reviewer specialist composition (M28)
+
+- **Status:** Accepted
+- **Date:** 2026-09-13
+- **Context:** M27 shipped detect→investigate→verify→report with fixture/heuristic
+  candidates. Roadmap B1 requires wiring security/adversarial/testing specialists
+  to emit candidate JSON into verify without relying on bare heuristics alone.
+- **Decision:**
+  1. Add hermetic `orchestrator/review/specialists.py` emitters for
+     `security-review`, `adversarial-reviewer`, and `testing-validation`.
+  2. Default `--candidates-mode specialists`; retain heuristics escape hatch and
+     fixture `--candidates` for CI.
+  3. Keep Captain locks: no model on default path; no GitHub review posting; Skill
+     slug remains `code-reviewer`.
+- **Consequences:** Enriched bitcoin-style dry-runs become the default demo.
+  Accessibility emitter and GitHub posting remain deferred (M29/M30).
+
 ## ADR-044: NorthStar Code Reviewer MVP (M27)
 
 - **Status:** Accepted

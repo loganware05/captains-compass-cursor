@@ -1,6 +1,55 @@
 # Changelog
 
+## 1.31.0 — 2026-09-13
+
+### Added
+
+- **M28 Code Reviewer specialist composition** — hermetic security / adversarial /
+  testing emitters (`orchestrator/review/specialists.py`) compose candidate JSON
+  into the existing verify → report gate
+- CLI `--candidates-mode specialists|heuristics|specialists+heuristics` (default:
+  `specialists`); fixtures via `--candidates` remain the CI golden path
+- Tests: `tests/orchestrator/test_m28_specialists.py`
+
+### Changed
+
+- Default code-review candidates source is specialists (M27 heuristics retained as
+  escape hatch)
+- `code-reviewer` Skill + integration docs describe specialist composition
+- Doctor checks for `orchestrator/review/specialists.py`
+
+### Locks (unchanged)
+
+- Hermetic CI / no model on default path
+- No GitHub review posting (M30 deferred)
+- Skill slug remains `code-reviewer`
+
 ## Unreleased
+
+## 1.31.0 — 2026-09-13
+
+### Added
+
+- **M28 Code Reviewer specialist composition** — hermetic security / adversarial /
+  testing emitters (`orchestrator/review/specialists.py`) compose candidate JSON
+  into the existing verify → report gate
+- CLI `--candidates-mode specialists|heuristics|specialists+heuristics` (default:
+  `specialists`); fixtures via `--candidates` remain the CI golden path
+- Tests: `tests/orchestrator/test_m28_specialists.py`
+
+### Changed
+
+- Default code-review candidates source is specialists (M27 heuristics retained as
+  escape hatch)
+- `code-reviewer` Skill + integration docs describe specialist composition
+- Doctor checks for `orchestrator/review/specialists.py`
+
+### Locks (unchanged)
+
+- Hermetic CI / no model on default path
+- No GitHub review posting (M30 deferred)
+- Skill slug remains `code-reviewer`
+
 
 ### Added
 

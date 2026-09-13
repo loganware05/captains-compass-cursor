@@ -1,0 +1,24 @@
+{
+  "run_id": "m28-bitcoin-style-demo",
+  "report_path": "/tmp/tmp.CEKIe5DRCn/.agent/evidence/code-review/m28-bitcoin-style-demo/report.json",
+  "summary": {
+    "domains": [
+      "python",
+      "security"
+    ],
+    "skills_invoked": [
+      "code-reviewer",
+      "testing-validation",
+      "security-review",
+      "adversarial-reviewer",
+      "review-fix-loop"
+    ],
+    "findings_total": 4,
+    "verified": 3,
+    "unverified": 0,
+    "discarded": 1,
+    "intent_artifact": "/tmp/tmp.CEKIe5DRCn/IMPLEMENTATION_PLAN.md"
+  },
+  "github_review_posted": false,
+  "candidates_source": "specialists"
+}

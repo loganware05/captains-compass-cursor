@@ -11,7 +11,12 @@ from orchestrator.review.candidates import generate_heuristic_candidates, load_c
 from orchestrator.review.detect import detect
 from orchestrator.review.investigate import investigate
 from orchestrator.review.report import ReportError, build_report, write_report
+from orchestrator.review.specialists import compose_specialist_candidates
 from orchestrator.review.verify import DEFAULT_MIN_CONFIDENCE, verify_findings
+
+_VALID_CANDIDATE_MODES = frozenset(
+    {"specialists", "heuristics", "specialists+heuristics", "fixtures"}
+)
 
 
 class ReviewError(ValueError):
@@ -29,7 +34,6 @@ def _git_diff(repo_root: Path, base: str, head: str) -> str:
     except OSError as exc:
         raise ReviewError(f"git diff failed: {exc}") from exc
     if proc.returncode != 0:
-        # Fall back to two-dot range for shallow/fixture repos.
         proc2 = subprocess.run(
             ["git", "-C", str(repo_root), "diff", "--no-ext-diff", base, head],
             check=False,
@@ -54,14 +58,26 @@ def run_code_review(
     changed_paths: list[str] | None = None,
     plan_path: Path | None = None,
     candidates_path: Path | None = None,
+    candidates_mode: str = "specialists",
     plan_id: str = "",
     min_confidence: float = DEFAULT_MIN_CONFIDENCE,
     hermetic: bool = True,
 ) -> dict[str, Any]:
-    """Run the hermetic code-review pipeline and write evidence under the repo."""
+    """Run the hermetic code-review pipeline and write evidence under the repo.
+
+    Default ``candidates_mode`` is ``specialists`` (M28). Passing ``candidates_path``
+    forces the fixtures source for hermetic CI. Model invocation remains disabled.
+    """
     root = Path(repo_root).resolve()
     if not root.is_dir():
         raise ReviewError(f"repo_root is not a directory: {root}")
+
+    mode = (candidates_mode or "specialists").strip().lower()
+    if mode not in _VALID_CANDIDATE_MODES:
+        raise ReviewError(
+            f"invalid candidates_mode {candidates_mode!r}; "
+            f"expected one of {sorted(_VALID_CANDIDATE_MODES)}"
+        )
 
     if diff_text is None:
         if diff_file is not None:
@@ -94,25 +110,38 @@ def run_code_review(
         diff_text=diff_text or "",
     )
 
-    if candidates_path is not None:
+    specialist_skills: list[str] = []
+    if candidates_path is not None or mode == "fixtures":
+        if candidates_path is None:
+            raise ReviewError("candidates_mode=fixtures requires candidates_path")
         candidates = load_candidates_json(Path(candidates_path))
         candidates_source = "fixtures"
-    else:
+    elif mode == "heuristics":
         candidates = generate_heuristic_candidates(
             detection=detection,
             context_pack=context_pack,
         )
         candidates_source = "heuristics"
+    else:
+        include_heuristics = mode == "specialists+heuristics"
+        candidates, specialist_skills, candidates_source = compose_specialist_candidates(
+            detection=detection,
+            context_pack=context_pack,
+            include_heuristics=include_heuristics,
+        )
 
     if hermetic is False:
         raise ReviewError(
-            "non-hermetic/model invocation is not enabled in M27 MVP "
+            "non-hermetic/model invocation is not enabled "
             "(Captain lock: hermetic CI / no model in default path)"
         )
 
     findings = verify_findings(candidates, min_confidence=min_confidence)
     rid = run_id or f"cr-{uuid4().hex[:12]}"
     skills = list(detection.get("skills_suggested") or [])
+    for skill in specialist_skills:
+        if skill not in skills:
+            skills.append(skill)
     report = build_report(
         run_id=rid,
         repository=str(root),
@@ -137,4 +166,6 @@ def run_code_review(
         "report": report,
         "detection": detection,
         "findings": findings,
+        "candidates_source": candidates_source,
+        "specialist_skills": specialist_skills,
     }
