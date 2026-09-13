@@ -84,30 +84,16 @@ def _extract_section_bullets(text: str, headings: tuple[str, ...]) -> list[str]:
     return items
 
 
-def load_intent(plan_path: Path | None) -> dict[str, Any]:
-    if plan_path is None or not plan_path.is_file():
-        return {
-            "plan_path": None,
-            "acceptance_criteria": [],
-            "non_goals": [],
-            "excerpt": "",
-        }
-    text = plan_path.read_text(encoding="utf-8", errors="replace")
-    ac = _extract_section_bullets(
-        text,
-        ("acceptance criteria", "acceptance", "definition of done", "desired outcomes"),
-    )
-    non_goals = _extract_section_bullets(
-        text,
-        ("non-goals", "non goals", "deferred", "out of scope"),
-    )
-    excerpt = "\n".join(text.splitlines()[:80])
-    return {
-        "plan_path": str(plan_path),
-        "acceptance_criteria": ac,
-        "non_goals": non_goals,
-        "excerpt": excerpt,
-    }
+def load_intent(
+    plan_path: Path | None,
+    *,
+    intent_json: Path | None = None,
+) -> dict[str, Any]:
+    """Load intent from plan markdown and/or normalized intent-pack JSON (M29)."""
+    from orchestrator.review.intent import load_intent_pack, to_detection_intent
+
+    pack = load_intent_pack(plan_path=plan_path, intent_json=intent_json)
+    return to_detection_intent(pack)
 
 
 def detect(
@@ -116,12 +102,13 @@ def detect(
     changed_paths: list[str] | None = None,
     diff_text: str = "",
     plan_path: Path | None = None,
+    intent_json: Path | None = None,
 ) -> dict[str, Any]:
     paths = list(changed_paths or [])
     if not paths and diff_text:
         paths = parse_changed_paths_from_diff(diff_text)
     domains = detect_domains(paths)
-    intent = load_intent(plan_path)
+    intent = load_intent(plan_path, intent_json=intent_json)
     return {
         "repository": str(repo_root.resolve()),
         "changed_paths": paths,

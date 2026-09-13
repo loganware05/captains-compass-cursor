@@ -74,6 +74,7 @@ DOC_FILES=(
   AGENTS.md
   PROJECT_CONTEXT.md
   IMPLEMENTATION_PLAN.md
+  INTENT_PACK.md
   DECISIONS.md
   PROGRESS.md
   TESTING.md
@@ -107,7 +108,7 @@ if [[ ${#conflicts[@]} -gt 0 && "$FORCE" -ne 1 ]]; then
   exit 1
 fi
 
-mkdir -p "$TARGET/.cursor" "$TARGET/.agent/evidence" "$TARGET/.agent/budgets" "$TARGET/.agent/budgets/_templates" "$TARGET/.agent/budgets/private" "$TARGET/.agent/sessions" "$TARGET/.agent/sessions/private" "$TARGET/.agent/runs" "$TARGET/.agent/experience" "$TARGET/.agent/evaluations" "$TARGET/.agent/routing/proposals" "$TARGET/.agent/routing/applied" "$TARGET/.agent/agents/proficiency" "$TARGET/.agent/agents/promotions" "$TARGET/.agent/knowledge/items" "$TARGET/.agent/knowledge/ingest-log" "$TARGET/.agent/knowledge/procedures" "$TARGET/.agent/capabilities/compiled" "$TARGET/.agent/plans"
+mkdir -p "$TARGET/.cursor" "$TARGET/.agent/evidence" "$TARGET/.agent/intent" "$TARGET/.agent/budgets" "$TARGET/.agent/budgets/_templates" "$TARGET/.agent/budgets/private" "$TARGET/.agent/sessions" "$TARGET/.agent/sessions/private" "$TARGET/.agent/runs" "$TARGET/.agent/experience" "$TARGET/.agent/evaluations" "$TARGET/.agent/routing/proposals" "$TARGET/.agent/routing/applied" "$TARGET/.agent/agents/proficiency" "$TARGET/.agent/agents/promotions" "$TARGET/.agent/knowledge/items" "$TARGET/.agent/knowledge/ingest-log" "$TARGET/.agent/knowledge/procedures" "$TARGET/.agent/capabilities/compiled" "$TARGET/.agent/plans"
 
 
 # Copy Cursor package
@@ -243,5 +244,6 @@ Next steps:
 Do not install into critical production repos until you have validated the workflow in a disposable sandbox.
 
 Note: --force refreshes .cursor rules/skills/agents/hooks but does not overwrite existing
-product memory docs (PROJECT_CONTEXT.md, IMPLEMENTATION_PLAN.md, etc.).
+product memory docs (PROJECT_CONTEXT.md, IMPLEMENTATION_PLAN.md, INTENT_PACK.md, etc.).
+Intent packs (M29) are review evidence only and never originate Captain approval.
 EOF

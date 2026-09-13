@@ -1,0 +1,31 @@
+{
+  "schema_version": "northstar.intent_pack.v1",
+  "source": "linear",
+  "plan_path": "",
+  "linear_issue_id": "OVA-FIXTURE-M29",
+  "title": "Sandbox intent pack dry-run",
+  "status": "In Progress",
+  "acceptance_criteria": [
+    "Review runs with --intent-json and no hand-written temp plan",
+    "captain_approval remains false after export"
+  ],
+  "non_goals": [
+    "GitHub review posting",
+    "Treating Linear status as Captain approval"
+  ],
+  "rollback": [
+    "Delete .agent/intent export artifacts",
+    "Revert to plan-path-only review"
+  ],
+  "security_notes": [
+    "Do not log LINEAR_API_KEY",
+    "Redact secrets from excerpts"
+  ],
+  "domains": [
+    "security",
+    "python",
+    "tests"
+  ],
+  "excerpt": "Hermetic Linear-shaped fixture for M29 intent export. Never approval.",
+  "captain_approval": false
+}

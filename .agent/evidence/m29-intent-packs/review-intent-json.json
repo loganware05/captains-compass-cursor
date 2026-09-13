@@ -1,0 +1,25 @@
+{
+  "run_id": "m29-evidence-intent-json",
+  "report_path": "/tmp/tmp.H0AmWG8WZG/.agent/evidence/code-review/m29-evidence-intent-json/report.json",
+  "summary": {
+    "domains": [
+      "python",
+      "security"
+    ],
+    "skills_invoked": [
+      "code-reviewer",
+      "testing-validation",
+      "security-review",
+      "adversarial-reviewer",
+      "review-fix-loop"
+    ],
+    "findings_total": 4,
+    "verified": 3,
+    "unverified": 0,
+    "discarded": 1,
+    "intent_artifact": ""
+  },
+  "github_review_posted": false,
+  "candidates_source": "specialists",
+  "intent_source": "fixture"
+}

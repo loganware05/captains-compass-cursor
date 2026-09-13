@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://northstar.dev/schemas/intent-pack.schema.json",
+  "title": "NorthStarIntentPack",
+  "description": "Normalized review intent pack (M29). Never carries Captain approval authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "source",
+    "acceptance_criteria",
+    "non_goals",
+    "captain_approval"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "northstar.intent_pack.v1"
+    },
+    "source": {
+      "type": "string",
+      "enum": ["plan", "linear", "fixture", "json"]
+    },
+    "plan_path": { "type": "string" },
+    "linear_issue_id": { "type": "string" },
+    "title": { "type": "string" },
+    "status": {
+      "type": "string",
+      "description": "Informational plan status only; never treated as Captain approval."
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "non_goals": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "rollback": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "security_notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "domains": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "excerpt": { "type": "string" },
+    "captain_approval": {
+      "type": "boolean",
+      "const": false,
+      "description": "Always false. Intent packs never originate Captain approval."
+    }
+  }
+}

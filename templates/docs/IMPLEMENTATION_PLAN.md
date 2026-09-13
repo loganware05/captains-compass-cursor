@@ -2,15 +2,17 @@
 
 ## Metadata
 
-- Status: DRAFT
-- Plan ID:
-- Issue:
-- Branch:
-- Created:
-- Last updated:
-- Approved by:
-- Approval date:
-- Approved revision:
+| Field | Value |
+|---|---|
+| Status | DRAFT |
+| Plan ID | |
+| Issue | |
+| Branch | |
+| Created | |
+| Last updated | |
+| Approved by | |
+| Approval date | |
+| Approved revision | |
 
 ## Request
 
@@ -20,7 +22,33 @@
 
 ## Acceptance Criteria
 
+<!-- Required for NorthStar Code Reviewer intent packs (M29+) -->
+
+- 
+
 ## Non-Goals
+
+<!-- Out of scope / deferred work the reviewer should not treat as in-scope -->
+
+- 
+
+## Rollback
+
+<!-- How to undo this change if merge/deploy goes wrong -->
+
+- 
+
+## Security Notes
+
+<!-- Auth, secrets, supply-chain, or data-handling notes for review -->
+
+- 
+
+## Review Domains
+
+<!-- Optional domain hints for specialist composition (e.g. python, security, tests) -->
+
+- 
 
 ## Assumptions
 

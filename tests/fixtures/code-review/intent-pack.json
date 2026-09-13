@@ -1,0 +1,28 @@
+{
+  "schema_version": "northstar.intent_pack.v1",
+  "source": "fixture",
+  "plan_path": "",
+  "linear_issue_id": "",
+  "title": "M29 intent-json fixture",
+  "status": "DRAFT",
+  "acceptance_criteria": [
+    "Load intent from normalized JSON without a temp plan",
+    "Keep reviews hermetic and evidence-only"
+  ],
+  "non_goals": [
+    "Auto-posting GitHub reviews",
+    "Linear as approval authority"
+  ],
+  "rollback": [
+    "Remove intent JSON and fall back to IMPLEMENTATION_PLAN.md"
+  ],
+  "security_notes": [
+    "Never set captain_approval true from export"
+  ],
+  "domains": [
+    "security",
+    "python"
+  ],
+  "excerpt": "Normalized intent pack for hermetic Code Reviewer runs.",
+  "captain_approval": false
+}

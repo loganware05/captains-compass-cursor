@@ -25,6 +25,7 @@ SCHEMA_FILES = (
     "vector-index.schema.json",
     "embedding-index.schema.json",
     "code-review-report.schema.json",
+    "intent-pack.schema.json",
 )
 
 

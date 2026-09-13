@@ -11,7 +11,8 @@ DIFF_FILE=""
 CANDIDATES=""
 CANDIDATES_MODE="specialists"
 PLAN_PATH=""
-PLAN_ID="m28-reviewer-specialist-composition"
+INTENT_JSON=""
+PLAN_ID="m29-intent-packs"
 RUN_ID=""
 CHANGED=""
 
@@ -26,7 +27,8 @@ Options:
   --diff-file PATH       Use a unified diff file instead of git
   --candidates PATH      Fixture candidates JSON (hermetic CI)
   --candidates-mode MODE specialists|heuristics|specialists+heuristics (default: specialists)
-  --plan PATH            IMPLEMENTATION_PLAN.md (intent)
+  --plan PATH            IMPLEMENTATION_PLAN.md / INTENT_PACK.md (intent)
+  --intent-json PATH     Normalized intent pack JSON (never sets captain_approval)
   --plan-id ID           Plan id recorded in report
   --run-id ID            Stable run id (default: generated)
   --changed PATHS        Comma-separated changed paths override
@@ -45,6 +47,7 @@ while [[ $# -gt 0 ]]; do
     --candidates) CANDIDATES="$2"; shift 2 ;;
     --candidates-mode) CANDIDATES_MODE="$2"; shift 2 ;;
     --plan) PLAN_PATH="$2"; shift 2 ;;
+    --intent-json) INTENT_JSON="$2"; shift 2 ;;
     --plan-id) PLAN_ID="$2"; shift 2 ;;
     --run-id) RUN_ID="$2"; shift 2 ;;
     --changed) CHANGED="$2"; shift 2 ;;
@@ -60,7 +63,7 @@ if [[ -z "$REPO_ROOT" ]]; then
 fi
 
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python3 - "$REPO_ROOT" "$BASE_REF" "$HEAD_REF" "$DIFF_FILE" "$CANDIDATES" "$PLAN_PATH" "$PLAN_ID" "$RUN_ID" "$CHANGED" "$CANDIDATES_MODE" <<'PY'
+python3 - "$REPO_ROOT" "$BASE_REF" "$HEAD_REF" "$DIFF_FILE" "$CANDIDATES" "$PLAN_PATH" "$INTENT_JSON" "$PLAN_ID" "$RUN_ID" "$CHANGED" "$CANDIDATES_MODE" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -73,10 +76,11 @@ head_ref = sys.argv[3] or "HEAD"
 diff_file = sys.argv[4]
 candidates = sys.argv[5]
 plan_path = sys.argv[6]
-plan_id = sys.argv[7]
-run_id = sys.argv[8]
-changed = sys.argv[9]
-candidates_mode = sys.argv[10] if len(sys.argv) > 10 else "specialists"
+intent_json = sys.argv[7]
+plan_id = sys.argv[8]
+run_id = sys.argv[9]
+changed = sys.argv[10]
+candidates_mode = sys.argv[11] if len(sys.argv) > 11 else "specialists"
 
 kwargs = {
     "repo_root": repo,
@@ -92,6 +96,8 @@ if candidates:
     kwargs["candidates_path"] = Path(candidates)
 if plan_path:
     kwargs["plan_path"] = Path(plan_path)
+if intent_json:
+    kwargs["intent_json"] = Path(intent_json)
 if run_id:
     kwargs["run_id"] = run_id
 if changed:
@@ -110,5 +116,6 @@ print(json.dumps({
     "summary": summary,
     "github_review_posted": result["report"]["provenance"].get("github_review_posted", False),
     "candidates_source": result["report"]["provenance"].get("candidates_source"),
+    "intent_source": (result.get("detection") or {}).get("intent", {}).get("source"),
 }, indent=2))
 PY
