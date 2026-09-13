@@ -26,40 +26,6 @@
 
 ## Unreleased
 
-## 1.31.0 — 2026-09-13
-
-### Added
-
-- **M28 Code Reviewer specialist composition** — hermetic security / adversarial /
-  testing emitters (`orchestrator/review/specialists.py`) compose candidate JSON
-  into the existing verify → report gate
-- CLI `--candidates-mode specialists|heuristics|specialists+heuristics` (default:
-  `specialists`); fixtures via `--candidates` remain the CI golden path
-- Tests: `tests/orchestrator/test_m28_specialists.py`
-
-### Changed
-
-- Default code-review candidates source is specialists (M27 heuristics retained as
-  escape hatch)
-- `code-reviewer` Skill + integration docs describe specialist composition
-- Doctor checks for `orchestrator/review/specialists.py`
-
-### Locks (unchanged)
-
-- Hermetic CI / no model on default path
-- No GitHub review posting (M30 deferred)
-- Skill slug remains `code-reviewer`
-
-
-### Added
-
-- M26 Cursor Cloud wakeability probe adapter
-  (`orchestrator/routing/cloud_wakeability_probe.py`) — snapshot/live list from
-  MCP `list-cloud-agents` maps IDLE/RUNNING→wakeable, EXPIRED/ARCHIVED→expired
-- `score-agent-routing.sh --cloud-agents-json PATH` prefers live probe over
-  stale registry `wakeability_status` (OVA-17 learning)
-- Tests: `tests/orchestrator/test_m26_cloud_wakeability_probe.py`
-
 ## 1.30.0 — 2026-09-12
 
 ### Added

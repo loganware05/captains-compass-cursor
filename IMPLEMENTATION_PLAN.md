@@ -1,174 +1,152 @@
-# Implementation Plan — M28 Code Reviewer specialist composition
+# Implementation Plan — M29 Intent packs + installer templates
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
-| Plan ID | `m28-reviewer-specialist-composition` |
-| Supersedes | `m27-northstar-code-reviewer` (CLOSED — shipped as v1.30.0 / M27) |
+| Status | **AWAITING_APPROVAL** |
+| Plan ID | `m29-intent-packs` |
+| Supersedes | `m28-reviewer-specialist-composition` (CLOSED — shipped as v1.31.0 / M28) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
-| Baseline | `v1.30.0` / `origin/main` (M27 merged) |
+| Baseline | `v1.31.0` / `origin/main` (M28 merged, PR #143) |
 | Prepared | 2026-09-13 |
-| Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track B / **B1** |
-| Product dry-run target | `loganware05/bitcoin-data-collector` (context only; evidence under control/sandbox) |
+| Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track B / **B2** |
+| Product dry-run target | `loganware05/bitcoin-data-collector` + `captain-compass-sandbox` |
 | Control repo | `loganware05/captains-compass-cursor` |
-| Proposed release | **v1.31.0** |
-| Rollback tag | `rollback/pre-m28-reviewer-specialist-composition` (created after approval) |
-| Branch | `cursor/m28-reviewer-specialist-composition-3b10` |
+| Proposed release | **v1.32.0** |
+| Rollback tag | `rollback/pre-m29-intent-packs` (created after approval) |
+| Branch | `cursor/m29-intent-packs-3b10` |
 | Issue | GitHub issue (create after approval; tracker = GitHub only) |
 | Captain | Logan Ware |
-| Approved by | Logan Ware (Captain) |
-| Approval date | 2026-09-13 |
-| Issue | https://github.com/loganware05/captains-compass-cursor/issues/144 |
-| Rollback tag | `rollback/pre-m28-reviewer-specialist-composition` |
 
-## Captain locks (binding — carry forward + M28)
+## Captain locks (binding — carry forward + M29)
 
-1. **Hermetic CI** — fixture / deterministic specialist emitters only; **no model calls** on the default path
-2. **Skill slug** — orchestrator Skill remains `code-reviewer` (specialists compose *into* it)
+1. **Hermetic CI** — no model calls on the default review path
+2. **Skill slug** — orchestrator Skill remains `code-reviewer`
 3. **No GitHub review posting** — still Phase B / M30; evidence-only reports
-4. **Tracker** — GitHub issues only (Linear = flight recorder)
-5. **No Star clone/exec** from Learning Loop during this plan
-6. **Sandbox-first dry-run**; bitcoin-data-collector is product context / demo target, not execution of external Stars
+4. **Tracker** — GitHub issues only (Linear = flight recorder, never approval authority)
+5. **Installer must not overwrite** product memory docs without `--force`
+6. **Linear ingest is optional and read-only** — issue body → intent artifact only; never treat Linear status as Captain approval
+7. **No Star clone/exec** during this plan
 
 ## Request (Captain-level)
 
-Proceed with **M28 — Code Reviewer specialist composition (roadmap B1)**: stop relying on bare monolithic heuristics alone; wire **security / adversarial / testing** specialist emitters so they produce candidate JSON that feeds the existing **verify → report** gate.
+Proceed with **M29 — Intent packs + installer templates (roadmap B2)**: make product repos carry **reviewable intent** so Code Reviewer can run without a hand-written temporary plan. Ship installer/template support for a stable intent pack shape, wire optional Linear issue-body → intent export, and prove on sandbox (bitcoin-style demo as stretch).
 
 ## Problem statement
 
-1. M27 shipped `detect → investigate → verify → report` with fixture candidates and a single `generate_heuristic_candidates` path.
-2. Roadmap B1 exit criterion: *“Wire security/adversarial/test Skills to emit candidate JSON into verify”* and *“Enriched mode documented; bitcoin-style dry-run is the default demo.”*
-3. Today, Skill names (`security-review`, `testing-validation`) and agents (`security-reviewer`, `adversarial-reviewer`) exist as prose, but the pipeline does **not** compose them as structured candidate sources.
-4. Without composition, bitcoin-style dry-runs stay thin and Learning Loop Skills cannot cleanly feed the reviewer later (A3).
+1. M27/M28 `detect.load_intent` already parses `IMPLEMENTATION_PLAN.md` for acceptance criteria + non-goals, but product installs get a generic DRAFT plan template — not a **review-oriented intent pack**.
+2. Roadmap B2 exit criterion: *“Review without hand-written temp plan”* via template `IMPLEMENTATION_PLAN.md` / AC export in installer + optional Linear issue body ingest.
+3. Operators still drop ad-hoc plan files for dry-runs (bitcoin M27/M28 demos). That does not scale across product repos.
+4. Linear already holds Learning Run / issue prose, but there is no safe, hermetic path from Linear issue body → local intent artifact for review.
 
-## Desired outcomes (M28)
+## Desired outcomes (M29)
 
 ```
-diff / paths / plan
+Installer / templates
+   └─ intent-pack sections in IMPLEMENTATION_PLAN.md (AC, non-goals, rollback, domains)
         ↓
- Detect (domains + intent)  [existing]
+Product repo (or sandbox)
+   └─ .agent/intent/current.json  (optional normalized export)
         ↓
- Investigate (context pack) [existing]
+northstar review --plan … | --intent-json …
         ↓
- Specialist composition (NEW)
-   ├─ security emitter  → candidates[]
-   ├─ adversarial emitter → candidates[]
-   └─ testing emitter → candidates[]
-   (+ optional baseline heuristics / fixtures)
-        ↓
- Verify / Judge (existing confidence + evidence gates)
-        ↓
- Evidence report only (.agent/evidence/code-review/<run-id>/)
- provenance.candidates_source includes specialist mix
+detect.load_intent (extended) → specialists → verify → evidence report
 ```
 
-### Deferred (non-goals for v1.31.0)
+Optional path:
+
+```
+Linear issue body (read-only)
+   → scripts/export-intent-from-linear.sh / northstar intent export
+   → .agent/intent/<issue-id>.json + markdown summary
+   → review --intent-json (Captain still owns approval in repo evidence)
+```
+
+### Deferred (non-goals for v1.32.0)
 
 - GitHub PR review posting (M30 / B3)
-- Intent pack installer templates (M29 / B2)
+- Treating Linear as approval authority
+- Auto-writing APPROVED into product `IMPLEMENTATION_PLAN.md`
 - FIND→FIX repair loop (B4)
-- Precision / TP-FP reputation ledger (B5 / A3)
-- Live LLM specialist calls (optional future flag; not default; not CI)
-- Mutating bitcoin-data-collector product code
+- Precision/TP-FP ledger (B5)
+- Mutating bitcoin-data-collector application code (docs/intent only if Captain asks)
 
 ## Acceptance criteria
 
-1. New module(s) under `orchestrator/review/` (e.g. `specialists.py` + thin per-specialty helpers) implement **hermetic** emitters for:
-   - `security-review`
-   - `adversarial-reviewer` (agent-aligned; Skill prose may map to adversarial checks)
-   - `testing-validation`
-2. Pipeline default (when no `--candidates` fixture) **composes** specialist candidates (union + stable id namespacing) then runs existing `verify_findings`.
-3. CLI / `northstar review` supports an explicit mode flag, e.g. `--candidates-mode specialists|heuristics|fixtures` (fixtures via existing `--candidates` path); **default = specialists** (roadmap: enriched mode is the demo default).
-4. Report provenance records `candidates_source` accurately (e.g. `specialists`, `specialists+heuristics`, `fixtures`).
-5. Unit tests cover: each emitter produces expected ids on fixture diffs; composition dedupes; verify still discards noise; schema-valid report.
-6. Docs: `docs/integrations/code-reviewer.md` + `code-reviewer` Skill procedure updated for specialist composition.
-7. Doctor still lists `code-reviewer`; add checks only if new required files are introduced.
-8. Sandbox (and/or control) dry-run evidence under `.agent/evidence/m28-reviewer-specialist-composition/` including a **bitcoin-style** enriched demo (reuse prior M27 bitcoin context pack / diff fixtures where possible — no product-repo mutation required).
-9. Memory docs: `DECISIONS.md` ADR-045, `PROGRESS.md`, `CHANGELOG.md`, `VERSION` → **1.31.0**.
-10. Default posture unchanged: **no auto-merge**, **no GitHub review posts**, **no model in CI**.
+1. **Intent pack template** — `templates/docs/IMPLEMENTATION_PLAN.md` (and/or `templates/docs/INTENT_PACK.md`) includes required review sections:
+   - Acceptance Criteria
+   - Non-Goals / Out of Scope
+   - Rollback
+   - Security / domains notes (optional bullets)
+   - Status gate language preserved (DRAFT → AWAITING_APPROVAL → APPROVED)
+2. **Installer** — `scripts/install.sh` installs the intent-capable plan template into product repos without clobbering existing APPROVED plans unless `--force`.
+3. **Normalized intent schema** — `orchestrator/schemas/intent-pack.schema.json` (+ validate helper) with fields at least: `acceptance_criteria`, `non_goals`, `rollback`, `plan_path`, `source` (`plan`|`linear`|`fixture`).
+4. **Detect/CLI** — `load_intent` accepts plan markdown **or** `--intent-json`; `run-code-review.sh` / `northstar review` gain `--intent-json PATH`.
+5. **Optional Linear export** — hermetic fixture mode + live `gh`/`linear` read path behind explicit CLI; writes evidence under `.agent/intent/` / `.agent/evidence/intent-export/`; never sets Captain approval.
+6. **Doctor** — checks template + schema presence.
+7. **Tests** — unit tests for schema, plan→intent parse, intent-json override, installer dry-run/fixture.
+8. **Evidence** — sandbox (and optional bitcoin-style) review run using installed intent pack **without** a hand-authored temp plan.
+9. **Docs** — `docs/integrations/code-reviewer.md` + installer README note intent packs.
+10. **Memory** — DECISIONS ADR-046, PROGRESS, CHANGELOG, VERSION → **1.32.0**.
+11. Default posture unchanged: **no auto-merge**, **no GitHub review posts**, **no model in CI**.
 
 ## Architecture
 
 ```
-scripts/run-code-review.sh / northstar review
-        │
-        ▼
-orchestrator/review/pipeline.py
-        │
-        ├─ detect.py / investigate.py          (unchanged behavior)
-        ├─ specialists.py                      (NEW composition facade)
-        │     ├─ security_emitter(...)
-        │     ├─ adversarial_emitter(...)
-        │     └─ testing_emitter(...)
-        ├─ candidates.py                       (retain fixtures + optional heuristics)
-        ├─ verify.py / report.py               (minor provenance fields only)
-        └─ schemas/code-review-report.schema.json (extend enum/notes if needed)
+scripts/install.sh
+   └─ templates/docs/IMPLEMENTATION_PLAN.md  (intent sections)
+
+scripts/export-intent-from-linear.sh   (optional)
+   └─ .agent/intent/<id>.json
+
+orchestrator/review/intent.py          (NEW: normalize plan|json → IntentPack)
+orchestrator/review/detect.py          (call intent loader)
+orchestrator/schemas/intent-pack.schema.json
+
+scripts/run-code-review.sh --plan PATH | --intent-json PATH
 ```
-
-### Specialist emitter rules (hermetic)
-
-| Specialist | Skill / agent affinity | Example hermetic signals (deterministic) |
-|---|---|---|
-| Security | `security-review` / `security-reviewer` | Secret assignment, AWS key patterns, auth path without tests, `except Exception` swallow near auth, credential path under worktree |
-| Adversarial | `adversarial-reviewer` | Plan non-goal / AC contradiction, missing rollback mention when deploy paths change, over-broad catch, “tests pass for wrong reason” markers (assert True / empty tests) |
-| Testing | `testing-validation` | Production paths changed with no test paths; missing failure-path tests for client/HTTP modules; snapshot-only edits without assert |
-
-Emitters **must not** call models, clone remotes, or post to GitHub. They only read the context pack + detection + local file snippets already gathered by investigate.
-
-### Composition policy
-
-1. If `--candidates PATH` → fixtures only (CI hermetic golden path preserved).
-2. Else if `--candidates-mode heuristics` → legacy M27 heuristics only (escape hatch).
-3. Else (**default `specialists`**) → run all three emitters; optionally merge residual baseline heuristics behind an internal flag or `--candidates-mode specialists+heuristics` if needed for parity tests.
-4. Prefix candidate ids: `sec-…`, `adv-…`, `test-…` for provenance clarity.
-5. `skills_invoked` / `skills_suggested` in the report must list the specialists actually composed.
 
 ## Implementation steps (after approval only)
 
-1. Create GitHub issue + rollback tag `rollback/pre-m28-reviewer-specialist-composition`.
-2. Implement `orchestrator/review/specialists.py` (+ tests/fixtures for specialist diffs).
-3. Wire `pipeline.py` + CLI flag(s); keep fixtures path for CI.
-4. Update schema/report provenance if required (backward compatible).
-5. Update Skill/agent docs (`code-reviewer`); cross-link security/testing/adversarial.
-6. Run `./scripts/doctor.sh`, `./tests/run.sh`, orchestrator unit tests.
-7. Produce sandbox/control dry-run evidence (bitcoin-style demo).
-8. Adversarial review of the change; update ADR/PROGRESS/CHANGELOG/VERSION.
-9. Open PR to `main`; Captain merge → tag **v1.31.0**.
+1. Create GitHub issue + rollback tag `rollback/pre-m29-intent-packs`.
+2. Author intent-pack template sections + JSON schema.
+3. Add `orchestrator/review/intent.py`; extend detect + CLI.
+4. Optional Linear export script (fixture-first).
+5. Installer wiring + doctor checks.
+6. Tests + sandbox evidence dry-run.
+7. Docs + ADR/PROGRESS/CHANGELOG/VERSION.
+8. Open PR to `main`; Captain merge → tag **v1.32.0**.
 
 ## Validation plan
 
 | Layer | How |
 |---|---|
-| Static | `doctor.sh`; schema validate reports |
-| Unit | New `tests/orchestrator/test_m28_specialists.py` (+ extend M27 pipeline tests) |
-| Integration | `run-code-review.sh` against fixture repo + sandbox dry-run |
-| Security | Confirm no secrets in evidence; redact path still applied |
-| Accessibility | N/A (no UI) |
-| Production build | N/A (control template repo) |
-| Deployment smoke | Doctor + unit suite green on PR |
-| Rollback | `git reset --hard rollback/pre-m28-reviewer-specialist-composition` / revert PR |
+| Static | `doctor.sh`; schema validate intent packs |
+| Unit | intent parse/normalize; CLI `--intent-json`; installer template presence |
+| Integration | sandbox install → review with pack only (no temp plan) |
+| Security | Linear token never logged; intent export redacts secrets |
+| Rollback | reset to rollback tag / revert PR |
 
 ## Risks & mitigations
 
 | Risk | Mitigation |
 |---|---|
-| Specialist noise | Keep verify gate; severity/confidence floors; discard empty-evidence findings |
-| Scope creep into LLM calls | Explicit lock: hermetic default; model path remains hard-error unless future plan |
-| Duplicate findings vs heuristics | Namespaced ids + composition mode separation |
-| Touching product repos | Dry-run evidence only; no bitcoin product commits in this plan |
+| Overwriting product plans | Installer skip-if-exists unless `--force` |
+| Linear treated as approval | Explicit docs + code comments; export never writes APPROVED |
+| Scope creep into M30 posting | Hard non-goal; evidence-only |
+| Weak AC parsing | Schema + fixture tests for section headings |
 
 ## Budget
 
-After approval: `.agent/budgets/m28-reviewer-specialist-composition.md`
+After approval: `.agent/budgets/m29-intent-packs.md`
 
-Soft stop: AC + tests + evidence + PR. Hard stop: no GitHub posting; no model-in-CI; no product-repo code changes.
+Soft stop: AC + tests + evidence + PR. Hard stop: no GitHub posting; no Linear-as-approval; no model-in-CI.
 
 ## Rollback
 
-1. Revert the M28 PR or reset to rollback tag.
-2. Confirm `northstar review` still runs M27 fixture/heuristic path.
+1. Revert the M29 PR or reset to rollback tag.
+2. Confirm `northstar review --plan IMPLEMENTATION_PLAN.md` still works (M28 path).
 3. VERSION/CHANGELOG note if tag already cut.
 
 ## Approval gate
@@ -177,11 +155,11 @@ Soft stop: AC + tests + evidence + PR. Hard stop: no GitHub posting; no model-in
 
 Suggested approval phrase:
 
-`I approve IMPLEMENTATION_PLAN.md for m28-reviewer-specialist-composition`
+`I approve IMPLEMENTATION_PLAN.md for m29-intent-packs`
 
-Optional lock confirmations to include:
+Optional lock confirmations:
 
-- hermetic specialists (no model in default path)
+- installer never overwrites APPROVED plans without `--force`
+- Linear export is read-only / never approval
 - no GitHub review posting
-- default candidates mode = specialists
-- GitHub issue tracker only
+- hermetic default review path
