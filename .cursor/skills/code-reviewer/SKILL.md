@@ -9,7 +9,8 @@ description: Runs NorthStar Detection → Investigation → Verification → Rev
 
 A branch, PR, or local diff needs a structured NorthStar code review that:
 
-- loads **intent** from `IMPLEMENTATION_PLAN.md` / acceptance criteria
+- loads **intent** from `IMPLEMENTATION_PLAN.md`, `INTENT_PACK.md`, or `--intent-json`
+  (normalized `northstar.intent_pack.v1`; never sets Captain approval)
 - investigates changed files + related neighbors
 - verifies candidate findings before reporting
 - writes evidence under `.agent/evidence/code-review/<run-id>/`
@@ -19,11 +20,12 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 - Repository root (control or sandbox)
 - Optional git base/head refs, unified diff file, or changed-path list
 - Optional fixture candidates JSON (required for hermetic CI / no model)
-- Optional plan path (defaults to `IMPLEMENTATION_PLAN.md`)
+- Optional plan path (defaults to `IMPLEMENTATION_PLAN.md` / `INTENT_PACK.md` auto-discover)
+- Optional `--intent-json` normalized intent pack (M29)
 
 ## Procedure
 
-1. **Detect** — identify domains from changed paths; load plan acceptance criteria / non-goals.
+1. **Detect** — identify domains from changed paths; load plan or intent-pack acceptance criteria / non-goals.
 2. **Investigate** — assemble a context pack (diff excerpt, changed file snippets, neighbors). Redact secrets.
 3. **Candidates** — default **specialists** mode composes hermetic security / adversarial / testing emitters (M28). Use `--candidates` fixtures in CI; `--candidates-mode heuristics` is the M27 escape hatch. No model in the default path.
 4. **Verify** — discard findings below confidence threshold or without evidence paths.
@@ -35,8 +37,10 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 ```bash
 # From control repo
 ./scripts/run-code-review.sh --repo-root /path/to/repo --plan IMPLEMENTATION_PLAN.md
+./scripts/run-code-review.sh --repo-root /path/to/repo --intent-json .agent/intent/current.json
 ./scripts/northstar review --repo /path/to/repo --candidates-mode specialists
 ./scripts/northstar review --repo /path/to/repo --candidates tests/fixtures/code-review/candidates.json
+./scripts/northstar intent export --out .agent/intent/current.json --fixture issue.json
 ```
 
 ## Output

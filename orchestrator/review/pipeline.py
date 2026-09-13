@@ -57,6 +57,7 @@ def run_code_review(
     diff_file: Path | None = None,
     changed_paths: list[str] | None = None,
     plan_path: Path | None = None,
+    intent_json: Path | None = None,
     candidates_path: Path | None = None,
     candidates_mode: str = "specialists",
     plan_id: str = "",
@@ -66,7 +67,9 @@ def run_code_review(
     """Run the hermetic code-review pipeline and write evidence under the repo.
 
     Default ``candidates_mode`` is ``specialists`` (M28). Passing ``candidates_path``
-    forces the fixtures source for hermetic CI. Model invocation remains disabled.
+    forces the fixtures source for hermetic CI. ``intent_json`` (M29) supplies a
+    normalized intent pack without requiring a hand-written temp plan.
+    Model invocation remains disabled.
     """
     root = Path(repo_root).resolve()
     if not root.is_dir():
@@ -88,14 +91,18 @@ def run_code_review(
             diff_text = ""
 
     resolved_plan = plan_path
-    if resolved_plan is None:
+    if resolved_plan is None and intent_json is None:
         for candidate in (
             root / "IMPLEMENTATION_PLAN.md",
-            root / "IMPLEMENTATION_PLAN.md",
+            root / "INTENT_PACK.md",
             root / "docs" / "IMPLEMENTATION_PLAN.md",
+            root / ".agent" / "intent" / "current.json",
         ):
             if candidate.is_file():
-                resolved_plan = candidate
+                if candidate.suffix.lower() == ".json":
+                    intent_json = candidate
+                else:
+                    resolved_plan = candidate
                 break
 
     detection = detect(
@@ -103,6 +110,7 @@ def run_code_review(
         changed_paths=changed_paths,
         diff_text=diff_text or "",
         plan_path=resolved_plan,
+        intent_json=intent_json,
     )
     context_pack = investigate(
         repo_root=root,

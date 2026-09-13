@@ -4,19 +4,21 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING_APPROVAL** |
+| Status | **APPROVED** |
 | Plan ID | `m29-intent-packs` |
 | Supersedes | `m28-reviewer-specialist-composition` (CLOSED — shipped as v1.31.0 / M28) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
 | Baseline | `v1.31.0` / `origin/main` (M28 merged, PR #143) |
 | Prepared | 2026-09-13 |
+| Approved | 2026-09-13 — Captain: “I approve” |
+| Approved | 2026-09-13 — Captain: “I approve” |
 | Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track B / **B2** |
 | Product dry-run target | `loganware05/bitcoin-data-collector` + `captain-compass-sandbox` |
 | Control repo | `loganware05/captains-compass-cursor` |
 | Proposed release | **v1.32.0** |
-| Rollback tag | `rollback/pre-m29-intent-packs` (created after approval) |
+| Rollback tag | `rollback/pre-m29-intent-packs` |
 | Branch | `cursor/m29-intent-packs-3b10` |
-| Issue | GitHub issue (create after approval; tracker = GitHub only) |
+| Issue | [#146](https://github.com/loganware05/captains-compass-cursor/issues/146) |
 | Captain | Logan Ware |
 
 ## Captain locks (binding — carry forward + M29)
@@ -151,15 +153,13 @@ Soft stop: AC + tests + evidence + PR. Hard stop: no GitHub posting; no Linear-a
 
 ## Approval gate
 
-**No product implementation until Captain explicitly approves this `IMPLEMENTATION_PLAN.md`.**
+**Captain approved this plan on 2026-09-13** (“I approve”). Implementation proceeds on
+`cursor/m29-intent-packs-3b10` toward **v1.32.0**.
 
-Suggested approval phrase:
-
-`I approve IMPLEMENTATION_PLAN.md for m29-intent-packs`
-
-Optional lock confirmations:
+Locks confirmed:
 
 - installer never overwrites APPROVED plans without `--force`
 - Linear export is read-only / never approval
 - no GitHub review posting
 - hermetic default review path
+

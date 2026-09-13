@@ -1,5 +1,32 @@
 # Changelog
 
+## 1.32.0 — 2026-09-13
+
+### Added
+
+- **M29 Intent packs + installer templates** — normalized review intent so Code
+  Reviewer can run without hand-written temporary plans
+- Schema `intent-pack.schema.json` (`northstar.intent_pack.v1`) + loader
+  `orchestrator/review/intent.py` (`captain_approval` always false)
+- CLI `--intent-json`; auto-discover `INTENT_PACK.md` / `.agent/intent/current.json`
+- Optional Linear export: `scripts/export-intent-from-linear.sh` /
+  `northstar intent export` (fixture-first, never approval)
+- Installer template `INTENT_PACK.md` + `.agent/intent/` (skip-if-exists)
+- Tests: `tests/orchestrator/test_m29_intent_packs.py`
+
+### Changed
+
+- `templates/docs/IMPLEMENTATION_PLAN.md` includes intent-pack sections
+- `code-reviewer` Skill + integration docs describe intent packs
+- Doctor checks for intent module, schema, template, and export script
+
+### Locks (unchanged)
+
+- Hermetic CI / no model on default path
+- No GitHub review posting (M30 deferred)
+- Linear is flight recorder only — never Captain approval
+- Skill slug remains `code-reviewer`
+
 ## 1.31.0 — 2026-09-13
 
 ### Added

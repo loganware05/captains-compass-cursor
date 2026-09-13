@@ -1,0 +1,75 @@
+{
+  "changed_paths": [
+    "src/auth/session.py"
+  ],
+  "diff": "diff --git a/src/auth/session.py b/src/auth/session.py\nindex 111..222 100644\n--- a/src/auth/session.py\n+++ b/src/auth/session.py\n@@ -1,5 +1,8 @@\n def create_session(user_id: str) -> dict:\n-    return {\"user_id\": user_id}\n+    api_key = \"sk_live_example_secret_value_do_not_commit\"\n+    return {\"user_id\": user_id, \"api_key\": api_key}\n",
+  "domains": [
+    "python",
+    "security"
+  ],
+  "file_snippets": {},
+  "intent": {
+    "acceptance_criteria": [
+      "Load intent from normalized JSON without a temp plan",
+      "Keep reviews hermetic and evidence-only"
+    ],
+    "captain_approval": false,
+    "domains": [
+      "security",
+      "python"
+    ],
+    "excerpt": "Normalized intent pack for hermetic Code Reviewer runs.",
+    "intent_pack": {
+      "acceptance_criteria": [
+        "Load intent from normalized JSON without a temp plan",
+        "Keep reviews hermetic and evidence-only"
+      ],
+      "captain_approval": false,
+      "domains": [
+        "security",
+        "python"
+      ],
+      "excerpt": "Normalized intent pack for hermetic Code Reviewer runs.",
+      "linear_issue_id": "",
+      "non_goals": [
+        "Auto-posting GitHub reviews",
+        "Linear as approval authority"
+      ],
+      "plan_path": "",
+      "rollback": [
+        "Remove intent JSON and fall back to IMPLEMENTATION_PLAN.md"
+      ],
+      "schema_version": "northstar.intent_pack.v1",
+      "security_notes": [
+        "Never set captain_approval true from export"
+      ],
+      "source": "fixture",
+      "status": "DRAFT",
+      "title": "M29 intent-json fixture"
+    },
+    "linear_issue_id": null,
+    "non_goals": [
+      "Auto-posting GitHub reviews",
+      "Linear as approval authority"
+    ],
+    "plan_path": null,
+    "rollback": [
+      "Remove intent JSON and fall back to IMPLEMENTATION_PLAN.md"
+    ],
+    "security_notes": [
+      "Never set captain_approval true from export"
+    ],
+    "source": "fixture",
+    "status": "DRAFT"
+  },
+  "related_paths": [],
+  "related_snippets": {},
+  "repository": "/tmp/tmp.H0AmWG8WZG",
+  "skills_suggested": [
+    "code-reviewer",
+    "testing-validation",
+    "security-review",
+    "adversarial-reviewer",
+    "review-fix-loop"
+  ]
+}

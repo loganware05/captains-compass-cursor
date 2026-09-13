@@ -1,0 +1,16 @@
+test_export_intent_from_linear_fixture (tests.orchestrator.test_m29_intent_packs.CliAndInstallerTests.test_export_intent_from_linear_fixture) ... ok
+test_installer_adds_intent_pack_skip_if_exists (tests.orchestrator.test_m29_intent_packs.CliAndInstallerTests.test_installer_adds_intent_pack_skip_if_exists) ... ok
+test_run_code_review_sh_intent_json (tests.orchestrator.test_m29_intent_packs.CliAndInstallerTests.test_run_code_review_sh_intent_json) ... ok
+test_captain_approval_forced_false (tests.orchestrator.test_m29_intent_packs.IntentPackSchemaTests.test_captain_approval_forced_false) ... ok
+test_fixture_pack_validates (tests.orchestrator.test_m29_intent_packs.IntentPackSchemaTests.test_fixture_pack_validates) ... ok
+test_detect_load_intent_json (tests.orchestrator.test_m29_intent_packs.IntentParseTests.test_detect_load_intent_json) ... ok
+test_intent_json_override (tests.orchestrator.test_m29_intent_packs.IntentParseTests.test_intent_json_override) ... ok
+test_missing_json_raises (tests.orchestrator.test_m29_intent_packs.IntentParseTests.test_missing_json_raises) ... ok
+test_plan_markdown_sections (tests.orchestrator.test_m29_intent_packs.IntentParseTests.test_plan_markdown_sections) ... ok
+test_auto_discover_intent_json (tests.orchestrator.test_m29_intent_packs.IntentPipelineTests.test_auto_discover_intent_json) ... ok
+test_review_with_intent_json_only (tests.orchestrator.test_m29_intent_packs.IntentPipelineTests.test_review_with_intent_json_only) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.133s
+
+OK

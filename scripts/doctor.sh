@@ -378,10 +378,35 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing orchestrator/review/specialists.py"
   fi
+  if [[ -f "$ROOT/orchestrator/review/intent.py" ]]; then
+    ok "review intent pack module"
+  else
+    fail "missing orchestrator/review/intent.py"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/code-review-report.schema.json" ]]; then
     ok "code-review-report schema"
   else
     fail "missing orchestrator/schemas/code-review-report.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/intent-pack.schema.json" ]]; then
+    ok "intent-pack schema"
+  else
+    fail "missing orchestrator/schemas/intent-pack.schema.json"
+  fi
+  if [[ -f "$ROOT/templates/docs/INTENT_PACK.md" ]]; then
+    ok "INTENT_PACK.md template"
+  else
+    fail "missing templates/docs/INTENT_PACK.md"
+  fi
+  if grep -q 'Acceptance Criteria' "$ROOT/templates/docs/IMPLEMENTATION_PLAN.md" 2>/dev/null; then
+    ok "IMPLEMENTATION_PLAN.md intent sections"
+  else
+    fail "templates/docs/IMPLEMENTATION_PLAN.md missing Acceptance Criteria"
+  fi
+  if [[ -x "$ROOT/scripts/export-intent-from-linear.sh" ]]; then
+    ok "export-intent-from-linear.sh"
+  else
+    fail "missing executable scripts/export-intent-from-linear.sh"
   fi
   if [[ -f "$ROOT/orchestrator/reference-profiles/code-reviewer.json" ]]; then
     ok "code-reviewer reference profile"

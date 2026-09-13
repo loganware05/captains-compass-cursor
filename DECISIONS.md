@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-046: Intent packs + installer templates (M29)
+
+- **Status:** Accepted
+- **Date:** 2026-09-13
+- **Context:** M27/M28 Code Reviewer can parse `IMPLEMENTATION_PLAN.md`, but product
+  installs still lack a stable review-oriented intent shape. Roadmap B2 requires
+  review without hand-written temporary plans, plus optional Linear issue-body ingest
+  that must never be treated as Captain approval.
+- **Decision:**
+  1. Extend plan templates with Acceptance Criteria / Non-Goals / Rollback /
+     Security Notes / Review Domains; add optional `INTENT_PACK.md`.
+  2. Add `orchestrator/schemas/intent-pack.schema.json` and
+     `orchestrator/review/intent.py` with `captain_approval` always `false`.
+  3. Wire `--intent-json` on `run-code-review.sh` / `northstar review`; auto-discover
+     `.agent/intent/current.json`.
+  4. Ship fixture-first `export-intent-from-linear.sh` (read-only); installer installs
+     `INTENT_PACK.md` skip-if-exists and creates `.agent/intent/`.
+- **Consequences:** Product repos can dry-run Code Reviewer from installed intent.
+  GitHub review posting remains deferred (M30). Linear remains a flight recorder only.
+
 ## ADR-045: Code Reviewer specialist composition (M28)
 
 - **Status:** Accepted

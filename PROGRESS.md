@@ -2,24 +2,24 @@
 
 ## Current status
 
-**Release: v1.31.0** — M28 Code Reviewer specialist composition merged to `main`
-([PR #143](https://github.com/loganware05/captains-compass-cursor/pull/143),
-[release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.31.0)).
+**Release candidate: v1.32.0** — M29 Intent packs + installer templates on branch
+`cursor/m29-intent-packs-3b10` ([issue #146](https://github.com/loganware05/captains-compass-cursor/issues/146),
+[PR #145](https://github.com/loganware05/captains-compass-cursor/pull/145)).
 
 | Item | Value |
 |---|---|
-| Release | **v1.31.0** |
-| M28 | Code Reviewer specialist composition (merged) |
-| Issue | [#144](https://github.com/loganware05/captains-compass-cursor/issues/144) |
-| Rollback | `rollback/pre-m28-reviewer-specialist-composition` |
-| Prior baseline | v1.30.0 / M27 ([release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.30.0)) |
+| Release (pending merge) | **v1.32.0** |
+| M29 | Intent packs + installer templates (implementing) |
+| Issue | [#146](https://github.com/loganware05/captains-compass-cursor/issues/146) |
+| Rollback | `rollback/pre-m29-intent-packs` |
+| Prior baseline | v1.31.0 / M28 ([release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.31.0)) |
 
 ## In flight (Captain-directed)
 
-- **M29** plan drafted — Intent packs + installer templates (roadmap B2);
-  `IMPLEMENTATION_PLAN.md` status **AWAITING_APPROVAL** on branch
+- **M29** — Captain approved 2026-09-13 (“I approve”); implementation on
   `cursor/m29-intent-packs-3b10`
-- After M29: optional M30 GitHub draft-review posting (sandbox allowlist) or OVA-45+ routing
+- After M29 merge/tag: optional M30 GitHub draft-review posting (sandbox allowlist)
+  or OVA-45+ routing
 
 ## Completed
 
