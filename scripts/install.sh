@@ -108,7 +108,7 @@ if [[ ${#conflicts[@]} -gt 0 && "$FORCE" -ne 1 ]]; then
   exit 1
 fi
 
-mkdir -p "$TARGET/.cursor" "$TARGET/.agent/evidence" "$TARGET/.agent/intent" "$TARGET/.agent/budgets" "$TARGET/.agent/budgets/_templates" "$TARGET/.agent/budgets/private" "$TARGET/.agent/sessions" "$TARGET/.agent/sessions/private" "$TARGET/.agent/runs" "$TARGET/.agent/experience" "$TARGET/.agent/evaluations" "$TARGET/.agent/routing/proposals" "$TARGET/.agent/routing/applied" "$TARGET/.agent/agents/proficiency" "$TARGET/.agent/agents/promotions" "$TARGET/.agent/knowledge/items" "$TARGET/.agent/knowledge/ingest-log" "$TARGET/.agent/knowledge/procedures" "$TARGET/.agent/capabilities/compiled" "$TARGET/.agent/plans"
+mkdir -p "$TARGET/.cursor" "$TARGET/.agent/evidence" "$TARGET/.agent/intent" "$TARGET/.agent/review" "$TARGET/.agent/budgets" "$TARGET/.agent/budgets/_templates" "$TARGET/.agent/budgets/private" "$TARGET/.agent/sessions" "$TARGET/.agent/sessions/private" "$TARGET/.agent/runs" "$TARGET/.agent/experience" "$TARGET/.agent/evaluations" "$TARGET/.agent/routing/proposals" "$TARGET/.agent/routing/applied" "$TARGET/.agent/agents/proficiency" "$TARGET/.agent/agents/promotions" "$TARGET/.agent/knowledge/items" "$TARGET/.agent/knowledge/ingest-log" "$TARGET/.agent/knowledge/procedures" "$TARGET/.agent/capabilities/compiled" "$TARGET/.agent/plans"
 
 
 # Copy Cursor package
@@ -139,6 +139,18 @@ for f in "${DOC_FILES[@]}"; do
     echo "added: $f"
   fi
 done
+
+
+# Opt-in GitHub draft allowlist (M30) — skip-if-exists
+if [[ -f "$SOURCE_ROOT/templates/agent/review/github-allowlist.yml" ]]; then
+  if [[ -f "$TARGET/.agent/review/github-allowlist.yml" ]]; then
+    echo "keep: .agent/review/github-allowlist.yml (already exists; not overwritten)"
+  else
+    mkdir -p "$TARGET/.agent/review"
+    cp "$SOURCE_ROOT/templates/agent/review/github-allowlist.yml" "$TARGET/.agent/review/github-allowlist.yml"
+    echo "added: .agent/review/github-allowlist.yml"
+  fi
+fi
 
 # Thin Claude Code adapter — only when missing (never overwrite customized CLAUDE.md)
 if [[ -f "$SOURCE_ROOT/templates/docs/CLAUDE.md" ]]; then

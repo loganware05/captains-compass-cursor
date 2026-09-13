@@ -1,0 +1,12 @@
+{
+  "posted": false,
+  "reason": "repo_not_allowlisted",
+  "evidence": {
+    "allowlist_path": "templates/agent/review/github-allowlist.yml",
+    "repo_slug": "acme/x",
+    "pull_number": 1,
+    "severity_floor": "medium",
+    "selected_finding_ids": [],
+    "allowed": false
+  }
+}

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# run-code-review.sh — Hermetic NorthStar Code Reviewer CLI (M27+M28).
-# Evidence-only: writes .agent/evidence/code-review/<run-id>/ — never posts GitHub reviews.
+# run-code-review.sh — Hermetic NorthStar Code Reviewer CLI (M27–M30).
+# Default: evidence-only under .agent/evidence/code-review/<run-id>/.
+# Opt-in M30: --post-github-draft posts a PENDING draft review for allowlisted repos.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -12,29 +13,41 @@ CANDIDATES=""
 CANDIDATES_MODE="specialists"
 PLAN_PATH=""
 INTENT_JSON=""
-PLAN_ID="m29-intent-packs"
+PLAN_ID="m30-github-draft-reviews"
 RUN_ID=""
 CHANGED=""
+POST_GITHUB_DRAFT=0
+GITHUB_REPO=""
+PULL_NUMBER=""
+GITHUB_ALLOWLIST=""
+SEVERITY_FLOOR=""
+GITHUB_COMMIT=""
 
 usage() {
   cat <<'USAGE'
 Usage: run-code-review.sh --repo-root PATH [options]
 
 Options:
-  --repo-root PATH       Repository to review (required)
-  --base REF             Git base ref (uses git diff base...head)
-  --head REF             Git head ref (default HEAD)
-  --diff-file PATH       Use a unified diff file instead of git
-  --candidates PATH      Fixture candidates JSON (hermetic CI)
-  --candidates-mode MODE specialists|heuristics|specialists+heuristics (default: specialists)
-  --plan PATH            IMPLEMENTATION_PLAN.md / INTENT_PACK.md (intent)
-  --intent-json PATH     Normalized intent pack JSON (never sets captain_approval)
-  --plan-id ID           Plan id recorded in report
-  --run-id ID            Stable run id (default: generated)
-  --changed PATHS        Comma-separated changed paths override
-  -h, --help             Show help
+  --repo-root PATH         Repository to review (required)
+  --base REF               Git base ref (uses git diff base...head)
+  --head REF               Git head ref (default HEAD)
+  --diff-file PATH         Use a unified diff file instead of git
+  --candidates PATH        Fixture candidates JSON (hermetic CI)
+  --candidates-mode MODE   specialists|heuristics|specialists+heuristics (default: specialists)
+  --plan PATH              IMPLEMENTATION_PLAN.md / INTENT_PACK.md (intent)
+  --intent-json PATH       Normalized intent pack JSON (never sets captain_approval)
+  --plan-id ID             Plan id recorded in report
+  --run-id ID              Stable run id (default: generated)
+  --changed PATHS          Comma-separated changed paths override
+  --post-github-draft      Opt-in M30: post PENDING draft review (allowlist-gated)
+  --github-repo OWNER/NAME GitHub repo slug (required with --post-github-draft)
+  --pull-number N          Pull request number (required with --post-github-draft)
+  --github-allowlist PATH  Allowlist YAML/JSON (default: .agent/review/github-allowlist.yml)
+  --severity-floor LEVEL    critical|high|medium|low|info (default from allowlist)
+  --github-commit SHA      Optional commit_id for the draft review
+  -h, --help               Show help
 
-Never posts GitHub reviews. Never invokes a model in the default path.
+Default path never posts GitHub reviews and never invokes a model.
 USAGE
 }
 
@@ -51,6 +64,12 @@ while [[ $# -gt 0 ]]; do
     --plan-id) PLAN_ID="$2"; shift 2 ;;
     --run-id) RUN_ID="$2"; shift 2 ;;
     --changed) CHANGED="$2"; shift 2 ;;
+    --post-github-draft) POST_GITHUB_DRAFT=1; shift ;;
+    --github-repo) GITHUB_REPO="$2"; shift 2 ;;
+    --pull-number) PULL_NUMBER="$2"; shift 2 ;;
+    --github-allowlist) GITHUB_ALLOWLIST="$2"; shift 2 ;;
+    --severity-floor) SEVERITY_FLOOR="$2"; shift 2 ;;
+    --github-commit) GITHUB_COMMIT="$2"; shift 2 ;;
     -h|--help) usage; exit 0 ;;
     *) echo "error: unknown argument: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -63,7 +82,7 @@ if [[ -z "$REPO_ROOT" ]]; then
 fi
 
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python3 - "$REPO_ROOT" "$BASE_REF" "$HEAD_REF" "$DIFF_FILE" "$CANDIDATES" "$PLAN_PATH" "$INTENT_JSON" "$PLAN_ID" "$RUN_ID" "$CHANGED" "$CANDIDATES_MODE" <<'PY'
+python3 - "$REPO_ROOT" "$BASE_REF" "$HEAD_REF" "$DIFF_FILE" "$CANDIDATES" "$PLAN_PATH" "$INTENT_JSON" "$PLAN_ID" "$RUN_ID" "$CHANGED" "$CANDIDATES_MODE" "$POST_GITHUB_DRAFT" "$GITHUB_REPO" "$PULL_NUMBER" "$GITHUB_ALLOWLIST" "$SEVERITY_FLOOR" "$GITHUB_COMMIT" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -81,6 +100,12 @@ plan_id = sys.argv[8]
 run_id = sys.argv[9]
 changed = sys.argv[10]
 candidates_mode = sys.argv[11] if len(sys.argv) > 11 else "specialists"
+post_github_draft = sys.argv[12] == "1"
+github_repo = sys.argv[13]
+pull_number_raw = sys.argv[14]
+github_allowlist = sys.argv[15]
+severity_floor = sys.argv[16]
+github_commit = sys.argv[17]
 
 kwargs = {
     "repo_root": repo,
@@ -89,6 +114,7 @@ kwargs = {
     "plan_id": plan_id,
     "hermetic": True,
     "candidates_mode": candidates_mode or "specialists",
+    "post_github_draft": post_github_draft,
 }
 if diff_file:
     kwargs["diff_file"] = Path(diff_file)
@@ -102,6 +128,16 @@ if run_id:
     kwargs["run_id"] = run_id
 if changed:
     kwargs["changed_paths"] = [p.strip() for p in changed.split(",") if p.strip()]
+if github_repo:
+    kwargs["github_repo"] = github_repo
+if pull_number_raw:
+    kwargs["pull_number"] = int(pull_number_raw)
+if github_allowlist:
+    kwargs["github_allowlist"] = Path(github_allowlist)
+if severity_floor:
+    kwargs["severity_floor"] = severity_floor
+if github_commit:
+    kwargs["github_commit_id"] = github_commit
 
 try:
     result = run_code_review(**kwargs)
@@ -117,5 +153,6 @@ print(json.dumps({
     "github_review_posted": result["report"]["provenance"].get("github_review_posted", False),
     "candidates_source": result["report"]["provenance"].get("candidates_source"),
     "intent_source": (result.get("detection") or {}).get("intent", {}).get("source"),
+    "github_draft": result.get("github_draft"),
 }, indent=2))
 PY

@@ -1,5 +1,21 @@
 # Decisions
 
+## ADR-047: Opt-in GitHub draft reviews (M30)
+
+- **Status:** Accepted
+- **Date:** 2026-09-13
+- **Context:** M27–M29 ship hermetic evidence-only Code Reviewer with specialist
+  composition and intent packs. Roadmap B3 asks for a gated GitHub surface without
+  amplifying noise or bypassing Captain authority.
+- **Decision:**
+  1. Keep evidence-only as the default path (`github_review_posted=false`).
+  2. Add opt-in `--post-github-draft` that creates a PENDING draft review only.
+  3. Gate posting with `.agent/review/github-allowlist.yml` (sandbox first).
+  4. Apply a severity floor (default medium) and verified-findings-only.
+  5. Never APPROVE / REQUEST_CHANGES / auto-merge / webhooks in M30.
+- **Consequences:** Sandbox PRs can receive low-noise draft reviews. Product repos
+  stay quiet until explicitly allowlisted. Repair-loop automation remains deferred.
+
 ## ADR-046: Intent packs + installer templates (M29)
 
 - **Status:** Accepted

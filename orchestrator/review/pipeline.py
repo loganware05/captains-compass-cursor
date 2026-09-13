@@ -63,13 +63,22 @@ def run_code_review(
     plan_id: str = "",
     min_confidence: float = DEFAULT_MIN_CONFIDENCE,
     hermetic: bool = True,
+    post_github_draft: bool = False,
+    github_repo: str = "",
+    pull_number: int = 0,
+    github_allowlist: Path | None = None,
+    severity_floor: str | None = None,
+    github_commit_id: str | None = None,
+    github_token: str | None = None,
+    github_http_client: Any | None = None,
 ) -> dict[str, Any]:
     """Run the hermetic code-review pipeline and write evidence under the repo.
 
     Default ``candidates_mode`` is ``specialists`` (M28). Passing ``candidates_path``
     forces the fixtures source for hermetic CI. ``intent_json`` (M29) supplies a
     normalized intent pack without requiring a hand-written temp plan.
-    Model invocation remains disabled.
+    ``post_github_draft`` (M30) is opt-in and allowlist-gated; default remains
+    evidence-only. Model invocation remains disabled.
     """
     root = Path(repo_root).resolve()
     if not root.is_dir():
@@ -150,6 +159,42 @@ def run_code_review(
     for skill in specialist_skills:
         if skill not in skills:
             skills.append(skill)
+    github_draft_meta: dict[str, Any] | None = None
+    github_posted = False
+    if post_github_draft:
+        from orchestrator.review.github_draft import post_if_allowed, write_draft_evidence
+
+        if not github_repo or pull_number <= 0:
+            raise ReviewError(
+                "post_github_draft requires github_repo (owner/name) and pull_number"
+            )
+        draft_result = post_if_allowed(
+            report={
+                "run_id": rid,
+                "summary": {"domains": list(detection.get("domains") or [])},
+                "provenance": {"candidates_source": candidates_source},
+            },
+            findings=findings,
+            repo_slug=github_repo,
+            pull_number=int(pull_number),
+            allowlist_path=github_allowlist,
+            repo_root=root,
+            severity_floor=severity_floor,
+            commit_id=github_commit_id,
+            token=github_token,
+            http_client=github_http_client,
+        )
+        write_draft_evidence(root, rid, draft_result)
+        github_posted = bool(draft_result.get("posted"))
+        github_draft_meta = {
+            "posted": github_posted,
+            "reason": draft_result.get("reason"),
+            "review_id": draft_result.get("review_id"),
+            "state": draft_result.get("state"),
+            "html_url": draft_result.get("html_url"),
+            "evidence": draft_result.get("evidence") or {},
+        }
+
     report = build_report(
         run_id=rid,
         repository=str(root),
@@ -162,6 +207,8 @@ def run_code_review(
         plan_id=plan_id,
         hermetic=True,
         candidates_source=candidates_source,
+        github_review_posted=github_posted,
+        github_draft=github_draft_meta,
     )
     try:
         path = write_report(root, report, context_pack=context_pack)
@@ -176,4 +223,5 @@ def run_code_review(
         "findings": findings,
         "candidates_source": candidates_source,
         "specialist_skills": specialist_skills,
+        "github_draft": github_draft_meta,
     }

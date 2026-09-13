@@ -1,0 +1,9 @@
+# Opt-in GitHub draft-review allowlist (M30)
+# Posting is refuse-closed: repos not listed here will never receive drafts.
+schema_version: northstar.github_allowlist.v1
+severity_floor: medium
+repos:
+  - loganware05/captain-compass-sandbox
+notes: >
+  Add product repos only after sandbox proof and Captain confirmation.
+  Draft posting still requires --post-github-draft and a token.
