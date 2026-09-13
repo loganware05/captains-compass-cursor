@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Plan | m29-intent-packs |
-| Status | implementing |
+| Status | closed |
 | Started | 2026-09-13 |
 | Approved | 2026-09-13 (Captain: “I approve”) |
 | Soft stop | AC met + tests green + evidence + PR |
@@ -22,3 +22,5 @@
 |---|---|
 | 2026-09-13 | M28 shipped (v1.31.0); M29 plan drafted; paused for Captain approval |
 | 2026-09-13 | Captain approved; implementing schema/loader/CLI/installer/tests |
+
+| 2026-09-13 | Merged PR #145; tagged v1.32.0; closeout |

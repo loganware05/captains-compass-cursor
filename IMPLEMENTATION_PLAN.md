@@ -1,165 +1,137 @@
-# Implementation Plan — M29 Intent packs + installer templates
+# Implementation Plan — M30 Opt-in GitHub draft reviews
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
-| Plan ID | `m29-intent-packs` |
-| Supersedes | `m28-reviewer-specialist-composition` (CLOSED — shipped as v1.31.0 / M28) |
+| Status | **AWAITING_APPROVAL** |
+| Plan ID | `m30-github-draft-reviews` |
+| Supersedes | `m29-intent-packs` (CLOSED — shipped as v1.32.0 / M29) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
-| Baseline | `v1.31.0` / `origin/main` (M28 merged, PR #143) |
+| Baseline | `v1.32.0` / `origin/main` (M29 merged, PR #145) |
 | Prepared | 2026-09-13 |
-| Approved | 2026-09-13 — Captain: “I approve” |
-| Approved | 2026-09-13 — Captain: “I approve” |
-| Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track B / **B2** |
-| Product dry-run target | `loganware05/bitcoin-data-collector` + `captain-compass-sandbox` |
+| Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track B / **B3** |
+| Product dry-run target | `captain-compass-sandbox` first; bitcoin-style product only after sandbox proof |
 | Control repo | `loganware05/captains-compass-cursor` |
-| Proposed release | **v1.32.0** |
-| Rollback tag | `rollback/pre-m29-intent-packs` |
-| Branch | `cursor/m29-intent-packs-3b10` |
-| Issue | [#146](https://github.com/loganware05/captains-compass-cursor/issues/146) |
+| Proposed release | **v1.33.0** |
+| Rollback tag | `rollback/pre-m30-github-draft-reviews` (create after approval) |
+| Branch | `cursor/m29-closeout-m30-plan-3b10` (plan PR); implementation branch after approval |
+| Issue | GitHub issue (create after approval; tracker = GitHub only) |
 | Captain | Logan Ware |
 
-## Captain locks (binding — carry forward + M29)
+## Captain locks (binding — carry forward + M30)
 
-1. **Hermetic CI** — no model calls on the default review path
+1. **Hermetic CI** — no model calls on the default review path (posting must not require a model)
 2. **Skill slug** — orchestrator Skill remains `code-reviewer`
-3. **No GitHub review posting** — still Phase B / M30; evidence-only reports
-4. **Tracker** — GitHub issues only (Linear = flight recorder, never approval authority)
-5. **Installer must not overwrite** product memory docs without `--force`
-6. **Linear ingest is optional and read-only** — issue body → intent artifact only; never treat Linear status as Captain approval
-7. **No Star clone/exec** during this plan
+3. **Opt-in only** — GitHub posting is **off by default**; requires explicit CLI flag + allowlist
+4. **Draft reviews only** — never submit a final/request-changes review that blocks merge without Captain policy later
+5. **Sandbox allowlist first** — only repos on an explicit allowlist; start with `captain-compass-sandbox`
+6. **Severity floor** — post only verified findings at/above configured severity (default: `warning`+)
+7. **Tracker** — GitHub issues only (Linear = flight recorder, never approval authority)
+8. **No auto-merge** — posting never merges or approves the PR
+9. **Intent packs remain non-approving** — M29 `captain_approval` stays false forever from export/load
 
 ## Request (Captain-level)
 
-Proceed with **M29 — Intent packs + installer templates (roadmap B2)**: make product repos carry **reviewable intent** so Code Reviewer can run without a hand-written temporary plan. Ship installer/template support for a stable intent pack shape, wire optional Linear issue-body → intent export, and prove on sandbox (bitcoin-style demo as stretch).
+Proceed with **M30 — Opt-in GitHub draft-review posting (roadmap B3)**: after hermetic Code Reviewer produces a verified evidence report, optionally post a **draft** PR review to GitHub for allowlisted repos. Prove on sandbox before any product repo.
 
 ## Problem statement
 
-1. M27/M28 `detect.load_intent` already parses `IMPLEMENTATION_PLAN.md` for acceptance criteria + non-goals, but product installs get a generic DRAFT plan template — not a **review-oriented intent pack**.
-2. Roadmap B2 exit criterion: *“Review without hand-written temp plan”* via template `IMPLEMENTATION_PLAN.md` / AC export in installer + optional Linear issue body ingest.
-3. Operators still drop ad-hoc plan files for dry-runs (bitcoin M27/M28 demos). That does not scale across product repos.
-4. Linear already holds Learning Run / issue prose, but there is no safe, hermetic path from Linear issue body → local intent artifact for review.
+1. M27–M29 ship a strong evidence-only loop, but humans still copy findings into PR comments by hand.
+2. Roadmap B3 exit: *posted review on sandbox PR with low noise* — draft only, severity floor, Captain allowlist.
+3. Premature posting would amplify noise; M28/M29 raised signal quality enough to consider a gated surface.
 
-## Desired outcomes (M29)
+## Non-goals
 
-```
-Installer / templates
-   └─ intent-pack sections in IMPLEMENTATION_PLAN.md (AC, non-goals, rollback, domains)
-        ↓
-Product repo (or sandbox)
-   └─ .agent/intent/current.json  (optional normalized export)
-        ↓
-northstar review --plan … | --intent-json …
-        ↓
-detect.load_intent (extended) → specialists → verify → evidence report
-```
-
-Optional path:
-
-```
-Linear issue body (read-only)
-   → scripts/export-intent-from-linear.sh / northstar intent export
-   → .agent/intent/<issue-id>.json + markdown summary
-   → review --intent-json (Captain still owns approval in repo evidence)
-```
-
-### Deferred (non-goals for v1.32.0)
-
-- GitHub PR review posting (M30 / B3)
-- Treating Linear as approval authority
-- Auto-writing APPROVED into product `IMPLEMENTATION_PLAN.md`
-- FIND→FIX repair loop (B4)
-- Precision/TP-FP ledger (B5)
-- Mutating bitcoin-data-collector application code (docs/intent only if Captain asks)
+- Final / blocking GitHub reviews (REQUEST_CHANGES) in this milestone
+- Webhook-driven auto-review on every PR
+- Posting outside the allowlist
+- Model calls to rewrite comments
+- Auto-merge or auto-approve
+- Changing Skill slug or Linear approval semantics
+- Repair-loop / FIND→FIX automation (M31 / B4)
 
 ## Acceptance criteria
 
-1. **Intent pack template** — `templates/docs/IMPLEMENTATION_PLAN.md` (and/or `templates/docs/INTENT_PACK.md`) includes required review sections:
-   - Acceptance Criteria
-   - Non-Goals / Out of Scope
-   - Rollback
-   - Security / domains notes (optional bullets)
-   - Status gate language preserved (DRAFT → AWAITING_APPROVAL → APPROVED)
-2. **Installer** — `scripts/install.sh` installs the intent-capable plan template into product repos without clobbering existing APPROVED plans unless `--force`.
-3. **Normalized intent schema** — `orchestrator/schemas/intent-pack.schema.json` (+ validate helper) with fields at least: `acceptance_criteria`, `non_goals`, `rollback`, `plan_path`, `source` (`plan`|`linear`|`fixture`).
-4. **Detect/CLI** — `load_intent` accepts plan markdown **or** `--intent-json`; `run-code-review.sh` / `northstar review` gain `--intent-json PATH`.
-5. **Optional Linear export** — hermetic fixture mode + live `gh`/`linear` read path behind explicit CLI; writes evidence under `.agent/intent/` / `.agent/evidence/intent-export/`; never sets Captain approval.
-6. **Doctor** — checks template + schema presence.
-7. **Tests** — unit tests for schema, plan→intent parse, intent-json override, installer dry-run/fixture.
-8. **Evidence** — sandbox (and optional bitcoin-style) review run using installed intent pack **without** a hand-authored temp plan.
-9. **Docs** — `docs/integrations/code-reviewer.md` + installer README note intent packs.
-10. **Memory** — DECISIONS ADR-046, PROGRESS, CHANGELOG, VERSION → **1.32.0**.
-11. Default posture unchanged: **no auto-merge**, **no GitHub review posts**, **no model in CI**.
+1. **Default remains evidence-only** — without `--post-github-draft` (or equivalent), behavior identical to v1.32.0 (`github_review_posted: false`).
+2. **Allowlist gate** — posting refused unless repo is listed in config (e.g. `.agent/review/github-allowlist.yml` or env); sandbox listed in fixture/docs.
+3. **Draft review only** — uses GitHub “pending/draft review” or comment-only draft path; never APPROVE / REQUEST_CHANGES in M30.
+4. **Severity floor** — only verified findings ≥ configured severity are included; discarded/unverified never posted.
+5. **Idempotence / evidence** — every post attempt writes evidence under `.agent/evidence/code-review/<run-id>/` including request/response redacted metadata and `github_review_posted: true|false`.
+6. **Secrets** — tokens never logged; bodies redacted through existing secret redaction.
+7. **CLI** — `run-code-review.sh` / `northstar review` gain opt-in flag; doctor checks module/config template.
+8. **Tests** — unit tests with mocked GitHub client; no live network in default CI.
+9. **Sandbox proof** — one dry-run against `captain-compass-sandbox` (or fixture PR) documented in evidence.
+10. **Docs** — `docs/integrations/code-reviewer.md` + Skill prose; ADR-047; VERSION → **1.33.0**.
+11. **Memory** — DECISIONS / PROGRESS / CHANGELOG updated.
 
-## Architecture
+## Architecture (proposed)
 
 ```
-scripts/install.sh
-   └─ templates/docs/IMPLEMENTATION_PLAN.md  (intent sections)
-
-scripts/export-intent-from-linear.sh   (optional)
-   └─ .agent/intent/<id>.json
-
-orchestrator/review/intent.py          (NEW: normalize plan|json → IntentPack)
-orchestrator/review/detect.py          (call intent loader)
-orchestrator/schemas/intent-pack.schema.json
-
-scripts/run-code-review.sh --plan PATH | --intent-json PATH
+northstar review --post-github-draft
+        │
+        ▼
+run_code_review (hermetic) → report.json
+        │
+        ▼
+github_draft.post_if_allowed(report, allowlist, severity_floor)
+        │
+        ├─ refuse → evidence note, github_review_posted=false
+        └─ draft review via gh API → evidence note, github_review_posted=true
 ```
 
 ## Implementation steps (after approval only)
 
-1. Create GitHub issue + rollback tag `rollback/pre-m29-intent-packs`.
-2. Author intent-pack template sections + JSON schema.
-3. Add `orchestrator/review/intent.py`; extend detect + CLI.
-4. Optional Linear export script (fixture-first).
-5. Installer wiring + doctor checks.
-6. Tests + sandbox evidence dry-run.
-7. Docs + ADR/PROGRESS/CHANGELOG/VERSION.
-8. Open PR to `main`; Captain merge → tag **v1.32.0**.
+1. Create GitHub issue + rollback tag `rollback/pre-m30-github-draft-reviews`.
+2. Add allowlist config template + schema; refuse-closed without allowlist match.
+3. Implement `orchestrator/review/github_draft.py` with injectable HTTP client (mockable).
+4. Wire CLI flag; keep default off.
+5. Doctor + unit tests (mock GH); sandbox evidence run.
+6. Docs + ADR/PROGRESS/CHANGELOG/VERSION.
+7. Open PR to `main`; Captain merge → tag **v1.33.0**.
 
 ## Validation plan
 
 | Layer | How |
 |---|---|
-| Static | `doctor.sh`; schema validate intent packs |
-| Unit | intent parse/normalize; CLI `--intent-json`; installer template presence |
-| Integration | sandbox install → review with pack only (no temp plan) |
-| Security | Linear token never logged; intent export redacts secrets |
-| Rollback | reset to rollback tag / revert PR |
+| Static | doctor.sh; schema validate allowlist |
+| Unit | mock GitHub; default-off; allowlist refuse; severity floor |
+| Integration | sandbox draft post with fixture/token or recorded transport |
+| Security | token scrubbing; no secrets in evidence bodies |
+| Rollback | revert PR / reset to rollback tag |
 
 ## Risks & mitigations
 
 | Risk | Mitigation |
 |---|---|
-| Overwriting product plans | Installer skip-if-exists unless `--force` |
-| Linear treated as approval | Explicit docs + code comments; export never writes APPROVED |
-| Scope creep into M30 posting | Hard non-goal; evidence-only |
-| Weak AC parsing | Schema + fixture tests for section headings |
+| Noisy PR comments | Severity floor + verified-only + draft-only |
+| Accidental product posting | Explicit allowlist; sandbox-first |
+| Token leakage | Never log Authorization; redact bodies |
+| Scope creep to webhooks | Hard non-goal |
 
 ## Budget
 
-After approval: `.agent/budgets/m29-intent-packs.md`
+After approval: `.agent/budgets/m30-github-draft-reviews.md`
 
-Soft stop: AC + tests + evidence + PR. Hard stop: no GitHub posting; no Linear-as-approval; no model-in-CI.
+Soft stop: AC + tests + sandbox evidence + PR. Hard stop: no final reviews; no webhooks; no model-in-CI; no auto-merge.
 
 ## Rollback
 
-1. Revert the M29 PR or reset to rollback tag.
-2. Confirm `northstar review --plan IMPLEMENTATION_PLAN.md` still works (M28 path).
+1. Revert the M30 PR or reset to rollback tag.
+2. Confirm default `northstar review` still evidence-only.
 3. VERSION/CHANGELOG note if tag already cut.
 
 ## Approval gate
 
-**Captain approved this plan on 2026-09-13** (“I approve”). Implementation proceeds on
-`cursor/m29-intent-packs-3b10` toward **v1.32.0**.
+**No product implementation until the Captain explicitly approves this `IMPLEMENTATION_PLAN.md`.**
 
-Locks confirmed:
+Suggested approval phrase:
 
-- installer never overwrites APPROVED plans without `--force`
-- Linear export is read-only / never approval
-- no GitHub review posting
-- hermetic default review path
+`I approve IMPLEMENTATION_PLAN.md for m30-github-draft-reviews`
 
+Optional lock confirmations:
+
+- posting off by default
+- sandbox allowlist first
+- draft only / no REQUEST_CHANGES
+- hermetic default review path unchanged
