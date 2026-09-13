@@ -150,6 +150,8 @@ def _skills_for_domains(domains: list[str]) -> list[str]:
         # Always keep security on the radar for API/auth-ish paths already handled;
         # adversarial review remains a default companion.
         pass
+    if "adversarial-reviewer" not in skills:
+        skills.append("adversarial-reviewer")
     if "review-fix-loop" not in skills:
         skills.append("review-fix-loop")
     return skills

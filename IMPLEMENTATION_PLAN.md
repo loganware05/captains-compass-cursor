@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING_APPROVAL** |
+| Status | **APPROVED** |
 | Plan ID | `m28-reviewer-specialist-composition` |
 | Supersedes | `m27-northstar-code-reviewer` (CLOSED — shipped as v1.30.0 / M27) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
@@ -18,6 +18,10 @@
 | Branch | `cursor/m28-reviewer-specialist-composition-3b10` |
 | Issue | GitHub issue (create after approval; tracker = GitHub only) |
 | Captain | Logan Ware |
+| Approved by | Logan Ware (Captain) |
+| Approval date | 2026-09-13 |
+| Issue | https://github.com/loganware05/captains-compass-cursor/issues/144 |
+| Rollback tag | `rollback/pre-m28-reviewer-specialist-composition` |
 
 ## Captain locks (binding — carry forward + M28)
 

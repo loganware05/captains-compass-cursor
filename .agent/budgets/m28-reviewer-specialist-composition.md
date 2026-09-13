@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Plan | m28-reviewer-specialist-composition |
-| Status | awaiting_approval |
+| Status | approved_implementing |
 | Started | 2026-09-13 |
 | Soft stop | AC met + tests green + evidence + PR |
 | Hard stop | No GitHub review posts; no model in CI; no bitcoin product code changes |
@@ -20,3 +20,4 @@
 | When | Note |
 |---|---|
 | 2026-09-13 | Plan drafted; paused for Captain approval |
+| 2026-09-13 | Captain approved; implementing specialists composition |

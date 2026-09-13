@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# run-code-review.sh — Hermetic NorthStar Code Reviewer CLI (M27).
+# run-code-review.sh — Hermetic NorthStar Code Reviewer CLI (M27+M28).
 # Evidence-only: writes .agent/evidence/code-review/<run-id>/ — never posts GitHub reviews.
 set -euo pipefail
 
@@ -9,8 +9,9 @@ BASE_REF=""
 HEAD_REF="HEAD"
 DIFF_FILE=""
 CANDIDATES=""
+CANDIDATES_MODE="specialists"
 PLAN_PATH=""
-PLAN_ID="m27-northstar-code-reviewer"
+PLAN_ID="m28-reviewer-specialist-composition"
 RUN_ID=""
 CHANGED=""
 
@@ -24,6 +25,7 @@ Options:
   --head REF             Git head ref (default HEAD)
   --diff-file PATH       Use a unified diff file instead of git
   --candidates PATH      Fixture candidates JSON (hermetic CI)
+  --candidates-mode MODE specialists|heuristics|specialists+heuristics (default: specialists)
   --plan PATH            IMPLEMENTATION_PLAN.md (intent)
   --plan-id ID           Plan id recorded in report
   --run-id ID            Stable run id (default: generated)
@@ -41,6 +43,7 @@ while [[ $# -gt 0 ]]; do
     --head) HEAD_REF="$2"; shift 2 ;;
     --diff-file) DIFF_FILE="$2"; shift 2 ;;
     --candidates) CANDIDATES="$2"; shift 2 ;;
+    --candidates-mode) CANDIDATES_MODE="$2"; shift 2 ;;
     --plan) PLAN_PATH="$2"; shift 2 ;;
     --plan-id) PLAN_ID="$2"; shift 2 ;;
     --run-id) RUN_ID="$2"; shift 2 ;;
@@ -57,7 +60,7 @@ if [[ -z "$REPO_ROOT" ]]; then
 fi
 
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python3 - "$REPO_ROOT" "$BASE_REF" "$HEAD_REF" "$DIFF_FILE" "$CANDIDATES" "$PLAN_PATH" "$PLAN_ID" "$RUN_ID" "$CHANGED" <<'PY'
+python3 - "$REPO_ROOT" "$BASE_REF" "$HEAD_REF" "$DIFF_FILE" "$CANDIDATES" "$PLAN_PATH" "$PLAN_ID" "$RUN_ID" "$CHANGED" "$CANDIDATES_MODE" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -73,6 +76,7 @@ plan_path = sys.argv[6]
 plan_id = sys.argv[7]
 run_id = sys.argv[8]
 changed = sys.argv[9]
+candidates_mode = sys.argv[10] if len(sys.argv) > 10 else "specialists"
 
 kwargs = {
     "repo_root": repo,
@@ -80,6 +84,7 @@ kwargs = {
     "head_ref": head_ref,
     "plan_id": plan_id,
     "hermetic": True,
+    "candidates_mode": candidates_mode or "specialists",
 }
 if diff_file:
     kwargs["diff_file"] = Path(diff_file)
@@ -104,5 +109,6 @@ print(json.dumps({
     "report_path": result["report_path"],
     "summary": summary,
     "github_review_posted": result["report"]["provenance"].get("github_review_posted", False),
+    "candidates_source": result["report"]["provenance"].get("candidates_source"),
 }, indent=2))
 PY

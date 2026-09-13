@@ -1,0 +1,19 @@
+test_run_code_review_cli (tests.orchestrator.test_m27_code_review.CliTests.test_run_code_review_cli) ... ok
+test_parse_paths_and_domains (tests.orchestrator.test_m27_code_review.DetectTests.test_parse_paths_and_domains) ... ok
+test_fixture_pipeline_writes_schema_valid_report (tests.orchestrator.test_m27_code_review.PipelineTests.test_fixture_pipeline_writes_schema_valid_report) ... ok
+test_investigate_includes_neighbors (tests.orchestrator.test_m27_code_review.PipelineTests.test_investigate_includes_neighbors) ... ok
+test_non_hermetic_rejected (tests.orchestrator.test_m27_code_review.PipelineTests.test_non_hermetic_rejected) ... ok
+test_verify_discards_noise_and_keeps_high_signal (tests.orchestrator.test_m27_code_review.VerifyTests.test_verify_discards_noise_and_keeps_high_signal) ... ok
+test_adversarial_weak_test (tests.orchestrator.test_m28_specialists.SpecialistEmitterTests.test_adversarial_weak_test) ... ok
+test_compose_dedupes_and_reports_source (tests.orchestrator.test_m28_specialists.SpecialistEmitterTests.test_compose_dedupes_and_reports_source) ... ok
+test_security_emits_secret_finding (tests.orchestrator.test_m28_specialists.SpecialistEmitterTests.test_security_emits_secret_finding) ... ok
+test_testing_emits_missing_coverage (tests.orchestrator.test_m28_specialists.SpecialistEmitterTests.test_testing_emits_missing_coverage) ... ok
+test_cli_specialists_mode (tests.orchestrator.test_m28_specialists.SpecialistPipelineTests.test_cli_specialists_mode) ... ok
+test_default_mode_is_specialists (tests.orchestrator.test_m28_specialists.SpecialistPipelineTests.test_default_mode_is_specialists) ... ok
+test_heuristics_mode_escape_hatch (tests.orchestrator.test_m28_specialists.SpecialistPipelineTests.test_heuristics_mode_escape_hatch) ... ok
+test_invalid_mode_rejected (tests.orchestrator.test_m28_specialists.SpecialistPipelineTests.test_invalid_mode_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.158s
+
+OK

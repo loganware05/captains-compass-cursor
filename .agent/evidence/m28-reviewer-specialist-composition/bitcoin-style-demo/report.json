@@ -1,0 +1,96 @@
+{
+  "base_ref": "",
+  "context_pack_path": ".agent/evidence/code-review/m28-bitcoin-style-demo/context-pack.json",
+  "created_at": "2026-09-13T05:05:58Z",
+  "findings": [
+    {
+      "category": "secrets",
+      "confidence": 0.92,
+      "detail": "Security specialist: diff matches credential-assignment or cloud key patterns. Confirm secrets are not committed.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "src/auth/session.py"
+      ],
+      "id": "sec-secret-in-diff",
+      "severity": "high",
+      "skill": "security-review",
+      "status": "verified",
+      "suggested_fix": "Remove secrets; rotate if exposed; use env/secret manager.",
+      "title": "Possible secret material in diff"
+    },
+    {
+      "category": "testing",
+      "confidence": 0.82,
+      "detail": "Security specialist: authentication/credential-related paths changed with no accompanying test paths.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "src/auth/session.py"
+      ],
+      "id": "sec-auth-without-tests",
+      "severity": "medium",
+      "skill": "security-review",
+      "status": "verified",
+      "suggested_fix": "Add tests for authn/authz failure paths and missing credentials.",
+      "title": "Auth/credential paths changed without tests"
+    },
+    {
+      "category": "coverage",
+      "confidence": 0.8,
+      "detail": "Testing specialist: non-doc production paths changed with no test path in the change set.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "src/auth/session.py"
+      ],
+      "id": "test-missing-for-prod-change",
+      "severity": "medium",
+      "skill": "testing-validation",
+      "status": "verified",
+      "suggested_fix": "Add or update unit/integration tests for the changed behavior.",
+      "title": "Production paths changed without test updates"
+    },
+    {
+      "category": "noise",
+      "confidence": 0.2,
+      "detail": "Placeholder low-signal nit used to exercise discard rules.",
+      "discard_reason": "missing_evidence_paths",
+      "evidence_paths": [],
+      "id": "noise-style-nit",
+      "severity": "low",
+      "skill": "code-reviewer",
+      "status": "discarded",
+      "suggested_fix": "",
+      "title": "Style nit without evidence"
+    }
+  ],
+  "head_ref": "HEAD",
+  "plan_id": "m28-reviewer-specialist-composition",
+  "provenance": {
+    "candidates_source": "specialists",
+    "github_review_posted": false,
+    "hermetic": true,
+    "invoke_model": false,
+    "pipeline": "northstar.review.v1"
+  },
+  "repository": "/tmp/tmp.CEKIe5DRCn",
+  "run_id": "m28-bitcoin-style-demo",
+  "schema_version": "northstar.code_review_report.v1",
+  "status": "completed",
+  "summary": {
+    "discarded": 1,
+    "domains": [
+      "python",
+      "security"
+    ],
+    "findings_total": 4,
+    "intent_artifact": "/tmp/tmp.CEKIe5DRCn/IMPLEMENTATION_PLAN.md",
+    "skills_invoked": [
+      "code-reviewer",
+      "testing-validation",
+      "security-review",
+      "adversarial-reviewer",
+      "review-fix-loop"
+    ],
+    "unverified": 0,
+    "verified": 3
+  }
+}
