@@ -15,11 +15,10 @@
 
 ## In flight (Captain-directed)
 
-- **NS-SKILL-003** started — Python settings/secrets hygiene (fixtures → sandbox);
-  Linear parent [OVA-34](https://linear.app/ovaltechnologysolutions/issue/OVA-34);
-  Captain gate [OVA-42](https://linear.app/ovaltechnologysolutions/issue/OVA-42);
-  sandbox branch `cursor/ns-skill-003-secrets-hygiene-3b10`
-- Next after Captain decision: promote/install (OVA-43/44), then M28 specialist composition for reviewer
+- **NS-SKILL-003** — Captain approved improve `python-ml` ([OVA-42](https://linear.app/ovaltechnologysolutions/issue/OVA-42));
+  promote/install Done ([OVA-43](https://linear.app/ovaltechnologysolutions/issue/OVA-43)/[44](https://linear.app/ovaltechnologysolutions/issue/OVA-44));
+  sandbox PR [#56](https://github.com/loganware05/captain-compass-sandbox/pull/56);
+  next optional: agent routing (OVA-45+) then M28 reviewer specialist composition
 
 ## Completed
 
