@@ -19,7 +19,8 @@
 - **M30** plan drafted — Opt-in GitHub draft-review posting (roadmap B3);
   `IMPLEMENTATION_PLAN.md` status **AWAITING_APPROVAL** on branch
   `cursor/m29-closeout-m30-plan-3b10`
-- Alternate track: OVA-45+ routing / NS-SKILL-003 Learning Run (Captain choice)
+  ([issue #147](https://github.com/loganware05/captains-compass-cursor/issues/147))
+- Alternate track: OVA-45+ routing / Learning Run (Captain choice)
 
 ## Completed
 

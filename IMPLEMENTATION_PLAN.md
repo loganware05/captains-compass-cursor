@@ -16,7 +16,7 @@
 | Proposed release | **v1.33.0** |
 | Rollback tag | `rollback/pre-m30-github-draft-reviews` (create after approval) |
 | Branch | `cursor/m29-closeout-m30-plan-3b10` (plan PR); implementation branch after approval |
-| Issue | GitHub issue (create after approval; tracker = GitHub only) |
+| Issue | [#147](https://github.com/loganware05/captains-compass-cursor/issues/147) (implementation after approval) |
 | Captain | Logan Ware |
 
 ## Captain locks (binding — carry forward + M30)
