@@ -383,6 +383,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing orchestrator/review/intent.py"
   fi
+  if [[ -f "$ROOT/orchestrator/review/github_draft.py" ]]; then
+    ok "review github draft module"
+  else
+    fail "missing orchestrator/review/github_draft.py"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/code-review-report.schema.json" ]]; then
     ok "code-review-report schema"
   else
@@ -393,10 +398,20 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing orchestrator/schemas/intent-pack.schema.json"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/github-allowlist.schema.json" ]]; then
+    ok "github-allowlist schema"
+  else
+    fail "missing orchestrator/schemas/github-allowlist.schema.json"
+  fi
   if [[ -f "$ROOT/templates/docs/INTENT_PACK.md" ]]; then
     ok "INTENT_PACK.md template"
   else
     fail "missing templates/docs/INTENT_PACK.md"
+  fi
+  if [[ -f "$ROOT/templates/agent/review/github-allowlist.yml" ]]; then
+    ok "github-allowlist template"
+  else
+    fail "missing templates/agent/review/github-allowlist.yml"
   fi
   if grep -q 'Acceptance Criteria' "$ROOT/templates/docs/IMPLEMENTATION_PLAN.md" 2>/dev/null; then
     ok "IMPLEMENTATION_PLAN.md intent sections"

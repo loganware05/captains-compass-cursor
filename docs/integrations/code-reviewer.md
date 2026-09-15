@@ -58,12 +58,38 @@ From the control repo:
 ./scripts/northstar review --repo /path/to/repo --candidates-mode heuristics  # M27 escape hatch
 ```
 
+
+
+## GitHub draft posting (M30)
+
+Default remains **evidence-only**. Opt-in draft posting:
+
+```bash
+./scripts/run-code-review.sh --repo-root /path/to/repo \
+  --post-github-draft \
+  --github-repo loganware05/captain-compass-sandbox \
+  --pull-number 123 \
+  --diff-file path/to.diff
+
+./scripts/northstar review --repo /path/to/repo \
+  --post-github-draft --github-repo owner/name --pull-number 123
+```
+
+Gates:
+
+- Explicit `--post-github-draft` (off by default)
+- Repo must appear in `.agent/review/github-allowlist.yml`
+- Only **verified** findings at/above severity floor (default `medium`)
+- Creates a **PENDING** draft review (never APPROVE / REQUEST_CHANGES)
+- Token from `GITHUB_TOKEN` / `GH_TOKEN` — never logged
+- Evidence written to `.agent/evidence/code-review/<run-id>/github-draft.json`
+
 ## Locks (Captain)
 
 - Hermetic CI — fixture / specialist / heuristic candidates only; no model calls by default
 - Default candidates mode: **specialists** (M28)
 - Skill slug: `code-reviewer`
-- **No GitHub review posting** (M30 deferred)
+- **GitHub draft posting opt-in only** (M30); default remains evidence-only
 - Intent packs are evidence only; Linear never approves
 - Tracker: GitHub issues only
 

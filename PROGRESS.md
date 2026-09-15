@@ -2,30 +2,29 @@
 
 ## Current status
 
-**Release: v1.32.0** — M29 Intent packs + installer templates merged to `main`
-([PR #145](https://github.com/loganware05/captains-compass-cursor/pull/145),
-[release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.32.0)).
+**Release candidate: v1.33.0** — M30 Opt-in GitHub draft reviews on branch
+`cursor/m30-github-draft-reviews-3b10` ([issue #147](https://github.com/loganware05/captains-compass-cursor/issues/147),
+[PR #149](https://github.com/loganware05/captains-compass-cursor/pull/149)).
 
 | Item | Value |
 |---|---|
-| Release | **v1.32.0** |
-| M29 | Intent packs + installer templates (merged) |
-| Issue | [#146](https://github.com/loganware05/captains-compass-cursor/issues/146) |
-| Rollback | `rollback/pre-m29-intent-packs` |
-| Prior baseline | v1.31.0 / M28 ([release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.31.0)) |
+| Release (pending merge) | **v1.33.0** |
+| M30 | Opt-in GitHub draft reviews (implementing / merge-conflict resolved) |
+| Issue | [#147](https://github.com/loganware05/captains-compass-cursor/issues/147) |
+| Rollback | `rollback/pre-m30-github-draft-reviews` |
+| Prior baseline | v1.32.0 / M29 ([release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.32.0)) |
 
 ## In flight (Captain-directed)
 
-- **M30** plan drafted — Opt-in GitHub draft-review posting (roadmap B3);
-  `IMPLEMENTATION_PLAN.md` status **AWAITING_APPROVAL** on branch
-  `cursor/m29-closeout-m30-plan-3b10`
-  ([issue #147](https://github.com/loganware05/captains-compass-cursor/issues/147))
-- Alternate track: OVA-45+ routing / Learning Run (Captain choice)
+- **M30** — Captain approved 2026-09-13; implementation on
+  `cursor/m30-github-draft-reviews-3b10` ([PR #149](https://github.com/loganware05/captains-compass-cursor/pull/149))
+- After M30 merge/tag: optional repair-loop (B4) or Learning Run / routing
 
 ## Completed
 
-- **M29** merged — intent packs, installer templates, `--intent-json`, Linear export
-  stub (never approval); tagged **v1.32.0**
+- **M29** merged — intent packs + installer templates; tagged **v1.32.0**
+  ([PR #145](https://github.com/loganware05/captains-compass-cursor/pull/145));
+  closeout docs via [PR #148](https://github.com/loganware05/captains-compass-cursor/pull/148)
 - **M28** merged — hermetic security/adversarial/testing specialist emitters;
   default `candidates-mode=specialists`; tagged **v1.31.0**
 - **M27** merged — Code Reviewer MVP; tagged **v1.30.0**
@@ -41,4 +40,4 @@
 
 ## Blockers
 
-None. Awaiting Captain choice: approve M30 (GitHub draft reviews) or redirect to Learning Run / routing.
+None.

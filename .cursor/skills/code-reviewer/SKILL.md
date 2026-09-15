@@ -30,7 +30,7 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 3. **Candidates** — default **specialists** mode composes hermetic security / adversarial / testing emitters (M28). Use `--candidates` fixtures in CI; `--candidates-mode heuristics` is the M27 escape hatch. No model in the default path.
 4. **Verify** — discard findings below confidence threshold or without evidence paths.
 5. **Report** — write `report.json` + `report.md` under `.agent/evidence/code-review/<run-id>/`.
-6. Hand verified findings to humans or `review-fix-loop`. **Never auto-merge. Never auto-post GitHub reviews (M30 deferred).**
+6. Hand verified findings to humans or `review-fix-loop`. **Never auto-merge.** GitHub draft posting is **opt-in** (`--post-github-draft`) and allowlist-gated (M30); default remains evidence-only.
 
 ### CLI
 

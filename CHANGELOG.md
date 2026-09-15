@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.33.0 — 2026-09-13
+
+### Added
+
+- **M30 Opt-in GitHub draft reviews** — allowlist-gated PENDING draft PR reviews
+- Module `orchestrator/review/github_draft.py` (never APPROVE / REQUEST_CHANGES)
+- Schema `github-allowlist.schema.json` + template `.agent/review/github-allowlist.yml`
+- CLI `--post-github-draft` / `--github-repo` / `--pull-number` (off by default)
+- Tests: `tests/orchestrator/test_m30_github_draft.py`
+- Evidence: `.agent/evidence/m30-github-draft-reviews/`
+
+### Changed
+
+- Code-review report schema allows `github_review_posted: true` when a draft is posted
+- Doctor checks for github draft module, allowlist schema/template
+- Installer creates `.agent/review/` and installs allowlist skip-if-exists
+- `code-reviewer` Skill + integration docs describe opt-in draft posting
+
+### Locks (unchanged)
+
+- Hermetic CI / no model on default path
+- Draft posting off by default; sandbox allowlist first
+- Linear is flight recorder only — never Captain approval
+- Skill slug remains `code-reviewer`
+- No auto-merge / no webhooks
+
 ## 1.32.0 — 2026-09-13
 
 ### Added

@@ -1,0 +1,24 @@
+{
+  "posted": true,
+  "reason": "posted_pending_draft",
+  "review_id": 1001,
+  "state": "PENDING",
+  "html_url": "https://example.test/reviews/1001",
+  "evidence": {
+    "allowlist_path": "templates/agent/review/github-allowlist.yml",
+    "repo_slug": "loganware05/captain-compass-sandbox",
+    "pull_number": 42,
+    "severity_floor": "medium",
+    "selected_finding_ids": [
+      "sec-1"
+    ],
+    "allowed": true,
+    "http_status": 200,
+    "repo": "loganware05/captain-compass-sandbox",
+    "event": null,
+    "state": "PENDING",
+    "id": 1001,
+    "html_url": "https://example.test/reviews/1001",
+    "message": null
+  }
+}

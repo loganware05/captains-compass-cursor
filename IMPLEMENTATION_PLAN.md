@@ -4,18 +4,19 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING_APPROVAL** |
+| Status | **APPROVED** |
 | Plan ID | `m30-github-draft-reviews` |
 | Supersedes | `m29-intent-packs` (CLOSED — shipped as v1.32.0 / M29) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
 | Baseline | `v1.32.0` / `origin/main` (M29 merged, PR #145) |
 | Prepared | 2026-09-13 |
+| Approved | 2026-09-13 — Captain: “I approve” |
 | Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track B / **B3** |
 | Product dry-run target | `captain-compass-sandbox` first; bitcoin-style product only after sandbox proof |
 | Control repo | `loganware05/captains-compass-cursor` |
 | Proposed release | **v1.33.0** |
-| Rollback tag | `rollback/pre-m30-github-draft-reviews` (create after approval) |
-| Branch | `cursor/m29-closeout-m30-plan-3b10` (plan PR); implementation branch after approval |
+| Rollback tag | `rollback/pre-m30-github-draft-reviews` |
+| Branch | `cursor/m30-github-draft-reviews-3b10` |
 | Issue | [#147](https://github.com/loganware05/captains-compass-cursor/issues/147) (implementation after approval) |
 | Captain | Logan Ware |
 
@@ -123,13 +124,10 @@ Soft stop: AC + tests + sandbox evidence + PR. Hard stop: no final reviews; no w
 
 ## Approval gate
 
-**No product implementation until the Captain explicitly approves this `IMPLEMENTATION_PLAN.md`.**
+**Captain approved this plan on 2026-09-13** (“I approve”). Implementation proceeds on
+`cursor/m30-github-draft-reviews-3b10` toward **v1.33.0**.
 
-Suggested approval phrase:
-
-`I approve IMPLEMENTATION_PLAN.md for m30-github-draft-reviews`
-
-Optional lock confirmations:
+Locks confirmed:
 
 - posting off by default
 - sandbox allowlist first

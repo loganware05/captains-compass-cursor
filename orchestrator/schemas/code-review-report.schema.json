@@ -20,15 +20,35 @@
       "type": "string",
       "const": "northstar.code_review_report.v1"
     },
-    "run_id": { "type": "string", "minLength": 1 },
-    "created_at": { "type": "string", "minLength": 1 },
-    "repository": { "type": "string", "minLength": 1 },
-    "base_ref": { "type": "string" },
-    "head_ref": { "type": "string" },
-    "plan_id": { "type": "string" },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repository": {
+      "type": "string",
+      "minLength": 1
+    },
+    "base_ref": {
+      "type": "string"
+    },
+    "head_ref": {
+      "type": "string"
+    },
+    "plan_id": {
+      "type": "string"
+    },
     "status": {
       "type": "string",
-      "enum": ["completed", "partial", "failed", "cancelled"]
+      "enum": [
+        "completed",
+        "partial",
+        "failed",
+        "cancelled"
+      ]
     },
     "summary": {
       "type": "object",
@@ -43,17 +63,35 @@
       "properties": {
         "domains": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
         "skills_invoked": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
-        "findings_total": { "type": "integer", "minimum": 0 },
-        "verified": { "type": "integer", "minimum": 0 },
-        "unverified": { "type": "integer", "minimum": 0 },
-        "discarded": { "type": "integer", "minimum": 0 },
-        "intent_artifact": { "type": "string" }
+        "findings_total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "verified": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unverified": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "discarded": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "intent_artifact": {
+          "type": "string"
+        }
       }
     },
     "findings": {
@@ -71,48 +109,99 @@
         ],
         "additionalProperties": true,
         "properties": {
-          "id": { "type": "string", "minLength": 1 },
-          "title": { "type": "string", "minLength": 1 },
-          "detail": { "type": "string" },
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "detail": {
+            "type": "string"
+          },
           "severity": {
             "type": "string",
-            "enum": ["critical", "high", "medium", "low", "info"]
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ]
           },
-          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
           "status": {
             "type": "string",
-            "enum": ["verified", "unverified", "discarded"]
+            "enum": [
+              "verified",
+              "unverified",
+              "discarded"
+            ]
           },
-          "skill": { "type": "string", "minLength": 1 },
-          "category": { "type": "string" },
+          "skill": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "type": "string"
+          },
           "evidence_paths": {
             "type": "array",
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
-          "suggested_fix": { "type": "string" },
-          "discard_reason": { "type": "string" }
+          "suggested_fix": {
+            "type": "string"
+          },
+          "discard_reason": {
+            "type": "string"
+          }
         }
       }
     },
     "provenance": {
       "type": "object",
-      "required": ["pipeline", "hermetic"],
+      "required": [
+        "pipeline",
+        "hermetic"
+      ],
       "additionalProperties": true,
       "properties": {
         "pipeline": {
           "type": "string",
           "const": "northstar.review.v1"
         },
-        "hermetic": { "type": "boolean" },
-        "invoke_model": { "type": "boolean" },
+        "hermetic": {
+          "type": "boolean"
+        },
+        "invoke_model": {
+          "type": "boolean"
+        },
         "github_review_posted": {
           "type": "boolean",
-          "const": false
+          "description": "True only when an opt-in M30 draft review was posted."
         },
-        "candidates_source": { "type": "string" },
-        "control_sha": { "type": "string" }
+        "candidates_source": {
+          "type": "string"
+        },
+        "control_sha": {
+          "type": "string"
+        },
+        "github_draft": {
+          "type": "object",
+          "description": "Redacted draft-posting evidence (M30).",
+          "additionalProperties": true
+        }
       }
     },
-    "context_pack_path": { "type": "string" }
+    "context_pack_path": {
+      "type": "string"
+    }
   }
 }

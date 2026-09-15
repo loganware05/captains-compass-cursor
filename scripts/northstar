@@ -31,7 +31,8 @@ Topology:
 
 Never clones or executes starred repositories. Never installs Skills without
 --captain-approved on promote. Linear sync never originates Captain approval.
-Code review (M27+) is evidence-only — never auto-posts GitHub reviews.
+Code review (M27+) defaults to evidence-only. M30 draft posting is opt-in,
+allowlist-gated, and never APPROVE / REQUEST_CHANGES.
 Intent packs (M29) never originate Captain approval.
 USAGE
 }

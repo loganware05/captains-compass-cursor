@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://northstar.dev/schemas/github-allowlist.schema.json",
+  "title": "NorthStarGitHubAllowlist",
+  "description": "Allowlist for opt-in GitHub draft review posting (M30). Refuse-closed by default.",
+  "type": "object",
+  "required": ["schema_version", "repos"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "northstar.github_allowlist.v1"
+    },
+    "repos": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+      },
+      "description": "owner/repo slugs permitted for draft posting"
+    },
+    "severity_floor": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low", "info", "warning"],
+      "description": "Minimum severity included in draft body. warning maps to medium."
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

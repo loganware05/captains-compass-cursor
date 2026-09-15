@@ -46,10 +46,21 @@ def build_report(
     candidates_source: str = "fixtures",
     context_pack_path: str = "",
     status: str = "completed",
+    github_review_posted: bool = False,
+    github_draft: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     verified = sum(1 for f in findings if f.get("status") == "verified")
     unverified = sum(1 for f in findings if f.get("status") == "unverified")
     discarded = sum(1 for f in findings if f.get("status") == "discarded")
+    provenance: dict[str, Any] = {
+        "pipeline": "northstar.review.v1",
+        "hermetic": hermetic,
+        "invoke_model": False,
+        "github_review_posted": bool(github_review_posted),
+        "candidates_source": candidates_source,
+    }
+    if github_draft is not None:
+        provenance["github_draft"] = github_draft
     report: dict[str, Any] = {
         "schema_version": "northstar.code_review_report.v1",
         "run_id": run_id,
@@ -69,13 +80,7 @@ def build_report(
             "intent_artifact": intent_artifact or "",
         },
         "findings": findings,
-        "provenance": {
-            "pipeline": "northstar.review.v1",
-            "hermetic": hermetic,
-            "invoke_model": False,
-            "github_review_posted": False,
-            "candidates_source": candidates_source,
-        },
+        "provenance": provenance,
         "context_pack_path": context_pack_path,
     }
     return report
