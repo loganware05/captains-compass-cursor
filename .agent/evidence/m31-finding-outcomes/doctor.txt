@@ -1,7 +1,7 @@
 Captain's Compass doctor
 Root: /agent/repos/captains-compass-cursor
 
-  ok: VERSION=1.33.0
+  ok: VERSION=1.34.0
   ok: AGENTS.md
   ok: PROJECT_CONTEXT.md
   ok: IMPLEMENTATION_PLAN.md

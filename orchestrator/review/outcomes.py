@@ -20,6 +20,17 @@ from orchestrator.telemetry.store import write_experience
 
 SCHEMA_VERSION = "northstar.finding_outcome.v1"
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,120}$")
+# Free-text notes may embed tokens; scrub common patterns before Experience write.
+_SECRET_TEXT = re.compile(
+    r"(?i)("
+    r"ghp_[A-Za-z0-9_]{20,}"
+    r"|github_pat_[A-Za-z0-9_]{20,}"
+    r"|gho_[A-Za-z0-9_]{20,}"
+    r"|sk-[A-Za-z0-9_-]{20,}"
+    r"|xox[baprs]-[A-Za-z0-9-]{10,}"
+    r"|Bearer\s+[A-Za-z0-9._~+/=-]{20,}"
+    r")"
+)
 
 _DECISIONS = frozenset({"accepted", "rejected", "deferred"})
 _LABELS = frozenset({"tp", "fp", "unknown"})
@@ -38,6 +49,16 @@ def _safe_id(value: str, label: str) -> str:
         raise OutcomeError(f"unsafe {label}: {value!r}")
     return value
 
+
+def _redact_secret_text(value: Any) -> Any:
+    """Redact secret-shaped substrings in notes/lessons (beyond key-based redact_secrets)."""
+    if isinstance(value, str):
+        return _SECRET_TEXT.sub("[REDACTED]", value)
+    if isinstance(value, dict):
+        return {k: _redact_secret_text(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_redact_secret_text(v) for v in value]
+    return value
 
 def load_review_report(path: Path) -> dict[str, Any]:
     path = Path(path)
@@ -105,7 +126,7 @@ def normalize_outcome(
 
     skill = str(raw.get("skill") or finding.get("skill") or "code-reviewer").strip()
     label = _default_label(decision, raw.get("label"))
-    notes = str(raw.get("notes") or "")
+    notes = _redact_secret_text(str(raw.get("notes") or ""))
     run_id = str(report.get("run_id") or "")
     _safe_id(run_id, "run_id")
     _safe_id(finding_id, "finding_id")
@@ -128,7 +149,7 @@ def normalize_outcome(
         validate_document(pack, "finding-outcome.schema.json")
     except ValidationError as exc:
         raise OutcomeError(str(exc)) from exc
-    return pack
+    return _redact_secret_text(pack)
 
 
 def outcome_to_experience(outcome: dict[str, Any], *, plan_id: str = "") -> dict[str, Any]:
@@ -172,7 +193,7 @@ def outcome_to_experience(outcome: dict[str, Any], *, plan_id: str = "") -> dict
         },
         "created_at": outcome.get("created_at") or _utc_now(),
     }
-    return redact_secrets(experience)
+    return _redact_secret_text(redact_secrets(experience))
 
 
 def write_outcomes_evidence(
@@ -184,14 +205,16 @@ def write_outcomes_evidence(
     out_dir = Path(repo_root) / ".agent" / "evidence" / "code-review" / run_id
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / "outcomes.json"
-    payload = redact_secrets(
-        {
-            "schema_version": "northstar.finding_outcomes_bundle.v1",
-            "run_id": run_id,
-            "created_at": _utc_now(),
-            "outcomes": outcomes,
-            "captain_approval": False,
-        }
+    payload = _redact_secret_text(
+        redact_secrets(
+            {
+                "schema_version": "northstar.finding_outcomes_bundle.v1",
+                "run_id": run_id,
+                "created_at": _utc_now(),
+                "outcomes": outcomes,
+                "captain_approval": False,
+            }
+        )
     )
     path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return path

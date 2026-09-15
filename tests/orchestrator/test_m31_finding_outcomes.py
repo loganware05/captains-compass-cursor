@@ -74,6 +74,21 @@ class ExperienceBridgeTests(unittest.TestCase):
         experience = outcome_to_experience(outcome)
         self.assertEqual(experience["outcome"], "failed")
 
+    def test_notes_redact_embedded_tokens(self) -> None:
+        report = json.loads(SAMPLE_REPORT.read_text(encoding="utf-8"))
+        outcome = normalize_outcome(
+            {
+                "finding_id": "sec-secret-in-diff",
+                "decision": "accepted",
+                "notes": "saw token=ghp_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA in chat",
+            },
+            report=report,
+        )
+        self.assertNotIn("ghp_", outcome["notes"])
+        self.assertIn("[REDACTED]", outcome["notes"])
+        experience = outcome_to_experience(outcome)
+        self.assertNotIn("ghp_", json.dumps(experience))
+
 
 class RecordOutcomesTests(unittest.TestCase):
     def test_record_writes_experience_and_optional_proposal(self) -> None:
