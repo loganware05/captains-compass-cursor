@@ -7,7 +7,7 @@
   "objectives": [
     {
       "id": "learning-run",
-      "title": "Learning Run \u2014 complete NS-SKILL-003",
+      "title": "Learning Run — complete NS-SKILL-003",
       "status": "in_progress",
       "linear_parent": "OVA-34",
       "sandbox_pr": 56,
@@ -18,28 +18,26 @@
       "title": "Agent routing (OVA-45) with M26 wakeability",
       "status": "in_progress",
       "linear_issue": "OVA-45",
-      "depends_on": [
-        "learning-run"
-      ],
+      "depends_on": ["learning-run"],
       "notes": "OVA-45 scored; dispatch_ready=true; awaiting Captain I approve the dispatch"
     },
     {
       "id": "b4-repair-loop",
-      "title": "B4 \u2014 Repair loop (M31)",
+      "title": "B4 — Repair loop",
       "status": "queued_plan_drafted",
-      "plan_id": "m31-repair-loop",
-      "depends_on": [
-        "routing"
-      ],
+      "plan_id": "b4-repair-loop",
+      "plan_path": "docs/plans/B4_REPAIR_LOOP.md",
+      "depends_on": ["routing"],
       "roadmap": "B4",
-      "notes": "IMPLEMENTATION_PLAN.md m31-repair-loop DRAFT awaiting Captain approval",
+      "notes": "Draft only; does not claim M31 (A3 finding-outcomes is PR #152). Awaiting Captain approval of docs/plans/B4_REPAIR_LOOP.md",
       "linear_issue": "OVA-48"
     }
   ],
   "invariants": {
     "approved_for_execution": false,
     "linear_originates_approval": false,
-    "one_learning_run_at_a_time": true
+    "one_learning_run_at_a_time": true,
+    "m31_is_finding_outcomes": true
   },
   "markdown_path": ".agent/queues/captain-objectives-2026-09-15.md"
 }
