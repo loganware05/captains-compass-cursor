@@ -1,0 +1,26 @@
+{
+  "capabilities_exercised": [
+    "code-review",
+    "finding-triage"
+  ],
+  "created_at": "2026-09-15T18:18:30Z",
+  "experience_id": "exp-cr-m28-bitcoin-style-demo-noise-style-nit",
+  "lessons": [
+    "Code review finding `noise-style-nit` decision=rejected label=fp. Title: Style nit without evidence. Notes: Style nit discarded by verify; human agrees false positive noise."
+  ],
+  "objective": "Triage Code Reviewer finding noise-style-nit from run m28-bitcoin-style-demo",
+  "outcome": "failed",
+  "plan_id": "m31-finding-outcomes-experience",
+  "provenance": {
+    "code_review_run_id": "m28-bitcoin-style-demo",
+    "decision": "rejected",
+    "finding_id": "noise-style-nit",
+    "label": "fp",
+    "report_path": "/tmp/tmp.DltkYauKcl/.agent/evidence/code-review/m28-bitcoin-style-demo/report.json"
+  },
+  "run_id": "m28-bitcoin-style-demo",
+  "skills_used": [
+    "code-reviewer"
+  ],
+  "source_instance": "control-test"
+}

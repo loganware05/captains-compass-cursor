@@ -388,6 +388,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing orchestrator/review/github_draft.py"
   fi
+  if [[ -f "$ROOT/orchestrator/review/outcomes.py" ]]; then
+    ok "review finding outcomes module"
+  else
+    fail "missing orchestrator/review/outcomes.py"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/code-review-report.schema.json" ]]; then
     ok "code-review-report schema"
   else
@@ -402,6 +407,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "github-allowlist schema"
   else
     fail "missing orchestrator/schemas/github-allowlist.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/finding-outcome.schema.json" ]]; then
+    ok "finding-outcome schema"
+  else
+    fail "missing orchestrator/schemas/finding-outcome.schema.json"
   fi
   if [[ -f "$ROOT/templates/docs/INTENT_PACK.md" ]]; then
     ok "INTENT_PACK.md template"
@@ -422,6 +432,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "export-intent-from-linear.sh"
   else
     fail "missing executable scripts/export-intent-from-linear.sh"
+  fi
+  if [[ -x "$ROOT/scripts/record-finding-outcomes.sh" ]]; then
+    ok "record-finding-outcomes.sh"
+  else
+    fail "missing executable scripts/record-finding-outcomes.sh"
   fi
   if [[ -f "$ROOT/orchestrator/reference-profiles/code-reviewer.json" ]]; then
     ok "code-reviewer reference profile"

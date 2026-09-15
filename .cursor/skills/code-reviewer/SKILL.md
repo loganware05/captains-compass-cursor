@@ -31,6 +31,7 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 4. **Verify** — discard findings below confidence threshold or without evidence paths.
 5. **Report** — write `report.json` + `report.md` under `.agent/evidence/code-review/<run-id>/`.
 6. Hand verified findings to humans or `review-fix-loop`. **Never auto-merge.** GitHub draft posting is **opt-in** (`--post-github-draft`) and allowlist-gated (M30); default remains evidence-only.
+7. **Outcomes (M31)** — after human triage, record outcomes → Experience (optional RoutingProposal is proposal-only).
 
 ### CLI
 
@@ -41,6 +42,8 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 ./scripts/northstar review --repo /path/to/repo --candidates-mode specialists
 ./scripts/northstar review --repo /path/to/repo --candidates tests/fixtures/code-review/candidates.json
 ./scripts/northstar intent export --out .agent/intent/current.json --fixture issue.json
+./scripts/northstar outcomes record --report path/to/report.json --triage path/to/triage.json
+./scripts/record-finding-outcomes.sh --report path/to/report.json --triage path/to/triage.json --emit-routing-proposal
 ```
 
 ## Output
@@ -48,10 +51,12 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 - Schema-valid `report.json` (`code-review-report.schema.json`)
 - Human-readable `report.md`
 - Optional `context-pack.json`
+- Optional triage `outcomes.json` + Experience lessons; optional RoutingProposal (`auto_apply=false`)
 
 ## Prohibited actions
 
-- Posting GitHub Pull Request Reviews / inline comments (deferred to Phase B)
+- Auto-applying RoutingProposal / Skill confidence deltas (Captain gate only)
 - Invoking models in CI / default hermetic path
 - Auto-merging or auto-fixing without a separate approved plan
 - Expanding webhook `pull_request` handling in this Skill
+- Treating Linear as Captain approval authority

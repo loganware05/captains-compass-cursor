@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.34.0 — 2026-09-15
+
+### Added
+
+- **M31 Finding outcomes → Experience → RoutingProposal** — record human
+  triage of Code Reviewer findings as durable Experience lessons
+- Schema `finding-outcome.schema.json` (`northstar.finding_outcome.v1`)
+- Module `orchestrator/review/outcomes.py` (normalize, Experience write,
+  optional proposal-only RoutingProposal)
+- CLI `scripts/record-finding-outcomes.sh` /
+  `northstar outcomes record`
+- Fixture `tests/fixtures/code-review/triage-outcomes.json`
+- Tests: `tests/orchestrator/test_m31_finding_outcomes.py`
+- Evidence: `.agent/evidence/m31-finding-outcomes/`
+
+### Changed
+
+- Doctor checks for outcomes module, schema, and record script
+- `code-reviewer` Skill + integration docs describe finding outcomes
+
+### Locks (unchanged)
+
+- Hermetic CI / no model on default path
+- RoutingProposal always proposal-only (`auto_apply=false`)
+- Outcomes never originate Captain approval
+- Linear is flight recorder only — never Captain approval
+- Skill slug remains `code-reviewer`
+- No FIND→FIX repair loop (B4 deferred)
+- No auto-merge / no webhooks
+
 ## 1.33.0 — 2026-09-13
 
 ### Added
