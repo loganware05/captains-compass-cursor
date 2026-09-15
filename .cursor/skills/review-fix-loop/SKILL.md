@@ -39,3 +39,9 @@ Updated branch with fixes, validation evidence, and a loop summary (resolved vs 
 - Unrelated refactors or scope expansion
 - Continuing past autonomy budget without a Budget Stop Report
 - Treating a clean review as proof the product is valuable—only that this diff looks sound
+
+## Compose with
+
+- Upstream verified findings from `code-reviewer`
+- Supervised repair dry-run: `./scripts/northstar repair start --report … --finding …`
+  (M32/B4; never auto-merges; Captain flag required to authorize dispatch)

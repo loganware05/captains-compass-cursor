@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
+| Status | **SHIPPED** (via PR #156 / v1.35.0) |
 | Plan ID | `b4-repair-loop` |
 | Supersedes | `m31-finding-outcomes-experience` (CLOSED — shipped as v1.34.0 / M31 / A3) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
@@ -16,7 +16,7 @@
 | Control repo | `loganware05/captains-compass-cursor` |
 | Proposed release | **v1.35.0** |
 | Rollback tag | `rollback/pre-b4-repair-loop` (create after approval) |
-| Branch | `cursor/m32-b4-repair-loop-05fd` |
+| Branch | `cursor/m32-b4-repair-loop-05fd` (merged); alternate PR #157 resolved onto main |
 | Issue | [#154](https://github.com/loganware05/captains-compass-cursor/issues/154) |
 | Captain | Logan Ware |
 | Queue | `.agent/queues/captain-objectives-2026-09-15.md` item 3 |
