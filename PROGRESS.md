@@ -2,36 +2,30 @@
 
 ## Current status
 
-**Release baseline: v1.33.0** — M30 Opt-in GitHub draft reviews on `main`
+**Release: v1.33.0** — M30 Opt-in GitHub draft reviews merged to `main`
 ([PR #149](https://github.com/loganware05/captains-compass-cursor/pull/149),
 [release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.33.0)).
 
 | Item | Value |
 |---|---|
 | Release | **v1.33.0** |
-| M30 / B3 | Opt-in GitHub draft reviews — **merged** |
-| M31 / A3 | Finding outcomes → Experience → RoutingProposal — [PR #152](https://github.com/loganware05/captains-compass-cursor/pull/152) |
-| Prior baseline | v1.32.0 / M29 |
-
-## Captain objective queue (2026-09-15)
-
-Canonical: `.agent/queues/captain-objectives-2026-09-15.md`
-
-1. **Learning Run** — complete NS-SKILL-003 ([OVA-34](https://linear.app/ovaltechnologysolutions/issue/OVA-34)) — **IN PROGRESS** (sandbox [PR #56](https://github.com/loganware05/captain-compass-sandbox/pull/56))
-2. **routing** — [OVA-45](https://linear.app/ovaltechnologysolutions/issue/OVA-45) agent routing + M26 wakeability — scored; awaiting Captain dispatch approval
-3. **B4 — Repair loop** — FIND→PROVE→FIX→TEST→SUBMIT — queued; draft at `docs/plans/B4_REPAIR_LOOP.md` ([OVA-48](https://linear.app/ovaltechnologysolutions/issue/OVA-48))
+| M30 | Opt-in GitHub draft reviews (merged) |
+| Issue | [#147](https://github.com/loganware05/captains-compass-cursor/issues/147) |
+| Rollback | `rollback/pre-m30-github-draft-reviews` |
+| Prior baseline | v1.32.0 / M29 ([release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.32.0)) |
 
 ## In flight (Captain-directed)
 
-- **M31** (A3) — finding-outcomes implementation on [PR #152](https://github.com/loganware05/captains-compass-cursor/pull/152) (Captain-approved plan)
-- NS-SKILL-003 Learning Run + OVA-45 routing (Captain queue items 1–2)
-- B4 repair-loop plan draft only — **no implementation** until Captain approves `docs/plans/B4_REPAIR_LOOP.md`
+- **M31** plan drafted — Finding outcomes → Experience → RoutingProposal
+  (roadmap A3 / backlog M31); `IMPLEMENTATION_PLAN.md` status
+  **AWAITING_APPROVAL** on branch `cursor/m30-closeout-m31-plan-3b10`
+  ([issue #150](https://github.com/loganware05/captains-compass-cursor/issues/150))
+- Alternate: Learning Run / OVA routing, or defer to B4 repair-loop later
 
 ## Completed
 
 - **M30** merged — allowlist-gated PENDING draft PR reviews; tagged **v1.33.0**
-  ([PR #149](https://github.com/loganware05/captains-compass-cursor/pull/149));
-  closeout via [PR #151](https://github.com/loganware05/captains-compass-cursor/pull/151)
+  ([PR #149](https://github.com/loganware05/captains-compass-cursor/pull/149))
 - **M29** merged — intent packs + installer templates; tagged **v1.32.0**
   ([PR #145](https://github.com/loganware05/captains-compass-cursor/pull/145));
   closeout docs via [PR #148](https://github.com/loganware05/captains-compass-cursor/pull/148)
@@ -49,7 +43,4 @@ Canonical: `.agent/queues/captain-objectives-2026-09-15.md`
 
 ## Blockers
 
-- Sandbox PR #56 must merge (or remain the working base) before NS-SKILL-003 retain closeout on `main`
-- OVA-45 dispatch blocked until Captain: `I approve the dispatch`
-- B4 implementation blocked until Captain approves `docs/plans/B4_REPAIR_LOOP.md`
-- M31 (A3) tagging blocked until Captain merges [PR #152](https://github.com/loganware05/captains-compass-cursor/pull/152)
+None. Awaiting Captain choice: approve M31 or redirect.
