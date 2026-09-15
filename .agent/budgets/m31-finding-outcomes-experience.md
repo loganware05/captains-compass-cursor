@@ -3,8 +3,9 @@
 | Field | Value |
 |---|---|
 | Plan | m31-finding-outcomes-experience |
-| Status | implementing |
+| Status | **CLOSED** — shipped v1.34.0 |
 | Started | 2026-09-15 |
+| Closed | 2026-09-15 |
 | Soft stop | AC met + tests green + evidence + PR |
 | Hard stop | No auto-apply RoutingProposal; no B4 repair; no model in CI |
 
@@ -13,7 +14,7 @@
 1. Outcomes are evidence; Captain owns any Skill confidence apply
 2. Hermetic default path unchanged
 3. Skill slug `code-reviewer` unchanged
-4. Repair-loop deferred
+4. Repair-loop deferred (now drafted as `b4-repair-loop`)
 
 ## Iteration log
 
@@ -24,3 +25,4 @@
 | 2026-09-15 | Schema/module/CLI/doctor/tests/evidence green; docs + ADR-048 + VERSION 1.34.0 |
 | 2026-09-15 | Hardened notes redaction for embedded token patterns; PR #152 |
 | 2026-09-15 | Adversarial follow-up: proposal-notes scrub, broader patterns, empty triage guard, source_instance infer |
+| 2026-09-15 | PR #152/#153 merged; tagged **v1.34.0**; budget closed |

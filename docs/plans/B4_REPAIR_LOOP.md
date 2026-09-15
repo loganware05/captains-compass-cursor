@@ -1,25 +1,24 @@
-# Implementation Plan — B4 Repair loop (FIND→PROVE→FIX→TEST→SUBMIT)
+# Implementation Plan — M32 / B4 Repair loop (FIND→PROVE→FIX→TEST→SUBMIT)
 
-> **Not the active root `IMPLEMENTATION_PLAN.md`.**  
-> Active M31 is **Finding outcomes → Experience → RoutingProposal**
-> (`m31-finding-outcomes-experience`, issue #150 / PR #152).  
-> This document is a **draft** for roadmap **B4** (queued after A3).
+> Archive mirror of root `IMPLEMENTATION_PLAN.md` (plan id `b4-repair-loop`). Approve the root plan.
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **DRAFT — awaiting Captain approval** |
+| Status | **AWAITING_APPROVAL** |
 | Plan ID | `b4-repair-loop` |
-| Supersedes | n/a (parallel track to A3 / M31 finding-outcomes) |
-| Product | **NorthStar** |
-| Baseline | `v1.33.0` / `origin/main` (M30 merged); prefer after M31 A3 lands |
+| Supersedes | `m31-finding-outcomes-experience` (CLOSED — shipped as v1.34.0 / M31 / A3) |
+| Product | **NorthStar** (Captain's Compass compatibility alias) |
+| Baseline | `v1.34.0` / `origin/main` (M31 merged, PR #152) |
 | Prepared | 2026-09-15 |
-| Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track B / **B4** |
+| Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track B / **B4**; long-form `docs/plans/B4_REPAIR_LOOP.md` |
 | Linear | [OVA-48](https://linear.app/ovaltechnologysolutions/issue/OVA-48) |
 | Control repo | `loganware05/captains-compass-cursor` |
-| Proposed release | **TBD** (after M31 / v1.34.0 — do not claim M31 numbering) |
+| Proposed release | **v1.35.0** |
 | Rollback tag | `rollback/pre-b4-repair-loop` (create after approval) |
+| Branch | `cursor/m31-closeout-b4-plan-3b10` (plan PR); implementation after approval |
+| Issue | [#154](https://github.com/loganware05/captains-compass-cursor/issues/154) |
 | Captain | Logan Ware |
 | Queue | `.agent/queues/captain-objectives-2026-09-15.md` item 3 |
 
@@ -33,14 +32,16 @@
 6. **Linear records only** — never treat Linear as approval origin
 7. **Hermetic CI** — default tests/doctor remain network-free
 8. **`approved_for_execution` stays false** for Stars TI candidates
+9. **Skill slug** — `code-reviewer` unchanged
+10. **Finding outcomes remain proposal-gated** — M31 RoutingProposal apply stays a separate Captain action
 
 ## Request (Captain-level)
 
-Approve planning for **B4 — Repair loop**: after Code Reviewer produces verified findings, spawn a supervised FIND→PROVE→FIX→TEST→SUBMIT child workflow via agent routing, ending in a human-reviewed PR (never auto-merge).
+Approve planning for **M32 / B4 — Repair loop**: after Code Reviewer produces verified findings, spawn a supervised FIND→PROVE→FIX→TEST→SUBMIT child workflow via agent routing, ending in a human-reviewed PR (never auto-merge).
 
 ## Problem statement
 
-1. M27–M30 ship detect→verify→(optional draft post). Humans still open fix PRs by hand.
+1. M27–M31 ship detect→verify→(optional draft post)→finding outcomes / Experience. Humans still open fix PRs by hand.
 2. Roadmap B4 exit: *one supervised repair PR from a verified finding*.
 3. Without gates, repair automation could amplify false positives or merge unsafe changes.
 
@@ -50,18 +51,17 @@ Approve planning for **B4 — Repair loop**: after Code Reviewer produces verifi
 - Webhook-driven repair on every PR
 - Repairing unverified or discarded findings
 - Changing Linear approval semantics
-- Full A3 precision ledger / reputation dashboards (may land partial bridge only)
+- Auto-applying M31 RoutingProposal / Skill confidence deltas
 - Replacing Code Reviewer Skill slug
-- Claiming the M31 / v1.34.0 slot (reserved for finding-outcomes A3)
 
 ## Dependencies
 
 | Dep | Status |
 |---|---|
 | B3 — GitHub draft reviews (M30) | **Done** (v1.33.0) |
-| A3 — Review-informed learning (M31 finding-outcomes) | **In progress** — PR #152 |
+| A3 — Review-informed learning (M31 finding-outcomes) | **Done** (v1.34.0) |
 | Agent router wakeability (M25/M26) | **Done** |
-| Active Learning Run routing pattern | In progress (NS-SKILL-003 / OVA-45) |
+| Active Learning Run routing pattern | In progress (NS-SKILL-003 / OVA-45) — may proceed in parallel |
 
 ## Acceptance criteria
 
@@ -73,8 +73,8 @@ Approve planning for **B4 — Repair loop**: after Code Reviewer produces verifi
 6. **SUBMIT** — opens draft PR (or prepares branch) with finding link + rollback notes; **no auto-merge**.
 7. **Captain stop gates** — pause before FIX dispatch and before SUBMIT merge, unless Captain pre-authorizes in repo evidence.
 8. **Doctor + unit tests** — hermetic coverage for refuse paths (unverified finding, expired agent, non-allowlisted repo).
-9. **Docs** — new ADR (not ADR-048 — that is M31 finding-outcomes), `docs/integrations/` note, Skill cross-links (`code-reviewer`, `review-fix-loop` if present).
-10. **Memory** — DECISIONS / PROGRESS / CHANGELOG / VERSION (version TBD after M31).
+9. **Docs** — ADR-049 (or next free), `docs/integrations/` note, Skill cross-links (`code-reviewer`, `review-fix-loop` if present).
+10. **Memory** — DECISIONS / PROGRESS / CHANGELOG / VERSION → **1.35.0**.
 11. **Sandbox proof** — one supervised repair PR (or dry-run evidence) on `captain-compass-sandbox`.
 
 ## Architecture (proposed)
@@ -95,19 +95,58 @@ northstar repair start --finding <id> [--cloud-agents-json]
         └─ SUBMIT draft PR → stop (never auto-merge)
 ```
 
+## Implementation steps (after approval only)
+
+1. Create rollback tag `rollback/pre-b4-repair-loop`.
+2. Author repair intake + PROVE refuse paths.
+3. Wire agent-router dispatch packet (Captain-gated).
+4. Bounded FIX→TEST evidence writer + draft PR submit (no auto-merge).
+5. Doctor + hermetic tests + sandbox proof.
+6. Docs + ADR + VERSION 1.35.0.
+7. Open PR to `main`; Captain merge → tag **v1.35.0**.
+
+## Validation plan
+
+| Layer | How |
+|---|---|
+| Static | doctor.sh |
+| Unit | unverified refuse; allowlist refuse; no auto-merge |
+| Integration | fixture verified finding → dry-run repair evidence |
+| Security | redaction; token hygiene; no secret commit |
+| Rollback | revert PR / reset to rollback tag |
+
+## Risks & mitigations
+
+| Risk | Mitigation |
+|---|---|
+| Amplifying FP findings | Verified-only + severity floor + PROVE re-check |
+| Accidental merge | Hard non-goal; draft PR only |
+| Scope into auto-apply reputation | Explicit non-goal; M31 apply stays separate |
+
+## Budget
+
+After approval: `.agent/budgets/b4-repair-loop.md`
+
+Soft stop: AC + tests + evidence + PR. Hard stop: no auto-merge; no unverified repair; no model-in-CI default.
+
 ## Rollback
 
-1. Tag `rollback/pre-b4-repair-loop` at approval time.
-2. Revert B4 PR(s); leave M31 finding-outcomes intact.
-3. Disable repair CLI entrypoints via feature flag / docs “do not use” if partial land.
+1. Revert the B4 PR or reset to rollback tag.
+2. Confirm Code Reviewer + M31 outcomes still work.
+3. VERSION/CHANGELOG note if tag already cut.
 
 ## Open questions for Captain
 
 1. Prefer repair CLI as `northstar repair …` vs Skill-only procedure?
 2. First proof target: sandbox fixture finding vs live bitcoin-data-collector verified finding?
-3. Is M31 finding-outcomes (Experience + proposal-only RoutingProposal) enough to start B4, or must applied Skill reputation land first?
+3. Proceed with B4 now, or finish Learning Run / OVA-45 dispatch first?
 
-## Approval
+## Approval gate
 
-Reply with an explicit approval (e.g. `I approve docs/plans/B4_REPAIR_LOOP.md` / `I approve the B4 plan`) to authorize implementation.  
-Do **not** use `I approve M31` for this document — M31 refers to finding-outcomes.
+**Paused for Captain approval.** Reply with an explicit approval, for example:
+
+`I approve IMPLEMENTATION_PLAN.md for b4-repair-loop`
+
+(or `I approve the B4 plan`).
+
+Until then: no product implementation, no rollback tag for B4, no repair CLI land.
