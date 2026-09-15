@@ -1,6 +1,7 @@
 {
   "kind": "northstar-captain-objective-queue",
   "queued_at": "2026-09-15T18:18:08Z",
+  "updated_at": "2026-09-15T18:45:00Z",
   "captain": "Logan Ware",
   "captain_utterance": "Add the following objectives to queue, then begin working. Learning Run / routing / B4",
   "first_mate_run_id": "bc-0b8ec108-10ec-4204-a4e4-8bedbf0405fd",
@@ -24,20 +25,33 @@
     {
       "id": "b4-repair-loop",
       "title": "B4 — Repair loop",
-      "status": "queued_plan_drafted",
+      "status": "awaiting_plan_approval",
       "plan_id": "b4-repair-loop",
-      "plan_path": "docs/plans/B4_REPAIR_LOOP.md",
+      "plan_path": "IMPLEMENTATION_PLAN.md",
+      "long_form_path": "docs/plans/B4_REPAIR_LOOP.md",
       "depends_on": ["routing"],
       "roadmap": "B4",
-      "notes": "Draft only; does not claim M31 (A3 finding-outcomes is PR #152). Awaiting Captain approval of docs/plans/B4_REPAIR_LOOP.md",
-      "linear_issue": "OVA-48"
+      "milestone": "M32",
+      "proposed_release": "v1.35.0",
+      "notes": "Root IMPLEMENTATION_PLAN promoted after M31 closeout; awaiting Captain approval",
+      "linear_issue": "OVA-48",
+      "github_issue": 154
+    }
+  ],
+  "completed_related": [
+    {
+      "id": "m31-finding-outcomes",
+      "title": "M31 Finding outcomes → Experience → RoutingProposal",
+      "status": "shipped",
+      "release": "v1.34.0",
+      "pr": 152
     }
   ],
   "invariants": {
     "approved_for_execution": false,
     "linear_originates_approval": false,
     "one_learning_run_at_a_time": true,
-    "m31_is_finding_outcomes": true
+    "m31_finding_outcomes_shipped": true
   },
   "markdown_path": ".agent/queues/captain-objectives-2026-09-15.md"
 }
