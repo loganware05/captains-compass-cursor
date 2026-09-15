@@ -1,0 +1,99 @@
+{
+  "schema_version": "northstar.finding_outcomes_bundle.v1",
+  "run_id": "b5-precision-fixture",
+  "created_at": "2026-09-15T20:00:00Z",
+  "captain_approval": false,
+  "outcomes": [
+    {
+      "schema_version": "northstar.finding_outcome.v1",
+      "run_id": "b5-precision-fixture",
+      "finding_id": "sec-1",
+      "decision": "accepted",
+      "label": "tp",
+      "skill": "security-review",
+      "notes": "true positive",
+      "title": "secret material",
+      "severity": "high",
+      "captain_approval": false,
+      "created_at": "2026-09-15T20:00:00Z"
+    },
+    {
+      "schema_version": "northstar.finding_outcome.v1",
+      "run_id": "b5-precision-fixture",
+      "finding_id": "sec-2",
+      "decision": "accepted",
+      "label": "tp",
+      "skill": "security-review",
+      "notes": "true positive",
+      "title": "auth gap",
+      "severity": "medium",
+      "captain_approval": false,
+      "created_at": "2026-09-15T20:00:00Z"
+    },
+    {
+      "schema_version": "northstar.finding_outcome.v1",
+      "run_id": "b5-precision-fixture",
+      "finding_id": "sec-3",
+      "decision": "accepted",
+      "label": "tp",
+      "skill": "security-review",
+      "notes": "true positive",
+      "title": "unsafe deserialize",
+      "severity": "high",
+      "captain_approval": false,
+      "created_at": "2026-09-15T20:00:00Z"
+    },
+    {
+      "schema_version": "northstar.finding_outcome.v1",
+      "run_id": "b5-precision-fixture",
+      "finding_id": "sec-4",
+      "decision": "accepted",
+      "label": "tp",
+      "skill": "security-review",
+      "notes": "true positive",
+      "title": "path traversal",
+      "severity": "high",
+      "captain_approval": false,
+      "created_at": "2026-09-15T20:00:00Z"
+    },
+    {
+      "schema_version": "northstar.finding_outcome.v1",
+      "run_id": "b5-precision-fixture",
+      "finding_id": "sec-5",
+      "decision": "rejected",
+      "label": "fp",
+      "skill": "security-review",
+      "notes": "false positive",
+      "title": "benign token-looking string",
+      "severity": "low",
+      "captain_approval": false,
+      "created_at": "2026-09-15T20:00:00Z"
+    },
+    {
+      "schema_version": "northstar.finding_outcome.v1",
+      "run_id": "b5-precision-fixture",
+      "finding_id": "style-1",
+      "decision": "rejected",
+      "label": "fp",
+      "skill": "code-reviewer",
+      "notes": "noise",
+      "title": "style nit",
+      "severity": "low",
+      "captain_approval": false,
+      "created_at": "2026-09-15T20:00:00Z"
+    },
+    {
+      "schema_version": "northstar.finding_outcome.v1",
+      "run_id": "b5-precision-fixture",
+      "finding_id": "style-2",
+      "decision": "deferred",
+      "label": "unknown",
+      "skill": "code-reviewer",
+      "notes": "need owner",
+      "title": "naming",
+      "severity": "low",
+      "captain_approval": false,
+      "created_at": "2026-09-15T20:00:00Z"
+    }
+  ]
+}

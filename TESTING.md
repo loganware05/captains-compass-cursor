@@ -98,6 +98,19 @@ PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m32_b4_repair_loop -v
   --repository loganware05/captain-compass-sandbox
 ```
 
+Precision ledger (M33 / B5; hermetic; proposal-only):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m33_b5_precision_ledger -v
+./scripts/aggregate-precision-ledger.sh \
+  --outcomes tests/fixtures/code-review/precision-outcomes.json \
+  --ledger-id b5-fixture-demo \
+  --emit-priority-proposal
+./scripts/northstar precision aggregate \
+  --outcomes tests/fixtures/code-review/precision-outcomes.json \
+  --ledger-id b5-cli-demo
+```
+
 Promote candidate / train from Experience (staging drafts only):
 
 ```bash

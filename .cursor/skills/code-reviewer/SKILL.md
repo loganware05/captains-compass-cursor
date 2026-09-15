@@ -33,6 +33,7 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 6. Hand verified findings to humans or `review-fix-loop`. **Never auto-merge.** GitHub draft posting is **opt-in** (`--post-github-draft`) and allowlist-gated (M30); default remains evidence-only.
 7. **Outcomes (M31)** — after human triage, record outcomes → Experience (optional RoutingProposal is proposal-only).
 8. **Repair (M32 / B4)** — for verified findings only, `northstar repair start` builds a FIND→PROVE→dispatch packet. Never auto-merges. Captain authorization required before FIX/SUBMIT.
+9. **Precision (M33 / B5)** — aggregate finding outcomes into a precision ledger + dashboard; optional priority proposal never auto-applies.
 
 ### CLI
 
@@ -47,6 +48,8 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 ./scripts/record-finding-outcomes.sh --report path/to/report.json --triage path/to/triage.json --emit-routing-proposal
 ./scripts/northstar repair start --report path/to/report.json --finding <id> --repository loganware05/captain-compass-sandbox
 ./scripts/start-repair-loop.sh --report path/to/report.json --finding <id> --repository loganware05/captain-compass-sandbox
+./scripts/northstar precision aggregate --outcomes path/to/outcomes.json --emit-priority-proposal
+./scripts/aggregate-precision-ledger.sh --outcomes path/to/outcomes.json --ledger-id demo
 ```
 
 ## Output
