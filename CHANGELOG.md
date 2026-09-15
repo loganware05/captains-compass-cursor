@@ -1,3 +1,5 @@
+# Changelog
+
 ## 1.35.0 — 2026-09-15
 
 ### Added
@@ -17,8 +19,6 @@
 - Captain FIX authorization required to prepare submit metadata
 - Linear is flight recorder only
 - Skill slug remains `code-reviewer`
-
-# Changelog
 
 ## 1.34.0 — 2026-09-15
 
