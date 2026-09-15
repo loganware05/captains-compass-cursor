@@ -1,5 +1,8 @@
 # Implementation Plan — M33 / B5 Precision ledger (Skill/reviewer reputation)
 
+> Archive mirror of root `IMPLEMENTATION_PLAN.md` (plan id `b5-precision-ledger`).
+
+
 ## Metadata
 
 | Field | Value |
