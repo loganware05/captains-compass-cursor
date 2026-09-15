@@ -1,5 +1,29 @@
 # Decisions
 
+## ADR-048: Finding outcomes → Experience → RoutingProposal (M31)
+
+- **Status:** Accepted
+- **Date:** 2026-09-15
+- **Context:** M27–M30 produce verified findings and optional draft reviews, but
+  accepted/rejected triage is not yet stored as Experience. Roadmap A3 requires
+  at least one Skill confidence delta **proposed** from review outcomes without
+  auto-applying changes or opening the FIND→FIX repair loop.
+- **Decision:**
+  1. Add `finding-outcome.schema.json` with `decision`
+     (`accepted`|`rejected`|`deferred`), `label` (`tp`|`fp`|`unknown`), and
+     `captain_approval` always `false`.
+  2. Ship hermetic `orchestrator/review/outcomes.py` +
+     `scripts/record-finding-outcomes.sh` / `northstar outcomes record`.
+  3. Accepted/rejected outcomes write Experience lessons; deferred stays in
+     outcomes evidence only.
+  4. Optional `--emit-routing-proposal` builds a RoutingProposal with
+     `auto_apply=false` / `captain_approved=false` (never applied in M31).
+  5. Keep hermetic default path, Skill slug `code-reviewer`, and Linear as
+     flight recorder only. B4 FIND→FIX remains a separate plan.
+- **Consequences:** Review triage closes the learning loop into Experience and
+  can propose Skill confidence deltas for Captain review. No silent reputation
+  mutation; repair automation stays deferred.
+
 ## ADR-047: Opt-in GitHub draft reviews (M30)
 
 - **Status:** Accepted

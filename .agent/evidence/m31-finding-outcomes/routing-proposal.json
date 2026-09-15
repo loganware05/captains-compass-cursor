@@ -1,0 +1,42 @@
+{
+  "auto_apply": false,
+  "based_on_experiences": [
+    "exp-cr-m28-bitcoin-style-demo-sec-secret-in-diff",
+    "exp-cr-m28-bitcoin-style-demo-noise-style-nit"
+  ],
+  "captain_approval_required": true,
+  "captain_approved": false,
+  "created_at": "2026-09-15T18:18:30Z",
+  "decomposition_hints": [
+    {
+      "matcher_factor": "security_bonus",
+      "rationale": "Success experiences emphasized security-review (proposal-only decomposition hint; max delta 0.01)",
+      "sub_capabilities": [
+        "security-review"
+      ],
+      "weight_delta": 0.01
+    }
+  ],
+  "kind": "routing-proposal",
+  "matcher_weight_suggestions": {
+    "agent_affinity": 0.1,
+    "capability_overlap": 0.45,
+    "lifecycle_stage": 0.15,
+    "security_bonus": 0.11,
+    "stack_match": 0.2
+  },
+  "notes": "M31 fixture triage evidence",
+  "proposal_id": "route-cr-m28-bitcoin-style-demo-7337dcfd",
+  "skill_confidence_deltas": [
+    {
+      "delta": -0.05,
+      "rationale": "From 1 Experience(s): success=0 other=1 (proposal-only; not applied)",
+      "skill_id": "code-reviewer"
+    },
+    {
+      "delta": 0.05,
+      "rationale": "From 1 Experience(s): success=1 other=0 (proposal-only; not applied)",
+      "skill_id": "security-review"
+    }
+  ]
+}

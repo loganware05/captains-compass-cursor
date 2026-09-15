@@ -1,6 +1,6 @@
 # NorthStar Code Reviewer
 
-Hermetic, evidence-only code review pipeline for NorthStar (M27–M29).
+Hermetic, evidence-only code review pipeline for NorthStar (M27–M31).
 
 ## Pipeline
 
@@ -84,21 +84,50 @@ Gates:
 - Token from `GITHUB_TOKEN` / `GH_TOKEN` — never logged
 - Evidence written to `.agent/evidence/code-review/<run-id>/github-draft.json`
 
+## Finding outcomes (M31)
+
+After humans triage verified findings, record durable Experience lessons (and
+optionally a Captain-gated RoutingProposal). Outcomes never originate Captain
+approval; proposals are never auto-applied.
+
+```bash
+./scripts/record-finding-outcomes.sh \
+  --report .agent/evidence/code-review/<run-id>/report.json \
+  --triage path/to/triage-outcomes.json \
+  --plan-id m31-finding-outcomes-experience \
+  --emit-routing-proposal
+
+./scripts/northstar outcomes record \
+  --report .agent/evidence/code-review/<run-id>/report.json \
+  --triage path/to/triage-outcomes.json \
+  --emit-routing-proposal
+```
+
+Triage JSON is a list or `{"outcomes":[...]}` with `finding_id`,
+`decision` (`accepted`|`rejected`|`deferred`), and optional `label` /
+`skill` / `notes`. Accepted/rejected write Experience; deferred stays in
+`outcomes.json` only. `--emit-routing-proposal` writes a proposal with
+`auto_apply=false`.
+
 ## Locks (Captain)
 
 - Hermetic CI — fixture / specialist / heuristic candidates only; no model calls by default
 - Default candidates mode: **specialists** (M28)
 - Skill slug: `code-reviewer`
 - **GitHub draft posting opt-in only** (M30); default remains evidence-only
+- **Finding outcomes → Experience are evidence only** (M31); RoutingProposal never auto-applies
 - Intent packs are evidence only; Linear never approves
 - Tracker: GitHub issues only
+- FIND→FIX repair loop remains deferred (B4)
 
 ## Compose with
 
 - `security-review`, `accessibility-review`, `adversarial-reviewer`
 - Downstream: `review-fix-loop` consumes verified findings
+- Learning loop: `record-finding-outcomes.sh` → Experience → optional RoutingProposal
 
 ## Schemas
 
 - `orchestrator/schemas/code-review-report.schema.json`
 - `orchestrator/schemas/intent-pack.schema.json`
+- `orchestrator/schemas/finding-outcome.schema.json`

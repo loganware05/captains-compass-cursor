@@ -1,0 +1,50 @@
+{
+  "captain_approval": false,
+  "created_at": "2026-09-15T18:18:30Z",
+  "outcomes": [
+    {
+      "captain_approval": false,
+      "created_at": "2026-09-15T18:18:30Z",
+      "decision": "accepted",
+      "finding_id": "sec-secret-in-diff",
+      "label": "tp",
+      "notes": "Confirmed secret-looking literal in diff; treat as true positive.",
+      "report_path": "/tmp/tmp.DltkYauKcl/.agent/evidence/code-review/m28-bitcoin-style-demo/report.json",
+      "run_id": "m28-bitcoin-style-demo",
+      "schema_version": "northstar.finding_outcome.v1",
+      "severity": "high",
+      "skill": "security-review",
+      "title": "Possible secret material in diff"
+    },
+    {
+      "captain_approval": false,
+      "created_at": "2026-09-15T18:18:30Z",
+      "decision": "rejected",
+      "finding_id": "noise-style-nit",
+      "label": "fp",
+      "notes": "Style nit discarded by verify; human agrees false positive noise.",
+      "report_path": "/tmp/tmp.DltkYauKcl/.agent/evidence/code-review/m28-bitcoin-style-demo/report.json",
+      "run_id": "m28-bitcoin-style-demo",
+      "schema_version": "northstar.finding_outcome.v1",
+      "severity": "low",
+      "skill": "code-reviewer",
+      "title": "Style nit without evidence"
+    },
+    {
+      "captain_approval": false,
+      "created_at": "2026-09-15T18:18:30Z",
+      "decision": "deferred",
+      "finding_id": "sec-auth-without-tests",
+      "label": "unknown",
+      "notes": "Need product owner input before scoring.",
+      "report_path": "/tmp/tmp.DltkYauKcl/.agent/evidence/code-review/m28-bitcoin-style-demo/report.json",
+      "run_id": "m28-bitcoin-style-demo",
+      "schema_version": "northstar.finding_outcome.v1",
+      "severity": "medium",
+      "skill": "security-review",
+      "title": "Auth/credential paths changed without tests"
+    }
+  ],
+  "run_id": "m28-bitcoin-style-demo",
+  "schema_version": "northstar.finding_outcomes_bundle.v1"
+}

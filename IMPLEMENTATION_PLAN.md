@@ -4,18 +4,19 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING_APPROVAL** |
+| Status | **PR_OPEN** |
 | Plan ID | `m31-finding-outcomes-experience` |
 | Supersedes | `m30-github-draft-reviews` (CLOSED — shipped as v1.33.0 / M30) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
 | Baseline | `v1.33.0` / `origin/main` (M30 merged, PR #149) |
 | Prepared | 2026-09-15 |
+| Approved | 2026-09-15 — Captain: “I approve IMPLEMENTATION_PLAN.md for m31-finding-outcomes-experience” |
 | Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track A / **A3** + backlog M31 |
 | Product dry-run target | control fixtures + optional sandbox review triage |
 | Control repo | `loganware05/captains-compass-cursor` |
 | Proposed release | **v1.34.0** |
-| Rollback tag | `rollback/pre-m31-finding-outcomes` (create after approval) |
-| Branch | `cursor/m30-closeout-m31-plan-3b10` (plan PR); implementation after approval |
+| Rollback tag | `rollback/pre-m31-finding-outcomes`  |
+| Branch | `cursor/m31-finding-outcomes-3b10` |
 | Issue | [#150](https://github.com/loganware05/captains-compass-cursor/issues/150) |
 | Captain | Logan Ware |
 
@@ -115,13 +116,11 @@ Soft stop: AC + tests + evidence + PR. Hard stop: no auto-apply; no B4 repair; n
 
 ## Approval gate
 
-**No product implementation until the Captain explicitly approves this `IMPLEMENTATION_PLAN.md`.**
+**Captain approved this plan on 2026-09-15**
+(`I approve IMPLEMENTATION_PLAN.md for m31-finding-outcomes-experience`).
+Implementation proceeds on `cursor/m31-finding-outcomes-3b10` toward **v1.34.0**.
 
-Suggested approval phrase:
-
-`I approve IMPLEMENTATION_PLAN.md for m31-finding-outcomes-experience`
-
-Optional lock confirmations:
+Locks confirmed:
 
 - proposals only / no auto-apply
 - no FIND→FIX in this milestone

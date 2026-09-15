@@ -1,0 +1,12 @@
+{
+  "run_id": "m28-bitcoin-style-demo",
+  "outcomes_path": ".agent/evidence/m31-finding-outcomes/outcomes.json",
+  "outcome_count": 3,
+  "experience_paths": [
+    ".agent/evidence/m31-finding-outcomes/experiences/exp-cr-m28-bitcoin-style-demo-sec-secret-in-diff.json",
+    ".agent/evidence/m31-finding-outcomes/experiences/exp-cr-m28-bitcoin-style-demo-noise-style-nit.json"
+  ],
+  "proposal_path": ".agent/evidence/m31-finding-outcomes/routing-proposal.json",
+  "proposal_auto_apply": false,
+  "captain_approval": false
+}

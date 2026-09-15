@@ -26,6 +26,8 @@ SCHEMA_FILES = (
     "embedding-index.schema.json",
     "code-review-report.schema.json",
     "intent-pack.schema.json",
+    "github-allowlist.schema.json",
+    "finding-outcome.schema.json",
 )
 
 

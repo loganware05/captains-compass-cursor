@@ -1,0 +1,21 @@
+{
+  "outcomes": [
+    {
+      "finding_id": "sec-secret-in-diff",
+      "decision": "accepted",
+      "label": "tp",
+      "notes": "Confirmed secret-looking literal in diff; treat as true positive."
+    },
+    {
+      "finding_id": "noise-style-nit",
+      "decision": "rejected",
+      "label": "fp",
+      "notes": "Style nit discarded by verify; human agrees false positive noise."
+    },
+    {
+      "finding_id": "sec-auth-without-tests",
+      "decision": "deferred",
+      "notes": "Need product owner input before scoring."
+    }
+  ]
+}

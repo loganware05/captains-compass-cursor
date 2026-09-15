@@ -2,25 +2,24 @@
 
 ## Current status
 
-**Release: v1.33.0** — M30 Opt-in GitHub draft reviews merged to `main`
-([PR #149](https://github.com/loganware05/captains-compass-cursor/pull/149),
-[release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.33.0)).
+**Release candidate: v1.34.0** — M31 Finding outcomes → Experience →
+RoutingProposal on draft [PR #152](https://github.com/loganware05/captains-compass-cursor/pull/152)
+([issue #150](https://github.com/loganware05/captains-compass-cursor/issues/150)).
 
 | Item | Value |
 |---|---|
-| Release | **v1.33.0** |
-| M30 | Opt-in GitHub draft reviews (merged) |
-| Issue | [#147](https://github.com/loganware05/captains-compass-cursor/issues/147) |
-| Rollback | `rollback/pre-m30-github-draft-reviews` |
-| Prior baseline | v1.32.0 / M29 ([release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.32.0)) |
+| Release target | **v1.34.0** (RC — not tagged until Captain merges) |
+| M31 | Finding outcomes → Experience → RoutingProposal (PR open) |
+| Issue | [#150](https://github.com/loganware05/captains-compass-cursor/issues/150) |
+| PR | [#152](https://github.com/loganware05/captains-compass-cursor/pull/152) |
+| Rollback | `rollback/pre-m31-finding-outcomes` |
+| Prior baseline | v1.33.0 / M30 ([release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.33.0)) |
 
 ## In flight (Captain-directed)
 
-- **M31** plan drafted — Finding outcomes → Experience → RoutingProposal
-  (roadmap A3 / backlog M31); `IMPLEMENTATION_PLAN.md` status
-  **AWAITING_APPROVAL** on branch `cursor/m30-closeout-m31-plan-3b10`
-  ([issue #150](https://github.com/loganware05/captains-compass-cursor/issues/150))
-- Alternate: Learning Run / OVA routing, or defer to B4 repair-loop later
+- **M31** Captain-approved — AC met on `cursor/m31-finding-outcomes-3b10`; awaiting merge
+- Next after merge: tag **v1.34.0**, then closeout / next-move plan (B4 repair
+  loop remains a separate Captain choice)
 
 ## Completed
 
@@ -43,4 +42,4 @@
 
 ## Blockers
 
-None. Awaiting Captain choice: approve M31 or redirect.
+None. Soft stop after M31 PR; await Captain merge before tagging v1.34.0.
