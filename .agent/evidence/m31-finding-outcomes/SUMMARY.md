@@ -33,6 +33,6 @@ Triage input: `tests/fixtures/code-review/triage-outcomes.json`
 - Outcomes force `captain_approval=false`
 - RoutingProposal is proposal-only (`auto_apply=false`)
 - Deferred findings do not write Experience
-- Embedded tokens in triage notes are scrubbed (`[REDACTED]`) before Experience write
+- Common secret patterns in triage notes / proposal notes are scrubbed (`[REDACTED]`) before durable writes
 - Hermetic path — no model / no network
 - Skill slug `code-reviewer` unchanged

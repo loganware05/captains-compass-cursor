@@ -68,6 +68,20 @@ Record ExecutionRun + Experience:
   --skills "execution-telemetry,pull-request-preparation"
 ```
 
+Finding outcomes → Experience (M31; hermetic fixture path):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m31_finding_outcomes -v
+./scripts/record-finding-outcomes.sh \
+  --report .agent/evidence/m28-reviewer-specialist-composition/bitcoin-style-demo/report.json \
+  --triage tests/fixtures/code-review/triage-outcomes.json \
+  --plan-id m31-finding-outcomes-experience \
+  --emit-routing-proposal
+./scripts/northstar outcomes record \
+  --report .agent/evidence/m28-reviewer-specialist-composition/bitcoin-style-demo/report.json \
+  --triage tests/fixtures/code-review/triage-outcomes.json
+```
+
 Promote candidate / train from Experience (staging drafts only):
 
 ```bash

@@ -3,21 +3,21 @@
 ## Current status
 
 **Release candidate: v1.34.0** — M31 Finding outcomes → Experience →
-RoutingProposal implementing on `cursor/m31-finding-outcomes-3b10`
+RoutingProposal on draft [PR #152](https://github.com/loganware05/captains-compass-cursor/pull/152)
 ([issue #150](https://github.com/loganware05/captains-compass-cursor/issues/150)).
 
 | Item | Value |
 |---|---|
-| Release target | **v1.34.0** |
-| M31 | Finding outcomes → Experience → RoutingProposal (implementing) |
+| Release target | **v1.34.0** (RC — not tagged until Captain merges) |
+| M31 | Finding outcomes → Experience → RoutingProposal (PR open) |
 | Issue | [#150](https://github.com/loganware05/captains-compass-cursor/issues/150) |
+| PR | [#152](https://github.com/loganware05/captains-compass-cursor/pull/152) |
 | Rollback | `rollback/pre-m31-finding-outcomes` |
 | Prior baseline | v1.33.0 / M30 ([release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.33.0)) |
 
 ## In flight (Captain-directed)
 
-- **M31** Captain-approved — implementing outcomes writer, Experience bridge,
-  optional proposal-only RoutingProposal; hermetic tests + evidence green
+- **M31** Captain-approved — AC met on `cursor/m31-finding-outcomes-3b10`; awaiting merge
 - Next after merge: tag **v1.34.0**, then closeout / next-move plan (B4 repair
   loop remains a separate Captain choice)
 

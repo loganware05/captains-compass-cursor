@@ -23,3 +23,4 @@
 | 2026-09-15 | Captain approved; implementing outcomes writer + Experience/RoutingProposal |
 | 2026-09-15 | Schema/module/CLI/doctor/tests/evidence green; docs + ADR-048 + VERSION 1.34.0 |
 | 2026-09-15 | Hardened notes redaction for embedded token patterns; PR #152 |
+| 2026-09-15 | Adversarial follow-up: proposal-notes scrub, broader patterns, empty triage guard, source_instance infer |

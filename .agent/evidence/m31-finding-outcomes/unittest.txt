@@ -1,12 +1,14 @@
 test_accepted_maps_to_success (tests.orchestrator.test_m31_finding_outcomes.ExperienceBridgeTests.test_accepted_maps_to_success) ... ok
 test_notes_redact_embedded_tokens (tests.orchestrator.test_m31_finding_outcomes.ExperienceBridgeTests.test_notes_redact_embedded_tokens) ... ok
 test_rejected_maps_to_failed (tests.orchestrator.test_m31_finding_outcomes.ExperienceBridgeTests.test_rejected_maps_to_failed) ... ok
+test_non_dict_triage_rows_rejected (tests.orchestrator.test_m31_finding_outcomes.FindingOutcomeSchemaTests.test_non_dict_triage_rows_rejected) ... ok
 test_normalize_forces_captain_approval_false (tests.orchestrator.test_m31_finding_outcomes.FindingOutcomeSchemaTests.test_normalize_forces_captain_approval_false) ... ok
 test_unknown_finding_rejected (tests.orchestrator.test_m31_finding_outcomes.FindingOutcomeSchemaTests.test_unknown_finding_rejected) ... ok
 test_cli_record_finding_outcomes (tests.orchestrator.test_m31_finding_outcomes.RecordOutcomesTests.test_cli_record_finding_outcomes) ... ok
+test_proposal_notes_redacted (tests.orchestrator.test_m31_finding_outcomes.RecordOutcomesTests.test_proposal_notes_redacted) ... ok
 test_record_writes_experience_and_optional_proposal (tests.orchestrator.test_m31_finding_outcomes.RecordOutcomesTests.test_record_writes_experience_and_optional_proposal) ... ok
 
 ----------------------------------------------------------------------
-Ran 7 tests in 0.076s
+Ran 9 tests in 0.075s
 
 OK

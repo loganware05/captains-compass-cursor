@@ -20,7 +20,7 @@ from orchestrator.telemetry.store import write_experience
 
 SCHEMA_VERSION = "northstar.finding_outcome.v1"
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,120}$")
-# Free-text notes may embed tokens; scrub common patterns before Experience write.
+# Free-text notes may embed secrets; scrub common patterns before durable writes.
 _SECRET_TEXT = re.compile(
     r"(?i)("
     r"ghp_[A-Za-z0-9_]{20,}"
@@ -29,11 +29,15 @@ _SECRET_TEXT = re.compile(
     r"|sk-[A-Za-z0-9_-]{20,}"
     r"|xox[baprs]-[A-Za-z0-9-]{10,}"
     r"|Bearer\s+[A-Za-z0-9._~+/=-]{20,}"
+    r"|AKIA[0-9A-Z]{16}"
+    r"|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----[\s\S]*?-----END (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"
+    r"|(?:password|passwd|secret|api[_-]?key|access[_-]?key)\s*[:=]\s*\S+"
     r")"
 )
 
 _DECISIONS = frozenset({"accepted", "rejected", "deferred"})
 _LABELS = frozenset({"tp", "fp", "unknown"})
+_SOURCE_INSTANCES = frozenset({"control-test", "product-import", "control-live"})
 
 
 class OutcomeError(ValueError):
@@ -59,6 +63,16 @@ def _redact_secret_text(value: Any) -> Any:
     if isinstance(value, list):
         return [_redact_secret_text(v) for v in value]
     return value
+
+
+def infer_source_instance(repo_root: Path) -> str:
+    """Map repo_root to Experience source_instance without claiming Captain approval."""
+    root = Path(repo_root).resolve()
+    if (root / "orchestrator" / "schemas" / "finding-outcome.schema.json").is_file():
+        return "control-live"
+    if (root / ".agent").is_dir():
+        return "product-import"
+    return "control-test"
 
 def load_review_report(path: Path) -> dict[str, Any]:
     path = Path(path)
@@ -93,7 +107,10 @@ def load_triage_input(path: Path) -> list[dict[str, Any]]:
         raise OutcomeError("triage JSON must be a list or {\"outcomes\": [...]}")
     if not rows:
         raise OutcomeError("triage input is empty")
-    return [row for row in rows if isinstance(row, dict)]
+    dict_rows = [row for row in rows if isinstance(row, dict)]
+    if not dict_rows:
+        raise OutcomeError("triage input has no outcome objects")
+    return dict_rows
 
 
 def _default_label(decision: str, label: str | None) -> str:
@@ -152,7 +169,12 @@ def normalize_outcome(
     return _redact_secret_text(pack)
 
 
-def outcome_to_experience(outcome: dict[str, Any], *, plan_id: str = "") -> dict[str, Any]:
+def outcome_to_experience(
+    outcome: dict[str, Any],
+    *,
+    plan_id: str = "",
+    source_instance: str = "control-test",
+) -> dict[str, Any]:
     decision = outcome["decision"]
     label = outcome["label"]
     if decision == "accepted":
@@ -161,6 +183,9 @@ def outcome_to_experience(outcome: dict[str, Any], *, plan_id: str = "") -> dict
         exp_outcome = "failed"
     else:
         exp_outcome = "partial"
+
+    if source_instance not in _SOURCE_INSTANCES:
+        raise OutcomeError(f"invalid source_instance: {source_instance!r}")
 
     lesson = (
         f"Code review finding `{outcome['finding_id']}` "
@@ -180,7 +205,7 @@ def outcome_to_experience(outcome: dict[str, Any], *, plan_id: str = "") -> dict
             f"from run {outcome['run_id']}"
         ),
         "outcome": exp_outcome,
-        "source_instance": "control-test",
+        "source_instance": source_instance,
         "skills_used": [outcome["skill"]],
         "capabilities_exercised": ["code-review", "finding-triage"],
         "lessons": [lesson],
@@ -228,12 +253,16 @@ def record_finding_outcomes(
     plan_id: str = "",
     emit_routing_proposal: bool = False,
     proposal_notes: str = "",
+    source_instance: str | None = None,
 ) -> dict[str, Any]:
     """Validate triage against a review report; write outcomes + Experience (+ optional proposal)."""
     root = Path(repo_root).resolve()
     report = load_review_report(report_path)
     run_id = str(report.get("run_id") or "")
     _safe_id(run_id, "run_id")
+    resolved_source = source_instance or infer_source_instance(root)
+    if resolved_source not in _SOURCE_INSTANCES:
+        raise OutcomeError(f"invalid source_instance: {resolved_source!r}")
 
     raw_rows = load_triage_input(triage_path)
     outcomes: list[dict[str, Any]] = []
@@ -254,7 +283,11 @@ def record_finding_outcomes(
         if outcome["decision"] == "deferred":
             # Deferred findings are recorded in outcomes evidence only.
             continue
-        experience = outcome_to_experience(outcome, plan_id=plan_id)
+        experience = outcome_to_experience(
+            outcome,
+            plan_id=plan_id,
+            source_instance=resolved_source,
+        )
         path = write_experience(root, experience)
         experience_paths.append(str(path))
         experiences.append(experience)
@@ -266,17 +299,21 @@ def record_finding_outcomes(
             raise OutcomeError(
                 "emit_routing_proposal requires at least one non-deferred outcome"
             )
-        proposal = build_routing_proposal(
-            experiences,
-            proposal_id=f"route-cr-{run_id}-{uuid4().hex[:8]}",
-            notes=proposal_notes
+        notes = _redact_secret_text(
+            proposal_notes
             or (
                 "M31 proposal from Code Reviewer finding outcomes. "
                 "auto_apply=false; Captain must approve before apply."
-            ),
+            )
+        )
+        proposal = build_routing_proposal(
+            experiences,
+            proposal_id=f"route-cr-{run_id}-{uuid4().hex[:8]}",
+            notes=notes,
         )
         proposal["auto_apply"] = False
         proposal["captain_approved"] = False
+        proposal["notes"] = _redact_secret_text(str(proposal.get("notes") or notes))
         proposal_path = str(write_routing_proposal(root, proposal))
 
     return {
@@ -287,4 +324,5 @@ def record_finding_outcomes(
         "proposal_path": proposal_path,
         "proposal_auto_apply": False if proposal else None,
         "captain_approval": False,
+        "source_instance": resolved_source,
     }

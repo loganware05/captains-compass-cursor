@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **IMPLEMENTING** |
+| Status | **PR_OPEN** |
 | Plan ID | `m31-finding-outcomes-experience` |
 | Supersedes | `m30-github-draft-reviews` (CLOSED — shipped as v1.33.0 / M30) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |

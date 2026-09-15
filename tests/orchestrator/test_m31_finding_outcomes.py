@@ -11,6 +11,7 @@ from pathlib import Path
 
 from orchestrator.review.outcomes import (
     OutcomeError,
+    load_triage_input,
     normalize_outcome,
     outcome_to_experience,
     record_finding_outcomes,
@@ -52,6 +53,13 @@ class FindingOutcomeSchemaTests(unittest.TestCase):
                 report=report,
             )
 
+    def test_non_dict_triage_rows_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "bad.json"
+            path.write_text(json.dumps(["x", 1, None]), encoding="utf-8")
+            with self.assertRaises(OutcomeError):
+                load_triage_input(path)
+
 
 class ExperienceBridgeTests(unittest.TestCase):
     def test_accepted_maps_to_success(self) -> None:
@@ -80,14 +88,23 @@ class ExperienceBridgeTests(unittest.TestCase):
             {
                 "finding_id": "sec-secret-in-diff",
                 "decision": "accepted",
-                "notes": "saw token=ghp_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA in chat",
+                "notes": (
+                    "saw token=ghp_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+                    "password=supersecret "
+                    "AKIAIOSFODNN7EXAMPLE "
+                    "in chat"
+                ),
             },
             report=report,
         )
         self.assertNotIn("ghp_", outcome["notes"])
+        self.assertNotIn("supersecret", outcome["notes"])
+        self.assertNotIn("AKIAIOSFODNN7EXAMPLE", outcome["notes"])
         self.assertIn("[REDACTED]", outcome["notes"])
         experience = outcome_to_experience(outcome)
-        self.assertNotIn("ghp_", json.dumps(experience))
+        blob = json.dumps(experience)
+        self.assertNotIn("ghp_", blob)
+        self.assertNotIn("supersecret", blob)
 
 
 class RecordOutcomesTests(unittest.TestCase):
@@ -117,13 +134,54 @@ class RecordOutcomesTests(unittest.TestCase):
             self.assertEqual(result["outcome_count"], 3)
             self.assertIs(result["captain_approval"], False)
             self.assertEqual(result["proposal_auto_apply"], False)
+            self.assertEqual(result["source_instance"], "product-import")
             self.assertTrue(Path(result["outcomes_path"]).is_file())
             self.assertEqual(len(result["experience_paths"]), 2)  # deferred skipped
+            experience = json.loads(Path(result["experience_paths"][0]).read_text(encoding="utf-8"))
+            self.assertEqual(experience["source_instance"], "product-import")
             proposal = json.loads(Path(result["proposal_path"]).read_text(encoding="utf-8"))
             validate_document(proposal, "routing-proposal.schema.json")
             self.assertIs(proposal["auto_apply"], False)
             self.assertIs(proposal["captain_approved"], False)
             self.assertTrue(proposal["skill_confidence_deltas"])
+
+    def test_proposal_notes_redacted(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            report_dst = (
+                repo
+                / ".agent"
+                / "evidence"
+                / "code-review"
+                / "m28-bitcoin-style-demo"
+                / "report.json"
+            )
+            report_dst.parent.mkdir(parents=True)
+            shutil.copy(SAMPLE_REPORT, report_dst)
+            triage = repo / "triage.json"
+            triage.write_text(
+                json.dumps(
+                    {
+                        "outcomes": [
+                            {
+                                "finding_id": "sec-secret-in-diff",
+                                "decision": "accepted",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            result = record_finding_outcomes(
+                repo_root=repo,
+                report_path=report_dst,
+                triage_path=triage,
+                emit_routing_proposal=True,
+                proposal_notes="leak ghp_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            )
+            proposal = json.loads(Path(result["proposal_path"]).read_text(encoding="utf-8"))
+            self.assertNotIn("ghp_", proposal["notes"])
+            self.assertIn("[REDACTED]", proposal["notes"])
 
     def test_cli_record_finding_outcomes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -150,6 +208,8 @@ class RecordOutcomesTests(unittest.TestCase):
                     "--plan-id",
                     "m31-finding-outcomes-experience",
                     "--emit-routing-proposal",
+                    "--notes",
+                    "keep ghp_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB out",
                 ],
                 check=False,
                 capture_output=True,
@@ -160,6 +220,8 @@ class RecordOutcomesTests(unittest.TestCase):
             payload = json.loads(proc.stdout)
             self.assertFalse(payload["captain_approval"])
             self.assertEqual(payload["proposal_auto_apply"], False)
+            proposal = json.loads(Path(payload["proposal_path"]).read_text(encoding="utf-8"))
+            self.assertNotIn("ghp_", proposal["notes"])
 
 
 if __name__ == "__main__":
