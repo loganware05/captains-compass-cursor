@@ -118,16 +118,18 @@ Triage JSON is a list or `{"outcomes":[...]}` with `finding_id`,
 - **Finding outcomes → Experience are evidence only** (M31); RoutingProposal never auto-applies
 - Intent packs are evidence only; Linear never approves
 - Tracker: GitHub issues only
-- FIND→FIX repair loop remains deferred (B4)
+- **Repair loop is Captain-gated** (M32 / B4): verified findings only; never auto-merge; default stops at dispatch packet
 
 ## Compose with
 
 - `security-review`, `accessibility-review`, `adversarial-reviewer`
 - Downstream: `review-fix-loop` consumes verified findings
 - Learning loop: `record-finding-outcomes.sh` → Experience → optional RoutingProposal
+- Repair: `start-repair-loop.sh` / `northstar repair start` → FIND→PROVE→packet (optional captain-authorized submit prep)
 
 ## Schemas
 
 - `orchestrator/schemas/code-review-report.schema.json`
 - `orchestrator/schemas/intent-pack.schema.json`
 - `orchestrator/schemas/finding-outcome.schema.json`
+- `orchestrator/schemas/repair-run.schema.json`

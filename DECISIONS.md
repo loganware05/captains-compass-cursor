@@ -1,5 +1,18 @@
 # Decisions
 
+## ADR-049: Repair loop FIND→PROVE→packet (M32 / B4)
+
+- **Status:** Accepted
+- **Date:** 2026-09-15
+- **Context:** After M30 draft posting and M31 finding outcomes, humans still open fix PRs by hand. Roadmap B4 asks for a supervised repair loop without auto-merge.
+- **Decision:**
+  1. Add `orchestrator/repair/loop.py` + `northstar repair start`.
+  2. Intake only **verified** findings at/above severity floor; refuse otherwise.
+  3. Gate target repos with the GitHub draft allowlist (sandbox first).
+  4. Default stage stops at dispatch packet; `--captain-authorized-fix` prepares submit metadata only.
+  5. **Never auto-merge.**
+- **Consequences:** Operators can start supervised repairs from review evidence. Full FIX/TEST/PR still requires human follow-through.
+
 ## ADR-048: Finding outcomes → Experience → RoutingProposal (M31)
 
 - **Status:** Accepted
