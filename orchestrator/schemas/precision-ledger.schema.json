@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://northstar.dev/schemas/precision-ledger.schema.json",
+  "title": "NorthStarPrecisionLedger",
+  "description": "Roll-up of Code Reviewer finding-outcome precision by skill/specialist (M33 / B5). Never auto-applies reputation.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "ledger_id",
+    "created_at",
+    "entries",
+    "min_sample_for_proposal",
+    "captain_approval",
+    "locks"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "northstar.precision_ledger.v1"
+    },
+    "ledger_id": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "plan_id": { "type": "string" },
+    "source_outcome_paths": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "min_sample_for_proposal": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "key_kind",
+          "accepted",
+          "rejected",
+          "deferred",
+          "decided",
+          "precision",
+          "source_run_ids",
+          "finding_ids"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "key": { "type": "string", "minLength": 1 },
+          "key_kind": {
+            "type": "string",
+            "enum": ["skill", "specialist", "heuristic"]
+          },
+          "accepted": { "type": "integer", "minimum": 0 },
+          "rejected": { "type": "integer", "minimum": 0 },
+          "deferred": { "type": "integer", "minimum": 0 },
+          "decided": { "type": "integer", "minimum": 0 },
+          "precision": {
+            "description": "accepted / decided, or null when decided == 0",
+            "type": ["number", "null"],
+            "minimum": 0,
+            "maximum": 1
+          },
+          "source_run_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "finding_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "captain_approval": {
+      "type": "boolean",
+      "const": false
+    },
+    "locks": {
+      "type": "object",
+      "required": ["auto_apply", "captain_approved"],
+      "additionalProperties": true,
+      "properties": {
+        "auto_apply": { "type": "boolean", "const": false },
+        "captain_approved": { "type": "boolean", "const": false }
+      }
+    }
+  }
+}

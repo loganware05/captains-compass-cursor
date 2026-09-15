@@ -109,6 +109,29 @@ Triage JSON is a list or `{"outcomes":[...]}` with `finding_id`,
 `outcomes.json` only. `--emit-routing-proposal` writes a proposal with
 `auto_apply=false`.
 
+## Precision ledger (M33 / B5)
+
+Roll up finding outcomes into a durable precision ledger and dashboard (and
+optionally a Captain-gated priority proposal). Precision =
+`accepted / (accepted + rejected)`; deferred is counted but excluded from the
+denominator. Never auto-applies reputation.
+
+```bash
+./scripts/aggregate-precision-ledger.sh \
+  --outcomes .agent/evidence/code-review/<run-id>/outcomes.json \
+  --ledger-id my-precision-run \
+  --emit-priority-proposal
+
+./scripts/northstar precision aggregate \
+  --outcomes .agent/evidence/code-review/<run-id>/outcomes.json \
+  --outcomes-dir .agent/evidence/code-review \
+  --emit-priority-proposal
+```
+
+Writes `.agent/evidence/precision/<ledger-id>/precision-ledger.json`,
+`dashboard.md`, and `dashboard.json`. `--emit-priority-proposal` refuses unless
+at least one skill has decided findings ≥ `--min-sample` (default 5).
+
 ## Locks (Captain)
 
 - Hermetic CI — fixture / specialist / heuristic candidates only; no model calls by default
@@ -119,6 +142,7 @@ Triage JSON is a list or `{"outcomes":[...]}` with `finding_id`,
 - Intent packs are evidence only; Linear never approves
 - Tracker: GitHub issues only
 - **Repair loop is Captain-gated** (M32 / B4): verified findings only; never auto-merge; default stops at dispatch packet
+- **Precision ledger is proposal-only** (M33 / B5): no silent reputation mutation
 
 ## Compose with
 
@@ -126,6 +150,7 @@ Triage JSON is a list or `{"outcomes":[...]}` with `finding_id`,
 - Downstream: `review-fix-loop` consumes verified findings
 - Learning loop: `record-finding-outcomes.sh` → Experience → optional RoutingProposal
 - Repair: `start-repair-loop.sh` / `northstar repair start` → FIND→PROVE→packet (optional captain-authorized submit prep)
+- Precision: `aggregate-precision-ledger.sh` / `northstar precision aggregate` → dashboard + optional priority proposal
 
 ## Schemas
 
@@ -133,3 +158,4 @@ Triage JSON is a list or `{"outcomes":[...]}` with `finding_id`,
 - `orchestrator/schemas/intent-pack.schema.json`
 - `orchestrator/schemas/finding-outcome.schema.json`
 - `orchestrator/schemas/repair-run.schema.json`
+- `orchestrator/schemas/precision-ledger.schema.json`

@@ -1,0 +1,40 @@
+{
+  "auto_apply": false,
+  "based_on_experiences": [
+    "syn-security-review-tp-0",
+    "syn-security-review-tp-1",
+    "syn-security-review-tp-2",
+    "syn-security-review-tp-3",
+    "syn-security-review-fp-0"
+  ],
+  "captain_approval_required": true,
+  "captain_approved": false,
+  "created_at": "2026-09-15T20:46:41Z",
+  "decomposition_hints": [
+    {
+      "matcher_factor": "security_bonus",
+      "rationale": "Success experiences emphasized security-review (proposal-only decomposition hint; max delta 0.03)",
+      "sub_capabilities": [
+        "security-review"
+      ],
+      "weight_delta": 0.03
+    }
+  ],
+  "kind": "routing-proposal",
+  "matcher_weight_suggestions": {
+    "agent_affinity": 0.1,
+    "capability_overlap": 0.45,
+    "lifecycle_stage": 0.15,
+    "security_bonus": 0.13,
+    "stack_match": 0.2
+  },
+  "notes": "M33 / B5 precision-ledger priority proposal. auto_apply=false; Captain must approve before apply.",
+  "proposal_id": "route-precision-b5-fixture-demo-b2d38efe",
+  "skill_confidence_deltas": [
+    {
+      "delta": 0.03,
+      "rationale": "From 5 Experience(s): success=4 other=1 (proposal-only; not applied)",
+      "skill_id": "security-review"
+    }
+  ]
+}

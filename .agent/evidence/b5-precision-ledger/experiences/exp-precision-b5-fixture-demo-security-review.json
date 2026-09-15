@@ -1,0 +1,28 @@
+{
+  "capabilities_exercised": [
+    "code-review",
+    "precision-ledger"
+  ],
+  "created_at": "2026-09-15T20:46:41Z",
+  "experience_id": "exp-precision-b5-fixture-demo-security-review",
+  "lessons": [
+    "Precision ledger `b5-fixture-demo` skill `security-review`: precision=80.0% (accepted=4 rejected=1 deferred=0)."
+  ],
+  "objective": "Aggregate Code Reviewer precision for skill security-review in ledger b5-fixture-demo",
+  "outcome": "partial",
+  "plan_id": "b5-precision-ledger",
+  "provenance": {
+    "accepted": 4,
+    "decided": 5,
+    "deferred": 0,
+    "ledger_id": "b5-fixture-demo",
+    "precision": 0.8,
+    "rejected": 1,
+    "skill": "security-review"
+  },
+  "run_id": "b5-fixture-demo",
+  "skills_used": [
+    "security-review"
+  ],
+  "source_instance": "control-live"
+}

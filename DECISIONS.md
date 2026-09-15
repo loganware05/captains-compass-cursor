@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-050: Precision ledger from finding outcomes (M33 / B5)
+
+- **Status:** Accepted
+- **Date:** 2026-09-15
+- **Context:** M31 stores per-finding triage as Experience, but there is no
+  roll-up of precision by Skill/specialist over time. Roadmap B5 asks for
+  precision dashboards without silent reputation mutation.
+- **Decision:**
+  1. Add `precision-ledger.schema.json` + `orchestrator/review/precision.py`.
+  2. Aggregate accepted/rejected/deferred counts per skill key; precision =
+     accepted / (accepted + rejected); deferred excluded from denominator.
+  3. Ship hermetic `aggregate-precision-ledger.sh` / `northstar precision aggregate`
+     writing ledger + dashboard under `.agent/evidence/precision/<ledger-id>/`.
+  4. Optionally emit a RoutingProposal for invocation priority when decided
+     count ≥ min sample (default 5); always `auto_apply=false`.
+  5. Keep Skill slug `code-reviewer`, Linear as flight recorder only, and no
+     auto-demotion of Skills.
+- **Consequences:** Operators can inspect review precision in evidence/Experience
+  and propose (never auto-apply) priority adjustments. Reputation stays Captain-gated.
+
 ## ADR-049: Repair loop FIND→PROVE→packet (M32 / B4)
 
 - **Status:** Accepted
