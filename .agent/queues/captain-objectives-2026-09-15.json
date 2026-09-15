@@ -1,0 +1,45 @@
+{
+  "kind": "northstar-captain-objective-queue",
+  "queued_at": "2026-09-15T18:18:08Z",
+  "captain": "Logan Ware",
+  "captain_utterance": "Add the following objectives to queue, then begin working. Learning Run / routing / B4",
+  "first_mate_run_id": "bc-0b8ec108-10ec-4204-a4e4-8bedbf0405fd",
+  "objectives": [
+    {
+      "id": "learning-run",
+      "title": "Learning Run \u2014 complete NS-SKILL-003",
+      "status": "in_progress",
+      "linear_parent": "OVA-34",
+      "sandbox_pr": 56,
+      "notes": "NS-SKILL-003; PR #56 base + OVA-45 routing scored"
+    },
+    {
+      "id": "routing",
+      "title": "Agent routing (OVA-45) with M26 wakeability",
+      "status": "in_progress",
+      "linear_issue": "OVA-45",
+      "depends_on": [
+        "learning-run"
+      ],
+      "notes": "OVA-45 scored; dispatch_ready=true; awaiting Captain I approve the dispatch"
+    },
+    {
+      "id": "b4-repair-loop",
+      "title": "B4 \u2014 Repair loop (M31)",
+      "status": "queued_plan_drafted",
+      "plan_id": "m31-repair-loop",
+      "depends_on": [
+        "routing"
+      ],
+      "roadmap": "B4",
+      "notes": "IMPLEMENTATION_PLAN.md m31-repair-loop DRAFT awaiting Captain approval",
+      "linear_issue": "OVA-48"
+    }
+  ],
+  "invariants": {
+    "approved_for_execution": false,
+    "linear_originates_approval": false,
+    "one_learning_run_at_a_time": true
+  },
+  "markdown_path": ".agent/queues/captain-objectives-2026-09-15.md"
+}

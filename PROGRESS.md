@@ -2,42 +2,44 @@
 
 ## Current status
 
-**Release candidate: v1.33.0** — M30 Opt-in GitHub draft reviews on branch
-`cursor/m30-github-draft-reviews-3b10` ([issue #147](https://github.com/loganware05/captains-compass-cursor/issues/147),
-[PR #149](https://github.com/loganware05/captains-compass-cursor/pull/149)).
+**Release baseline: v1.33.0** — M30 Opt-in GitHub draft reviews on `main`
+([PR #149](https://github.com/loganware05/captains-compass-cursor/pull/149),
+[release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.33.0)).
 
 | Item | Value |
 |---|---|
-| Release (pending merge) | **v1.33.0** |
-| M30 | Opt-in GitHub draft reviews (implementing / merge-conflict resolved) |
-| Issue | [#147](https://github.com/loganware05/captains-compass-cursor/issues/147) |
-| Rollback | `rollback/pre-m30-github-draft-reviews` |
-| Prior baseline | v1.32.0 / M29 ([release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.32.0)) |
+| Release | **v1.33.0** |
+| M30 / B3 | Opt-in GitHub draft reviews — **merged** |
+| Prior baseline | v1.32.0 / M29 |
+
+## Captain objective queue (2026-09-15)
+
+Canonical: `.agent/queues/captain-objectives-2026-09-15.md`
+
+1. **Learning Run** — complete NS-SKILL-003 ([OVA-34](https://linear.app/ovaltechnologysolutions/issue/OVA-34)) — **IN PROGRESS** (sandbox [PR #56](https://github.com/loganware05/captain-compass-sandbox/pull/56) open)
+2. **routing** — [OVA-45](https://linear.app/ovaltechnologysolutions/issue/OVA-45) agent routing + M26 wakeability — queued / starting with #1
+3. **B4 — Repair loop** — M31 FIND→PROVE→FIX→TEST→SUBMIT — queued (IMPLEMENTATION_PLAN first)
 
 ## In flight (Captain-directed)
 
-- **M30** — Captain approved 2026-09-13; implementation on
-  `cursor/m30-github-draft-reviews-3b10` ([PR #149](https://github.com/loganware05/captains-compass-cursor/pull/149))
-- After M30 merge/tag: optional repair-loop (B4) or Learning Run / routing
+- NS-SKILL-003 Learning Run + OVA-45 routing (this session)
+- B4/M31 plan draft (awaiting Captain plan approval before implement)
 
 ## Completed
 
+- **M30** merged — opt-in GitHub draft reviews; tagged **v1.33.0**
 - **M29** merged — intent packs + installer templates; tagged **v1.32.0**
-  ([PR #145](https://github.com/loganware05/captains-compass-cursor/pull/145));
-  closeout docs via [PR #148](https://github.com/loganware05/captains-compass-cursor/pull/148)
-- **M28** merged — hermetic security/adversarial/testing specialist emitters;
-  default `candidates-mode=specialists`; tagged **v1.31.0**
+- **M28** merged — hermetic security/adversarial/testing specialist emitters; tagged **v1.31.0**
 - **M27** merged — Code Reviewer MVP; tagged **v1.30.0**
-- **NS-SKILL-003** — Captain approved improve `python-ml` ([OVA-42](https://linear.app/ovaltechnologysolutions/issue/OVA-42));
-  promote/install Done ([OVA-43](https://linear.app/ovaltechnologysolutions/issue/OVA-43)/[44](https://linear.app/ovaltechnologysolutions/issue/OVA-44));
-  sandbox PR [#56](https://github.com/loganware05/captain-compass-sandbox/pull/56);
-  control PROGRESS [#142](https://github.com/loganware05/captains-compass-cursor/pull/142) merged
+- NS-SKILL-003 Captain approved improve `python-ml` ([OVA-42](https://linear.app/ovaltechnologysolutions/issue/OVA-42)); promote/install Done on PR #56 ([OVA-43](https://linear.app/ovaltechnologysolutions/issue/OVA-43)/[44](https://linear.app/ovaltechnologysolutions/issue/OVA-44))
 - NorthStar install into bitcoin-data-collector (Captain-reported)
 - Captain Continuation Roadmap published; Next-6 moves approved
-- v1.5.0–v1.32.0 / M1–M29
+- v1.5.0–v1.33.0 / M1–M30
 - Run 001 `NS-SKILL-001` retained (`craft-tokens-design-system`)
 - Run 002 `NS-SKILL-002` retained (`react-engineering` accessible forms)
 
 ## Blockers
 
-None.
+- Sandbox PR #56 must merge (or remain the working base) before NS-SKILL-003 retain closeout on `main`
+- OVA-45 dispatch blocked until Captain: `I approve the dispatch`
+- B4 implementation blocked until Captain approves `m31-repair-loop` IMPLEMENTATION_PLAN
