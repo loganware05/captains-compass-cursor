@@ -1,0 +1,54 @@
+{
+  "schema_version": "northstar.repair_run.v1",
+  "run_id": "b4-sandbox-fixture-demo",
+  "created_at": "2026-09-15T18:49:56Z",
+  "stage": "fix_authorized_prepare_submit",
+  "repository": "loganware05/captain-compass-sandbox",
+  "finding": {
+    "finding_id": "sec-hardcoded-key",
+    "status": "verified",
+    "severity": "high",
+    "title": "Hardcoded API key introduced in session helper",
+    "suggested_fix": "Remove hardcoded secret; load from environment; rotate if exposed.",
+    "evidence_paths": [
+      "src/auth/session.py"
+    ],
+    "proved_at": "2026-09-15T18:49:56Z"
+  },
+  "report_path": "tests/fixtures/repair/sandbox-report.json",
+  "dispatch_packet": {
+    "kind": "northstar-repair-dispatch-packet",
+    "repair_run_id": "b4-sandbox-fixture-demo",
+    "created_at": "2026-09-15T18:49:56Z",
+    "dispatch_authorized": true,
+    "finding_id": "sec-hardcoded-key",
+    "repository": "loganware05/captain-compass-sandbox",
+    "selected_agent_id": null,
+    "objective": {
+      "title": "Repair verified finding sec-hardcoded-key: Hardcoded API key introduced in session helper",
+      "category": "devtool",
+      "target_repository": "loganware05/captain-compass-sandbox",
+      "required_skills": [
+        "code-reviewer",
+        "review-fix-loop"
+      ],
+      "skill_scope": "sandbox"
+    },
+    "awaiting_captain_utterance": "I authorize the repair fix",
+    "never_auto_merge": true,
+    "dispatch_authorized_at": "2026-09-15T18:49:56Z"
+  },
+  "submit": {
+    "prepared": true,
+    "auto_merge": false,
+    "suggested_branch": "cursor/repair-sec-hardcoded-key-05fd",
+    "suggested_pr_title": "fix: address verified finding sec-hardcoded-key",
+    "rollback": "Revert the repair PR; restore pre-fix evidence.",
+    "note": "Captain authorized FIX preparation only \u2014 open draft PR manually; never auto-merge."
+  },
+  "locks": {
+    "never_auto_merge": true,
+    "verified_only": true,
+    "captain_fix_authorized": true
+  }
+}

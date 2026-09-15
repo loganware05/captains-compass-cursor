@@ -4,25 +4,19 @@
 
 ### Added
 
-- **M32 / B4 Repair loop** — hermetic FIND→PROVE→FIX/TEST plan→SUBMIT metadata
-  from verified Code Reviewer findings
-- Module `orchestrator/repair/` (`start_repair`, prove gates, dispatch packet)
-- CLI `scripts/run-repair.sh` / `northstar repair start`
-- Fixture registry `tests/fixtures/repair/agent-registry.json`
-- Tests: `tests/orchestrator/test_m32_repair_loop.py`
-- Evidence: `.agent/evidence/m32-b4-repair-loop/`
-
-### Changed
-
-- Doctor checks for repair module + `run-repair.sh`
-- `code-reviewer` / `review-fix-loop` docs cross-link the repair CLI
+- **M32 / B4 Repair loop** — FIND→PROVE→packet starter for verified Code Reviewer findings
+- Module `orchestrator/repair/loop.py` (verified-only, allowlist-gated, never auto-merge)
+- Schema `repair-run.schema.json` (`northstar.repair_run.v1`)
+- CLI `scripts/start-repair-loop.sh` / `northstar repair start`
+- Fixture `tests/fixtures/repair/sandbox-report.json`
+- Tests: `tests/orchestrator/test_m32_b4_repair_loop.py`
+- Evidence: `.agent/evidence/b4-repair-loop/` + `.agent/evidence/repair/b4-sandbox-fixture-demo/`
 
 ### Locks (unchanged)
 
 - Never auto-merge repair PRs
-- Verified findings only; severity floor enforced
-- Live dispatch requires `--captain-approve-dispatch` and wakeable routing
-- Hermetic dry-run default (no model / no live Cursor dispatch)
+- Unverified/discarded findings refused
+- Captain FIX authorization required to prepare submit metadata
 - Linear is flight recorder only
 - Skill slug remains `code-reviewer`
 

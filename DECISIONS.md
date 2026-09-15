@@ -1,23 +1,17 @@
 # Decisions
 
-## ADR-049: B4 Repair loop — supervised FIND→PROVE→FIX→TEST→SUBMIT (M32)
+## ADR-049: Repair loop FIND→PROVE→packet (M32 / B4)
 
 - **Status:** Accepted
 - **Date:** 2026-09-15
-- **Context:** M27–M31 ship hermetic review + finding outcomes, but humans still
-  open fix PRs manually. Roadmap B4 asks for one supervised repair path from a
-  **verified** finding without auto-merge or unverified amplification.
+- **Context:** After M30 draft posting and M31 finding outcomes, humans still open fix PRs by hand. Roadmap B4 asks for a supervised repair loop without auto-merge.
 - **Decision:**
-  1. Add hermetic `orchestrator/repair/` + `run-repair.sh` / `northstar repair start`.
-  2. PROVE refuses non-verified, below-floor, or evidence-less findings.
-  3. Write objective + agent-router dispatch packet; set `dispatch_authorized`
-     only with `--captain-approve-dispatch` and `dispatch_ready`.
-  4. Dry-run default writes fix/test plans + draft PR metadata; **never merges**.
-  5. `--prepare-pr` requires the **product dispatch allowlist** (sandbox first);
-     the M30 GitHub draft-review allowlist does not unlock prepare; still never auto-merges.
-  6. Live Cursor agent dispatch is out of hermetic default path.
-- **Consequences:** Captains can dry-run a supervised repair packet from a
-  verified finding. Human review remains mandatory for any PR land.
+  1. Add `orchestrator/repair/loop.py` + `northstar repair start`.
+  2. Intake only **verified** findings at/above severity floor; refuse otherwise.
+  3. Gate target repos with the GitHub draft allowlist (sandbox first).
+  4. Default stage stops at dispatch packet; `--captain-authorized-fix` prepares submit metadata only.
+  5. **Never auto-merge.**
+- **Consequences:** Operators can start supervised repairs from review evidence. Full FIX/TEST/PR still requires human follow-through.
 
 ## ADR-048: Finding outcomes → Experience → RoutingProposal (M31)
 

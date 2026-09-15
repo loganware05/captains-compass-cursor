@@ -82,18 +82,20 @@ PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m31_finding_outcomes -v
   --triage tests/fixtures/code-review/triage-outcomes.json
 ```
 
-Repair loop dry-run (M32 / B4; never auto-merges):
+Repair loop FIND→PROVE→packet (M32 / B4; hermetic; never auto-merge):
 
 ```bash
-PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m32_repair_loop -v
-./scripts/run-repair.sh \
-  --report .agent/evidence/m28-reviewer-specialist-composition/bitcoin-style-demo/report.json \
-  --finding-id sec-secret-in-diff \
-  --target-repository loganware05/captain-compass-sandbox \
-  --registry tests/fixtures/repair/agent-registry.json
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m32_b4_repair_loop -v
+./scripts/start-repair-loop.sh \
+  --report tests/fixtures/repair/sandbox-report.json \
+  --finding finding-sandbox-secrets-1 \
+  --run-id b4-sandbox-fixture-demo \
+  --repository loganware05/captain-compass-sandbox \
+  --captain-authorized-fix
 ./scripts/northstar repair start \
-  --report .agent/evidence/m28-reviewer-specialist-composition/bitcoin-style-demo/report.json \
-  --finding-id sec-secret-in-diff
+  --report tests/fixtures/repair/sandbox-report.json \
+  --finding finding-sandbox-secrets-1 \
+  --repository loganware05/captain-compass-sandbox
 ```
 
 Promote candidate / train from Experience (staging drafts only):

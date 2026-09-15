@@ -43,5 +43,5 @@ Updated branch with fixes, validation evidence, and a loop summary (resolved vs 
 ## Compose with
 
 - Upstream verified findings from `code-reviewer`
-- Supervised repair dry-run: `./scripts/northstar repair start --report … --finding-id …`
+- Supervised repair dry-run: `./scripts/northstar repair start --report … --finding …`
   (M32/B4; never auto-merges; Captain flag required to authorize dispatch)

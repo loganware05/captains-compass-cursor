@@ -2,24 +2,23 @@
 
 > Archive mirror of root `IMPLEMENTATION_PLAN.md` (plan id `b4-repair-loop`).
 
-
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **PR_OPEN** |
+| Status | **SHIPPED** (via PR #156 / v1.35.0) |
 | Plan ID | `b4-repair-loop` |
 | Supersedes | `m31-finding-outcomes-experience` (CLOSED — shipped as v1.34.0 / M31 / A3) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
 | Baseline | `v1.34.0` / `origin/main` (M31 merged, PR #152) |
 | Prepared | 2026-09-15 |
-| Approved | 2026-09-15 — Captain: “I approve Implementation_Plan.md for B4 repair” |
+| Approved | 2026-09-15 — Captain: “I approve the dispatch, I approve M31/ B4 plan” |
 | Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track B / **B4**; long-form `docs/plans/B4_REPAIR_LOOP.md` |
 | Linear | [OVA-48](https://linear.app/ovaltechnologysolutions/issue/OVA-48) |
 | Control repo | `loganware05/captains-compass-cursor` |
 | Proposed release | **v1.35.0** |
-| Rollback tag | `rollback/pre-b4-repair-loop` |
-| Branch | `cursor/m32-b4-repair-loop-3b10` |
+| Rollback tag | `rollback/pre-b4-repair-loop` (create after approval) |
+| Branch | `cursor/m32-b4-repair-loop-05fd` (merged); alternate PR #157 resolved onto main |
 | Issue | [#154](https://github.com/loganware05/captains-compass-cursor/issues/154) |
 | Captain | Logan Ware |
 | Queue | `.agent/queues/captain-objectives-2026-09-15.md` item 3 |
@@ -137,22 +136,14 @@ Soft stop: AC + tests + evidence + PR. Hard stop: no auto-merge; no unverified r
 2. Confirm Code Reviewer + M31 outcomes still work.
 3. VERSION/CHANGELOG note if tag already cut.
 
-## Open questions for Captain
+## Open questions (resolved)
 
-1. Prefer repair CLI as `northstar repair …` vs Skill-only procedure?
-2. First proof target: sandbox fixture finding vs live bitcoin-data-collector verified finding?
-3. Proceed with B4 now, or finish Learning Run / OVA-45 dispatch first?
+1. Prefer repair CLI as `northstar repair …` — **yes** (shipped).
+2. First proof target: **sandbox fixture** dry-run (this PR); live product finding later.
+3. Proceed with B4 now **and** finish Learning Run / OVA-45 in parallel — Captain approved both.
 
 ## Approval gate
 
-**Captain approved this plan on 2026-09-15**
-(`I approve Implementation_Plan.md for B4 repair`).
-Implementation proceeds on `cursor/m32-b4-repair-loop-3b10` toward **v1.35.0**.
+**APPROVED** 2026-09-15 — Captain: “I approve the dispatch, I approve M31/ B4 plan”.
 
-Locks confirmed:
-
-- never auto-merge
-- verified findings only
-- Captain gates before dispatch
-- hermetic default path
-- Linear never approves
+Implementation in progress on `cursor/m32-b4-repair-loop-05fd`. Rollback tag: `rollback/pre-b4-repair-loop`.
