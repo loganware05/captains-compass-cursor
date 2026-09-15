@@ -15,8 +15,8 @@
 | Product dry-run target | `captain-compass-sandbox` first; bitcoin-style product only after sandbox proof |
 | Control repo | `loganware05/captains-compass-cursor` |
 | Proposed release | **v1.33.0** |
-| Rollback tag | `rollback/pre-m30-github-draft-reviews`  |
-| Branch | `cursor/m29-closeout-m30-plan-3b10` (plan PR); `cursor/m30-github-draft-reviews-3b10` |
+| Rollback tag | `rollback/pre-m30-github-draft-reviews` |
+| Branch | `cursor/m30-github-draft-reviews-3b10` |
 | Issue | [#147](https://github.com/loganware05/captains-compass-cursor/issues/147) (implementation after approval) |
 | Captain | Logan Ware |
 

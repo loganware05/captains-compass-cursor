@@ -23,3 +23,4 @@
 | 2026-09-13 | M29 shipped (v1.32.0); M30 plan drafted; paused for Captain approval |
 
 | 2026-09-13 | Captain approved; implementing github_draft + CLI |
+| 2026-09-15 | Resolved merge conflicts with main (PR #148 closeout) |
