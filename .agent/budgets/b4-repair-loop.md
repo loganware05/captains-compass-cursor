@@ -3,10 +3,11 @@
 | Field | Value |
 |---|---|
 | Plan | b4-repair-loop |
-| Status | active |
+| Status | **closed** (shipped v1.35.0) |
 | Started | 2026-09-15 |
-| Soft stop | AC met + tests green + evidence + PR |
-| Hard stop | No auto-merge; no unverified repair; no model in CI default |
+| Closed | 2026-09-15 |
+| Soft stop | AC met + tests green + evidence + PR — **met** |
+| Hard stop | No auto-merge; no unverified repair; no model in CI default — **held** |
 
 ## Locks
 
@@ -23,3 +24,5 @@
 | 2026-09-15 | Draft parked under `docs/plans/B4_REPAIR_LOOP.md` (PR #153) |
 | 2026-09-15 | Promoted to root IMPLEMENTATION_PLAN after M31 closeout |
 | 2026-09-15 | Captain approved B4; implementation on `cursor/m32-b4-repair-loop-05fd` |
+| 2026-09-15 | Merged PR #156; conflict resolution PR #157; tagged **v1.35.0** |
+| 2026-09-15 | Budget closed on M32 closeout |
