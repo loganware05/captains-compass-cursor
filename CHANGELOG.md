@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.35.0 — 2026-09-15
+
+### Added
+
+- **M32 / B4 Repair loop** — hermetic FIND→PROVE→FIX/TEST plan→SUBMIT metadata
+  from verified Code Reviewer findings
+- Module `orchestrator/repair/` (`start_repair`, prove gates, dispatch packet)
+- CLI `scripts/run-repair.sh` / `northstar repair start`
+- Fixture registry `tests/fixtures/repair/agent-registry.json`
+- Tests: `tests/orchestrator/test_m32_repair_loop.py`
+- Evidence: `.agent/evidence/m32-b4-repair-loop/`
+
+### Changed
+
+- Doctor checks for repair module + `run-repair.sh`
+- `code-reviewer` / `review-fix-loop` docs cross-link the repair CLI
+
+### Locks (unchanged)
+
+- Never auto-merge repair PRs
+- Verified findings only; severity floor enforced
+- Live dispatch requires `--captain-approve-dispatch` and wakeable routing
+- Hermetic dry-run default (no model / no live Cursor dispatch)
+- Linear is flight recorder only
+- Skill slug remains `code-reviewer`
+
 ## 1.34.0 — 2026-09-15
 
 ### Added

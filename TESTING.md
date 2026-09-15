@@ -82,6 +82,20 @@ PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m31_finding_outcomes -v
   --triage tests/fixtures/code-review/triage-outcomes.json
 ```
 
+Repair loop dry-run (M32 / B4; never auto-merges):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m32_repair_loop -v
+./scripts/run-repair.sh \
+  --report .agent/evidence/m28-reviewer-specialist-composition/bitcoin-style-demo/report.json \
+  --finding-id sec-secret-in-diff \
+  --target-repository loganware05/captain-compass-sandbox \
+  --registry tests/fixtures/repair/agent-registry.json
+./scripts/northstar repair start \
+  --report .agent/evidence/m28-reviewer-specialist-composition/bitcoin-style-demo/report.json \
+  --finding-id sec-secret-in-diff
+```
+
 Promote candidate / train from Experience (staging drafts only):
 
 ```bash

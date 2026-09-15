@@ -1,5 +1,23 @@
 # Decisions
 
+## ADR-049: B4 Repair loop — supervised FIND→PROVE→FIX→TEST→SUBMIT (M32)
+
+- **Status:** Accepted
+- **Date:** 2026-09-15
+- **Context:** M27–M31 ship hermetic review + finding outcomes, but humans still
+  open fix PRs manually. Roadmap B4 asks for one supervised repair path from a
+  **verified** finding without auto-merge or unverified amplification.
+- **Decision:**
+  1. Add hermetic `orchestrator/repair/` + `run-repair.sh` / `northstar repair start`.
+  2. PROVE refuses non-verified, below-floor, or evidence-less findings.
+  3. Write objective + agent-router dispatch packet; set `dispatch_authorized`
+     only with `--captain-approve-dispatch` and `dispatch_ready`.
+  4. Dry-run default writes fix/test plans + draft PR metadata; **never merges**.
+  5. `--prepare-pr` requires sandbox/product allowlist; still never auto-merges.
+  6. Live Cursor agent dispatch is out of hermetic default path.
+- **Consequences:** Captains can dry-run a supervised repair packet from a
+  verified finding. Human review remains mandatory for any PR land.
+
 ## ADR-048: Finding outcomes → Experience → RoutingProposal (M31)
 
 - **Status:** Accepted

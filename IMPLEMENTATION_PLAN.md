@@ -1,128 +1,155 @@
-# Implementation Plan — M31 Finding outcomes → Experience → RoutingProposal
+# Implementation Plan — M32 / B4 Repair loop (FIND→PROVE→FIX→TEST→SUBMIT)
 
 ## Metadata
 
 | Field | Value |
 |---|---|
 | Status | **PR_OPEN** |
-| Plan ID | `m31-finding-outcomes-experience` |
-| Supersedes | `m30-github-draft-reviews` (CLOSED — shipped as v1.33.0 / M30) |
+| Plan ID | `b4-repair-loop` |
+| Supersedes | `m31-finding-outcomes-experience` (CLOSED — shipped as v1.34.0 / M31 / A3) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
-| Baseline | `v1.33.0` / `origin/main` (M30 merged, PR #149) |
+| Baseline | `v1.34.0` / `origin/main` (M31 merged, PR #152) |
 | Prepared | 2026-09-15 |
-| Approved | 2026-09-15 — Captain: “I approve IMPLEMENTATION_PLAN.md for m31-finding-outcomes-experience” |
-| Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track A / **A3** + backlog M31 |
-| Product dry-run target | control fixtures + optional sandbox review triage |
+| Approved | 2026-09-15 — Captain: “I approve Implementation_Plan.md for B4 repair” |
+| Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track B / **B4**; long-form `docs/plans/B4_REPAIR_LOOP.md` |
+| Linear | [OVA-48](https://linear.app/ovaltechnologysolutions/issue/OVA-48) |
 | Control repo | `loganware05/captains-compass-cursor` |
-| Proposed release | **v1.34.0** |
-| Rollback tag | `rollback/pre-m31-finding-outcomes`  |
-| Branch | `cursor/m31-finding-outcomes-3b10` |
-| Issue | [#150](https://github.com/loganware05/captains-compass-cursor/issues/150) |
+| Proposed release | **v1.35.0** |
+| Rollback tag | `rollback/pre-b4-repair-loop` |
+| Branch | `cursor/m32-b4-repair-loop-3b10` |
+| Issue | [#154](https://github.com/loganware05/captains-compass-cursor/issues/154) |
 | Captain | Logan Ware |
+| Queue | `.agent/queues/captain-objectives-2026-09-15.md` item 3 |
 
-## Captain locks (binding — carry forward + M31)
+## Captain locks (binding)
 
-1. **Hermetic CI** — no model calls on the default path
-2. **Skill slug** — `code-reviewer` unchanged
-3. **Captain gate** — RoutingProposal / Skill confidence deltas are proposals only; never auto-apply
-4. **Linear** — flight recorder only; never approval authority
-5. **No auto-merge** — including repair PRs (B4 remains a separate plan)
-6. **No silent scope into B4** — FIND→FIX repair loop is explicitly out of scope here
-7. **Evidence truth** — outcomes must cite review run ids + finding ids under `.agent/evidence/`
+1. **Never auto-merge** — repair PRs stay human-reviewed
+2. **Captain plan gate** — no product implementation until this plan is explicitly approved
+3. **Verified findings only** — spawn repair work only from Code Reviewer **verified** findings (not unverified/discarded)
+4. **Sandbox / allowlisted repos first** — prove on `captain-compass-sandbox` before bitcoin-data-collector
+5. **Agent router + Learning Loop** — child tasks use `northstar.agent_router.v1` + M26 wakeability; fail closed on expired pins
+6. **Linear records only** — never treat Linear as approval origin
+7. **Hermetic CI** — default tests/doctor remain network-free
+8. **`approved_for_execution` stays false** for Stars TI candidates
+9. **Skill slug** — `code-reviewer` unchanged
+10. **Finding outcomes remain proposal-gated** — M31 RoutingProposal apply stays a separate Captain action
 
 ## Request (Captain-level)
 
-Proceed with **M31 — Finding outcomes → Experience → RoutingProposal**: after humans triage Code Reviewer verified findings (accept/reject / TP/FP), record durable Experience lessons and optionally emit a Captain-gated RoutingProposal that adjusts Skill/reviewer confidence — closing the review→learning loop from the roadmap.
+Approve planning for **M32 / B4 — Repair loop**: after Code Reviewer produces verified findings, spawn a supervised FIND→PROVE→FIX→TEST→SUBMIT child workflow via agent routing, ending in a human-reviewed PR (never auto-merge).
 
 ## Problem statement
 
-1. M27–M30 produce verified findings and optional draft reviews, but accepted/rejected outcomes are not yet stored as Experience.
-2. Roadmap A3 exit: at least one Skill confidence delta **proposed** from review outcomes.
-3. Without outcome memory, specialist emitters and Skill reputation cannot improve from real triage.
+1. M27–M31 ship detect→verify→(optional draft post)→finding outcomes / Experience. Humans still open fix PRs by hand.
+2. Roadmap B4 exit: *one supervised repair PR from a verified finding*.
+3. Without gates, repair automation could amplify false positives or merge unsafe changes.
 
 ## Non-goals
 
-- Auto-applying RoutingProposal / Skill weight changes
-- FIND→FIX repair-loop automation (B4 / M32+)
-- Webhook-driven auto-triage
-- Model-generated lesson prose on the default path
-- Changing Linear into an approval authority
-- Precision dashboards UI (B5) — schema/evidence only if needed
+- Auto-merge / auto-approve of repair PRs
+- Webhook-driven repair on every PR
+- Repairing unverified or discarded findings
+- Changing Linear approval semantics
+- Auto-applying M31 RoutingProposal / Skill confidence deltas
+- Replacing Code Reviewer Skill slug
+
+## Dependencies
+
+| Dep | Status |
+|---|---|
+| B3 — GitHub draft reviews (M30) | **Done** (v1.33.0) |
+| A3 — Review-informed learning (M31 finding-outcomes) | **Done** (v1.34.0) |
+| Agent router wakeability (M25/M26) | **Done** |
+| Active Learning Run routing pattern | In progress (NS-SKILL-003 / OVA-45) — may proceed in parallel |
 
 ## Acceptance criteria
 
-1. **Outcome schema** — `orchestrator/schemas/finding-outcome.schema.json` (or equivalent) with fields at least: `run_id`, `finding_id`, `decision` (`accepted`|`rejected`|`deferred`), `label` (`tp`|`fp`|`unknown`), `skill`, `notes`, `captain_approval=false`.
-2. **CLI / writer** — hermetic command or module to record outcomes from a completed review report + triage input (fixture JSON supported).
-3. **Experience write** — accepted/rejected outcomes produce Experience lessons under the existing Experience store path; secrets redacted.
-4. **RoutingProposal (optional)** — when enough outcomes exist for a Skill, emit a proposal artifact only (Captain-gated; never applied in this milestone).
-5. **Doctor** — schema + module/script presence checks.
-6. **Tests** — unit tests for schema, writer, Experience emit, proposal gate; no live network required.
-7. **Evidence** — fixture triage run documented under `.agent/evidence/m31-finding-outcomes/`.
-8. **Docs** — code-reviewer integration note + ADR-048; VERSION → **1.34.0**.
-9. **Memory** — DECISIONS / PROGRESS / CHANGELOG updated.
-10. Default review path unchanged: hermetic, no model, draft posting still opt-in.
+1. **Plan-gated** — implementation starts only after Captain approves this document.
+2. **Finding intake** — CLI/module accepts a verified finding id/path from a Code Reviewer report (`verified=true`, severity ≥ floor).
+3. **PROVE step** — re-check or cite existing verify evidence before FIX; refuse if finding no longer verified.
+4. **Child task packet** — writes dispatch packet + objective JSON for agent router (M26 probe optional but preferred).
+5. **FIX→TEST** — bounded code change + tests in allowlisted repo; evidence under `.agent/evidence/repair/<run-id>/`.
+6. **SUBMIT** — opens draft PR (or prepares branch) with finding link + rollback notes; **no auto-merge**.
+7. **Captain stop gates** — pause before FIX dispatch and before SUBMIT merge, unless Captain pre-authorizes in repo evidence.
+8. **Doctor + unit tests** — hermetic coverage for refuse paths (unverified finding, expired agent, non-allowlisted repo).
+9. **Docs** — ADR-049 (or next free), `docs/integrations/` note, Skill cross-links (`code-reviewer`, `review-fix-loop` if present).
+10. **Memory** — DECISIONS / PROGRESS / CHANGELOG / VERSION → **1.35.0**.
+11. **Sandbox proof** — one supervised repair PR (or dry-run evidence) on `captain-compass-sandbox`.
 
 ## Architecture (proposed)
 
 ```
-code-review report.json  +  triage outcomes.json
-            │
-            ▼
-orchestrator/review/outcomes.py  →  finding-outcome.schema.json
-            │
-            ├─► Experience lesson(s)
-            └─► RoutingProposal (optional, not applied)
+code-review report.json (verified finding)
+        │
+        ▼
+northstar repair start --finding <id> [--cloud-agents-json]
+        │
+        ├─ PROVE (re-verify / refuse)
+        │
+        ├─ route_agents (M26 probe) → dispatch packet
+        │     └─ stop unless Captain authorizes dispatch
+        │
+        ├─ FIX + TEST (bounded) → evidence
+        │
+        └─ SUBMIT draft PR → stop (never auto-merge)
 ```
 
 ## Implementation steps (after approval only)
 
-1. Create rollback tag `rollback/pre-m31-finding-outcomes`.
-2. Author outcome schema + writer module.
-3. Wire Experience emit + optional RoutingProposal builder.
-4. CLI/script + doctor checks.
-5. Tests + fixture evidence.
-6. Docs + ADR/PROGRESS/CHANGELOG/VERSION.
-7. Open PR to `main`; Captain merge → tag **v1.34.0**.
+1. Create rollback tag `rollback/pre-b4-repair-loop`.
+2. Author repair intake + PROVE refuse paths.
+3. Wire agent-router dispatch packet (Captain-gated).
+4. Bounded FIX→TEST evidence writer + draft PR submit (no auto-merge).
+5. Doctor + hermetic tests + sandbox proof.
+6. Docs + ADR + VERSION 1.35.0.
+7. Open PR to `main`; Captain merge → tag **v1.35.0**.
 
 ## Validation plan
 
 | Layer | How |
 |---|---|
-| Static | doctor.sh; schema validate outcomes |
-| Unit | outcome parse; Experience write; proposal not auto-applied |
-| Integration | fixture review report → outcomes → Experience artifacts |
-| Security | redaction of tokens/notes |
+| Static | doctor.sh |
+| Unit | unverified refuse; allowlist refuse; no auto-merge |
+| Integration | fixture verified finding → dry-run repair evidence |
+| Security | redaction; token hygiene; no secret commit |
 | Rollback | revert PR / reset to rollback tag |
 
 ## Risks & mitigations
 
 | Risk | Mitigation |
 |---|---|
-| Auto-applying confidence changes | Hard non-goal; proposals only |
-| Scope creep into repair loop | Explicit non-goal; separate plan for B4 |
-| Noisy FP labels | Require finding_id + run_id; fixture tests |
+| Amplifying FP findings | Verified-only + severity floor + PROVE re-check |
+| Accidental merge | Hard non-goal; draft PR only |
+| Scope into auto-apply reputation | Explicit non-goal; M31 apply stays separate |
 
 ## Budget
 
-After approval: `.agent/budgets/m31-finding-outcomes-experience.md`
+After approval: `.agent/budgets/b4-repair-loop.md`
 
-Soft stop: AC + tests + evidence + PR. Hard stop: no auto-apply; no B4 repair; no model-in-CI.
+Soft stop: AC + tests + evidence + PR. Hard stop: no auto-merge; no unverified repair; no model-in-CI default.
 
 ## Rollback
 
-1. Revert the M31 PR or reset to rollback tag.
-2. Confirm Code Reviewer + M30 draft posting still work.
+1. Revert the B4 PR or reset to rollback tag.
+2. Confirm Code Reviewer + M31 outcomes still work.
 3. VERSION/CHANGELOG note if tag already cut.
+
+## Open questions for Captain
+
+1. Prefer repair CLI as `northstar repair …` vs Skill-only procedure?
+2. First proof target: sandbox fixture finding vs live bitcoin-data-collector verified finding?
+3. Proceed with B4 now, or finish Learning Run / OVA-45 dispatch first?
 
 ## Approval gate
 
 **Captain approved this plan on 2026-09-15**
-(`I approve IMPLEMENTATION_PLAN.md for m31-finding-outcomes-experience`).
-Implementation proceeds on `cursor/m31-finding-outcomes-3b10` toward **v1.34.0**.
+(`I approve Implementation_Plan.md for B4 repair`).
+Implementation proceeds on `cursor/m32-b4-repair-loop-3b10` toward **v1.35.0**.
 
 Locks confirmed:
 
-- proposals only / no auto-apply
-- no FIND→FIX in this milestone
-- hermetic default path unchanged
+- never auto-merge
+- verified findings only
+- Captain gates before dispatch
+- hermetic default path
 - Linear never approves

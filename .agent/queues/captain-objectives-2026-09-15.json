@@ -1,13 +1,14 @@
 {
   "kind": "northstar-captain-objective-queue",
   "queued_at": "2026-09-15T18:18:08Z",
+  "updated_at": "2026-09-15T18:45:00Z",
   "captain": "Logan Ware",
   "captain_utterance": "Add the following objectives to queue, then begin working. Learning Run / routing / B4",
   "first_mate_run_id": "bc-0b8ec108-10ec-4204-a4e4-8bedbf0405fd",
   "objectives": [
     {
       "id": "learning-run",
-      "title": "Learning Run — complete NS-SKILL-003",
+      "title": "Learning Run \u2014 complete NS-SKILL-003",
       "status": "in_progress",
       "linear_parent": "OVA-34",
       "sandbox_pr": 56,
@@ -18,26 +19,43 @@
       "title": "Agent routing (OVA-45) with M26 wakeability",
       "status": "in_progress",
       "linear_issue": "OVA-45",
-      "depends_on": ["learning-run"],
+      "depends_on": [
+        "learning-run"
+      ],
       "notes": "OVA-45 scored; dispatch_ready=true; awaiting Captain I approve the dispatch"
     },
     {
       "id": "b4-repair-loop",
-      "title": "B4 — Repair loop",
-      "status": "queued_plan_drafted",
+      "title": "B4 \u2014 Repair loop",
+      "status": "implementing",
       "plan_id": "b4-repair-loop",
-      "plan_path": "docs/plans/B4_REPAIR_LOOP.md",
-      "depends_on": ["routing"],
+      "plan_path": "IMPLEMENTATION_PLAN.md",
+      "long_form_path": "docs/plans/B4_REPAIR_LOOP.md",
+      "depends_on": [
+        "routing"
+      ],
       "roadmap": "B4",
-      "notes": "Draft only; does not claim M31 (A3 finding-outcomes is PR #152). Awaiting Captain approval of docs/plans/B4_REPAIR_LOOP.md",
-      "linear_issue": "OVA-48"
+      "milestone": "M32",
+      "proposed_release": "v1.35.0",
+      "notes": "Captain approved; implementing on cursor/m32-b4-repair-loop-3b10",
+      "linear_issue": "OVA-48",
+      "github_issue": 154
+    }
+  ],
+  "completed_related": [
+    {
+      "id": "m31-finding-outcomes",
+      "title": "M31 Finding outcomes \u2192 Experience \u2192 RoutingProposal",
+      "status": "shipped",
+      "release": "v1.34.0",
+      "pr": 152
     }
   ],
   "invariants": {
     "approved_for_execution": false,
     "linear_originates_approval": false,
     "one_learning_run_at_a_time": true,
-    "m31_is_finding_outcomes": true
+    "m31_finding_outcomes_shipped": true
   },
   "markdown_path": ".agent/queues/captain-objectives-2026-09-15.md"
 }

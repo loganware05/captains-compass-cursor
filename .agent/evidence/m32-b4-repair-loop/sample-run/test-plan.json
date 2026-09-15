@@ -1,0 +1,12 @@
+{
+  "commands": [
+    "./scripts/doctor.sh",
+    "PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m32_repair_loop -v"
+  ],
+  "created_at": "2026-09-15T19:06:56Z",
+  "executed": false,
+  "finding_id": "sec-secret-in-diff",
+  "kind": "repair-test-plan",
+  "mode": "dry-run",
+  "notes": "Record intended validation; hermetic default does not execute product tests."
+}

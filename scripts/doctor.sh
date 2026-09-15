@@ -393,6 +393,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing orchestrator/review/outcomes.py"
   fi
+  if [[ -f "$ROOT/orchestrator/repair/__init__.py" ]]; then
+    ok "repair loop module"
+  else
+    fail "missing orchestrator/repair/__init__.py"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/code-review-report.schema.json" ]]; then
     ok "code-review-report schema"
   else
@@ -437,6 +442,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "record-finding-outcomes.sh"
   else
     fail "missing executable scripts/record-finding-outcomes.sh"
+  fi
+  if [[ -x "$ROOT/scripts/run-repair.sh" ]]; then
+    ok "run-repair.sh"
+  else
+    fail "missing executable scripts/run-repair.sh"
   fi
   if [[ -f "$ROOT/orchestrator/reference-profiles/code-reviewer.json" ]]; then
     ok "code-reviewer reference profile"

@@ -1,0 +1,13 @@
+{
+  "applied": false,
+  "created_at": "2026-09-15T19:06:56Z",
+  "files_hint": [
+    "src/auth/session.py"
+  ],
+  "finding_id": "sec-secret-in-diff",
+  "kind": "repair-fix-plan",
+  "mode": "dry-run",
+  "notes": "Hermetic B4 MVP records the fix plan only. No product files are modified in dry-run.",
+  "suggested_fix": "Remove secrets; rotate if exposed; use env/secret manager.",
+  "title": "Possible secret material in diff"
+}

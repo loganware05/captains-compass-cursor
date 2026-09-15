@@ -1,0 +1,16 @@
+{
+  "allowlisted": true,
+  "auto_merge": false,
+  "base": "main",
+  "body": "## Finding\n\n- id: `sec-secret-in-diff`\n- title: Possible secret material in diff\n- severity: high\n\n## Suggested fix\n\nRemove secrets; rotate if exposed; use env/secret manager.\n\n## Rollback\n\nRevert this PR. Repair run id: `repair-m28-bitcoin-style-demo-sec-secret-in-diff`.\n\n**auto_merge: false** \u2014 human review required.\n",
+  "branch": "cursor/repair-sec-secret-in-diff-repair-m28-bitcoin-style-demo-sec-secret-in-dif",
+  "created": false,
+  "created_at": "2026-09-15T19:06:56Z",
+  "draft": true,
+  "kind": "repair-pr-metadata",
+  "merged": false,
+  "notes": "Evidence-only by default. Even with --prepare-pr, this MVP never merges and only records draft PR metadata unless an allowlisted live path is later approved.",
+  "prepare_pr_requested": true,
+  "target_repository": "loganware05/captain-compass-sandbox",
+  "title": "fix: address verified finding sec-secret-in-diff"
+}
