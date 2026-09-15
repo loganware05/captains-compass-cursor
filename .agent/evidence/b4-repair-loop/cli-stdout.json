@@ -1,0 +1,6 @@
+{
+  "ok": true,
+  "run_id": "b4-sandbox-fixture-demo",
+  "stage": "fix_authorized_prepare_submit",
+  "evidence": ".agent/evidence/repair/b4-sandbox-fixture-demo/"
+}

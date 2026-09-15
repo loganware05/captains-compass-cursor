@@ -24,6 +24,7 @@ Usage:
   northstar review --repo PATH [run-code-review.sh options]
   northstar intent export --out PATH [--fixture PATH | --issue ID]
   northstar outcomes record --report PATH --triage PATH [record-finding-outcomes.sh options]
+  northstar repair start --report PATH --finding ID [start-repair-loop.sh options]
   northstar help
 
 Topology:
@@ -36,6 +37,7 @@ Code review (M27+) defaults to evidence-only. M30 draft posting is opt-in,
 allowlist-gated, and never APPROVE / REQUEST_CHANGES.
 Intent packs (M29) never originate Captain approval.
 Finding outcomes (M31) write Experience lessons; RoutingProposal stays proposal-only.
+Repair loop (M32 / B4) is Captain-gated, verified-only, and never auto-merges.
 USAGE
 }
 
@@ -175,6 +177,29 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown outcomes subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  repair)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    case "$sub" in
+      start)
+        # shellcheck disable=SC2207
+        mapped=()
+        while IFS= read -r -d '' item; do
+          mapped+=("$item")
+        done < <(map_repo_flag "$@")
+        exec "$ROOT/scripts/start-repair-loop.sh" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown repair subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;

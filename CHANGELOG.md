@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.35.0 — 2026-09-15
+
+### Added
+
+- **M32 / B4 Repair loop** — FIND→PROVE→packet starter for verified Code Reviewer findings
+- Module `orchestrator/repair/loop.py` (verified-only, allowlist-gated, never auto-merge)
+- Schema `repair-run.schema.json` (`northstar.repair_run.v1`)
+- CLI `scripts/start-repair-loop.sh` / `northstar repair start`
+- Fixture `tests/fixtures/repair/sandbox-report.json`
+- Tests: `tests/orchestrator/test_m32_b4_repair_loop.py`
+- Evidence: `.agent/evidence/b4-repair-loop/` + `.agent/evidence/repair/b4-sandbox-fixture-demo/`
+
+### Locks (unchanged)
+
+- Never auto-merge repair PRs
+- Unverified/discarded findings refused
+- Captain FIX authorization required to prepare submit metadata
+- Linear is flight recorder only
+- Skill slug remains `code-reviewer`
+
 ## 1.34.0 — 2026-09-15
 
 ### Added

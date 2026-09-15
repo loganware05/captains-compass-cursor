@@ -1,31 +1,37 @@
 {
   "kind": "northstar-captain-objective-queue",
   "queued_at": "2026-09-15T18:18:08Z",
-  "updated_at": "2026-09-15T18:45:00Z",
+  "updated_at": "2026-09-15T18:50:00Z",
   "captain": "Logan Ware",
   "captain_utterance": "Add the following objectives to queue, then begin working. Learning Run / routing / B4",
+  "approvals": [
+    {
+      "at": "2026-09-15T18:45:00Z",
+      "text": "I've merged sanbox #57. I approve the dispatch, I approve M31/ B4 plan"
+    }
+  ],
   "first_mate_run_id": "bc-0b8ec108-10ec-4204-a4e4-8bedbf0405fd",
   "objectives": [
     {
       "id": "learning-run",
       "title": "Learning Run — complete NS-SKILL-003",
-      "status": "in_progress",
+      "status": "awaiting_retain",
       "linear_parent": "OVA-34",
-      "sandbox_pr": 56,
-      "notes": "NS-SKILL-003; PR #56 base + OVA-45 routing scored"
+      "sandbox_prs": [56, 57],
+      "notes": "OVA-45 dispatched+executed; Experience success; stop for OVA-47"
     },
     {
       "id": "routing",
       "title": "Agent routing (OVA-45) with M26 wakeability",
-      "status": "in_progress",
+      "status": "dispatched",
       "linear_issue": "OVA-45",
       "depends_on": ["learning-run"],
-      "notes": "OVA-45 scored; dispatch_ready=true; awaiting Captain I approve the dispatch"
+      "notes": "Captain approved dispatch after sandbox #57 merge"
     },
     {
       "id": "b4-repair-loop",
       "title": "B4 — Repair loop",
-      "status": "awaiting_plan_approval",
+      "status": "implementing",
       "plan_id": "b4-repair-loop",
       "plan_path": "IMPLEMENTATION_PLAN.md",
       "long_form_path": "docs/plans/B4_REPAIR_LOOP.md",
@@ -33,7 +39,8 @@
       "roadmap": "B4",
       "milestone": "M32",
       "proposed_release": "v1.35.0",
-      "notes": "Root IMPLEMENTATION_PLAN promoted after M31 closeout; awaiting Captain approval",
+      "branch": "cursor/m32-b4-repair-loop-05fd",
+      "notes": "Captain approved B4 plan; packet MVP in progress; never auto-merge",
       "linear_issue": "OVA-48",
       "github_issue": 154
     }
@@ -51,7 +58,8 @@
     "approved_for_execution": false,
     "linear_originates_approval": false,
     "one_learning_run_at_a_time": true,
-    "m31_finding_outcomes_shipped": true
+    "m31_finding_outcomes_shipped": true,
+    "b4_never_auto_merge": true
   },
   "markdown_path": ".agent/queues/captain-objectives-2026-09-15.md"
 }

@@ -1,0 +1,68 @@
+{
+  "schema_version": "northstar.code_review_report.v1",
+  "run_id": "b4-fixture-sandbox",
+  "created_at": "2026-09-15T18:00:00Z",
+  "repository": "loganware05/captain-compass-sandbox",
+  "base_ref": "main",
+  "head_ref": "HEAD",
+  "plan_id": "b4-repair-loop",
+  "status": "completed",
+  "summary": {
+    "domains": ["security"],
+    "skills_invoked": ["code-reviewer", "security-review"],
+    "findings_total": 3,
+    "verified": 1,
+    "unverified": 1,
+    "discarded": 1,
+    "intent_artifact": ""
+  },
+  "findings": [
+    {
+      "id": "sec-hardcoded-key",
+      "status": "verified",
+      "severity": "high",
+      "title": "Hardcoded API key introduced in session helper",
+      "category": "secrets",
+      "confidence": 0.93,
+      "detail": "New assignment writes a live-looking API key into session payload.",
+      "evidence_paths": ["src/auth/session.py"],
+      "suggested_fix": "Remove hardcoded secret; load from environment; rotate if exposed.",
+      "skill": "security-review",
+      "discard_reason": ""
+    },
+    {
+      "id": "intent-ac-check",
+      "status": "unverified",
+      "severity": "medium",
+      "title": "Confirm acceptance criteria still covered",
+      "category": "intent",
+      "confidence": 0.66,
+      "detail": "Unverified intent check.",
+      "evidence_paths": ["IMPLEMENTATION_PLAN.md"],
+      "suggested_fix": "",
+      "skill": "code-reviewer",
+      "discard_reason": ""
+    },
+    {
+      "id": "noise-naming",
+      "status": "discarded",
+      "severity": "low",
+      "title": "Variable rename preference",
+      "category": "noise",
+      "confidence": 0.2,
+      "detail": "Style-only.",
+      "evidence_paths": [],
+      "suggested_fix": "",
+      "skill": "code-reviewer",
+      "discard_reason": "missing_evidence_paths"
+    }
+  ],
+  "provenance": {
+    "pipeline": "northstar.review.v1",
+    "hermetic": true,
+    "invoke_model": false,
+    "github_review_posted": false,
+    "candidates_source": "fixtures"
+  },
+  "context_pack_path": ""
+}

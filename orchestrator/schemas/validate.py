@@ -28,6 +28,7 @@ SCHEMA_FILES = (
     "intent-pack.schema.json",
     "github-allowlist.schema.json",
     "finding-outcome.schema.json",
+    "repair-run.schema.json",
 )
 
 

@@ -4,18 +4,19 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING_APPROVAL** |
+| Status | **APPROVED** |
 | Plan ID | `b4-repair-loop` |
 | Supersedes | `m31-finding-outcomes-experience` (CLOSED — shipped as v1.34.0 / M31 / A3) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
 | Baseline | `v1.34.0` / `origin/main` (M31 merged, PR #152) |
 | Prepared | 2026-09-15 |
+| Approved | 2026-09-15 — Captain: “I approve the dispatch, I approve M31/ B4 plan” |
 | Design source | `docs/plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md` Track B / **B4**; long-form `docs/plans/B4_REPAIR_LOOP.md` |
 | Linear | [OVA-48](https://linear.app/ovaltechnologysolutions/issue/OVA-48) |
 | Control repo | `loganware05/captains-compass-cursor` |
 | Proposed release | **v1.35.0** |
 | Rollback tag | `rollback/pre-b4-repair-loop` (create after approval) |
-| Branch | `cursor/m31-closeout-b4-plan-3b10` (plan PR); implementation after approval |
+| Branch | `cursor/m32-b4-repair-loop-05fd` |
 | Issue | [#154](https://github.com/loganware05/captains-compass-cursor/issues/154) |
 | Captain | Logan Ware |
 | Queue | `.agent/queues/captain-objectives-2026-09-15.md` item 3 |
@@ -133,18 +134,14 @@ Soft stop: AC + tests + evidence + PR. Hard stop: no auto-merge; no unverified r
 2. Confirm Code Reviewer + M31 outcomes still work.
 3. VERSION/CHANGELOG note if tag already cut.
 
-## Open questions for Captain
+## Open questions (resolved)
 
-1. Prefer repair CLI as `northstar repair …` vs Skill-only procedure?
-2. First proof target: sandbox fixture finding vs live bitcoin-data-collector verified finding?
-3. Proceed with B4 now, or finish Learning Run / OVA-45 dispatch first?
+1. Prefer repair CLI as `northstar repair …` — **yes** (shipped).
+2. First proof target: **sandbox fixture** dry-run (this PR); live product finding later.
+3. Proceed with B4 now **and** finish Learning Run / OVA-45 in parallel — Captain approved both.
 
 ## Approval gate
 
-**Paused for Captain approval.** Reply with an explicit approval, for example:
+**APPROVED** 2026-09-15 — Captain: “I approve the dispatch, I approve M31/ B4 plan”.
 
-`I approve IMPLEMENTATION_PLAN.md for b4-repair-loop`
-
-(or `I approve the B4 plan`).
-
-Until then: no product implementation, no rollback tag for B4, no repair CLI land.
+Implementation in progress on `cursor/m32-b4-repair-loop-05fd`. Rollback tag: `rollback/pre-b4-repair-loop`.
