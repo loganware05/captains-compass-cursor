@@ -121,6 +121,80 @@ class StartRepairTests(unittest.TestCase):
                     prepare_pr=True,
                 )
 
+    def test_prepare_pr_ignores_github_draft_allowlist(self) -> None:
+        """M30 github-allowlist must not unlock --prepare-pr (product allowlist only)."""
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            report_dst = repo / "report.json"
+            shutil.copy(SAMPLE_REPORT, report_dst)
+            allow = repo / ".agent" / "review"
+            allow.mkdir(parents=True)
+            (allow / "github-allowlist.yml").write_text(
+                "schema_version: northstar.github_allowlist.v1\n"
+                "repos:\n  - repo: other/repo\n"
+                "severity_floor: medium\n",
+                encoding="utf-8",
+            )
+            with self.assertRaises(RepairError):
+                start_repair(
+                    repo_root=repo,
+                    report_path=report_dst,
+                    finding_id="sec-secret-in-diff",
+                    target_repository="other/repo",
+                    prepare_pr=True,
+                )
+
+    def test_expired_agent_not_dispatch_authorized(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            report_dst = repo / "report.json"
+            shutil.copy(SAMPLE_REPORT, report_dst)
+            registry = {
+                "agents": [
+                    {
+                        "id": "bc-repair-expired-only",
+                        "status": "active",
+                        "categories": ["repair", "security"],
+                        "repository_allowlist": [
+                            "loganware05/captain-compass-sandbox"
+                        ],
+                        "skills_installed_scope": ["sandbox"],
+                        "skills": [
+                            "review-fix-loop",
+                            "security-review",
+                            "testing-validation",
+                        ],
+                        "availability": 1.0,
+                        "wakeability_status": "expired",
+                        "repository_familiarity": {
+                            "loganware05/captain-compass-sandbox": 0.9
+                        },
+                        "category_success": {"repair": 0.7},
+                        "historical_runs": 1,
+                        "autonomy_budget_ok": True,
+                    }
+                ]
+            }
+            reg_path = repo / "registry.json"
+            reg_path.write_text(json.dumps(registry), encoding="utf-8")
+            result = start_repair(
+                repo_root=repo,
+                report_path=report_dst,
+                finding_id="sec-secret-in-diff",
+                target_repository="loganware05/captain-compass-sandbox",
+                registry_path=reg_path,
+                captain_approve_dispatch=True,
+            )
+            self.assertTrue(result["ok"])
+            self.assertFalse(result["dispatch_ready"])
+            self.assertFalse(result["dispatch_authorized"])
+            packet = json.loads(
+                Path(result["evidence_dir"], "dispatch-packet.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertIs(packet["live_dispatch_invoked"], False)
+
     def test_cli_repair_start(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             repo = Path(tmp)

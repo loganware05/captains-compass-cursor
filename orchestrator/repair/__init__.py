@@ -15,11 +15,7 @@ from uuid import uuid4
 
 from orchestrator.integrations.events import redact_secrets
 from orchestrator.integrations.product_allowlist import PRODUCT_DISPATCH_ALLOWLIST
-from orchestrator.review.github_draft import (
-    load_allowlist,
-    resolve_allowlist_path,
-    severity_meets_floor,
-)
+from orchestrator.review.github_draft import severity_meets_floor
 from orchestrator.review.outcomes import load_review_report
 from orchestrator.routing.agent_router import (
     RouteObjective,
@@ -187,7 +183,7 @@ def build_pr_metadata(
         "merged": False,
         "notes": (
             "Evidence-only by default. Even with --prepare-pr, this MVP never merges "
-            "and only records draft PR metadata unless an allowlisted live path is later approved."
+            "and only records draft PR metadata for product-dispatch-allowlisted repos."
         ),
         "created_at": _utc_now(),
     }
@@ -293,13 +289,7 @@ def start_repair(
         _write_json(out_dir / "result.json", summary)
         raise RepairError("; ".join(prove["reasons"]))
 
-    # Allowlist awareness (sandbox first) — refuse prepare_pr for non-allowlisted.
-    allowlist_path = resolve_allowlist_path(root)
-    allowlist = load_allowlist(allowlist_path)
-    github_allowlisted = any(
-        str(r.get("repo") if isinstance(r, dict) else r) == repo_slug
-        for r in (allowlist.get("repos") or [])
-    )
+    # Product dispatch allowlist only (sandbox first) — not the M30 GitHub draft list.
     product_allowlisted = repo_slug in PRODUCT_DISPATCH_ALLOWLIST
 
     objective = build_repair_objective(
@@ -337,9 +327,9 @@ def start_repair(
     _write_json(out_dir / "fix-plan.json", fix_plan)
     _write_json(out_dir / "test-plan.json", test_plan)
 
-    if prepare_pr and not (product_allowlisted or github_allowlisted):
+    if prepare_pr and not product_allowlisted:
         raise RepairError(
-            f"prepare_pr refused: repository not allowlisted: {repo_slug!r}"
+            f"prepare_pr refused: repository not on product dispatch allowlist: {repo_slug!r}"
         )
 
     pr_meta = build_pr_metadata(

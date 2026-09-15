@@ -24,3 +24,4 @@
 | 2026-09-15 | Promoted to root IMPLEMENTATION_PLAN after M31 closeout; awaiting Captain approval |
 | 2026-09-15 | Captain approved (“I approve Implementation_Plan.md for B4 repair”); implementing |
 | 2026-09-15 | Hermetic repair module/CLI/tests/evidence green; VERSION 1.35.0 |
+| 2026-09-15 | Adversarial follow-up: product-allowlist-only prepare_pr; expired-agent + github-allowlist tests; code-reviewer Skill link |

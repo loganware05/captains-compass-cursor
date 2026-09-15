@@ -3,10 +3,13 @@ test_discarded_refused (tests.orchestrator.test_m32_repair_loop.ProveTests.test_
 test_verified_high_passes (tests.orchestrator.test_m32_repair_loop.ProveTests.test_verified_high_passes) ... ok
 test_cli_repair_start (tests.orchestrator.test_m32_repair_loop.StartRepairTests.test_cli_repair_start) ... ok
 test_dry_run_writes_evidence_never_merges (tests.orchestrator.test_m32_repair_loop.StartRepairTests.test_dry_run_writes_evidence_never_merges) ... ok
+test_expired_agent_not_dispatch_authorized (tests.orchestrator.test_m32_repair_loop.StartRepairTests.test_expired_agent_not_dispatch_authorized) ... ok
+test_prepare_pr_ignores_github_draft_allowlist (tests.orchestrator.test_m32_repair_loop.StartRepairTests.test_prepare_pr_ignores_github_draft_allowlist)
+M30 github-allowlist must not unlock --prepare-pr (product allowlist only). ... ok
 test_prepare_pr_refuses_non_allowlisted (tests.orchestrator.test_m32_repair_loop.StartRepairTests.test_prepare_pr_refuses_non_allowlisted) ... ok
 test_unverified_raises (tests.orchestrator.test_m32_repair_loop.StartRepairTests.test_unverified_raises) ... ok
 
 ----------------------------------------------------------------------
-Ran 7 tests in 0.085s
+Ran 9 tests in 0.086s
 
 OK

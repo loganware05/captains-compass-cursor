@@ -32,6 +32,7 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 5. **Report** — write `report.json` + `report.md` under `.agent/evidence/code-review/<run-id>/`.
 6. Hand verified findings to humans or `review-fix-loop`. **Never auto-merge.** GitHub draft posting is **opt-in** (`--post-github-draft`) and allowlist-gated (M30); default remains evidence-only.
 7. **Outcomes (M31)** — after human triage, record outcomes → Experience (optional RoutingProposal is proposal-only).
+8. **Repair (M32/B4)** — optional supervised dry-run from a verified finding (`northstar repair start`); never auto-merges.
 
 ### CLI
 
@@ -44,6 +45,9 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 ./scripts/northstar intent export --out .agent/intent/current.json --fixture issue.json
 ./scripts/northstar outcomes record --report path/to/report.json --triage path/to/triage.json
 ./scripts/record-finding-outcomes.sh --report path/to/report.json --triage path/to/triage.json --emit-routing-proposal
+./scripts/northstar repair start --report path/to/report.json --finding-id FINDING_ID
+./scripts/run-repair.sh --report path/to/report.json --finding-id FINDING_ID \
+  --target-repository loganware05/captain-compass-sandbox
 ```
 
 ## Output
@@ -52,10 +56,12 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 - Human-readable `report.md`
 - Optional `context-pack.json`
 - Optional triage `outcomes.json` + Experience lessons; optional RoutingProposal (`auto_apply=false`)
+- Optional repair evidence under `.agent/evidence/repair/<run-id>/` (dry-run; never auto-merge)
 
 ## Prohibited actions
 
 - Auto-applying RoutingProposal / Skill confidence deltas (Captain gate only)
+- Auto-merging repair PRs (B4 SUBMIT is draft/human-reviewed only)
 - Invoking models in CI / default hermetic path
 - Auto-merging or auto-fixing without a separate approved plan
 - Expanding webhook `pull_request` handling in this Skill

@@ -13,7 +13,8 @@
   3. Write objective + agent-router dispatch packet; set `dispatch_authorized`
      only with `--captain-approve-dispatch` and `dispatch_ready`.
   4. Dry-run default writes fix/test plans + draft PR metadata; **never merges**.
-  5. `--prepare-pr` requires sandbox/product allowlist; still never auto-merges.
+  5. `--prepare-pr` requires the **product dispatch allowlist** (sandbox first);
+     the M30 GitHub draft-review allowlist does not unlock prepare; still never auto-merges.
   6. Live Cursor agent dispatch is out of hermetic default path.
 - **Consequences:** Captains can dry-run a supervised repair packet from a
   verified finding. Human review remains mandatory for any PR land.
