@@ -126,4 +126,7 @@ Machine-generated capability matches and agent manifests are proposals only.
 
 ## Approval Record
 
-<!-- After Captain approval, record who approved, when, and the plan revision. Set Status to APPROVED. -->
+<!-- After Captain approval, record who approved, when, and the plan revision.
+     Set Status to APPROVED in the Metadata table. Promoting Status via Write/StrReplace
+     requires COMPASS_CAPTAIN_APPROVE=1 (see .cursor/hooks/README.md). Commit the plan
+     before product-source edits — working-tree-only approval does not unlock the gate. -->

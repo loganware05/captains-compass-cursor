@@ -2,32 +2,30 @@
 
 ## Current status
 
-**Release: v1.38.0** — M35 / C2 product-repo install on branch
-`cursor/m35-c2-product-repo-install-3b10` (**READY FOR MERGE** — product PR open).
+**Release: v1.38.1** — M36 hook security hardening (C2 product PR #7 remediation).
+**v1.38.0** tagged 2026-09-17 @ `c8c1345` after #166 + bitcoin-data-collector #7 merged.
 
 | Item | Value |
 |---|---|
-| Release | **v1.38.0** (pending tag after merge) |
-| M35 / C2 | Control evidence + installer rewrite; product PR **#7** open |
-| Product PR | https://github.com/loganware05/bitcoin-data-collector/pull/7 |
-| Issue | [#164](https://github.com/loganware05/captains-compass-cursor/issues/164) |
-| Rollback | `rollback/pre-c2-product-repo-install` |
-| Evidence | `.agent/evidence/c2-product-repo-install/` |
+| Tagged | **v1.38.0** (M35 / C2) |
+| In flight | **v1.38.1** / M36 — PR [#167](https://github.com/loganware05/captains-compass-cursor/pull/167) rebased onto `main` |
+| Branch | `cursor/m36-hook-security-hardening-5182` |
+| Product follow-up | Refresh hooks on `cursor/kalshi-live-decision-system` (APPLY_TO_PR7; #7 already merged) |
+| Next plan | `docs/plans/AGENTIC_SECURITY_REVIEW_INTEGRATION.md` **AWAITING APPROVAL** |
+| Rollback | `rollback/pre-m36-hook-security-hardening` |
 
-## In flight (Captain-directed)
+## In flight
 
-- Review/merge control [PR #166](https://github.com/loganware05/captains-compass-cursor/pull/166)
-- Review/merge product [PR #7](https://github.com/loganware05/bitcoin-data-collector/pull/7)
-- Tag **v1.38.0** after #166 merges
-- NS-SKILL-003 / OVA-45 remain parallel queue items
-- Docs closeout PR [#165](https://github.com/loganware05/captains-compass-cursor/pull/165) may be superseded
+- Retarget / merge control M36 PR #167 (base was stale C2 branch → now `main`)
+- Open product hooks-refresh PR for bitcoin-data-collector
+- Await Captain approval of agentic-security-review-integration (M37)
 
 ## Completed
 
-- **M34 / C1** merged + tagged **v1.37.0**
-- **M33 / B5** merged + tagged **v1.36.0** — Track B complete
-- C2 APPLY.md applied; product install branch pushed (write access available on this agent)
+- **M35 / C2** merged + tagged **v1.38.0** (control #166, product #7)
+- **M34 / C1** → v1.37.0
+- **M33 / B5** → v1.36.0 — Track B complete
 
 ## Blockers
 
-None for opening the product PR. Merge + tag remain Captain actions.
+None for M36 merge path after rebase. M37 awaits Captain plan approval.

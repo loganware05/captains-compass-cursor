@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.38.1 — 2026-09-16
+
+### Fixed
+
+- **M36 / Hook security hardening** — close two medium findings from Cursor
+  Agentic Security Review on bitcoin-data-collector PR #7:
+  - `plan-approval-check`: product edits require a **committed** APPROVED plan
+    (table Status + real Approved by / Approval date); writing APPROVED into
+    `IMPLEMENTATION_PLAN.md` needs `COMPASS_CAPTAIN_APPROVE=1` (no self-serve)
+  - `protected-branch`: deny push refspecs to protected branches, honor
+    `git -C`, remove `checkout -b feature/` substring short-circuit
+- Hermetic tests: `tests/orchestrator/test_m36_hook_security_hardening.py`
+- ADR-053
+
 ## 1.38.0 — 2026-09-16
 
 ### Added
