@@ -1,7 +1,7 @@
 {
   "kind": "northstar-captain-objective-queue",
   "queued_at": "2026-09-15T18:18:08Z",
-  "updated_at": "2026-09-16T02:32:00Z",
+  "updated_at": "2026-09-16T03:52:00Z",
   "captain": "Logan Ware",
   "captain_utterance": "Add the following objectives to queue, then begin working. Learning Run / routing / B4",
   "approvals": [
@@ -22,114 +22,81 @@
   "objectives": [
     {
       "id": "learning-run",
-      "title": "Learning Run \u2014 complete NS-SKILL-003",
+      "title": "Learning Run — complete NS-SKILL-003",
       "status": "awaiting_retain",
       "linear_parent": "OVA-34",
-      "sandbox_prs": [
-        56,
-        57
-      ],
-      "notes": "OVA-45 dispatched+executed; Experience success; stop for OVA-47"
+      "notes": "Experience success; stop for OVA-47"
     },
     {
       "id": "routing",
       "title": "Agent routing (OVA-45) with M26 wakeability",
       "status": "dispatched",
       "linear_issue": "OVA-45",
-      "depends_on": [
-        "learning-run"
-      ],
-      "notes": "Captain approved dispatch after sandbox #57 merge"
+      "depends_on": ["learning-run"]
     },
     {
       "id": "b4-repair-loop",
-      "title": "B4 \u2014 Repair loop",
+      "title": "B4 — Repair loop",
       "status": "shipped",
-      "plan_id": "b4-repair-loop",
-      "roadmap": "B4",
-      "milestone": "M32",
       "release": "v1.35.0",
-      "prs": [
-        156,
-        157
-      ],
-      "linear_issue": "OVA-48",
-      "github_issue": 154
+      "linear_issue": "OVA-48"
     },
     {
       "id": "b5-precision-ledger",
-      "title": "B5 \u2014 Precision ledger",
+      "title": "B5 — Precision ledger",
       "status": "shipped",
-      "plan_id": "b5-precision-ledger",
-      "roadmap": "B5",
-      "milestone": "M33",
       "release": "v1.36.0",
-      "prs": [
-        159,
-        160
-      ],
-      "linear_issue": "OVA-49",
-      "github_issue": 158
+      "linear_issue": "OVA-49"
     },
     {
       "id": "c1-single-launcher-ux",
-      "title": "C1 \u2014 Single launcher UX",
-      "status": "implementing",
+      "title": "C1 — Single launcher UX",
+      "status": "shipped",
       "plan_id": "c1-single-launcher-ux",
-      "plan_path": "IMPLEMENTATION_PLAN.md",
-      "long_form_path": "docs/plans/C1_SINGLE_LAUNCHER_UX.md",
-      "depends_on": [
-        "b5-precision-ledger"
-      ],
       "roadmap": "C1",
       "milestone": "M34",
-      "proposed_release": "v1.37.0",
-      "notes": "Captain approved; unified help + INDEX + install boundary",
+      "release": "v1.37.0",
+      "prs": [162, 163],
       "linear_issue": "OVA-50",
-      "github_issue": 161,
-      "branch": "cursor/m34-c1-single-launcher-ux-3b10"
+      "github_issue": 161
+    },
+    {
+      "id": "c2-product-repo-install",
+      "title": "C2 — Product-repo install",
+      "status": "awaiting_approval",
+      "plan_id": "c2-product-repo-install",
+      "plan_path": "IMPLEMENTATION_PLAN.md",
+      "long_form_path": "docs/plans/C2_PRODUCT_REPO_INSTALL.md",
+      "depends_on": ["c1-single-launcher-ux"],
+      "roadmap": "C2",
+      "milestone": "M35",
+      "proposed_release": "v1.38.0",
+      "target_product": "loganware05/bitcoin-data-collector",
+      "notes": "Plan only; no product implementation until Captain approval",
+      "linear_issue": "OVA-51",
+      "github_issue": 164
     }
   ],
   "completed_related": [
     {
-      "id": "m31-finding-outcomes",
-      "title": "M31 Finding outcomes \u2192 Experience \u2192 RoutingProposal",
-      "status": "shipped",
-      "release": "v1.34.0",
-      "pr": 152
-    },
-    {
-      "id": "m32-b4-repair-loop",
-      "title": "M32 / B4 Repair loop FIND\u2192PROVE\u2192packet",
-      "status": "shipped",
-      "release": "v1.35.0",
-      "prs": [
-        156,
-        157
-      ]
-    },
-    {
       "id": "m33-b5-precision-ledger",
-      "title": "M33 / B5 Precision ledger",
       "status": "shipped",
-      "release": "v1.36.0",
-      "prs": [
-        159,
-        160
-      ]
+      "release": "v1.36.0"
+    },
+    {
+      "id": "m34-c1-single-launcher-ux",
+      "status": "shipped",
+      "release": "v1.37.0",
+      "prs": [162, 163]
     }
   ],
   "invariants": {
     "approved_for_execution": false,
     "linear_originates_approval": false,
     "one_learning_run_at_a_time": true,
-    "m31_finding_outcomes_shipped": true,
-    "b4_never_auto_merge": true,
-    "b4_repair_loop_shipped": true,
-    "b5_no_auto_apply_reputation": true,
-    "b5_precision_ledger_shipped": true,
     "track_b_complete": true,
-    "c1_no_control_script_copy": true
+    "c1_single_launcher_shipped": true,
+    "c2_no_control_script_copy": true
   },
   "markdown_path": ".agent/queues/captain-objectives-2026-09-15.md"
 }
