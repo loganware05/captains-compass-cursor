@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.37.0 — 2026-09-16
+
+### Added
+
+- **M34 / C1 Single launcher UX** — unified `northstar` help surface map for
+  skills / review / intent / outcomes / repair / precision
+- Operator docs index: `docs/INDEX.md` (Learning Loop + Code Reviewer)
+- Clear control vs product install boundary in `install.sh` help +
+  `docs/PRODUCT_ONBOARDING.md`
+- Product install now skip-if-exists copies `docs/INDEX.md` and
+  `docs/integrations/code-reviewer.md`
+- Doctor checks for help surfaces + INDEX/onboarding boundary
+- Tests: `tests/orchestrator/test_m34_c1_single_launcher_ux.py`
+- ADR-051
+
+### Locks (unchanged)
+
+- Control `scripts/` never copied into product repos (C2 remains separate)
+- Linear is flight recorder only
+- Skill slug remains `code-reviewer`
+- Hermetic CI / no model on default path
+
 ## 1.36.0 — 2026-09-15
 
 ### Added

@@ -1,5 +1,23 @@
 # Decisions
 
+## ADR-051: Single launcher UX (M34 / C1)
+
+- **Status:** Accepted
+- **Date:** 2026-09-16
+- **Context:** Track B shipped skills + review + outcomes + repair + precision,
+  but help/docs still felt like separate families. Roadmap C1 asks for unified
+  help, a docs index, and a clear product install path without doing full C2
+  product-repo install work.
+- **Decision:**
+  1. Expand `scripts/northstar` help with a surface map and docs pointers.
+  2. Add `docs/INDEX.md` linking Learning Loop and Code Reviewer operator docs.
+  3. Clarify control vs product boundary in `install.sh` and
+     `docs/PRODUCT_ONBOARDING.md`; still never copy control `scripts/`.
+  4. Skip-if-exists install of `docs/INDEX.md` (+ code-reviewer integration doc).
+  5. Doctor + hermetic help tests enforce the surface list.
+- **Consequences:** Operators see one product entrypoint. Full bitcoin-data-collector
+  (or other) product install remains roadmap C2 under a separate Captain plan.
+
 ## ADR-050: Precision ledger from finding outcomes (M33 / B5)
 
 - **Status:** Accepted

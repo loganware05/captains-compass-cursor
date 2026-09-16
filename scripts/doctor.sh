@@ -358,6 +358,43 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing executable scripts/northstar"
   fi
+  if "$ROOT/scripts/northstar" help 2>/dev/null | grep -q 'Surfaces (one-line purpose)'; then
+    ok "northstar help surface map"
+  else
+    fail "northstar help missing Surfaces map (C1)"
+  fi
+  for surface in skills review intent outcomes repair precision; do
+    if "$ROOT/scripts/northstar" help 2>/dev/null | grep -Eq "^  ${surface}[[:space:]]"; then
+      ok "northstar help lists ${surface}"
+    else
+      fail "northstar help missing surface: ${surface}"
+    fi
+  done
+  if "$ROOT/scripts/northstar" help 2>/dev/null | grep -q 'docs/INDEX.md'; then
+    ok "northstar help points to docs/INDEX.md"
+  else
+    fail "northstar help missing docs/INDEX.md pointer"
+  fi
+  if [[ -f "$ROOT/docs/INDEX.md" ]]; then
+    ok "docs/INDEX.md"
+  else
+    fail "missing docs/INDEX.md"
+  fi
+  if grep -q 'Control vs product' "$ROOT/docs/INDEX.md" 2>/dev/null; then
+    ok "docs/INDEX.md control vs product section"
+  else
+    fail "docs/INDEX.md missing Control vs product section"
+  fi
+  if grep -q 'Does NOT copy control-repo scripts' "$ROOT/scripts/install.sh" 2>/dev/null; then
+    ok "install.sh control-script boundary help"
+  else
+    fail "install.sh missing control-script boundary help"
+  fi
+  if grep -q 'What install does (and does not)' "$ROOT/docs/PRODUCT_ONBOARDING.md" 2>/dev/null; then
+    ok "PRODUCT_ONBOARDING control vs product"
+  else
+    fail "PRODUCT_ONBOARDING.md missing install boundary section"
+  fi
   if [[ -x "$ROOT/scripts/sync-skill-learning-ledger.sh" ]]; then
     ok "sync-skill-learning-ledger.sh"
   else
