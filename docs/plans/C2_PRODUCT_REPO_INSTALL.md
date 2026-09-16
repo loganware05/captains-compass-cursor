@@ -1,5 +1,8 @@
 # Implementation Plan — M35 / C2 Product-repo install (bitcoin-data-collector)
 
+> Archive mirror of root `IMPLEMENTATION_PLAN.md` (plan id `c2-product-repo-install`).
+
+
 ## Metadata
 
 | Field | Value |
