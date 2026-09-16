@@ -1,7 +1,7 @@
 {
   "kind": "northstar-captain-objective-queue",
   "queued_at": "2026-09-15T18:18:08Z",
-  "updated_at": "2026-09-15T18:50:00Z",
+  "updated_at": "2026-09-15T20:35:00Z",
   "captain": "Logan Ware",
   "captain_utterance": "Add the following objectives to queue, then begin working. Learning Run / routing / B4",
   "approvals": [
@@ -31,18 +31,32 @@
     {
       "id": "b4-repair-loop",
       "title": "B4 — Repair loop",
-      "status": "implementing",
+      "status": "shipped",
       "plan_id": "b4-repair-loop",
-      "plan_path": "IMPLEMENTATION_PLAN.md",
-      "long_form_path": "docs/plans/B4_REPAIR_LOOP.md",
+      "plan_path": "docs/plans/B4_REPAIR_LOOP.md",
       "depends_on": ["routing"],
       "roadmap": "B4",
       "milestone": "M32",
-      "proposed_release": "v1.35.0",
-      "branch": "cursor/m32-b4-repair-loop-05fd",
-      "notes": "Captain approved B4 plan; packet MVP in progress; never auto-merge",
+      "release": "v1.35.0",
+      "prs": [156, 157],
+      "notes": "Packet MVP shipped; never auto-merge; full live FIX still Captain-gated",
       "linear_issue": "OVA-48",
       "github_issue": 154
+    },
+    {
+      "id": "b5-precision-ledger",
+      "title": "B5 — Precision ledger",
+      "status": "awaiting_approval",
+      "plan_id": "b5-precision-ledger",
+      "plan_path": "IMPLEMENTATION_PLAN.md",
+      "long_form_path": "docs/plans/B5_PRECISION_LEDGER.md",
+      "depends_on": ["b4-repair-loop"],
+      "roadmap": "B5",
+      "milestone": "M33",
+      "proposed_release": "v1.36.0",
+      "notes": "Plan only; no product implementation until Captain approval",
+      "linear_issue": "OVA-49",
+      "github_issue": 158
     }
   ],
   "completed_related": [
@@ -52,6 +66,13 @@
       "status": "shipped",
       "release": "v1.34.0",
       "pr": 152
+    },
+    {
+      "id": "m32-b4-repair-loop",
+      "title": "M32 / B4 Repair loop FIND→PROVE→packet",
+      "status": "shipped",
+      "release": "v1.35.0",
+      "prs": [156, 157]
     }
   ],
   "invariants": {
@@ -59,7 +80,9 @@
     "linear_originates_approval": false,
     "one_learning_run_at_a_time": true,
     "m31_finding_outcomes_shipped": true,
-    "b4_never_auto_merge": true
+    "b4_never_auto_merge": true,
+    "b4_repair_loop_shipped": true,
+    "b5_no_auto_apply_reputation": true
   },
   "markdown_path": ".agent/queues/captain-objectives-2026-09-15.md"
 }

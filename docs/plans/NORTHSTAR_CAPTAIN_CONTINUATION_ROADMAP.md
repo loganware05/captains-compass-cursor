@@ -99,8 +99,8 @@ The Captain’s job is to **wire them together** so review outcomes improve Skil
 | **B1 — Specialist composition** | Stop relying on bare heuristics | Wire security/adversarial/test Skills to emit candidate JSON into verify | B0 | Enriched mode documented; bitcoin-style dry-run is the default demo |
 | **B2 — Intent packs** | Product repos carry reviewable intent | Template `IMPLEMENTATION_PLAN.md` / AC export in installer; optional Linear issue body ingest | B0 | Review without hand-written temp plan |
 | **B3 — GitHub posting (opt-in)** | Phase B from original brief | New plan: draft reviews only, severity floor, Captain allowlist, sandbox repo first | B1 | Posted review on sandbox PR with low noise |
-| **B4 — Repair loop** | FIND→PROVE→FIX→TEST→SUBMIT | Child task spawn via Learning Loop / agent router; never auto-merge | B3 + A3 | One supervised repair PR from a verified finding |
-| **B5 — Precision ledger** | Skill/reviewer reputation | Store accepted/rejected findings; gate invocation priority | A3 | Precision dashboards in evidence/Experience |
+| **B4 — Repair loop** | FIND→PROVE→FIX→TEST→SUBMIT | Child task spawn via Learning Loop / agent router; never auto-merge — **shipped v1.35.0** (packet MVP) | B3 + A3 | One supervised repair PR from a verified finding (packet/dry-run proved; live FIX still gated) |
+| **B5 — Precision ledger** | Skill/reviewer reputation | Store accepted/rejected findings; gate invocation priority (plan: `b5-precision-ledger` / M33 — AWAITING_APPROVAL) | A3 (done) | Precision dashboards in evidence/Experience |
 
 ### Track C — Platform glue (makes A+B compound)
 
