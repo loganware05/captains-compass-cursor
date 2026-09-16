@@ -8,24 +8,33 @@ Issue: [#164](https://github.com/loganware05/captains-compass-cursor/issues/164)
 
 ## Result
 
-Local `install.sh` into `loganware05/bitcoin-data-collector` **succeeded**.
+Local `install.sh` into `loganware05/bitcoin-data-collector` **succeeded** at
+control `VERSION=1.38.0` (product commit `0b7bb96`).
 Push of product branch `cursor/m35-c2-northstar-install-3b10` **failed** (GitHub 403 —
 `cursor[bot]` lacks write access to that repo).
 
 | Artifact | Purpose |
 |---|---|
-| `install.log` | install.sh stdout |
-| `INVENTORY.md` | Locks: no `scripts/`; cloud venv install preserved; COMPASS_VERSION |
-| `bitcoin-data-collector-install.patch` | `git format-patch` of the product install commit |
+| `install.log.txt` | scrubbed install.sh stdout (v1.38.0) |
+| `INVENTORY.md` | Locks + SHA alignment with patch |
+| `bitcoin-data-collector-install.patch` | `git format-patch` of product commit `0b7bb96` |
 | `APPLY.md` | Captain steps to push product PR |
+| `SECRETS_SCAN.md` | high-signal secret pattern scan (clean) |
+| `doctor.txt` | control doctor after C2 changes |
 
 ## Locks verified (local product tree)
 
 - No `scripts/` directory / no `scripts/northstar`
+- Install rewrites bare `./scripts/` → `$CONTROL/scripts/` in Skills/agents/commands/integrations
 - `.cursor/install.sh` + `.cursor/environment.json` (Cloud Agent) preserved
-- Product-scoped `docs/INDEX.md` relative links resolve
+- Product-scoped `docs/INDEX.md` relative links resolve; learn uses `$(pwd)`
 - Memory templates added (repo had none prior)
-- `.agent/COMPASS_VERSION` = `1.38.0`
+- `.agent/COMPASS_VERSION` = `1.38.0` (matches control VERSION + install log)
+
+## Status
+
+**PARTIAL** — control evidence + installer fix ready; full C2 exit needs product PR
+(Captain apply `APPLY.md` or grant write access).
 
 ## Captain follow-up (required for full C2 exit)
 

@@ -2,19 +2,32 @@
 
 | Check | Result |
 |---|---|
-| Branch | `cursor/m35-c2-northstar-install-3b10` (local commit `80faee8`) |
+| Branch | `cursor/m35-c2-northstar-install-3b10` (local commit `0b7bb96`) |
+| Full SHA | `0b7bb964c2a5ca1941835172abc1d0eb80a5dc87` |
 | Base | `cursor/kalshi-live-decision-system` |
+| Control VERSION at install | `1.38.0` |
 | `.agent/COMPASS_VERSION` | `1.38.0` |
 | `scripts/` dir | **absent** |
 | `scripts/northstar` | **absent** |
+| Bare `./scripts/` in Skills/agents/commands/integrations | **0** (rewritten to `$CONTROL/scripts/`) |
 | Preserved `.cursor/install.sh` (Cloud Agent venv) | yes |
 | Preserved `.cursor/environment.json` | yes |
-| Product `docs/INDEX.md` | product-scoped template |
+| Product `docs/INDEX.md` | product-scoped template (`--repo "$(pwd)"`) |
 | Skills under `.cursor/skills` | 42 |
+
+## Commit
+
+```
+0b7bb96 chore(workflow): install NorthStar (Captain's Compass) without control scripts
+ .agent/COMPASS_VERSION                             |   1 +
+ .agent/budgets/_templates/BUDGET_LEDGER.md         |  39 ++++
+ .agent/budgets/_templates/BUDGET_STOP_REPORT.md    |  28 +++
+ .agent/budgets/_templates/SESSION_NOTE.md          |  33 +++
+```
 
 ## Top-level added (selected)
 
-80faee8 chore(workflow): install NorthStar (Captain's Compass) without control scripts
+```
  .agent/COMPASS_VERSION                             |   1 +
  .agent/budgets/_templates/BUDGET_LEDGER.md         |  39 ++++
  .agent/budgets/_templates/BUDGET_STOP_REPORT.md    |  28 +++
@@ -94,3 +107,5 @@
  .../skills/implementation-planning/capability.yaml |  30 +++
  .cursor/skills/ios-engineering/SKILL.md            |  33 +++
  .cursor/skills/ios-engineering/capability.yaml     |  31 +++
+ .cursor/skills/knowledge-steward/SKILL.md          |  99 +++++++++
+```

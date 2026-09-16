@@ -3,12 +3,12 @@
 ## Current status
 
 **Release: v1.38.0** — M35 / C2 product-repo install on branch
-`cursor/m35-c2-product-repo-install-3b10` (awaiting Captain merge).
+`cursor/m35-c2-product-repo-install-3b10` (**PARTIAL** — product PR pending Captain).
 
 | Item | Value |
 |---|---|
 | Release | **v1.38.0** (pending tag after merge) |
-| M35 / C2 | Product install proven locally; product PR needs Captain push (403) |
+| M35 / C2 | Local install `0b7bb96` + rewrite; product PR needs Captain push (403) |
 | Issue | [#164](https://github.com/loganware05/captains-compass-cursor/issues/164) |
 | Rollback | `rollback/pre-c2-product-repo-install` |
 | Evidence | `.agent/evidence/c2-product-repo-install/` |

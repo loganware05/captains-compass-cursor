@@ -7,7 +7,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **SHIPPED** (control evidence / v1.38.0; product PR pending Captain push) |
+| Status | **PARTIAL** (control evidence / v1.38.0 ready; product PR pending Captain push) |
 | Plan ID | `c2-product-repo-install` |
 | Supersedes | `c1-single-launcher-ux` (CLOSED — shipped as v1.37.0 / M34 / C1) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
@@ -27,13 +27,13 @@
 ## Acceptance criteria
 
 1. **Plan-gated** ✅
-2. **Product install** — local install succeeded; product PR push blocked (403) — patch in evidence for Captain ✅ (partial)
-3. **No scripts/** ✅ (inventory)
+2. **Product install** — local install at `VERSION=1.38.0` succeeded (commit `0b7bb96`); product PR push blocked (403) — patch in evidence for Captain ⬜ (open until product PR exists)
+3. **No scripts/** ✅ (inventory; bare `./scripts/` rewritten to `$CONTROL/scripts/`)
 4. **Memory preserved** ✅ (new templates; Cloud Agent files preserved)
 5. **Operator path documented** ✅ (`docs/INDEX.md` product-scoped + APPLY.md)
-6. **Control evidence** ✅ `.agent/evidence/c2-product-repo-install/`
+6. **Control evidence** ✅ `.agent/evidence/c2-product-repo-install/` (SHA-aligned patch + scrubbed `install.log.txt`)
 7. **Control docs** — ADR-052; VERSION **1.38.0** ✅
-8. **Doctor/tests** — control hermetic checks remain green ✅
+8. **Doctor/tests** — hermetic install boundary + rewrite checks green ✅
 
 ## Residual
 

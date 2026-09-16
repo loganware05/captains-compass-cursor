@@ -22,3 +22,4 @@
 |---|---|
 | 2026-09-16 | Plan drafted on M34 closeout; awaiting approval |
 | 2026-09-16 | Captain approved; local install OK; product push 403; patch in evidence |
+| 2026-09-16 | Adversarial: evidence SHA/version drift + bare `./scripts/` in product docs — fixed rewrite + reinstall at 1.38.0 (`0b7bb96`); status PARTIAL until product PR |

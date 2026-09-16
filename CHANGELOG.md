@@ -6,8 +6,11 @@
 
 - **M35 / C2 Product-repo install** — NorthStar install into
   `bitcoin-data-collector` proven locally (no control `scripts/` copy)
-- Evidence: `.agent/evidence/c2-product-repo-install/` (install log, inventory,
-  apply patch for Captain push — bot lacks write access to product repo)
+- `install.sh` rewrites bare `./scripts/` → `$CONTROL/scripts/` in product
+  Skills/agents/commands/integrations after copy
+- Product INDEX learn example uses `--repo "$(pwd)"`
+- Evidence: `.agent/evidence/c2-product-repo-install/` (scrubbed install log,
+  SHA-aligned inventory + patch for Captain push — bot lacks write access)
 - ADR-052
 
 ### Locks (unchanged)

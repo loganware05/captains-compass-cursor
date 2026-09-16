@@ -1,13 +1,9 @@
-From 1c7e2d281b0b163b3b749969b5d11a1b52fdf1b7 Mon Sep 17 00:00:00 2001
-From: Cursor Agent <cursoragent@cursor.com>
-Date: Wed, 16 Sep 2026 03:57:03 +0000
+From 0b7bb964c2a5ca1941835172abc1d0eb80a5dc87 Mon Sep 17 00:00:00 2001
+From: Cursor Agent <cursor@example.com>
+Date: Wed, 16 Sep 2026 04:04:26 +0000
 Subject: [PATCH] chore(workflow): install NorthStar (Captain's Compass)
  without control scripts
 
-Install NorthStar Skills/rules/agents, memory doc templates, and product-scoped
-docs/INDEX.md via control install.sh. Preserves existing .cursor/environment.json
-and .cursor/install.sh (Cloud Agent venv). Control scripts/ are not copied;
-operators run northstar from captains-compass-cursor with --repo.
 ---
  .agent/COMPASS_VERSION                        |   1 +
  .agent/budgets/_templates/BUDGET_LEDGER.md    |  39 +++
@@ -571,7 +567,7 @@ index 0000000..af44b1c
 +Return an architecture brief to the First Mate.
 diff --git a/.cursor/agents/code-reviewer.md b/.cursor/agents/code-reviewer.md
 new file mode 100644
-index 0000000..dfd3787
+index 0000000..42d1abf
 --- /dev/null
 +++ b/.cursor/agents/code-reviewer.md
 @@ -0,0 +1,37 @@
@@ -592,7 +588,7 @@ index 0000000..dfd3787
 +Prefer the hermetic CLI when available:
 +
 +```bash
-+./scripts/northstar review --repo <repo> [--candidates <fixture.json>] [--plan <plan.md>]
++$CONTROL/scripts/northstar review --repo <repo> [--candidates <fixture.json>] [--plan <plan.md>]
 +```
 +
 +Compose specialist agents/Skills when helpful (`security-reviewer`, `adversarial-reviewer`,
@@ -866,7 +862,7 @@ index 0000000..8407e9e
 +the approval gate, fail-closed critical hooks, or autonomy budgets.
 diff --git a/.cursor/commands/close-workstream.md b/.cursor/commands/close-workstream.md
 new file mode 100644
-index 0000000..23b33bc
+index 0000000..a00fb15
 --- /dev/null
 +++ b/.cursor/commands/close-workstream.md
 @@ -0,0 +1,22 @@
@@ -878,7 +874,7 @@ index 0000000..23b33bc
 +4. Load Skill `execution-telemetry` and record an ExecutionRun + Experience:
 +
 +   ```bash
-+   ./scripts/record-execution-run.sh \
++   $CONTROL/scripts/record-execution-run.sh \
 +     --plan-id <plan-id> \
 +     --outcome success \
 +     --objective "<summary>" \
@@ -929,7 +925,7 @@ index 0000000..9a00e90
 +Additional context from the Captain (if any) follows this command.
 diff --git a/.cursor/commands/plan-feature.md b/.cursor/commands/plan-feature.md
 new file mode 100644
-index 0000000..95dd7bb
+index 0000000..9329150
 --- /dev/null
 +++ b/.cursor/commands/plan-feature.md
 @@ -0,0 +1,13 @@
@@ -937,7 +933,7 @@ index 0000000..95dd7bb
 +
 +1. Load Skills `implementation-planning` and `capability-planning` and follow them.
 +2. Read required project memory docs and inspect the current implementation.
-+3. Run `./scripts/capability-plan.sh --plan-id <plan-id> "<objective>"` and merge the rendered capability sections into root `IMPLEMENTATION_PLAN.md`.
++3. Run `$CONTROL/scripts/capability-plan.sh --plan-id <plan-id> "<objective>"` and merge the rendered capability sections into root `IMPLEMENTATION_PLAN.md`.
 +4. Complete remaining human-authored plan sections per `implementation-planning`.
 +5. Write or update root `IMPLEMENTATION_PLAN.md`.
 +6. Set status to **AWAITING APPROVAL**.
@@ -1839,7 +1835,7 @@ index 0000000..5f364e7
 +confidence: 0.9
 diff --git a/.cursor/skills/bounded-autonomy/SKILL.md b/.cursor/skills/bounded-autonomy/SKILL.md
 new file mode 100644
-index 0000000..d6f2cbd
+index 0000000..8169a2b
 --- /dev/null
 +++ b/.cursor/skills/bounded-autonomy/SKILL.md
 @@ -0,0 +1,61 @@
@@ -1869,7 +1865,7 @@ index 0000000..d6f2cbd
 +3. Apply once under budget:
 +
 +   ```bash
-+   ./scripts/apply-routing-proposal.sh \
++   $CONTROL/scripts/apply-routing-proposal.sh \
 +     --proposal .agent/routing/proposals/<id>.json \
 +     --budget .agent/budgets/<plan-id>.md
 +   ```
@@ -1881,9 +1877,9 @@ index 0000000..d6f2cbd
 +4. **Context selection apply** (M17 — which plan slices appear):
 +
 +   ```bash
-+   ./scripts/propose-context-selection.sh --experiences tests/fixtures/experience/contact-counter.json
++   $CONTROL/scripts/propose-context-selection.sh --experiences tests/fixtures/experience/contact-counter.json
 +   # Captain sets captain_approved: true on the context-selection proposal
-+   ./scripts/apply-context-selection-proposal.sh \
++   $CONTROL/scripts/apply-context-selection-proposal.sh \
 +     --proposal .agent/routing/proposals/<ctxsel-id>.json \
 +     --budget .agent/budgets/<plan-id>.md
 +   ```
@@ -1941,7 +1937,7 @@ index 0000000..83bc050
 +confidence: 0.85
 diff --git a/.cursor/skills/candidate-promotion/SKILL.md b/.cursor/skills/candidate-promotion/SKILL.md
 new file mode 100644
-index 0000000..2a09e2a
+index 0000000..e03fd00
 --- /dev/null
 +++ b/.cursor/skills/candidate-promotion/SKILL.md
 @@ -0,0 +1,71 @@
@@ -1976,11 +1972,11 @@ index 0000000..2a09e2a
 +2. Advance lifecycle (examples):
 +
 +   ```bash
-+   ./scripts/promote-candidate.sh --candidate <path.json>
-+   ./scripts/promote-candidate.sh --candidate <path.json> \
++   $CONTROL/scripts/promote-candidate.sh --candidate <path.json>
++   $CONTROL/scripts/promote-candidate.sh --candidate <path.json> \
 +     --stage SECURITY_REVIEWED \
 +     --evidence .agent/evidence/security-review.md
-+   ./scripts/promote-candidate.sh --candidate <path.json> \
++   $CONTROL/scripts/promote-candidate.sh --candidate <path.json> \
 +     --stage SANDBOX_TESTED \
 +     --evidence .agent/evidence/sandbox-test.md
 +   ```
@@ -1990,14 +1986,14 @@ index 0000000..2a09e2a
 +   evidence paths (from the TI scorecard) or the draft fails closed:
 +
 +   ```bash
-+   ./scripts/promote-candidate.sh --candidate <path.json> --draft-skill <slug>
++   $CONTROL/scripts/promote-candidate.sh --candidate <path.json> --draft-skill <slug>
 +   ```
 +
 +4. For post-sandbox stages, load Skill `skill-lifecycle` (requires
 +   `--captain-approved`).
 +5. Open a Captain-reviewed PR to copy draft files into `.cursor/skills/<slug>/`
 +   only after explicit approval. Never auto-merge.
-+6. Re-run `./scripts/compile-capability-registry.sh` and tests after merge.
++6. Re-run `$CONTROL/scripts/compile-capability-registry.sh` and tests after merge.
 +7. For **live** starred-repo discovery (Captain local only), use Skill
 +   `technology-intelligence-live` with `COMPASS_TI_PROVIDER=github-stars`.
 +   External repos must be starred; non-starred feeds are rejected.
@@ -2051,7 +2047,7 @@ index 0000000..fcdaa92
 +confidence: 0.85
 diff --git a/.cursor/skills/capability-planning/SKILL.md b/.cursor/skills/capability-planning/SKILL.md
 new file mode 100644
-index 0000000..07e263b
+index 0000000..e1af80a
 --- /dev/null
 +++ b/.cursor/skills/capability-planning/SKILL.md
 @@ -0,0 +1,65 @@
@@ -2083,11 +2079,11 @@ index 0000000..07e263b
 +
 +## Procedure
 +
-+1. Ensure registry is current: `./scripts/compile-capability-registry.sh`
++1. Ensure registry is current: `$CONTROL/scripts/compile-capability-registry.sh`
 +2. Run the planning pipeline:
 +
 +   ```bash
-+   ./scripts/capability-plan.sh --plan-id <plan-id> "<objective>"
++   $CONTROL/scripts/capability-plan.sh --plan-id <plan-id> "<objective>"
 +   ```
 +
 +3. Copy rendered sections into `IMPLEMENTATION_PLAN.md`:
@@ -2158,7 +2154,7 @@ index 0000000..3681ff9
 +confidence: 0.9
 diff --git a/.cursor/skills/code-reviewer/SKILL.md b/.cursor/skills/code-reviewer/SKILL.md
 new file mode 100644
-index 0000000..6413f18
+index 0000000..f403e85
 --- /dev/null
 +++ b/.cursor/skills/code-reviewer/SKILL.md
 @@ -0,0 +1,70 @@
@@ -2203,17 +2199,17 @@ index 0000000..6413f18
 +
 +```bash
 +# From control repo
-+./scripts/run-code-review.sh --repo-root /path/to/repo --plan IMPLEMENTATION_PLAN.md
-+./scripts/run-code-review.sh --repo-root /path/to/repo --intent-json .agent/intent/current.json
-+./scripts/northstar review --repo /path/to/repo --candidates-mode specialists
-+./scripts/northstar review --repo /path/to/repo --candidates tests/fixtures/code-review/candidates.json
-+./scripts/northstar intent export --out .agent/intent/current.json --fixture issue.json
-+./scripts/northstar outcomes record --report path/to/report.json --triage path/to/triage.json
-+./scripts/record-finding-outcomes.sh --report path/to/report.json --triage path/to/triage.json --emit-routing-proposal
-+./scripts/northstar repair start --report path/to/report.json --finding <id> --repository loganware05/captain-compass-sandbox
-+./scripts/start-repair-loop.sh --report path/to/report.json --finding <id> --repository loganware05/captain-compass-sandbox
-+./scripts/northstar precision aggregate --outcomes path/to/outcomes.json --emit-priority-proposal
-+./scripts/aggregate-precision-ledger.sh --outcomes path/to/outcomes.json --ledger-id demo
++$CONTROL/scripts/run-code-review.sh --repo-root /path/to/repo --plan IMPLEMENTATION_PLAN.md
++$CONTROL/scripts/run-code-review.sh --repo-root /path/to/repo --intent-json .agent/intent/current.json
++$CONTROL/scripts/northstar review --repo /path/to/repo --candidates-mode specialists
++$CONTROL/scripts/northstar review --repo /path/to/repo --candidates tests/fixtures/code-review/candidates.json
++$CONTROL/scripts/northstar intent export --out .agent/intent/current.json --fixture issue.json
++$CONTROL/scripts/northstar outcomes record --report path/to/report.json --triage path/to/triage.json
++$CONTROL/scripts/record-finding-outcomes.sh --report path/to/report.json --triage path/to/triage.json --emit-routing-proposal
++$CONTROL/scripts/northstar repair start --report path/to/report.json --finding <id> --repository loganware05/captain-compass-sandbox
++$CONTROL/scripts/start-repair-loop.sh --report path/to/report.json --finding <id> --repository loganware05/captain-compass-sandbox
++$CONTROL/scripts/northstar precision aggregate --outcomes path/to/outcomes.json --emit-priority-proposal
++$CONTROL/scripts/aggregate-precision-ledger.sh --outcomes path/to/outcomes.json --ledger-id demo
 +```
 +
 +## Output
@@ -2359,7 +2355,7 @@ index 0000000..1a1cca7
 +confidence: 0.9
 diff --git a/.cursor/skills/compass-evaluator/SKILL.md b/.cursor/skills/compass-evaluator/SKILL.md
 new file mode 100644
-index 0000000..f48fdcb
+index 0000000..5ab473e
 --- /dev/null
 +++ b/.cursor/skills/compass-evaluator/SKILL.md
 @@ -0,0 +1,55 @@
@@ -2390,7 +2386,7 @@ index 0000000..f48fdcb
 +2. Record the experiment:
 +
 +   ```bash
-+   ./scripts/run-evaluation.sh \
++   $CONTROL/scripts/run-evaluation.sh \
 +     --plan-id <plan-id> \
 +     --objective "<question>" \
 +     --alternatives '[{"id":"a","label":"Option A"},{"id":"b","label":"Option B"}]' \
@@ -2627,7 +2623,7 @@ index 0000000..2b0c7a3
 +confidence: 0.9
 diff --git a/.cursor/skills/embedding-providers/SKILL.md b/.cursor/skills/embedding-providers/SKILL.md
 new file mode 100644
-index 0000000..2fe42ee
+index 0000000..89547e0
 --- /dev/null
 +++ b/.cursor/skills/embedding-providers/SKILL.md
 @@ -0,0 +1,67 @@
@@ -2657,17 +2653,17 @@ index 0000000..2fe42ee
 +1. Default path stays TF-IDF (`COMPASS_EMBEDDING_PROVIDER` unset or `tfidf`):
 +
 +   ```bash
-+   ./scripts/rebuild-knowledge-vector-index.sh
-+   ./scripts/query-knowledge.sh --query "matcher tuning" --mode hybrid
++   $CONTROL/scripts/rebuild-knowledge-vector-index.sh
++   $CONTROL/scripts/query-knowledge.sh --query "matcher tuning" --mode hybrid
 +   ```
 +
 +2. Opt into fixture dense embeddings (offline; no network):
 +
 +   ```bash
 +   COMPASS_EMBEDDING_PROVIDER=fixture \
-+     ./scripts/rebuild-knowledge-embedding-index.sh
++     $CONTROL/scripts/rebuild-knowledge-embedding-index.sh
 +   COMPASS_EMBEDDING_PROVIDER=fixture \
-+     ./scripts/query-knowledge.sh --query "matcher tuning" --mode vector
++     $CONTROL/scripts/query-knowledge.sh --query "matcher tuning" --mode vector
 +   ```
 +
 +3. Opt into **OpenAI-compatible** embeddings (Captain local only; never CI):
@@ -2678,8 +2674,8 @@ index 0000000..2fe42ee
 +   # optional:
 +   # export COMPASS_EMBEDDING_BASE_URL=https://api.openai.com/v1
 +   # export COMPASS_EMBEDDING_MODEL=text-embedding-3-small
-+   ./scripts/rebuild-knowledge-embedding-index.sh
-+   ./scripts/query-knowledge.sh --query "matcher tuning" --mode vector
++   $CONTROL/scripts/rebuild-knowledge-embedding-index.sh
++   $CONTROL/scripts/query-knowledge.sh --query "matcher tuning" --mode vector
 +   ```
 +
 +4. Missing dense index or live HTTP failure → automatic **TF-IDF fallback**.
@@ -2736,7 +2732,7 @@ index 0000000..b2dcabe
 +confidence: 0.85
 diff --git a/.cursor/skills/execution-telemetry/SKILL.md b/.cursor/skills/execution-telemetry/SKILL.md
 new file mode 100644
-index 0000000..aac3d26
+index 0000000..87a0d0f
 --- /dev/null
 +++ b/.cursor/skills/execution-telemetry/SKILL.md
 @@ -0,0 +1,49 @@
@@ -2764,7 +2760,7 @@ index 0000000..aac3d26
 +2. Record telemetry from the control or product repo root:
 +
 +   ```bash
-+   ./scripts/record-execution-run.sh \
++   $CONTROL/scripts/record-execution-run.sh \
 +     --plan-id <plan-id> \
 +     --outcome success \
 +     --objective "<short objective>" \
@@ -2824,7 +2820,7 @@ index 0000000..322abec
 +confidence: 0.85
 diff --git a/.cursor/skills/experience-routing/SKILL.md b/.cursor/skills/experience-routing/SKILL.md
 new file mode 100644
-index 0000000..9456b50
+index 0000000..16ce698
 --- /dev/null
 +++ b/.cursor/skills/experience-routing/SKILL.md
 @@ -0,0 +1,67 @@
@@ -2851,7 +2847,7 @@ index 0000000..9456b50
 +2. Generate a **proposal-only** routing artifact:
 +
 +   ```bash
-+   ./scripts/propose-experience-routing.sh \
++   $CONTROL/scripts/propose-experience-routing.sh \
 +     --experiences tests/fixtures/experience/contact-counter.json
 +   ```
 +
@@ -2859,20 +2855,20 @@ index 0000000..9456b50
 +4. Present skill confidence deltas and weight suggestions to the Captain.
 +5. To apply weights (Milestone 4 Level 3), Captain sets `captain_approved: true`
 +   on the proposal JSON, then use Skill `bounded-autonomy` /
-+   `./scripts/apply-routing-proposal.sh` under an autonomy budget.
++   `$CONTROL/scripts/apply-routing-proposal.sh` under an autonomy budget.
 +   Routing proposals include **decomposition hints** (bounded matcher-factor deltas;
 +   M17) merged on apply.
 +6. For **context selection tuning** (M17 — which knowledge/TI slices appear in plans):
 +
 +   ```bash
-+   ./scripts/propose-context-selection.sh --experiences tests/fixtures/experience/contact-counter.json
++   $CONTROL/scripts/propose-context-selection.sh --experiences tests/fixtures/experience/contact-counter.json
 +   ```
 +
-+   Captain sets `captain_approved: true`, then `./scripts/apply-context-selection-proposal.sh`.
++   Captain sets `captain_approved: true`, then `$CONTROL/scripts/apply-context-selection-proposal.sh`.
 +7. Optionally record subagent proficiency metadata after Skill training:
 +
 +   ```bash
-+   ./scripts/record-agent-proficiency.sh \
++   $CONTROL/scripts/record-agent-proficiency.sh \
 +     --agent-id compass-evaluator \
 +     --classifications evaluation,arbitration \
 +     --skills compass-evaluator,execution-telemetry \
@@ -2932,7 +2928,7 @@ index 0000000..4599b0c
 +confidence: 0.85
 diff --git a/.cursor/skills/experience-skill-training/SKILL.md b/.cursor/skills/experience-skill-training/SKILL.md
 new file mode 100644
-index 0000000..17b1bd8
+index 0000000..51cab11
 --- /dev/null
 +++ b/.cursor/skills/experience-skill-training/SKILL.md
 @@ -0,0 +1,53 @@
@@ -2962,7 +2958,7 @@ index 0000000..17b1bd8
 +2. Train a draft Skill in control-repo staging (not live Skills):
 +
 +   ```bash
-+   ./scripts/train-skill-from-experience.sh \
++   $CONTROL/scripts/train-skill-from-experience.sh \
 +     --experience /path/to/product/.agent/experience/<id>.json \
 +     --control-root /path/to/captains-compass-cursor \
 +     [--skill-slug my-new-skill]
@@ -2973,7 +2969,7 @@ index 0000000..17b1bd8
 +4. Run control-repo validation:
 +
 +   ```bash
-+   ./scripts/doctor.sh
++   $CONTROL/scripts/doctor.sh
 +   PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_*.py' -q
 +   ```
 +
@@ -3024,7 +3020,7 @@ index 0000000..5d4b03f
 +confidence: 0.8
 diff --git a/.cursor/skills/external-knowledge-ingest/SKILL.md b/.cursor/skills/external-knowledge-ingest/SKILL.md
 new file mode 100644
-index 0000000..4004a43
+index 0000000..7a34704
 --- /dev/null
 +++ b/.cursor/skills/external-knowledge-ingest/SKILL.md
 @@ -0,0 +1,75 @@
@@ -3053,11 +3049,11 @@ index 0000000..4004a43
 +3. Ingest explicitly:
 +
 +   ```bash
-+   ./scripts/ingest-notion-live.sh --source cache
++   $CONTROL/scripts/ingest-notion-live.sh --source cache
 +   # offline/CI:
-+   ./scripts/ingest-notion-live.sh --source fixtures
++   $CONTROL/scripts/ingest-notion-live.sh --source fixtures
 +   # after MCP session payload export:
-+   ./scripts/ingest-notion-live.sh --source live --payload mcp-pages.json
++   $CONTROL/scripts/ingest-notion-live.sh --source live --payload mcp-pages.json
 +   ```
 +
 +4. Items use provenance `export_mode: mcp_live` (distinct from file exports).
@@ -3081,13 +3077,13 @@ index 0000000..4004a43
 +3. Ingest (explicit CLI only):
 +
 +   ```bash
-+   ./scripts/ingest-knowledge.sh --from-store notion,notebooklm
++   $CONTROL/scripts/ingest-knowledge.sh --from-store notion,notebooklm
 +   ```
 +
 +4. Query as `kind: knowledge`:
 +
 +   ```bash
-+   ./scripts/query-knowledge.sh --query "approval gate" --kind knowledge
++   $CONTROL/scripts/query-knowledge.sh --query "approval gate" --kind knowledge
 +   ```
 +
 +5. Items appear in plan **Knowledge Context** after ingest (informational only).
@@ -3312,7 +3308,7 @@ index 0000000..f8dfbbb
 +confidence: 0.9
 diff --git a/.cursor/skills/hosted-vector-db/SKILL.md b/.cursor/skills/hosted-vector-db/SKILL.md
 new file mode 100644
-index 0000000..e9822ae
+index 0000000..c23ad78
 --- /dev/null
 +++ b/.cursor/skills/hosted-vector-db/SKILL.md
 @@ -0,0 +1,78 @@
@@ -3349,8 +3345,8 @@ index 0000000..e9822ae
 +1. Default path stays file-backed (`COMPASS_VECTOR_PROVIDER=file` or unset):
 +
 +   ```bash
-+   ./scripts/rebuild-knowledge-vector-index.sh
-+   ./scripts/query-knowledge.sh --query "approval gate" --mode hybrid
++   $CONTROL/scripts/rebuild-knowledge-vector-index.sh
++   $CONTROL/scripts/query-knowledge.sh --query "approval gate" --mode hybrid
 +   ```
 +
 +2. Bootstrap pgvector schema on Neon (Captain local):
@@ -3358,7 +3354,7 @@ index 0000000..e9822ae
 +   ```bash
 +   export COMPASS_VECTOR_DATABASE_URL='postgresql://...'
 +   export COMPASS_VECTOR_DIMENSIONS=32   # match embedding provider
-+   ./scripts/init-pgvector-schema.sh --apply
++   $CONTROL/scripts/init-pgvector-schema.sh --apply
 +   ```
 +
 +3. Sync knowledge embeddings to hosted store (explicit CLI):
@@ -3367,7 +3363,7 @@ index 0000000..e9822ae
 +   export COMPASS_VECTOR_PROVIDER=pgvector
 +   export COMPASS_VECTOR_NAMESPACE=captains-compass-cursor
 +   export COMPASS_EMBEDDING_PROVIDER=fixture   # or openai-compatible + API key
-+   ./scripts/sync-knowledge-vector-db.sh
++   $CONTROL/scripts/sync-knowledge-vector-db.sh
 +   ```
 +
 +4. Query hosted vectors:
@@ -3377,7 +3373,7 @@ index 0000000..e9822ae
 +   COMPASS_VECTOR_DATABASE_URL='postgresql://...' \
 +   COMPASS_VECTOR_NAMESPACE=captains-compass-cursor \
 +   COMPASS_EMBEDDING_PROVIDER=fixture \
-+     ./scripts/query-knowledge.sh --query "matcher tuning" --mode vector
++     $CONTROL/scripts/query-knowledge.sh --query "matcher tuning" --mode vector
 +   ```
 +
 +5. On missing hosted backend, live embed failure, or empty hosted index → **TF-IDF
@@ -3435,7 +3431,7 @@ index 0000000..62af295
 +confidence: 0.85
 diff --git a/.cursor/skills/implementation-planning/SKILL.md b/.cursor/skills/implementation-planning/SKILL.md
 new file mode 100644
-index 0000000..2945b11
+index 0000000..62ec93f
 --- /dev/null
 +++ b/.cursor/skills/implementation-planning/SKILL.md
 @@ -0,0 +1,48 @@
@@ -3464,7 +3460,7 @@ index 0000000..2945b11
 +
 +1. Read the required project documents.
 +2. Inspect relevant implementation files.
-+3. Load Skill `capability-planning` and run `./scripts/capability-plan.sh` for the objective; merge rendered sections into `IMPLEMENTATION_PLAN.md`.
++3. Load Skill `capability-planning` and run `$CONTROL/scripts/capability-plan.sh` for the objective; merge rendered sections into `IMPLEMENTATION_PLAN.md`.
 +4. Identify current behavior.
 +5. Define desired behavior.
 +6. Identify assumptions and open questions.
@@ -3601,7 +3597,7 @@ index 0000000..315bdf8
 +confidence: 0.9
 diff --git a/.cursor/skills/knowledge-steward/SKILL.md b/.cursor/skills/knowledge-steward/SKILL.md
 new file mode 100644
-index 0000000..cfaaafc
+index 0000000..e4d2756
 --- /dev/null
 +++ b/.cursor/skills/knowledge-steward/SKILL.md
 @@ -0,0 +1,99 @@
@@ -3629,8 +3625,8 @@ index 0000000..cfaaafc
 +1. **Ingest** (explicit CLI only — never auto-run on workstream close):
 +
 +   ```bash
-+   ./scripts/ingest-knowledge.sh --from-store experience,evaluations,decisions
-+   ./scripts/ingest-knowledge.sh --paths tests/fixtures/experience/contact-counter.json
++   $CONTROL/scripts/ingest-knowledge.sh --from-store experience,evaluations,decisions
++   $CONTROL/scripts/ingest-knowledge.sh --paths tests/fixtures/experience/contact-counter.json
 +   ```
 +
 +   `decisions` auto-ingests **ADR headings** from `DECISIONS.md`.
@@ -3639,15 +3635,15 @@ index 0000000..cfaaafc
 +   `external-knowledge-ingest` or:
 +
 +   ```bash
-+   ./scripts/ingest-knowledge.sh --from-store notion,notebooklm
++   $CONTROL/scripts/ingest-knowledge.sh --from-store notion,notebooklm
 +   ```
 +
 +2. **Query** for planning context (read-only):
 +
 +   ```bash
-+   ./scripts/query-knowledge.sh --query "evaluator routing" --kind decision
-+   ./scripts/query-knowledge.sh --query "matcher tuning" --kind performance --mode hybrid
-+   ./scripts/ingest-knowledge.sh --from-store runs,experience
++   $CONTROL/scripts/query-knowledge.sh --query "evaluator routing" --kind decision
++   $CONTROL/scripts/query-knowledge.sh --query "matcher tuning" --kind performance --mode hybrid
++   $CONTROL/scripts/ingest-knowledge.sh --from-store runs,experience
 +   ```
 +
 +   Execution runs ingest as `kind: performance` with `performance_metrics`
@@ -3661,8 +3657,8 @@ index 0000000..cfaaafc
 +3. **Rebuild vector index** (explicit CLI only):
 +
 +   ```bash
-+   ./scripts/rebuild-knowledge-vector-index.sh
-+   ./scripts/ingest-knowledge.sh --from-store decisions --rebuild-vector
++   $CONTROL/scripts/rebuild-knowledge-vector-index.sh
++   $CONTROL/scripts/ingest-knowledge.sh --from-store decisions --rebuild-vector
 +   ```
 +
 +   For **fixture dense embeddings** (TF-IDF remains fallback), use Skill
@@ -3670,14 +3666,14 @@ index 0000000..cfaaafc
 +
 +   ```bash
 +   COMPASS_EMBEDDING_PROVIDER=fixture \
-+     ./scripts/rebuild-knowledge-embedding-index.sh
++     $CONTROL/scripts/rebuild-knowledge-embedding-index.sh
 +   ```
 +
 +4. Review matches under `.agent/knowledge/items/` with provenance.
 +5. Optionally propose a reusable procedure (staging + Captain PR only):
 +
 +   ```bash
-+   ./scripts/propose-procedure-from-knowledge.sh \
++   $CONTROL/scripts/propose-procedure-from-knowledge.sh \
 +     --item-ids know-adr-020 \
 +     --title "Bounded weight apply playbook"
 +   ```
@@ -3901,7 +3897,7 @@ index 0000000..1e05fc8
 +confidence: 0.9
 diff --git a/.cursor/skills/northstar-connected-routine/SKILL.md b/.cursor/skills/northstar-connected-routine/SKILL.md
 new file mode 100644
-index 0000000..e19d536
+index 0000000..81718e5
 --- /dev/null
 +++ b/.cursor/skills/northstar-connected-routine/SKILL.md
 @@ -0,0 +1,73 @@
@@ -3952,21 +3948,21 @@ index 0000000..e19d536
 +## CLI
 +
 +```bash
-+./scripts/run-northstar-routine.sh --demo
-+./scripts/run-northstar-routine.sh --demo --approve --advance-to-review
-+./scripts/run-northstar-routine.sh --mode live --product-repo loganware05/captain-compass-sandbox \
++$CONTROL/scripts/run-northstar-routine.sh --demo
++$CONTROL/scripts/run-northstar-routine.sh --demo --approve --advance-to-review
++$CONTROL/scripts/run-northstar-routine.sh --mode live --product-repo loganware05/captain-compass-sandbox \
 +  --provider github --event path/to/event.json
-+./scripts/serve-northstar-ingress.sh --mode live --bind 127.0.0.1 --port 8787
-+./scripts/run-northstar-routine.sh --demo --approve --advance-to-review \
++$CONTROL/scripts/serve-northstar-ingress.sh --mode live --bind 127.0.0.1 --port 8787
++$CONTROL/scripts/run-northstar-routine.sh --demo --approve --advance-to-review \
 +  --propose-roles --surface-routing --notion-mode fixtures
-+./scripts/reconcile-northstar-run.sh --run .agent/evidence/<run_id>/run.json
++$CONTROL/scripts/reconcile-northstar-run.sh --run .agent/evidence/<run_id>/run.json
 +```
 +
 +See `docs/integrations/northstar-live-ops.md` for env vars and fail-closed rules.
 +
 +After `REVIEW_READY`, `--propose-roles` stages persistent-role drafts only
 +(Captain PR required). `--surface-routing` lists pending routing proposals and
-+does **not** apply weights. Use `./scripts/apply-routing-proposal.sh` with
++does **not** apply weights. Use `$CONTROL/scripts/apply-routing-proposal.sh` with
 +`captain_approved` for bounded apply. `--notion-mode fixtures|live` gathers
 +non-authoritative research context / summary mirrors.
 +
@@ -4022,7 +4018,7 @@ index 0000000..cf749b6
 +confidence: 0.85
 diff --git a/.cursor/skills/notion-integration/SKILL.md b/.cursor/skills/notion-integration/SKILL.md
 new file mode 100644
-index 0000000..582e776
+index 0000000..35cb18f
 --- /dev/null
 +++ b/.cursor/skills/notion-integration/SKILL.md
 @@ -0,0 +1,49 @@
@@ -4060,12 +4056,12 @@ index 0000000..582e776
 +   - Maintain `.agent/knowledge/notion-allowlist.txt` with approved page IDs.
 +   - Fetch allowlisted pages via `notion-fetch` MCP.
 +   - Save markdown under `.agent/knowledge/external/notion-live/<page-id>.md`
-+     or export a JSON payload for `./scripts/ingest-notion-live.sh --source live`.
-+   - Run `./scripts/ingest-notion-live.sh` explicitly; provenance is `mcp_live`.
++     or export a JSON payload for `$CONTROL/scripts/ingest-notion-live.sh --source live`.
++   - Run `$CONTROL/scripts/ingest-notion-live.sh` explicitly; provenance is `mcp_live`.
 +   - Never ingest pages outside the allowlist.
 +
 +7. **NorthStar bridge (non-authoritative):** after `REVIEW_READY`,
-+   `./scripts/run-northstar-routine.sh ... --notion-mode fixtures|live` may
++   `$CONTROL/scripts/run-northstar-routine.sh ... --notion-mode fixtures|live` may
 +   gather research context and write a summary mirror under
 +   `.agent/evidence/<run_id>/notion-summary-mirror.json`. Live mode requires
 +   Notion MCP authentication (Cursor desktop). Approvals stay on GitHub.
@@ -4111,7 +4107,7 @@ index 0000000..ea1e27a
 +confidence: 0.9
 diff --git a/.cursor/skills/package-registry-ti/SKILL.md b/.cursor/skills/package-registry-ti/SKILL.md
 new file mode 100644
-index 0000000..f4b8517
+index 0000000..afeed1d
 --- /dev/null
 +++ b/.cursor/skills/package-registry-ti/SKILL.md
 @@ -0,0 +1,49 @@
@@ -4140,14 +4136,14 @@ index 0000000..f4b8517
 +
 +   ```bash
 +   COMPASS_TI_PROVIDER=package-registry-file \
-+     ./scripts/query-technology-intelligence.sh --query "schema validation typescript"
++     $CONTROL/scripts/query-technology-intelligence.sh --query "schema validation typescript"
 +   ```
 +
 +2. Live npm + PyPI (Captain local; never CI default):
 +
 +   ```bash
 +   COMPASS_TI_PROVIDER=package-registry \
-+     ./scripts/query-technology-intelligence.sh --query "schema validation"
++     $CONTROL/scripts/query-technology-intelligence.sh --query "schema validation"
 +   ```
 +
 +3. Candidates appear only under **Technology Intelligence Candidates**
@@ -4201,7 +4197,7 @@ index 0000000..49cea75
 +confidence: 0.85
 diff --git a/.cursor/skills/persistent-role-promotion/SKILL.md b/.cursor/skills/persistent-role-promotion/SKILL.md
 new file mode 100644
-index 0000000..ee20c85
+index 0000000..2a6639c
 --- /dev/null
 +++ b/.cursor/skills/persistent-role-promotion/SKILL.md
 @@ -0,0 +1,55 @@
@@ -4229,7 +4225,7 @@ index 0000000..ee20c85
 +2. Propose staging drafts only:
 +
 +   ```bash
-+   ./scripts/propose-persistent-role.sh --agent-id compass-evaluator
++   $CONTROL/scripts/propose-persistent-role.sh --agent-id compass-evaluator
 +   ```
 +
 +3. Review proposal under `.agent/agents/promotions/proposals/` and drafts under
@@ -4244,7 +4240,7 @@ index 0000000..ee20c85
 +From a NorthStar run that has reached `REVIEW_READY`:
 +
 +```bash
-+./scripts/run-northstar-routine.sh --demo --approve --advance-to-review --propose-roles
++$CONTROL/scripts/run-northstar-routine.sh --demo --approve --advance-to-review --propose-roles
 +```
 +
 +This only stages drafts via `orchestrator/integrations/m4_bridge.py`. It does
@@ -4455,7 +4451,7 @@ index 0000000..29cf975
 +confidence: 0.9
 diff --git a/.cursor/skills/procedure-playbooks/SKILL.md b/.cursor/skills/procedure-playbooks/SKILL.md
 new file mode 100644
-index 0000000..f61d32a
+index 0000000..ca7c33c
 --- /dev/null
 +++ b/.cursor/skills/procedure-playbooks/SKILL.md
 @@ -0,0 +1,56 @@
@@ -4481,7 +4477,7 @@ index 0000000..f61d32a
 +1. **Propose** (optional — creates staging draft, does not ingest):
 +
 +   ```bash
-+   ./scripts/propose-procedure-from-knowledge.sh \
++   $CONTROL/scripts/propose-procedure-from-knowledge.sh \
 +     --item-ids know-adr-020 \
 +     --title "Bounded weight apply playbook"
 +   ```
@@ -4489,7 +4485,7 @@ index 0000000..f61d32a
 +2. **Ingest** procedure playbooks (explicit CLI only):
 +
 +   ```bash
-+   ./scripts/ingest-knowledge.sh --from-store procedures
++   $CONTROL/scripts/ingest-knowledge.sh --from-store procedures
 +   ```
 +
 +   Ingests `playbook.md` from **staging** and **approved** roots. Re-ingest
@@ -4498,7 +4494,7 @@ index 0000000..f61d32a
 +3. **Query** for readback:
 +
 +   ```bash
-+   ./scripts/query-knowledge.sh --query "bounded autonomy apply" --kind procedure
++   $CONTROL/scripts/query-knowledge.sh --query "bounded autonomy apply" --kind procedure
 +   ```
 +
 +4. Review **Procedure Context** in capability plans (always rendered; empty when none).
@@ -4874,7 +4870,7 @@ index 0000000..32b3d93
 +confidence: 0.9
 diff --git a/.cursor/skills/review-fix-loop/SKILL.md b/.cursor/skills/review-fix-loop/SKILL.md
 new file mode 100644
-index 0000000..28399fe
+index 0000000..4bda0e6
 --- /dev/null
 +++ b/.cursor/skills/review-fix-loop/SKILL.md
 @@ -0,0 +1,47 @@
@@ -4923,7 +4919,7 @@ index 0000000..28399fe
 +## Compose with
 +
 +- Upstream verified findings from `code-reviewer`
-+- Supervised repair dry-run: `./scripts/northstar repair start --report … --finding …`
++- Supervised repair dry-run: `$CONTROL/scripts/northstar repair start --report … --finding …`
 +  (M32/B4; never auto-merges; Captain flag required to authorize dispatch)
 diff --git a/.cursor/skills/review-fix-loop/capability.yaml b/.cursor/skills/review-fix-loop/capability.yaml
 new file mode 100644
@@ -5041,7 +5037,7 @@ index 0000000..74a3c75
 +confidence: 0.9
 diff --git a/.cursor/skills/skill-learning-loop/SKILL.md b/.cursor/skills/skill-learning-loop/SKILL.md
 new file mode 100644
-index 0000000..8a9ccc2
+index 0000000..3109354
 --- /dev/null
 +++ b/.cursor/skills/skill-learning-loop/SKILL.md
 @@ -0,0 +1,233 @@
@@ -5095,7 +5091,7 @@ index 0000000..8a9ccc2
 +"$CONTROL/scripts/run-skill-learning-loop.sh" --repo-root "$SANDBOX" ...
 +```
 +
-+Never run bare `./scripts/...` from inside the sandbox and expect these tools
++Never run bare `$CONTROL/scripts/...` from inside the sandbox and expect these tools
 +to exist there.
 +
 +## Inputs
@@ -5323,7 +5319,7 @@ index 0000000..0ea8b72
 +confidence: 0.85
 diff --git a/.cursor/skills/skill-lifecycle/SKILL.md b/.cursor/skills/skill-lifecycle/SKILL.md
 new file mode 100644
-index 0000000..859c4b3
+index 0000000..8cf8cb9
 --- /dev/null
 +++ b/.cursor/skills/skill-lifecycle/SKILL.md
 @@ -0,0 +1,84 @@
@@ -5360,7 +5356,7 @@ index 0000000..859c4b3
 +2. Captain-approved advance to **APPROVED**:
 +
 +   ```bash
-+   ./scripts/promote-candidate.sh --candidate <path.json> \
++   $CONTROL/scripts/promote-candidate.sh --candidate <path.json> \
 +     --stage APPROVED \
 +     --evidence .agent/evidence/approval.md \
 +     --captain-approved \
@@ -5370,7 +5366,7 @@ index 0000000..859c4b3
 +3. Emit **AVAILABLE_SKILL** install **proposal** (never live install):
 +
 +   ```bash
-+   ./scripts/promote-candidate.sh --candidate <staging.json> \
++   $CONTROL/scripts/promote-candidate.sh --candidate <staging.json> \
 +     --stage AVAILABLE_SKILL \
 +     --evidence .agent/evidence/approval.md \
 +     --captain-approved \
@@ -5385,7 +5381,7 @@ index 0000000..859c4b3
 +   the slug. When **≥2** successful Experiences exist, advance to **PROVEN_SKILL**:
 +
 +   ```bash
-+   ./scripts/promote-candidate.sh --candidate <staging.json> \
++   $CONTROL/scripts/promote-candidate.sh --candidate <staging.json> \
 +     --stage PROVEN_SKILL \
 +     --evidence .agent/evidence/proven.md \
 +     --captain-approved \
@@ -5395,9 +5391,9 @@ index 0000000..859c4b3
 +   Override threshold with `COMPASS_PROVEN_SUCCESS_THRESHOLD` if needed.
 +
 +5. Optional training draft from Experience: Skill `experience-skill-training`
-+   (`./scripts/train-skill-from-experience.sh`). Learning-run Experiences: Skill
++   (`$CONTROL/scripts/train-skill-from-experience.sh`). Learning-run Experiences: Skill
 +   `skill-learning-loop` (`bridge-learning-experiences.sh`).
-+6. Re-run `./scripts/compile-capability-registry.sh` after any live Skill PR merges.
++6. Re-run `$CONTROL/scripts/compile-capability-registry.sh` after any live Skill PR merges.
 +
 +## Output
 +
@@ -5741,7 +5737,7 @@ index 0000000..c365ee9
 +confidence: 0.85
 diff --git a/.cursor/skills/testing-validation/SKILL.md b/.cursor/skills/testing-validation/SKILL.md
 new file mode 100644
-index 0000000..cfc81e3
+index 0000000..f916039
 --- /dev/null
 +++ b/.cursor/skills/testing-validation/SKILL.md
 @@ -0,0 +1,41 @@
@@ -5772,8 +5768,8 @@ index 0000000..cfc81e3
 +5. Capture screenshots and logs under .agent/evidence/.
 +6. Confirm build succeeds when applicable.
 +7. Review rollback instructions against the change.
-+8. For release closeout, run `./scripts/run-sandbox-release-smokes.sh` and gate with
-+   `./scripts/validate-sandbox-release-smokes.sh --version X.Y.Z` (M18).
++8. For release closeout, run `$CONTROL/scripts/run-sandbox-release-smokes.sh` and gate with
++   `$CONTROL/scripts/validate-sandbox-release-smokes.sh --version X.Y.Z` (M18).
 +9. If tests fail, fix implementation or report a blocker—never weaken tests to pass.
 +10. Stop and report if budget limits are exceeded.
 +
@@ -6416,7 +6412,7 @@ index 0000000..5faec3d
 +Summarize non-sensitive conclusions in a committed validation note.
 diff --git a/docs/INDEX.md b/docs/INDEX.md
 new file mode 100644
-index 0000000..d98f068
+index 0000000..5b7dfc2
 --- /dev/null
 +++ b/docs/INDEX.md
 @@ -0,0 +1,46 @@
@@ -6434,7 +6430,7 @@ index 0000000..d98f068
 +CONTROL=/path/to/captains-compass-cursor
 +$CONTROL/scripts/northstar help
 +$CONTROL/scripts/northstar review --repo "$(pwd)"
-+$CONTROL/scripts/northstar skills learn --repo /path/to/sandbox --objective "…"
++$CONTROL/scripts/northstar skills learn --repo "$(pwd)" --objective "…"
 +```
 +
 +## Surfaces (`northstar …` in control)
@@ -6468,7 +6464,7 @@ index 0000000..d98f068
 +| **Product** (this repo) | `.cursor/` Skills/rules/agents, memory docs, `.agent/` layout — **not** control `scripts/` |
 diff --git a/docs/integrations/code-reviewer.md b/docs/integrations/code-reviewer.md
 new file mode 100644
-index 0000000..f6d9777
+index 0000000..e590ff9
 --- /dev/null
 +++ b/docs/integrations/code-reviewer.md
 @@ -0,0 +1,161 @@
@@ -6502,10 +6498,10 @@ index 0000000..f6d9777
 +Linear export is read-only flight-recorder input:
 +
 +```bash
-+./scripts/export-intent-from-linear.sh --out .agent/intent/current.json \
++$CONTROL/scripts/export-intent-from-linear.sh --out .agent/intent/current.json \
 +  --fixture tests/fixtures/code-review/linear-issue.json
 +
-+./scripts/northstar intent export --out .agent/intent/current.json --fixture path/to/issue.json
++$CONTROL/scripts/northstar intent export --out .agent/intent/current.json --fixture path/to/issue.json
 +```
 +
 +Installer installs `INTENT_PACK.md` when missing and creates `.agent/intent/`.
@@ -6517,19 +6513,19 @@ index 0000000..f6d9777
 +From the control repo:
 +
 +```bash
-+./scripts/run-code-review.sh --repo-root /path/to/repo \
++$CONTROL/scripts/run-code-review.sh --repo-root /path/to/repo \
 +  --plan IMPLEMENTATION_PLAN.md \
 +  --candidates tests/fixtures/code-review/candidates.json
 +
 +# Intent JSON only (no temp plan)
-+./scripts/run-code-review.sh --repo-root /path/to/repo \
++$CONTROL/scripts/run-code-review.sh --repo-root /path/to/repo \
 +  --intent-json .agent/intent/current.json \
 +  --diff-file path/to.diff
 +
-+./scripts/northstar review --repo /path/to/repo --diff-file path/to.diff
-+./scripts/northstar review --repo /path/to/repo --candidates-mode specialists
-+./scripts/northstar review --repo /path/to/repo --intent-json .agent/intent/current.json
-+./scripts/northstar review --repo /path/to/repo --candidates-mode heuristics  # M27 escape hatch
++$CONTROL/scripts/northstar review --repo /path/to/repo --diff-file path/to.diff
++$CONTROL/scripts/northstar review --repo /path/to/repo --candidates-mode specialists
++$CONTROL/scripts/northstar review --repo /path/to/repo --intent-json .agent/intent/current.json
++$CONTROL/scripts/northstar review --repo /path/to/repo --candidates-mode heuristics  # M27 escape hatch
 +```
 +
 +
@@ -6539,13 +6535,13 @@ index 0000000..f6d9777
 +Default remains **evidence-only**. Opt-in draft posting:
 +
 +```bash
-+./scripts/run-code-review.sh --repo-root /path/to/repo \
++$CONTROL/scripts/run-code-review.sh --repo-root /path/to/repo \
 +  --post-github-draft \
 +  --github-repo loganware05/captain-compass-sandbox \
 +  --pull-number 123 \
 +  --diff-file path/to.diff
 +
-+./scripts/northstar review --repo /path/to/repo \
++$CONTROL/scripts/northstar review --repo /path/to/repo \
 +  --post-github-draft --github-repo owner/name --pull-number 123
 +```
 +
@@ -6565,13 +6561,13 @@ index 0000000..f6d9777
 +approval; proposals are never auto-applied.
 +
 +```bash
-+./scripts/record-finding-outcomes.sh \
++$CONTROL/scripts/record-finding-outcomes.sh \
 +  --report .agent/evidence/code-review/<run-id>/report.json \
 +  --triage path/to/triage-outcomes.json \
 +  --plan-id m31-finding-outcomes-experience \
 +  --emit-routing-proposal
 +
-+./scripts/northstar outcomes record \
++$CONTROL/scripts/northstar outcomes record \
 +  --report .agent/evidence/code-review/<run-id>/report.json \
 +  --triage path/to/triage-outcomes.json \
 +  --emit-routing-proposal
@@ -6591,12 +6587,12 @@ index 0000000..f6d9777
 +denominator. Never auto-applies reputation.
 +
 +```bash
-+./scripts/aggregate-precision-ledger.sh \
++$CONTROL/scripts/aggregate-precision-ledger.sh \
 +  --outcomes .agent/evidence/code-review/<run-id>/outcomes.json \
 +  --ledger-id my-precision-run \
 +  --emit-priority-proposal
 +
-+./scripts/northstar precision aggregate \
++$CONTROL/scripts/northstar precision aggregate \
 +  --outcomes .agent/evidence/code-review/<run-id>/outcomes.json \
 +  --outcomes-dir .agent/evidence/code-review \
 +  --emit-priority-proposal
@@ -6681,7 +6677,7 @@ index 0000000..7472f48
 +than the one that implemented the change (implementer ≠ rubber-stamp reviewer).
 diff --git a/docs/integrations/technology-intelligence.md b/docs/integrations/technology-intelligence.md
 new file mode 100644
-index 0000000..6fb72e7
+index 0000000..b21e850
 --- /dev/null
 +++ b/docs/integrations/technology-intelligence.md
 @@ -0,0 +1,214 @@
@@ -6766,7 +6762,7 @@ index 0000000..6fb72e7
 +`gh` (Captain local only; fails closed without auth). Set
 +`COMPASS_TI_PROVIDER=github-stars-cached` to read the offline cache at
 +`.agent/intelligence/ti-cache/starred-repos.json` (refresh via
-+`./scripts/refresh-ti-cache.sh`; optional `--if-stale HOURS` skips when
++`$CONTROL/scripts/refresh-ti-cache.sh`; optional `--if-stale HOURS` skips when
 +`fetched_at` is fresh). Set `COMPASS_TI_PROVIDER=huggingface-file` for offline
 +Hugging Face model-card fixtures (no Hub network in CI). Set
 +`COMPASS_TI_PROVIDER=huggingface-hub` for **live Hub model search** (Captain local
@@ -6779,18 +6775,18 @@ index 0000000..6fb72e7
 +Explicit read-only queries:
 +
 +```bash
-+COMPASS_TI_PROVIDER=github-stars ./scripts/query-technology-intelligence.sh --query "react forms"
-+./scripts/refresh-ti-cache.sh
-+./scripts/refresh-ti-cache.sh --if-stale 24
-+COMPASS_TI_PROVIDER=github-stars-cached ./scripts/query-technology-intelligence.sh --query "react forms"
++COMPASS_TI_PROVIDER=github-stars $CONTROL/scripts/query-technology-intelligence.sh --query "react forms"
++$CONTROL/scripts/refresh-ti-cache.sh
++$CONTROL/scripts/refresh-ti-cache.sh --if-stale 24
++COMPASS_TI_PROVIDER=github-stars-cached $CONTROL/scripts/query-technology-intelligence.sh --query "react forms"
 +
 +# Batch categorized stars (offline ML from manual labels — M14)
-+./scripts/categorize-github-stars.sh --source fixtures
-+COMPASS_TI_PROVIDER=github-stars-categorized ./scripts/query-technology-intelligence.sh --query "react forms"
-+COMPASS_TI_PROVIDER=huggingface-file ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
-+COMPASS_TI_PROVIDER=huggingface-hub ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
-+COMPASS_TI_PROVIDER=package-registry-file ./scripts/query-technology-intelligence.sh --query "schema validation"
-+COMPASS_TI_PROVIDER=package-registry ./scripts/query-technology-intelligence.sh --query "schema validation"
++$CONTROL/scripts/categorize-github-stars.sh --source fixtures
++COMPASS_TI_PROVIDER=github-stars-categorized $CONTROL/scripts/query-technology-intelligence.sh --query "react forms"
++COMPASS_TI_PROVIDER=huggingface-file $CONTROL/scripts/query-technology-intelligence.sh --query "sentence embeddings"
++COMPASS_TI_PROVIDER=huggingface-hub $CONTROL/scripts/query-technology-intelligence.sh --query "sentence embeddings"
++COMPASS_TI_PROVIDER=package-registry-file $CONTROL/scripts/query-technology-intelligence.sh --query "schema validation"
++COMPASS_TI_PROVIDER=package-registry $CONTROL/scripts/query-technology-intelligence.sh --query "schema validation"
 +```
 +
 +## Plan rendering
@@ -6857,12 +6853,12 @@ index 0000000..6fb72e7
 +
 +Scripts:
 +
-+- `./scripts/promote-candidate.sh`
-+- `./scripts/train-skill-from-experience.sh` (product Experience → control draft)
-+- `./scripts/run-skill-learning-loop.sh` (categorized Stars → staging/harness/drafts; M19/M23)
-+- `./scripts/example-design-repo-scorecard.sh` (starred design-repo scorecard → draft; M23)
-+- `./scripts/bridge-learning-experiences.sh` (learning-run → Experiences; M20)
-+- `./scripts/apply-skill-improvement.sh` (Captain-gated improvement apply; M20/M23)
++- `$CONTROL/scripts/promote-candidate.sh`
++- `$CONTROL/scripts/train-skill-from-experience.sh` (product Experience → control draft)
++- `$CONTROL/scripts/run-skill-learning-loop.sh` (categorized Stars → staging/harness/drafts; M19/M23)
++- `$CONTROL/scripts/example-design-repo-scorecard.sh` (starred design-repo scorecard → draft; M23)
++- `$CONTROL/scripts/bridge-learning-experiences.sh` (learning-run → Experiences; M20)
++- `$CONTROL/scripts/apply-skill-improvement.sh` (Captain-gated improvement apply; M20/M23)
 +- `docs/guides/starred-repos-to-skills.md` (Captain playbook: Stars → Skills; M23)
 +
 +## Implementing a future live provider
