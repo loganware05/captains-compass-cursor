@@ -2,31 +2,29 @@
 
 ## Current status
 
-**Release: v1.37.0** — M34 / C1 Single launcher UX tagged and published
-([release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.37.0);
-PRs [#162](https://github.com/loganware05/captains-compass-cursor/pull/162) /
-[#163](https://github.com/loganware05/captains-compass-cursor/pull/163)).
+**Release: v1.38.0** — M35 / C2 product-repo install on branch
+`cursor/m35-c2-product-repo-install-3b10` (awaiting Captain merge).
 
 | Item | Value |
 |---|---|
-| Release | **v1.37.0** |
-| M34 / C1 | Single launcher UX (shipped) |
-| Issue | [#161](https://github.com/loganware05/captains-compass-cursor/issues/161) |
-| Rollback | `rollback/pre-c1-single-launcher-ux` |
-| Next plan | **M35 / C2 Product-repo install** — `AWAITING_APPROVAL` |
-| Next issue | [#164](https://github.com/loganware05/captains-compass-cursor/issues/164) |
+| Release | **v1.38.0** (pending tag after merge) |
+| M35 / C2 | Product install proven locally; product PR needs Captain push (403) |
+| Issue | [#164](https://github.com/loganware05/captains-compass-cursor/issues/164) |
+| Rollback | `rollback/pre-c2-product-repo-install` |
+| Evidence | `.agent/evidence/c2-product-repo-install/` |
 
 ## In flight (Captain-directed)
 
-- Root `IMPLEMENTATION_PLAN.md` → **c2-product-repo-install** awaiting Captain approval
-- NS-SKILL-003 / OVA-45 remain parallel queue items where applicable
+- Control C2 PR ready for review
+- Product branch prepared locally — see `APPLY.md` (bot cannot push to bitcoin-data-collector)
+- NS-SKILL-003 / OVA-45 remain parallel queue items
+- Docs closeout PR [#165](https://github.com/loganware05/captains-compass-cursor/pull/165) may be superseded
 
 ## Completed
 
 - **M34 / C1** merged + tagged **v1.37.0**
 - **M33 / B5** merged + tagged **v1.36.0** — Track B complete
-- **M32**–**M27** Code Reviewer track shipped
 
 ## Blockers
 
-None. Pause for Captain approval of C2 / `c2-product-repo-install`.
+Product-repo write access for Cloud Agent (optional) — otherwise Captain applies patch.
