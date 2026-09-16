@@ -1,5 +1,8 @@
 # Implementation Plan — M34 / C1 Single launcher UX
 
+> Archive mirror of root `IMPLEMENTATION_PLAN.md` (plan id `c1-single-launcher-ux`).
+
+
 ## Metadata
 
 | Field | Value |
