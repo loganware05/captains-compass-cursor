@@ -100,13 +100,13 @@ The Captain’s job is to **wire them together** so review outcomes improve Skil
 | **B2 — Intent packs** | Product repos carry reviewable intent | Template `IMPLEMENTATION_PLAN.md` / AC export in installer; optional Linear issue body ingest | B0 | Review without hand-written temp plan |
 | **B3 — GitHub posting (opt-in)** | Phase B from original brief | New plan: draft reviews only, severity floor, Captain allowlist, sandbox repo first | B1 | Posted review on sandbox PR with low noise |
 | **B4 — Repair loop** | FIND→PROVE→FIX→TEST→SUBMIT | Child task spawn via Learning Loop / agent router; never auto-merge — **shipped v1.35.0** (packet MVP) | B3 + A3 | One supervised repair PR from a verified finding (packet/dry-run proved; live FIX still gated) |
-| **B5 — Precision ledger** | Skill/reviewer reputation | Store accepted/rejected findings; gate invocation priority — **implementing M33 / v1.36.0** (`b5-precision-ledger`) | A3 (done) | Precision dashboards in evidence/Experience |
+| **B5 — Precision ledger** | Skill/reviewer reputation | Store accepted/rejected findings; gate invocation priority — **shipped v1.36.0** | A3 (done) | Precision dashboards in evidence/Experience |
 
 ### Track C — Platform glue (makes A+B compound)
 
 | Phase | Goal | Concrete next actions |
 |---|---|---|
-| **C1 — Single launcher UX** | `northstar skills …` and `northstar review …` feel like one product | Help text, docs index, install path into product repos |
+| **C1 — Single launcher UX** | `northstar skills …` and `northstar review …` feel like one product | Help text, docs index, install path into product repos — plan `c1-single-launcher-ux` / M34 **AWAITING_APPROVAL** |
 | **C2 — Product-repo install** | bitcoin-data-collector (and others) get NorthStar docs/Skills without control scripts | `install.sh` into product; memory docs preserved |
 | **C3 — Connected routine** | Issue→plan→approve→dispatch→review→ledger | Extend ingress carefully; PR events only after B3 plan |
 | **C4 — Eval harness** | Golden diffs with known defects | Fixture repos; measure precision/recall of reviewer |
@@ -192,8 +192,9 @@ Why this order: **merge → use on a real repo → learn a Skill that helps that
 4. ~~**M30** — Opt-in GitHub draft reviews~~ (shipped)
 5. ~~**M31** — Finding outcome → Experience → RoutingProposal~~ (shipped v1.34.0)
 6. ~~**M32 / B4** — Repair loop packet MVP~~ (shipped v1.35.0)
-7. **M33 / B5** — Precision ledger (`b5-precision-ledger`) — **implementing / v1.36.0**
-8. **Product install** — NorthStar into `bitcoin-data-collector` (no control script copy)
+7. ~~**M33 / B5** — Precision ledger~~ (shipped v1.36.0) — **Track B complete**
+8. **M34 / C1** — Single launcher UX (`c1-single-launcher-ux`) — **AWAITING_APPROVAL**
+9. **C2 / Product install** — NorthStar into `bitcoin-data-collector` (no control script copy)
 
 ---
 
