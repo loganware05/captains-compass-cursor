@@ -6,13 +6,13 @@
 
 - **M34 / C1 Single launcher UX** — unified `northstar` help surface map for
   skills / review / intent / outcomes / repair / precision
-- Operator docs index: `docs/INDEX.md` (Learning Loop + Code Reviewer)
+- Operator docs index: `docs/INDEX.md` (control) + `templates/docs/INDEX.md` (product)
 - Clear control vs product install boundary in `install.sh` help +
   `docs/PRODUCT_ONBOARDING.md`
-- Product install now skip-if-exists copies `docs/INDEX.md` and
-  `docs/integrations/code-reviewer.md`
+- Product install skip-if-exists copies product-scoped INDEX + selected
+  integration docs (never control `scripts/`)
 - Doctor checks for help surfaces + INDEX/onboarding boundary
-- Tests: `tests/orchestrator/test_m34_c1_single_launcher_ux.py`
+- Hermetic tests for help, control INDEX link integrity, and install boundary
 - ADR-051
 
 ### Locks (unchanged)

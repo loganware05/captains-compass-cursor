@@ -1,5 +1,11 @@
-....
+test_control_index_links_resolve (tests.orchestrator.test_m34_c1_single_launcher_ux.DocsIndexTests.test_control_index_links_resolve) ... ok
+test_onboarding_and_install_boundary (tests.orchestrator.test_m34_c1_single_launcher_ux.DocsIndexTests.test_onboarding_and_install_boundary) ... ok
+test_product_index_template_links_resolve_against_installed_set (tests.orchestrator.test_m34_c1_single_launcher_ux.DocsIndexTests.test_product_index_template_links_resolve_against_installed_set) ... ok
+test_hermetic_install_copies_product_index_not_scripts (tests.orchestrator.test_m34_c1_single_launcher_ux.InstallBoundaryTests.test_hermetic_install_copies_product_index_not_scripts) ... ok
+test_help_alias_flags (tests.orchestrator.test_m34_c1_single_launcher_ux.NorthstarHelpTests.test_help_alias_flags) ... ok
+test_help_lists_all_surfaces_and_docs_index (tests.orchestrator.test_m34_c1_single_launcher_ux.NorthstarHelpTests.test_help_lists_all_surfaces_and_docs_index) ... ok
+
 ----------------------------------------------------------------------
-Ran 4 tests in 0.012s
+Ran 6 tests in 0.068s
 
 OK

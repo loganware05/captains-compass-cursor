@@ -1,7 +1,7 @@
 Captain's Compass doctor
 Root: /agent/repos/captains-compass-cursor
 
-  ok: VERSION=1.36.0
+  ok: VERSION=1.37.0
   ok: AGENTS.md
   ok: PROJECT_CONTEXT.md
   ok: IMPLEMENTATION_PLAN.md
@@ -129,8 +129,11 @@ Root: /agent/repos/captains-compass-cursor
   ok: northstar help lists precision
   ok: northstar help points to docs/INDEX.md
   ok: docs/INDEX.md
+  ok: templates/docs/INDEX.md (product-scoped)
   ok: docs/INDEX.md control vs product section
+  ok: product INDEX marks product install scope
   ok: install.sh control-script boundary help
+  ok: install.sh uses product-scoped INDEX template
   ok: PRODUCT_ONBOARDING control vs product
   ok: sync-skill-learning-ledger.sh
   ok: score-agent-routing.sh

@@ -380,15 +380,30 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing docs/INDEX.md"
   fi
+  if [[ -f "$ROOT/templates/docs/INDEX.md" ]]; then
+    ok "templates/docs/INDEX.md (product-scoped)"
+  else
+    fail "missing templates/docs/INDEX.md"
+  fi
   if grep -q 'Control vs product' "$ROOT/docs/INDEX.md" 2>/dev/null; then
     ok "docs/INDEX.md control vs product section"
   else
     fail "docs/INDEX.md missing Control vs product section"
   fi
+  if grep -q 'product install' "$ROOT/templates/docs/INDEX.md" 2>/dev/null; then
+    ok "product INDEX marks product install scope"
+  else
+    fail "templates/docs/INDEX.md missing product install scope marker"
+  fi
   if grep -q 'Does NOT copy control-repo scripts' "$ROOT/scripts/install.sh" 2>/dev/null; then
     ok "install.sh control-script boundary help"
   else
     fail "install.sh missing control-script boundary help"
+  fi
+  if grep -q 'templates/docs/INDEX.md' "$ROOT/scripts/install.sh" 2>/dev/null; then
+    ok "install.sh uses product-scoped INDEX template"
+  else
+    fail "install.sh must copy templates/docs/INDEX.md (not control docs/INDEX.md)"
   fi
   if grep -q 'What install does (and does not)' "$ROOT/docs/PRODUCT_ONBOARDING.md" 2>/dev/null; then
     ok "PRODUCT_ONBOARDING control vs product"

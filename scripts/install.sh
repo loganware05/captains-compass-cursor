@@ -169,7 +169,7 @@ fi
 
 # Optional guidance docs (install when missing; do not clobber)
 mkdir -p "$TARGET/docs"
-for f in EVIDENCE_MATRIX.md INDEX.md; do
+for f in EVIDENCE_MATRIX.md; do
   if [[ -f "$SOURCE_ROOT/docs/$f" ]]; then
     if [[ -f "$TARGET/docs/$f" ]]; then
       echo "keep: docs/$f (already exists; not overwritten)"
@@ -179,6 +179,15 @@ for f in EVIDENCE_MATRIX.md INDEX.md; do
     fi
   fi
 done
+# Product-scoped INDEX (not control docs/INDEX.md — avoids broken relative links)
+if [[ -f "$SOURCE_ROOT/templates/docs/INDEX.md" ]]; then
+  if [[ -f "$TARGET/docs/INDEX.md" ]]; then
+    echo "keep: docs/INDEX.md (already exists; not overwritten)"
+  else
+    cp "$SOURCE_ROOT/templates/docs/INDEX.md" "$TARGET/docs/INDEX.md"
+    echo "added: docs/INDEX.md"
+  fi
+fi
 if [[ -f "$SOURCE_ROOT/docs/integrations/code-reviewer.md" ]]; then
   mkdir -p "$TARGET/docs/integrations"
   if [[ -f "$TARGET/docs/integrations/code-reviewer.md" ]]; then

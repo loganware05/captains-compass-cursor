@@ -36,7 +36,7 @@ Launcher: `scripts/northstar` (control repo only).
 | Lives in | What |
 |---|---|
 | **Control** (`captains-compass-cursor`) | `scripts/northstar`, orchestrator, doctor, Learning Loop + repair/precision CLIs |
-| **Product** (after `install.sh`) | `.cursor/` Skills/rules/agents, memory docs, `.agent/` layout — **not** control `scripts/` |
+| **Product** (after `install.sh`) | `.cursor/` Skills/rules/agents, memory docs, `.agent/` layout, product-scoped `docs/INDEX.md` from `templates/docs/INDEX.md` — **not** control `scripts/` |
 
 Full product-repo install polish for a specific app (e.g. `bitcoin-data-collector`) is roadmap **C2** — separate Captain plan.
 

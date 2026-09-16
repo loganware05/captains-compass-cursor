@@ -122,7 +122,7 @@ Doctor reads `.agent/COMPASS_VERSION` in product repos (there is no product `VER
 |---|---|
 | `.cursor/rules`, `skills`, `agents`, hooks | Refreshed |
 | Doc templates at repo root | Created if missing; **not** overwritten |
-| `docs/INDEX.md` (operator map) | Created if missing; **not** overwritten |
+| `docs/INDEX.md` (product-scoped operator map) | Created if missing from `templates/docs/INDEX.md`; **not** overwritten |
 | `.agent/COMPASS_VERSION` | Updated to the control-repo version |
 | Control-repo `scripts/` | **Not** copied into the product repo — run them from the control repo |
 

@@ -10,11 +10,12 @@
   product-repo install work.
 - **Decision:**
   1. Expand `scripts/northstar` help with a surface map and docs pointers.
-  2. Add `docs/INDEX.md` linking Learning Loop and Code Reviewer operator docs.
+  2. Add `docs/INDEX.md` (control operator map) and `templates/docs/INDEX.md`
+     (product-scoped map without broken relative links).
   3. Clarify control vs product boundary in `install.sh` and
      `docs/PRODUCT_ONBOARDING.md`; still never copy control `scripts/`.
-  4. Skip-if-exists install of `docs/INDEX.md` (+ code-reviewer integration doc).
-  5. Doctor + hermetic help tests enforce the surface list.
+  4. Skip-if-exists install of product INDEX + selected integration docs.
+  5. Doctor + hermetic help/install tests enforce surfaces and link integrity.
 - **Consequences:** Operators see one product entrypoint. Full bitcoin-data-collector
   (or other) product install remains roadmap C2 under a separate Captain plan.
 

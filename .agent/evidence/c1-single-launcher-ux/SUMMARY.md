@@ -11,12 +11,14 @@ Issue: [#161](https://github.com/loganware05/captains-compass-cursor/issues/161)
 | File | What it proves |
 |---|---|
 | `doctor.txt` | Doctor green including help surfaces + INDEX/onboarding |
-| `unittest.txt` | `tests/orchestrator/test_m34_c1_single_launcher_ux.py` green |
+| `unittest.txt` | Help + control INDEX links + hermetic install boundary |
 | `northstar-help.txt` | Unified surface map + docs/INDEX.md pointer |
 
 ## Locks verified
 
-- Control `scripts/` not copied on install (help + onboarding state boundary)
+- Control `scripts/` not copied on install (hermetic install test)
+- Product gets `templates/docs/INDEX.md` (no broken control-only relative links)
+- Control `docs/INDEX.md` relative links resolve in-repo
 - Skill slug `code-reviewer` unchanged
 - No C2 product-repo install in this release
 - Hermetic path — no model / no network

@@ -51,9 +51,9 @@
 
 | Layer | Result |
 |---|---|
-| Static | doctor.sh passed (help surfaces + INDEX) |
-| Unit/smoke | `test_m34_c1_single_launcher_ux.py` passed |
-| Docs | INDEX links in-repo |
+| Static | doctor.sh passed (help surfaces + INDEX; product-scoped `templates/docs/INDEX.md`) |
+| Unit/smoke | `test_m34_c1_single_launcher_ux.py` + `InstallBoundaryTests` (hermetic product INDEX links) |
+| Docs | Control `docs/INDEX.md` + product `templates/docs/INDEX.md` (install copies product-scoped) |
 | Rollback | `rollback/pre-c1-single-launcher-ux` |
 
 ## Open questions (resolved)
