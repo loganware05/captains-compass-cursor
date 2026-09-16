@@ -2,24 +2,22 @@
 
 ## Current status
 
-**Release: v1.35.0** — M32 / B4 Repair loop tagged and published
-([release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.35.0);
-PRs [#156](https://github.com/loganware05/captains-compass-cursor/pull/156) /
-[#157](https://github.com/loganware05/captains-compass-cursor/pull/157)).
+**Release: v1.36.0** — M33 / B5 Precision ledger on branch
+`cursor/m33-b5-precision-ledger-3b10` (awaiting Captain merge).
 
 | Item | Value |
 |---|---|
-| Release | **v1.35.0** |
-| M32 / B4 | Repair loop FIND→PROVE→packet (shipped) |
-| Issue | [#154](https://github.com/loganware05/captains-compass-cursor/issues/154) (close manually if bot lacks permission) |
-| Rollback | `rollback/pre-b4-repair-loop` |
-| Next plan | **M33 / B5 Precision ledger** — `AWAITING_APPROVAL` |
-| Next issue | [#158](https://github.com/loganware05/captains-compass-cursor/issues/158) |
+| Release | **v1.36.0** (pending tag after merge) |
+| M33 / B5 | Precision ledger (implementing / PR) |
+| Issue | [#158](https://github.com/loganware05/captains-compass-cursor/issues/158) |
+| Rollback | `rollback/pre-b5-precision-ledger` |
+| Prior baseline | v1.35.0 / M32 |
 
 ## In flight (Captain-directed)
 
-- Root `IMPLEMENTATION_PLAN.md` → **b5-precision-ledger** awaiting Captain approval
+- M33 / B5 implementation PR ready for review
 - NS-SKILL-003 / OVA-45 remain parallel queue items where applicable
+- Docs closeout PR [#159](https://github.com/loganware05/captains-compass-cursor/pull/159) may be superseded by this branch
 
 ## Completed
 
@@ -29,4 +27,4 @@ PRs [#156](https://github.com/loganware05/captains-compass-cursor/pull/156) /
 
 ## Blockers
 
-None. Pause for Captain approval of B5 / `b5-precision-ledger`.
+None. Soft stop: merge → tag v1.36.0.

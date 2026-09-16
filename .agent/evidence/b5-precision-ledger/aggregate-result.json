@@ -1,0 +1,18 @@
+{
+  "ledger_id": "b5-fixture-demo",
+  "ledger_path": "/agent/repos/captains-compass-cursor/.agent/evidence/precision/b5-fixture-demo/precision-ledger.json",
+  "dashboard_md_path": "/agent/repos/captains-compass-cursor/.agent/evidence/precision/b5-fixture-demo/dashboard.md",
+  "dashboard_json_path": "/agent/repos/captains-compass-cursor/.agent/evidence/precision/b5-fixture-demo/dashboard.json",
+  "evidence_dir": "/agent/repos/captains-compass-cursor/.agent/evidence/precision/b5-fixture-demo",
+  "entry_count": 2,
+  "experience_paths": [
+    "/agent/repos/captains-compass-cursor/.agent/experience/exp-precision-b5-fixture-demo-code-reviewer.json",
+    "/agent/repos/captains-compass-cursor/.agent/experience/exp-precision-b5-fixture-demo-security-review.json"
+  ],
+  "experience_path": "/agent/repos/captains-compass-cursor/.agent/experience/exp-precision-b5-fixture-demo-code-reviewer.json",
+  "proposal_path": "/agent/repos/captains-compass-cursor/.agent/routing/proposals/route-precision-b5-fixture-demo-b2d38efe.json",
+  "proposal_auto_apply": false,
+  "captain_approval": false,
+  "source_instance": "control-live",
+  "min_sample_for_proposal": 5
+}

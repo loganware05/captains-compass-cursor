@@ -1,13 +1,17 @@
 {
   "kind": "northstar-captain-objective-queue",
   "queued_at": "2026-09-15T18:18:08Z",
-  "updated_at": "2026-09-15T20:35:00Z",
+  "updated_at": "2026-09-15T20:40:00Z",
   "captain": "Logan Ware",
   "captain_utterance": "Add the following objectives to queue, then begin working. Learning Run / routing / B4",
   "approvals": [
     {
       "at": "2026-09-15T18:45:00Z",
       "text": "I've merged sanbox #57. I approve the dispatch, I approve M31/ B4 plan"
+    },
+    {
+      "at": "2026-09-15T20:37:00Z",
+      "text": "I approve IMPLEMENTATION_PLAN.md for b5-precision-ledger"
     }
   ],
   "first_mate_run_id": "bc-0b8ec108-10ec-4204-a4e4-8bedbf0405fd",
@@ -46,7 +50,7 @@
     {
       "id": "b5-precision-ledger",
       "title": "B5 — Precision ledger",
-      "status": "awaiting_approval",
+      "status": "implementing",
       "plan_id": "b5-precision-ledger",
       "plan_path": "IMPLEMENTATION_PLAN.md",
       "long_form_path": "docs/plans/B5_PRECISION_LEDGER.md",
@@ -54,7 +58,8 @@
       "roadmap": "B5",
       "milestone": "M33",
       "proposed_release": "v1.36.0",
-      "notes": "Plan only; no product implementation until Captain approval",
+      "branch": "cursor/m33-b5-precision-ledger-3b10",
+      "notes": "Captain approved; hermetic ledger + dashboard; proposal-only priority",
       "linear_issue": "OVA-49",
       "github_issue": 158
     }

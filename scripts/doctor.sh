@@ -398,6 +398,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing orchestrator/repair/loop.py"
   fi
+  if [[ -f "$ROOT/orchestrator/review/precision.py" ]]; then
+    ok "review precision ledger module"
+  else
+    fail "missing orchestrator/review/precision.py"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/code-review-report.schema.json" ]]; then
     ok "code-review-report schema"
   else
@@ -422,6 +427,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "repair-run schema"
   else
     fail "missing orchestrator/schemas/repair-run.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/precision-ledger.schema.json" ]]; then
+    ok "precision-ledger schema"
+  else
+    fail "missing orchestrator/schemas/precision-ledger.schema.json"
   fi
   if [[ -f "$ROOT/templates/docs/INTENT_PACK.md" ]]; then
     ok "INTENT_PACK.md template"
@@ -452,6 +462,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "start-repair-loop.sh"
   else
     fail "missing executable scripts/start-repair-loop.sh"
+  fi
+  if [[ -x "$ROOT/scripts/aggregate-precision-ledger.sh" ]]; then
+    ok "aggregate-precision-ledger.sh"
+  else
+    fail "missing executable scripts/aggregate-precision-ledger.sh"
   fi
   if [[ -f "$ROOT/orchestrator/reference-profiles/code-reviewer.json" ]]; then
     ok "code-reviewer reference profile"

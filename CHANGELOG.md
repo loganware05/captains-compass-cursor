@@ -1,5 +1,30 @@
 # Changelog
 
+## 1.36.0 — 2026-09-15
+
+### Added
+
+- **M33 / B5 Precision ledger** — aggregate Code Reviewer finding outcomes into
+  skill/specialist precision dashboards (evidence + Experience)
+- Schema `precision-ledger.schema.json` (`northstar.precision_ledger.v1`)
+- Module `orchestrator/review/precision.py`
+- CLI `scripts/aggregate-precision-ledger.sh` / `northstar precision aggregate`
+- Optional proposal-only invocation-priority RoutingProposal
+  (`--emit-priority-proposal`, min sample default 5)
+- Fixture `tests/fixtures/code-review/precision-outcomes.json`
+- Tests: `tests/orchestrator/test_m33_b5_precision_ledger.py`
+- Evidence: `.agent/evidence/b5-precision-ledger/` +
+  `.agent/evidence/precision/b5-fixture-demo/`
+- ADR-050
+
+### Locks (unchanged)
+
+- No silent reputation mutation / no auto-apply priority
+- Finding outcomes never originate Captain approval
+- Linear is flight recorder only
+- Skill slug remains `code-reviewer`
+- Hermetic CI / no model on default path
+
 ## 1.35.0 — 2026-09-15
 
 ### Added
