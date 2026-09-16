@@ -6,11 +6,16 @@ usage() {
   cat <<'USAGE'
 Usage: install.sh [--force] <target-repo-path>
 
-Copies Captain's Compass rules, Skills, agents, and documentation templates
-into a product Git repository.
+Install NorthStar (Captain's Compass) workflow package into a product Git
+repository: .cursor Skills/rules/agents, memory doc templates (if missing),
+and .agent layout.
+
+Does NOT copy control-repo scripts/ (northstar, doctor, Learning Loop runners).
+Run those from the control repo with --repo pointed at the product checkout.
+See docs/INDEX.md and docs/PRODUCT_ONBOARDING.md.
 
 Options:
-  --force   Overwrite existing workflow files
+  --force   Overwrite existing .cursor workflow files (memory docs still skip-if-exists)
   -h, --help  Show this help
 
 Example:
@@ -174,6 +179,24 @@ for f in EVIDENCE_MATRIX.md; do
     fi
   fi
 done
+# Product-scoped INDEX (not control docs/INDEX.md — avoids broken relative links)
+if [[ -f "$SOURCE_ROOT/templates/docs/INDEX.md" ]]; then
+  if [[ -f "$TARGET/docs/INDEX.md" ]]; then
+    echo "keep: docs/INDEX.md (already exists; not overwritten)"
+  else
+    cp "$SOURCE_ROOT/templates/docs/INDEX.md" "$TARGET/docs/INDEX.md"
+    echo "added: docs/INDEX.md"
+  fi
+fi
+if [[ -f "$SOURCE_ROOT/docs/integrations/code-reviewer.md" ]]; then
+  mkdir -p "$TARGET/docs/integrations"
+  if [[ -f "$TARGET/docs/integrations/code-reviewer.md" ]]; then
+    echo "keep: docs/integrations/code-reviewer.md (already exists; not overwritten)"
+  else
+    cp "$SOURCE_ROOT/docs/integrations/code-reviewer.md" "$TARGET/docs/integrations/code-reviewer.md"
+    echo "added: docs/integrations/code-reviewer.md"
+  fi
+fi
 if [[ -f "$SOURCE_ROOT/docs/integrations/multi-runtime-agents.md" ]]; then
   mkdir -p "$TARGET/docs/integrations"
   if [[ -f "$TARGET/docs/integrations/multi-runtime-agents.md" ]]; then
@@ -244,7 +267,7 @@ echo "$VERSION" > "$TARGET/.agent/COMPASS_VERSION"
 
 cat <<EOF
 
-Captain's Compass v${VERSION} installed into:
+NorthStar / Captain's Compass v${VERSION} installed into:
   $TARGET
 
 Next steps:
@@ -252,6 +275,11 @@ Next steps:
   2. Open the repository in Cursor.
   3. Ask the First Mate to follow AGENTS.md for your next change.
   4. Expect IMPLEMENTATION_PLAN.md to reach AWAITING APPROVAL before product code changes.
+  5. Run Learning Loop / Code Reviewer from the CONTROL repo:
+       <control>/scripts/northstar help
+       <control>/scripts/northstar review --repo $TARGET
+
+Control scripts/ were NOT copied (by design). See docs/INDEX.md.
 
 Do not install into critical production repos until you have validated the workflow in a disposable sandbox.
 

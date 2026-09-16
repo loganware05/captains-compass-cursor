@@ -2,32 +2,29 @@
 
 ## Current status
 
-**Release: v1.36.0** — M33 / B5 Precision ledger tagged and published
-([release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.36.0);
-PRs [#159](https://github.com/loganware05/captains-compass-cursor/pull/159) /
-[#160](https://github.com/loganware05/captains-compass-cursor/pull/160)).
+**Release: v1.37.0** — M34 / C1 Single launcher UX on branch
+`cursor/m34-c1-single-launcher-ux-3b10` (awaiting Captain merge).
 
 | Item | Value |
 |---|---|
-| Release | **v1.36.0** |
-| M33 / B5 | Precision ledger (shipped) |
-| Issue | [#158](https://github.com/loganware05/captains-compass-cursor/issues/158) |
-| Rollback | `rollback/pre-b5-precision-ledger` |
-| Track B | **Complete** (B0–B5 / M27–M33) |
-| Next plan | **M34 / C1 Single launcher UX** — `AWAITING_APPROVAL` |
-| Next issue | [#161](https://github.com/loganware05/captains-compass-cursor/issues/161) |
+| Release | **v1.37.0** (pending tag after merge) |
+| M34 / C1 | Single launcher UX (implementing / PR) |
+| Issue | [#161](https://github.com/loganware05/captains-compass-cursor/issues/161) |
+| Rollback | `rollback/pre-c1-single-launcher-ux` |
+| Prior baseline | v1.36.0 / M33 (Track B complete) |
 
 ## In flight (Captain-directed)
 
-- Root `IMPLEMENTATION_PLAN.md` → **c1-single-launcher-ux** awaiting Captain approval
+- M34 / C1 implementation PR ready for review
 - NS-SKILL-003 / OVA-45 remain parallel queue items where applicable
+- Docs closeout PR [#162](https://github.com/loganware05/captains-compass-cursor/pull/162) may be superseded by this branch
 
 ## Completed
 
-- **M33 / B5** merged + tagged **v1.36.0**
+- **M33 / B5** merged + tagged **v1.36.0** — Track B complete
 - **M32 / B4** merged + tagged **v1.35.0**
-- **M31**–**M27** Code Reviewer track shipped (Track B complete)
+- **M31**–**M27** Code Reviewer track shipped
 
 ## Blockers
 
-None. Pause for Captain approval of C1 / `c1-single-launcher-ux`.
+None. Soft stop: merge → tag v1.37.0.

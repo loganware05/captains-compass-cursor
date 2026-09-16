@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
-# northstar — topology-free launcher for control-plane Skills operations (M24).
+# northstar — topology-free launcher for NorthStar control-plane operations (M24 / M34).
 #
-# Agents and runbooks should prefer:
-#   northstar skills refresh --repo <sandbox>
-#   northstar skills learn --repo <sandbox> --objective "..." [--category ...]
-#   northstar skills promote --repo <sandbox> --candidate <path> ...
+# One product surface for Skills Learning Loop + Code Reviewer:
+#   northstar skills … | review | intent | outcomes | repair | precision
 #
 # Scripts always live in this control repository. Product/sandbox checkouts do
 # not contain ./scripts/run-skill-learning-loop.sh (or siblings).
+# Docs index: docs/INDEX.md
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -15,7 +14,26 @@ export PATH="$ROOT/scripts:$PATH"
 
 usage() {
   cat <<'USAGE'
+NorthStar launcher — Skills Learning Loop + Code Reviewer (one product)
+
 Usage:
+  northstar help
+  northstar skills <subcommand> …
+  northstar review …
+  northstar intent <subcommand> …
+  northstar outcomes <subcommand> …
+  northstar repair <subcommand> …
+  northstar precision <subcommand> …
+
+Surfaces (one-line purpose):
+  skills      Learning Loop — refresh TI, learn, promote, sync-ledger, route-agents
+  review      Code Reviewer — detect→investigate→verify→report (evidence-only default)
+  intent      Export / normalize intent packs for review (never Captain approval)
+  outcomes    Record finding triage → Experience (+ optional proposal-only routing)
+  repair      FIND→PROVE→packet from verified findings (never auto-merge)
+  precision   Aggregate finding outcomes into precision ledger / dashboard
+
+Commands:
   northstar skills refresh [--repo PATH] [refresh-ti-cache.sh options]
   northstar skills learn   --repo PATH --objective TEXT [run-skill-learning-loop.sh options]
   northstar skills promote --repo PATH --candidate PATH [promote-candidate.sh options]
@@ -26,20 +44,27 @@ Usage:
   northstar outcomes record --report PATH --triage PATH [record-finding-outcomes.sh options]
   northstar repair start --report PATH --finding ID [start-repair-loop.sh options]
   northstar precision aggregate (--outcomes PATH | --outcomes-dir PATH) [aggregate-precision-ledger.sh options]
-  northstar help
 
 Topology:
   CONTROL  = directory containing this launcher (captains-compass-cursor)
   --repo   = product/sandbox repository root (maps to --repo-root on underlying scripts)
+  Product installs get docs/Skills via install.sh — control scripts stay in CONTROL
 
-Never clones or executes starred repositories. Never installs Skills without
---captain-approved on promote. Linear sync never originates Captain approval.
-Code review (M27+) defaults to evidence-only. M30 draft posting is opt-in,
-allowlist-gated, and never APPROVE / REQUEST_CHANGES.
-Intent packs (M29) never originate Captain approval.
-Finding outcomes (M31) write Experience lessons; RoutingProposal stays proposal-only.
-Repair loop (M32 / B4) is Captain-gated, verified-only, and never auto-merges.
-Precision ledger (M33 / B5) aggregates finding outcomes; priority proposals never auto-apply.
+Docs:
+  docs/INDEX.md                 Operator index (Learning Loop + Code Reviewer)
+  docs/PRODUCT_ONBOARDING.md    Install into a product repo
+  docs/integrations/code-reviewer.md
+  docs/integrations/linear-skills-learning-loop.md
+
+Locks:
+  Never clones or executes starred repositories.
+  Never installs Skills without --captain-approved on promote.
+  Linear sync never originates Captain approval.
+  Code review (M27+) defaults to evidence-only; M30 draft posting is opt-in.
+  Intent packs (M29) never originate Captain approval.
+  Finding outcomes (M31) write Experience; RoutingProposal stays proposal-only.
+  Repair loop (M32 / B4) is Captain-gated, verified-only, never auto-merges.
+  Precision ledger (M33 / B5) never auto-applies reputation / priority.
 USAGE
 }
 

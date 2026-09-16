@@ -1,11 +1,31 @@
 # Product Repository Onboarding
 
-Install Captain's Compass into a **product** repository after validating the workflow in a disposable sandbox.
+Install **NorthStar** (Captain's Compass compatibility alias) into a **product**
+repository after validating the workflow in a disposable sandbox.
 
 Control repository: https://github.com/loganware05/captains-compass-cursor  
-Current stable version: **1.1.0**
+Docs index: [`INDEX.md`](INDEX.md)  
+Current control version: see root `VERSION` in the control repo (recorded in the
+product as `.agent/COMPASS_VERSION` after install).
 
-Do not install into critical production repos until sandbox validation has passed. See [`SANDBOX_VALIDATION.md`](SANDBOX_VALIDATION.md).
+Do not install into critical production repos until sandbox validation has passed.
+See [`SANDBOX_VALIDATION.md`](SANDBOX_VALIDATION.md).
+
+## What install does (and does not)
+
+| Installs into product | Stays in control repo only |
+|---|---|
+| `.cursor/` rules, Skills, agents, hooks | `scripts/northstar` and all control CLIs |
+| Root memory templates (if missing) | `orchestrator/`, doctor, Learning Loop runners |
+| `.agent/` layout + `COMPASS_VERSION` | Repair / precision / outcomes implementation scripts |
+
+Run Learning Loop and Code Reviewer commands **from the control repo**, pointing
+`--repo` at the product or sandbox checkout:
+
+```bash
+/path/to/captains-compass-cursor/scripts/northstar help
+/path/to/captains-compass-cursor/scripts/northstar review --repo /path/to/product
+```
 
 ## Prerequisites
 
@@ -17,24 +37,25 @@ Do not install into critical production repos until sandbox validation has passe
 ```bash
 # From the control repo
 ./scripts/doctor.sh
+./scripts/northstar help
 ```
 
 ## Path A — New project
 
-Generate or create the product repository first, then install Compass.
+Generate or create the product repository first, then install NorthStar.
 
 ```bash
 git clone git@github.com:<org>/<new-project>.git
 cd <new-project>
 
 # Optional: start on an install branch before the first merge
-git checkout -b chore/install-captains-compass
+git checkout -b chore/install-northstar
 
 /path/to/captains-compass-cursor/scripts/install.sh "$(pwd)"
 
 git add .
-git commit -m "chore(workflow): install Captain's Compass"
-git push -u origin chore/install-captains-compass
+git commit -m "chore(workflow): install NorthStar"
+git push -u origin chore/install-northstar
 # Open a PR, review, and merge
 ```
 
@@ -51,13 +72,13 @@ Always install through a dedicated branch and pull request.
 
 ```bash
 cd existing-project
-git checkout -b chore/install-captains-compass
+git checkout -b chore/install-northstar
 
 /path/to/captains-compass-cursor/scripts/install.sh "$(pwd)"
 
 git add .
-git commit -m "chore(workflow): install Captain's Compass"
-git push -u origin chore/install-captains-compass
+git commit -m "chore(workflow): install NorthStar"
+git push -u origin chore/install-northstar
 ```
 
 Review the PR carefully:
@@ -65,6 +86,7 @@ Review the PR carefully:
 - `.cursor/` rules, Skills, agents, hooks
 - Root memory templates (`AGENTS.md`, `PROJECT_CONTEXT.md`, …) — only created if missing
 - `.agent/COMPASS_VERSION` and `.agent/evidence/`
+- Optional `docs/INDEX.md` (operator map) when newly added
 
 Merge only after the Captain is satisfied.
 
@@ -80,7 +102,7 @@ Details: [`UPGRADING.md`](UPGRADING.md).
 
 ## Uninstall
 
-Removes Compass control files; preserves product memory docs by default:
+Removes Compass/NorthStar control files; preserves product memory docs by default:
 
 ```bash
 /path/to/captains-compass-cursor/scripts/uninstall.sh --yes /path/to/product-repo
@@ -100,6 +122,7 @@ Doctor reads `.agent/COMPASS_VERSION` in product repos (there is no product `VER
 |---|---|
 | `.cursor/rules`, `skills`, `agents`, hooks | Refreshed |
 | Doc templates at repo root | Created if missing; **not** overwritten |
+| `docs/INDEX.md` (product-scoped operator map) | Created if missing from `templates/docs/INDEX.md`; **not** overwritten |
 | `.agent/COMPASS_VERSION` | Updated to the control-repo version |
 | Control-repo `scripts/` | **Not** copied into the product repo — run them from the control repo |
 
@@ -108,6 +131,7 @@ Doctor reads `.agent/COMPASS_VERSION` in product repos (there is no product `VER
 1. Customize `PROJECT_CONTEXT.md`, `TESTING.md`, and `DECISIONS.md`.
 2. Use the approval gate for every product-behavior change.
 3. Store evidence under `.agent/evidence/` before opening PRs (PR evidence hook).
+4. Prefer `northstar …` from the control repo for skills / review / outcomes / repair / precision.
 
 ### Agent-ready prompts
 

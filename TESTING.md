@@ -111,6 +111,14 @@ PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m33_b5_precision_ledger
   --ledger-id b5-cli-demo
 ```
 
+Single launcher UX (M34 / C1; hermetic help + docs index):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m34_c1_single_launcher_ux -v
+./scripts/northstar help
+test -f docs/INDEX.md
+```
+
 Promote candidate / train from Experience (staging drafts only):
 
 ```bash

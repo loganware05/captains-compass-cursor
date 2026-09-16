@@ -1,0 +1,51 @@
+NorthStar launcher — Skills Learning Loop + Code Reviewer (one product)
+
+Usage:
+  northstar help
+  northstar skills <subcommand> …
+  northstar review …
+  northstar intent <subcommand> …
+  northstar outcomes <subcommand> …
+  northstar repair <subcommand> …
+  northstar precision <subcommand> …
+
+Surfaces (one-line purpose):
+  skills      Learning Loop — refresh TI, learn, promote, sync-ledger, route-agents
+  review      Code Reviewer — detect→investigate→verify→report (evidence-only default)
+  intent      Export / normalize intent packs for review (never Captain approval)
+  outcomes    Record finding triage → Experience (+ optional proposal-only routing)
+  repair      FIND→PROVE→packet from verified findings (never auto-merge)
+  precision   Aggregate finding outcomes into precision ledger / dashboard
+
+Commands:
+  northstar skills refresh [--repo PATH] [refresh-ti-cache.sh options]
+  northstar skills learn   --repo PATH --objective TEXT [run-skill-learning-loop.sh options]
+  northstar skills promote --repo PATH --candidate PATH [promote-candidate.sh options]
+  northstar skills sync-ledger --run PATH [--mode fixtures|link] [options]
+  northstar skills route-agents --registry PATH --objective PATH [--out PATH] [--cloud-agents-json PATH]
+  northstar review --repo PATH [run-code-review.sh options]
+  northstar intent export --out PATH [--fixture PATH | --issue ID]
+  northstar outcomes record --report PATH --triage PATH [record-finding-outcomes.sh options]
+  northstar repair start --report PATH --finding ID [start-repair-loop.sh options]
+  northstar precision aggregate (--outcomes PATH | --outcomes-dir PATH) [aggregate-precision-ledger.sh options]
+
+Topology:
+  CONTROL  = directory containing this launcher (captains-compass-cursor)
+  --repo   = product/sandbox repository root (maps to --repo-root on underlying scripts)
+  Product installs get docs/Skills via install.sh — control scripts stay in CONTROL
+
+Docs:
+  docs/INDEX.md                 Operator index (Learning Loop + Code Reviewer)
+  docs/PRODUCT_ONBOARDING.md    Install into a product repo
+  docs/integrations/code-reviewer.md
+  docs/integrations/linear-skills-learning-loop.md
+
+Locks:
+  Never clones or executes starred repositories.
+  Never installs Skills without --captain-approved on promote.
+  Linear sync never originates Captain approval.
+  Code review (M27+) defaults to evidence-only; M30 draft posting is opt-in.
+  Intent packs (M29) never originate Captain approval.
+  Finding outcomes (M31) write Experience; RoutingProposal stays proposal-only.
+  Repair loop (M32 / B4) is Captain-gated, verified-only, never auto-merges.
+  Precision ledger (M33 / B5) never auto-applies reputation / priority.

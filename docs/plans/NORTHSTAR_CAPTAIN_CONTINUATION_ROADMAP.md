@@ -106,7 +106,7 @@ The Captain’s job is to **wire them together** so review outcomes improve Skil
 
 | Phase | Goal | Concrete next actions |
 |---|---|---|
-| **C1 — Single launcher UX** | `northstar skills …` and `northstar review …` feel like one product | Help text, docs index, install path into product repos — plan `c1-single-launcher-ux` / M34 **AWAITING_APPROVAL** |
+| **C1 — Single launcher UX** | `northstar skills …` and `northstar review …` feel like one product | Help text, docs index, install path into product repos — **implementing M34 / v1.37.0** |
 | **C2 — Product-repo install** | bitcoin-data-collector (and others) get NorthStar docs/Skills without control scripts | `install.sh` into product; memory docs preserved |
 | **C3 — Connected routine** | Issue→plan→approve→dispatch→review→ledger | Extend ingress carefully; PR events only after B3 plan |
 | **C4 — Eval harness** | Golden diffs with known defects | Fixture repos; measure precision/recall of reviewer |
@@ -193,7 +193,7 @@ Why this order: **merge → use on a real repo → learn a Skill that helps that
 5. ~~**M31** — Finding outcome → Experience → RoutingProposal~~ (shipped v1.34.0)
 6. ~~**M32 / B4** — Repair loop packet MVP~~ (shipped v1.35.0)
 7. ~~**M33 / B5** — Precision ledger~~ (shipped v1.36.0) — **Track B complete**
-8. **M34 / C1** — Single launcher UX (`c1-single-launcher-ux`) — **AWAITING_APPROVAL**
+8. **M34 / C1** — Single launcher UX (`c1-single-launcher-ux`) — **implementing / v1.37.0**
 9. **C2 / Product install** — NorthStar into `bitcoin-data-collector` (no control script copy)
 
 ---

@@ -6,7 +6,7 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.29.1
+## Current version: 1.37.0
 
 ### Included
 
@@ -20,6 +20,8 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 - Evidence matrix, multi-runtime docs, technology-intelligence adapter contract, harness evals + sandbox behavioral checklist
 - Structural-test examples (`examples/structural-tests/`)
 - Thin `CLAUDE.md` adapter when missing
+- Topology-free `scripts/northstar` launcher (skills + review + outcomes + repair + precision)
+- Operator docs index: [`docs/INDEX.md`](docs/INDEX.md)
 - `install.sh`, `update.sh`, `uninstall.sh`, `doctor.sh`
 - Control-repo CI (doctor + tests + evals)
 
@@ -34,8 +36,11 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 
 ```bash
 ./scripts/doctor.sh
+./scripts/northstar help
 ./tests/run.sh
 ```
+
+Operator map: [`docs/INDEX.md`](docs/INDEX.md).
 
 ## Install into a product repository
 
@@ -46,6 +51,8 @@ Copy-paste Cursor agent prompts (install + activate / fill `PROJECT_CONTEXT.md`)
 ```bash
 ./scripts/install.sh /path/to/product-repo
 ```
+
+Control `scripts/` are **not** copied. After install, run `northstar` from this control repo with `--repo` pointed at the product checkout.
 
 ## Update an existing install
 
