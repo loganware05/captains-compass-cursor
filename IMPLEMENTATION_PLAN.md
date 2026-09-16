@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **PARTIAL** (control evidence / v1.38.0 ready; product PR pending Captain push) |
+| Status | **READY FOR MERGE** (control evidence / v1.38.0; product PR #7 open) |
 | Plan ID | `c2-product-repo-install` |
 | Supersedes | `c1-single-launcher-ux` (CLOSED — shipped as v1.37.0 / M34 / C1) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
@@ -24,7 +24,7 @@
 ## Acceptance criteria
 
 1. **Plan-gated** ✅
-2. **Product install** — local install at `VERSION=1.38.0` succeeded (commit `0b7bb96`); product PR push blocked (403) — patch in evidence for Captain ⬜ (open until product PR exists)
+2. **Product install** — local install at `VERSION=1.38.0` succeeded (commit `0b7bb96`); product PR **#7** opened via APPLY Option A (`468c948` on `cursor/m35-c2-northstar-install-5182`) ✅
 3. **No scripts/** ✅ (inventory; bare `./scripts/` rewritten to `$CONTROL/scripts/`)
 4. **Memory preserved** ✅ (new templates; Cloud Agent files preserved)
 5. **Operator path documented** ✅ (`docs/INDEX.md` product-scoped + APPLY.md)
@@ -34,8 +34,8 @@
 
 ## Residual
 
-Captain must apply `.agent/evidence/c2-product-repo-install/APPLY.md` (or grant
-write access) to open/merge the bitcoin-data-collector PR for full C2 exit.
+Captain review/merge product [PR #7](https://github.com/loganware05/bitcoin-data-collector/pull/7)
+and control [PR #166](https://github.com/loganware05/captains-compass-cursor/pull/166), then tag **v1.38.0**.
 
 ## Approval gate
 
