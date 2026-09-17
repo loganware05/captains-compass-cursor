@@ -27,13 +27,13 @@
 3. Protected-branch denies `HEAD:main` / `push origin main` / `git -C` / checkout short-circuit ✅
 4. Hermetic unit + `tests/run.sh` / eval coverage ✅
 5. Control PR retargeted to `main` after C2 merge (branch conflict resolved) ✅
-6. Product hooks refreshed on bitcoin-data-collector (post-#7 merge) ⬜
+6. Product hooks refreshed on bitcoin-data-collector (post-#7 merge) ✅ → [#8](https://github.com/loganware05/bitcoin-data-collector/pull/8)
 7. Agentic security → NorthStar Code Reviewer integration plan drafted (separate) ✅
 
 ## Residual
 
 1. Merge control PR #167 → tag **v1.38.1**
-2. Ship product hooks refresh PR (APPLY_TO_PR7 against `cursor/kalshi-live-decision-system`)
+2. Merge product hooks refresh PR [#8](https://github.com/loganware05/bitcoin-data-collector/pull/8)
 3. Captain approve `docs/plans/AGENTIC_SECURITY_REVIEW_INTEGRATION.md` for M37
 
 ## Approval gate

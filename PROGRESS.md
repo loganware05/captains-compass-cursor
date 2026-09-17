@@ -10,14 +10,14 @@
 | Tagged | **v1.38.0** (M35 / C2) |
 | In flight | **v1.38.1** / M36 — PR [#167](https://github.com/loganware05/captains-compass-cursor/pull/167) rebased onto `main` |
 | Branch | `cursor/m36-hook-security-hardening-5182` |
-| Product follow-up | Refresh hooks on `cursor/kalshi-live-decision-system` (APPLY_TO_PR7; #7 already merged) |
+| Product follow-up | [bitcoin-data-collector#8](https://github.com/loganware05/bitcoin-data-collector/pull/8) hooks refresh (APPLY_TO_PR7) |
 | Next plan | `docs/plans/AGENTIC_SECURITY_REVIEW_INTEGRATION.md` **AWAITING APPROVAL** |
 | Rollback | `rollback/pre-m36-hook-security-hardening` |
 
 ## In flight
 
-- Retarget / merge control M36 PR #167 (base was stale C2 branch → now `main`)
-- Open product hooks-refresh PR for bitcoin-data-collector
+- Merge control M36 PR [#167](https://github.com/loganware05/captains-compass-cursor/pull/167) (rebased onto `main`; MERGEABLE) → tag **v1.38.1**
+- Merge product hooks-refresh PR [bitcoin-data-collector#8](https://github.com/loganware05/bitcoin-data-collector/pull/8)
 - Await Captain approval of agentic-security-review-integration (M37)
 
 ## Completed
