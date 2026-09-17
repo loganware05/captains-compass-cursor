@@ -36,11 +36,6 @@ _PLAN_ALLOW_CASE = re.compile(
     r"^\+.*case\s+[\"'].*IMPLEMENTATION_PLAN\.md",
     re.M | re.I,
 )
-_CAPTAIN_ENV = re.compile(r"COMPASS_CAPTAIN_APPROVE")
-_COMMITTED_PLAN = re.compile(
-    r"git\s+show\s+HEAD:IMPLEMENTATION_PLAN\.md|HEAD:IMPLEMENTATION_PLAN\.md",
-    re.I,
-)
 _CHECKOUT_SHORTCIRCUIT = re.compile(
     # Literal shell (`checkout -b feature/`) OR grep-pattern source
     # (`checkout[[:space:]]+(-b|--branch)[[:space:]]+(feature|fix|…)`).
@@ -56,12 +51,31 @@ _ALLOW_NEAR_CHECKOUT = re.compile(
     r"(?:-b|--branch|\(-b\|--branch\))",
     re.I | re.S,
 )
-_GIT_C_PARSE = re.compile(r"""git\s+-C\b|tokens\[.*\]\s*==\s*[\"']-C[\"']|\"-C\"""")
+# Command-argv -C parsing (not merely `git -C` for local rev-parse).
+_CMD_C_PARSE = re.compile(
+    r"""tokens\[[^\]]+\]\s*==\s*['\"]-C['\"]"""
+    r"""|\bt\s*==\s*['\"]-C['\"]"""
+    r"""|startswith\(\s*['\"]-C['\"]"""
+    r"""|tok\s*==\s*['\"]-C['\"]""",
+)
 _REFSPEC_HINT = re.compile(
-    r"refspec|HEAD:\w+|refs/heads/|split\([\"']:[\"']\)",
+    r"refspec|HEAD:\w+|refs/heads/"
+    r"""|split\(\s*['\"]:['\"]\s*\)"""
+    r"""|partition\(\s*['\"]:['\"]\s*\)"""
+    r"""|['\"]:['\"]\s*in\s+\w+"""
+    r"""|is_protected_ref""",
     re.I,
 )
-_PUSH_VERB = re.compile(r"\b(git\s+)?push\b|verb\s*==\s*[\"']push[\"']", re.I)
+_PUSH_VERB = re.compile(
+    r"""verb\s*==\s*['\"]push['\"]"""
+    r"""|git\s+push\b"""
+    r"""|git\[\[:space:\]\]\+\(commit\|push\|merge\|rebase\)"""
+    r"""|[\"']push[\"']\s*in\s*\{"""
+    r"""|\(commit\|push\|merge\|rebase\)""",
+    re.I,
+)
+_PLAN_APPROVAL_HOOK = re.compile(r"plan-approval-check", re.I)
+_PROTECTED_BRANCH_HOOK = re.compile(r"protected-branch", re.I)
 
 
 def _diff_and_paths(
@@ -88,6 +102,24 @@ def _hook_control_plane_touched(changed: list[str], diff: str) -> bool:
     )
 
 
+def _paths_and_headers(changed: list[str], diff: str) -> list[str]:
+    paths = [p for p in changed if _HOOK_PATH.search(p)]
+    for match in re.finditer(
+        r"^diff --git a/(\S+) b/(\S+)",
+        diff,
+        re.M,
+    ):
+        paths.append(match.group(2))
+    # Preserve order, unique
+    seen: set[str] = set()
+    out: list[str] = []
+    for p in paths:
+        if p not in seen:
+            seen.add(p)
+            out.append(p)
+    return out
+
+
 def _added_text(diff: str) -> str:
     lines: list[str] = []
     for line in diff.splitlines():
@@ -101,6 +133,13 @@ def _added_text(diff: str) -> str:
             body = body.split("  #", 1)[0]
         lines.append(body)
     return "\n".join(lines)
+
+
+def _strip_string_literals(text: str) -> str:
+    """Remove quoted strings so deny-message text cannot fake mitigations."""
+    text = re.sub(r"\"(?:\\.|[^\"\\])*\"", '""', text)
+    text = re.sub(r"'(?:\\.|[^'\\])*'", "''", text)
+    return text
 
 
 def _emit_fail_closed_hook_candidates(
@@ -118,15 +157,41 @@ def _emit_fail_closed_hook_candidates(
         return []
 
     added = _added_text(diff)
+    added_code = _strip_string_literals(added)
     out: list[dict[str, Any]] = []
-    hook_paths = [p for p in changed if _HOOK_PATH.search(p)] or [
-        p for p in changed if "hook" in p.casefold()
-    ] or [".cursor/hooks/"]
+    hook_paths = _paths_and_headers(changed, diff) or [".cursor/hooks/"]
+    joined_paths = " ".join(hook_paths)
+    # Scope by path only — do not scan file bodies for "protected-branch" prose.
+    is_plan_hook = bool(_PLAN_APPROVAL_HOOK.search(joined_paths))
+    is_protected_hook = bool(_PROTECTED_BRANCH_HOOK.search(joined_paths))
+    if not is_plan_hook and not is_protected_hook:
+        # Infer from diff headers when changed_paths omitted
+        headers = " ".join(
+            m.group(0)
+            for m in re.finditer(r"^diff --git .+$", diff, re.M)
+        )
+        is_plan_hook = bool(_PLAN_APPROVAL_HOOK.search(headers))
+        is_protected_hook = bool(_PROTECTED_BRANCH_HOOK.search(headers))
 
-    # Class 1 — plan-approval self-serve via exempt IMPLEMENTATION_PLAN.md Write
-    if _PLAN_EXEMPT.search(diff) or _PLAN_ALLOW_CASE.search(diff):
-        missing_captain = not _CAPTAIN_ENV.search(added)
-        missing_committed = not _COMMITTED_PLAN.search(added)
+
+    # Class 1 — plan-approval self-serve (only plan-approval-check.sh)
+    if is_plan_hook and (_PLAN_EXEMPT.search(diff) or _PLAN_ALLOW_CASE.search(diff)):
+        has_captain = bool(
+            re.search(
+                r"os\.environ\.get\(\s*[\"']COMPASS_CAPTAIN_APPROVE[\"']",
+                added,
+            )
+        )
+        has_committed = bool(
+            re.search(
+                r"[\"']git[\"']\s*,\s*[\"']show[\"']\s*,\s*[\"']HEAD:IMPLEMENTATION_PLAN\.md[\"']"
+                r"|subprocess\.run\(\s*\[[^\]]*HEAD:IMPLEMENTATION_PLAN\.md",
+                added,
+            )
+        )
+        missing_captain = not has_captain
+        missing_committed = not has_committed
+
         if missing_captain or missing_committed:
             gaps = []
             if missing_captain:
@@ -148,7 +213,10 @@ def _emit_fail_closed_hook_candidates(
                     "confidence": 0.88,
                     "skill": "security-review",
                     "category": "fail-closed-control",
-                    "evidence_paths": hook_paths[:5],
+                    "evidence_paths": [
+                        p for p in hook_paths if _PLAN_APPROVAL_HOOK.search(p)
+                    ][:5]
+                    or hook_paths[:5],
                     "suggested_fix": (
                         "Require COMPASS_CAPTAIN_APPROVE=1 to write APPROVED status; "
                         "gate product edits on committed plan Status + real Approval "
@@ -156,6 +224,9 @@ def _emit_fail_closed_hook_candidates(
                     ),
                 }
             )
+
+    if not is_protected_hook:
+        return out
 
     # Class 2a — checkout -b feature/ substring short-circuit
     has_checkout_sc = bool(_CHECKOUT_SHORTCIRCUIT.search(added))
@@ -183,7 +254,8 @@ def _emit_fail_closed_hook_candidates(
                 "confidence": 0.9,
                 "skill": "security-review",
                 "category": "fail-closed-control",
-                "evidence_paths": hook_paths[:5],
+                "evidence_paths": [p for p in hook_paths if _PROTECTED_BRANCH_HOOK.search(p)][:5]
+                or hook_paths[:5],
                 "suggested_fix": (
                     "Remove checkout substring short-circuit; decide allow/deny from "
                     "resolved repo HEAD and push refspecs only."
@@ -191,7 +263,7 @@ def _emit_fail_closed_hook_candidates(
             }
         )
 
-    # Class 2b — push path without refspec awareness (when push is handled)
+    # Class 2b — push path without refspec awareness
     handles_push = bool(_PUSH_VERB.search(added))
     if handles_push and not _REFSPEC_HINT.search(added):
         out.append(
@@ -208,7 +280,8 @@ def _emit_fail_closed_hook_candidates(
                 "confidence": 0.86,
                 "skill": "security-review",
                 "category": "fail-closed-control",
-                "evidence_paths": hook_paths[:5],
+                "evidence_paths": [p for p in hook_paths if _PROTECTED_BRANCH_HOOK.search(p)][:5]
+                or hook_paths[:5],
                 "suggested_fix": (
                     "Parse push refspecs and deny destinations that resolve to "
                     "main/master/develop/release/production."
@@ -216,35 +289,33 @@ def _emit_fail_closed_hook_candidates(
             }
         )
 
-    # Class 2c — missing git -C resolution when invoking git
-    if re.search(r"\bgit\b", added, re.I) and not _GIT_C_PARSE.search(added):
-        # Only flag protected-branch style mutation hooks, not every hook with "git"
-        if re.search(
-            r"protected.branch|rev-parse --abbrev-ref|git commit|git push",
-            added,
-            re.I,
-        ):
-            out.append(
-                {
-                    "id": "sec-hook-git-c-gap",
-                    "title": "Protected-branch hook may miss git -C target repo",
-                    "detail": (
-                        "Security specialist (agentic-equivalent): mutation hook uses "
-                        "git but does not parse `git -C <path>`, so "
-                        "`cd other && git -C <protected-repo> commit` can bypass cwd/"
-                        "cd-prefix checks."
-                    ),
-                    "severity": "medium",
-                    "confidence": 0.84,
-                    "skill": "security-review",
-                    "category": "fail-closed-control",
-                    "evidence_paths": hook_paths[:5],
-                    "suggested_fix": (
-                        "Resolve repo from `git -C` (and cd prefix / hook cwd); check "
-                        "that repo's HEAD / refspecs."
-                    ),
-                }
-            )
+    # Class 2c — missing command-argv git -C parsing (not local `git -C` rev-parse)
+    handles_mutation = bool(
+        re.search(r"commit|push|merge|rebase", added, re.I)
+    )
+    if handles_mutation and not _CMD_C_PARSE.search(added):
+        out.append(
+            {
+                "id": "sec-hook-git-c-gap",
+                "title": "Protected-branch hook may miss git -C target repo",
+                "detail": (
+                    "Security specialist (agentic-equivalent): mutation hook does not "
+                    "parse `git -C <path>` from the command argv, so "
+                    "`cd other && git -C <protected-repo> commit` can bypass cwd/"
+                    "cd-prefix checks (local `git -C` for rev-parse alone is not enough)."
+                ),
+                "severity": "medium",
+                "confidence": 0.84,
+                "skill": "security-review",
+                "category": "fail-closed-control",
+                "evidence_paths": [p for p in hook_paths if _PROTECTED_BRANCH_HOOK.search(p)][:5]
+                or hook_paths[:5],
+                "suggested_fix": (
+                    "Resolve repo from command-token `-C` (and cd prefix / hook cwd); "
+                    "check that repo's HEAD / refspecs."
+                ),
+            }
+        )
 
     return out
 

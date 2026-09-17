@@ -58,34 +58,26 @@ class FailClosedHookDetectorTests(unittest.TestCase):
 
     def test_hardened_m36_hooks_do_not_self_serve_or_shortcircuit(self) -> None:
         """Current control hooks after M36 should not trip the vulnerable patterns."""
-        plan = (ROOT / ".cursor" / "hooks" / "plan-approval-check.sh").read_text(
-            encoding="utf-8"
-        )
-        protected = (ROOT / ".cursor" / "hooks" / "protected-branch.sh").read_text(
-            encoding="utf-8"
-        )
-        # Synthesize an "add everything" diff of the hardened scripts
-        plan_diff = "diff --git a/.cursor/hooks/plan-approval-check.sh b/.cursor/hooks/plan-approval-check.sh\n" + "\n".join(
-            f"+{line}" for line in plan.splitlines()
-        )
-        prot_diff = "diff --git a/.cursor/hooks/protected-branch.sh b/.cursor/hooks/protected-branch.sh\n" + "\n".join(
-            f"+{line}" for line in protected.splitlines()
-        )
-        plan_findings = emit_security_candidates(
-            detection={"changed_paths": [".cursor/hooks/plan-approval-check.sh"]},
-            context_pack={"diff": plan_diff},
-        )
-        prot_findings = emit_security_candidates(
-            detection={"changed_paths": [".cursor/hooks/protected-branch.sh"]},
-            context_pack={"diff": prot_diff},
-        )
-        self.assertNotIn(
-            "sec-hook-plan-self-serve", {f["id"] for f in plan_findings}
-        )
-        prot_ids = {f["id"] for f in prot_findings}
-        self.assertNotIn("sec-hook-checkout-shortcircuit", prot_ids)
-        self.assertNotIn("sec-hook-push-refspec-gap", prot_ids)
-        self.assertNotIn("sec-hook-git-c-gap", prot_ids)
+        hooks_dir = ROOT / ".cursor" / "hooks"
+        for script in sorted(hooks_dir.glob("*.sh")):
+            if script.name.startswith("_"):
+                continue
+            text = script.read_text(encoding="utf-8")
+            rel = f".cursor/hooks/{script.name}"
+            diff = (
+                f"diff --git a/{rel} b/{rel}\n"
+                + "\n".join(f"+{line}" for line in text.splitlines())
+            )
+            findings = emit_security_candidates(
+                detection={"changed_paths": [rel]},
+                context_pack={"diff": diff},
+            )
+            hook_ids = {f["id"] for f in findings if f["id"].startswith("sec-hook-")}
+            self.assertEqual(
+                hook_ids,
+                set(),
+                f"{rel} unexpectedly emitted {hook_ids}",
+            )
 
     def test_compose_includes_security_skill_for_hook_diff(self) -> None:
         diff = (FIXTURES / "hook-plan-self-serve.diff").read_text(encoding="utf-8")
