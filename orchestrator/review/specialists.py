@@ -23,6 +23,45 @@ _DEPLOY_PATH = re.compile(
     re.I,
 )
 _TEST_PATH = re.compile(r"(^|/)(tests?|__tests__|spec)/|\.(test|spec)\.", re.I)
+_HOOK_PATH = re.compile(
+    r"(^|/)\.cursor/hooks(/|$)|(^|/)\.cursor/hooks\.json$|(^|/)hooks\.json$",
+    re.I,
+)
+_PLAN_EXEMPT = re.compile(
+    r"^\+.*\bIMPLEMENTATION_PLAN\.md\b",
+    re.M,
+)
+_PLAN_ALLOW_CASE = re.compile(
+    r"^\+.*\bIMPLEMENTATION_PLAN\.md\b.*allow|"
+    r"^\+.*case\s+[\"'].*IMPLEMENTATION_PLAN\.md",
+    re.M | re.I,
+)
+_CAPTAIN_ENV = re.compile(r"COMPASS_CAPTAIN_APPROVE")
+_COMMITTED_PLAN = re.compile(
+    r"git\s+show\s+HEAD:IMPLEMENTATION_PLAN\.md|HEAD:IMPLEMENTATION_PLAN\.md",
+    re.I,
+)
+_CHECKOUT_SHORTCIRCUIT = re.compile(
+    # Literal shell (`checkout -b feature/`) OR grep-pattern source
+    # (`checkout[[:space:]]+(-b|--branch)[[:space:]]+(feature|fix|…)`).
+    r"checkout(?:\s+|\[\[:space:\]\]\+)+"
+    r"(?:-b|--branch|\(-b\|--branch\))"
+    r".{0,120}(?:feature|fix|chore|docs|agent|hotfix)",
+    re.I,
+)
+_ALLOW_NEAR_CHECKOUT = re.compile(
+    r"checkout(?:\s+|\[\[:space:\]\]\+)+"
+    r"(?:-b|--branch|\(-b\|--branch\)).{0,240}\ballow\b|"
+    r"\ballow\b.{0,120}checkout(?:\s+|\[\[:space:\]\]\+)+"
+    r"(?:-b|--branch|\(-b\|--branch\))",
+    re.I | re.S,
+)
+_GIT_C_PARSE = re.compile(r"""git\s+-C\b|tokens\[.*\]\s*==\s*[\"']-C[\"']|\"-C\"""")
+_REFSPEC_HINT = re.compile(
+    r"refspec|HEAD:\w+|refs/heads/|split\([\"']:[\"']\)",
+    re.I,
+)
+_PUSH_VERB = re.compile(r"\b(git\s+)?push\b|verb\s*==\s*[\"']push[\"']", re.I)
 
 
 def _diff_and_paths(
@@ -34,12 +73,188 @@ def _diff_and_paths(
     return diff, changed
 
 
+def _hook_control_plane_touched(changed: list[str], diff: str) -> bool:
+    if any(_HOOK_PATH.search(p) for p in changed):
+        return True
+    # Diff-only path headers when changed_paths omitted
+    return bool(
+        re.search(
+            r"^diff --git a/.*\.cursor/hooks/|"
+            r"^diff --git a/.*hooks\.json|"
+            r"^\+\+\+ b/.*\.cursor/hooks/",
+            diff,
+            re.M,
+        )
+    )
+
+
+def _added_text(diff: str) -> str:
+    lines: list[str] = []
+    for line in diff.splitlines():
+        if not line.startswith("+") or line.startswith("+++"):
+            continue
+        body = line[1:]
+        # Drop shell / python comments so advisory notes do not fake mitigations
+        if body.lstrip().startswith("#"):
+            continue
+        if "  #" in body:
+            body = body.split("  #", 1)[0]
+        lines.append(body)
+    return "\n".join(lines)
+
+
+def _emit_fail_closed_hook_candidates(
+    *,
+    diff: str,
+    changed: list[str],
+) -> list[dict[str, Any]]:
+    """Agentic-equivalent hermetic checks for fail-closed hook control gaps (M37).
+
+    Encodes the two medium classes from Cursor Agentic Security Review on
+    bitcoin-data-collector PR #7: self-serve plan-approval and protected-branch
+    bypasses (refspecs / git -C / checkout substring short-circuit).
+    """
+    if not _hook_control_plane_touched(changed, diff):
+        return []
+
+    added = _added_text(diff)
+    out: list[dict[str, Any]] = []
+    hook_paths = [p for p in changed if _HOOK_PATH.search(p)] or [
+        p for p in changed if "hook" in p.casefold()
+    ] or [".cursor/hooks/"]
+
+    # Class 1 — plan-approval self-serve via exempt IMPLEMENTATION_PLAN.md Write
+    if _PLAN_EXEMPT.search(diff) or _PLAN_ALLOW_CASE.search(diff):
+        missing_captain = not _CAPTAIN_ENV.search(added)
+        missing_committed = not _COMMITTED_PLAN.search(added)
+        if missing_captain or missing_committed:
+            gaps = []
+            if missing_captain:
+                gaps.append("no COMPASS_CAPTAIN_APPROVE gate on plan Status promotion")
+            if missing_committed:
+                gaps.append("no committed HEAD:IMPLEMENTATION_PLAN.md check")
+            out.append(
+                {
+                    "id": "sec-hook-plan-self-serve",
+                    "title": "Fail-closed plan-approval hook may be self-servable",
+                    "detail": (
+                        "Security specialist (agentic-equivalent): hook diff exempts "
+                        "IMPLEMENTATION_PLAN.md from Write/StrReplace while product "
+                        "edits trust plan Status — "
+                        + "; ".join(gaps)
+                        + ". An agent can forge APPROVED in the exempt file."
+                    ),
+                    "severity": "medium",
+                    "confidence": 0.88,
+                    "skill": "security-review",
+                    "category": "fail-closed-control",
+                    "evidence_paths": hook_paths[:5],
+                    "suggested_fix": (
+                        "Require COMPASS_CAPTAIN_APPROVE=1 to write APPROVED status; "
+                        "gate product edits on committed plan Status + real Approval "
+                        "Record (see M36 / ADR-053)."
+                    ),
+                }
+            )
+
+    # Class 2a — checkout -b feature/ substring short-circuit
+    has_checkout_sc = bool(_CHECKOUT_SHORTCIRCUIT.search(added))
+    checkout_allows = bool(
+        _ALLOW_NEAR_CHECKOUT.search(added)
+        or re.search(r"checkout.{0,160}\ballow\s*(\(|\{)", added, re.I | re.S)
+        or (
+            "checkout" in added.casefold()
+            and re.search(r"^\s*allow\b", added, re.M)
+            and _CHECKOUT_SHORTCIRCUIT.search(added)
+        )
+    )
+    if has_checkout_sc and checkout_allows:
+        out.append(
+            {
+                "id": "sec-hook-checkout-shortcircuit",
+                "title": "Protected-branch hook short-circuits on checkout -b substring",
+                "detail": (
+                    "Security specialist (agentic-equivalent): fail-closed protected-"
+                    "branch hook allows when the command string contains "
+                    "`git checkout -b feature/…`, which does not prove HEAD left a "
+                    "protected branch before commit/push."
+                ),
+                "severity": "medium",
+                "confidence": 0.9,
+                "skill": "security-review",
+                "category": "fail-closed-control",
+                "evidence_paths": hook_paths[:5],
+                "suggested_fix": (
+                    "Remove checkout substring short-circuit; decide allow/deny from "
+                    "resolved repo HEAD and push refspecs only."
+                ),
+            }
+        )
+
+    # Class 2b — push path without refspec awareness (when push is handled)
+    handles_push = bool(_PUSH_VERB.search(added))
+    if handles_push and not _REFSPEC_HINT.search(added):
+        out.append(
+            {
+                "id": "sec-hook-push-refspec-gap",
+                "title": "Protected-branch hook ignores push refspecs",
+                "detail": (
+                    "Security specialist (agentic-equivalent): hook mentions git push "
+                    "but added code lacks refspec / HEAD:branch / refs/heads parsing — "
+                    "`git push origin HEAD:main` can mutate protected branches while "
+                    "feature HEAD looks safe."
+                ),
+                "severity": "medium",
+                "confidence": 0.86,
+                "skill": "security-review",
+                "category": "fail-closed-control",
+                "evidence_paths": hook_paths[:5],
+                "suggested_fix": (
+                    "Parse push refspecs and deny destinations that resolve to "
+                    "main/master/develop/release/production."
+                ),
+            }
+        )
+
+    # Class 2c — missing git -C resolution when invoking git
+    if re.search(r"\bgit\b", added, re.I) and not _GIT_C_PARSE.search(added):
+        # Only flag protected-branch style mutation hooks, not every hook with "git"
+        if re.search(
+            r"protected.branch|rev-parse --abbrev-ref|git commit|git push",
+            added,
+            re.I,
+        ):
+            out.append(
+                {
+                    "id": "sec-hook-git-c-gap",
+                    "title": "Protected-branch hook may miss git -C target repo",
+                    "detail": (
+                        "Security specialist (agentic-equivalent): mutation hook uses "
+                        "git but does not parse `git -C <path>`, so "
+                        "`cd other && git -C <protected-repo> commit` can bypass cwd/"
+                        "cd-prefix checks."
+                    ),
+                    "severity": "medium",
+                    "confidence": 0.84,
+                    "skill": "security-review",
+                    "category": "fail-closed-control",
+                    "evidence_paths": hook_paths[:5],
+                    "suggested_fix": (
+                        "Resolve repo from `git -C` (and cd prefix / hook cwd); check "
+                        "that repo's HEAD / refspecs."
+                    ),
+                }
+            )
+
+    return out
+
+
 def emit_security_candidates(
     *,
     detection: dict[str, Any],
     context_pack: dict[str, Any],
 ) -> list[dict[str, Any]]:
-    """Security-review specialist — secrets, authz gaps, fail-open catches."""
+    """Security-review specialist — secrets, authz gaps, fail-open / fail-closed."""
     diff, changed = _diff_and_paths(detection, context_pack)
     out: list[dict[str, Any]] = []
     auth_paths = [p for p in changed if _AUTH_PATH.search(p)]
@@ -105,6 +320,7 @@ def emit_security_candidates(
             }
         )
 
+    out.extend(_emit_fail_closed_hook_candidates(diff=diff, changed=changed))
     return out
 
 

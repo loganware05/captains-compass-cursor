@@ -1,0 +1,21 @@
+{
+  "schema_version": "northstar.intent_pack.v1",
+  "source": "fixture",
+  "title": "Fail-closed hook control-plane review",
+  "status": "DRAFT",
+  "acceptance_criteria": [
+    "Emit medium+ findings for plan-approval self-serve patterns in .cursor/hooks",
+    "Emit medium+ findings for protected-branch refspec / git -C / checkout short-circuit gaps",
+    "Remain hermetic — no Cursor Cloud requirement on default northstar review"
+  ],
+  "non_goals": [
+    "Live Cursor Security Agent ingestion (Phase B)",
+    "Shell redirect forge gate (Phase C)"
+  ],
+  "security_notes": [
+    "Agentic-equivalent hermetic checks for fail-closed control effectiveness"
+  ],
+  "domains": ["security", "hooks", "fail-closed-control"],
+  "excerpt": "Review .cursor/hooks fail-closed control plane (plan-approval + protected-branch).",
+  "captain_approval": false
+}

@@ -14,6 +14,31 @@ detect → investigate → specialist composition → verify → report
 4. **Verify** — confidence + evidence-path gate (discards noise)
 5. **Report** — `.agent/evidence/code-review/<run-id>/{report.json,report.md,context-pack.json}`
 
+## Agentic-equivalent fail-closed checks (M37)
+
+Cursor Agentic Security Review reasons about *control effectiveness* (not only
+secret regexes). NorthStar encodes the PR #7 medium classes as hermetic
+`security-review` specialist candidates when the diff touches `.cursor/hooks/**`
+or `hooks.json`:
+
+| Finding id | Class |
+|---|---|
+| `sec-hook-plan-self-serve` | Plan-approval self-serve via exempt `IMPLEMENTATION_PLAN.md` Write |
+| `sec-hook-checkout-shortcircuit` | Protected-branch `checkout -b feature/` substring allow |
+| `sec-hook-push-refspec-gap` | Push without refspec / `HEAD:main` awareness |
+| `sec-hook-git-c-gap` | Missing `git -C` target-repo resolution |
+
+Fixtures: `tests/fixtures/code-review/hook-*.diff` and
+`intent-security-hooks.json`. Remains hermetic — no Cursor Cloud on the default
+`northstar review` path. Live Security Agent ingestion is Phase B (deferred).
+
+```bash
+# Review a hooks change with the security-hooks intent fixture
+$CONTROL/scripts/northstar review --repo "$(pwd)" \
+  --diff-file path/to.diff \
+  --intent-json $CONTROL/tests/fixtures/code-review/intent-security-hooks.json
+```
+
 ## Intent packs (M29)
 
 Product repos can carry reviewable intent without a hand-written temp plan:

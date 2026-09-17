@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.39.0 — 2026-09-17
+
+### Added
+
+- **M37 / Agentic security review integration (Phase A)** — hermetic
+  `security-review` specialist emits medium fail-closed-control findings for
+  Cursor Agentic Security Review classes from bitcoin-data-collector PR #7:
+  plan-approval self-serve, protected-branch checkout short-circuit, push
+  refspec gaps, missing `git -C`
+- Fixtures: `hook-plan-self-serve.diff`, `hook-protected-branch-bypass.diff`,
+  `intent-security-hooks.json`
+- Tests: `tests/orchestrator/test_m37_agentic_security_review.py`
+- Docs: Code Reviewer + security-review Skill agentic-equivalent section
+- ADR-054
+
+### Deferred
+
+- Phase B: live Cursor Security Agent / `/review-security` ingestion
+- Phase C: shell redirect forge gate for `IMPLEMENTATION_PLAN.md`
+
 ## 1.38.1 — 2026-09-16
 
 ### Fixed
