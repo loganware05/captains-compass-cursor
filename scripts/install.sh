@@ -261,6 +261,29 @@ else
   ensure_gitignore_line ".agent/compass-skip.env"
 fi
 
+# Product checkouts do not contain control scripts/. Rewrite operator docs and
+# Skills that still say "./scripts/…" so agents run them from $CONTROL instead.
+rewrite_control_script_refs() {
+  local root="$1"
+  local f
+  while IFS= read -r -d '' f; do
+    # Only touch files that still use bare ./scripts/ (idempotent).
+    if grep -q '\./scripts/' "$f" 2>/dev/null; then
+      # Prefer portable in-place edit (GNU/BSD sed differ on -i).
+      local tmp
+      tmp="$(mktemp)"
+      sed 's|\./scripts/|$CONTROL/scripts/|g' "$f" > "$tmp"
+      mv "$tmp" "$f"
+    fi
+  done < <(
+    find "$root/.cursor/skills" "$root/.cursor/agents" "$root/.cursor/commands" \
+      "$root/docs/integrations" \
+      -type f \( -name '*.md' -o -name '*.mdc' \) -print0 2>/dev/null || true
+  )
+}
+
+rewrite_control_script_refs "$TARGET"
+
 # Record installed version
 mkdir -p "$TARGET/.agent"
 echo "$VERSION" > "$TARGET/.agent/COMPASS_VERSION"

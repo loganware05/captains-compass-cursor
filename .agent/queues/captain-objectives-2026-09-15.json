@@ -1,7 +1,7 @@
 {
   "kind": "northstar-captain-objective-queue",
   "queued_at": "2026-09-15T18:18:08Z",
-  "updated_at": "2026-09-16T03:52:00Z",
+  "updated_at": "2026-09-16T03:58:00Z",
   "captain": "Logan Ware",
   "captain_utterance": "Add the following objectives to queue, then begin working. Learning Run / routing / B4",
   "approvals": [
@@ -16,13 +16,17 @@
     {
       "at": "2026-09-16T02:29:00Z",
       "text": "I approve IMPLEMENTATION_PLAN.md for c1-single-launcher-ux"
+    },
+    {
+      "at": "2026-09-16T03:55:00Z",
+      "text": "I approve IMPLEMENTATION_PLAN.md for c2-product-repo-install"
     }
   ],
   "first_mate_run_id": "bc-0b8ec108-10ec-4204-a4e4-8bedbf0405fd",
   "objectives": [
     {
       "id": "learning-run",
-      "title": "Learning Run — complete NS-SKILL-003",
+      "title": "Learning Run \u2014 complete NS-SKILL-003",
       "status": "awaiting_retain",
       "linear_parent": "OVA-34",
       "notes": "Experience success; stop for OVA-47"
@@ -32,49 +36,57 @@
       "title": "Agent routing (OVA-45) with M26 wakeability",
       "status": "dispatched",
       "linear_issue": "OVA-45",
-      "depends_on": ["learning-run"]
+      "depends_on": [
+        "learning-run"
+      ]
     },
     {
       "id": "b4-repair-loop",
-      "title": "B4 — Repair loop",
+      "title": "B4 \u2014 Repair loop",
       "status": "shipped",
       "release": "v1.35.0",
       "linear_issue": "OVA-48"
     },
     {
       "id": "b5-precision-ledger",
-      "title": "B5 — Precision ledger",
+      "title": "B5 \u2014 Precision ledger",
       "status": "shipped",
       "release": "v1.36.0",
       "linear_issue": "OVA-49"
     },
     {
       "id": "c1-single-launcher-ux",
-      "title": "C1 — Single launcher UX",
+      "title": "C1 \u2014 Single launcher UX",
       "status": "shipped",
       "plan_id": "c1-single-launcher-ux",
       "roadmap": "C1",
       "milestone": "M34",
       "release": "v1.37.0",
-      "prs": [162, 163],
+      "prs": [
+        162,
+        163
+      ],
       "linear_issue": "OVA-50",
       "github_issue": 161
     },
     {
       "id": "c2-product-repo-install",
-      "title": "C2 — Product-repo install",
-      "status": "awaiting_approval",
+      "title": "C2 \u2014 Product-repo install",
+      "status": "implementing",
       "plan_id": "c2-product-repo-install",
       "plan_path": "IMPLEMENTATION_PLAN.md",
       "long_form_path": "docs/plans/C2_PRODUCT_REPO_INSTALL.md",
-      "depends_on": ["c1-single-launcher-ux"],
+      "depends_on": [
+        "c1-single-launcher-ux"
+      ],
       "roadmap": "C2",
       "milestone": "M35",
       "proposed_release": "v1.38.0",
       "target_product": "loganware05/bitcoin-data-collector",
-      "notes": "Plan only; no product implementation until Captain approval",
+      "notes": "Local install OK; product push 403; patch in evidence for Captain",
       "linear_issue": "OVA-51",
-      "github_issue": 164
+      "github_issue": 164,
+      "branch": "cursor/m35-c2-product-repo-install-3b10"
     }
   ],
   "completed_related": [
@@ -87,7 +99,10 @@
       "id": "m34-c1-single-launcher-ux",
       "status": "shipped",
       "release": "v1.37.0",
-      "prs": [162, 163]
+      "prs": [
+        162,
+        163
+      ]
     }
   ],
   "invariants": {

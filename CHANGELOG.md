@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.38.0 — 2026-09-16
+
+### Added
+
+- **M35 / C2 Product-repo install** — NorthStar install into
+  `bitcoin-data-collector` proven locally (no control `scripts/` copy)
+- `install.sh` rewrites bare `./scripts/` → `$CONTROL/scripts/` in product
+  Skills/agents/commands/integrations after copy
+- Product INDEX learn example uses `--repo "$(pwd)"`
+- Evidence: `.agent/evidence/c2-product-repo-install/` (scrubbed install log,
+  SHA-aligned inventory + patch for Captain push — bot lacks write access)
+- ADR-052
+
+### Locks (unchanged)
+
+- Control `scripts/` never copied into product repos
+- Product memory docs skip-if-exists
+- Linear is flight recorder only
+- Skill slug remains `code-reviewer`
+
 ## 1.37.0 — 2026-09-16
 
 ### Added

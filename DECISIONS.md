@@ -1,5 +1,28 @@
 # Decisions
 
+## ADR-052: Product-repo install for bitcoin-data-collector (M35 / C2)
+
+- **Status:** Accepted
+- **Date:** 2026-09-16
+- **Context:** C1 clarified the install boundary. Roadmap C2 asks for NorthStar
+  docs/Skills in `bitcoin-data-collector` without control scripts, preserving
+  memory docs.
+- **Decision:**
+  1. Run control `scripts/install.sh` against `bitcoin-data-collector` on a
+     dedicated branch from `cursor/kalshi-live-decision-system`.
+  2. Never copy control `scripts/`; preserve existing Cloud Agent
+     `.cursor/install.sh` / `environment.json`.
+  3. After copy, rewrite bare `./scripts/` → `$CONTROL/scripts/` in installed
+     Skills/agents/commands/integrations so product checkouts do not teach
+     missing local CLIs.
+  4. Record inventory + `git format-patch` evidence under
+     `.agent/evidence/c2-product-repo-install/` (scrubbed install log; SHA-aligned).
+  5. When the Cloud Agent cannot push the product repo (403), ship the patch +
+     APPLY instructions in control evidence for Captain to open the product PR.
+- **Consequences:** Product install is reproducible from control. Full C2 exit
+  (merged product PR) may require Captain push or write access grant. Status
+  stays **PARTIAL** until the product PR exists.
+
 ## ADR-051: Single launcher UX (M34 / C1)
 
 - **Status:** Accepted

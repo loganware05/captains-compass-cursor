@@ -123,6 +123,27 @@ class InstallBoundaryTests(unittest.TestCase):
             for target in _relative_md_targets(installed):
                 path = (docs_root / target).resolve()
                 self.assertTrue(path.is_file(), f"broken product INDEX link after install: {target}")
+            self.assertNotIn("/path/to/sandbox", installed)
+            self.assertIn('--repo "$(pwd)"', installed)
+            # Install must not teach bare ./scripts/ in product-facing Skills/docs
+            bare = []
+            for path in product.rglob("*"):
+                if not path.is_file():
+                    continue
+                if path.suffix not in {".md", ".mdc"}:
+                    continue
+                rel = path.relative_to(product).as_posix()
+                if not (
+                    rel.startswith(".cursor/skills/")
+                    or rel.startswith(".cursor/agents/")
+                    or rel.startswith(".cursor/commands/")
+                    or rel.startswith("docs/integrations/")
+                ):
+                    continue
+                text = path.read_text(encoding="utf-8")
+                if "./scripts/" in text:
+                    bare.append(rel)
+            self.assertEqual(bare, [], f"bare ./scripts/ left in product install: {bare}")
 
 
 if __name__ == "__main__":

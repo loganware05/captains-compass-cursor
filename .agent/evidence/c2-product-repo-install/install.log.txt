@@ -1,0 +1,35 @@
+added: AGENTS.md
+added: PROJECT_CONTEXT.md
+added: IMPLEMENTATION_PLAN.md
+added: INTENT_PACK.md
+added: DECISIONS.md
+added: PROGRESS.md
+added: TESTING.md
+added: CHANGELOG.md
+added: .agent/review/github-allowlist.yml
+added: CLAUDE.md
+added: docs/EVIDENCE_MATRIX.md
+added: docs/INDEX.md
+added: docs/integrations/code-reviewer.md
+added: docs/integrations/multi-runtime-agents.md
+added: docs/integrations/technology-intelligence.md
+
+NorthStar / Captain's Compass v1.38.0 installed into:
+  $PRODUCT
+
+Next steps:
+  1. Fill in PROJECT_CONTEXT.md for this product.
+  2. Open the repository in Cursor.
+  3. Ask the First Mate to follow AGENTS.md for your next change.
+  4. Expect IMPLEMENTATION_PLAN.md to reach AWAITING APPROVAL before product code changes.
+  5. Run Learning Loop / Code Reviewer from the CONTROL repo:
+       <control>/scripts/northstar help
+       <control>/scripts/northstar review --repo $PRODUCT
+
+Control scripts/ were NOT copied (by design). See docs/INDEX.md.
+
+Do not install into critical production repos until you have validated the workflow in a disposable sandbox.
+
+Note: --force refreshes .cursor rules/skills/agents/hooks but does not overwrite existing
+product memory docs (PROJECT_CONTEXT.md, IMPLEMENTATION_PLAN.md, INTENT_PACK.md, etc.).
+Intent packs (M29) are review evidence only and never originate Captain approval.

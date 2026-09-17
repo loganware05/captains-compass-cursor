@@ -12,7 +12,7 @@ Control repository: https://github.com/loganware05/captains-compass-cursor
 CONTROL=/path/to/captains-compass-cursor
 $CONTROL/scripts/northstar help
 $CONTROL/scripts/northstar review --repo "$(pwd)"
-$CONTROL/scripts/northstar skills learn --repo /path/to/sandbox --objective "…"
+$CONTROL/scripts/northstar skills learn --repo "$(pwd)" --objective "…"
 ```
 
 ## Surfaces (`northstar …` in control)
