@@ -196,8 +196,8 @@ Why this order: **merge → use on a real repo → learn a Skill that helps that
 8. ~~**M34 / C1** — Single launcher UX~~ (shipped v1.37.0)
 9. ~~**M35 / C2** — Product-repo install~~ (shipped v1.38.0)
 10. ~~**M36 / M37** — Hook hardening + agentic-equivalent detectors~~ (v1.38.1 / v1.39.0)
-11. **M38** — Shell forge gate (`m38-shell-forge-gate`) — AWAITING APPROVAL
-12. **M39** — Live Agentic Security ingest (`m39-agentic-security-phase-b`) — AWAITING APPROVAL
+11. ~~**M38** — Shell forge gate (`m38-shell-forge-gate`)~~ — landed #173 (v1.39.1); opaque residual → #174 (v1.40.1)
+12. ~~**M39** — Live Agentic Security ingest (`m39-agentic-security-phase-b`)~~ — landed #175 (v1.40.0); this PR (#176) is conflict closeout
 13. **C3** — Connected routine
 
 ---
