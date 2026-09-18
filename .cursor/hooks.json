@@ -11,6 +11,10 @@
         "failClosed": true
       },
       {
+        "command": ".cursor/hooks/plan-approval-check.sh",
+        "failClosed": true
+      },
+      {
         "command": ".cursor/hooks/branch-name-validation.sh",
         "failClosed": false
       },

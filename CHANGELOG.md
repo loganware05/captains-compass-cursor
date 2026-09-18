@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.39.1 — 2026-09-18
+
+### Fixed
+
+- **M38 / Shell forge gate** — `plan-approval-check` also runs on
+  `beforeShellExecution` and denies redirects/`tee`/`cp` that promote
+  `IMPLEMENTATION_PLAN.md` Status without `COMPASS_CAPTAIN_APPROVE=1`
+- Hermetic tests: `tests/orchestrator/test_m38_shell_forge_gate.py`
+- ADR-055; product refresh note under `.agent/evidence/m38-shell-forge-gate/`
+
 ## 1.39.0 — 2026-09-17
 
 ### Added
@@ -17,8 +27,8 @@
 
 ### Deferred
 
-- Phase B: live Cursor Security Agent / `/review-security` ingestion
-- Phase C: shell redirect forge gate for `IMPLEMENTATION_PLAN.md`
+- Phase B: live Cursor Security Agent / `/review-security` ingestion (M39)
+- ~~Phase C: shell redirect forge gate~~ → **M38 / v1.39.1**
 
 ## 1.38.1 — 2026-09-16
 

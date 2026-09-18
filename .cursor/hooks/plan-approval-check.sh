@@ -71,6 +71,58 @@ def tool_payload(d: dict) -> str:
     return ""
 
 
+def shell_command(d: dict) -> str:
+    return str(
+        d.get("command")
+        or d.get("cmd")
+        or (d.get("tool_input") or {}).get("command")
+        or (d.get("input") or {}).get("command")
+        or ""
+    )
+
+
+_PLAN_FILE = r"IMPLEMENTATION_PLAN\.md"
+# Redirects / tee / dd / cp that target the plan file.
+_FORGE_WRITE = re.compile(
+    rf"(?:>>|>)\s*[\"']?(?:\./)?{_PLAN_FILE}\b"
+    rf"|(?:\btee(?:\s+-a)?\s+[\"']?(?:\./)?{_PLAN_FILE}\b)"
+    rf"|(?:\bof=[\"']?(?:\./)?{_PLAN_FILE}\b)"
+    rf"|(?:\b(?:cp|mv|install)\b[^\n;|&]{{0,160}}[\"']?(?:\./)?{_PLAN_FILE}\b)"
+    rf"|(?:\b(?:cat|printf|echo|sed|awk|sponge)\b[^\n;|&]{{0,200}}(?:>>|>)\s*[\"']?(?:\./)?{_PLAN_FILE}\b)",
+    re.I,
+)
+_PROMOTE = re.compile(
+    r"(?i)(\|\s*Status\s*\|\s*(APPROVED|IN PROGRESS|VALIDATING|COMPLETE)\s*\|"
+    r"|Status:\s*(APPROVED|IN PROGRESS|VALIDATING|COMPLETE)"
+    r"|\b(APPROVED|IN PROGRESS|VALIDATING|COMPLETE)\b)",
+)
+
+
+def shell_forges_plan(cmd: str) -> bool:
+    if not cmd or not re.search(_PLAN_FILE, cmd, re.I):
+        return False
+    if _FORGE_WRITE.search(cmd):
+        return True
+    if re.search(
+        rf"(?:<<|<<-)\s*\S+[^\n]*\n[^\0]{{0,4000}}(?:>>|>)\s*[\"']?(?:\./)?{_PLAN_FILE}\b"
+        rf"|(?:<<|<<-)\s*\S+.*?(?:>>|>)\s*[\"']?(?:\./)?{_PLAN_FILE}\b",
+        cmd,
+        re.I | re.S,
+    ):
+        return True
+    if re.search(
+        rf"(?:open|Path\(|write_text|write\()\s*\([^\)]*{_PLAN_FILE}",
+        cmd,
+        re.I,
+    ):
+        return True
+    return False
+
+
+def shell_promotes(cmd: str) -> bool:
+    return bool(_PROMOTE.search(cmd))
+
+
 def parse_status(text: str) -> str:
     # Prefer metadata table: | Status | VALUE |
     m = re.search(
@@ -149,7 +201,24 @@ def current_branch() -> str:
 
 
 d = load()
+cmd = shell_command(d)
 path = tool_path(d)
+
+# M38 — beforeShellExecution: deny shell forges that promote plan Status
+# without Captain. Non-promoting plan shell edits are allowed.
+if cmd and shell_forges_plan(cmd):
+    captain = os.environ.get("COMPASS_CAPTAIN_APPROVE", "") == "1"
+    if captain:
+        allow()
+    if shell_promotes(cmd):
+        deny(
+            "Plan-approval hook: refusing shell forge that promotes "
+            "IMPLEMENTATION_PLAN.md Status (APPROVED/IN PROGRESS/VALIDATING/"
+            "COMPLETE). Captain must set COMPASS_CAPTAIN_APPROVE=1 "
+            "(M38 shell forge gate)."
+        )
+    allow()
+
 if not path:
     allow()
 
