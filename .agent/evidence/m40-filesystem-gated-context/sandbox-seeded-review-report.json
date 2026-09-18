@@ -1,0 +1,93 @@
+{
+  "base_ref": "",
+  "context_pack_path": ".agent/evidence/code-review/m40-sandbox-seeded/context-pack.json",
+  "created_at": "2026-09-18T21:30:04Z",
+  "findings": [
+    {
+      "category": "boundary",
+      "confidence": 0.9,
+      "detail": "`src/components/FormIssuesSummary.tsx` imports `purgeFormIssues` from `src/lib/formAnalytics.ts`, but the callee inode exports only ['FormIssue', 'countFormIssues', 'summarizeFormIssues']. Interface drift across the `src/components` \u2192 `src/lib` boundary.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "src/components/FormIssuesSummary.tsx",
+        "src/lib/formAnalytics.ts"
+      ],
+      "id": "boundary-unknown-symbol-src/components/FormIssuesSummary.tsx-purgeFormIssues",
+      "severity": "high",
+      "skill": "code-reviewer",
+      "status": "verified",
+      "suggested_fix": "Import an exported symbol from `src/lib/formAnalytics.ts` or add `purgeFormIssues` to its exports.",
+      "title": "Cross-boundary import of unknown symbol `purgeFormIssues`"
+    },
+    {
+      "category": "boundary",
+      "confidence": 0.85,
+      "detail": "Added call `const empty = summarizeFormIssues()` passes 0 argument(s); `src/lib/formAnalytics.ts` declares `summarizeFormIssues(errors: ContactFormErrors): FormIssue[]` (1 required / 1 total).",
+      "discard_reason": "",
+      "evidence_paths": [
+        "src/components/FormIssuesSummary.tsx",
+        "src/lib/formAnalytics.ts"
+      ],
+      "id": "boundary-arity-src/components/FormIssuesSummary.tsx-summarizeFormIssues",
+      "severity": "medium",
+      "skill": "code-reviewer",
+      "status": "verified",
+      "suggested_fix": "Align the call with the declared signature in `src/lib/formAnalytics.ts`.",
+      "title": "Cross-boundary call arity mismatch: `summarizeFormIssues`"
+    },
+    {
+      "category": "boundary",
+      "confidence": 0.8,
+      "detail": "Added call `const recheck = summarizeFormIssues(errors)` invokes `summarizeFormIssues` (declared O(N) in `src/lib/formAnalytics.ts`) inside a loop, giving effective O(N\u00d7N) \u2014 e.g. O(N) callee \u21d2 O(N^2) total.",
+      "discard_reason": "",
+      "evidence_paths": [
+        "src/components/FormIssuesSummary.tsx",
+        "src/lib/formAnalytics.ts"
+      ],
+      "id": "boundary-complexity-src/components/FormIssuesSummary.tsx-summarizeFormIssues",
+      "severity": "medium",
+      "skill": "code-reviewer",
+      "status": "verified",
+      "suggested_fix": "Hoist the call out of the loop, batch the input, or renegotiate the callee's declared complexity.",
+      "title": "Complexity amplification across boundary: `summarizeFormIssues` declared O(N)"
+    }
+  ],
+  "head_ref": "HEAD",
+  "plan_id": "m30-github-draft-reviews",
+  "provenance": {
+    "boundary": {
+      "candidates": 3,
+      "enabled": true,
+      "notes": [
+        "boundary check: 1 changed file(s) checked against inode store"
+      ]
+    },
+    "candidates_source": "fixtures+boundary",
+    "github_review_posted": false,
+    "hermetic": true,
+    "invoke_model": false,
+    "pipeline": "northstar.review.v1"
+  },
+  "repository": "/agent/repos/captain-compass-sandbox",
+  "run_id": "m40-sandbox-seeded",
+  "schema_version": "northstar.code_review_report.v1",
+  "status": "completed",
+  "summary": {
+    "discarded": 0,
+    "domains": [
+      "react",
+      "typescript"
+    ],
+    "findings_total": 3,
+    "intent_artifact": "/agent/repos/captain-compass-sandbox/IMPLEMENTATION_PLAN.md",
+    "skills_invoked": [
+      "code-reviewer",
+      "accessibility-review",
+      "testing-validation",
+      "adversarial-reviewer",
+      "review-fix-loop"
+    ],
+    "unverified": 0,
+    "verified": 3
+  }
+}
