@@ -3,10 +3,11 @@
 ## ADR-054: Agentic-equivalent fail-closed checks in Code Reviewer (M37)
 
 - **Status:** Accepted
-- **Date:** 2026-09-17
+- **Date:** 2026-09-18
 - **Context:** Cursor Agentic Security Review caught fail-closed hook bypasses
   that NorthStar’s hermetic security specialist missed (pattern-only secrets/
-  auth checks). Captain approved `agentic-security-review-integration` Phase A.
+  auth checks). Captain approved `agentic-security-review-integration` Phase A
+  (2026-09-18; Linear OVA-52).
 - **Decision:**
   1. Extend `emit_security_candidates` with control-plane detectors for diffs
      touching `.cursor/hooks/**` / `hooks.json`.
