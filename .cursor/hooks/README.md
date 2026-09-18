@@ -12,9 +12,9 @@ Configured in `.cursor/hooks.json` (`beforeShellExecution` + `preToolUse`):
    Status is read from the metadata table (`| Status | … |`) or `- Status:` lines;
    `Approved by` + `Approval date` must be real (not empty / TBD). Working-tree-only
    approval does not unlock product files.
-   **M38:** also runs on `beforeShellExecution` and denies redirects/`tee`/`cp`
-   that forge a promoting Status into `IMPLEMENTATION_PLAN.md` unless
-   `COMPASS_CAPTAIN_APPROVE=1`. Non-promoting plan shell edits are allowed.
+   **M38:** also runs on `beforeShellExecution` and denies **any** shell write
+   to `IMPLEMENTATION_PLAN.md` (redirects/`tee`/`cp`/opaque `cat >`) unless
+   `COMPASS_CAPTAIN_APPROVE=1`. Bare reads (`cat`/`grep`) remain allowed.
 4. **branch-name-validation** — require `feature|fix|chore|docs|agent|hotfix/<name>` (fail-open)
 5. **pre-commit-formatting** — run `npm run format` or `lint` before commit when present (`COMPASS_SKIP_FORMAT=1`) (fail-open)
 6. **pre-push-tests** — run `npm test` before push when present (`COMPASS_SKIP_TESTS=1`) (fail-open)

@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.40.1 — 2026-09-18
+
+### Fixed
+
+- **M38 residual / opaque shell forge** — `plan-approval-check` now **fail-closes**
+  all shell writes to `IMPLEMENTATION_PLAN.md` without `COMPASS_CAPTAIN_APPROVE=1`,
+  including opaque redirects (`cat file > IMPLEMENTATION_PLAN.md`) that lack
+  promote tokens in the command line (closes ADR-055 residual left by #173)
+- Hermetic tests extended in `tests/orchestrator/test_m38_shell_forge_gate.py`
+- Bare plan reads (`cat`/`grep`) remain allowed
+
 ## 1.40.0 — 2026-09-18
 
 ### Added
