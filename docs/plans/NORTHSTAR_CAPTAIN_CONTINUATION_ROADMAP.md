@@ -107,7 +107,7 @@ The Captain’s job is to **wire them together** so review outcomes improve Skil
 | Phase | Goal | Concrete next actions |
 |---|---|---|
 | **C1 — Single launcher UX** | `northstar skills …` and `northstar review …` feel like one product | Help text, docs index, install path into product repos — **shipped v1.37.0** |
-| **C2 — Product-repo install** | bitcoin-data-collector (and others) get NorthStar docs/Skills without control scripts | `install.sh` into product; memory docs preserved — **implementing M35 / v1.38.0** (product PR pending Captain push) |
+| **C2 — Product-repo install** | bitcoin-data-collector (and others) get NorthStar docs/Skills without control scripts | `install.sh` into product; memory docs preserved — **shipped v1.38.0** (control #166, product #7) |
 | **C3 — Connected routine** | Issue→plan→approve→dispatch→review→ledger | Extend ingress carefully; PR events only after B3 plan |
 | **C4 — Eval harness** | Golden diffs with known defects | Fixture repos; measure precision/recall of reviewer |
 
@@ -194,7 +194,11 @@ Why this order: **merge → use on a real repo → learn a Skill that helps that
 6. ~~**M32 / B4** — Repair loop packet MVP~~ (shipped v1.35.0)
 7. ~~**M33 / B5** — Precision ledger~~ (shipped v1.36.0) — **Track B complete**
 8. ~~**M34 / C1** — Single launcher UX~~ (shipped v1.37.0)
-9. **M35 / C2** — Product-repo install (`c2-product-repo-install`) — **implementing / v1.38.0** (product PR pending Captain push)
+9. ~~**M35 / C2** — Product-repo install~~ (shipped v1.38.0)
+10. ~~**M36 / M37** — Hook hardening + agentic-equivalent detectors~~ (v1.38.1 / v1.39.0)
+11. **M38** — Shell forge gate (`m38-shell-forge-gate`) — AWAITING APPROVAL
+12. **M39** — Live Agentic Security ingest (`m39-agentic-security-phase-b`) — AWAITING APPROVAL
+13. **C3** — Connected routine
 
 ---
 

@@ -7,7 +7,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **PARTIAL** (control evidence / v1.38.0 ready; product PR pending Captain push) |
+| Status | **SHIPPED** (v1.38.0 — control #166 + bitcoin-data-collector #7) |
 | Plan ID | `c2-product-repo-install` |
 | Supersedes | `c1-single-launcher-ux` (CLOSED — shipped as v1.37.0 / M34 / C1) |
 | Product | **NorthStar** (Captain's Compass compatibility alias) |
