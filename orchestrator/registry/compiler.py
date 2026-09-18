@@ -151,6 +151,20 @@ def compile_registry(repo_root: Path) -> CompileResult:
             provenance["skill_inode"] = skill_inode_id_for(content_hash)
         skills.append(capability)
 
+    # Drift visibility: skill directories on disk that are not registered in
+    # SKILL_SLUGS never enter the compiled registry (pre-existing gap for
+    # code-reviewer / northstar-connected-routine — see PROGRESS follow-ups).
+    skills_root = repo_root / ".cursor" / "skills"
+    if skills_root.is_dir():
+        for path in sorted(skills_root.iterdir()):
+            if (
+                path.is_dir()
+                and path.name != "inodes"
+                and (path / "SKILL.md").is_file()
+                and path.name not in SKILL_SLUGS
+            ):
+                warnings.append(f"skill dir not registered in SKILL_SLUGS: {path.name}")
+
     profiles: list[dict] = []
     seen_profile_ids: set[str] = set()
     for profile_id in AGENT_PROFILES:

@@ -53,7 +53,20 @@ def load_schema(name: str) -> dict[str, Any]:
 
 
 def validate(instance: Any, schema: dict[str, Any], *, path: str = "$") -> None:
-    """Validate instance against a JSON Schema subset (types, required, enum, const)."""
+    """Validate instance against a JSON Schema subset (types, required, enum, const, anyOf)."""
+    if "anyOf" in schema:
+        errors = []
+        for branch in schema["anyOf"]:
+            try:
+                validate(instance, branch, path=path)
+                break
+            except ValidationError as exc:
+                errors.append(str(exc))
+        else:
+            raise ValidationError(
+                f"{path}: no anyOf branch matched ({'; '.join(errors[:3])})"
+            )
+
     schema_type = schema.get("type")
     if schema_type is not None:
         _check_type(instance, schema_type, path)

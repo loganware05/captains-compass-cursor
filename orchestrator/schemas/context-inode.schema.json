@@ -52,7 +52,7 @@
           "name": { "type": "string", "minLength": 1 },
           "kind": {
             "type": "string",
-            "enum": ["interface", "type", "function", "class", "const", "method"]
+            "enum": ["interface", "type", "function", "class", "const", "method", "reexport"]
           },
           "exported": { "type": "boolean" },
           "signature": { "type": "string" },

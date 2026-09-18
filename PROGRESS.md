@@ -16,9 +16,10 @@ Architecture (Captain-approved 2026-09-18).
 
 ## In flight
 
-- M40 WS1–WS7 implemented; validation green (doctor 0/0, suite 125, orchestrator
-  432, evals 44); sandbox boundary precision **1.0** (3/3 seeded detected, 0 FP
-  on clean change); payload reduction 52% on fixture corpus
+- M40 WS1–WS7 implemented + adversarial remediation (H1–M13 fixed; 26
+  regression tests); validation green (suite 125, orchestrator 458, evals 43);
+  sandbox boundary precision **1.0** (3/3 seeded detected, 0 FP on clean
+  change); payload reduction 52% on fixture corpus
 - Remaining: Captain review of PR #177 / sandbox #59, merge, tag **v1.41.0**
 - Carry-over pending Captain: `capability-planning`, `code-reviewer`,
   `skill-lifecycle` skill inodes (edited in M40) — approve via

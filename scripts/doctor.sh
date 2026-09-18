@@ -276,6 +276,24 @@ if [[ -d "$ROOT/templates/docs" ]]; then
       else
         fail "skill inodes stale — rerun scripts/build-skill-inodes.sh"
       fi
+      pending="$(PYTHONPATH="$ROOT" python3 - "$ROOT" <<'PY'
+import json, sys
+from pathlib import Path
+idx = Path(sys.argv[1]) / ".cursor" / "skills" / "inodes" / "index.json"
+if idx.is_file():
+    data = json.loads(idx.read_text(encoding="utf-8"))
+    pending = [
+        slug for slug, entry in sorted((data.get("skills") or {}).items())
+        if (entry.get("reputation") or {}).get("carry_over_from")
+        and not (entry.get("reputation") or {}).get("captain_approved")
+    ]
+    if pending:
+        print(",".join(pending))
+PY
+)"
+      if [[ -n "$pending" ]]; then
+        warn "skill inode carry-over pending Captain approval: $pending"
+      fi
     fi
   else
     fail "missing scripts/build-skill-inodes.sh"

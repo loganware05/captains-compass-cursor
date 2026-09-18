@@ -1,12 +1,12 @@
 {
   "base_ref": "",
   "context_pack_path": ".agent/evidence/code-review/m40-sandbox-seeded/context-pack.json",
-  "created_at": "2026-09-18T21:30:04Z",
+  "created_at": "2026-09-18T21:56:58Z",
   "findings": [
     {
       "category": "boundary",
       "confidence": 0.9,
-      "detail": "`src/components/FormIssuesSummary.tsx` imports `purgeFormIssues` from `src/lib/formAnalytics.ts`, but the callee inode exports only ['FormIssue', 'countFormIssues', 'summarizeFormIssues']. Interface drift across the `src/components` \u2192 `src/lib` boundary.",
+      "detail": "`src/components/FormIssuesSummary.tsx` imports `purgeFormIssues` from `src/lib/formAnalytics.ts`, but the callee exports only ['FormIssue', 'countFormIssues', 'summarizeFormIssues']. Interface drift across the `src/components` \u2192 `src/lib` boundary.",
       "discard_reason": "",
       "evidence_paths": [
         "src/components/FormIssuesSummary.tsx",
@@ -59,7 +59,7 @@
       "candidates": 3,
       "enabled": true,
       "notes": [
-        "boundary check: 1 changed file(s) checked against inode store"
+        "boundary check: 2 file(s) checked against inode store"
       ]
     },
     "candidates_source": "fixtures+boundary",

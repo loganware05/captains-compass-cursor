@@ -16,8 +16,11 @@ carry-over to the new inode defaults to NOT approved.
 Options:
   --repo-root PATH     Repository (default: control repo root)
   --check              Do not write; fail (exit 1) when inodes are stale/missing
-  --captain-approved   Approve reputation carry-over for Skills whose content
-                       changed since the last indexed inode (Captain gate)
+  --captain-approved [SLUG ...]
+                       Approve reputation carry-over for Skills whose content
+                       changed since the last indexed inode (Captain gate).
+                       Bare flag approves all changed Skills; with SLUGs,
+                       approval is scoped to those Skills only.
   -h, --help           Show help
 USAGE
 }
@@ -25,6 +28,7 @@ USAGE
 REPO_ROOT="$ROOT"
 CHECK=0
 CAPTAIN_APPROVED=0
+APPROVED_SLUGS=()
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -39,6 +43,11 @@ while [[ $# -gt 0 ]]; do
     --captain-approved)
       CAPTAIN_APPROVED=1
       shift
+      # Optional per-slug scoping: consume following non-flag args as slugs.
+      while [[ $# -gt 0 && "$1" != -* ]]; do
+        APPROVED_SLUGS+=("$1")
+        shift
+      done
       ;;
     -h|--help)
       usage
@@ -52,7 +61,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-PYTHONPATH="$ROOT" python3 - "$REPO_ROOT" "$CHECK" "$CAPTAIN_APPROVED" <<'PY'
+PYTHONPATH="$ROOT" python3 - "$REPO_ROOT" "$CHECK" "$CAPTAIN_APPROVED" "${APPROVED_SLUGS[@]+"${APPROVED_SLUGS[@]}"}" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -62,6 +71,7 @@ from orchestrator.registry.inodes import build_skill_inode_index, verify_skill_i
 repo_root = Path(sys.argv[1]).resolve()
 check = sys.argv[2] == "1"
 captain_approved = sys.argv[3] == "1"
+approved_slugs = [slug for slug in sys.argv[4:] if slug]
 
 if check:
     problems = verify_skill_inodes(repo_root)
@@ -71,7 +81,11 @@ if check:
     print(json.dumps({"ok": True, "problems": []}, indent=2))
     sys.exit(0)
 
-result = build_skill_inode_index(repo_root, captain_approved=captain_approved)
+result = build_skill_inode_index(
+    repo_root,
+    captain_approved=captain_approved and not approved_slugs,
+    captain_approved_slugs=approved_slugs or None,
+)
 index = result["index"]
 changed_pending = [
     slug

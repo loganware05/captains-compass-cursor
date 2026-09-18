@@ -158,7 +158,7 @@ def run_code_review(
     # M40: cross-boundary verification gate — validates calls crossing context
     # boundaries against metadata inodes. Skips with an explicit note when the
     # inode store is absent or stale (never reviews against untrusted metadata).
-    boundary_meta: dict[str, Any] = {"enabled": bool(boundary_check), "notes": []}
+    boundary_meta: dict[str, Any] = {"enabled": bool(boundary_check), "notes": [], "candidates": 0}
     if boundary_check:
         from orchestrator.review.boundary import emit_boundary_candidates
 

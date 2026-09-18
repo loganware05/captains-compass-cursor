@@ -54,6 +54,12 @@ def derive_context_tree(
     index = load_index(repo_root, store_dir=store_dir)
     base = Path(store_dir) if store_dir else repo_root / DEFAULT_STORE_DIR
     context_root = Path(output_dir) if output_dir else repo_root / DEFAULT_CONTEXT_ROOT
+    # The tree is fully derived — clear stale nodes from prior builds first so
+    # deleted modules stop resolving (GC; the tree is regenerated wholesale).
+    if context_root.is_dir():
+        import shutil
+
+        shutil.rmtree(context_root)
     context_root.mkdir(parents=True, exist_ok=True)
 
     exports_by_inode: dict[str, list[str]] = {}
@@ -124,12 +130,17 @@ def walk_route(
 
     Stops at the first segment that has no node — ``resolved`` is then false
     and ``failed_segment`` names the missing segment, mirroring ENOENT.
+    Segments are confined to the context root: empty/dot/traversal segments
+    are rejected before any filesystem access.
     """
     repo_root = Path(repo_root)
-    base = Path(context_root) if context_root else repo_root / DEFAULT_CONTEXT_ROOT
+    base = (Path(context_root) if context_root else repo_root / DEFAULT_CONTEXT_ROOT).resolve()
     segments = [segment for segment in route.strip("/").split("/") if segment]
     if not segments:
         raise ContextWalkError("route must contain at least one segment")
+    for segment in segments:
+        if segment in {".", ".."} or "/" in segment or "\\" in segment:
+            raise ContextWalkError(f"unsafe route segment: {segment!r}")
 
     steps: list[dict[str, Any]] = []
     resolved = True
@@ -137,8 +148,10 @@ def walk_route(
     terminal_node: dict[str, Any] | None = None
     current = base
     for segment in segments:
-        node_path = current / segment / NODE_FILENAME
-        if not node_path.is_file():
+        node_path = (current / segment / NODE_FILENAME).resolve()
+        if base not in node_path.parents:
+            raise ContextWalkError(f"route escapes context root at segment: {segment!r}")
+        if not node_path.is_file() or node_path.is_symlink():
             resolved = False
             failed_segment = segment
             steps.append({"segment": segment, "found": False})

@@ -100,7 +100,7 @@ class BoundaryEmitterTests(unittest.TestCase):
             for candidate in candidates:
                 self.assertEqual(candidate["category"], "boundary")
                 self.assertEqual(len(candidate["evidence_paths"]), 2)
-            self.assertIn("1 changed file(s) checked", notes[-1])
+            self.assertIn("1 file(s) checked", notes[-1])
 
     def test_clean_diff_yields_zero_candidates(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

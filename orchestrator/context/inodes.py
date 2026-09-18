@@ -96,6 +96,8 @@ def iter_source_files(
     repo_root = Path(repo_root)
     collected: list[str] = []
     for path in repo_root.rglob("*"):
+        if path.is_symlink():
+            continue  # never follow links out of the repo into the store
         if not path.is_file():
             continue
         rel = path.relative_to(repo_root)
@@ -145,6 +147,13 @@ def build_store(
         with out_path.open("w", encoding="utf-8") as handle:
             json.dump(inode, handle, indent=2, sort_keys=True)
             handle.write("\n")
+
+    # GC: remove inode files no longer referenced by the new index.
+    for orphan in store_dir.glob("*.json"):
+        if orphan.name == INDEX_FILENAME:
+            continue
+        if orphan.stem not in inodes_by_hash:
+            orphan.unlink()
 
     index = {
         "store_version": INODE_STORE_VERSION,

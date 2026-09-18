@@ -8,10 +8,49 @@ Sandbox: `captain-compass-sandbox` branch `cursor/m40-filesystem-gated-context-e
 
 | Check | Result |
 |---|---|
-| `./scripts/doctor.sh` | 0 errors, 0 warnings (incl. new skill-inode freshness + schema checks) |
+| `./scripts/doctor.sh` | 0 errors, 1 intended warning (skill-inode carry-over pending Captain approval for the 3 M40-edited Skills — visibility per design) |
 | `./tests/run.sh` | 125 passed, 0 failed |
-| Orchestrator unit tests | 432 passed (`test_m40_*`: 35 tests across inodes/walker, skill inodes, dependency graph, boundary gate, manifest pwd) |
+| Orchestrator unit tests | 458 passed (`test_m40_*`: 74 — inodes/walker, skill inodes, dependency graph, boundary gate, manifest pwd, adversarial regression) |
 | `./tests/evals/run.sh` | 43 passed, 0 failed (incl. M40 sensor block) |
+
+## Adversarial review remediation (agent bc-26d74938, 2026-09-18)
+
+The initial implementation passed all tests but the adversarial reviewer
+proved the fixture corpus was too narrow to expose real defects. Fixed and
+pinned by `tests/orchestrator/test_m40_adversarial_regression.py` (26 tests):
+
+- **H1** TS extractor: generics, `export default`, one-liner bodies, classes,
+  named re-exports, multi-line imports now extracted
+- **H2** arity: quote/depth-aware param splitting; variadic (`...rest`,
+  `*args`) skips the upper-bound check
+- **H3** multi-line calls: logical-line joining by paren depth; trailing
+  commas counted correctly
+- **H4** loops: `.forEach/.map/.filter/.reduce` and single-line `for` detected;
+  calls on loop-header lines count as in-loop
+- **H5** both directions checked: changed importers AND unchanged importers of
+  changed callees; new files checked via added import lines
+- **H6** effective exports = store − removed + added diff symbols (correct in
+  store=base and store=head modes)
+- **M7** context tree + inode store garbage-collect (deleted modules stop
+  resolving; orphan inodes removed)
+- **M8** route segments sanitized; traversal outside the context root rejected
+- **M9** schema validator now enforces `anyOf` (typed dependency negatives
+  tested)
+- **M10** duplicate finding IDs get occurrence suffixes
+- **M11** method calls, comments, and string literals no longer match as call
+  sites
+- **M12** indexer never follows symlinks out of the repo
+- **M13** literal values elided from stored signatures (inodes carry metadata,
+  not content)
+- **L14–L19** boundary metadata always populated; dependency-graph dead code /
+  O(n²) / duplicate edges fixed; above-root imports unresolvable; per-slug
+  carry-over approval (`--captain-approved <slug>`); doctor warns on pending
+  carry-over; compiler warns on unregistered skill dirs; doc counts corrected
+
+Known limitation (documented, accepted): the TS parser-lite remains a subset
+extractor — `export * from` edges are recorded but not expanded; Python
+set-comprehension loops are not loop-detected. Precision claims are
+fixture+sandbox-corpus measured, not absolute.
 
 ## Measured context-window optimization (fixture corpus)
 

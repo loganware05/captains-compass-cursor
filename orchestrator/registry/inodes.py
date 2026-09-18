@@ -86,7 +86,8 @@ def build_skill_inode(
     """Build one skill inode. Carry-over rules:
 
     - No prior index entry → fresh inode, ``captain_approved: false``.
-    - Unchanged content → prior carry-over state preserved (idempotent rebuild).
+    - Unchanged content → prior carry-over state preserved (idempotent rebuild);
+      a passed ``captain_approved`` retroactively approves a pending carry-over.
     - Changed content → new inode; reputation carry-over requires
       ``captain_approved=True`` (Captain gate), default false.
     """
@@ -101,8 +102,6 @@ def build_skill_inode(
         if previous.get("content_hash") == chash:
             carry_over_from = previous.get("reputation", {}).get("carry_over_from")
             approved = bool(previous.get("reputation", {}).get("captain_approved"))
-            # Retroactive approval: the Captain may approve carry-over for the
-            # current content after the fact; the approval then sticks.
             if captain_approved and carry_over_from:
                 approved = True
         else:
@@ -141,9 +140,14 @@ def build_skill_inode_index(
     repo_root: Path,
     *,
     captain_approved: bool = False,
+    captain_approved_slugs: list[str] | None = None,
     output_dir: Path | None = None,
 ) -> dict[str, Any]:
-    """Build/refresh the skill inode index for all Skills. Deterministic."""
+    """Build/refresh the skill inode index for all Skills. Deterministic.
+
+    ``captain_approved`` approves carry-over for every changed Skill;
+    ``captain_approved_slugs`` scopes approval to named Skills only.
+    """
     repo_root = Path(repo_root)
     skills_root = repo_root / ".cursor" / "skills"
     inodes_dir = Path(output_dir) if output_dir else repo_root / SKILL_INODES_DIR
@@ -156,10 +160,13 @@ def build_skill_inode_index(
     written: list[str] = []
     for skill_dir in iter_skill_dirs(skills_root):
         previous = previous_by_slug.get(skill_dir.name)
+        approved = bool(captain_approved) or bool(
+            captain_approved_slugs and skill_dir.name in captain_approved_slugs
+        )
         inode = build_skill_inode(
             skill_dir,
             previous=previous,
-            captain_approved=captain_approved,
+            captain_approved=approved,
         )
         out_path = inodes_dir / f"{inode['content_hash']}.json"
         if not out_path.is_file() or json.loads(out_path.read_text(encoding="utf-8")) != inode:

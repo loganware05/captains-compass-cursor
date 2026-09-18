@@ -203,8 +203,9 @@ reviewer with operating-system filesystem patterns:
    proves disjoint-route manifests share no inode refs
 8. Sandbox ✅ — `npm run lint` clean, 31 tests pass, `npm run build` green;
    reports + diffs under `.agent/evidence/m40-filesystem-gated-context/`
-9. Validation battery ✅ — doctor 0 errors/0 warnings; `tests/run.sh` 125
-   passed; orchestrator 432 passed; `tests/evals/run.sh` 44 passed
+9. Validation battery ✅ — doctor 0 errors (1 intended carry-over visibility
+   warning); `tests/run.sh` 125 passed; orchestrator 458 passed;
+   `tests/evals/run.sh` 43 passed
 10. Documentation ✅ — ADR-057; PROJECT_CONTEXT / DECISIONS / PROGRESS /
     TESTING / CHANGELOG updated; Skills extended + new `context-inodes`
 

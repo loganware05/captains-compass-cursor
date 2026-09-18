@@ -52,7 +52,15 @@ class RegistryCompileTests(unittest.TestCase):
         # 40 pre-M40 skills + context-inodes (M40)
         self.assertEqual(len(result.registry["skills"]), 41)
         self.assertEqual(len(result.registry["reference_profiles"]), 10)
-        self.assertEqual(result.warnings, [])
+        # Drift warnings pin the known pre-existing gap (PROGRESS follow-ups):
+        # two skill dirs predate SKILL_SLUGS registration.
+        self.assertEqual(
+            result.warnings,
+            [
+                "skill dir not registered in SKILL_SLUGS: code-reviewer",
+                "skill dir not registered in SKILL_SLUGS: northstar-connected-routine",
+            ],
+        )
 
     def test_skill_ids_are_unique(self) -> None:
         result = compile_registry(ROOT)

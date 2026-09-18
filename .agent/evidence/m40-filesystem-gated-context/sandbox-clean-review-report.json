@@ -1,7 +1,7 @@
 {
   "base_ref": "main",
   "context_pack_path": ".agent/evidence/code-review/m40-sandbox-clean/context-pack.json",
-  "created_at": "2026-09-18T21:29:24Z",
+  "created_at": "2026-09-18T21:57:21Z",
   "findings": [
     {
       "category": "fail-closed-control",
@@ -39,7 +39,7 @@
       "candidates": 0,
       "enabled": true,
       "notes": [
-        "boundary check: 4 changed file(s) checked against inode store"
+        "boundary check: 4 file(s) checked against inode store"
       ]
     },
     "candidates_source": "specialists",

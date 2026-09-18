@@ -30,13 +30,14 @@ class DependencyGraphError(ValueError):
     """Raised when the dependency graph cannot be built."""
 
 
-def _resolve_relative(importer: str, module: str) -> str:
+def _resolve_relative(importer: str, module: str) -> str | None:
     base = PurePosixPath(importer).parent
     parts: list[str] = []
     for part in (base / module).parts:
         if part == "..":
-            if parts:
-                parts.pop()
+            if not parts:
+                return None  # climbs above the repo root — unresolvable
+            parts.pop()
         elif part not in (".", ""):
             parts.append(part)
     return "/".join(parts)
@@ -62,6 +63,8 @@ def resolve_import(importer: str, module: str, indexed_paths: set[str]) -> str |
         target = module.replace(".", "/")
     else:
         return None
+    if target is None:
+        return None
 
     candidates = [target + suffix for suffix in _RESOLVE_SUFFIXES]
     candidates += [f"{target}/{name}" for name in _RESOLVE_INDEX_FILES]
@@ -83,40 +86,49 @@ def build_dependency_graph(
     base = Path(store_dir) if store_dir else repo_root / ".agent" / "inodes"
 
     inodes: dict[str, dict[str, Any]] = {}
-    path_by_inode: dict[str, str] = {}
     for rel_path, entry in sorted(index["files"].items()):
         inode_path = base / f"{entry['content_hash']}.json"
         if not inode_path.is_file():
             raise DependencyGraphError(f"inode file missing: {inode_path}")
         with inode_path.open(encoding="utf-8") as handle:
             inodes[rel_path] = json.load(handle)
-        path_by_inode[entry["inode_id"]] = rel_path
 
     indexed_paths = set(inodes)
-    edges: list[dict[str, Any]] = []
+    target_exports = {path: set(doc.get("exports") or []) for path, doc in inodes.items()}
+
+    # Merge edges per (from, to) pair: hard wins; contract/name sets union.
+    merged: dict[tuple[str, str], dict[str, Any]] = {}
     for rel_path, inode in sorted(inodes.items()):
         importer_route = module_route_for(rel_path)
-        target_exports = {
-            path: set(doc.get("exports") or []) for path, doc in inodes.items()
-        }
         for imp in inode.get("imports") or []:
             module = imp.get("module") or ""
             target = resolve_import(rel_path, module, indexed_paths)
             if target is None or target == rel_path:
                 continue
-            names = [name for name in (imp.get("names") or []) if name]
-            shared = sorted(set(names) & target_exports.get(target, set()))
-            edge: dict[str, Any] = {
-                "from": rel_path,
-                "to": target,
-                "link": "hard" if shared else "symlink",
-                "cross_boundary": module_route_for(target) != importer_route,
-            }
-            if shared:
-                edge["contract"] = shared
-            if names:
-                edge["names"] = sorted(names)
-            edges.append(edge)
+            names = {name for name in (imp.get("names") or []) if name}
+            key = (rel_path, target)
+            edge = merged.setdefault(
+                key,
+                {
+                    "from": rel_path,
+                    "to": target,
+                    "link": "symlink",
+                    "cross_boundary": module_route_for(target) != importer_route,
+                    "_names": set(),
+                },
+            )
+            edge["_names"] |= names
+
+    edges: list[dict[str, Any]] = []
+    for edge in merged.values():
+        names = edge.pop("_names")
+        shared = sorted(names & target_exports.get(edge["to"], set()))
+        if shared:
+            edge["link"] = "hard"
+            edge["contract"] = shared
+        if names:
+            edge["names"] = sorted(names)
+        edges.append(edge)
 
     edges.sort(key=lambda edge: (edge["from"], edge["to"], edge["link"]))
     stats = {
