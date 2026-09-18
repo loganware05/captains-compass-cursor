@@ -1,5 +1,5 @@
 {
-  "skill_count": 42,
+  "skill_count": 43,
   "skills": {
     "accessibility-review": {
       "content_hash": "1bc05cf1b3b769ac134964c94d95b649c86b21ea8056beb9c93e57002d737990",
@@ -38,22 +38,22 @@
       "skill_inode_id": "skl-cf3afd73d9499e6a"
     },
     "capability-planning": {
-      "content_hash": "a9209c8a3ad9078bff192d0e7b296e7359e6f51f6c4881787dd8937f4bdaa56b",
+      "content_hash": "1f116244868c1b0d1e23116594be69f4bd232ae4fb7cc581b6722c8add7e6fbf",
       "lifecycle_stage": "PROVEN_SKILL",
       "reputation": {
         "captain_approved": false,
-        "carry_over_from": null
+        "carry_over_from": "skl-a9209c8a3ad9078b"
       },
-      "skill_inode_id": "skl-a9209c8a3ad9078b"
+      "skill_inode_id": "skl-1f116244868c1b0d"
     },
     "code-reviewer": {
-      "content_hash": "e3180f723de83c1d34508a4c0dff4b7df5fd97d444b15d61d3602f4eac6c0085",
+      "content_hash": "558ab7144b211e4ebe7673a38bf91aef8f990fd96c1bb9b8c3cca78c689106ab",
       "lifecycle_stage": "AVAILABLE_SKILL",
       "reputation": {
         "captain_approved": false,
-        "carry_over_from": null
+        "carry_over_from": "skl-e3180f723de83c1d"
       },
-      "skill_inode_id": "skl-e3180f723de83c1d"
+      "skill_inode_id": "skl-558ab7144b211e4e"
     },
     "code-structure-cleanup": {
       "content_hash": "b8728f538dccc387d88fce5d95bf85c4eb4d569a905aa2eefcd49ca72b52d744",
@@ -72,6 +72,15 @@
         "carry_over_from": null
       },
       "skill_inode_id": "skl-8ee88506b1017763"
+    },
+    "context-inodes": {
+      "content_hash": "f217f73c439524ad3ea6536900a7b39b892eb695ec0874374147a611237bae6a",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-f217f73c439524ad"
     },
     "dependency-supply-chain": {
       "content_hash": "60efbca38f87bd8234319687583a27ec227b302b8409f09d5da3f7ddac32272c",
@@ -335,13 +344,13 @@
       "skill_inode_id": "skl-6ea1a2c3af72a225"
     },
     "skill-lifecycle": {
-      "content_hash": "2e58332b95f8cf0bf3cf015ca19c1f437e3882241268cbe804935371a5d69e57",
+      "content_hash": "4f93c66f1d8e03037510bd9e63a7e96aa06b4cfb7e52b076c302008d9d030978",
       "lifecycle_stage": "AVAILABLE_SKILL",
       "reputation": {
         "captain_approved": false,
-        "carry_over_from": null
+        "carry_over_from": "skl-2e58332b95f8cf0b"
       },
-      "skill_inode_id": "skl-2e58332b95f8cf0b"
+      "skill_inode_id": "skl-4f93c66f1d8e0303"
     },
     "source-code-context": {
       "content_hash": "9876b235a02a8cc83f56027c0af2bf4a00034a4b5fee1ae084784c577011261c",

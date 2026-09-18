@@ -188,32 +188,25 @@ reviewer with operating-system filesystem patterns:
 
 ## Acceptance Criteria
 
-1. Plan-gated ✅ (this doc AWAITING APPROVAL → Captain approves)
-2. Inode store + walker: hermetic, deterministic build (same source ⇒ same
-   hashes) over control repo + fixtures; doctor staleness check fails closed on
-   stale inodes with a rebuild hint
-3. Route walking: a module-scoped manifest references only its route's inodes;
-   `tests/evals/` records prompt-payload byte reduction vs the monolithic
-   baseline on a fixed fixture
-4. Typed links: `task.schema.json` accepts string and object dependencies;
-   planner emits hard/symlink links; existing graphs/fixtures unchanged and green
-5. Boundary gate: fixture corpus yields precision 1.0 (no false positives on
-   clean controls) and detects all seeded cross-boundary type/complexity
-   violations; integrated into `northstar review` evidence-only path; hermetic,
-   no model, stdlib-only in CI
-6. Skill inodes: registry compile embeds content hashes; editing a SKILL.md
-   yields a new inode; stage carry-over requires Captain-approved proposal;
-   `.cursor/skills/inodes/` index built for all 41 Skills
-7. `pwd` isolation: manifests carry `working_context` with scope allow/deny;
-   eval proves disjoint-module parallel manifests share only declared contract
-   inodes
-8. Sandbox: `npm run lint`, `npm run test`, `npm run build` green on the sandbox
-   branch; boundary review report + diffs logged under `.agent/evidence/`
-9. `./scripts/doctor.sh`, `./tests/run.sh`, `./tests/evals/run.sh` all green;
-   hermetic CI preserved (no node, no network, no model on default path)
-10. Documentation: ADR-057, PROJECT_CONTEXT / DECISIONS / PROGRESS / TESTING /
-    CHANGELOG updates; Skill updates (`capability-planning`, `code-reviewer`,
-    `skill-lifecycle`) + one new Skill `context-inodes`
+1. Plan-gated ✅ (APPROVED 2026-09-18, recorded below)
+2. Inode store + walker ✅ — deterministic build (eval sensor 1), doctor
+   staleness checks fail closed with rebuild hints
+3. Route walking ✅ — module-scoped manifests reference only their route's
+   inodes; eval sensor 5 records 52% payload reduction on the fixture corpus
+4. Typed links ✅ — string + object forms both valid; planner emits hard/symlink
+   links; all pre-existing graph fixtures/tests green
+5. Boundary gate ✅ — precision 1.0 on fixture corpus (3 TP / 0 FP) and sandbox
+   corpus (3/3 seeded detected, 0 on clean change); evidence-only, hermetic
+6. Skill inodes ✅ — registry embeds `content_hash` + `skill_inode`; edits yield
+   new inodes; carry-over gated by `--captain-approved`; index built for all 43
+7. `pwd` isolation ✅ — `working_context` in every manifest; eval sensor 4
+   proves disjoint-route manifests share no inode refs
+8. Sandbox ✅ — `npm run lint` clean, 31 tests pass, `npm run build` green;
+   reports + diffs under `.agent/evidence/m40-filesystem-gated-context/`
+9. Validation battery ✅ — doctor 0 errors/0 warnings; `tests/run.sh` 125
+   passed; orchestrator 432 passed; `tests/evals/run.sh` 44 passed
+10. Documentation ✅ — ADR-057; PROJECT_CONTEXT / DECISIONS / PROGRESS /
+    TESTING / CHANGELOG updated; Skills extended + new `context-inodes`
 
 ## Non-Goals
 

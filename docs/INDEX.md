@@ -23,6 +23,7 @@ Launcher: `scripts/northstar` (control repo only).
 | `outcomes` | Finding triage → Experience (+ proposal-only routing) | [`integrations/code-reviewer.md`](integrations/code-reviewer.md) |
 | `repair` | FIND→PROVE→packet (never auto-merge) | [`integrations/code-reviewer.md`](integrations/code-reviewer.md), [`plans/B4_REPAIR_LOOP.md`](plans/B4_REPAIR_LOOP.md) |
 | `precision` | Precision ledger / dashboard from outcomes | [`integrations/code-reviewer.md`](integrations/code-reviewer.md), [`plans/B5_PRECISION_LEDGER.md`](plans/B5_PRECISION_LEDGER.md) |
+| `context` | Inode store build + context route walking (M40) | [`integrations/context-inodes.md`](integrations/context-inodes.md) |
 
 ```bash
 # From the control repo

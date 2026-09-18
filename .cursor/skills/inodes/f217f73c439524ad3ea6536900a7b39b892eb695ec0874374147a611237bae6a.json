@@ -1,0 +1,15 @@
+{
+  "content_hash": "f217f73c439524ad3ea6536900a7b39b892eb695ec0874374147a611237bae6a",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-f217f73c439524ad",
+  "slug": "context-inodes",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

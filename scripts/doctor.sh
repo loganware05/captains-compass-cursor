@@ -110,6 +110,7 @@ SKILLS=(
   skill-learning-loop
   northstar-connected-routine
   code-reviewer
+  context-inodes
 )
 
 for s in "${SKILLS[@]}"; do

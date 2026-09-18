@@ -1,0 +1,31 @@
+id: context-inodes
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/context-inodes/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: AVAILABLE_SKILL
+categories: [planning, context, review]
+tags:
+  - context
+  - inodes
+  - dependency-graph
+  - boundary-review
+capabilities_provided:
+  - context-inode-store-build
+  - context-route-walking
+  - module-scope-isolation
+  - cross-boundary-metadata
+compatible_stacks:
+  - any
+security_sensitivity: low
+agent_affinity:
+  - architecture-agent
+  - implementation-agent
+  - code-reviewer
+maturity: available
+confidence: 0.9

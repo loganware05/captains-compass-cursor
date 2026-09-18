@@ -54,6 +54,24 @@ Written under `.agent/plans/<plan-id>/`:
 - `task-graph.json`
 - `manifests.json`
 
+## M40: typed dependency links + subagent pwd
+
+`task-graph.json` dependencies carry explicit link types (backward compatible):
+
+- **string form** (legacy) — pure ordering edge
+- **hard link** — `{ "target", "link": "hard", "contract" }`: version-locked
+  contract coupling; both sides must change together (e.g. implementation
+  tasks hard-link the `architecture-brief` contract)
+- **symlink** — `{ "target", "link": "symlink", "paths" }`: loose module /
+  artifact path reference (e.g. validation symlinks implementation artifacts)
+
+Manifests include a `working_context` block (the subagent `pwd`):
+`context_root` (scoped route in `.agent/context/`), `inode_refs` (only the
+in-scope module's inode pointers), and `scope_allow` / `scope_deny` path lists.
+Disjoint module tasks must not share inode refs — that isolation invariant is
+checked by the M40 eval sensor. Build the inode store first (Skill
+`context-inodes`) or manifests degrade to unrestricted scope with a note.
+
 ## Output
 
 Capability-aware plan sections ready for Captain review.

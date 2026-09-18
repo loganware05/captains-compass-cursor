@@ -11,7 +11,7 @@ Sandbox: `captain-compass-sandbox` branch `cursor/m40-filesystem-gated-context-e
 | `./scripts/doctor.sh` | 0 errors, 0 warnings (incl. new skill-inode freshness + schema checks) |
 | `./tests/run.sh` | 125 passed, 0 failed |
 | Orchestrator unit tests | 432 passed (`test_m40_*`: 35 tests across inodes/walker, skill inodes, dependency graph, boundary gate, manifest pwd) |
-| `./tests/evals/run.sh` | 44 passed, 0 failed (incl. M40 sensor block) |
+| `./tests/evals/run.sh` | 43 passed, 0 failed (incl. M40 sensor block) |
 
 ## Measured context-window optimization (fixture corpus)
 

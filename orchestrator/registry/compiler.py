@@ -52,6 +52,7 @@ SKILL_SLUGS = (
     "hosted-vector-db",
     "package-registry-ti",
     "skill-learning-loop",
+    "context-inodes",
 )
 
 AGENT_PROFILES = (
