@@ -4,8 +4,9 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING APPROVAL** |
+| Status | **APPROVED — IMPLEMENTING** |
 | Plan ID | `m40-filesystem-gated-context` |
+| Approved | 2026-09-18 — Captain: "I approve the M40 Implementation plan" |
 | Supersedes | — (builds on M17 context selection, M27–M33 Code Reviewer, M9/M23 skill lifecycle) |
 | Product | **NorthStar** |
 | Baseline | **v1.40.1** @ `125d53e` (M38 + M39 merged; prior plan archived at `docs/plans/AGENTIC_SECURITY_REVIEW_PHASE_B.md`) |
@@ -330,9 +331,10 @@ Machine-generated capability matches and agent manifests under
      Promoting Status via Write/StrReplace requires COMPASS_CAPTAIN_APPROVE=1
      (see .cursor/hooks/README.md). Commit the plan before product-source edits. -->
 
-- Approved by: _pending_
-- Approval date: _pending_
-- Approved revision: _pending_
+- Approved by: Logan Ware (Captain)
+- Approval date: 2026-09-18
+- Approved revision: `6197079` (plan commit on `cursor/m40-filesystem-gated-context-ea39`, PR #177)
+- Approval source: Captain chat, 2026-09-18 ~21:04 UTC — "I approve the M40 Implementation plan"
 
 ---
 
