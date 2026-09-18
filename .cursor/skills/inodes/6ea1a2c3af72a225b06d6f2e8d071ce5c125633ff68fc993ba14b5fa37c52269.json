@@ -1,0 +1,15 @@
+{
+  "content_hash": "6ea1a2c3af72a225b06d6f2e8d071ce5c125633ff68fc993ba14b5fa37c52269",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-6ea1a2c3af72a225",
+  "slug": "skill-learning-loop",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

@@ -1,0 +1,15 @@
+{
+  "content_hash": "27c364541360ddf32cb9bf9fd4fbd293eaeb16b8ba890e12ca781b6a48c7fd8c",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-27c364541360ddf3",
+  "slug": "procedure-playbooks",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

@@ -1,0 +1,15 @@
+{
+  "content_hash": "4f93c66f1d8e03037510bd9e63a7e96aa06b4cfb7e52b076c302008d9d030978",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": "skl-2e58332b95f8cf0b"
+  },
+  "skill_inode_id": "skl-4f93c66f1d8e0303",
+  "slug": "skill-lifecycle",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

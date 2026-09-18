@@ -1,0 +1,24 @@
+diff --git a/src/components/FormIssuesSummary.tsx b/src/components/FormIssuesSummary.tsx
+index 1111111..2222222 100644
+--- a/src/components/FormIssuesSummary.tsx
++++ b/src/components/FormIssuesSummary.tsx
+@@ -1,5 +1,5 @@
+ import type { ContactFormErrors } from '../lib/contactValidation'
+-import { summarizeFormIssues } from '../lib/formAnalytics'
++import { summarizeFormIssues, purgeFormIssues } from '../lib/formAnalytics'
+ 
+ export interface FormIssuesSummaryProps {
+   errors: ContactFormErrors
+@@ -8,6 +8,13 @@
+ export function FormIssuesSummary({ errors, heading }: FormIssuesSummaryProps) {
+   const issues = summarizeFormIssues(errors)
++  const purged = purgeFormIssues(errors)
++  const empty = summarizeFormIssues()
++  const all: string[] = []
++  for (const issue of issues) {
++    const recheck = summarizeFormIssues(errors)
++    all.push(issue.field)
++  }
+   if (issues.length === 0) {
+     return null
+   }

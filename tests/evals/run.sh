@@ -287,6 +287,79 @@ PY
 )"
 assert_contains "M18 smoke catalog present" '^ok$' "$m18_out"
 
+echo "=== eval: M40 filesystem-gated context sensors ==="
+m40_out="$(PYTHONPATH="$ROOT" python3 - "$ROOT" <<'PY'
+import json
+import shutil
+import sys
+import tempfile
+from pathlib import Path
+
+from orchestrator.assembler.manifest import build_manifest_for_task
+from orchestrator.context.inodes import build_store
+from orchestrator.context.walker import derive_context_tree, walk_route
+from orchestrator.review.boundary import emit_boundary_candidates
+
+root = Path(sys.argv[1])
+fixture_src = root / "tests" / "fixtures" / "context" / "src"
+boundary = root / "tests" / "fixtures" / "code-review" / "boundary"
+
+with tempfile.TemporaryDirectory() as tmp:
+    tmp = Path(tmp)
+    repo = tmp / "repo"
+    shutil.copytree(fixture_src, repo / "src")
+
+    # Sensor 1: inode build determinism (same sources => byte-identical stores)
+    store_a, store_b = tmp / "a", tmp / "b"
+    build_store(repo, output_dir=store_a)
+    build_store(repo, output_dir=store_b)
+    names_a = sorted(p.name for p in store_a.glob("*.json"))
+    assert names_a == sorted(p.name for p in store_b.glob("*.json"))
+    for name in names_a:
+        assert (store_a / name).read_bytes() == (store_b / name).read_bytes(), name
+
+    # Sensors 2-5 use the default store location (what review/manifests read).
+    build_store(repo)
+    store_a = repo / ".agent" / "inodes"
+
+    # Sensor 2: route walking is sequential and scoped
+    derive_context_tree(repo)
+    route = walk_route(repo, "src/ui")
+    assert route["resolved"] and len(route["steps"]) == 2
+    assert len(route["inode_refs"]) == 3
+    missing = walk_route(repo, "src/nope")
+    assert not missing["resolved"] and missing["failed_segment"] == "nope"
+
+    # Sensor 3: boundary precision = 1.0 on fixture corpus
+    bad = (boundary / "bad-change.diff").read_text(encoding="utf-8")
+    clean = (boundary / "clean-change.diff").read_text(encoding="utf-8")
+    tp, _ = emit_boundary_candidates(repo, changed_paths=["src/api/client.ts"], diff_text=bad)
+    fp, _ = emit_boundary_candidates(repo, changed_paths=["src/api/client.ts"], diff_text=clean)
+    assert len(tp) == 3 and len(fp) == 0, (len(tp), len(fp))
+
+    # Sensor 4: manifest pwd isolation — disjoint routes share no inode refs
+    task_f = {"id": "task-impl-frontend", "objective": "ui", "required_capabilities": []}
+    task_b = {"id": "task-impl-backend", "objective": "api", "required_capabilities": []}
+    mf = build_manifest_for_task(task_f, [], stacks=["react"], security_sensitive=False, plan_id="eval-m40", repo_root=repo)
+    mb = build_manifest_for_task(task_b, [], stacks=["node"], security_sensitive=False, plan_id="eval-m40", repo_root=repo)
+    refs_f = set(mf["working_context"]["inode_refs"])
+    refs_b = set(mb["working_context"]["inode_refs"])
+    assert mf["working_context"]["route_resolved"] and mb["working_context"]["route_resolved"]
+    assert refs_f.isdisjoint(refs_b)
+
+    # Sensor 5: measured prompt-payload reduction (walked route vs monolithic dump)
+    monolithic = sum(p.stat().st_size for p in store_a.glob("*.json"))
+    scoped = sum(
+        (store_a / f"{entry['content_hash']}.json").stat().st_size
+        for entry in json.loads((store_a / "index.json").read_text())["files"].values()
+        if entry["inode_id"] in set(route["inode_refs"])
+    )
+    assert 0 < scoped < monolithic
+    print(f"ok payload_bytes monolithic={monolithic} scoped={scoped} reduction={1 - scoped / monolithic:.0%}")
+PY
+)"
+assert_contains "M40 context sensors (determinism, walk, precision, isolation, payload)" '^ok' "$m40_out"
+
 echo
 echo "Eval results: $PASS passed, $FAIL failed"
 if [[ "$FAIL" -gt 0 ]]; then

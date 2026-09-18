@@ -2,9 +2,55 @@
 
 from __future__ import annotations
 
+from typing import Any
+
+LINK_TYPES = frozenset({"hard", "symlink"})
+
 
 class GraphValidationError(ValueError):
     """Raised when a task graph is invalid."""
+
+
+def normalize_dependency(dep: Any, *, task_id: str = "") -> str:
+    """Return the target task id for a dependency in either form.
+
+    Legacy form: a plain task-id string (ordering edge).
+    Typed form (M40): an object ``{"target", "link", "contract"?, "paths"?}``
+    where ``link`` is ``hard`` (version-locked contract coupling) or
+    ``symlink`` (loose module path reference).
+    """
+    where = f"task {task_id}: " if task_id else ""
+    if isinstance(dep, str):
+        if not dep.strip():
+            raise GraphValidationError(f"{where}dependency id must be non-empty")
+        return dep
+    if isinstance(dep, dict):
+        target = dep.get("target")
+        if not isinstance(target, str) or not target.strip():
+            raise GraphValidationError(f"{where}typed dependency requires non-empty 'target'")
+        link = dep.get("link")
+        if link not in LINK_TYPES:
+            raise GraphValidationError(
+                f"{where}typed dependency 'link' must be one of {sorted(LINK_TYPES)}, got {link!r}"
+            )
+        contract = dep.get("contract")
+        if contract is not None and not isinstance(contract, str):
+            raise GraphValidationError(f"{where}typed dependency 'contract' must be a string")
+        paths = dep.get("paths")
+        if paths is not None and not (
+            isinstance(paths, list) and all(isinstance(p, str) for p in paths)
+        ):
+            raise GraphValidationError(f"{where}typed dependency 'paths' must be a list of strings")
+        return target
+    raise GraphValidationError(f"{where}dependency must be a string or typed object")
+
+
+def normalize_dependencies(task: dict) -> list[str]:
+    """Return dependency target ids for a task, accepting both forms."""
+    return [
+        normalize_dependency(dep, task_id=str(task.get("id") or ""))
+        for dep in task.get("dependencies") or []
+    ]
 
 
 def validate_task_graph(tasks: list[dict]) -> None:
@@ -29,12 +75,13 @@ def validate_task_graph(tasks: list[dict]) -> None:
         deps = task.get("dependencies") or []
         if not isinstance(deps, list):
             raise GraphValidationError(f"task {task_id}: dependencies must be a list")
-        for dep in deps:
+        normalized = normalize_dependencies(task)
+        for dep in normalized:
             if dep not in ids:
                 raise GraphValidationError(f"task {task_id}: missing dependency {dep!r}")
             if dep == task_id:
                 raise GraphValidationError(f"task {task_id}: self dependency")
-        graph[task_id] = list(deps)
+        graph[task_id] = normalized
 
     visiting: set[str] = set()
     visited: set[str] = set()
@@ -65,7 +112,7 @@ def topological_order(tasks: list[dict]) -> list[str]:
     def visit(task_id: str) -> None:
         if task_id in visited:
             return
-        for dep in index[task_id].get("dependencies") or []:
+        for dep in normalize_dependencies(index[task_id]):
             visit(dep)
         visited.add(task_id)
         order.append(task_id)

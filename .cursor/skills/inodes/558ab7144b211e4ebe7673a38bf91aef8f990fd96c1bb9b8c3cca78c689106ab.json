@@ -1,0 +1,15 @@
+{
+  "content_hash": "558ab7144b211e4ebe7673a38bf91aef8f990fd96c1bb9b8c3cca78c689106ab",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": "skl-e3180f723de83c1d"
+  },
+  "skill_inode_id": "skl-558ab7144b211e4e",
+  "slug": "code-reviewer",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

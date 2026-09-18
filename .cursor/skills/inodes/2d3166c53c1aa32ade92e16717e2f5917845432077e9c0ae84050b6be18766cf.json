@@ -1,0 +1,15 @@
+{
+  "content_hash": "2d3166c53c1aa32ade92e16717e2f5917845432077e9c0ae84050b6be18766cf",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-2d3166c53c1aa32a",
+  "slug": "harness-gc",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

@@ -1,0 +1,15 @@
+{
+  "content_hash": "da6aed24ca8631136544c3e902f46a659107b537bb4fca1aa7a3de51d9dace6c",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-da6aed24ca863113",
+  "slug": "northstar-connected-routine",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

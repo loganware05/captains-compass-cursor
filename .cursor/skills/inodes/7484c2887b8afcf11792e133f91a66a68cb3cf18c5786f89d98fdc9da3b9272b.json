@@ -1,0 +1,15 @@
+{
+  "content_hash": "7484c2887b8afcf11792e133f91a66a68cb3cf18c5786f89d98fdc9da3b9272b",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-7484c2887b8afcf1",
+  "slug": "persistent-role-promotion",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

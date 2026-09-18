@@ -111,6 +111,32 @@ PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m33_b5_precision_ledger
   --ledger-id b5-cli-demo
 ```
 
+Filesystem-gated context (M40; hermetic; deterministic):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m40_context_inodes -v
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m40_skill_inodes -v
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m40_dependency_graph -v
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m40_boundary_gate -v
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m40_manifest_pwd -v
+
+# Inode store + context tree (deterministic build; --check fails closed on stale)
+./scripts/build-context-inodes.sh
+./scripts/build-context-inodes.sh --check
+./scripts/walk-context-route.sh --route orchestrator/review
+./scripts/northstar context build --repo /path/to/repo
+./scripts/northstar context walk --repo /path/to/repo --route src/lib
+
+# Content-addressed Skill inodes (carry-over is Captain-gated)
+./scripts/build-skill-inodes.sh
+./scripts/build-skill-inodes.sh --check
+./scripts/build-skill-inodes.sh --captain-approved   # approve reputation carry-over
+
+# Boundary review gate (default on; skips with note when inode store absent/stale)
+./scripts/run-code-review.sh --repo-root /path/to/repo --base main
+./scripts/run-code-review.sh --repo-root /path/to/repo --no-boundary-check
+```
+
 Single launcher UX (M34 / C1; hermetic help + docs index):
 
 ```bash

@@ -1,0 +1,15 @@
+{
+  "content_hash": "f3c54e9fc101537d63105a549e6c54ec6164ac8368658b0a40a2c4bd59d36ee3",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-f3c54e9fc101537d",
+  "slug": "react-engineering",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

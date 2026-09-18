@@ -2,30 +2,48 @@
 
 ## Current status
 
-**Release track:** v1.40.0 on `main` (M39 via #175). **Follow-up:** v1.40.1 opaque
-shell-forge residual on PR #174.
+**In flight: M40 / v1.41.0** — Filesystem-Gated Context & Dependency
+Architecture (Captain-approved 2026-09-18).
 
 | Item | Value |
 |---|---|
-| Tagged / on main | **v1.40.0** — M39 (#175); M38 (#173) → v1.39.1 |
-| Open | **#174** — M38 opaque forge residual → **v1.40.1** |
-| Open | **#176** — conflict closeout / docs sync after #175 |
-| Rollback | `rollback/pre-m39-agentic-security-phase-b` |
+| On main | **v1.40.1** — M39 (#175) + M38 residual (#174) + closeout (#176) |
+| In flight | **M40** — control PR [#177](https://github.com/loganware05/captains-compass-cursor/pull/177); sandbox PR [#59](https://github.com/loganware05/captain-compass-sandbox/pull/59) |
+| Branch | `cursor/m40-filesystem-gated-context-ea39` (both repos) |
+| Plan | `IMPLEMENTATION_PLAN.md` — **APPROVED — IMPLEMENTING** (`m40-filesystem-gated-context`) |
+| Rollback | `rollback/pre-m40-filesystem-gated-context` @ `125d53e` |
+| Evidence | `.agent/evidence/m40-filesystem-gated-context/` |
 
 ## In flight
 
-- Merge #174 (opaque shell-forge fail-closed) → tag **v1.40.1**
-- Merge #176 (post-#175 conflict closeout)
+- M40 WS1–WS7 implemented + adversarial remediation (H1–M13 fixed; 26
+  regression tests); validation green (suite 125, orchestrator 458, evals 43);
+  sandbox boundary precision **1.0** (3/3 seeded detected, 0 FP on clean
+  change); payload reduction 52% on fixture corpus
+- Remaining: Captain review of PR #177 / sandbox #59, merge, tag **v1.41.0**
+- Carry-over pending Captain: `capability-planning`, `code-reviewer`,
+  `skill-lifecycle` skill inodes (edited in M40) — approve via
+  `./scripts/build-skill-inodes.sh --captain-approved`
 
 ## Completed
 
-- Captain dual-approved M38 + M39 (2026-09-18) after #171
-- M38 landed via **#173**; M39 landed via **#175** (parallel tracks to #174/#176)
-- M37 → v1.39.0
-- Track B complete through B5 / v1.36.0
+- M39 → v1.40.0 / v1.40.1 (agentic security ingest + opaque forge gate)
+- M37 → v1.39.0; Track B complete through B5 / v1.36.0
+
+## Known follow-ups (observed during M40; not in scope)
+
+- M37 specialist `sec-hook-checkout-shortcircuit` fires on *removed* diff lines
+  (FP when a diff removes the legacy pattern) — detectors should scan added
+  lines only
+- `orchestrator/registry/compiler.py` SKILL_SLUGS predates M21/M27: missing
+  `code-reviewer` and `northstar-connected-routine` (pre-existing on main)
+
+## Blockers
+
+None.
 
 ## Recommended sequence
 
-1. Merge #174 → tag v1.40.1  
-2. Merge #176 closeout  
-3. Track **C3** connected routine (roadmap)
+1. Captain review + merge control PR #177 and sandbox PR #59
+2. Tag **v1.41.0**; approve skill-inode carry-over for the three edited Skills
+3. File follow-up plans for the two known follow-ups above

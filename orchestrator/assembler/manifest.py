@@ -20,6 +20,73 @@ class ManifestBuildError(ValueError):
     """Raised when manifest assembly fails."""
 
 
+# M40 Task 3.2 — subagent pwd sandboxing. Each manifest carries a
+# working_context: the scoped context route, the inode pointers in scope, and
+# path allow/deny lists. Advisory-by-construction: the manifest declares the
+# scope; runtime enforcement is a Cursor-platform concern.
+_TASK_ROUTE_CANDIDATES: dict[str, list[str]] = {
+    "task-impl-frontend": ["src/ui", "src/components", "src/app", "src/pages", "src"],
+    "task-impl-backend": ["src/api", "src/server", "api", "server", "orchestrator"],
+    "task-impl-database": ["prisma", "src/db", "db", "src"],
+    "task-impl-ml": ["worker", "ml", "src/ml", "src"],
+    "task-impl-ios": ["ios", "Sources"],
+    "task-impl-docker": ["deploy", "docker", ".github"],
+    "task-validation": ["tests", "src"],
+    "task-security-review": ["src", "orchestrator"],
+}
+
+_DEFAULT_SCOPE_DENY = [
+    ".agent/evidence/private/**",
+    ".agent/budgets/private/**",
+    ".agent/sessions/private/**",
+    "**/.env",
+    "**/.env.*",
+    "**/*.pem",
+    "**/*.key",
+    "secrets/**",
+    "credentials/**",
+]
+
+
+def _working_context(repo_root: Path | None, task_id: str) -> dict:
+    """Compute the per-task pwd scope. Unrestricted-with-note when no store."""
+    block: dict = {
+        "context_root": "",
+        "route_resolved": False,
+        "inode_refs": [],
+        "scope_allow": ["**"],
+        "scope_deny": list(_DEFAULT_SCOPE_DENY),
+    }
+    if repo_root is None:
+        block["note"] = "no repo_root — scope unrestricted"
+        return block
+    try:
+        from orchestrator.context.walker import DEFAULT_CONTEXT_ROOT, walk_route
+
+        context_root = Path(repo_root) / DEFAULT_CONTEXT_ROOT
+        if not context_root.is_dir():
+            block["note"] = "context tree absent — scope unrestricted (run scripts/build-context-inodes.sh)"
+            return block
+        for route in _TASK_ROUTE_CANDIDATES.get(task_id, []):
+            result = walk_route(repo_root, route, context_root=context_root)
+            if result["resolved"]:
+                block.update(
+                    {
+                        "context_root": route,
+                        "route_resolved": True,
+                        "inode_refs": list(result["inode_refs"]),
+                        "scope_allow": [f"{route}/**"],
+                    }
+                )
+                block.pop("note", None)
+                return block
+        block["note"] = "no task-matched route in context tree — scope unrestricted"
+        return block
+    except Exception as exc:  # never let scoping break manifest assembly
+        block["note"] = f"working context unavailable: {exc}"
+        return block
+
+
 def _model_recommendation(model_class: str) -> dict:
     catalog = load_catalog()
     for profile in catalog["profiles"]:
@@ -107,6 +174,7 @@ def build_manifest_for_task(
             "ledger_path": f".agent/budgets/{plan_id}.md",
         },
         "rationale": _rationale(task, reference_profile, skill_ids, model_class),
+        "working_context": _working_context(repo_root, task_id),
     }
     if scoring_breakdown:
         manifest["scoring_breakdown"] = scoring_breakdown

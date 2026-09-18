@@ -1,0 +1,15 @@
+{
+  "content_hash": "553782403782ea682f0ac2fd52a7603f04d813be50ff4fb7c956e1eff926b8ec",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-553782403782ea68",
+  "slug": "embedding-providers",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

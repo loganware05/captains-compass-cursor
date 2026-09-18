@@ -1,0 +1,15 @@
+{
+  "content_hash": "4833238cb19399a41a6829f54800941c1339a4ee961a9378b86032d10619ffaf",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-4833238cb19399a4",
+  "slug": "repository-discovery",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

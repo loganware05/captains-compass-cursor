@@ -52,6 +52,26 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 ./scripts/aggregate-precision-ledger.sh --outcomes path/to/outcomes.json --ledger-id demo
 ```
 
+## M40: cross-boundary verification gate
+
+When the repo has a built inode store (Skill `context-inodes`), the pipeline
+emits deterministic **boundary candidates** for calls/imports that cross
+context routes (`domain/module`):
+
+- `boundary-unknown-symbol` (high) — import names a symbol the callee inode
+  does not export
+- `boundary-arity` (medium) — added call site passes an argument count the
+  declared signature cannot accept
+- `boundary-complexity` (medium) — added call inside an added loop invokes a
+  callee with non-constant declared `@complexity` (e.g. declared \(O(N)\)
+  called per element ⇒ effective \(O(N^2)\))
+
+The gate is on by default (`--boundary-check`); it **skips with an explicit
+note** when the inode store is absent or stale — never review against
+untrusted metadata. Boundary findings carry `category: boundary` and flow
+through the standard verify/rank path. Precision target on fixture + sandbox
+corpora: 1.0 (measured in `tests/evals/run.sh` M40 sensors).
+
 ## Output
 
 - Schema-valid `report.json` (`code-review-report.schema.json`)
@@ -59,6 +79,7 @@ A branch, PR, or local diff needs a structured NorthStar code review that:
 - Optional `context-pack.json`
 - Optional triage `outcomes.json` + Experience lessons; optional RoutingProposal (`auto_apply=false`)
 - Optional repair `repair-run.json` + `dispatch-packet.json` under `.agent/evidence/repair/<run-id>/`
+- Report provenance records `boundary` notes/candidate counts
 
 ## Prohibited actions
 

@@ -1,0 +1,15 @@
+{
+  "content_hash": "59b305facf98cb260aba0e92165ed4fabecab3008b3cfb5b21b5b6fd40e5251c",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-59b305facf98cb26",
+  "slug": "playwright-browser-validation",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

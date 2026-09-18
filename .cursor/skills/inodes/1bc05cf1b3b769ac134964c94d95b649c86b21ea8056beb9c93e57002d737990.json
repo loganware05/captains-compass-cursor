@@ -1,0 +1,15 @@
+{
+  "content_hash": "1bc05cf1b3b769ac134964c94d95b649c86b21ea8056beb9c93e57002d737990",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-1bc05cf1b3b769ac",
+  "slug": "accessibility-review",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

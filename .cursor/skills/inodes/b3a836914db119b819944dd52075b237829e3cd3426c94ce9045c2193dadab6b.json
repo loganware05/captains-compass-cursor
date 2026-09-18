@@ -1,0 +1,15 @@
+{
+  "content_hash": "b3a836914db119b819944dd52075b237829e3cd3426c94ce9045c2193dadab6b",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-b3a836914db119b8",
+  "slug": "worktree-orchestration",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

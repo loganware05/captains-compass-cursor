@@ -1,0 +1,15 @@
+{
+  "content_hash": "c3af27a5d076a78d816d4542cfa2aa3fe18ddfef42f41e5ee87dc7d2914002de",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-c3af27a5d076a78d",
+  "slug": "external-knowledge-ingest",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

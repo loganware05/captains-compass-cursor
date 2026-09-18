@@ -1,5 +1,38 @@
 # Changelog
 
+## 1.41.0 — 2026-09-18
+
+### Added
+
+- **M40 Filesystem-Gated Context & Dependency Architecture** — OS filesystem
+  patterns for the orchestrator (plan `m40-filesystem-gated-context`):
+  - Inode metadata store (`.agent/inodes/`): content-addressed structural
+    metadata (TS interfaces, Python/TS signatures with param optionality,
+    declared `@complexity`); deterministic builds; staleness detection
+  - Directory-style context route walker (`.agent/context/<domain>/<module>/`)
+    returning inode pointers only; measured 52% payload reduction on the
+    fixture corpus
+  - Typed `task-graph.json` dependencies: hard links (contract coupling) and
+    symlinks (path references), backward compatible with string form
+  - `orchestrator/dependency_graph.py`: module link graph from inode imports
+    with cross-boundary edge flagging
+  - `northstar review` boundary gate: unknown imported symbol, call-arity
+    mismatch, and declared-complexity amplification checks against inodes;
+    precision 1.0 on fixture + sandbox corpora; skips safely when the store
+    is absent/stale
+  - Content-addressed Skill inodes (`.cursor/skills/inodes/`): Skill identity
+    is content; reputation carry-over on edit requires `--captain-approved`
+  - Subagent `pwd`: manifests carry `working_context` (scoped route, inode
+    refs, scope allow/deny); disjoint-route isolation invariant eval-checked
+  - New Skill `context-inodes` (43 Skills); extended `capability-planning`,
+    `code-reviewer`, `skill-lifecycle`
+  - CLIs: `build-context-inodes.sh`, `walk-context-route.sh`,
+    `build-skill-inodes.sh`, `northstar context build|walk`,
+    `run-code-review.sh --boundary-check/--no-boundary-check`
+  - Schemas: `context-inode`, `context-route`, `skill-inode`; `task` and
+    `agent-manifest` extended
+  - doctor: skill-inode freshness (fail closed) + context-store staleness
+
 ## 1.40.1 — 2026-09-18
 
 ### Fixed

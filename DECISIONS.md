@@ -1,5 +1,50 @@
 # Decisions
 
+## ADR-057: Filesystem-gated context and dependency architecture (v1.41.0 M40)
+
+- **Status:** Accepted
+- **Date:** 2026-09-18
+- **Context:** Flat memory files (DECISIONS.md alone passed 50 ADRs) and flat
+  top-N retrieval scale with project history, not task scope; task-graph
+  dependencies were ordering-only strings; `northstar review` never checked
+  calls crossing module boundaries (roadmap: "Verification depth" gap); Skill
+  reputation attached to mutable slugs. Captain approved plan
+  `m40-filesystem-gated-context` applying OS filesystem patterns.
+- **Decision:**
+  1. **Inode metadata store** — `.agent/inodes/<sha256>.json` content-addressed
+     structural metadata (exports, signatures with param optionality, declared
+     `@complexity`), decoupled from raw source; deterministic builds; explicit
+     rebuild CLI only; doctor fails closed on stale built stores.
+  2. **Directory-style route walking** — `.agent/context/<domain>/<module>/`
+     tree *derived* from repo structure (never hand-authored); walks resolve
+     segment-by-segment and return inode pointers only.
+  3. **Typed dependency links** — `task.schema.json` dependencies accept legacy
+     strings or `{target, link: hard|symlink, contract?, paths?}`; planner emits
+     hard links to the architecture contract and symlinks to impl artifacts;
+     `orchestrator/dependency_graph.py` types module edges from inode imports
+     (named-symbol = hard, side-effect = symlink) and flags cross-boundary edges.
+  4. **Boundary review gate** — `orchestrator/review/boundary.py` emits
+     deterministic candidates (unknown imported symbol, call-arity mismatch,
+     declared-complexity amplification) checked against inodes; on by default;
+     skips with explicit note when the store is absent/stale. Precision 1.0 on
+     fixture + sandbox corpora (measured, logged).
+  5. **Content-addressed Skill inodes** — `.cursor/skills/inodes/`; editing a
+     Skill yields a new inode; reputation carry-over requires
+     `--captain-approved`; registry provenance embeds `content_hash` +
+     `skill_inode`. New Skill `context-inodes` (43 Skills).
+  6. **Subagent pwd** — manifests carry `working_context` (scoped route, inode
+     refs, scope allow/deny); advisory-by-construction, runtime enforcement is
+     a Cursor-platform concern; disjoint-route isolation invariant is
+     eval-checked.
+  7. Complexity checking is declared-metadata + heuristic only — no static
+     complexity inference. Hermetic CI preserved (stdlib, no network, no model).
+- **Consequences:** Subagent context is scoped by module route with measured
+  payload reduction; review gains contract-conformance checking at boundaries;
+  Skill reputation is pinned to content. Follow-ups recorded: M37 specialist
+  FP on removed diff lines; compiler SKILL_SLUGS missing `code-reviewer` and
+  `northstar-connected-routine` (pre-existing on main). See
+  [`docs/integrations/context-inodes.md`](docs/integrations/context-inodes.md).
+
 ## ADR-056: Opt-in Cursor Agentic Security ingest (M39)
 
 - **Status:** Accepted

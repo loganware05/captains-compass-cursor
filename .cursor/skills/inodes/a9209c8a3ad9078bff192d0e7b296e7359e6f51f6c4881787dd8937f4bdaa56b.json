@@ -1,0 +1,15 @@
+{
+  "content_hash": "a9209c8a3ad9078bff192d0e7b296e7359e6f51f6c4881787dd8937f4bdaa56b",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-a9209c8a3ad9078b",
+  "slug": "capability-planning",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

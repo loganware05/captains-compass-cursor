@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/skill-inode.schema.json",
+  "title": "SkillInode",
+  "description": "Content-addressed Skill identity (M40). The hash covers SKILL.md + capability.yaml, so a Skill edit yields a new inode; reputation carry-over to a new inode requires explicit Captain approval.",
+  "type": "object",
+  "required": [
+    "skill_inode_id",
+    "store_version",
+    "slug",
+    "content_hash",
+    "sources",
+    "reputation"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "skill_inode_id": { "type": "string", "minLength": 1 },
+    "store_version": { "type": "string", "minLength": 1 },
+    "slug": { "type": "string", "minLength": 1 },
+    "content_hash": {
+      "type": "string",
+      "minLength": 64,
+      "description": "SHA-256 hex over the Skill's hashed source files."
+    },
+    "sources": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Skill-relative files covered by the content hash."
+    },
+    "lifecycle_stage": {
+      "type": "string",
+      "description": "Stage read from capability.yaml content (descriptive, not prescriptive)."
+    },
+    "reputation": {
+      "type": "object",
+      "required": ["captain_approved"],
+      "additionalProperties": true,
+      "properties": {
+        "carry_over_from": {
+          "type": ["string", "null"],
+          "description": "Predecessor skill inode ID when content changed."
+        },
+        "captain_approved": {
+          "type": "boolean",
+          "description": "True only when the Captain approved reputation carry-over to this inode. Experience-pinned reputation never transfers silently."
+        }
+      }
+    }
+  }
+}

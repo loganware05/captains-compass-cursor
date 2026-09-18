@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/context-inode.schema.json",
+  "title": "ContextInode",
+  "description": "Inode-style structural metadata for one source file, content-addressed and decoupled from raw source (M40). Inodes store pointers and metadata only — never file contents.",
+  "type": "object",
+  "required": [
+    "inode_id",
+    "store_version",
+    "source_path",
+    "content_hash",
+    "language",
+    "byte_size",
+    "symbols",
+    "imports"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "inode_id": { "type": "string", "minLength": 1 },
+    "store_version": { "type": "string", "minLength": 1 },
+    "source_path": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Repo-relative POSIX path of the indexed source file."
+    },
+    "content_hash": {
+      "type": "string",
+      "minLength": 64,
+      "description": "SHA-256 hex of the source file bytes at index time (staleness detection)."
+    },
+    "language": {
+      "type": "string",
+      "enum": ["python", "typescript", "tsx", "other"]
+    },
+    "byte_size": { "type": "integer", "minimum": 0 },
+    "module": {
+      "type": "string",
+      "description": "Context route (domain/module) this file belongs to."
+    },
+    "exports": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Names of exported symbols."
+    },
+    "symbols": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "kind", "exported"],
+        "additionalProperties": true,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "kind": {
+            "type": "string",
+            "enum": ["interface", "type", "function", "class", "const", "method", "reexport"]
+          },
+          "exported": { "type": "boolean" },
+          "signature": { "type": "string" },
+          "params": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name"],
+              "additionalProperties": true,
+              "properties": {
+                "name": { "type": "string", "minLength": 1 },
+                "type": { "type": "string" }
+              }
+            }
+          },
+          "return_type": { "type": "string" },
+          "complexity": {
+            "type": "string",
+            "description": "Declared complexity from an explicit @complexity annotation; never inferred."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name"],
+              "additionalProperties": true,
+              "properties": {
+                "name": { "type": "string", "minLength": 1 },
+                "type": { "type": "string" },
+                "optional": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "imports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["module"],
+        "additionalProperties": true,
+        "properties": {
+          "module": { "type": "string", "minLength": 1 },
+          "names": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "declared_complexity": {
+      "type": "string",
+      "description": "File-level declared complexity from an explicit @complexity annotation; empty when absent."
+    }
+  }
+}

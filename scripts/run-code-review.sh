@@ -22,6 +22,7 @@ PULL_NUMBER=""
 GITHUB_ALLOWLIST=""
 SEVERITY_FLOOR=""
 GITHUB_COMMIT=""
+BOUNDARY_CHECK=1
 
 usage() {
   cat <<'USAGE'
@@ -45,6 +46,8 @@ Options:
   --github-allowlist PATH  Allowlist YAML/JSON (default: .agent/review/github-allowlist.yml)
   --severity-floor LEVEL    critical|high|medium|low|info (default from allowlist)
   --github-commit SHA      Optional commit_id for the draft review
+  --boundary-check         M40: cross-boundary verification against inode store (default: on)
+  --no-boundary-check      Disable the M40 boundary gate
   -h, --help               Show help
 
 Default path never posts GitHub reviews and never invokes a model.
@@ -70,6 +73,8 @@ while [[ $# -gt 0 ]]; do
     --github-allowlist) GITHUB_ALLOWLIST="$2"; shift 2 ;;
     --severity-floor) SEVERITY_FLOOR="$2"; shift 2 ;;
     --github-commit) GITHUB_COMMIT="$2"; shift 2 ;;
+    --boundary-check) BOUNDARY_CHECK=1; shift ;;
+    --no-boundary-check) BOUNDARY_CHECK=0; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "error: unknown argument: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -82,7 +87,7 @@ if [[ -z "$REPO_ROOT" ]]; then
 fi
 
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python3 - "$REPO_ROOT" "$BASE_REF" "$HEAD_REF" "$DIFF_FILE" "$CANDIDATES" "$PLAN_PATH" "$INTENT_JSON" "$PLAN_ID" "$RUN_ID" "$CHANGED" "$CANDIDATES_MODE" "$POST_GITHUB_DRAFT" "$GITHUB_REPO" "$PULL_NUMBER" "$GITHUB_ALLOWLIST" "$SEVERITY_FLOOR" "$GITHUB_COMMIT" <<'PY'
+python3 - "$REPO_ROOT" "$BASE_REF" "$HEAD_REF" "$DIFF_FILE" "$CANDIDATES" "$PLAN_PATH" "$INTENT_JSON" "$PLAN_ID" "$RUN_ID" "$CHANGED" "$CANDIDATES_MODE" "$POST_GITHUB_DRAFT" "$GITHUB_REPO" "$PULL_NUMBER" "$GITHUB_ALLOWLIST" "$SEVERITY_FLOOR" "$GITHUB_COMMIT" "$BOUNDARY_CHECK" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -106,6 +111,7 @@ pull_number_raw = sys.argv[14]
 github_allowlist = sys.argv[15]
 severity_floor = sys.argv[16]
 github_commit = sys.argv[17]
+boundary_check = sys.argv[18] == "1" if len(sys.argv) > 18 else True
 
 kwargs = {
     "repo_root": repo,
@@ -115,6 +121,7 @@ kwargs = {
     "hermetic": True,
     "candidates_mode": candidates_mode or "specialists",
     "post_github_draft": post_github_draft,
+    "boundary_check": boundary_check,
 }
 if diff_file:
     kwargs["diff_file"] = Path(diff_file)
@@ -153,6 +160,7 @@ print(json.dumps({
     "github_review_posted": result["report"]["provenance"].get("github_review_posted", False),
     "candidates_source": result["report"]["provenance"].get("candidates_source"),
     "intent_source": (result.get("detection") or {}).get("intent", {}).get("source"),
+    "boundary": result.get("boundary"),
     "github_draft": result.get("github_draft"),
 }, indent=2))
 PY

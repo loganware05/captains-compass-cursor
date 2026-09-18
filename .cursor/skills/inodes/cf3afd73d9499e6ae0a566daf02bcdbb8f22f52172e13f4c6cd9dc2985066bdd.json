@@ -1,0 +1,15 @@
+{
+  "content_hash": "cf3afd73d9499e6ae0a566daf02bcdbb8f22f52172e13f4c6cd9dc2985066bdd",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-cf3afd73d9499e6a",
+  "slug": "candidate-promotion",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

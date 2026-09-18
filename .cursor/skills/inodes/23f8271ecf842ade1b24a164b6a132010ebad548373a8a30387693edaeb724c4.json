@@ -1,0 +1,15 @@
+{
+  "content_hash": "23f8271ecf842ade1b24a164b6a132010ebad548373a8a30387693edaeb724c4",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-23f8271ecf842ade",
+  "slug": "notion-integration",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

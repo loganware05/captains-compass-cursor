@@ -5,14 +5,38 @@ Hermetic, evidence-only code review pipeline for NorthStar (M27–M31).
 ## Pipeline
 
 ```
-detect → investigate → specialist composition → verify → report
+detect → investigate → specialist composition → boundary gate (M40) → verify → report
 ```
 
 1. **Detect** — domains from changed paths + intent from plan markdown **or** intent-pack JSON (M29)
 2. **Investigate** — context pack (diff, snippets, neighbors); secrets redacted
 3. **Specialists (M28 default)** — hermetic security / adversarial / testing emitters produce candidate JSON
-4. **Verify** — confidence + evidence-path gate (discards noise)
-5. **Report** — `.agent/evidence/code-review/<run-id>/{report.json,report.md,context-pack.json}`
+4. **Boundary gate (M40)** — cross-boundary checks against metadata inodes (below)
+5. **Verify** — confidence + evidence-path gate (discards noise)
+6. **Report** — `.agent/evidence/code-review/<run-id>/{report.json,report.md,context-pack.json}`
+
+## Cross-boundary verification gate (M40)
+
+When the repo has a built inode store (`scripts/build-context-inodes.sh`; see
+[`context-inodes.md`](context-inodes.md)), the gate validates imports/calls
+that cross context routes (`domain/module`) against callee metadata:
+
+| Check | Severity | Fires when |
+|---|---|---|
+| `boundary-unknown-symbol` | high | an import names a symbol the callee does not export (both directions: changed importers and unchanged importers of a changed callee) |
+| `boundary-arity` | medium | an added call passes an argument count the declared signature cannot accept (variadic-aware) |
+| `boundary-complexity` | medium | an added call inside an added loop invokes a callee with non-constant declared `@complexity` (e.g. \(O(N)\) per element ⇒ \(O(N^2)\)) |
+
+- On by default; `--no-boundary-check` disables. Absent/stale store ⇒ the gate
+  **skips with an explicit note** (never reviews against untrusted metadata).
+- New files are checked via their added import lines even when unindexed.
+- Effective callee exports = store exports − diff-removed + diff-added, so
+  verdicts are correct whether the store was built from base or head.
+- Deterministic and hermetic; findings carry `category: boundary` and flow
+  through the standard verify/rank path. Precision 1.0 on the fixture and
+  sandbox corpora (measured; see `.agent/evidence/m40-filesystem-gated-context/`).
+- Known limits: TS parser-lite subset (no `export *` expansion); complexity is
+  declared-metadata conformance, not static inference.
 
 ## Agentic-equivalent fail-closed checks (M37)
 

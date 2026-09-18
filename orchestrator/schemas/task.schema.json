@@ -15,7 +15,23 @@
     },
     "dependencies": {
       "type": "array",
-      "items": { "type": "string" }
+      "description": "Ordering edges (legacy string form) or typed links (M40): hard = version-locked contract coupling, symlink = loose module path reference.",
+      "items": {
+        "anyOf": [
+          { "type": "string", "minLength": 1 },
+          {
+            "type": "object",
+            "required": ["target", "link"],
+            "additionalProperties": true,
+            "properties": {
+              "target": { "type": "string", "minLength": 1 },
+              "link": { "type": "string", "enum": ["hard", "symlink"] },
+              "contract": { "type": "string" },
+              "paths": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        ]
+      }
     },
     "required_capabilities": {
       "type": "array",

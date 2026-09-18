@@ -48,6 +48,7 @@ def build_report(
     status: str = "completed",
     github_review_posted: bool = False,
     github_draft: dict[str, Any] | None = None,
+    boundary: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     verified = sum(1 for f in findings if f.get("status") == "verified")
     unverified = sum(1 for f in findings if f.get("status") == "unverified")
@@ -61,6 +62,8 @@ def build_report(
     }
     if github_draft is not None:
         provenance["github_draft"] = github_draft
+    if boundary is not None:
+        provenance["boundary"] = boundary
     report: dict[str, Any] = {
         "schema_version": "northstar.code_review_report.v1",
         "run_id": run_id,

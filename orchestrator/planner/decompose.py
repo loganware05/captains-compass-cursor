@@ -7,12 +7,25 @@ from dataclasses import dataclass, field
 from orchestrator.intent.infer_capabilities import IntentResult
 
 
+ARCHITECTURE_CONTRACT = "architecture-brief"
+
+
+def _hard_link(target: str, contract: str) -> dict:
+    """Version-locked contract coupling: both sides must change together."""
+    return {"target": target, "link": "hard", "contract": contract}
+
+
+def _symlink(target: str, paths: list[str]) -> dict:
+    """Loose module/artifact path reference through indirection."""
+    return {"target": target, "link": "symlink", "paths": list(paths)}
+
+
 @dataclass
 class TaskNode:
     id: str
     objective: str
     acceptance_criteria: list[str] = field(default_factory=list)
-    dependencies: list[str] = field(default_factory=list)
+    dependencies: list = field(default_factory=list)
     required_capabilities: list[str] = field(default_factory=list)
     parallelizable: bool = False
     expected_artifacts: list[str] = field(default_factory=list)
@@ -93,6 +106,8 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
     )
 
     implementation_ids: list[str] = []
+    implementation_artifacts: dict[str, list[str]] = {}
+    arch_dep = [_hard_link("task-architecture", ARCHITECTURE_CONTRACT)]
 
     if flags["frontend"]:
         task = TaskNode(
@@ -102,7 +117,7 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
                 "UI matches approved plan and project conventions",
                 "Client tests updated or added for changed behavior",
             ],
-            dependencies=["task-architecture"],
+            dependencies=list(arch_dep),
             required_capabilities=[
                 "react-component-development",
                 "typescript-ui",
@@ -117,6 +132,7 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
             )
         tasks.append(task)
         implementation_ids.append(task.id)
+        implementation_artifacts[task.id] = list(task.expected_artifacts)
 
     if flags["backend"]:
         task = TaskNode(
@@ -126,7 +142,7 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
                 "API behavior matches approved contracts",
                 "Auth boundaries and validation enforced",
             ],
-            dependencies=["task-architecture"],
+            dependencies=list(arch_dep),
             required_capabilities=[
                 "node-api-development",
                 "auth-boundary-enforcement",
@@ -137,6 +153,7 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
         )
         tasks.append(task)
         implementation_ids.append(task.id)
+        implementation_artifacts[task.id] = list(task.expected_artifacts)
 
     if flags["database"]:
         task = TaskNode(
@@ -146,7 +163,7 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
                 "Prisma/schema changes migrate cleanly with rollback notes",
                 "Indexes and constraints documented",
             ],
-            dependencies=["task-architecture"],
+            dependencies=list(arch_dep),
             required_capabilities=[
                 "prisma-schema-design",
                 "database-migration",
@@ -157,6 +174,7 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
         )
         tasks.append(task)
         implementation_ids.append(task.id)
+        implementation_artifacts[task.id] = list(task.expected_artifacts)
 
     if flags["ml"]:
         task = TaskNode(
@@ -166,7 +184,7 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
                 "Training/eval steps are reproducible",
                 "Dataset and model contracts documented",
             ],
-            dependencies=["task-architecture"],
+            dependencies=list(arch_dep),
             required_capabilities=[
                 "python-service-development",
                 "ml-training",
@@ -178,6 +196,7 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
         )
         tasks.append(task)
         implementation_ids.append(task.id)
+        implementation_artifacts[task.id] = list(task.expected_artifacts)
 
     if flags["ios"]:
         task = TaskNode(
@@ -187,7 +206,7 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
                 "Simulator validation completed for changed flows",
                 "Accessibility labels present on new UI",
             ],
-            dependencies=["task-architecture"],
+            dependencies=list(arch_dep),
             required_capabilities=[
                 "swiftui-development",
                 "simulator-testing",
@@ -198,6 +217,7 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
         )
         tasks.append(task)
         implementation_ids.append(task.id)
+        implementation_artifacts[task.id] = list(task.expected_artifacts)
 
     if flags["docker"]:
         task = TaskNode(
@@ -207,7 +227,7 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
                 "Docker/Compose config builds successfully",
                 "Preview deploy and rollback steps documented",
             ],
-            dependencies=["task-architecture"],
+            dependencies=list(arch_dep),
             required_capabilities=[
                 "dockerfile-authoring",
                 "docker-compose-config",
@@ -218,6 +238,7 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
         )
         tasks.append(task)
         implementation_ids.append(task.id)
+        implementation_artifacts[task.id] = list(task.expected_artifacts)
 
     if not implementation_ids:
         task = TaskNode(
@@ -227,15 +248,18 @@ def decompose(objective: str, intent: IntentResult) -> list[dict]:
                 "Implementation matches approved plan acceptance criteria",
                 "No silent scope expansion",
             ],
-            dependencies=["task-architecture"],
+            dependencies=list(arch_dep),
             required_capabilities=["feature-implementation", "convention-following"],
             parallelizable=False,
             expected_artifacts=["implementation-diff"],
         )
         tasks.append(task)
         implementation_ids.append(task.id)
+        implementation_artifacts[task.id] = list(task.expected_artifacts)
 
-    validation_deps = list(implementation_ids)
+    validation_deps = [
+        _symlink(tid, implementation_artifacts.get(tid, [])) for tid in implementation_ids
+    ]
     validation_caps = [
         "unit-test-execution",
         "integration-test-execution",
