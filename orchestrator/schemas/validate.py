@@ -32,6 +32,7 @@ SCHEMA_FILES = (
     "repair-run.schema.json",
     "context-inode.schema.json",
     "context-route.schema.json",
+    "skill-inode.schema.json",
 )
 
 

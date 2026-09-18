@@ -1,0 +1,15 @@
+{
+  "content_hash": "e2750e26c1e75fd010ad225af29ba7e7b68bd10d8421ab259ec34d049bde9afa",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-e2750e26c1e75fd0",
+  "slug": "technology-intelligence-live",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

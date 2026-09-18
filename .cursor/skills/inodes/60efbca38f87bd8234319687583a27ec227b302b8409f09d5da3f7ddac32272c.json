@@ -1,0 +1,15 @@
+{
+  "content_hash": "60efbca38f87bd8234319687583a27ec227b302b8409f09d5da3f7ddac32272c",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-60efbca38f87bd82",
+  "slug": "dependency-supply-chain",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

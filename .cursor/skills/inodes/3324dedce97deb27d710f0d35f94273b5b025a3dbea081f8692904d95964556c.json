@@ -1,0 +1,15 @@
+{
+  "content_hash": "3324dedce97deb27d710f0d35f94273b5b025a3dbea081f8692904d95964556c",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-3324dedce97deb27",
+  "slug": "linear-integration",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

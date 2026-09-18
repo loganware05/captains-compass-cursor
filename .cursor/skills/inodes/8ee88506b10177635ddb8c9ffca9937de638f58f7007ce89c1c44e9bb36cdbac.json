@@ -1,0 +1,15 @@
+{
+  "content_hash": "8ee88506b10177635ddb8c9ffca9937de638f58f7007ce89c1c44e9bb36cdbac",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-8ee88506b1017763",
+  "slug": "compass-evaluator",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

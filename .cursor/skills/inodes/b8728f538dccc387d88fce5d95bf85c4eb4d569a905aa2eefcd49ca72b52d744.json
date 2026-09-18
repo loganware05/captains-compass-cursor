@@ -1,0 +1,15 @@
+{
+  "content_hash": "b8728f538dccc387d88fce5d95bf85c4eb4d569a905aa2eefcd49ca72b52d744",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-b8728f538dccc387",
+  "slug": "code-structure-cleanup",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

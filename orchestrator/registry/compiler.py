@@ -139,6 +139,15 @@ def compile_registry(repo_root: Path) -> CompileResult:
         if cap_id in seen_ids:
             raise RegistryCompileError(f"duplicate capability id: {cap_id}")
         seen_ids.add(cap_id)
+        # M40: pin content-addressed skill identity into provenance.
+        from orchestrator.registry.inodes import skill_content_hash, skill_inode_id_for
+        from orchestrator.registry.loader import resolve_skill_dir
+
+        content_hash = skill_content_hash(resolve_skill_dir(repo_root, slug))
+        provenance = capability.setdefault("provenance", {})
+        if isinstance(provenance, dict):
+            provenance["content_hash"] = content_hash
+            provenance["skill_inode"] = skill_inode_id_for(content_hash)
         skills.append(capability)
 
     profiles: list[dict] = []

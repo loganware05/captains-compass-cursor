@@ -1,0 +1,15 @@
+{
+  "content_hash": "f05a256f8afce73ca5ea64440edc83c3cb6359ab3ddf4b9d7e3a7a87a96cd9ec",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-f05a256f8afce73c",
+  "slug": "docker-cloud",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

@@ -1,0 +1,15 @@
+{
+  "content_hash": "850cda57689cda13146a4fff6c2bbcbf030e0a928704244deef753b3a08f7b8b",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-850cda57689cda13",
+  "slug": "package-registry-ti",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

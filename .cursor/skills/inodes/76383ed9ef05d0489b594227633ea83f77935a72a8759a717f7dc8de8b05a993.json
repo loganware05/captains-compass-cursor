@@ -1,0 +1,15 @@
+{
+  "content_hash": "76383ed9ef05d0489b594227633ea83f77935a72a8759a717f7dc8de8b05a993",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-76383ed9ef05d048",
+  "slug": "implementation-planning",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

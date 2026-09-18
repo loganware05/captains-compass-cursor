@@ -1,0 +1,15 @@
+{
+  "content_hash": "e0500739c3347b582b04dae80ee1c043aedb7960b9093cb6729dd021d2ef5c1e",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-e0500739c3347b58",
+  "slug": "github-integration",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

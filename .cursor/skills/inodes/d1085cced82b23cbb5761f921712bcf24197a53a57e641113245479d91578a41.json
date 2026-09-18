@@ -1,0 +1,15 @@
+{
+  "content_hash": "d1085cced82b23cbb5761f921712bcf24197a53a57e641113245479d91578a41",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-d1085cced82b23cb",
+  "slug": "execution-telemetry",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

@@ -1,0 +1,15 @@
+{
+  "content_hash": "0de818f5ad26ca03a6c722b65329e8627838b88d1586ebb3eaa7dc8d7c21360e",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-0de818f5ad26ca03",
+  "slug": "postgres-prisma",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}
