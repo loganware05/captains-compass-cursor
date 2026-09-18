@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED — IMPLEMENTING** |
+| Status | **COMPLETE on main (#175)**; follow-up opaque forge → #174 |
 | Plan ID | `m39-agentic-security-phase-b` |
 | Supersedes | Continues `agentic-security-review-integration` Phase B |
 | Product | **NorthStar** |

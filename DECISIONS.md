@@ -28,10 +28,11 @@
   1. Register `plan-approval-check.sh` on `beforeShellExecution` (fail-closed).
   2. Deny commands that write to `IMPLEMENTATION_PLAN.md` and promote Status to
      APPROVED/IN PROGRESS/VALIDATING/COMPLETE unless `COMPASS_CAPTAIN_APPROVE=1`.
-  3. Allow non-promoting plan shell edits and unrelated commands.
-- **Consequences:** Common shell forges of approval are blocked. Residual:
-  content-opaque copies (`cat file > IMPLEMENTATION_PLAN.md`) without promote
-  tokens in the command line remain a process risk.
+  3. Deny opaque shell writes to the plan file fail-closed (cannot prove Status
+     is safe); allow bare reads and unrelated commands. Captain override via
+     `COMPASS_CAPTAIN_APPROVE=1`.
+- **Consequences:** Shell forges of approval — including opaque redirects — are
+  blocked (opaque residual closed in v1.40.1 / PR #174 after #173).
 
 ## ADR-054: Agentic-equivalent fail-closed checks in Code Reviewer (M37)
 

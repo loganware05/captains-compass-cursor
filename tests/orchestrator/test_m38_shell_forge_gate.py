@@ -64,11 +64,37 @@ class ShellForgeGateTests(unittest.TestCase):
         )
         self.assertEqual(out["permission"], "allow")
 
-    def test_allows_non_promoting_plan_shell_edit(self) -> None:
+    def test_denies_opaque_non_promoting_plan_shell_write(self) -> None:
+        # Fail-closed residual from #173: redirects without promote tokens
+        # still cannot prove Status is safe.
         out = _run_hook(
             {
                 "command": (
                     'echo "| Status | AWAITING APPROVAL |" > IMPLEMENTATION_PLAN.md'
+                )
+            }
+        )
+        self.assertEqual(out["permission"], "deny")
+        self.assertIn("opaque", out["agent_message"].lower())
+
+    def test_denies_opaque_cat_redirect(self) -> None:
+        out = _run_hook(
+            {"command": "cat somewhere.md > IMPLEMENTATION_PLAN.md"}
+        )
+        self.assertEqual(out["permission"], "deny")
+
+    def test_allows_read_only_plan_shell(self) -> None:
+        out = _run_hook({"command": "cat IMPLEMENTATION_PLAN.md"})
+        self.assertEqual(out["permission"], "allow")
+        out = _run_hook({"command": "grep -n Status IMPLEMENTATION_PLAN.md"})
+        self.assertEqual(out["permission"], "allow")
+
+    def test_allows_captain_env_in_command_string(self) -> None:
+        out = _run_hook(
+            {
+                "command": (
+                    "COMPASS_CAPTAIN_APPROVE=1 "
+                    'echo "| Status | APPROVED |" > IMPLEMENTATION_PLAN.md'
                 )
             }
         )

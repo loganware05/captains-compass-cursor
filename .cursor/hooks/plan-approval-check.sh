@@ -204,10 +204,12 @@ d = load()
 cmd = shell_command(d)
 path = tool_path(d)
 
-# M38 — beforeShellExecution: deny shell forges that promote plan Status
-# without Captain. Non-promoting plan shell edits are allowed.
+# M38 — beforeShellExecution: deny shell writes that forge IMPLEMENTATION_PLAN.md
+# without Captain. Opaque redirects are fail-closed (cannot prove Status is safe).
 if cmd and shell_forges_plan(cmd):
     captain = os.environ.get("COMPASS_CAPTAIN_APPROVE", "") == "1"
+    if re.search(r"(?:^|[\s;])COMPASS_CAPTAIN_APPROVE=1\b", cmd):
+        captain = True
     if captain:
         allow()
     if shell_promotes(cmd):
@@ -217,7 +219,12 @@ if cmd and shell_forges_plan(cmd):
             "COMPLETE). Captain must set COMPASS_CAPTAIN_APPROVE=1 "
             "(M38 shell forge gate)."
         )
-    allow()
+    deny(
+        "Plan-approval hook: refusing opaque shell write to "
+        "IMPLEMENTATION_PLAN.md without COMPASS_CAPTAIN_APPROVE=1 "
+        "(cannot prove Status is not being forged). Use Write/StrReplace "
+        "with an inspectable payload, or set COMPASS_CAPTAIN_APPROVE=1."
+    )
 
 if not path:
     allow()
