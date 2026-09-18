@@ -470,6 +470,11 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "missing orchestrator/schemas/github-allowlist.schema.json"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/agentic-security-allowlist.schema.json" ]]; then
+    ok "agentic-security-allowlist schema"
+  else
+    fail "missing orchestrator/schemas/agentic-security-allowlist.schema.json"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/finding-outcome.schema.json" ]]; then
     ok "finding-outcome schema"
   else
@@ -494,6 +499,16 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "github-allowlist template"
   else
     fail "missing templates/agent/review/github-allowlist.yml"
+  fi
+  if [[ -f "$ROOT/templates/agent/review/agentic-security-allowlist.yml" ]]; then
+    ok "agentic-security-allowlist template"
+  else
+    fail "missing templates/agent/review/agentic-security-allowlist.yml"
+  fi
+  if [[ -x "$ROOT/scripts/ingest-agentic-security.sh" ]]; then
+    ok "ingest-agentic-security.sh"
+  else
+    fail "missing executable scripts/ingest-agentic-security.sh"
   fi
   if grep -q 'Acceptance Criteria' "$ROOT/templates/docs/IMPLEMENTATION_PLAN.md" 2>/dev/null; then
     ok "IMPLEMENTATION_PLAN.md intent sections"

@@ -30,7 +30,7 @@ or `hooks.json`:
 
 Fixtures: `tests/fixtures/code-review/hook-*.diff` and
 `intent-security-hooks.json`. Remains hermetic — no Cursor Cloud on the default
-`northstar review` path. Live Security Agent ingestion is Phase B (deferred).
+`northstar review` path.
 
 ```bash
 # Review a hooks change with the security-hooks intent fixture
@@ -38,6 +38,29 @@ $CONTROL/scripts/northstar review --repo "$(pwd)" \
   --diff-file path/to.diff \
   --intent-json $CONTROL/tests/fixtures/code-review/intent-security-hooks.json
 ```
+
+## Live Agentic Security ingest (M39, opt-in)
+
+After running Cursor `/review-security` (or Security Reviewer Automation), export
+the findings JSON and ingest into NorthStar evidence **without** changing the
+hermetic default review path:
+
+```bash
+# Captain: enable allowlist in the target repo
+cp $CONTROL/templates/agent/review/agentic-security-allowlist.yml \
+   "$(pwd)/.agent/review/agentic-security-allowlist.yml"
+# set enabled: true and ensure owner/repo is listed
+
+$CONTROL/scripts/northstar review ingest-agentic-security \
+  --repo "$(pwd)" \
+  --artifact path/to/cursor-security-export.json \
+  --github-repo owner/name \
+  [--run-id my-run] [--outcomes-proposal]
+```
+
+Evidence lands at `.agent/evidence/review/<run-id>/agentic-security/`.
+Refuse-closed when `enabled: false` or the repo is not listed (M30 posture).
+Never auto-merges; never invokes Cursor Cloud from the ingest script.
 
 ## Intent packs (M29)
 

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://northstar.dev/schemas/agentic-security-allowlist.schema.json",
+  "title": "NorthStarAgenticSecurityAllowlist",
+  "description": "Allowlist for opt-in Cursor Agentic Security ingest (M39). Refuse-closed by default.",
+  "type": "object",
+  "required": ["schema_version", "repos", "enabled"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "northstar.agentic_security_allowlist.v1"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Master switch. false → all ingest refused."
+    },
+    "repos": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+      },
+      "description": "owner/repo slugs permitted for agentic-security ingest"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

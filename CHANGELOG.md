@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.40.0 — 2026-09-18
+
+### Added
+
+- **M39 / Live Agentic Security ingest (Phase B)** — opt-in
+  `northstar review ingest-agentic-security` normalizes Cursor Security
+  Reviewer exports into `.agent/evidence/review/<run-id>/agentic-security/`
+- Refuse-closed allowlist (`.agent/review/agentic-security-allowlist.yml`,
+  `enabled: false` by default) — same posture as M30
+- Hermetic fixture + tests; installer copies allowlist template skip-if-exists
+- ADR-056
+
 ## 1.39.1 — 2026-09-18
 
 ### Fixed

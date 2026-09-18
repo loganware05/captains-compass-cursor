@@ -157,6 +157,17 @@ if [[ -f "$SOURCE_ROOT/templates/agent/review/github-allowlist.yml" ]]; then
   fi
 fi
 
+# Opt-in Agentic Security ingest allowlist (M39) — skip-if-exists
+if [[ -f "$SOURCE_ROOT/templates/agent/review/agentic-security-allowlist.yml" ]]; then
+  if [[ -f "$TARGET/.agent/review/agentic-security-allowlist.yml" ]]; then
+    echo "keep: .agent/review/agentic-security-allowlist.yml (already exists; not overwritten)"
+  else
+    mkdir -p "$TARGET/.agent/review"
+    cp "$SOURCE_ROOT/templates/agent/review/agentic-security-allowlist.yml" "$TARGET/.agent/review/agentic-security-allowlist.yml"
+    echo "added: .agent/review/agentic-security-allowlist.yml"
+  fi
+fi
+
 # Thin Claude Code adapter — only when missing (never overwrite customized CLAUDE.md)
 if [[ -f "$SOURCE_ROOT/templates/docs/CLAUDE.md" ]]; then
   if [[ -f "$TARGET/CLAUDE.md" ]]; then

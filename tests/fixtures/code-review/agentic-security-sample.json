@@ -1,0 +1,27 @@
+{
+  "source": "cursor-agentic-security",
+  "findings": [
+    {
+      "id": "asr-plan-self-serve",
+      "title": "Plan-approval hook self-servable via Write",
+      "severity": "Medium",
+      "description": "IMPLEMENTATION_PLAN.md Write path can forge APPROVED without Captain env.",
+      "files": [".cursor/hooks/plan-approval-check.sh"],
+      "fix": "Require COMPASS_CAPTAIN_APPROVE=1 to promote Status."
+    },
+    {
+      "id": "asr-refspec",
+      "title": "Protected-branch misses push refspecs",
+      "severity": "High",
+      "description": "git push origin HEAD:main bypasses feature HEAD check.",
+      "paths": [".cursor/hooks/protected-branch.sh"],
+      "suggested_fix": "Parse push refspecs."
+    },
+    {
+      "id": "asr-info",
+      "title": "Informational note",
+      "severity": "Informational",
+      "message": "Consider documenting Captain env in README."
+    }
+  ]
+}
