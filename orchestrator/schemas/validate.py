@@ -30,6 +30,8 @@ SCHEMA_FILES = (
     "agentic-security-allowlist.schema.json",
     "finding-outcome.schema.json",
     "repair-run.schema.json",
+    "context-inode.schema.json",
+    "context-route.schema.json",
 )
 
 

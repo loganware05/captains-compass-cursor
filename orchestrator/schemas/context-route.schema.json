@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/context-route.schema.json",
+  "title": "ContextRoute",
+  "description": "Result of a directory-style sequential context route walk (M40). Records each resolved segment so callers can prove only the walked path was loaded.",
+  "type": "object",
+  "required": ["route", "resolved", "steps", "inode_refs"],
+  "additionalProperties": true,
+  "properties": {
+    "route": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Requested context route, e.g. 'ui/components'."
+    },
+    "resolved": {
+      "type": "boolean",
+      "description": "True when every segment resolved to a context node."
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["segment", "found"],
+        "additionalProperties": true,
+        "properties": {
+          "segment": { "type": "string", "minLength": 1 },
+          "found": { "type": "boolean" },
+          "node_id": { "type": "string" },
+          "summary": { "type": "string" }
+        }
+      }
+    },
+    "inode_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Inode IDs in scope at the resolved route (pointers only, never source)."
+    },
+    "failed_segment": {
+      "type": "string",
+      "description": "First segment that did not resolve, when resolved is false."
+    }
+  }
+}

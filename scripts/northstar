@@ -25,6 +25,7 @@ Usage:
   northstar outcomes <subcommand> …
   northstar repair <subcommand> …
   northstar precision <subcommand> …
+  northstar context <subcommand> …
 
 Surfaces (one-line purpose):
   skills      Learning Loop — refresh TI, learn, promote, sync-ledger, route-agents
@@ -34,6 +35,7 @@ Surfaces (one-line purpose):
   outcomes    Record finding triage → Experience (+ optional proposal-only routing)
   repair      FIND→PROVE→packet from verified findings (never auto-merge)
   precision   Aggregate finding outcomes into precision ledger / dashboard
+  context     Filesystem-gated context (M40) — build inode store + walk context routes
 
 Commands:
   northstar skills refresh [--repo PATH] [refresh-ti-cache.sh options]
@@ -47,6 +49,8 @@ Commands:
   northstar outcomes record --report PATH --triage PATH [record-finding-outcomes.sh options]
   northstar repair start --report PATH --finding ID [start-repair-loop.sh options]
   northstar precision aggregate (--outcomes PATH | --outcomes-dir PATH) [aggregate-precision-ledger.sh options]
+  northstar context build --repo PATH [--check]
+  northstar context walk --repo PATH --route domain/module
 
 Topology:
   CONTROL  = directory containing this launcher (captains-compass-cursor)
@@ -264,6 +268,34 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown precision subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  context)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      build)
+        require_repo_root "${mapped[@]+"${mapped[@]}"}"
+        exec "$ROOT/scripts/build-context-inodes.sh" "${mapped[@]}"
+        ;;
+      walk)
+        require_repo_root "${mapped[@]+"${mapped[@]}"}"
+        exec "$ROOT/scripts/walk-context-route.sh" "${mapped[@]}"
+        ;;
+      *)
+        echo "error: unknown context subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;
