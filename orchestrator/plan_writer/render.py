@@ -227,7 +227,14 @@ def render_task_graph(artifacts: CapabilityPlanArtifacts) -> str:
         "|---|---|---|---|",
     ]
     for task in artifacts.task_graph.get("tasks") or []:
-        deps = ", ".join(task.get("dependencies") or []) or "—"
+        rendered_deps: list[str] = []
+        for dep in task.get("dependencies") or []:
+            if isinstance(dep, dict):
+                link = dep.get("link", "")
+                rendered_deps.append(f"{dep.get('target', '?')} ({link})" if link else str(dep.get("target", "?")))
+            else:
+                rendered_deps.append(str(dep))
+        deps = ", ".join(rendered_deps) or "—"
         parallel = "yes" if task.get("parallelizable") else "no"
         objective = task.get("objective", "").replace("|", "\\|")
         lines.append(

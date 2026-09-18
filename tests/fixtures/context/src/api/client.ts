@@ -1,6 +1,7 @@
 // Fixture: API client that crosses the ui boundary (M40 boundary fixtures).
 import { FormProps, buildForm } from '../ui/components/Form';
 import { validateForm } from '../ui/utils/validate';
+import '../ui/components/Input';
 
 export interface SubmissionResult {
   ok: boolean;
