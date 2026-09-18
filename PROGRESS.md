@@ -8,15 +8,16 @@
 | Item | Value |
 |---|---|
 | Tagged | **v1.38.1** (M36) — [release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.38.1) |
-| Landing | **v1.39.0** / M37 via `cursor/m37-land-main-5182` → `main` |
+| Landing | **v1.39.0** / M37 via [#172](https://github.com/loganware05/captains-compass-cursor/pull/172) (`cursor/m37-land-main-5182` → `main`) |
 | Next plan | **`m38-shell-forge-gate`** AWAITING APPROVAL ([#169](https://github.com/loganware05/captains-compass-cursor/issues/169)) |
 | Also queued | **`m39-agentic-security-phase-b`** AWAITING ([#170](https://github.com/loganware05/captains-compass-cursor/issues/170)) |
 | Rollback | `rollback/pre-m37-agentic-security-review` |
 
 ## In flight
 
-- Merge this closeout / land-M37-on-main PR → tag **v1.39.0**
+- Merge land PR [#172](https://github.com/loganware05/captains-compass-cursor/pull/172) → tag **v1.39.0**
 - Captain approve M38 (shell forge) and/or M39 (live Cursor Security ingest)
+- Close/ignore [#171](https://github.com/loganware05/captains-compass-cursor/pull/171) (superseded by #172) and note [#168](https://github.com/loganware05/captains-compass-cursor/pull/168) wrong-base merge
 
 ## Completed
 
