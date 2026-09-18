@@ -1,6 +1,27 @@
 # Decisions
 
+## ADR-053: Fail-closed hook hardening after Agentic Security Review (M36)
+
+- **Status:** Accepted
+- **Date:** 2026-09-16
+- **Context:** Cursor Security Reviewer on bitcoin-data-collector PR #7 reported
+  two medium issues in installed NorthStar hooks: plan-approval was self-servable
+  by writing `IMPLEMENTATION_PLAN.md`, and protected-branch could be bypassed via
+  push refspecs, `git -C`, and a `checkout -b feature/` substring short-circuit.
+- **Decision:**
+  1. Gate product-source edits on **committed** plan Status (metadata table or
+     `- Status:`), with non-placeholder Approved by + Approval date.
+  2. Deny Write/StrReplace that promotes plan Status to APPROVED/IN PROGRESS/
+     VALIDATING/COMPLETE unless `COMPASS_CAPTAIN_APPROVE=1`.
+  3. Rewrite protected-branch to parse `git -C` and push refspecs; remove the
+     checkout short-circuit.
+  4. Ship hermetic regression tests for both bypass classes.
+- **Consequences:** Agents cannot unlock the plan gate from the exempt plan file
+  alone. Residual: shell redirects that forge a committed plan still require a
+  follow-on shell gate (tracked under agentic-security-review integration plan).
+
 ## ADR-052: Product-repo install for bitcoin-data-collector (M35 / C2)
+
 
 - **Status:** Accepted
 - **Date:** 2026-09-16

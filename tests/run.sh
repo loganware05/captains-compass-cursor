@@ -110,9 +110,16 @@ git -C "$TMPB" -c user.email=t@t.com -c user.name=t commit -q -m init
   git checkout -B main >/dev/null
   out2="$(echo '{"command":"git commit -m x"}' | "$ROOT/.cursor/hooks/protected-branch.sh")"
   echo "$out2" > /tmp/compass-hook-main.out
+  # M36: refspec / short-circuit / git -C bypasses must deny
+  git checkout -B feature/hook-test >/dev/null
+  echo '{"command":"git push origin HEAD:main"}' | "$ROOT/.cursor/hooks/protected-branch.sh" > /tmp/compass-hook-refspec.out
+  git checkout -B main >/dev/null
+  echo '{"command":"git checkout -b feature/evil && git commit -m x"}' | "$ROOT/.cursor/hooks/protected-branch.sh" > /tmp/compass-hook-short.out
 )
 assert_contains "protected allows feature branch" 'allow' "$(cat /tmp/compass-hook-feature.out)"
 assert_contains "protected denies main" 'deny' "$(cat /tmp/compass-hook-main.out)"
+assert_contains "protected denies HEAD:main refspec" 'deny' "$(cat /tmp/compass-hook-refspec.out)"
+assert_contains "protected denies checkout substring short-circuit" 'deny' "$(cat /tmp/compass-hook-short.out)"
 rm -rf "$TMPB"
 
 echo "=== hook: plan approval ==="
@@ -125,24 +132,38 @@ git checkout -B feature/plan >/dev/null
 cat > IMPLEMENTATION_PLAN.md <<'PLAN'
 # Implementation Plan
 ## Metadata
-- Status: DRAFT
+| Field | Value |
+|---|---|
+| Status | DRAFT |
 PLAN
+git add IMPLEMENTATION_PLAN.md && git -c user.email=t@t.com -c user.name=t commit -q -m 'plan draft'
 out="$(echo '{"path":"src/App.tsx"}' | "$ROOT/.cursor/hooks/plan-approval-check.sh")"
 assert_contains "plan denies DRAFT for src" 'deny' "$out"
 
+# Working-tree APPROVED without commit must not unlock
 cat > IMPLEMENTATION_PLAN.md <<'PLAN'
 # Implementation Plan
 ## Metadata
-- Status: APPROVED
-- Approved by: Captain
-- Approval date: 2026-07-10
+| Field | Value |
+|---|---|
+| Status | APPROVED |
+| Approved by | Logan Ware |
+| Approval date | 2026-09-16 |
 ## Approval Record
 Approved.
 PLAN
 out="$(echo '{"path":"src/App.tsx"}' | "$ROOT/.cursor/hooks/plan-approval-check.sh")"
-assert_contains "plan allows APPROVED src on feature" 'allow' "$out"
-out="$(echo '{"path":"IMPLEMENTATION_PLAN.md"}' | "$ROOT/.cursor/hooks/plan-approval-check.sh")"
-assert_contains "plan allows editing plan file" 'allow' "$out"
+assert_contains "plan denies uncommitted APPROVED" 'deny' "$out"
+
+git add IMPLEMENTATION_PLAN.md && git -c user.email=t@t.com -c user.name=t commit -q -m 'plan approved'
+out="$(echo '{"path":"src/App.tsx"}' | "$ROOT/.cursor/hooks/plan-approval-check.sh")"
+assert_contains "plan allows committed APPROVED src on feature" 'allow' "$out"
+
+# Self-serve Write of APPROVED plan denied without Captain env
+out="$(echo '{"path":"IMPLEMENTATION_PLAN.md","contents":"| Status | APPROVED |\n"}' | "$ROOT/.cursor/hooks/plan-approval-check.sh")"
+assert_contains "plan denies self-serve APPROVED write" 'deny' "$out"
+out="$(COMPASS_CAPTAIN_APPROVE=1 echo '{"path":"IMPLEMENTATION_PLAN.md","contents":"| Status | APPROVED |\n"}' | COMPASS_CAPTAIN_APPROVE=1 "$ROOT/.cursor/hooks/plan-approval-check.sh")"
+assert_contains "plan allows Captain-env APPROVED write" 'allow' "$out"
 cd "$ROOT"
 rm -rf "$TMPP"
 

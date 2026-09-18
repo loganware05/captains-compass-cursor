@@ -1,0 +1,600 @@
+diff --git a/.cursor/hooks/README.md b/.cursor/hooks/README.md
+index 3742c20..eafe3fc 100644
+--- a/.cursor/hooks/README.md
++++ b/.cursor/hooks/README.md
+@@ -3,13 +3,32 @@
+ Configured in `.cursor/hooks.json` (`beforeShellExecution` + `preToolUse`):
+ 
+ 1. **secret-protection** — block staging/committing secrets (**fail-closed**)
+-2. **protected-branch** — block mutations on main/master/develop/release/production (**fail-closed**)
+-3. **plan-approval-check** — block product source edits without an APPROVED plan (**fail-closed**)
++2. **protected-branch** — block mutations on main/master/develop/release/production (**fail-closed**).
++   Parses `git -C`, push refspecs (`HEAD:main`, `origin main`), and does **not**
++   short-circuit on a `checkout -b feature/` substring in the same command.
++3. **plan-approval-check** — block product source edits without a **committed**
++   APPROVED plan (**fail-closed**). Writing `APPROVED` into `IMPLEMENTATION_PLAN.md`
++   requires `COMPASS_CAPTAIN_APPROVE=1` so agents cannot self-serve the gate.
++   Status is read from the metadata table (`| Status | … |`) or `- Status:` lines;
++   `Approved by` + `Approval date` must be real (not empty / TBD). Working-tree-only
++   approval does not unlock product files.
+ 4. **branch-name-validation** — require `feature|fix|chore|docs|agent|hotfix/<name>` (fail-open)
+ 5. **pre-commit-formatting** — run `npm run format` or `lint` before commit when present (`COMPASS_SKIP_FORMAT=1`) (fail-open)
+ 6. **pre-push-tests** — run `npm test` before push when present (`COMPASS_SKIP_TESTS=1`) (fail-open)
+ 7. **pr-evidence-validation** — require plan + `.agent/evidence/` files before `gh pr create` (`COMPASS_SKIP_PR_EVIDENCE=1`) (fail-open)
+ 
++## Captain approval env
++
++When promoting a plan to APPROVED / IN PROGRESS / VALIDATING / COMPLETE via
++Write/StrReplace, set in the Cursor / shell environment:
++
++```bash
++export COMPASS_CAPTAIN_APPROVE=1
++```
++
++Agents must not set this for themselves. After the plan is committed with a filled
++Approval Record, product-source edits are allowed on non-protected branches.
++
+ ## Fail-closed vs fail-open
+ 
+ - **Critical** hooks (`secret-protection`, `protected-branch`, `plan-approval-check`) use
+diff --git a/.cursor/hooks/plan-approval-check.sh b/.cursor/hooks/plan-approval-check.sh
+index c12a4b8..5372187 100755
+--- a/.cursor/hooks/plan-approval-check.sh
++++ b/.cursor/hooks/plan-approval-check.sh
+@@ -1,77 +1,249 @@
+ #!/usr/bin/env bash
+-# Before Write/StrReplace on product source, require APPROVED IMPLEMENTATION_PLAN.md
+-# and a non-protected branch. Planning docs and workflow files are exempt.
++# Before Write/StrReplace on product source, require a *committed* APPROVED plan.
++# Writing APPROVED into IMPLEMENTATION_PLAN.md requires COMPASS_CAPTAIN_APPROVE=1
++# so the agent cannot self-serve the fail-closed gate by editing the exempt plan file.
+ set -euo pipefail
+ 
+ input="$(cat)"
++export COMPASS_HOOK_INPUT="$input"
+ 
+-FILE_PATH="$(printf '%s' "$input" | python3 -c '
+-import json, sys
+-d = json.load(sys.stdin)
+-path = (
+-    d.get("file_path")
+-    or d.get("path")
+-    or (d.get("tool_input") or {}).get("path")
+-    or (d.get("input") or {}).get("path")
+-    or ""
++python3 - <<'PY'
++import json, os, re, subprocess, sys
++
++PROTECTED = {"main", "master", "develop", "release", "production"}
++APPROVED_RE = re.compile(
++    r"(?i)\b(APPROVED|IN PROGRESS|VALIDATING|COMPLETE)\b"
++)
++PLACEHOLDER_BY = re.compile(
++    r"(?i)^(tbd|todo|n/?a|none|unknown|<\s*captain\s*>|your name|changeme|\s*)$"
+ )
+-if not path and isinstance(d.get("arguments"), dict):
+-    path = d["arguments"].get("path") or d["arguments"].get("file_path") or ""
+-print(path)
+-')"
++PLACEHOLDER_DATE = re.compile(
++    r"(?i)^(tbd|todo|n/?a|none|unknown|yyyy-mm-dd|\s*)$"
++)
++
++
++def allow():
++    print(json.dumps({"permission": "allow"}))
++    sys.exit(0)
++
++
++def deny(msg: str):
++    print(json.dumps({
++        "permission": "deny",
++        "user_message": msg,
++        "agent_message": msg,
++    }))
++    sys.exit(0)
++
++
++def load() -> dict:
++    raw = os.environ.get("COMPASS_HOOK_INPUT") or ""
++    try:
++        return json.loads(raw) if raw else {}
++    except json.JSONDecodeError:
++        return {}
++
++
++def tool_path(d: dict) -> str:
++    path = (
++        d.get("file_path")
++        or d.get("path")
++        or (d.get("tool_input") or {}).get("path")
++        or (d.get("input") or {}).get("path")
++        or ""
++    )
++    args = d.get("arguments")
++    if not path and isinstance(args, dict):
++        path = args.get("path") or args.get("file_path") or ""
++    return str(path or "")
++
++
++def tool_payload(d: dict) -> str:
++    """Best-effort new file contents from Write / StrReplace hook payloads."""
++    ti = d.get("tool_input") if isinstance(d.get("tool_input"), dict) else {}
++    inp = d.get("input") if isinstance(d.get("input"), dict) else {}
++    args = d.get("arguments") if isinstance(d.get("arguments"), dict) else {}
++    for blob in (d, ti, inp, args):
++        for key in ("contents", "content", "new_string", "new_str", "text"):
++            val = blob.get(key)
++            if isinstance(val, str) and val.strip():
++                return val
++    return ""
++
++
++def parse_status(text: str) -> str:
++    # Prefer metadata table: | Status | VALUE |
++    m = re.search(
++        r"(?im)^\|\s*Status\s*\|\s*([^|]+?)\s*\|",
++        text,
++    )
++    if m:
++        return m.group(1).strip()
++    m = re.search(r"(?im)^-\s*Status:\s*(.+)$", text)
++    if m:
++        return m.group(1).strip()
++    m = re.search(r"(?im)^\*\*?Status\*\*?\s*[:=]\s*(.+)$", text)
++    if m:
++        return m.group(1).strip()
++    return ""
+ 
+-allow() { echo '{"permission":"allow"}'; exit 0; }
+ 
+-deny() {
+-  local msg="$1"
+-  python3 -c 'import json,sys; print(json.dumps({"permission":"deny","user_message":sys.argv[1],"agent_message":sys.argv[1]}))' "$msg"
+-  exit 0
+-}
++def parse_field(text: str, names: tuple[str, ...]) -> str:
++    for name in names:
++        m = re.search(
++            rf"(?im)^\|\s*{re.escape(name)}\s*\|\s*([^|]+?)\s*\|",
++            text,
++        )
++        if m:
++            return m.group(1).strip()
++        m = re.search(rf"(?im)^-\s*{re.escape(name)}:\s*(.+)$", text)
++        if m:
++            return m.group(1).strip()
++    return ""
+ 
+-if [[ -z "$FILE_PATH" ]]; then
+-  allow
+-fi
+ 
+-rel="${FILE_PATH#./}"
++def is_approved_status(status: str) -> bool:
++    return bool(status and APPROVED_RE.search(status))
+ 
+-case "$rel" in
+-  IMPLEMENTATION_PLAN.md|AGENTS.md|PROJECT_CONTEXT.md|DECISIONS.md|PROGRESS.md|TESTING.md|CHANGELOG.md|README.md|LICENSE|VERSION|.gitignore|.cursorignore)
+-    allow ;;
+-esac
+ 
+-case "$rel" in
+-  .cursor/*|.agent/*|docs/*|templates/*|scripts/*|tests/*)
+-    allow ;;
+-esac
++def approval_record_ok(text: str) -> bool:
++    by = parse_field(text, ("Approved by", "Approved By"))
++    date = parse_field(text, ("Approval date", "Approval Date"))
++    if not by or PLACEHOLDER_BY.match(by.strip()):
++        return False
++    if not date or PLACEHOLDER_DATE.match(date.strip()):
++        return False
++    # Heading alone (shipped template) is not enough — fields must be filled.
++    if not re.search(r"(?im)^##\s+Approval Record\b", text):
++        # Allow metadata-table-only plans if by/date are real.
++        pass
++    return True
+ 
+-# Allow non-product markdown
+-if [[ "$rel" == *.md ]]; then
+-  allow
+-fi
++
++def git_show_plan() -> str | None:
++    try:
++        proc = subprocess.run(
++            ["git", "show", "HEAD:IMPLEMENTATION_PLAN.md"],
++            capture_output=True,
++            text=True,
++            check=False,
++        )
++    except OSError:
++        return None
++    if proc.returncode != 0:
++        return None
++    return proc.stdout
++
++
++def current_branch() -> str:
++    try:
++        proc = subprocess.run(
++            ["git", "rev-parse", "--abbrev-ref", "HEAD"],
++            capture_output=True,
++            text=True,
++            check=False,
++        )
++    except OSError:
++        return ""
++    return (proc.stdout or "").strip()
++
++
++d = load()
++path = tool_path(d)
++if not path:
++    allow()
++
++rel = path[2:] if path.startswith("./") else path
++rel = rel.lstrip("/")
++
++# Memory / workflow exemptions (plan file handled specially below)
++if rel in {
++    "AGENTS.md",
++    "PROJECT_CONTEXT.md",
++    "DECISIONS.md",
++    "PROGRESS.md",
++    "TESTING.md",
++    "CHANGELOG.md",
++    "README.md",
++    "LICENSE",
++    "VERSION",
++    ".gitignore",
++    ".cursorignore",
++}:
++    allow()
++
++if rel.startswith((".cursor/", ".agent/", "docs/", "templates/", "scripts/", "tests/")):
++    allow()
++
++if rel == "IMPLEMENTATION_PLAN.md":
++    payload = tool_payload(d)
++    captain = os.environ.get("COMPASS_CAPTAIN_APPROVE", "") == "1"
++    if not payload:
++        # Fail closed on opaque plan writes — cannot prove they do not self-approve.
++        deny(
++            "Plan-approval hook: refusing opaque Write/StrReplace on "
++            "IMPLEMENTATION_PLAN.md (no contents visible). Captain must set "
++            "COMPASS_CAPTAIN_APPROVE=1 to promote Status to APPROVED, or edit "
++            "with a payload the hook can inspect."
++        )
++    new_status = parse_status(payload)
++    # Also catch approval promotion via new_string fragments without full table
++    promotes = is_approved_status(new_status) or bool(
++        re.search(
++            r"(?i)(\|\s*Status\s*\|\s*(APPROVED|IN PROGRESS|VALIDATING|COMPLETE)\s*\|"
++            r"|Status:\s*(APPROVED|IN PROGRESS|VALIDATING|COMPLETE))",
++            payload,
++        )
++    )
++    if promotes and not captain:
++        deny(
++            "Plan-approval hook: refusing self-serve approval of "
++            "IMPLEMENTATION_PLAN.md. Captain must set COMPASS_CAPTAIN_APPROVE=1 "
++            "in the environment before writing an APPROVED/IN PROGRESS/"
++            "VALIDATING/COMPLETE status (agents must not forge the gate)."
++        )
++    allow()
++
++# Non-product markdown elsewhere
++if rel.endswith(".md"):
++    allow()
+ 
+ # Only gate common product source / config extensions
+-if ! echo "$rel" | grep -Eq '\.(ts|tsx|js|jsx|mjs|cjs|py|go|rs|swift|java|kt|css|scss|sass|html|vue|svelte|json|yml|yaml|toml|sql|prisma)$'; then
+-  allow
+-fi
+-
+-if [[ ! -f IMPLEMENTATION_PLAN.md ]]; then
+-  deny "Plan-approval hook: IMPLEMENTATION_PLAN.md is missing. Create a plan and get Captain approval before changing product files ($rel)."
+-fi
+-
+-status_line="$(grep -E '^- Status:' IMPLEMENTATION_PLAN.md | head -1 || true)"
+-if ! echo "$status_line" | grep -Eqi 'APPROVED|IN PROGRESS|VALIDATING|COMPLETE'; then
+-  deny "Plan-approval hook: IMPLEMENTATION_PLAN.md is not APPROVED (found: ${status_line:-none}). Stop and await Captain approval before editing $rel."
+-fi
+-
+-if ! grep -Eqi 'Approved by:|Approval date:|## Approval Record' IMPLEMENTATION_PLAN.md; then
+-  deny "Plan-approval hook: IMPLEMENTATION_PLAN.md lacks an approval record. Record Captain approval before editing $rel."
+-fi
+-
+-branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")"
+-case "$branch" in
+-  main|master|develop|release|production)
+-    deny "Plan-approval hook: refuse product edits on protected branch '$branch'. Create a feature/fix branch first."
+-    ;;
+-esac
+-
+-allow
++if not re.search(
++    r"\.(ts|tsx|js|jsx|mjs|cjs|py|go|rs|swift|java|kt|css|scss|sass|html|vue|"
++    r"svelte|json|yml|yaml|toml|sql|prisma)$",
++    rel,
++):
++    allow()
++
++committed = git_show_plan()
++if committed is None:
++    deny(
++        f"Plan-approval hook: committed IMPLEMENTATION_PLAN.md missing on HEAD. "
++        f"Captain must commit an APPROVED plan before changing product files ({rel})."
++    )
++
++status = parse_status(committed)
++if not is_approved_status(status):
++    deny(
++        f"Plan-approval hook: committed IMPLEMENTATION_PLAN.md is not APPROVED "
++        f"(found Status: {status or 'none'}). Working-tree edits to the plan do "
++        f"not unlock product files — commit Captain approval first before editing {rel}."
++    )
++
++if not approval_record_ok(committed):
++    deny(
++        f"Plan-approval hook: committed plan lacks a real Approval Record "
++        f"(Approved by + Approval date must be filled, not placeholders) before "
++        f"editing {rel}."
++    )
++
++branch = current_branch()
++if branch in PROTECTED:
++    deny(
++        f"Plan-approval hook: refuse product edits on protected branch '{branch}'. "
++        f"Create a feature/fix branch first."
++    )
++
++allow()
++PY
+diff --git a/.cursor/hooks/protected-branch.sh b/.cursor/hooks/protected-branch.sh
+index 40b7838..a61b289 100755
+--- a/.cursor/hooks/protected-branch.sh
++++ b/.cursor/hooks/protected-branch.sh
+@@ -1,50 +1,195 @@
+ #!/usr/bin/env bash
+-# Block commits and pushes directly on protected base branches.
+-# Resolves the target git repo from hook cwd or a leading `cd` in the command.
++# Block commits and pushes that mutate protected base branches.
++# Parses git -C, push refspecs, and does NOT short-circuit on checkout -b substrings.
+ set -euo pipefail
+ 
+ input="$(cat)"
++export COMPASS_HOOK_INPUT="$input"
+ 
+-COMMAND="$(printf '%s' "$input" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("command") or "")')"
+-HOOK_CWD="$(printf '%s' "$input" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("cwd") or d.get("working_directory") or d.get("workingDirectory") or "")')"
+-CD_PATH="$(printf '%s' "$input" | python3 -c '
+-import json,sys,re
+-command=json.load(sys.stdin).get("command") or ""
+-m=re.search(r"(?:^|[;&\n])\s*cd\s+(\"([^\"]+)\"|'\''([^'\'']+)'\''|(\S+))\s*(?:&&|;|\n)", command)
+-if not m:
+-    print("")
+-else:
+-    print(m.group(2) or m.group(3) or m.group(4) or "")
+-')"
+-
+-allow() { echo '{"permission":"allow"}'; exit 0; }
+-deny() {
+-  python3 -c 'import json,sys; print(json.dumps({"permission":"deny","user_message":sys.argv[1],"agent_message":sys.argv[1]}))' "$1"
+-  exit 0
+-}
+-
+-if ! echo "$COMMAND" | grep -Eqi '(^|[[:space:]])git[[:space:]]+(commit|push|merge|rebase)'; then
+-  allow
+-fi
+-
+-# If the command itself switches off a protected branch first, allow
+-if echo "$COMMAND" | grep -Eqi 'git[[:space:]]+checkout[[:space:]]+(-b|--branch)[[:space:]]+(feature|fix|chore|docs|agent|hotfix)/'; then
+-  allow
+-fi
+-
+-if [[ -n "$CD_PATH" ]]; then
+-  repo_dir="$CD_PATH"
+-elif [[ -n "$HOOK_CWD" ]]; then
+-  repo_dir="$HOOK_CWD"
+-else
+-  repo_dir="$(pwd)"
+-fi
+-
+-branch="$(git -C "$repo_dir" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")"
+-case "$branch" in
+-  main|master|develop|release|production)
+-    deny "Protected-branch hook: refusing git mutation on protected branch '$branch' in $repo_dir. Use a feature/fix branch."
+-    ;;
+-esac
+-
+-allow
++python3 - <<'PY'
++import json, os, re, subprocess, sys
++
++PROTECTED = {"main", "master", "develop", "release", "production"}
++
++
++def allow():
++    print(json.dumps({"permission": "allow"}))
++    sys.exit(0)
++
++
++def deny(msg: str):
++    print(json.dumps({
++        "permission": "deny",
++        "user_message": msg,
++        "agent_message": msg,
++    }))
++    sys.exit(0)
++
++
++def load() -> dict:
++    raw = os.environ.get("COMPASS_HOOK_INPUT") or ""
++    try:
++        return json.loads(raw) if raw else {}
++    except json.JSONDecodeError:
++        return {}
++
++
++d = load()
++command = str(d.get("command") or "")
++hook_cwd = str(
++    d.get("cwd") or d.get("working_directory") or d.get("workingDirectory") or ""
++)
++
++if not re.search(r"(?i)(^|[\s;|&])git(\s|$)", command):
++    allow()
++
++# Only interested in mutating git verbs (anywhere in the command string).
++if not re.search(
++    r"(?i)(^|[\s;|&])git(\s+\-C\s+\S+)?\s+(commit|push|merge|rebase)\b",
++    command,
++):
++    allow()
++
++
++def unquote(tok: str) -> str:
++    if len(tok) >= 2 and tok[0] == tok[-1] and tok[0] in "'\"":
++        return tok[1:-1]
++    return tok
++
++
++def tokenize(cmd: str) -> list[str]:
++    # Lightweight shell-ish split for git argv inspection (handles quotes).
++    return re.findall(r'"(?:\\.|[^"])*"|\'(?:\\.|[^\'])*\'|\S+', cmd)
++
++
++def branch_of(repo: str) -> str:
++    try:
++        proc = subprocess.run(
++            ["git", "-C", repo, "rev-parse", "--abbrev-ref", "HEAD"],
++            capture_output=True,
++            text=True,
++            check=False,
++        )
++    except OSError:
++        return ""
++    return (proc.stdout or "").strip()
++
++
++def is_protected_ref(name: str) -> bool:
++    n = name.strip()
++    if not n:
++        return False
++    n = n.removeprefix("+")
++    # refspec dest side: src:dst
++    if ":" in n:
++        n = n.split(":", 1)[1]
++    n = n.removeprefix("refs/heads/")
++    n = n.removeprefix("refs/remotes/")
++    if "/" in n and not n.startswith("refs/"):
++        # remote-tracking style origin/main → main when second part protected
++        parts = n.split("/")
++        if parts[-1] in PROTECTED:
++            n = parts[-1]
++    return n in PROTECTED
++
++
++def leading_cd(cmd: str) -> str | None:
++    m = re.search(
++        r"(?:^|[;&\n])\s*cd\s+(\"[^\"]+\"|'[^']+'|\S+)\s*(?:&&|;|\n|$)",
++        cmd,
++    )
++    if not m:
++        return None
++    return unquote(m.group(1))
++
++
++# Split on shell separators while keeping git invocations discoverable
++segments = re.split(r"[;&\n]|&&|\|\|", command)
++default_repo = leading_cd(command) or hook_cwd or os.getcwd()
++
++for seg in segments:
++    seg = seg.strip()
++    if not seg:
++        continue
++    # Strip env assignments: FOO=1 git ...
++    seg = re.sub(r"^(?:\w+=\S+\s+)+", "", seg)
++    if not re.search(r"(?i)^git\b", seg):
++        continue
++    tokens = [unquote(t) for t in tokenize(seg)]
++    if not tokens or tokens[0] != "git":
++        continue
++
++    repo = default_repo
++    i = 1
++    # git global options before verb: -C, -c, --git-dir, --work-tree
++    while i < len(tokens):
++        t = tokens[i]
++        if t == "-C" and i + 1 < len(tokens):
++            repo = tokens[i + 1]
++            i += 2
++            continue
++        if t.startswith("-C") and len(t) > 2:
++            repo = t[2:]
++            i += 1
++            continue
++        if t in {"-c", "--git-dir", "--work-tree"} and i + 1 < len(tokens):
++            i += 2
++            continue
++        if t.startswith("-"):
++            i += 1
++            continue
++        break
++
++    if i >= len(tokens):
++        continue
++    verb = tokens[i].lower()
++    args = tokens[i + 1 :]
++
++    if verb not in {"commit", "push", "merge", "rebase"}:
++        continue
++
++    if verb == "push":
++        # Collect refspecs (non-option tokens after optional remote)
++        positionals = [a for a in args if not a.startswith("-")]
++        refspecs = positionals[1:] if positionals else []
++        # Flags that push protected branches without naming them
++        joined = " ".join(args).lower()
++        if re.search(r"(?i)(^|\s)--all(\s|$)|(^|\s)--mirror(\s|$)", joined):
++            deny(
++                "Protected-branch hook: refusing git push --all/--mirror "
++                f"(may update protected branches) in {repo}."
++            )
++        for spec in refspecs:
++            if is_protected_ref(spec):
++                deny(
++                    "Protected-branch hook: refusing push refspec "
++                    f"'{spec}' targeting protected branch in {repo}."
++                )
++        # No refspecs → pushes current HEAD
++        if not refspecs:
++            br = branch_of(repo)
++            if br in PROTECTED:
++                deny(
++                    "Protected-branch hook: refusing git push on protected "
++                    f"branch '{br}' in {repo}."
++                )
++        continue
++
++    if verb in {"commit", "merge", "rebase"}:
++        br = branch_of(repo)
++        if br in PROTECTED:
++            deny(
++                "Protected-branch hook: refusing git "
++                f"{verb} on protected branch '{br}' in {repo}."
++            )
++        # merge/rebase onto protected remote-tracking names in args
++        if verb in {"merge", "rebase"}:
++            for a in args:
++                if a.startswith("-"):
++                    continue
++                if is_protected_ref(a) or a in PROTECTED:
++                    # merging *from* main into feature is OK; only deny if HEAD protected (above).
++                    pass
++
++allow()
++PY

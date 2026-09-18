@@ -70,19 +70,27 @@ git -C "$TMP" -c user.email=t@t.com -c user.name=t commit -q -m init
   cat > IMPLEMENTATION_PLAN.md <<'PLAN'
 # Implementation Plan
 ## Metadata
-- Status: DRAFT
+| Field | Value |
+|---|---|
+| Status | DRAFT |
 PLAN
+  git add IMPLEMENTATION_PLAN.md
+  git -c user.email=t@t.com -c user.name=t commit -q -m 'draft plan'
   out="$(echo '{"path":"src/App.tsx"}' | "$ROOT/.cursor/hooks/plan-approval-check.sh")"
   echo "$out" > /tmp/compass-eval-draft.out
   cat > IMPLEMENTATION_PLAN.md <<'PLAN'
 # Implementation Plan
 ## Metadata
-- Status: APPROVED
-- Approved by: Captain
-- Approval date: 2026-07-30
+| Field | Value |
+|---|---|
+| Status | APPROVED |
+| Approved by | Logan Ware |
+| Approval date | 2026-07-30 |
 ## Approval Record
 Approved.
 PLAN
+  git add IMPLEMENTATION_PLAN.md
+  git -c user.email=t@t.com -c user.name=t commit -q -m 'approved plan'
   out2="$(echo '{"path":"src/App.tsx"}' | "$ROOT/.cursor/hooks/plan-approval-check.sh")"
   echo "$out2" > /tmp/compass-eval-approved.out
 )
