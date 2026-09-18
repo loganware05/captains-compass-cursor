@@ -12,3 +12,9 @@ Validation: `python3 -m unittest tests.orchestrator.test_m39_agentic_security_in
 
 Locks: hermetic `northstar review` default unchanged; refuse-closed without
 `enabled: true` + allowlisted `owner/repo`.
+
+## Landing note (2026-09-18)
+
+Feature landed on `main` via **#175** (`cursor/m39-agentic-security-phase-b-5182`).
+Parallel track **#176** (`…-3b10`) was rebased as a docs/conflict closeout after
+#173/#175 — no second implementation.

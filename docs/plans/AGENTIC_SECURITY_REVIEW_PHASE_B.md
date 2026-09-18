@@ -6,12 +6,12 @@
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED — IMPLEMENTING** |
+| Status | **COMPLETE** — landed on `main` via [#175](https://github.com/loganware05/captains-compass-cursor/pull/175) (v1.40.0) |
 | Plan ID | `m39-agentic-security-phase-b` |
 | Baseline | after **v1.39.0** / prefer after M38 |
 | Approved | 2026-09-18 — Captain: “I approve M38/M39 plans” |
 | Release | **v1.40.0** |
-| Branch | `cursor/m39-agentic-security-phase-b-5182` |
+| Branch | `cursor/m39-agentic-security-phase-b-5182` (merged); conflict twin `…-3b10` → #176 closeout |
 | Issue | [#170](https://github.com/loganware05/captains-compass-cursor/issues/170) |
 | Linear | [OVA-54](https://linear.app/ovaltechnologysolutions/issue/OVA-54) |
 
