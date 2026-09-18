@@ -57,13 +57,11 @@ class FailClosedHookDetectorTests(unittest.TestCase):
             self.assertEqual(row["skill"], "security-review")
 
     def test_hardened_m36_hooks_do_not_self_serve_or_shortcircuit(self) -> None:
-        """Current control hooks after M36 should not trip the vulnerable patterns."""
-        hooks_dir = ROOT / ".cursor" / "hooks"
-        for script in sorted(hooks_dir.glob("*.sh")):
-            if script.name.startswith("_"):
-                continue
+        """M36-hardened plan-approval + protected-branch should not trip detectors."""
+        for name in ("plan-approval-check.sh", "protected-branch.sh"):
+            script = ROOT / ".cursor" / "hooks" / name
             text = script.read_text(encoding="utf-8")
-            rel = f".cursor/hooks/{script.name}"
+            rel = f".cursor/hooks/{name}"
             diff = (
                 f"diff --git a/{rel} b/{rel}\n"
                 + "\n".join(f"+{line}" for line in text.splitlines())
@@ -79,7 +77,76 @@ class FailClosedHookDetectorTests(unittest.TestCase):
                 f"{rel} unexpectedly emitted {hook_ids}",
             )
 
-    def test_compose_includes_security_skill_for_hook_diff(self) -> None:
+    def test_echo_deny_strings_cannot_fake_mitigations(self) -> None:
+        """Message text must not suppress plan / push / git -C findings."""
+        diff = """diff --git a/.cursor/hooks/plan-approval-check.sh b/.cursor/hooks/plan-approval-check.sh
++++ b/.cursor/hooks/plan-approval-check.sh
++# Vulnerable: exempt plan path; only mention gates in deny strings
++case "$rel" in
++  IMPLEMENTATION_PLAN.md) allow ;;
++esac
++deny("set COMPASS_CAPTAIN_APPROVE=1 and git show HEAD:IMPLEMENTATION_PLAN.md")
++echo '{"permission":"deny","user_message":"os.environ.get(\\"COMPASS_CAPTAIN_APPROVE\\")"}'
+"""
+        findings = emit_security_candidates(
+            detection={"changed_paths": [".cursor/hooks/plan-approval-check.sh"]},
+            context_pack={"diff": diff},
+        )
+        self.assertIn("sec-hook-plan-self-serve", {f["id"] for f in findings})
+
+        protected = """diff --git a/.cursor/hooks/protected-branch.sh b/.cursor/hooks/protected-branch.sh
++++ b/.cursor/hooks/protected-branch.sh
++if ! echo "$COMMAND" | grep -Eqi 'git[[:space:]]+(commit|push|merge|rebase)'; then
++  allow
++fi
++if echo "$COMMAND" | grep -Eqi 'git[[:space:]]+checkout[[:space:]]+(-b|--branch)[[:space:]]+(feature|fix)/'; then
++  allow
++fi
++deny("refusing push refspec HEAD:main refs/heads/ is_protected_ref tokens[i] == \\"-C\\"")
++allow
+"""
+        ids = {
+            f["id"]
+            for f in emit_security_candidates(
+                detection={"changed_paths": [".cursor/hooks/protected-branch.sh"]},
+                context_pack={"diff": protected},
+            )
+        }
+        self.assertIn("sec-hook-checkout-shortcircuit", ids)
+        self.assertIn("sec-hook-push-refspec-gap", ids)
+        self.assertIn("sec-hook-git-c-gap", ids)
+
+    def test_renamed_hook_still_emits_plan_finding(self) -> None:
+        diff = """diff --git a/.cursor/hooks/plan-gate.sh b/.cursor/hooks/plan-gate.sh
++++ b/.cursor/hooks/plan-gate.sh
++case "$rel" in
++  IMPLEMENTATION_PLAN.md) allow ;;
++esac
++allow
+"""
+        findings = emit_security_candidates(
+            detection={"changed_paths": [".cursor/hooks/plan-gate.sh"]},
+            context_pack={"diff": diff},
+        )
+        self.assertIn("sec-hook-plan-self-serve", {f["id"] for f in findings})
+
+    def test_cursor_prefix_and_switch_shortcircuit(self) -> None:
+        diff = """diff --git a/.cursor/hooks/protected-branch.sh b/.cursor/hooks/protected-branch.sh
++++ b/.cursor/hooks/protected-branch.sh
++if echo "$COMMAND" | grep -Eqi 'git[[:space:]]+(commit|push)'; then :; fi
++if echo "$COMMAND" | grep -Eqi 'git[[:space:]]+switch[[:space:]]+(-c|--create)[[:space:]]+cursor/'; then
++  allow
++fi
+"""
+        ids = {
+            f["id"]
+            for f in emit_security_candidates(
+                detection={"changed_paths": [".cursor/hooks/protected-branch.sh"]},
+                context_pack={"diff": diff},
+            )
+        }
+        self.assertIn("sec-hook-checkout-shortcircuit", ids)
+
         diff = (FIXTURES / "hook-plan-self-serve.diff").read_text(encoding="utf-8")
         candidates, skills, source = compose_specialist_candidates(
             detection={

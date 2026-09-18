@@ -36,19 +36,22 @@ _PLAN_ALLOW_CASE = re.compile(
     r"^\+.*case\s+[\"'].*IMPLEMENTATION_PLAN\.md",
     re.M | re.I,
 )
+_BRANCH_PREFIX = r"(?:feature|fix|chore|docs|agent|hotfix|cursor)"
 _CHECKOUT_SHORTCIRCUIT = re.compile(
-    # Literal shell (`checkout -b feature/`) OR grep-pattern source
-    # (`checkout[[:space:]]+(-b|--branch)[[:space:]]+(feature|fix|…)`).
-    r"checkout(?:\s+|\[\[:space:\]\]\+)+"
+    # Literal shell (`checkout -b feature/` / `switch -c cursor/`) OR grep-pattern
+    # source (`checkout[[:space:]]+(-b|--branch)[[:space:]]+(feature|…)`).
+    r"(?:checkout(?:\s+|\[\[:space:\]\]\+)+"
     r"(?:-b|--branch|\(-b\|--branch\))"
-    r".{0,120}(?:feature|fix|chore|docs|agent|hotfix)",
+    r"|switch(?:\s+|\[\[:space:\]\]\+)+"
+    r"(?:-c|--create|\(-c\|--create\)))"
+    r".{0,120}" + _BRANCH_PREFIX,
     re.I,
 )
 _ALLOW_NEAR_CHECKOUT = re.compile(
-    r"checkout(?:\s+|\[\[:space:\]\]\+)+"
-    r"(?:-b|--branch|\(-b\|--branch\)).{0,240}\ballow\b|"
-    r"\ballow\b.{0,120}checkout(?:\s+|\[\[:space:\]\]\+)+"
-    r"(?:-b|--branch|\(-b\|--branch\))",
+    r"(?:checkout|switch)(?:\s+|\[\[:space:\]\]\+)+"
+    r"(?:-b|--branch|-c|--create|\(-b\|--branch\)|\(-c\|--create\)).{0,240}\ballow\b|"
+    r"\ballow\b.{0,120}(?:checkout|switch)(?:\s+|\[\[:space:\]\]\+)+"
+    r"(?:-b|--branch|-c|--create|\(-b\|--branch\)|\(-c\|--create\))",
     re.I | re.S,
 )
 # Command-argv -C parsing (not merely `git -C` for local rev-parse).
@@ -142,6 +145,44 @@ def _strip_string_literals(text: str) -> str:
     return text
 
 
+def _strip_message_contexts(text: str) -> str:
+    """Drop deny/print/user_message payloads so they cannot fake mitigations.
+
+    Unlike full string-literal stripping, this keeps executable quoted tokens
+    such as ``t == "-C"`` and ``os.environ.get("COMPASS_CAPTAIN_APPROVE")``.
+    Shell ``echo | grep`` control-flow lines are preserved (not message-only).
+    """
+    patterns = (
+        r"\bprint\s*\((?:[^()]|\([^()]*\))*\)",
+        r"\bdeny\s*\((?:[^()]|\([^()]*\))*\)",
+        r"(?:user_message|agent_message|agentMessage|userMessage)\s*=\s*"
+        r"(?:\"(?:\\.|[^\"\\])*\"|'(?:\\.|[^'\\])*')",
+        # echo '{"permission":"deny",...}' / deny JSON payloads
+        r"""\becho\s+['\"]\{[^'\"]*permission[^'\"]*\}['\"]""",
+        r"""\becho\s+['\"][^'\"]*COMPASS_CAPTAIN_APPROVE[^'\"]*['\"]""",
+        r"""\becho\s+['\"][^'\"]*refspec[^'\"]*['\"]""",
+        r"""\becho\s+['\"][^'\"]*HEAD:IMPLEMENTATION_PLAN\.md[^'\"]*['\"]""",
+    )
+    out = text
+    for pat in patterns:
+        out = re.sub(pat, " ", out, flags=re.I | re.S)
+    return out
+
+
+_CAPTAIN_GATE = re.compile(
+    r"os\.environ\.get\(\s*[\"']COMPASS_CAPTAIN_APPROVE[\"']"
+    r"|\$\{?COMPASS_CAPTAIN_APPROVE\b"
+    r"|\[\[?\s*[\"']?\$\{?COMPASS_CAPTAIN_APPROVE",
+    re.I,
+)
+_COMMITTED_PLAN = re.compile(
+    r"[\"']git[\"']\s*,\s*[\"']show[\"']\s*,\s*[\"']HEAD:IMPLEMENTATION_PLAN\.md[\"']"
+    r"|subprocess\.run\(\s*\[[^\]]*HEAD:IMPLEMENTATION_PLAN\.md"
+    r"|git\s+show\s+HEAD:IMPLEMENTATION_PLAN\.md",
+    re.I,
+)
+
+
 def _emit_fail_closed_hook_candidates(
     *,
     diff: str,
@@ -157,15 +198,15 @@ def _emit_fail_closed_hook_candidates(
         return []
 
     added = _added_text(diff)
-    added_code = _strip_string_literals(added)
+    # Mitigation presence must ignore echo/deny/print message text (fail-open
+    # otherwise). Do not full-strip string literals — that erases real gates.
+    logic = _strip_message_contexts(added)
     out: list[dict[str, Any]] = []
     hook_paths = _paths_and_headers(changed, diff) or [".cursor/hooks/"]
     joined_paths = " ".join(hook_paths)
-    # Scope by path only — do not scan file bodies for "protected-branch" prose.
     is_plan_hook = bool(_PLAN_APPROVAL_HOOK.search(joined_paths))
     is_protected_hook = bool(_PROTECTED_BRANCH_HOOK.search(joined_paths))
     if not is_plan_hook and not is_protected_hook:
-        # Infer from diff headers when changed_paths omitted
         headers = " ".join(
             m.group(0)
             for m in re.finditer(r"^diff --git .+$", diff, re.M)
@@ -173,22 +214,31 @@ def _emit_fail_closed_hook_candidates(
         is_plan_hook = bool(_PLAN_APPROVAL_HOOK.search(headers))
         is_protected_hook = bool(_PROTECTED_BRANCH_HOOK.search(headers))
 
+    # Behavioral fallback for renamed hooks (filename gate alone is fail-open).
+    plan_signals = bool(_PLAN_EXEMPT.search(diff) or _PLAN_ALLOW_CASE.search(diff))
+    # Protected-class body signal: guards main/master (not merely any commit/push hook).
+    guards_protected_base = bool(
+        re.search(
+            r"""\b(main|master|develop|release|production)\b.{0,80}\bdeny\b"""
+            r"""|\bdeny\b.{0,80}\b(main|master|develop|release|production)\b"""
+            r"""|is_protected_ref|PROTECTED\s*=""",
+            added,
+            re.I | re.S,
+        )
+    )
+    protected_signals = bool(
+        (_CHECKOUT_SHORTCIRCUIT.search(added) and guards_protected_base)
+        or (_PUSH_VERB.search(added) and guards_protected_base)
+    )
+    if not is_plan_hook and plan_signals:
+        is_plan_hook = True
+    if not is_protected_hook and protected_signals:
+        is_protected_hook = True
 
-    # Class 1 — plan-approval self-serve (only plan-approval-check.sh)
-    if is_plan_hook and (_PLAN_EXEMPT.search(diff) or _PLAN_ALLOW_CASE.search(diff)):
-        has_captain = bool(
-            re.search(
-                r"os\.environ\.get\(\s*[\"']COMPASS_CAPTAIN_APPROVE[\"']",
-                added,
-            )
-        )
-        has_committed = bool(
-            re.search(
-                r"[\"']git[\"']\s*,\s*[\"']show[\"']\s*,\s*[\"']HEAD:IMPLEMENTATION_PLAN\.md[\"']"
-                r"|subprocess\.run\(\s*\[[^\]]*HEAD:IMPLEMENTATION_PLAN\.md",
-                added,
-            )
-        )
+    # Class 1 — plan-approval self-serve
+    if is_plan_hook and plan_signals:
+        has_captain = bool(_CAPTAIN_GATE.search(logic))
+        has_committed = bool(_COMMITTED_PLAN.search(logic))
         missing_captain = not has_captain
         missing_committed = not has_committed
 
@@ -210,7 +260,7 @@ def _emit_fail_closed_hook_candidates(
                         + ". An agent can forge APPROVED in the exempt file."
                     ),
                     "severity": "medium",
-                    "confidence": 0.88,
+                    "confidence": 0.88 if _PLAN_APPROVAL_HOOK.search(joined_paths) else 0.8,
                     "skill": "security-review",
                     "category": "fail-closed-control",
                     "evidence_paths": [
@@ -228,14 +278,18 @@ def _emit_fail_closed_hook_candidates(
     if not is_protected_hook:
         return out
 
-    # Class 2a — checkout -b feature/ substring short-circuit
+    # Class 2a — checkout/switch substring short-circuit
     has_checkout_sc = bool(_CHECKOUT_SHORTCIRCUIT.search(added))
     checkout_allows = bool(
         _ALLOW_NEAR_CHECKOUT.search(added)
-        or re.search(r"checkout.{0,160}\ballow\s*(\(|\{)", added, re.I | re.S)
+        or re.search(
+            r"(?:checkout|switch).{0,160}\b(?:allow|compass_allow)\s*(\(|\{)?",
+            added,
+            re.I | re.S,
+        )
         or (
-            "checkout" in added.casefold()
-            and re.search(r"^\s*allow\b", added, re.M)
+            re.search(r"checkout|switch", added, re.I)
+            and re.search(r"^\s*(?:allow|compass_allow)\b", added, re.M)
             and _CHECKOUT_SHORTCIRCUIT.search(added)
         )
     )
@@ -247,8 +301,9 @@ def _emit_fail_closed_hook_candidates(
                 "detail": (
                     "Security specialist (agentic-equivalent): fail-closed protected-"
                     "branch hook allows when the command string contains "
-                    "`git checkout -b feature/…`, which does not prove HEAD left a "
-                    "protected branch before commit/push."
+                    "`git checkout -b` / `git switch -c` with a feature-like prefix, "
+                    "which does not prove HEAD left a protected branch before "
+                    "commit/push."
                 ),
                 "severity": "medium",
                 "confidence": 0.9,
@@ -257,15 +312,15 @@ def _emit_fail_closed_hook_candidates(
                 "evidence_paths": [p for p in hook_paths if _PROTECTED_BRANCH_HOOK.search(p)][:5]
                 or hook_paths[:5],
                 "suggested_fix": (
-                    "Remove checkout substring short-circuit; decide allow/deny from "
-                    "resolved repo HEAD and push refspecs only."
+                    "Remove checkout/switch substring short-circuit; decide allow/deny "
+                    "from resolved repo HEAD and push refspecs only."
                 ),
             }
         )
 
-    # Class 2b — push path without refspec awareness
+    # Class 2b — push path without refspec awareness (ignore message fakes)
     handles_push = bool(_PUSH_VERB.search(added))
-    if handles_push and not _REFSPEC_HINT.search(added):
+    if handles_push and not _REFSPEC_HINT.search(logic):
         out.append(
             {
                 "id": "sec-hook-push-refspec-gap",
@@ -290,10 +345,8 @@ def _emit_fail_closed_hook_candidates(
         )
 
     # Class 2c — missing command-argv git -C parsing (not local `git -C` rev-parse)
-    handles_mutation = bool(
-        re.search(r"commit|push|merge|rebase", added, re.I)
-    )
-    if handles_mutation and not _CMD_C_PARSE.search(added):
+    handles_mutation = bool(_PUSH_VERB.search(added) or _CHECKOUT_SHORTCIRCUIT.search(added))
+    if handles_mutation and not _CMD_C_PARSE.search(logic):
         out.append(
             {
                 "id": "sec-hook-git-c-gap",

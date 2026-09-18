@@ -8,7 +8,7 @@
 | Item | Value |
 |---|---|
 | Tagged | **v1.38.1** (M36) — [release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.38.1) |
-| Landing | **v1.39.0** / M37 via closeout PR → `main` |
+| Landing | **v1.39.0** / M37 via `cursor/m37-land-main-5182` → `main` |
 | Next plan | **`m38-shell-forge-gate`** AWAITING APPROVAL ([#169](https://github.com/loganware05/captains-compass-cursor/issues/169)) |
 | Also queued | **`m39-agentic-security-phase-b`** AWAITING ([#170](https://github.com/loganware05/captains-compass-cursor/issues/170)) |
 | Rollback | `rollback/pre-m37-agentic-security-review` |
