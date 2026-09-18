@@ -57,20 +57,25 @@ def _declared_complexity(*texts: str) -> str:
     return ""
 
 
-def _parse_params(raw: str) -> list[dict[str, str]]:
-    params: list[dict[str, str]] = []
+def _parse_params(raw: str) -> list[dict[str, Any]]:
+    params: list[dict[str, Any]] = []
     for chunk in raw.split(","):
         chunk = chunk.strip()
         if not chunk:
             continue
         chunk = chunk.lstrip("...").strip()
+        optional = "=" in chunk
         if "=" in chunk:
             chunk = chunk.split("=", 1)[0].strip()
         if ":" in chunk:
             name, ptype = chunk.split(":", 1)
-            params.append({"name": name.strip().rstrip("?"), "type": ptype.strip()})
+            name = name.strip()
+            optional = optional or name.endswith("?")
+            params.append({"name": name.rstrip("?"), "type": ptype.strip(), "optional": optional})
         else:
-            params.append({"name": chunk.rstrip("?"), "type": ""})
+            name = chunk.strip()
+            optional = optional or name.endswith("?")
+            params.append({"name": name.rstrip("?"), "type": "", "optional": optional})
     return params
 
 
@@ -98,18 +103,29 @@ def extract_python(source: str) -> dict[str, Any]:
     imports: list[dict[str, Any]] = []
     for node in tree.body:
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            params: list[dict[str, str]] = []
-            for arg in list(node.args.posonlyargs) + list(node.args.args) + list(node.args.kwonlyargs):
+            params: list[dict[str, Any]] = []
+            positional = list(node.args.posonlyargs) + list(node.args.args)
+            defaults = [None] * (len(positional) - len(node.args.defaults)) + list(node.args.defaults)
+            for arg, default in zip(positional, defaults):
                 params.append(
                     {
                         "name": arg.arg,
                         "type": ast.unparse(arg.annotation) if arg.annotation else "",
+                        "optional": default is not None,
+                    }
+                )
+            for arg, default in zip(node.args.kwonlyargs, node.args.kw_defaults):
+                params.append(
+                    {
+                        "name": arg.arg,
+                        "type": ast.unparse(arg.annotation) if arg.annotation else "",
+                        "optional": default is not None,
                     }
                 )
             if node.args.vararg:
-                params.append({"name": node.args.vararg.arg, "type": ""})
+                params.append({"name": node.args.vararg.arg, "type": "", "optional": True})
             if node.args.kwarg:
-                params.append({"name": node.args.kwarg.arg, "type": ""})
+                params.append({"name": node.args.kwarg.arg, "type": "", "optional": True})
             return_type = ast.unparse(node.returns) if node.returns else ""
             docstring = ast.get_docstring(node) or ""
             signature = f"def {node.name}({_params_signature(params)})"

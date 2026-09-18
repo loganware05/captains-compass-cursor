@@ -63,6 +63,8 @@ def run_code_review(
     plan_id: str = "",
     min_confidence: float = DEFAULT_MIN_CONFIDENCE,
     hermetic: bool = True,
+    boundary_check: bool = True,
+    boundary_store_dir: Path | None = None,
     post_github_draft: bool = False,
     github_repo: str = "",
     pull_number: int = 0,
@@ -153,6 +155,25 @@ def run_code_review(
             "(Captain lock: hermetic CI / no model in default path)"
         )
 
+    # M40: cross-boundary verification gate — validates calls crossing context
+    # boundaries against metadata inodes. Skips with an explicit note when the
+    # inode store is absent or stale (never reviews against untrusted metadata).
+    boundary_meta: dict[str, Any] = {"enabled": bool(boundary_check), "notes": []}
+    if boundary_check:
+        from orchestrator.review.boundary import emit_boundary_candidates
+
+        boundary_candidates, boundary_notes = emit_boundary_candidates(
+            root,
+            changed_paths=list(detection.get("changed_paths") or []),
+            diff_text=diff_text or "",
+            store_dir=boundary_store_dir,
+        )
+        boundary_meta["notes"] = boundary_notes
+        boundary_meta["candidates"] = len(boundary_candidates)
+        if boundary_candidates:
+            candidates = list(candidates) + boundary_candidates
+            candidates_source = f"{candidates_source}+boundary"
+
     findings = verify_findings(candidates, min_confidence=min_confidence)
     rid = run_id or f"cr-{uuid4().hex[:12]}"
     skills = list(detection.get("skills_suggested") or [])
@@ -209,6 +230,7 @@ def run_code_review(
         candidates_source=candidates_source,
         github_review_posted=github_posted,
         github_draft=github_draft_meta,
+        boundary=boundary_meta,
     )
     try:
         path = write_report(root, report, context_pack=context_pack)
@@ -223,5 +245,6 @@ def run_code_review(
         "findings": findings,
         "candidates_source": candidates_source,
         "specialist_skills": specialist_skills,
+        "boundary": boundary_meta,
         "github_draft": github_draft_meta,
     }
