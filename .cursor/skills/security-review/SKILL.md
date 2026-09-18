@@ -24,7 +24,11 @@ secrets, networking, file operations, dependencies, or cloud permissions.
 4. Review dependency and supply-chain risk for new packages.
 5. Review unsafe file, deserialization, and network patterns.
 6. Review container/cloud permission changes when present.
-7. Record findings with severity and remediation.
+7. **Fail-closed control plane (M37):** when `.cursor/hooks/**` or `hooks.json`
+   change, check for agentic-equivalent gaps — plan-approval self-serve,
+   protected-branch checkout short-circuits, missing push refspec / `git -C`
+   handling (see `docs/integrations/code-reviewer.md`).
+8. Record findings with severity and remediation.
 
 ## Output
 

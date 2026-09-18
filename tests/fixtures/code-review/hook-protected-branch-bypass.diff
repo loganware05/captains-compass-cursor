@@ -1,0 +1,29 @@
+diff --git a/.cursor/hooks/protected-branch.sh b/.cursor/hooks/protected-branch.sh
+index 111..222 100644
+--- a/.cursor/hooks/protected-branch.sh
++++ b/.cursor/hooks/protected-branch.sh
+@@ -20,30 +20,28 @@
++COMMAND="$(printf '%s' "$input" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("command") or "")')"
++HOOK_CWD="$(printf '%s' "$input" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("cwd") or "")')"
++
++allow() { echo '{"permission":"allow"}'; exit 0; }
++deny() { echo '{"permission":"deny"}'; exit 0; }
++
++if ! echo "$COMMAND" | grep -Eqi '(^|[[:space:]])git[[:space:]]+(commit|push|merge|rebase)'; then
++  allow
++fi
++
++# Vulnerable short-circuit: substring does not move HEAD
++if echo "$COMMAND" | grep -Eqi 'git[[:space:]]+checkout[[:space:]]+(-b|--branch)[[:space:]]+(feature|fix|chore)/'; then
++  allow
++fi
++
++# Only checks cwd HEAD — does not inspect alternate repo paths or dest refs
++branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")"
++case "$branch" in
++  main|master|develop|release|production)
++    deny
++    ;;
++esac
++
++allow
