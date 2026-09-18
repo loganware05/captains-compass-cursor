@@ -1,4 +1,7 @@
-# Implementation Plan — M38 / Phase C Shell forge gate (IMPLEMENTATION_PLAN.md)
+# Implementation Plan — M38 / Phase C Shell forge gate
+
+> Archive mirror of root `IMPLEMENTATION_PLAN.md` (plan id `m38-shell-forge-gate`).
+
 
 ## Metadata
 

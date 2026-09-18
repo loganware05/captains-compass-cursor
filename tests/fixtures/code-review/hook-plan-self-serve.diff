@@ -1,0 +1,27 @@
+diff --git a/.cursor/hooks/plan-approval-check.sh b/.cursor/hooks/plan-approval-check.sh
+index 111..222 100644
+--- a/.cursor/hooks/plan-approval-check.sh
++++ b/.cursor/hooks/plan-approval-check.sh
+@@ -30,20 +30,35 @@
++rel="${FILE_PATH#./}"
++
++case "$rel" in
++  IMPLEMENTATION_PLAN.md|AGENTS.md|PROJECT_CONTEXT.md)
++    allow ;;
++esac
++
++# Only gate product source extensions
++if ! echo "$rel" | grep -Eq '\.(ts|tsx|py)$'; then
++  allow
++fi
++
++status_line="$(grep -E '^- Status:' IMPLEMENTATION_PLAN.md | head -1 || true)"
++if ! echo "$status_line" | grep -Eqi 'APPROVED|IN PROGRESS'; then
++  deny "Plan-approval hook: IMPLEMENTATION_PLAN.md is not APPROVED"
++fi
++
++if ! grep -Eqi '## Approval Record' IMPLEMENTATION_PLAN.md; then
++  deny "Plan-approval hook: missing Approval Record heading"
++fi
++
++allow

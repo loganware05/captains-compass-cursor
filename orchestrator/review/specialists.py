@@ -23,6 +23,62 @@ _DEPLOY_PATH = re.compile(
     re.I,
 )
 _TEST_PATH = re.compile(r"(^|/)(tests?|__tests__|spec)/|\.(test|spec)\.", re.I)
+_HOOK_PATH = re.compile(
+    r"(^|/)\.cursor/hooks(/|$)|(^|/)\.cursor/hooks\.json$|(^|/)hooks\.json$",
+    re.I,
+)
+_PLAN_EXEMPT = re.compile(
+    r"^\+.*\bIMPLEMENTATION_PLAN\.md\b",
+    re.M,
+)
+_PLAN_ALLOW_CASE = re.compile(
+    r"^\+.*\bIMPLEMENTATION_PLAN\.md\b.*allow|"
+    r"^\+.*case\s+[\"'].*IMPLEMENTATION_PLAN\.md",
+    re.M | re.I,
+)
+_BRANCH_PREFIX = r"(?:feature|fix|chore|docs|agent|hotfix|cursor)"
+_CHECKOUT_SHORTCIRCUIT = re.compile(
+    # Literal shell (`checkout -b feature/` / `switch -c cursor/`) OR grep-pattern
+    # source (`checkout[[:space:]]+(-b|--branch)[[:space:]]+(feature|…)`).
+    r"(?:checkout(?:\s+|\[\[:space:\]\]\+)+"
+    r"(?:-b|--branch|\(-b\|--branch\))"
+    r"|switch(?:\s+|\[\[:space:\]\]\+)+"
+    r"(?:-c|--create|\(-c\|--create\)))"
+    r".{0,120}" + _BRANCH_PREFIX,
+    re.I,
+)
+_ALLOW_NEAR_CHECKOUT = re.compile(
+    r"(?:checkout|switch)(?:\s+|\[\[:space:\]\]\+)+"
+    r"(?:-b|--branch|-c|--create|\(-b\|--branch\)|\(-c\|--create\)).{0,240}\ballow\b|"
+    r"\ballow\b.{0,120}(?:checkout|switch)(?:\s+|\[\[:space:\]\]\+)+"
+    r"(?:-b|--branch|-c|--create|\(-b\|--branch\)|\(-c\|--create\))",
+    re.I | re.S,
+)
+# Command-argv -C parsing (not merely `git -C` for local rev-parse).
+_CMD_C_PARSE = re.compile(
+    r"""tokens\[[^\]]+\]\s*==\s*['\"]-C['\"]"""
+    r"""|\bt\s*==\s*['\"]-C['\"]"""
+    r"""|startswith\(\s*['\"]-C['\"]"""
+    r"""|tok\s*==\s*['\"]-C['\"]""",
+)
+_REFSPEC_HINT = re.compile(
+    r"refspec|HEAD:\w+|refs/heads/"
+    r"""|split\(\s*['\"]:['\"]\s*\)"""
+    r"""|partition\(\s*['\"]:['\"]\s*\)"""
+    r"""|['\"]:['\"]\s*in\s+\w+"""
+    r"""|is_protected_ref""",
+    re.I,
+)
+_PUSH_VERB = re.compile(
+    r"""verb\s*==\s*['\"]push['\"]"""
+    r"""|git\s+push\b"""
+    r"""|git\[\[:space:\]\]\+\(commit\|push\|merge\|rebase\)"""
+    r"""|[\"']push[\"']\s*in\s*\{"""
+    r"""|\(commit\|push\|merge\|rebase\)""",
+    re.I,
+)
+_PLAN_APPROVAL_HOOK = re.compile(r"plan-approval-check", re.I)
+_PROTECTED_BRANCH_HOOK = re.compile(r"protected-branch", re.I)
 
 
 def _diff_and_paths(
@@ -34,12 +90,295 @@ def _diff_and_paths(
     return diff, changed
 
 
+def _hook_control_plane_touched(changed: list[str], diff: str) -> bool:
+    if any(_HOOK_PATH.search(p) for p in changed):
+        return True
+    # Diff-only path headers when changed_paths omitted
+    return bool(
+        re.search(
+            r"^diff --git a/.*\.cursor/hooks/|"
+            r"^diff --git a/.*hooks\.json|"
+            r"^\+\+\+ b/.*\.cursor/hooks/",
+            diff,
+            re.M,
+        )
+    )
+
+
+def _paths_and_headers(changed: list[str], diff: str) -> list[str]:
+    paths = [p for p in changed if _HOOK_PATH.search(p)]
+    for match in re.finditer(
+        r"^diff --git a/(\S+) b/(\S+)",
+        diff,
+        re.M,
+    ):
+        paths.append(match.group(2))
+    # Preserve order, unique
+    seen: set[str] = set()
+    out: list[str] = []
+    for p in paths:
+        if p not in seen:
+            seen.add(p)
+            out.append(p)
+    return out
+
+
+def _added_text(diff: str) -> str:
+    lines: list[str] = []
+    for line in diff.splitlines():
+        if not line.startswith("+") or line.startswith("+++"):
+            continue
+        body = line[1:]
+        # Drop shell / python comments so advisory notes do not fake mitigations
+        if body.lstrip().startswith("#"):
+            continue
+        if "  #" in body:
+            body = body.split("  #", 1)[0]
+        lines.append(body)
+    return "\n".join(lines)
+
+
+def _strip_string_literals(text: str) -> str:
+    """Remove quoted strings so deny-message text cannot fake mitigations."""
+    text = re.sub(r"\"(?:\\.|[^\"\\])*\"", '""', text)
+    text = re.sub(r"'(?:\\.|[^'\\])*'", "''", text)
+    return text
+
+
+def _strip_message_contexts(text: str) -> str:
+    """Drop deny/print/user_message payloads so they cannot fake mitigations.
+
+    Unlike full string-literal stripping, this keeps executable quoted tokens
+    such as ``t == "-C"`` and ``os.environ.get("COMPASS_CAPTAIN_APPROVE")``.
+    Shell ``echo | grep`` control-flow lines are preserved (not message-only).
+    """
+    patterns = (
+        r"\bprint\s*\((?:[^()]|\([^()]*\))*\)",
+        r"\bdeny\s*\((?:[^()]|\([^()]*\))*\)",
+        r"(?:user_message|agent_message|agentMessage|userMessage)\s*=\s*"
+        r"(?:\"(?:\\.|[^\"\\])*\"|'(?:\\.|[^'\\])*')",
+        # echo '{"permission":"deny",...}' / deny JSON payloads
+        r"""\becho\s+['\"]\{[^'\"]*permission[^'\"]*\}['\"]""",
+        r"""\becho\s+['\"][^'\"]*COMPASS_CAPTAIN_APPROVE[^'\"]*['\"]""",
+        r"""\becho\s+['\"][^'\"]*refspec[^'\"]*['\"]""",
+        r"""\becho\s+['\"][^'\"]*HEAD:IMPLEMENTATION_PLAN\.md[^'\"]*['\"]""",
+    )
+    out = text
+    for pat in patterns:
+        out = re.sub(pat, " ", out, flags=re.I | re.S)
+    return out
+
+
+_CAPTAIN_GATE = re.compile(
+    r"os\.environ\.get\(\s*[\"']COMPASS_CAPTAIN_APPROVE[\"']"
+    r"|\$\{?COMPASS_CAPTAIN_APPROVE\b"
+    r"|\[\[?\s*[\"']?\$\{?COMPASS_CAPTAIN_APPROVE",
+    re.I,
+)
+_COMMITTED_PLAN = re.compile(
+    r"[\"']git[\"']\s*,\s*[\"']show[\"']\s*,\s*[\"']HEAD:IMPLEMENTATION_PLAN\.md[\"']"
+    r"|subprocess\.run\(\s*\[[^\]]*HEAD:IMPLEMENTATION_PLAN\.md"
+    r"|git\s+show\s+HEAD:IMPLEMENTATION_PLAN\.md",
+    re.I,
+)
+
+
+def _emit_fail_closed_hook_candidates(
+    *,
+    diff: str,
+    changed: list[str],
+) -> list[dict[str, Any]]:
+    """Agentic-equivalent hermetic checks for fail-closed hook control gaps (M37).
+
+    Encodes the two medium classes from Cursor Agentic Security Review on
+    bitcoin-data-collector PR #7: self-serve plan-approval and protected-branch
+    bypasses (refspecs / git -C / checkout substring short-circuit).
+    """
+    if not _hook_control_plane_touched(changed, diff):
+        return []
+
+    added = _added_text(diff)
+    # Mitigation presence must ignore echo/deny/print message text (fail-open
+    # otherwise). Do not full-strip string literals — that erases real gates.
+    logic = _strip_message_contexts(added)
+    out: list[dict[str, Any]] = []
+    hook_paths = _paths_and_headers(changed, diff) or [".cursor/hooks/"]
+    joined_paths = " ".join(hook_paths)
+    is_plan_hook = bool(_PLAN_APPROVAL_HOOK.search(joined_paths))
+    is_protected_hook = bool(_PROTECTED_BRANCH_HOOK.search(joined_paths))
+    if not is_plan_hook and not is_protected_hook:
+        headers = " ".join(
+            m.group(0)
+            for m in re.finditer(r"^diff --git .+$", diff, re.M)
+        )
+        is_plan_hook = bool(_PLAN_APPROVAL_HOOK.search(headers))
+        is_protected_hook = bool(_PROTECTED_BRANCH_HOOK.search(headers))
+
+    # Behavioral fallback for renamed hooks (filename gate alone is fail-open).
+    plan_signals = bool(_PLAN_EXEMPT.search(diff) or _PLAN_ALLOW_CASE.search(diff))
+    # Protected-class body signal: guards main/master (not merely any commit/push hook).
+    guards_protected_base = bool(
+        re.search(
+            r"""\b(main|master|develop|release|production)\b.{0,80}\bdeny\b"""
+            r"""|\bdeny\b.{0,80}\b(main|master|develop|release|production)\b"""
+            r"""|is_protected_ref|PROTECTED\s*=""",
+            added,
+            re.I | re.S,
+        )
+    )
+    protected_signals = bool(
+        (_CHECKOUT_SHORTCIRCUIT.search(added) and guards_protected_base)
+        or (_PUSH_VERB.search(added) and guards_protected_base)
+    )
+    if not is_plan_hook and plan_signals:
+        is_plan_hook = True
+    if not is_protected_hook and protected_signals:
+        is_protected_hook = True
+
+    # Class 1 — plan-approval self-serve
+    if is_plan_hook and plan_signals:
+        has_captain = bool(_CAPTAIN_GATE.search(logic))
+        has_committed = bool(_COMMITTED_PLAN.search(logic))
+        missing_captain = not has_captain
+        missing_committed = not has_committed
+
+        if missing_captain or missing_committed:
+            gaps = []
+            if missing_captain:
+                gaps.append("no COMPASS_CAPTAIN_APPROVE gate on plan Status promotion")
+            if missing_committed:
+                gaps.append("no committed HEAD:IMPLEMENTATION_PLAN.md check")
+            out.append(
+                {
+                    "id": "sec-hook-plan-self-serve",
+                    "title": "Fail-closed plan-approval hook may be self-servable",
+                    "detail": (
+                        "Security specialist (agentic-equivalent): hook diff exempts "
+                        "IMPLEMENTATION_PLAN.md from Write/StrReplace while product "
+                        "edits trust plan Status — "
+                        + "; ".join(gaps)
+                        + ". An agent can forge APPROVED in the exempt file."
+                    ),
+                    "severity": "medium",
+                    "confidence": 0.88 if _PLAN_APPROVAL_HOOK.search(joined_paths) else 0.8,
+                    "skill": "security-review",
+                    "category": "fail-closed-control",
+                    "evidence_paths": [
+                        p for p in hook_paths if _PLAN_APPROVAL_HOOK.search(p)
+                    ][:5]
+                    or hook_paths[:5],
+                    "suggested_fix": (
+                        "Require COMPASS_CAPTAIN_APPROVE=1 to write APPROVED status; "
+                        "gate product edits on committed plan Status + real Approval "
+                        "Record (see M36 / ADR-053)."
+                    ),
+                }
+            )
+
+    if not is_protected_hook:
+        return out
+
+    # Class 2a — checkout/switch substring short-circuit
+    has_checkout_sc = bool(_CHECKOUT_SHORTCIRCUIT.search(added))
+    checkout_allows = bool(
+        _ALLOW_NEAR_CHECKOUT.search(added)
+        or re.search(
+            r"(?:checkout|switch).{0,160}\b(?:allow|compass_allow)\s*(\(|\{)?",
+            added,
+            re.I | re.S,
+        )
+        or (
+            re.search(r"checkout|switch", added, re.I)
+            and re.search(r"^\s*(?:allow|compass_allow)\b", added, re.M)
+            and _CHECKOUT_SHORTCIRCUIT.search(added)
+        )
+    )
+    if has_checkout_sc and checkout_allows:
+        out.append(
+            {
+                "id": "sec-hook-checkout-shortcircuit",
+                "title": "Protected-branch hook short-circuits on checkout -b substring",
+                "detail": (
+                    "Security specialist (agentic-equivalent): fail-closed protected-"
+                    "branch hook allows when the command string contains "
+                    "`git checkout -b` / `git switch -c` with a feature-like prefix, "
+                    "which does not prove HEAD left a protected branch before "
+                    "commit/push."
+                ),
+                "severity": "medium",
+                "confidence": 0.9,
+                "skill": "security-review",
+                "category": "fail-closed-control",
+                "evidence_paths": [p for p in hook_paths if _PROTECTED_BRANCH_HOOK.search(p)][:5]
+                or hook_paths[:5],
+                "suggested_fix": (
+                    "Remove checkout/switch substring short-circuit; decide allow/deny "
+                    "from resolved repo HEAD and push refspecs only."
+                ),
+            }
+        )
+
+    # Class 2b — push path without refspec awareness (ignore message fakes)
+    handles_push = bool(_PUSH_VERB.search(added))
+    if handles_push and not _REFSPEC_HINT.search(logic):
+        out.append(
+            {
+                "id": "sec-hook-push-refspec-gap",
+                "title": "Protected-branch hook ignores push refspecs",
+                "detail": (
+                    "Security specialist (agentic-equivalent): hook mentions git push "
+                    "but added code lacks refspec / HEAD:branch / refs/heads parsing — "
+                    "`git push origin HEAD:main` can mutate protected branches while "
+                    "feature HEAD looks safe."
+                ),
+                "severity": "medium",
+                "confidence": 0.86,
+                "skill": "security-review",
+                "category": "fail-closed-control",
+                "evidence_paths": [p for p in hook_paths if _PROTECTED_BRANCH_HOOK.search(p)][:5]
+                or hook_paths[:5],
+                "suggested_fix": (
+                    "Parse push refspecs and deny destinations that resolve to "
+                    "main/master/develop/release/production."
+                ),
+            }
+        )
+
+    # Class 2c — missing command-argv git -C parsing (not local `git -C` rev-parse)
+    handles_mutation = bool(_PUSH_VERB.search(added) or _CHECKOUT_SHORTCIRCUIT.search(added))
+    if handles_mutation and not _CMD_C_PARSE.search(logic):
+        out.append(
+            {
+                "id": "sec-hook-git-c-gap",
+                "title": "Protected-branch hook may miss git -C target repo",
+                "detail": (
+                    "Security specialist (agentic-equivalent): mutation hook does not "
+                    "parse `git -C <path>` from the command argv, so "
+                    "`cd other && git -C <protected-repo> commit` can bypass cwd/"
+                    "cd-prefix checks (local `git -C` for rev-parse alone is not enough)."
+                ),
+                "severity": "medium",
+                "confidence": 0.84,
+                "skill": "security-review",
+                "category": "fail-closed-control",
+                "evidence_paths": [p for p in hook_paths if _PROTECTED_BRANCH_HOOK.search(p)][:5]
+                or hook_paths[:5],
+                "suggested_fix": (
+                    "Resolve repo from command-token `-C` (and cd prefix / hook cwd); "
+                    "check that repo's HEAD / refspecs."
+                ),
+            }
+        )
+
+    return out
+
+
 def emit_security_candidates(
     *,
     detection: dict[str, Any],
     context_pack: dict[str, Any],
 ) -> list[dict[str, Any]]:
-    """Security-review specialist — secrets, authz gaps, fail-open catches."""
+    """Security-review specialist — secrets, authz gaps, fail-open / fail-closed."""
     diff, changed = _diff_and_paths(detection, context_pack)
     out: list[dict[str, Any]] = []
     auth_paths = [p for p in changed if _AUTH_PATH.search(p)]
@@ -105,6 +444,7 @@ def emit_security_candidates(
             }
         )
 
+    out.extend(_emit_fail_closed_hook_candidates(diff=diff, changed=changed))
     return out
 
 

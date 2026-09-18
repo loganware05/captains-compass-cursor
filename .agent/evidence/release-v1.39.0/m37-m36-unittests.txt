@@ -1,0 +1,14 @@
+test_compose_includes_security_skill_for_hook_diff (tests.orchestrator.test_m37_agentic_security_review.FailClosedHookDetectorTests.test_compose_includes_security_skill_for_hook_diff) ... ok
+test_hardened_m36_hooks_do_not_self_serve_or_shortcircuit (tests.orchestrator.test_m37_agentic_security_review.FailClosedHookDetectorTests.test_hardened_m36_hooks_do_not_self_serve_or_shortcircuit)
+Current control hooks after M36 should not trip the vulnerable patterns. ... ok
+test_plan_self_serve_fixture_emits_medium (tests.orchestrator.test_m37_agentic_security_review.FailClosedHookDetectorTests.test_plan_self_serve_fixture_emits_medium) ... ok
+test_protected_branch_bypass_fixture_emits_mediums (tests.orchestrator.test_m37_agentic_security_review.FailClosedHookDetectorTests.test_protected_branch_bypass_fixture_emits_mediums) ... ok
+test_self_serve_plan_write_denied_without_captain_env (tests.orchestrator.test_m36_hook_security_hardening.PlanApprovalHardeningTests.test_self_serve_plan_write_denied_without_captain_env) ... ok
+test_template_heading_alone_insufficient (tests.orchestrator.test_m36_hook_security_hardening.PlanApprovalHardeningTests.test_template_heading_alone_insufficient) ... ok
+test_working_tree_approved_does_not_unlock_product_without_commit (tests.orchestrator.test_m36_hook_security_hardening.PlanApprovalHardeningTests.test_working_tree_approved_does_not_unlock_product_without_commit) ... ok
+test_denies_push_refspecs_and_git_c_and_checkout_shortcircuit (tests.orchestrator.test_m36_hook_security_hardening.ProtectedBranchHardeningTests.test_denies_push_refspecs_and_git_c_and_checkout_shortcircuit) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.403s
+
+OK

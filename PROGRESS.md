@@ -2,30 +2,33 @@
 
 ## Current status
 
-**Release: v1.38.1** — M36 hook security hardening (C2 product PR #7 remediation).
-**v1.38.0** tagged 2026-09-17 @ `c8c1345` after #166 + bitcoin-data-collector #7 merged.
+**Landing v1.39.0** — M37 agentic-equivalent fail-closed detectors (rebased onto
+`main`; PR #168 had merged into the M36 branch first).
 
 | Item | Value |
 |---|---|
-| Tagged | **v1.38.0** (M35 / C2) |
-| In flight | **v1.38.1** / M36 — PR [#167](https://github.com/loganware05/captains-compass-cursor/pull/167) rebased onto `main` |
-| Branch | `cursor/m36-hook-security-hardening-5182` |
-| Product follow-up | [bitcoin-data-collector#8](https://github.com/loganware05/bitcoin-data-collector/pull/8) hooks refresh (APPLY_TO_PR7) |
-| Next plan | `docs/plans/AGENTIC_SECURITY_REVIEW_INTEGRATION.md` **AWAITING APPROVAL** |
-| Rollback | `rollback/pre-m36-hook-security-hardening` |
+| Tagged | **v1.38.1** (M36) — [release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.38.1) |
+| Landing | **v1.39.0** / M37 via [#172](https://github.com/loganware05/captains-compass-cursor/pull/172) (`cursor/m37-land-main-5182` → `main`) |
+| Next plan | **`m38-shell-forge-gate`** AWAITING APPROVAL ([#169](https://github.com/loganware05/captains-compass-cursor/issues/169)) |
+| Also queued | **`m39-agentic-security-phase-b`** AWAITING ([#170](https://github.com/loganware05/captains-compass-cursor/issues/170)) |
+| Rollback | `rollback/pre-m37-agentic-security-review` |
 
 ## In flight
 
-- Merge control M36 PR [#167](https://github.com/loganware05/captains-compass-cursor/pull/167) (rebased onto `main`; MERGEABLE) → tag **v1.38.1**
-- Merge product hooks-refresh PR [bitcoin-data-collector#8](https://github.com/loganware05/bitcoin-data-collector/pull/8)
-- Await Captain approval of agentic-security-review-integration (M37)
+- Merge land PR [#172](https://github.com/loganware05/captains-compass-cursor/pull/172) → tag **v1.39.0**
+- Captain approve M38 (shell forge) and/or M39 (live Cursor Security ingest)
+- Close/ignore [#171](https://github.com/loganware05/captains-compass-cursor/pull/171) (superseded by #172) and note [#168](https://github.com/loganware05/captains-compass-cursor/pull/168) wrong-base merge
 
 ## Completed
 
-- **M35 / C2** merged + tagged **v1.38.0** (control #166, product #7)
-- **M34 / C1** → v1.37.0
-- **M33 / B5** → v1.36.0 — Track B complete
+- **M37 Phase A** hermetic fail-closed hook detectors (ADR-054)
+- **M36** → v1.38.1 (control #167, product #8)
+- **M35 / C2** → v1.38.0 (control #166, product #7)
+- Track B complete through B5 / v1.36.0
 
-## Blockers
+## Recommended sequence
 
-None for M36 merge path after rebase. M37 awaits Captain plan approval.
+1. Land M37 on `main` + tag v1.39.0  
+2. Approve **M38** shell forge gate (closes ADR-053 residual)  
+3. Approve **M39** live Agentic Security ingest (opt-in)  
+4. Then Track **C3** connected routine (roadmap)

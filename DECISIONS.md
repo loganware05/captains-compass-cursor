@@ -1,6 +1,25 @@
 # Decisions
 
+## ADR-054: Agentic-equivalent fail-closed checks in Code Reviewer (M37)
+
+- **Status:** Accepted
+- **Date:** 2026-09-18
+- **Context:** Cursor Agentic Security Review caught fail-closed hook bypasses
+  that NorthStar’s hermetic security specialist missed (pattern-only secrets/
+  auth checks). Captain approved `agentic-security-review-integration` Phase A
+  (2026-09-18; Linear OVA-52).
+- **Decision:**
+  1. Extend `emit_security_candidates` with control-plane detectors for diffs
+     touching `.cursor/hooks/**` / `hooks.json`.
+  2. Emit medium `fail-closed-control` candidates for plan self-serve and
+     protected-branch gaps (checkout short-circuit, refspecs, `git -C`).
+  3. Keep default `northstar review` hermetic — no Cursor Cloud requirement.
+  4. Defer live Security Agent ingestion (Phase B) and shell forge gate (Phase C).
+- **Consequences:** Hook PRs get agentic-equivalent findings in CI without paid
+  Cloud Agents. Residual classes still need Phase B/C for full parity.
+
 ## ADR-053: Fail-closed hook hardening after Agentic Security Review (M36)
+
 
 - **Status:** Accepted
 - **Date:** 2026-09-16
