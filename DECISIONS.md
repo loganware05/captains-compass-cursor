@@ -1,5 +1,21 @@
 # Decisions
 
+## ADR-055: Shell forge gate for IMPLEMENTATION_PLAN.md (M38)
+
+- **Status:** Accepted
+- **Date:** 2026-09-18
+- **Context:** M36 closed Write/StrReplace self-serve of plan approval. Agents
+  could still forge Status via shell redirects (`echo`/`tee`/`cat >`). ADR-053
+  residual / M37 Phase C.
+- **Decision:**
+  1. Register `plan-approval-check.sh` on `beforeShellExecution` (fail-closed).
+  2. Deny commands that write to `IMPLEMENTATION_PLAN.md` and promote Status to
+     APPROVED/IN PROGRESS/VALIDATING/COMPLETE unless `COMPASS_CAPTAIN_APPROVE=1`.
+  3. Allow non-promoting plan shell edits and unrelated commands.
+- **Consequences:** Common shell forges of approval are blocked. Residual:
+  content-opaque copies (`cat file > IMPLEMENTATION_PLAN.md`) without promote
+  tokens in the command line remain a process risk.
+
 ## ADR-054: Agentic-equivalent fail-closed checks in Code Reviewer (M37)
 
 - **Status:** Accepted

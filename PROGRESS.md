@@ -2,33 +2,23 @@
 
 ## Current status
 
-**Landing v1.39.0** — M37 agentic-equivalent fail-closed detectors (rebased onto
-`main`; PR #168 had merged into the M36 branch first).
+**Release: v1.39.1** — M38 shell forge gate (in flight).
+**v1.39.0** tagged 2026-09-18 after M37 land (#172 / #171 merge path).
 
 | Item | Value |
 |---|---|
-| Tagged | **v1.38.1** (M36) — [release](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.38.1) |
-| Landing | **v1.39.0** / M37 via [#172](https://github.com/loganware05/captains-compass-cursor/pull/172) (`cursor/m37-land-main-5182` → `main`) |
-| Next plan | **`m38-shell-forge-gate`** AWAITING APPROVAL ([#169](https://github.com/loganware05/captains-compass-cursor/issues/169)) |
-| Also queued | **`m39-agentic-security-phase-b`** AWAITING ([#170](https://github.com/loganware05/captains-compass-cursor/issues/170)) |
-| Rollback | `rollback/pre-m37-agentic-security-review` |
+| Tagged | **v1.39.0** (M37) |
+| In flight | **v1.39.1** / M38 — `cursor/m38-shell-forge-gate-5182` |
+| Also approved | **M39** / `m39-agentic-security-phase-b` → v1.40.0 |
+| Rollback | `rollback/pre-m38-shell-forge-gate` |
 
 ## In flight
 
-- Merge land PR [#172](https://github.com/loganware05/captains-compass-cursor/pull/172) → tag **v1.39.0**
-- Captain approve M38 (shell forge) and/or M39 (live Cursor Security ingest)
-- Close/ignore [#171](https://github.com/loganware05/captains-compass-cursor/pull/171) (superseded by #172) and note [#168](https://github.com/loganware05/captains-compass-cursor/pull/168) wrong-base merge
+- M38 shell forge gate PR → tag **v1.39.1**
+- M39 live agentic security ingest (opt-in) after/alongside M38
 
 ## Completed
 
-- **M37 Phase A** hermetic fail-closed hook detectors (ADR-054)
-- **M36** → v1.38.1 (control #167, product #8)
-- **M35 / C2** → v1.38.0 (control #166, product #7)
-- Track B complete through B5 / v1.36.0
-
-## Recommended sequence
-
-1. Land M37 on `main` + tag v1.39.0  
-2. Approve **M38** shell forge gate (closes ADR-053 residual)  
-3. Approve **M39** live Agentic Security ingest (opt-in)  
-4. Then Track **C3** connected routine (roadmap)
+- **M37** → v1.39.0 (hermetic fail-closed detectors)
+- **M36** → v1.38.1
+- **M35 / C2** → v1.38.0
