@@ -1,5 +1,22 @@
 # Decisions
 
+## ADR-056: Opt-in Cursor Agentic Security ingest (M39)
+
+- **Status:** Accepted
+- **Date:** 2026-09-18
+- **Context:** M37 Phase A encodes PR #7 classes hermetically. Captain still
+  wants optional live Cursor `/review-security` results in NorthStar evidence
+  without making Cloud Agents the CI default (ADR-054 Phase B).
+- **Decision:**
+  1. Add refuse-closed allowlist (`enabled` + repos) for agentic-security ingest.
+  2. Provide `scripts/ingest-agentic-security.sh` +
+     `northstar review ingest-agentic-security` to normalize Cursor JSON →
+     findings under `.agent/evidence/review/<run-id>/agentic-security/`.
+  3. Keep default `northstar review` hermetic; never auto-merge; optional
+     proposal-only M31 outcome stubs.
+- **Consequences:** Captains can attach live agentic findings when allowlisted.
+  Product repos stay quiet until explicitly enabled.
+
 ## ADR-055: Shell forge gate for IMPLEMENTATION_PLAN.md (M38)
 
 - **Status:** Accepted

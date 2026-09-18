@@ -1,0 +1,10 @@
+# Opt-in Cursor Agentic Security ingest allowlist (M39)
+# Refuse-closed: enabled=false or repos not listed → ingest denied.
+schema_version: northstar.agentic_security_allowlist.v1
+enabled: false
+repos:
+  - loganware05/captain-compass-sandbox
+notes: >
+  Set enabled: true and add product repos only after Captain confirmation.
+  Ingest still requires an explicit scripts/ingest-agentic-security.sh invocation.
+  Default northstar review remains hermetic (no Cursor Cloud).

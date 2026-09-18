@@ -20,6 +20,7 @@ Usage:
   northstar help
   northstar skills <subcommand> …
   northstar review …
+  northstar review ingest-agentic-security …
   northstar intent <subcommand> …
   northstar outcomes <subcommand> …
   northstar repair <subcommand> …
@@ -27,7 +28,8 @@ Usage:
 
 Surfaces (one-line purpose):
   skills      Learning Loop — refresh TI, learn, promote, sync-ledger, route-agents
-  review      Code Reviewer — detect→investigate→verify→report (evidence-only default)
+  review      Code Reviewer — detect→investigate→verify→report (evidence-only default);
+              optional ingest-agentic-security (M39, allowlist opt-in)
   intent      Export / normalize intent packs for review (never Captain approval)
   outcomes    Record finding triage → Experience (+ optional proposal-only routing)
   repair      FIND→PROVE→packet from verified findings (never auto-merge)
@@ -40,6 +42,7 @@ Commands:
   northstar skills sync-ledger --run PATH [--mode fixtures|link] [options]
   northstar skills route-agents --registry PATH --objective PATH [--out PATH] [--cloud-agents-json PATH]
   northstar review --repo PATH [run-code-review.sh options]
+  northstar review ingest-agentic-security --repo PATH --artifact PATH --github-repo OWNER/NAME [options]
   northstar intent export --out PATH [--fixture PATH | --issue ID]
   northstar outcomes record --report PATH --triage PATH [record-finding-outcomes.sh options]
   northstar repair start --report PATH --finding ID [start-repair-loop.sh options]
@@ -61,6 +64,7 @@ Locks:
   Never installs Skills without --captain-approved on promote.
   Linear sync never originates Captain approval.
   Code review (M27+) defaults to evidence-only; M30 draft posting is opt-in.
+  Agentic Security ingest (M39) is opt-in + allowlist-gated; hermetic default unchanged.
   Intent packs (M29) never originate Captain approval.
   Finding outcomes (M31) write Experience; RoutingProposal stays proposal-only.
   Repair loop (M32 / B4) is Captain-gated, verified-only, never auto-merges.
@@ -160,6 +164,16 @@ case "$cmd" in
     esac
     ;;
   review)
+    if [[ "${1:-}" == "ingest-agentic-security" ]]; then
+      shift
+      # shellcheck disable=SC2207
+      mapped=()
+      while IFS= read -r -d '' item; do
+        mapped+=("$item")
+      done < <(map_repo_flag "$@")
+      require_repo_root "${mapped[@]+"${mapped[@]}"}"
+      exec "$ROOT/scripts/ingest-agentic-security.sh" "${mapped[@]}"
+    fi
     # shellcheck disable=SC2207
     mapped=()
     while IFS= read -r -d '' item; do

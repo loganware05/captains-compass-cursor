@@ -27,6 +27,7 @@ SCHEMA_FILES = (
     "code-review-report.schema.json",
     "intent-pack.schema.json",
     "github-allowlist.schema.json",
+    "agentic-security-allowlist.schema.json",
     "finding-outcome.schema.json",
     "repair-run.schema.json",
 )
