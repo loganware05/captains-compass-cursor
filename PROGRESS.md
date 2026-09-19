@@ -2,31 +2,27 @@
 
 ## Current status
 
-**In flight: M40 / v1.41.0** — Filesystem-Gated Context & Dependency
-Architecture (Captain-approved 2026-09-18).
+**Release: v1.41.0** — M40 Filesystem-Gated Context & Dependency Architecture
+shipped 2026-09-19.
 
 | Item | Value |
 |---|---|
-| On main | **v1.40.1** — M39 (#175) + M38 residual (#174) + closeout (#176) |
-| In flight | **M40** — control PR [#177](https://github.com/loganware05/captains-compass-cursor/pull/177); sandbox PR [#59](https://github.com/loganware05/captain-compass-sandbox/pull/59) |
-| Branch | `cursor/m40-filesystem-gated-context-ea39` (both repos) |
-| Plan | `IMPLEMENTATION_PLAN.md` — **APPROVED — IMPLEMENTING** (`m40-filesystem-gated-context`) |
+| Tagged | **v1.41.0** @ `a6039b0` (control #177 merged; sandbox #59 merged) |
+| Plan | `m40-filesystem-gated-context` — **COMPLETE** |
 | Rollback | `rollback/pre-m40-filesystem-gated-context` @ `125d53e` |
 | Evidence | `.agent/evidence/m40-filesystem-gated-context/` |
+| Carry-over | Approved by Captain 2026-09-19 for `capability-planning`, `code-reviewer`, `skill-lifecycle` (inodes `captain_approved: true`) |
 
 ## In flight
 
-- M40 WS1–WS7 implemented + adversarial remediation (H1–M13 fixed; 26
-  regression tests); validation green (suite 125, orchestrator 458, evals 43);
-  sandbox boundary precision **1.0** (3/3 seeded detected, 0 FP on clean
-  change); payload reduction 52% on fixture corpus
-- Remaining: Captain review of PR #177 / sandbox #59, merge, tag **v1.41.0**
-- Carry-over pending Captain: `capability-planning`, `code-reviewer`,
-  `skill-lifecycle` skill inodes (edited in M40) — approve via
-  `./scripts/build-skill-inodes.sh --captain-approved`
+- Nothing. Awaiting next Captain-directed milestone.
 
 ## Completed
 
+- **M40 → v1.41.0** — inode store, context route walker, hard/symlink
+  dependency graph, boundary review gate (precision 1.0 fixture + sandbox),
+  content-addressed Skill inodes, subagent `pwd` isolation; adversarial
+  remediation (19 findings) with 26 regression tests
 - M39 → v1.40.0 / v1.40.1 (agentic security ingest + opaque forge gate)
 - M37 → v1.39.0; Track B complete through B5 / v1.36.0
 
@@ -36,7 +32,8 @@ Architecture (Captain-approved 2026-09-18).
   (FP when a diff removes the legacy pattern) — detectors should scan added
   lines only
 - `orchestrator/registry/compiler.py` SKILL_SLUGS predates M21/M27: missing
-  `code-reviewer` and `northstar-connected-routine` (pre-existing on main)
+  `code-reviewer` and `northstar-connected-routine` (drift warnings now
+  surface both)
 
 ## Blockers
 
@@ -44,6 +41,5 @@ None.
 
 ## Recommended sequence
 
-1. Captain review + merge control PR #177 and sandbox PR #59
-2. Tag **v1.41.0**; approve skill-inode carry-over for the three edited Skills
-3. File follow-up plans for the two known follow-ups above
+1. File follow-up plans for the two known follow-ups above when the Captain
+   prioritizes them
