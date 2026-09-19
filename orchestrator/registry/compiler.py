@@ -52,6 +52,7 @@ SKILL_SLUGS = (
     "hosted-vector-db",
     "package-registry-ti",
     "skill-learning-loop",
+    "context-inodes",
 )
 
 AGENT_PROFILES = (
@@ -139,7 +140,30 @@ def compile_registry(repo_root: Path) -> CompileResult:
         if cap_id in seen_ids:
             raise RegistryCompileError(f"duplicate capability id: {cap_id}")
         seen_ids.add(cap_id)
+        # M40: pin content-addressed skill identity into provenance.
+        from orchestrator.registry.inodes import skill_content_hash, skill_inode_id_for
+        from orchestrator.registry.loader import resolve_skill_dir
+
+        content_hash = skill_content_hash(resolve_skill_dir(repo_root, slug))
+        provenance = capability.setdefault("provenance", {})
+        if isinstance(provenance, dict):
+            provenance["content_hash"] = content_hash
+            provenance["skill_inode"] = skill_inode_id_for(content_hash)
         skills.append(capability)
+
+    # Drift visibility: skill directories on disk that are not registered in
+    # SKILL_SLUGS never enter the compiled registry (pre-existing gap for
+    # code-reviewer / northstar-connected-routine — see PROGRESS follow-ups).
+    skills_root = repo_root / ".cursor" / "skills"
+    if skills_root.is_dir():
+        for path in sorted(skills_root.iterdir()):
+            if (
+                path.is_dir()
+                and path.name != "inodes"
+                and (path / "SKILL.md").is_file()
+                and path.name not in SKILL_SLUGS
+            ):
+                warnings.append(f"skill dir not registered in SKILL_SLUGS: {path.name}")
 
     profiles: list[dict] = []
     seen_profile_ids: set[str] = set()

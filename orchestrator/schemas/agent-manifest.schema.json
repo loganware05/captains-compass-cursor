@@ -43,6 +43,20 @@
       "additionalProperties": true
     },
     "rationale": { "type": "string", "minLength": 1 },
+    "working_context": {
+      "type": "object",
+      "description": "M40 subagent pwd: scoped context route + inode pointers + path allow/deny lists (advisory-by-construction).",
+      "required": ["route_resolved", "inode_refs", "scope_allow", "scope_deny"],
+      "additionalProperties": true,
+      "properties": {
+        "context_root": { "type": "string" },
+        "route_resolved": { "type": "boolean" },
+        "inode_refs": { "type": "array", "items": { "type": "string" } },
+        "scope_allow": { "type": "array", "items": { "type": "string" } },
+        "scope_deny": { "type": "array", "items": { "type": "string" } },
+        "note": { "type": "string" }
+      }
+    },
     "scoring_breakdown": {
       "type": "array",
       "items": {

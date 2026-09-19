@@ -1,0 +1,15 @@
+{
+  "content_hash": "412ef364a2f0b69c4625878a210b4a54e8aa433ce697830fdc066e191b0bec57",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-412ef364a2f0b69c",
+  "slug": "knowledge-steward",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

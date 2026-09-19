@@ -1,0 +1,15 @@
+{
+  "content_hash": "e4532dbe2af2481716f96529c84d169fd5b167e85c2d5993650d3283aa8b8dcc",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-e4532dbe2af24817",
+  "slug": "python-ml",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

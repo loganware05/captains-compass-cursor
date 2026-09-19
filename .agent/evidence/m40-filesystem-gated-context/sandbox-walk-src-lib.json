@@ -1,0 +1,24 @@
+{
+  "route": "src/lib",
+  "resolved": true,
+  "steps": [
+    {
+      "segment": "src",
+      "found": true,
+      "node_id": "ctx-25a6634263c1",
+      "summary": "13 file(s); exports: ContactField, ContactFormErrors, ContactFormValues, FormIssue, FormIssuesSummary, FormIssuesSummaryProps, MESSAGE_MAX_LENGTH, countFormIssues, \u2026"
+    },
+    {
+      "segment": "lib",
+      "found": true,
+      "node_id": "ctx-91be6cfb7c91",
+      "summary": "4 file(s); exports: ContactField, ContactFormErrors, ContactFormValues, FormIssue, MESSAGE_MAX_LENGTH, countFormIssues, hasContactFormErrors, summarizeFormIssues, \u2026"
+    }
+  ],
+  "inode_refs": [
+    "ino-2edf3ecba8be3e89",
+    "ino-5c96fa61067ae695",
+    "ino-98f5f9e38a9268f5",
+    "ino-e561605f8377ea4d"
+  ]
+}

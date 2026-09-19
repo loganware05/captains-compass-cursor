@@ -1,0 +1,15 @@
+{
+  "content_hash": "c762380bfac3769c0794d56ece224a955fd26818273bd85c92ff721d4dc9db07",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-c762380bfac3769c",
+  "slug": "testing-validation",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

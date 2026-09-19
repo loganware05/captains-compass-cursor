@@ -70,6 +70,22 @@ For earlier stages (`DISCOVERED → SANDBOX_TESTED`) use Skill `candidate-promot
    `skill-learning-loop` (`bridge-learning-experiences.sh`).
 6. Re-run `./scripts/compile-capability-registry.sh` after any live Skill PR merges.
 
+## M40: content-addressed Skill inodes
+
+Every Skill has an immutable inode at `.cursor/skills/inodes/<sha256>.json`
+(SHA-256 over `SKILL.md` + `capability.yaml`). Skill identity is content, not
+slug:
+
+- Editing a Skill produces a **new inode**; the old inode is immutable history.
+- Experience/proficiency reputation pins to the inode hash it was earned on.
+- Reputation carry-over to a changed Skill's new inode requires
+  `./scripts/build-skill-inodes.sh --captain-approved` (Captain gate);
+  otherwise the new inode carries `reputation.captain_approved: false`.
+- `doctor.sh` fails closed when committed inodes are stale — rerun
+  `./scripts/build-skill-inodes.sh` after editing any Skill.
+- The compiled registry embeds `provenance.content_hash` + `skill_inode` per
+  Skill entry.
+
 ## Output
 
 - Staging candidate with updated `lifecycle_stage`

@@ -1,0 +1,15 @@
+{
+  "content_hash": "2b77d790b3641119d2f7e1c0ca1d7def81c6affd819f50976495a0d43e74d6af",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-2b77d790b3641119",
+  "slug": "security-review",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

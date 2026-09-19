@@ -1,0 +1,6 @@
+> oxlint
+
+ Test Files  5 passed (5)
+      Tests  31 passed (31)
+
+✓ built in 109ms

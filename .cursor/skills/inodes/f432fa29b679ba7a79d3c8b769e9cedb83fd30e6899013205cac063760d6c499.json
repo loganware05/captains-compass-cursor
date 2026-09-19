@@ -1,0 +1,15 @@
+{
+  "content_hash": "f432fa29b679ba7a79d3c8b769e9cedb83fd30e6899013205cac063760d6c499",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-f432fa29b679ba7a",
+  "slug": "hosted-vector-db",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

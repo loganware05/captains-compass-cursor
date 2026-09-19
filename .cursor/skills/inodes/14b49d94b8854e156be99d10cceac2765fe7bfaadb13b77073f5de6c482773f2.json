@@ -1,0 +1,15 @@
+{
+  "content_hash": "14b49d94b8854e156be99d10cceac2765fe7bfaadb13b77073f5de6c482773f2",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-14b49d94b8854e15",
+  "slug": "experience-skill-training",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

@@ -1,0 +1,15 @@
+{
+  "content_hash": "bc1fe3f389704a092c690526d9026a7bb8148c8747542165d3e530568059eb53",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-bc1fe3f389704a09",
+  "slug": "review-fix-loop",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

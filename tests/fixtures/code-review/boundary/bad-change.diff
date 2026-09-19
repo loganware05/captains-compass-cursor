@@ -1,0 +1,30 @@
+diff --git a/src/api/client.ts b/src/api/client.ts
+index 1111111..2222222 100644
+--- a/src/api/client.ts
++++ b/src/api/client.ts
+@@ -1,6 +1,6 @@
+ // Fixture: API client that crosses the ui boundary (M40 boundary fixtures).
+-import { FormProps, buildForm } from '../ui/components/Form';
++import { FormProps, buildForm, deleteForm } from '../ui/components/Form';
+ import { validateForm } from '../ui/utils/validate';
+ import '../ui/components/Input';
+ 
+@@ -14,5 +14,14 @@
+ export function submitForm(form: FormProps): SubmissionResult {
+   const errors = validateForm(form.fields);
+   return { ok: errors.length === 0, errors };
+ }
+ 
+ export function remake(title: string): FormProps {
+-  return buildForm(title, []);
++  return buildForm(title);
+ }
++
++export function validateAll(forms: FormProps[]): string[] {
++  const all: string[] = [];
++  for (const form of forms) {
++    const errs = validateForm(form.fields);
++    all.push(...errs);
++  }
++  return all;
++}

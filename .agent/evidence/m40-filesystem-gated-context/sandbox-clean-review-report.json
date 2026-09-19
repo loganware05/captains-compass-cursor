@@ -1,0 +1,76 @@
+{
+  "base_ref": "main",
+  "context_pack_path": ".agent/evidence/code-review/m40-sandbox-clean/context-pack.json",
+  "created_at": "2026-09-18T21:57:21Z",
+  "findings": [
+    {
+      "category": "fail-closed-control",
+      "confidence": 0.9,
+      "detail": "Security specialist (agentic-equivalent): fail-closed protected-branch hook allows when the command string contains `git checkout -b` / `git switch -c` with a feature-like prefix, which does not prove HEAD left a protected branch before commit/push.",
+      "discard_reason": "",
+      "evidence_paths": [
+        ".cursor/hooks/protected-branch.sh"
+      ],
+      "id": "sec-hook-checkout-shortcircuit",
+      "severity": "medium",
+      "skill": "security-review",
+      "status": "verified",
+      "suggested_fix": "Remove checkout/switch substring short-circuit; decide allow/deny from resolved repo HEAD and push refspecs only.",
+      "title": "Protected-branch hook short-circuits on checkout -b substring"
+    },
+    {
+      "category": "noise",
+      "confidence": 0.2,
+      "detail": "Placeholder low-signal nit used to exercise discard rules.",
+      "discard_reason": "missing_evidence_paths",
+      "evidence_paths": [],
+      "id": "noise-style-nit",
+      "severity": "low",
+      "skill": "code-reviewer",
+      "status": "discarded",
+      "suggested_fix": "",
+      "title": "Style nit without evidence"
+    }
+  ],
+  "head_ref": "HEAD",
+  "plan_id": "m30-github-draft-reviews",
+  "provenance": {
+    "boundary": {
+      "candidates": 0,
+      "enabled": true,
+      "notes": [
+        "boundary check: 4 file(s) checked against inode store"
+      ]
+    },
+    "candidates_source": "specialists",
+    "github_review_posted": false,
+    "hermetic": true,
+    "invoke_model": false,
+    "pipeline": "northstar.review.v1"
+  },
+  "repository": "/agent/repos/captain-compass-sandbox",
+  "run_id": "m40-sandbox-clean",
+  "schema_version": "northstar.code_review_report.v1",
+  "status": "completed",
+  "summary": {
+    "discarded": 1,
+    "domains": [
+      "docs",
+      "react",
+      "tests",
+      "typescript"
+    ],
+    "findings_total": 2,
+    "intent_artifact": "/agent/repos/captain-compass-sandbox/IMPLEMENTATION_PLAN.md",
+    "skills_invoked": [
+      "code-reviewer",
+      "accessibility-review",
+      "testing-validation",
+      "adversarial-reviewer",
+      "review-fix-loop",
+      "security-review"
+    ],
+    "unverified": 0,
+    "verified": 1
+  }
+}

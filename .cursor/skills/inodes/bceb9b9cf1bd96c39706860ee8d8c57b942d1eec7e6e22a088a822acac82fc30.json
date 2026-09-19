@@ -1,0 +1,15 @@
+{
+  "content_hash": "bceb9b9cf1bd96c39706860ee8d8c57b942d1eec7e6e22a088a822acac82fc30",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-bceb9b9cf1bd96c3",
+  "slug": "experience-routing",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

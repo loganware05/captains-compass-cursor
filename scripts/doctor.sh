@@ -110,6 +110,7 @@ SKILLS=(
   skill-learning-loop
   northstar-connected-routine
   code-reviewer
+  context-inodes
 )
 
 for s in "${SKILLS[@]}"; do
@@ -226,6 +227,9 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     candidate-capability.schema.json
     execution-run.schema.json
     experience.schema.json
+    context-inode.schema.json
+    context-route.schema.json
+    skill-inode.schema.json
   )
   for s in "${ORCHESTRATOR_SCHEMAS[@]}"; do
     if [[ -f "$ROOT/orchestrator/schemas/$s" ]]; then
@@ -262,6 +266,50 @@ if [[ -d "$ROOT/templates/docs" ]]; then
     ok "capability-planning sidecar"
   else
     fail "missing capability-planning/capability.yaml"
+  fi
+  # M40: content-addressed Skill inodes must be fresh (committed index).
+  if [[ -x "$ROOT/scripts/build-skill-inodes.sh" ]]; then
+    ok "scripts/build-skill-inodes.sh present"
+    if command -v python3 >/dev/null 2>&1; then
+      if "$ROOT/scripts/build-skill-inodes.sh" --repo-root "$ROOT" --check >/dev/null 2>&1; then
+        ok "skill inodes fresh"
+      else
+        fail "skill inodes stale — rerun scripts/build-skill-inodes.sh"
+      fi
+      pending="$(PYTHONPATH="$ROOT" python3 - "$ROOT" <<'PY'
+import json, sys
+from pathlib import Path
+idx = Path(sys.argv[1]) / ".cursor" / "skills" / "inodes" / "index.json"
+if idx.is_file():
+    data = json.loads(idx.read_text(encoding="utf-8"))
+    pending = [
+        slug for slug, entry in sorted((data.get("skills") or {}).items())
+        if (entry.get("reputation") or {}).get("carry_over_from")
+        and not (entry.get("reputation") or {}).get("captain_approved")
+    ]
+    if pending:
+        print(",".join(pending))
+PY
+)"
+      if [[ -n "$pending" ]]; then
+        warn "skill inode carry-over pending Captain approval: $pending"
+      fi
+    fi
+  else
+    fail "missing scripts/build-skill-inodes.sh"
+  fi
+  # M40: context inode store, when built, must not be stale (fail closed on staleness).
+  if [[ -x "$ROOT/scripts/build-context-inodes.sh" ]]; then
+    ok "scripts/build-context-inodes.sh present"
+    if [[ -f "$ROOT/.agent/inodes/index.json" ]] && command -v python3 >/dev/null 2>&1; then
+      if "$ROOT/scripts/build-context-inodes.sh" --repo-root "$ROOT" --check >/dev/null 2>&1; then
+        ok "context inodes fresh"
+      else
+        fail "context inodes stale — rerun scripts/build-context-inodes.sh"
+      fi
+    fi
+  else
+    fail "missing scripts/build-context-inodes.sh"
   fi
   if [[ -f "$ROOT/.agent/experience/.gitkeep" ]]; then
     ok ".agent/experience layout"
@@ -363,7 +411,7 @@ if [[ -d "$ROOT/templates/docs" ]]; then
   else
     fail "northstar help missing Surfaces map (C1)"
   fi
-  for surface in skills review intent outcomes repair precision; do
+  for surface in skills review intent outcomes repair precision context; do
     if "$ROOT/scripts/northstar" help 2>/dev/null | grep -Eq "^  ${surface}[[:space:]]"; then
       ok "northstar help lists ${surface}"
     else

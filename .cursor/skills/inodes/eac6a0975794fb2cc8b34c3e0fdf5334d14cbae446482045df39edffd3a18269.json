@@ -1,0 +1,15 @@
+{
+  "content_hash": "eac6a0975794fb2cc8b34c3e0fdf5334d14cbae446482045df39edffd3a18269",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-eac6a0975794fb2c",
+  "slug": "bounded-autonomy",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

@@ -1,0 +1,393 @@
+{
+  "skill_count": 43,
+  "skills": {
+    "accessibility-review": {
+      "content_hash": "1bc05cf1b3b769ac134964c94d95b649c86b21ea8056beb9c93e57002d737990",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-1bc05cf1b3b769ac"
+    },
+    "autonomy-budget": {
+      "content_hash": "629843a00d054a9bdd0f9872970a17143fc1336ead7e4a86aab6a6aac3646200",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-629843a00d054a9b"
+    },
+    "bounded-autonomy": {
+      "content_hash": "eac6a0975794fb2cc8b34c3e0fdf5334d14cbae446482045df39edffd3a18269",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-eac6a0975794fb2c"
+    },
+    "candidate-promotion": {
+      "content_hash": "cf3afd73d9499e6ae0a566daf02bcdbb8f22f52172e13f4c6cd9dc2985066bdd",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-cf3afd73d9499e6a"
+    },
+    "capability-planning": {
+      "content_hash": "1f116244868c1b0d1e23116594be69f4bd232ae4fb7cc581b6722c8add7e6fbf",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": "skl-a9209c8a3ad9078b"
+      },
+      "skill_inode_id": "skl-1f116244868c1b0d"
+    },
+    "code-reviewer": {
+      "content_hash": "558ab7144b211e4ebe7673a38bf91aef8f990fd96c1bb9b8c3cca78c689106ab",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": "skl-e3180f723de83c1d"
+      },
+      "skill_inode_id": "skl-558ab7144b211e4e"
+    },
+    "code-structure-cleanup": {
+      "content_hash": "b8728f538dccc387d88fce5d95bf85c4eb4d569a905aa2eefcd49ca72b52d744",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-b8728f538dccc387"
+    },
+    "compass-evaluator": {
+      "content_hash": "8ee88506b10177635ddb8c9ffca9937de638f58f7007ce89c1c44e9bb36cdbac",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-8ee88506b1017763"
+    },
+    "context-inodes": {
+      "content_hash": "f217f73c439524ad3ea6536900a7b39b892eb695ec0874374147a611237bae6a",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-f217f73c439524ad"
+    },
+    "dependency-supply-chain": {
+      "content_hash": "60efbca38f87bd8234319687583a27ec227b302b8409f09d5da3f7ddac32272c",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-60efbca38f87bd82"
+    },
+    "docker-cloud": {
+      "content_hash": "f05a256f8afce73ca5ea64440edc83c3cb6359ab3ddf4b9d7e3a7a87a96cd9ec",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-f05a256f8afce73c"
+    },
+    "embedding-providers": {
+      "content_hash": "553782403782ea682f0ac2fd52a7603f04d813be50ff4fb7c956e1eff926b8ec",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-553782403782ea68"
+    },
+    "execution-telemetry": {
+      "content_hash": "d1085cced82b23cbb5761f921712bcf24197a53a57e641113245479d91578a41",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-d1085cced82b23cb"
+    },
+    "experience-routing": {
+      "content_hash": "bceb9b9cf1bd96c39706860ee8d8c57b942d1eec7e6e22a088a822acac82fc30",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-bceb9b9cf1bd96c3"
+    },
+    "experience-skill-training": {
+      "content_hash": "14b49d94b8854e156be99d10cceac2765fe7bfaadb13b77073f5de6c482773f2",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-14b49d94b8854e15"
+    },
+    "external-knowledge-ingest": {
+      "content_hash": "c3af27a5d076a78d816d4542cfa2aa3fe18ddfef42f41e5ee87dc7d2914002de",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-c3af27a5d076a78d"
+    },
+    "github-integration": {
+      "content_hash": "e0500739c3347b582b04dae80ee1c043aedb7960b9093cb6729dd021d2ef5c1e",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-e0500739c3347b58"
+    },
+    "harness-gc": {
+      "content_hash": "2d3166c53c1aa32ade92e16717e2f5917845432077e9c0ae84050b6be18766cf",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-2d3166c53c1aa32a"
+    },
+    "hosted-vector-db": {
+      "content_hash": "f432fa29b679ba7a79d3c8b769e9cedb83fd30e6899013205cac063760d6c499",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-f432fa29b679ba7a"
+    },
+    "implementation-planning": {
+      "content_hash": "76383ed9ef05d0489b594227633ea83f77935a72a8759a717f7dc8de8b05a993",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-76383ed9ef05d048"
+    },
+    "ios-engineering": {
+      "content_hash": "99ba8dda1d4170182a7653f98ae505fc555400c168d6dfd082ac4ed0f11e11d3",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-99ba8dda1d417018"
+    },
+    "knowledge-steward": {
+      "content_hash": "412ef364a2f0b69c4625878a210b4a54e8aa433ce697830fdc066e191b0bec57",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-412ef364a2f0b69c"
+    },
+    "linear-integration": {
+      "content_hash": "3324dedce97deb27d710f0d35f94273b5b025a3dbea081f8692904d95964556c",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-3324dedce97deb27"
+    },
+    "node-engineering": {
+      "content_hash": "845f412ac41ac97913ab9902646f9a1ea55f35d332414d35edb61265e5815bb9",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-845f412ac41ac979"
+    },
+    "northstar-connected-routine": {
+      "content_hash": "da6aed24ca8631136544c3e902f46a659107b537bb4fca1aa7a3de51d9dace6c",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-da6aed24ca863113"
+    },
+    "notion-integration": {
+      "content_hash": "23f8271ecf842ade1b24a164b6a132010ebad548373a8a30387693edaeb724c4",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-23f8271ecf842ade"
+    },
+    "package-registry-ti": {
+      "content_hash": "850cda57689cda13146a4fff6c2bbcbf030e0a928704244deef753b3a08f7b8b",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-850cda57689cda13"
+    },
+    "persistent-role-promotion": {
+      "content_hash": "7484c2887b8afcf11792e133f91a66a68cb3cf18c5786f89d98fdc9da3b9272b",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-7484c2887b8afcf1"
+    },
+    "playwright-browser-validation": {
+      "content_hash": "59b305facf98cb260aba0e92165ed4fabecab3008b3cfb5b21b5b6fd40e5251c",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-59b305facf98cb26"
+    },
+    "postgres-prisma": {
+      "content_hash": "0de818f5ad26ca03a6c722b65329e8627838b88d1586ebb3eaa7dc8d7c21360e",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-0de818f5ad26ca03"
+    },
+    "procedure-playbooks": {
+      "content_hash": "27c364541360ddf32cb9bf9fd4fbd293eaeb16b8ba890e12ca781b6a48c7fd8c",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-27c364541360ddf3"
+    },
+    "pull-request-preparation": {
+      "content_hash": "3aa00c2d28085eaafa70578213e34a6205cc613862191684b456f6f06cd88658",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-3aa00c2d28085eaa"
+    },
+    "python-ml": {
+      "content_hash": "e4532dbe2af2481716f96529c84d169fd5b167e85c2d5993650d3283aa8b8dcc",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-e4532dbe2af24817"
+    },
+    "react-engineering": {
+      "content_hash": "f3c54e9fc101537d63105a549e6c54ec6164ac8368658b0a40a2c4bd59d36ee3",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-f3c54e9fc101537d"
+    },
+    "repository-discovery": {
+      "content_hash": "4833238cb19399a41a6829f54800941c1339a4ee961a9378b86032d10619ffaf",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-4833238cb19399a4"
+    },
+    "review-fix-loop": {
+      "content_hash": "bc1fe3f389704a092c690526d9026a7bb8148c8747542165d3e530568059eb53",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-bc1fe3f389704a09"
+    },
+    "security-review": {
+      "content_hash": "2b77d790b3641119d2f7e1c0ca1d7def81c6affd819f50976495a0d43e74d6af",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-2b77d790b3641119"
+    },
+    "skill-learning-loop": {
+      "content_hash": "6ea1a2c3af72a225b06d6f2e8d071ce5c125633ff68fc993ba14b5fa37c52269",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-6ea1a2c3af72a225"
+    },
+    "skill-lifecycle": {
+      "content_hash": "4f93c66f1d8e03037510bd9e63a7e96aa06b4cfb7e52b076c302008d9d030978",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": "skl-2e58332b95f8cf0b"
+      },
+      "skill_inode_id": "skl-4f93c66f1d8e0303"
+    },
+    "source-code-context": {
+      "content_hash": "9876b235a02a8cc83f56027c0af2bf4a00034a4b5fee1ae084784c577011261c",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-9876b235a02a8cc8"
+    },
+    "technology-intelligence-live": {
+      "content_hash": "e2750e26c1e75fd010ad225af29ba7e7b68bd10d8421ab259ec34d049bde9afa",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-e2750e26c1e75fd0"
+    },
+    "testing-validation": {
+      "content_hash": "c762380bfac3769c0794d56ece224a955fd26818273bd85c92ff721d4dc9db07",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-c762380bfac3769c"
+    },
+    "worktree-orchestration": {
+      "content_hash": "b3a836914db119b819944dd52075b237829e3cd3426c94ce9045c2193dadab6b",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-b3a836914db119b8"
+    }
+  },
+  "store_version": "1.0.0"
+}

@@ -40,7 +40,11 @@ class DecomposeTests(unittest.TestCase):
         self.assertGreaterEqual(len(impl_tasks), 3)
         for task in impl_tasks:
             self.assertTrue(task["parallelizable"])
-            self.assertEqual(task["dependencies"], ["task-architecture"])
+            # M40: impl tasks hard-link to the architecture contract.
+            self.assertEqual(
+                task["dependencies"],
+                [{"target": "task-architecture", "link": "hard", "contract": "architecture-brief"}],
+            )
 
     def test_security_sensitive_adds_security_review_task(self) -> None:
         objective = "Review OAuth login flow for auth flaws and injection risks"
