@@ -126,8 +126,9 @@ gh auth status
 
 ## Current Priorities
 
-**M40 in flight** — Filesystem-Gated Context & Dependency Architecture
-(`IMPLEMENTATION_PLAN.md`, APPROVED 2026-09-18): inode metadata store, context
-route walker, hard/symlink dependency graph + boundary review gate,
-content-addressed Skill inodes, subagent `pwd` isolation. Sandbox validation
-green (boundary precision 1.0). See PROGRESS.md.
+**M41 awaiting approval** — Jev Decision Service shadow-mode skill suggestion
+(`IMPLEMENTATION_PLAN.md`, plan id `m41-jev-decision-service`): optional
+version-pinned DecisionProvider; compare against deterministic matcher without
+changing dispatch; hermetic stub/file default. Spec: Notion Decision Service
+draft (research only). Deferred: M37 removed-line FP; compiler SKILL_SLUGS gap.
+See PROGRESS.md.
