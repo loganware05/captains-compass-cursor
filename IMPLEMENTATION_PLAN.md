@@ -10,11 +10,11 @@
 | Linear | [OVA-55](https://linear.app/ovaltechnologysolutions/issue/OVA-55/m43-jev-decisionprovider-ranking-enablement-v1430) |
 | Supersedes | Plan draft on PR #181; builds on M41 ADR-058 |
 | Product | **NorthStar** |
-| Baseline | **v1.42.0** @ `ed20499` (rebaseline to post-M42 `main` if #180 merges first) |
+| Baseline | **v1.42.1** @ `0219300` (post-M42 #180 on `main`) |
 | Prepared | 2026-09-24 |
 | Spec source | Captain approval + open-question resolutions; ADR-058; `docs/integrations/decision-provider.md` |
 | Proposed release | **v1.43.0** (default-off) |
-| Rollback | Tag `rollback/pre-m43-jev-ranking-enablement` at pre-implementation `main` |
+| Rollback | Tag `rollback/pre-m43-jev-ranking-enablement` @ post-M42 `main` (`0219300`) |
 | Branch | `cursor/m43-jev-ranking-enablement-753c` |
 | Captain | Logan Ware |
 | Pinned model | **`jev-1.13.0`** |

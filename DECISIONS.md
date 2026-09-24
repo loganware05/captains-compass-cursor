@@ -26,6 +26,25 @@
 - **Consequences:** Ranking apply is inert until env opt-in; unset APPLY restores
   matcher-only. Rollback tag `rollback/pre-m43-jev-ranking-enablement`.
 
+## ADR-059: Hook fail-closed detectors scan executable added lines only (v1.42.1 M42)
+
+- **Status:** Accepted
+- **Date:** 2026-09-24
+- **Context:** M37 detectors intended to scan added hook logic, but matched
+  whole-diff added text. M40 sandbox clean review verified a FP for
+  `sec-hook-checkout-shortcircuit` when the short-circuit was removed from
+  `protected-branch.sh` while docs/README described the old pattern. Captain
+  directed continuation after M41 merge.
+- **Decision:**
+  1. Parse unified diffs per file; ignore removed (`-`) lines for detector body.
+  2. Restrict fail-closed pattern matching to executable hook paths
+     (`.cursor/hooks/*.{sh,bash,zsh}` and `hooks.json`), not README/docs.
+  3. Keep positive M37 fixtures; add regression tests including M40 sandbox pack
+     replay.
+- **Consequences:** Hook refresh PRs that delete legacy short-circuits stay
+  quiet; real added short-circuits still fire. Ranking enablement / review
+  triage / agent routing remain separate Decision Service plans.
+
 ## ADR-058: Optional Jev DecisionProvider for shadow skill suggestion (v1.42.0 M41)
 
 - **Status:** Accepted

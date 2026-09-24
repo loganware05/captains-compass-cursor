@@ -2,26 +2,27 @@
 
 ## Current status
 
-**Implementing: M43 ranking enablement** — APPROVED (OVA-55); code on
-`cursor/m43-jev-ranking-enablement-753c` toward v1.43.0.
+**Ready for merge: M43 ranking enablement** — APPROVED (OVA-55); PR [#181](https://github.com/loganware05/captains-compass-cursor/pull/181) rebaselined onto post-M42 `main` (v1.42.1).
 
 | Item | Value |
 |---|---|
-| On main | **v1.42.0** M41 (#179) |
-| Parallel | **M42** PR [#180](https://github.com/loganware05/captains-compass-cursor/pull/180) — M37 FP fix (v1.42.1); CI green |
-| Active | **M43** ranking enablement — implementation in progress ([#181](https://github.com/loganware05/captains-compass-cursor/pull/181)) |
+| On main | **v1.42.1** M42 (#180) @ `0219300` |
+| Active PR | **M43** [#181](https://github.com/loganware05/captains-compass-cursor/pull/181) — v1.43.0 default-off |
+| Plan | `m43-jev-ranking-enablement` — **APPROVED** |
+| Rollback | `rollback/pre-m43-jev-ranking-enablement` @ post-M42 `main` |
 
 ## Captain-ordered Decision Service sequence
 
 1. ~~Shadow skill suggestion (M41)~~ merged
-2. Ranking enablement ← **in progress (approved)**
+2. Ranking enablement ← **ready to merge**
 3. Review triage
 4. Agent routing
 
-## Also in flight
+## Completed recently
 
-- M42 specialist added-line scope (M37 FP) — PR #180
+- **M42 → v1.42.1** — M37 specialist added-line scope (#180)
+- **M41 → v1.42.0** — Jev DecisionProvider shadow skill suggestion (#179)
 
 ## Blockers
 
-None for M43 implementation. Rebaseline onto post-M42 `main` if #180 merges first.
+None.

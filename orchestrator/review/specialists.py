@@ -27,6 +27,14 @@ _HOOK_PATH = re.compile(
     r"(^|/)\.cursor/hooks(/|$)|(^|/)\.cursor/hooks\.json$|(^|/)hooks\.json$",
     re.I,
 )
+# Executable hook control plane only — docs under .cursor/hooks/ (README) must
+# not feed fail-closed detectors (M42 / M40 sandbox FP).
+_HOOK_SCAN_PATH = re.compile(
+    r"(^|/)\.cursor/hooks/[^/]+\.(sh|bash|zsh)$|"
+    r"(^|/)\.cursor/hooks\.json$|"
+    r"(^|/)hooks\.json$",
+    re.I,
+)
 _PLAN_EXEMPT = re.compile(
     r"^\+.*\bIMPLEMENTATION_PLAN\.md\b",
     re.M,
@@ -138,6 +146,50 @@ def _added_text(diff: str) -> str:
     return "\n".join(lines)
 
 
+def _added_text_by_file(diff: str) -> dict[str, str]:
+    """Map each diff path to its added-line body (comments stripped).
+
+    Removed lines (``-``) and file headers are ignored — detectors must not
+    fire on deletions or on unrelated docs that merely describe a pattern.
+    """
+    current: str | None = None
+    buckets: dict[str, list[str]] = {}
+    for line in diff.splitlines():
+        if line.startswith("diff --git "):
+            match = re.match(r"^diff --git a/(\S+) b/(\S+)", line)
+            current = match.group(2) if match else None
+            if current is not None:
+                buckets.setdefault(current, [])
+            continue
+        if current is None:
+            continue
+        if line.startswith("+++ ") or line.startswith("--- "):
+            continue
+        if not line.startswith("+"):
+            continue
+        body = line[1:]
+        if body.lstrip().startswith("#"):
+            continue
+        if "  #" in body:
+            body = body.split("  #", 1)[0]
+        buckets[current].append(body)
+    return {path: "\n".join(rows) for path, rows in buckets.items()}
+
+
+def _hook_added_text(diff: str, changed: list[str]) -> str:
+    """Added text from executable hook scripts / hooks.json only.
+
+    Excludes docs under ``.cursor/hooks/`` (e.g. README) so descriptive text
+    about removed short-circuits cannot false-positive detectors.
+    """
+    by_file = _added_text_by_file(diff)
+    hook_paths = {
+        p for p in list(by_file) + list(changed) if _HOOK_SCAN_PATH.search(p)
+    }
+    chunks = [by_file[p] for p in sorted(hook_paths) if by_file.get(p)]
+    return "\n".join(chunks)
+
+
 def _strip_string_literals(text: str) -> str:
     """Remove quoted strings so deny-message text cannot fake mitigations."""
     text = re.sub(r"\"(?:\\.|[^\"\\])*\"", '""', text)
@@ -197,7 +249,10 @@ def _emit_fail_closed_hook_candidates(
     if not _hook_control_plane_touched(changed, diff):
         return []
 
-    added = _added_text(diff)
+    # Scope pattern matching to hook-file added lines only. Whole-diff
+    # ``_added_text`` includes docs/markdown that mention legacy patterns and
+    # caused M40 sandbox FPs when short-circuits were *removed*.
+    added = _hook_added_text(diff, changed)
     # Mitigation presence must ignore echo/deny/print message text (fail-open
     # otherwise). Do not full-strip string literals — that erases real gates.
     logic = _strip_message_contexts(added)
