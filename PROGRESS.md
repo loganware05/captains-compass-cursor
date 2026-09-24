@@ -2,36 +2,25 @@
 
 ## Current status
 
-**Ready for Captain merge: M41 / v1.42.0** — Jev Decision Service shadow skill
-suggestion. Plan status **COMPLETE**.
+**Planning: M43 ranking enablement** — AWAITING APPROVAL (plan draft PR).
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.41.0** @ `cec4da2` |
-| Branch | `cursor/m41-jev-decision-service-753c` |
-| PR | [#179](https://github.com/loganware05/captains-compass-cursor/pull/179) |
-| Plan | `IMPLEMENTATION_PLAN.md` — **COMPLETE** (`m41-jev-decision-service`) |
-| Rollback | `rollback/pre-m41-jev-decision-service` @ `cec4da2` |
-| Evidence | `.agent/evidence/m41-jev-decision-service/` |
-| Validation | doctor 0; suite **125**; evals **43** |
+| On main | **v1.42.0** M41 (#179) |
+| Parallel | **M42** PR [#180](https://github.com/loganware05/captains-compass-cursor/pull/180) — M37 FP fix (v1.42.1) |
+| Next plan | `m43-jev-ranking-enablement` — **AWAITING APPROVAL** |
 
-## In flight
+## Captain-ordered Decision Service sequence
 
-- Awaiting Captain merge of control PR #179 and tag **v1.42.0**
+1. ~~Shadow skill suggestion (M41)~~ merged
+2. Ranking enablement ← **this plan**
+3. Review triage
+4. Agent routing
 
-## Completed (this branch)
+## Also in flight
 
-- Optional DecisionProvider (stub / file / jev) with shadow-only skill suggestion
-- WS0: `SKILL_SLUGS` includes `code-reviewer` + `northstar-connected-routine`
-- Pinned live model `jev-1.13.0`; evidence under `.agent/evidence/` only
-- ADR-058 + integration docs; security harden (base URL allowlist, no redirects)
-
-## Known follow-ups (deferred)
-
-1. M37 specialist FP on *removed* diff lines (scan added lines only)
-2. Next Decision Service trials (separate plans): ranking enablement → review
-   triage → agent routing
+- M42 specialist added-line scope (M37 FP) — PR #180
 
 ## Blockers
 
-None.
+Awaiting Captain approval of M43 (and merge of M42 when ready).

@@ -1,3 +1,5 @@
+> Draft awaiting Captain approval. Active root plan is the same content while this branch is open.
+
 # Implementation Plan — M43 / Jev Decision Service (Ranking Enablement)
 
 ## Metadata
