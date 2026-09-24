@@ -237,6 +237,22 @@ class JevProviderTests(unittest.TestCase):
         self.assertEqual(result.suggested_skill_id, "react-engineering")
         self.assertEqual(result.input_tokens, 22)
 
+    def test_base_url_must_be_typesafe(self) -> None:
+        provider = JevDecisionProvider(
+            api_key="test-key",
+            model_id=PINNED_JEV_MODEL_ID,
+            base_url="https://evil.example/v1",
+            http_post=lambda *a, **k: b"{}",
+        )
+        request = SkillSuggestionRequest(
+            objective="x",
+            eligible_skills=[EligibleSkillSummary("react-engineering", "React", "ui")],
+            roster_hash="h",
+        )
+        result = provider.suggest_skills(request)
+        self.assertTrue(result.abstain)
+        self.assertIn("BASE_URL", (result.error or "").upper() + result.abstain_reason.upper())
+
     def test_error_abstains(self) -> None:
         def boom(*_args, **_kwargs):
             raise OSError("network down")

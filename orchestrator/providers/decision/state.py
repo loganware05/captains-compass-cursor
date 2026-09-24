@@ -92,7 +92,7 @@ def summarize_skill(skill: dict[str, Any]) -> EligibleSkillSummary:
     evidence = redact_text(str(skill.get("evidence_notes") or skill.get("notes") or ""))
     return EligibleSkillSummary(
         skill_id=skill_id,
-        name=name,
+        name=truncate(redact_text(name), 120),
         description=truncate(description, _MAX_DESCRIPTION_CHARS),
         lifecycle_stage=str(skill.get("lifecycle_stage") or ""),
         maturity=str(skill.get("maturity") or ""),

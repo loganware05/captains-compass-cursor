@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **VALIDATING** |
+| Status | **COMPLETE** |
 | Plan ID | `m41-jev-decision-service` |
 | Approved | 2026-09-24 — Captain: "I approve." + WS0 fold-in; pin `jev-1.13.0`; evidence under `.agent/evidence/` only; next trials: ranking enablement → review triage → agent routing |
 | Supersedes | — (builds on M3 matcher / experience-routing, M25 agent router contract, optional-provider pattern from TI/embeddings) |

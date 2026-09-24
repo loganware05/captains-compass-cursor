@@ -69,3 +69,9 @@ See `eval/file-provider-eval-v1.json`:
 git checkout rollback/pre-m41-jev-decision-service
 # or unset COMPASS_DECISION_PROVIDER / COMPASS_DECISION_SHADOW
 ```
+
+## Security follow-up (shipped)
+
+- Allowlisted `COMPASS_JEV_BASE_URL` to `https://api.typesafe.ai/v1`
+- Redirects refused (Authorization not forwarded)
+- Question revisions allowlisted; skill names redacted

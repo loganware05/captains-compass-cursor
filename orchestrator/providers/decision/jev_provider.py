@@ -10,7 +10,7 @@ import urllib.request
 from pathlib import Path
 from typing import Any, Callable
 
-from orchestrator.providers.decision.state import assert_state_safe
+from orchestrator.providers.decision.state import assert_state_safe, redact_text
 from orchestrator.providers.decision.types import (
     FORBIDDEN_MODEL_ALIASES,
     PINNED_JEV_MODEL_ID,
@@ -21,17 +21,34 @@ from orchestrator.providers.decision.types import (
 
 DEFAULT_BASE_URL = "https://api.typesafe.ai/v1"
 QUESTIONS_DIR = Path(__file__).resolve().parent / "questions"
+ALLOWED_QUESTION_REVISIONS = frozenset({"skill_suggest_v1", "skill_recheck_v1"})
 HttpPost = Callable[[str, dict[str, str], bytes, float], bytes]
+
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    """Refuse redirects so Authorization is never forwarded to another host."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):  # noqa: ANN001
+        raise urllib.error.HTTPError(
+            req.full_url, code, f"redirect refused to {newurl}", headers, fp
+        )
 
 
 def _default_http_post(url: str, headers: dict[str, str], body: bytes, timeout: float) -> bytes:
     request = urllib.request.Request(url, data=body, headers=headers, method="POST")
-    with urllib.request.urlopen(request, timeout=timeout) as response:
+    opener = urllib.request.build_opener(_NoRedirect())
+    with opener.open(request, timeout=timeout) as response:
         return response.read()
 
 
 def _load_question_template(revision: str) -> dict[str, Any]:
-    path = QUESTIONS_DIR / f"{revision}.json"
+    if revision not in ALLOWED_QUESTION_REVISIONS:
+        raise ValueError(f"unsupported question revision: {revision!r}")
+    path = (QUESTIONS_DIR / f"{revision}.json").resolve()
+    try:
+        path.relative_to(QUESTIONS_DIR.resolve())
+    except ValueError as exc:
+        raise ValueError(f"question revision path escapes questions dir: {revision}") from exc
     if not path.is_file():
         raise FileNotFoundError(f"missing question revision file: {path}")
     with path.open(encoding="utf-8") as handle:
@@ -39,6 +56,16 @@ def _load_question_template(revision: str) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise ValueError(f"question revision must be object: {path}")
     return payload
+
+
+def _normalize_base_url(raw: str) -> str:
+    base = raw.strip().rstrip("/")
+    if base != "https://api.typesafe.ai/v1":
+        raise ValueError(
+            "COMPASS_JEV_BASE_URL must be exactly https://api.typesafe.ai/v1 "
+            f"(got {raw!r})"
+        )
+    return base
 
 
 def resolve_pinned_model_id(raw: str | None = None) -> str:
@@ -62,7 +89,6 @@ def resolve_pinned_model_id(raw: str | None = None) -> str:
             f"COMPASS_JEV_MODEL_ID must be a version-pinned id (got {model!r}); "
             f"refusing aliases {sorted(FORBIDDEN_MODEL_ALIASES)}"
         )
-    # M41 allowlist: Captain-pinned release only.
     if model != PINNED_JEV_MODEL_ID:
         raise ValueError(
             f"COMPASS_JEV_MODEL_ID must be exactly {PINNED_JEV_MODEL_ID!r} for M41 "
@@ -81,12 +107,20 @@ def _filter_ranked(
     return [item for item in ranked if item.skill_id in allowed]
 
 
+def _safe_error(exc: BaseException) -> str:
+    """Persist a short error without raw URLs."""
+    name = type(exc).__name__
+    msg = redact_text(str(exc))
+    msg = msg.split("://", 1)[0] if "://" in msg else msg
+    return f"{name}: {msg[:160]}"
+
+
 class JevDecisionProvider:
     """Two-pass skill suggestion via POST /v1/systemone (injected HTTP for tests).
 
     Env:
     - COMPASS_JEV_API_KEY or TYPESAFE_API_KEY (required for live)
-    - COMPASS_JEV_BASE_URL (default https://api.typesafe.ai/v1)
+    - COMPASS_JEV_BASE_URL (must be https://api.typesafe.ai/v1)
     - COMPASS_JEV_MODEL_ID (required; must be exactly jev-1.13.0 in M41)
     """
 
@@ -107,12 +141,17 @@ class JevDecisionProvider:
         if key is None:
             key = os.environ.get("COMPASS_JEV_API_KEY") or os.environ.get("TYPESAFE_API_KEY") or ""
         self.api_key = key.strip()
-        base = (
+        base_raw = (
             base_url
             if base_url is not None
             else os.environ.get("COMPASS_JEV_BASE_URL", DEFAULT_BASE_URL)
         )
-        self.base_url = str(base).strip().rstrip("/")
+        try:
+            self.base_url = _normalize_base_url(str(base_raw))
+            self._base_error: str | None = None
+        except ValueError as exc:
+            self.base_url = DEFAULT_BASE_URL
+            self._base_error = str(exc)
         try:
             self.model_id = resolve_pinned_model_id(model_id)
             self._model_error: str | None = None
@@ -144,7 +183,7 @@ class JevDecisionProvider:
     def _choice_criteria(self, skill_ids: list[str], summaries: dict[str, str]) -> dict[str, str | None]:
         criteria: dict[str, str | None] = {"none": "No eligible skill fits the objective"}
         for skill_id in skill_ids:
-            criteria[skill_id] = summaries.get(skill_id) or skill_id
+            criteria[skill_id] = redact_text(summaries.get(skill_id) or skill_id)
         return criteria
 
     def _build_rank_questions(
@@ -175,19 +214,20 @@ class JevDecisionProvider:
 
     def suggest_skills(self, request: SkillSuggestionRequest) -> SkillSuggestionResult:
         started = time.perf_counter()
-        if self._model_error:
+        if self._model_error or self._base_error:
             return SkillSuggestionResult(
                 provider=self.name,
                 model_id=None,
                 abstain=True,
-                abstain_reason="jev provider refused — model id not pinned",
-                error=self._model_error,
+                abstain_reason="jev provider refused — model/base URL not allowed",
+                error=self._model_error or self._base_error,
                 latency_ms=(time.perf_counter() - started) * 1000.0,
             )
         allowed = _eligible_id_set(request)
         try:
             summaries = {
-                s.skill_id: f"{s.name}: {s.description}" for s in request.eligible_skills
+                s.skill_id: f"{redact_text(s.name)}: {s.description}"
+                for s in request.eligible_skills
             }
             state = {
                 "objective": request.objective,
@@ -273,7 +313,7 @@ class JevDecisionProvider:
 
             fuller = {
                 s.skill_id: (
-                    f"{s.name}: {s.description} "
+                    f"{redact_text(s.name)}: {s.description} "
                     f"[lifecycle={s.lifecycle_stage}; categories={','.join(s.categories)}]"
                 )
                 for s in request.eligible_skills
@@ -363,6 +403,6 @@ class JevDecisionProvider:
                 model_id=self.model_id,
                 abstain=True,
                 abstain_reason="jev provider error — withhold suggestion",
-                error=str(exc),
+                error=_safe_error(exc),
                 latency_ms=(time.perf_counter() - started) * 1000.0,
             )

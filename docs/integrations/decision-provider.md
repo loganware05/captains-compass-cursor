@@ -22,7 +22,7 @@ Pinned live model: **`jev-1.13.0`** (aliases `jev-latest` / `jev-preview` refuse
 | `COMPASS_DECISION_FIXTURES_DIR` | package fixtures | Offline file-provider fixtures |
 | `COMPASS_JEV_MODEL_ID` | *(required for `jev`)* | Must be exactly `jev-1.13.0` in M41 (aliases refused) |
 | `COMPASS_JEV_API_KEY` or `TYPESAFE_API_KEY` | unset | Captain-local only; never commit |
-| `COMPASS_JEV_BASE_URL` | `https://api.typesafe.ai/v1` | System One API base |
+| `COMPASS_JEV_BASE_URL` | `https://api.typesafe.ai/v1` | Must be exactly this allowlisted HTTPS origin |
 
 CI defaults leave the provider on **stub** with shadow off → no network.
 
