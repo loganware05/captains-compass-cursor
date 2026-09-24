@@ -169,6 +169,18 @@ COMPASS_DECISION_APPLY=1 \
 See `docs/integrations/decision-provider.md` and
 `.agent/evidence/m43-jev-ranking-enablement/HOLDOUT_GATE.md`.
 
+Review triage shadow (M44; default-off; never mutates findings):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m44_review_triage -v
+
+COMPASS_DECISION_PROVIDER=file \
+COMPASS_DECISION_REVIEW_SHADOW=1 \
+./scripts/run-code-review.sh --repo-root . --base HEAD~1
+```
+
+See `.agent/evidence/m44-jev-review-triage/VALIDATION.md`.
+
 Fail-closed hook detectors — added-line / executable-hook scope (M42):
 
 ```bash

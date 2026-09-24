@@ -2,13 +2,13 @@
 
 ## Current status
 
-**Implementing / PR: M44 review triage shadow** — APPROVED (OVA-56); v1.44.0
-default-off on `cursor/m44-jev-review-triage-753c`.
+**PR ready: M44 review triage shadow** — APPROVED (OVA-56); v1.44.0 default-off
+on `cursor/m44-jev-review-triage-753c`.
 
 | Item | Value |
 |---|---|
 | On main | **v1.43.0** M43 (#181) @ `cc1de5c` |
-| Active | **M44** review triage shadow — in progress |
+| Active PR | **M44** review triage shadow |
 | Plan | `m44-jev-review-triage` — **APPROVED** |
 | Rollback | `rollback/pre-m44-jev-review-triage` @ `cc1de5c` |
 
