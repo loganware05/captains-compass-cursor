@@ -137,12 +137,15 @@ PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m40_manifest_pwd -v
 ./scripts/run-code-review.sh --repo-root /path/to/repo --no-boundary-check
 ```
 
-DecisionProvider shadow skill suggestion (M41; hermetic file/stub; live Jev Captain-local):
+DecisionProvider shadow skill suggestion (M41) and ranking apply (M43; hermetic
+file/stub; live Jev Captain-local; APPLY default-off):
 
 ```bash
-PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m41_decision_provider -v
+PYTHONPATH=. python3 -m unittest \
+  tests.orchestrator.test_m41_decision_provider \
+  tests.orchestrator.test_m43_decision_apply -v
 
-# Defaults: stub provider, no shadow — rankings unchanged, no network
+# Defaults: stub provider, APPLY/SHADOW unset — rankings unchanged, no network
 ./scripts/capability-resolve.sh "Build accessible forms with React"
 
 # Offline shadow compare (writes under .agent/evidence/ only; rankings unchanged)
@@ -150,15 +153,21 @@ COMPASS_DECISION_PROVIDER=file \
 COMPASS_DECISION_SHADOW=1 \
 ./scripts/capability-resolve.sh "Build accessible forms with React"
 
-# Live Jev (Captain-local; pin model; never CI default)
+# Offline ranking apply (M43; evidence under m43-jev-ranking-enablement/)
+COMPASS_DECISION_PROVIDER=file \
+COMPASS_DECISION_APPLY=1 \
+./scripts/capability-resolve.sh "Build accessible forms with React"
+
+# Live Jev apply (Captain-local; pin model; never CI default)
 # COMPASS_DECISION_PROVIDER=jev \
-# COMPASS_DECISION_SHADOW=1 \
+# COMPASS_DECISION_APPLY=1 \
 # COMPASS_JEV_MODEL_ID=jev-1.13.0 \
 # COMPASS_JEV_API_KEY=… \
 # ./scripts/capability-resolve.sh "…"
 ```
 
-See `docs/integrations/decision-provider.md`.
+See `docs/integrations/decision-provider.md` and
+`.agent/evidence/m43-jev-ranking-enablement/HOLDOUT_GATE.md`.
 
 Single launcher UX (M34 / C1; hermetic help + docs index):
 

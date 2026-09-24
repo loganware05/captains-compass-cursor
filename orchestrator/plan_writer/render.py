@@ -68,22 +68,37 @@ def render_reusable_capabilities(artifacts: CapabilityPlanArtifacts) -> str:
 
 
 def render_decision_shadow(artifacts: CapabilityPlanArtifacts) -> str:
-    """Shadow DecisionProvider suggestions — never applied to rankings (M41)."""
+    """DecisionProvider shadow / optional apply (M41/M43) — path/ID refs only."""
+    shadow = (artifacts.resolve or {}).get("decision_shadow")
+    applied = bool(shadow.get("applied")) if shadow else False
+    title = (
+        "## Decision Provider (applied ranking)"
+        if applied
+        else "## Decision Shadow (observe-only)"
+    )
     lines = [
-        "## Decision Shadow (not applied)",
+        title,
         "",
         "> Optional DecisionProvider comparison vs the deterministic matcher. "
-        "**Does not change** `recommended_skill_ids`. Full artifact lives under "
-        "`.agent/evidence/` only; this section references path/ID.",
+        "Full artifact lives under `.agent/evidence/` only; this section "
+        "references path/ID. Apply requires `COMPASS_DECISION_APPLY=1` and "
+        "passing Noul/confidence gates (M43); default remains matcher-only.",
         "",
     ]
-    shadow = (artifacts.resolve or {}).get("decision_shadow")
     if not shadow:
-        lines.append("*No decision shadow run (provider stub or `COMPASS_DECISION_SHADOW` unset).*")
+        lines.append(
+            "*No decision provider run (stub, or both `COMPASS_DECISION_SHADOW` "
+            "and `COMPASS_DECISION_APPLY` unset).*"
+        )
         lines.append("")
         return "\n".join(lines)
     evidence_path = shadow.get("evidence_path") or "(none)"
     evidence_id = shadow.get("evidence_id") or "(none)"
+    suggested_label = (
+        "Suggested skill (applied when gates passed)"
+        if applied
+        else "Suggested skill (not applied)"
+    )
     lines.extend(
         [
             f"- Evidence ID: `{evidence_id}`",
@@ -92,11 +107,13 @@ def render_decision_shadow(artifacts: CapabilityPlanArtifacts) -> str:
             f"- Model: `{shadow.get('model_id') or 'n/a'}`",
             f"- Abstain: `{shadow.get('abstain')}`",
             f"- Disagreement count: `{shadow.get('disagreement_count')}`",
-            f"- Suggested skill (not applied): `{shadow.get('suggested_skill_id') or 'none'}`",
-            "- Applied: `false`",
+            f"- {suggested_label}: `{shadow.get('suggested_skill_id') or 'none'}`",
+            f"- Applied: `{'true' if applied else 'false'}`",
             "",
         ]
     )
+    if shadow.get("apply_reason"):
+        lines.extend([f"- Apply reason: `{shadow.get('apply_reason')}`", ""])
     if shadow.get("error"):
         lines.extend([f"- Error: {shadow.get('error')}", ""])
     return "\n".join(lines)

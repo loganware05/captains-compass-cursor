@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.43.0 — 2026-09-24
+
+### Added
+
+- **M43 Jev ranking enablement (default-off)** — opt-in DecisionProvider apply:
+  - `COMPASS_DECISION_APPLY` may mutate `recommended_skill_ids` when Noul ≥
+    `COMPASS_DECISION_NOUL_MIN` (0.70) and Choice confidence ≥
+    `COMPASS_DECISION_CONF_MIN` (0.60); pad from matcher; fail closed otherwise
+  - APPLY implies paired evidence under
+    `.agent/evidence/m43-jev-ranking-enablement/` (trial); `applied: true` only
+    when rankings change
+  - Holdout gate doc (5% relative wrong/unnecessary skill-load tolerance)
+  - Docs: `docs/integrations/decision-provider.md`; ADR-060; plan
+    `m43-jev-ranking-enablement` (OVA-55)
+
 ## 1.42.0 — 2026-09-24
 
 ### Added

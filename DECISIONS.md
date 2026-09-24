@@ -1,5 +1,31 @@
 # Decisions
 
+## ADR-060: Opt-in DecisionProvider ranking apply (v1.43.0 M43)
+
+- **Status:** Accepted
+- **Date:** 2026-09-24
+- **Context:** M41 shipped shadow-only DecisionProvider (`jev-1.13.0`). Captain
+  ordered ranking enablement next (then review triage → agent routing) and
+  approved plan `m43-jev-ranking-enablement` (2026-09-24) with resolved gates:
+  Noul ≥ 0.70, Choice confidence ≥ 0.60, pad from matcher, APPLY implies trial
+  shadow evidence, ≤5% relative holdout regression, ship default-off.
+- **Decision:**
+  1. Add `orchestrator/providers/decision/apply.py` with fail-closed policy;
+     env `COMPASS_DECISION_APPLY` (default off), `COMPASS_DECISION_NOUL_MIN`
+     (0.70), `COMPASS_DECISION_CONF_MIN` (0.60).
+  2. Resolve may replace `recommended_skill_ids` only when APPLY is on, provider
+     ≠ stub, suggestion non-abstaining, gates pass, and IDs ⊆ eligible roster;
+     pad remaining slots from matcher order; `applied: true` only when the list
+     differs from matcher.
+  3. During M43 trial, APPLY implies paired shadow/apply evidence under
+     `.agent/evidence/m43-jev-ranking-enablement/`; plans store path/ID only.
+  4. Shadow-only (no APPLY) remains non-mutating (ADR-058).
+  5. Holdout gate doc defines primary metric and 5% relative rollback tolerance;
+     live Jev is Captain-local, not required for CI.
+  6. Review triage and agent routing remain separate Captain-gated plans.
+- **Consequences:** Ranking apply is inert until env opt-in; unset APPLY restores
+  matcher-only. Rollback tag `rollback/pre-m43-jev-ranking-enablement`.
+
 ## ADR-058: Optional Jev DecisionProvider for shadow skill suggestion (v1.42.0 M41)
 
 - **Status:** Accepted
