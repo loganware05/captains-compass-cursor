@@ -1,7 +1,7 @@
-"""DecisionProvider boundary — optional skill-suggestion signals (M41).
+"""DecisionProvider boundary — optional skill suggestion + review triage.
 
-Authority: suggestions never mutate matcher rankings, never set
-``approved_for_execution``, and never bypass Captain gates.
+Authority: suggestions never mutate matcher rankings or review findings, never
+set ``approved_for_execution``, and never bypass Captain gates.
 """
 
 from __future__ import annotations
@@ -10,18 +10,23 @@ from typing import Protocol
 
 from orchestrator.providers.decision.types import (
     PINNED_JEV_MODEL_ID,
+    ReviewTriageRequest,
+    ReviewTriageResult,
     SkillSuggestionRequest,
     SkillSuggestionResult,
 )
 
 
 class DecisionProvider(Protocol):
-    """Narrow skill-suggestion call. Implementations must be suggestion-only."""
+    """Suggestion-only DecisionProvider surface (skills + review triage)."""
 
     name: str
 
     def suggest_skills(self, request: SkillSuggestionRequest) -> SkillSuggestionResult:
         """Return ranked skill suggestions or an explicit abstain."""
+
+    def triage_review(self, request: ReviewTriageRequest) -> ReviewTriageResult:
+        """Return review investigation priority signals or abstain."""
 
 
 class StubDecisionProvider:
@@ -38,6 +43,15 @@ class StubDecisionProvider:
             abstain_reason="stub provider (decision service disabled)",
         )
 
+    def triage_review(self, request: ReviewTriageRequest) -> ReviewTriageResult:
+        del request
+        return ReviewTriageResult(
+            provider=self.name,
+            model_id=None,
+            abstain=True,
+            abstain_reason="stub provider (decision service disabled)",
+        )
+
 
 __all__ = [
     "DecisionProvider",
@@ -45,4 +59,6 @@ __all__ = [
     "PINNED_JEV_MODEL_ID",
     "SkillSuggestionRequest",
     "SkillSuggestionResult",
+    "ReviewTriageRequest",
+    "ReviewTriageResult",
 ]

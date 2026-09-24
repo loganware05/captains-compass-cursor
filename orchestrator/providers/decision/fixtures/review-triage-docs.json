@@ -1,0 +1,27 @@
+{
+  "path_contains": "readme",
+  "model_id": "jev-1.13.0",
+  "question_revision": "review_triage_v1",
+  "abstain": false,
+  "investigation_priority": "low",
+  "specialist_security_warranted": "no",
+  "touches_authz": 0.12,
+  "touches_sensitive": 0.10,
+  "raw_answers": {
+    "touches_authz": {"type": "noul", "noul": 0.12},
+    "touches_sensitive": {"type": "noul", "noul": 0.10},
+    "specialist_security_warranted": {
+      "type": "choice",
+      "choice": "no",
+      "confidence": 0.70
+    },
+    "investigation_priority": {
+      "type": "choice",
+      "choice": "low",
+      "confidence": 0.65
+    }
+  },
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0
+}

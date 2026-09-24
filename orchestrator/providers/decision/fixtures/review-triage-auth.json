@@ -1,0 +1,27 @@
+{
+  "path_contains": "auth",
+  "model_id": "jev-1.13.0",
+  "question_revision": "review_triage_v1",
+  "abstain": false,
+  "investigation_priority": "high",
+  "specialist_security_warranted": "yes",
+  "touches_authz": 0.88,
+  "touches_sensitive": 0.72,
+  "raw_answers": {
+    "touches_authz": {"type": "noul", "noul": 0.88},
+    "touches_sensitive": {"type": "noul", "noul": 0.72},
+    "specialist_security_warranted": {
+      "type": "choice",
+      "choice": "yes",
+      "confidence": 0.81
+    },
+    "investigation_priority": {
+      "type": "choice",
+      "choice": "high",
+      "confidence": 0.77
+    }
+  },
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0
+}
