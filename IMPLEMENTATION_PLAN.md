@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED — IMPLEMENTING** |
+| Status | **COMPLETE** — merged via [#177](https://github.com/loganware05/captains-compass-cursor/pull/177), tagged **v1.41.0** @ `a6039b0` (2026-09-19); sandbox [#59](https://github.com/loganware05/captain-compass-sandbox/pull/59) merged; skill carry-over approved |
 | Plan ID | `m40-filesystem-gated-context` |
 | Approved | 2026-09-18 — Captain: "I approve the M40 Implementation plan" |
 | Supersedes | — (builds on M17 context selection, M27–M33 Code Reviewer, M9/M23 skill lifecycle) |
