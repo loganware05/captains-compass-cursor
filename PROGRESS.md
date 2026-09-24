@@ -2,13 +2,13 @@
 
 ## Current status
 
-**Planning: M43 ranking enablement** — AWAITING APPROVAL (plan draft PR).
+**Planning: M43 ranking enablement** — AWAITING APPROVAL ([#181](https://github.com/loganware05/captains-compass-cursor/pull/181)).
 
 | Item | Value |
 |---|---|
 | On main | **v1.42.0** M41 (#179) |
-| Parallel | **M42** PR [#180](https://github.com/loganware05/captains-compass-cursor/pull/180) — M37 FP fix (v1.42.1) |
-| Next plan | `m43-jev-ranking-enablement` — **AWAITING APPROVAL** |
+| Parallel | **M42** PR [#180](https://github.com/loganware05/captains-compass-cursor/pull/180) — M37 FP fix (v1.42.1); CI green |
+| Next plan | `m43-jev-ranking-enablement` — **AWAITING APPROVAL** [#181](https://github.com/loganware05/captains-compass-cursor/pull/181) |
 
 ## Captain-ordered Decision Service sequence
 
