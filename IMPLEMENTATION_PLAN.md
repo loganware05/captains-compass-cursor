@@ -4,9 +4,9 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING APPROVAL** |
+| Status | **VALIDATING** |
 | Plan ID | `m41-jev-decision-service` |
-| Approved | — |
+| Approved | 2026-09-24 — Captain: "I approve." + WS0 fold-in; pin `jev-1.13.0`; evidence under `.agent/evidence/` only; next trials: ranking enablement → review triage → agent routing |
 | Supersedes | — (builds on M3 matcher / experience-routing, M25 agent router contract, optional-provider pattern from TI/embeddings) |
 | Product | **NorthStar** |
 | Baseline | **v1.41.0** @ `cec4da2` (M40 closeout on `main`; prior plan archived at `docs/plans/M40_FILESYSTEM_GATED_CONTEXT.md`) |
@@ -15,8 +15,8 @@
 | Control repo | `loganware05/captains-compass-cursor` |
 | Validation proving ground | `loganware05/captain-compass-sandbox` (task examples + behavioral evidence only; **no** Jev service code in sandbox) |
 | Proposed release | **v1.42.0** (tentative; shadow-only slice) |
-| Rollback checkpoint | To be tagged `rollback/pre-m41-jev-decision-service` at approval on current `main` SHA |
-| Branch | `cursor/m41-jev-decision-service-753c` (planning docs only until approval) |
+| Rollback checkpoint | `rollback/pre-m41-jev-decision-service` @ `cec4da2` (origin/main at approval) |
+| Branch | `cursor/m41-jev-decision-service-753c` |
 | Issue | Local placeholder per ADR-004 — Captain to file GitHub issue (`gh` is read-only for the agent) |
 | Linear | Optional flight-recorder issue after approval (does not originate authority) |
 | Captain | Logan Ware |
@@ -254,15 +254,12 @@ M41 only ships shadow + fixtures + optional live adapter behind flags.
    prefer existing live-provider patterns.
 4. Sandbox is used for objectives/evidence, not for installing Jev service code.
 
-## Open Questions (Captain)
+## Open Questions (Captain) — RESOLVED 2026-09-24
 
-1. Include **WS0** (`SKILL_SLUGS` gap) in this milestone, or keep it a separate
-   micro-fix?
-2. Preferred pinned Jev model ID for the trial (once live runs begin)?
-3. Should shadow evidence be written under `.agent/plans/<id>/` as well as
-   `.agent/evidence/`, or evidence-only?
-4. After shadow evidence, is the next desired trial **agent routing**, **review
-   triage**, or **ranking enablement**?
+1. **WS0:** Fold into M41 — add `code-reviewer` + `northstar-connected-routine` to `SKILL_SLUGS`.
+2. **Pinned model:** `jev-1.13.0` (refuse aliases `jev-latest` / `jev-preview` for live runs).
+3. **Evidence location:** Shadow artifacts only under `.agent/evidence/`; plans/`resolve.json` reference by path/ID (no duplication).
+4. **Next trials (ordered):** ranking enablement → review triage → agent routing (separate Captain-gated plans).
 
 ## Autonomy Budget (post-approval)
 

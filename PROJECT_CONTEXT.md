@@ -58,7 +58,7 @@ agentic engineering process across multiple product repositories.
 7. Documentation, budget/session templates, evidence matrix, multi-runtime adapters, evals
 8. Installation, update, uninstall, and doctor scripts
 9. Control-repo CI (doctor + tests + harness evals)
-10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3), persistent roles + bounded weight apply (v1.8.0 M4), knowledge steward (v1.9.0 M5), hybrid vector search (v1.10.0 M6), performance knowledge + live Stars TI (v1.11.0 M7), procedure ingest + TI cache (v1.12.0 M8), skill lifecycle + Artifact Context (v1.13.0 M9), external knowledge + HF file TI (v1.14.0 M10), fixture embeddings + package-registry file TI (v1.15.0 M11), **code review pipeline (v1.30.0 M27)**, **filesystem-gated context: inode store, route walker, typed dependency links, boundary review gate, skill inodes, subagent pwd (v1.41.0 M40)**
+10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3), persistent roles + bounded weight apply (v1.8.0 M4), knowledge steward (v1.9.0 M5), hybrid vector search (v1.10.0 M6), performance knowledge + live Stars TI (v1.11.0 M7), procedure ingest + TI cache (v1.12.0 M8), skill lifecycle + Artifact Context (v1.13.0 M9), external knowledge + HF file TI (v1.14.0 M10), fixture embeddings + package-registry file TI (v1.15.0 M11), **code review pipeline (v1.30.0 M27)**, **filesystem-gated context (v1.41.0 M40)**, **optional DecisionProvider / Jev shadow skill suggestion (v1.42.0 M41)**
 
 ## External Services
 
@@ -126,9 +126,8 @@ gh auth status
 
 ## Current Priorities
 
-**M41 awaiting approval** — Jev Decision Service shadow-mode skill suggestion
-(`IMPLEMENTATION_PLAN.md`, plan id `m41-jev-decision-service`): optional
-version-pinned DecisionProvider; compare against deterministic matcher without
-changing dispatch; hermetic stub/file default. Spec: Notion Decision Service
-draft (research only). Deferred: M37 removed-line FP; compiler SKILL_SLUGS gap.
-See PROGRESS.md.
+**M41 implementing** — Jev Decision Service shadow-mode skill suggestion
+(`IMPLEMENTATION_PLAN.md`, APPROVED 2026-09-24): optional version-pinned
+DecisionProvider (`jev-1.13.0`); shadow evidence under `.agent/evidence/` only;
+WS0 SKILL_SLUGS registration. Next trials (later plans): ranking enablement →
+review triage → agent routing. Deferred: M37 removed-line FP. See PROGRESS.md.

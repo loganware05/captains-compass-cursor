@@ -54,4 +54,5 @@ Full product-repo install polish for a specific app (e.g. `bitcoin-data-collecto
 - [`integrations/linear.md`](integrations/linear.md)
 - [`integrations/github.md`](integrations/github.md)
 - [`integrations/agent-routing-contract.md`](integrations/agent-routing-contract.md)
+- [`integrations/decision-provider.md`](integrations/decision-provider.md)
 - [`integrations/northstar-live-ops.md`](integrations/northstar-live-ops.md)

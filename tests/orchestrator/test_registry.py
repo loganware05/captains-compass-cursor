@@ -49,18 +49,11 @@ class InferTests(unittest.TestCase):
 class RegistryCompileTests(unittest.TestCase):
     def test_compile_control_repo_registry(self) -> None:
         result = compile_registry(ROOT)
-        # 40 pre-M40 skills + context-inodes (M40)
-        self.assertEqual(len(result.registry["skills"]), 41)
+        # 41 pre-M41 registered skills + code-reviewer + northstar-connected-routine (M41 WS0)
+        self.assertEqual(len(result.registry["skills"]), 43)
         self.assertEqual(len(result.registry["reference_profiles"]), 10)
-        # Drift warnings pin the known pre-existing gap (PROGRESS follow-ups):
-        # two skill dirs predate SKILL_SLUGS registration.
-        self.assertEqual(
-            result.warnings,
-            [
-                "skill dir not registered in SKILL_SLUGS: code-reviewer",
-                "skill dir not registered in SKILL_SLUGS: northstar-connected-routine",
-            ],
-        )
+        # M41 WS0 closed the SKILL_SLUGS drift warnings.
+        self.assertEqual(result.warnings, [])
 
     def test_skill_ids_are_unique(self) -> None:
         result = compile_registry(ROOT)

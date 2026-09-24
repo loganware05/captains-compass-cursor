@@ -43,7 +43,9 @@ def build_capability_plan(
     context = dict(context or {})
     write_registry(repo_root)
 
-    resolve_result = resolve_capabilities(repo_root, objective, context)
+    resolve_result = resolve_capabilities(
+        repo_root, objective, context, plan_id=plan_id
+    )
     task_graph = build_task_graph(objective, context)
     registry = load_registry(repo_root)
     manifests = build_manifests(task_graph, registry, plan_id=plan_id)
@@ -192,32 +194,7 @@ def build_capability_plan(
     with manifests_path.open("w", encoding="utf-8") as handle:
         json.dump(manifests, handle, indent=2, sort_keys=True)
         handle.write("\n")
-    with resolve_path.open("w", encoding="utf-8") as handle:
-        json.dump(
-            {
-                "objective": objective,
-                "required_capabilities": resolve_result.intent.required_capabilities,
-                "capability_gaps": resolve_result.capability_gaps,
-                "recommended_skill_ids": resolve_result.recommended_skill_ids,
-                "domains_detected": resolve_result.intent.domains_detected,
-                "security_sensitive": resolve_result.intent.security_sensitive,
-                "stacks": resolve_result.intent.stacks,
-                "ranked_skills": [
-                    {
-                        "skill_id": item.skill_id,
-                        "score": item.score,
-                        "scoring_breakdown": item.scoring_breakdown,
-                    }
-                    for item in resolve_result.ranked_skills
-                ],
-            },
-            handle,
-            indent=2,
-            sort_keys=True,
-        )
-        handle.write("\n")
-
-    resolve_payload = {
+    resolve_doc: dict = {
         "objective": objective,
         "required_capabilities": resolve_result.intent.required_capabilities,
         "capability_gaps": resolve_result.capability_gaps,
@@ -234,11 +211,31 @@ def build_capability_plan(
             for item in resolve_result.ranked_skills
         ],
     }
+    if resolve_result.decision_shadow is not None:
+        # Reference only — full shadow artifact is under .agent/evidence/
+        resolve_doc["decision_shadow"] = {
+            "evidence_id": resolve_result.decision_shadow.get("evidence_id"),
+            "evidence_path": resolve_result.decision_shadow.get("evidence_path"),
+            "applied": False,
+            "provider": resolve_result.decision_shadow.get("provider"),
+            "model_id": resolve_result.decision_shadow.get("model_id"),
+            "abstain": resolve_result.decision_shadow.get("abstain"),
+            "disagreement_count": resolve_result.decision_shadow.get(
+                "disagreement_count"
+            ),
+            "suggested_skill_id": resolve_result.decision_shadow.get(
+                "suggested_skill_id"
+            ),
+            "error": resolve_result.decision_shadow.get("error"),
+        }
+    with resolve_path.open("w", encoding="utf-8") as handle:
+        json.dump(resolve_doc, handle, indent=2, sort_keys=True)
+        handle.write("\n")
 
     return CapabilityPlanArtifacts(
         plan_id=plan_id,
         objective=objective,
-        resolve=resolve_payload,
+        resolve=resolve_doc,
         task_graph=task_graph,
         manifests=manifests,
         technology_intelligence_candidates=candidates,

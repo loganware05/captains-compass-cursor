@@ -1,5 +1,37 @@
 # Decisions
 
+## ADR-058: Optional Jev DecisionProvider for shadow skill suggestion (v1.42.0 M41)
+
+- **Status:** Accepted
+- **Date:** 2026-09-24
+- **Context:** After M40, skill ranking remains deterministic keyword/capability
+  overlap (`matcher/score.py`). Notion research draft proposed TypeSafe Jev as an
+  optional decision service. Vendor skill-suggestion results are not NorthStar
+  ground truth. Captain approved plan `m41-jev-decision-service` (2026-09-24)
+  with WS0 (`SKILL_SLUGS` for `code-reviewer` + `northstar-connected-routine`),
+  pinned model `jev-1.13.0`, shadow evidence only under `.agent/evidence/`, and
+  next-trial order ranking enablement → review triage → agent routing.
+- **Decision:**
+  1. Add `orchestrator/providers/decision/` with Protocol + stub (default) +
+     file fixtures + optional Jev HTTP adapter (injected transport; stdlib
+     urllib). Unknown provider names fail closed to stub.
+  2. Shadow mode (`COMPASS_DECISION_SHADOW`) compares provider vs matcher after
+     `rank_skills()` and **never mutates** `recommended_skill_ids`.
+  3. Full shadow JSON lives only under
+     `.agent/evidence/m41-jev-decision-service/`; plans/`resolve.json` store
+     path/ID references only.
+  4. Live Jev requires version-pinned `COMPASS_JEV_MODEL_ID` (default
+     `jev-1.13.0`); refuse `jev-latest` / `jev-preview`.
+  5. Compact state is redacted and size-bounded; secrets/diffs/full memory
+     forbidden.
+  6. Register previously drifting Skills `code-reviewer` and
+     `northstar-connected-routine` in `SKILL_SLUGS` (WS0).
+  7. Ranking enablement, review triage, and agent routing via Jev remain
+     **out of scope** pending separate Captain-gated plans.
+- **Consequences:** Captains can evaluate Jev skill suggestions hermetically
+  (file) or Captain-local (jev) without changing dispatch. CI stays offline by
+  default. See [`docs/integrations/decision-provider.md`](docs/integrations/decision-provider.md).
+
 ## ADR-057: Filesystem-gated context and dependency architecture (v1.41.0 M40)
 
 - **Status:** Accepted

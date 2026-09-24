@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.42.0 — 2026-09-24
+
+### Added
+
+- **M41 Jev Decision Service (shadow skill suggestion)** — optional
+  `DecisionProvider` under `orchestrator/providers/decision/`:
+  - Stub (CI default), file fixtures, and optional live Jev adapter
+    (`POST /v1/systemone`) with injected HTTP for tests
+  - Shadow mode (`COMPASS_DECISION_SHADOW`) compares provider vs matcher
+    without mutating `recommended_skill_ids`
+  - Evidence only under `.agent/evidence/m41-jev-decision-service/`;
+    plans reference path/ID only
+  - Pinned live model `jev-1.13.0` (aliases refused)
+  - Docs: `docs/integrations/decision-provider.md`; ADR-058
+
+### Fixed
+
+- **WS0 / compiler SKILL_SLUGS drift** — register `code-reviewer` and
+  `northstar-connected-routine` (compile warnings cleared; 43 Skills)
+
 ## 1.41.0 — 2026-09-18
 
 ### Added
