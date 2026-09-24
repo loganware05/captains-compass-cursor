@@ -107,3 +107,83 @@ class SkillSuggestionResult:
             "error": self.error,
             "applied": bool(applied),
         }
+
+
+QUESTION_REVISION_REVIEW_TRIAGE = "review_triage_v1"
+PRIORITY_CHOICES = frozenset({"high", "medium", "low", "none"})
+WARRANT_CHOICES = frozenset({"yes", "no", "uncertain"})
+
+
+@dataclass(frozen=True)
+class ReviewChangeSummary:
+    """Compact change metadata for review triage (no diffs / secrets)."""
+
+    changed_paths: tuple[str, ...]
+    domains: tuple[str, ...]
+    path_flags: dict[str, bool]
+    specialist_skill_ids: tuple[str, ...] = ()
+    candidate_count: int = 0
+    objective: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "changed_paths": list(self.changed_paths),
+            "domains": list(self.domains),
+            "path_flags": dict(self.path_flags),
+            "specialist_skill_ids": list(self.specialist_skill_ids),
+            "candidate_count": int(self.candidate_count),
+            "objective": self.objective,
+        }
+
+
+@dataclass
+class ReviewTriageRequest:
+    change: ReviewChangeSummary
+    change_hash: str
+    question_revision: str = QUESTION_REVISION_REVIEW_TRIAGE
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "change": self.change.to_dict(),
+            "change_hash": self.change_hash,
+            "question_revision": self.question_revision,
+        }
+
+
+@dataclass
+class ReviewTriageResult:
+    """Suggestion-only — never mutates review findings or grants merge authority."""
+
+    provider: str
+    model_id: str | None
+    investigation_priority: str | None = None
+    specialist_security_warranted: str | None = None
+    touches_authz: float | None = None
+    touches_sensitive: float | None = None
+    abstain: bool = False
+    abstain_reason: str = ""
+    question_revision: str = QUESTION_REVISION_REVIEW_TRIAGE
+    latency_ms: float | None = None
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    raw_answers: dict[str, Any] = field(default_factory=dict)
+    error: str | None = None
+
+    def to_dict(self, *, applied: bool = False) -> dict[str, Any]:
+        return {
+            "provider": self.provider,
+            "model_id": self.model_id,
+            "investigation_priority": self.investigation_priority,
+            "specialist_security_warranted": self.specialist_security_warranted,
+            "touches_authz": self.touches_authz,
+            "touches_sensitive": self.touches_sensitive,
+            "abstain": self.abstain,
+            "abstain_reason": self.abstain_reason,
+            "question_revision": self.question_revision,
+            "latency_ms": self.latency_ms,
+            "input_tokens": self.input_tokens,
+            "output_tokens": self.output_tokens,
+            "raw_answers": dict(self.raw_answers),
+            "error": self.error,
+            "applied": bool(applied),
+        }

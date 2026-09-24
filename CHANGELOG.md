@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.44.0 — 2026-09-24
+
+### Added
+
+- **M44 Jev review triage shadow (default-off)** — DecisionProvider
+  `triage_review` on the code-review pipeline:
+  - `COMPASS_DECISION_REVIEW_SHADOW` records investigation priority /
+    specialist-security-warranted signals without mutating findings
+  - Compact change state + `review_triage_v1` questions; evidence under
+    `.agent/evidence/m44-jev-review-triage/`
+  - Docs: `docs/integrations/decision-provider.md`; ADR-061; plan
+    `m44-jev-review-triage` (OVA-56)
+
+
 ## 1.43.0 — 2026-09-24
 
 ### Added

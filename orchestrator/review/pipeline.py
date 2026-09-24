@@ -174,6 +174,33 @@ def run_code_review(
             candidates = list(candidates) + boundary_candidates
             candidates_source = f"{candidates_source}+boundary"
 
+    decision_review_triage: dict[str, Any] | None = None
+    try:
+        from orchestrator.providers.decision.review_shadow import (
+            maybe_run_review_triage_shadow,
+        )
+
+        decision_review_triage = maybe_run_review_triage_shadow(
+            root,
+            changed_paths=list(detection.get("changed_paths") or []),
+            domains=list(detection.get("domains") or []),
+            specialist_skill_ids=list(specialist_skills),
+            candidate_count=len(candidates),
+            objective=str(
+                (detection.get("intent") or {}).get("objective")
+                or (detection.get("intent") or {}).get("title")
+                or ""
+            ),
+            plan_id=plan_id or None,
+        )
+    except Exception as exc:  # noqa: BLE001 — triage shadow must never break review
+        decision_review_triage = {
+            "applied": False,
+            "error": f"decision review triage withheld: {exc}",
+            "evidence_path": None,
+            "evidence_id": None,
+        }
+
     findings = verify_findings(candidates, min_confidence=min_confidence)
     rid = run_id or f"cr-{uuid4().hex[:12]}"
     skills = list(detection.get("skills_suggested") or [])
@@ -232,6 +259,23 @@ def run_code_review(
         github_draft=github_draft_meta,
         boundary=boundary_meta,
     )
+    if decision_review_triage is not None:
+        # Path/ID reference only — full artifact under .agent/evidence/
+        report["decision_review_triage"] = {
+            "evidence_id": decision_review_triage.get("evidence_id"),
+            "evidence_path": decision_review_triage.get("evidence_path"),
+            "applied": False,
+            "provider": decision_review_triage.get("provider"),
+            "model_id": decision_review_triage.get("model_id"),
+            "abstain": decision_review_triage.get("abstain"),
+            "investigation_priority": decision_review_triage.get(
+                "investigation_priority"
+            ),
+            "specialist_security_warranted": decision_review_triage.get(
+                "specialist_security_warranted"
+            ),
+            "error": decision_review_triage.get("error"),
+        }
     try:
         path = write_report(root, report, context_pack=context_pack)
     except ReportError as exc:
@@ -247,4 +291,5 @@ def run_code_review(
         "specialist_skills": specialist_skills,
         "boundary": boundary_meta,
         "github_draft": github_draft_meta,
+        "decision_review_triage": decision_review_triage,
     }

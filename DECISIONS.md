@@ -1,5 +1,30 @@
 # Decisions
 
+## ADR-061: Opt-in DecisionProvider review triage shadow (v1.44.0 M44)
+
+- **Status:** Accepted
+- **Date:** 2026-09-24
+- **Context:** After M43 ranking enablement, Captain ordered review triage next
+  (then agent routing). Notion §A proposes Jev signals for investigation
+  priority / specialist-security-warranted on the code-review pipeline without
+  replacing boundary, verify, or report authority. Captain: proceed after #181.
+- **Decision:**
+  1. Extend DecisionProvider with `triage_review` (stub/file/jev); question
+     revision `review_triage_v1`; pin remains `jev-1.13.0`.
+  2. Shadow via `COMPASS_DECISION_REVIEW_SHADOW` (default off; separate from
+     skill SHADOW/APPLY). Compact change state: paths, domains, path flags —
+     no secrets / unfiltered diffs.
+  3. Hook after specialist composition in `run_code_review`; write evidence
+     under `.agent/evidence/m44-jev-review-triage/`; never mutate findings,
+     candidates, boundary, or merge authority (`applied: false`).
+  4. Reports may store path/ID refs only.
+  5. Mutating specialist routing / tool-call triage / agent routing remain
+     separate Captain-gated plans.
+- **Consequences:** Review triage is inert until env opt-in. Unset
+  `COMPASS_DECISION_REVIEW_SHADOW` restores baseline. Rollback tag
+  `rollback/pre-m44-jev-review-triage`.
+
+
 ## ADR-060: Opt-in DecisionProvider ranking apply (v1.43.0 M43)
 
 - **Status:** Accepted

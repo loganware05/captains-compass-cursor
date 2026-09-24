@@ -1,0 +1,41 @@
+{
+  "revision": "review_triage_v1",
+  "pass": "triage",
+  "questions": {
+    "touches_authz": {
+      "type": "noul",
+      "instructions": "Does this change set likely touch authentication or authorization paths, credentials, sessions, or permission checks?",
+      "criteria": {
+        "true": "Auth/authz or credential surfaces are in scope",
+        "false": "No meaningful auth/authz surface"
+      }
+    },
+    "touches_sensitive": {
+      "type": "noul",
+      "instructions": "Does this change likely alter sensitive data flow, external network access, dependencies, hooks/control-plane, or execution permissions?",
+      "criteria": {
+        "true": "Sensitive data, network, deps, hooks, or permissions are in scope",
+        "false": "No meaningful sensitive surface"
+      }
+    },
+    "specialist_security_warranted": {
+      "type": "choice",
+      "instructions": "Is a specialist security investigation warranted beyond the default deterministic review emitters?",
+      "criteria": {
+        "yes": "Escalate for specialist security investigation",
+        "no": "Default deterministic review is sufficient",
+        "uncertain": "Abstain / insufficient signal"
+      }
+    },
+    "investigation_priority": {
+      "type": "choice",
+      "instructions": "What investigation priority should investigators assign relative to other open review work?",
+      "criteria": {
+        "high": "Investigate before lower-risk changes",
+        "medium": "Normal priority",
+        "low": "Defer after higher-risk work",
+        "none": "No additional investigation priority signal"
+      }
+    }
+  }
+}

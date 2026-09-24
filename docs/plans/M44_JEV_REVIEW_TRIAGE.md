@@ -1,3 +1,5 @@
+> **APPROVED** 2026-09-24. Active root plan mirrors this file. Linear: OVA-56.
+
 # Implementation Plan — M44 / Jev Decision Service (Review Triage Shadow)
 
 ## Metadata

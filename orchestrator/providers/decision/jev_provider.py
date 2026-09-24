@@ -14,14 +14,20 @@ from orchestrator.providers.decision.state import assert_state_safe, redact_text
 from orchestrator.providers.decision.types import (
     FORBIDDEN_MODEL_ALIASES,
     PINNED_JEV_MODEL_ID,
+    PRIORITY_CHOICES,
+    WARRANT_CHOICES,
     RankedSuggestion,
+    ReviewTriageRequest,
+    ReviewTriageResult,
     SkillSuggestionRequest,
     SkillSuggestionResult,
 )
 
 DEFAULT_BASE_URL = "https://api.typesafe.ai/v1"
 QUESTIONS_DIR = Path(__file__).resolve().parent / "questions"
-ALLOWED_QUESTION_REVISIONS = frozenset({"skill_suggest_v1", "skill_recheck_v1"})
+ALLOWED_QUESTION_REVISIONS = frozenset(
+    {"skill_suggest_v1", "skill_recheck_v1", "review_triage_v1"}
+)
 HttpPost = Callable[[str, dict[str, str], bytes, float], bytes]
 
 
@@ -403,6 +409,107 @@ class JevDecisionProvider:
                 model_id=self.model_id,
                 abstain=True,
                 abstain_reason="jev provider error — withhold suggestion",
+                error=_safe_error(exc),
+                latency_ms=(time.perf_counter() - started) * 1000.0,
+            )
+
+    def triage_review(self, request: ReviewTriageRequest) -> ReviewTriageResult:
+        started = time.perf_counter()
+        if self._model_error or self._base_error:
+            return ReviewTriageResult(
+                provider=self.name,
+                model_id=None,
+                abstain=True,
+                abstain_reason="jev provider refused — model/base URL not allowed",
+                error=self._model_error or self._base_error,
+                latency_ms=(time.perf_counter() - started) * 1000.0,
+            )
+        try:
+            state = {
+                "change": request.change.to_dict(),
+                "change_hash": request.change_hash,
+            }
+            assert_state_safe(state)
+            template = _load_question_template(request.question_revision)
+            questions = dict(template.get("questions") or {})
+            resp = self._post_systemone(state, questions)
+            answers = dict(resp.get("answers") or {})
+            usage = dict(resp.get("usage") or {})
+            model_reported = str(resp.get("model") or self.model_id)
+
+            authz = answers.get("touches_authz") or {}
+            sensitive = answers.get("touches_sensitive") or {}
+            warrant = answers.get("specialist_security_warranted") or {}
+            priority = answers.get("investigation_priority") or {}
+
+            authz_noul = (
+                float(authz.get("noul") or 0.0) if isinstance(authz, dict) else None
+            )
+            sens_noul = (
+                float(sensitive.get("noul") or 0.0)
+                if isinstance(sensitive, dict)
+                else None
+            )
+            warrant_choice = (
+                str(warrant.get("choice") or "").lower()
+                if isinstance(warrant, dict)
+                else ""
+            )
+            priority_choice = (
+                str(priority.get("choice") or "").lower()
+                if isinstance(priority, dict)
+                else ""
+            )
+
+            if warrant_choice not in WARRANT_CHOICES or warrant_choice == "uncertain":
+                return ReviewTriageResult(
+                    provider=self.name,
+                    model_id=model_reported,
+                    touches_authz=authz_noul,
+                    touches_sensitive=sens_noul,
+                    abstain=True,
+                    abstain_reason="review triage abstain (uncertain warrant)",
+                    question_revision=request.question_revision,
+                    latency_ms=(time.perf_counter() - started) * 1000.0,
+                    input_tokens=int(usage.get("input_tokens") or 0),
+                    output_tokens=int(usage.get("output_tokens") or 0),
+                    raw_answers=answers,
+                )
+            if priority_choice not in PRIORITY_CHOICES:
+                return ReviewTriageResult(
+                    provider=self.name,
+                    model_id=model_reported,
+                    touches_authz=authz_noul,
+                    touches_sensitive=sens_noul,
+                    specialist_security_warranted=warrant_choice,
+                    abstain=True,
+                    abstain_reason="review triage abstain (invalid priority)",
+                    question_revision=request.question_revision,
+                    latency_ms=(time.perf_counter() - started) * 1000.0,
+                    input_tokens=int(usage.get("input_tokens") or 0),
+                    output_tokens=int(usage.get("output_tokens") or 0),
+                    raw_answers=answers,
+                )
+            return ReviewTriageResult(
+                provider=self.name,
+                model_id=model_reported,
+                investigation_priority=priority_choice,
+                specialist_security_warranted=warrant_choice,
+                touches_authz=authz_noul,
+                touches_sensitive=sens_noul,
+                abstain=False,
+                question_revision=request.question_revision,
+                latency_ms=(time.perf_counter() - started) * 1000.0,
+                input_tokens=int(usage.get("input_tokens") or 0),
+                output_tokens=int(usage.get("output_tokens") or 0),
+                raw_answers=answers,
+            )
+        except (ValueError, OSError, urllib.error.URLError, json.JSONDecodeError, TimeoutError) as exc:
+            return ReviewTriageResult(
+                provider=self.name,
+                model_id=self.model_id,
+                abstain=True,
+                abstain_reason="jev provider error — withhold review triage",
                 error=_safe_error(exc),
                 latency_ms=(time.perf_counter() - started) * 1000.0,
             )

@@ -9,7 +9,11 @@ from pathlib import Path
 from orchestrator.providers.decision import StubDecisionProvider
 from orchestrator.providers.decision.types import (
     PINNED_JEV_MODEL_ID,
+    PRIORITY_CHOICES,
+    WARRANT_CHOICES,
     RankedSuggestion,
+    ReviewTriageRequest,
+    ReviewTriageResult,
     SkillSuggestionRequest,
     SkillSuggestionResult,
 )
@@ -106,6 +110,59 @@ class FileDecisionProvider:
             abstain_reason="no matching file fixture for objective",
         )
 
+    def triage_review(self, request: ReviewTriageRequest) -> ReviewTriageResult:
+        paths_blob = " ".join(request.change.changed_paths).lower()
+        domains_blob = " ".join(request.change.domains).lower()
+        haystack = f"{paths_blob} {domains_blob} {request.change.objective.lower()}"
+        for fixture in self._load_fixtures():
+            needle = str(fixture.get("path_contains") or "").lower().strip()
+            if not needle:
+                continue
+            if needle not in haystack:
+                continue
+            priority = fixture.get("investigation_priority")
+            if priority is not None:
+                priority = str(priority).lower()
+                if priority not in PRIORITY_CHOICES:
+                    priority = None
+            warrant = fixture.get("specialist_security_warranted")
+            if warrant is not None:
+                warrant = str(warrant).lower()
+                if warrant not in WARRANT_CHOICES:
+                    warrant = None
+            abstain = bool(fixture.get("abstain"))
+            return ReviewTriageResult(
+                provider=self.name,
+                model_id=str(fixture.get("model_id") or PINNED_JEV_MODEL_ID),
+                investigation_priority=None if abstain else priority,
+                specialist_security_warranted=None if abstain else warrant,
+                touches_authz=(
+                    float(fixture["touches_authz"])
+                    if fixture.get("touches_authz") is not None
+                    else None
+                ),
+                touches_sensitive=(
+                    float(fixture["touches_sensitive"])
+                    if fixture.get("touches_sensitive") is not None
+                    else None
+                ),
+                abstain=abstain,
+                abstain_reason=str(fixture.get("abstain_reason") or ""),
+                question_revision=str(
+                    fixture.get("question_revision") or request.question_revision
+                ),
+                latency_ms=float(fixture.get("latency_ms") or 0.0),
+                input_tokens=int(fixture.get("input_tokens") or 0),
+                output_tokens=int(fixture.get("output_tokens") or 0),
+                raw_answers=dict(fixture.get("raw_answers") or {}),
+            )
+        return ReviewTriageResult(
+            provider=self.name,
+            model_id=PINNED_JEV_MODEL_ID,
+            abstain=True,
+            abstain_reason="no matching file fixture for review paths",
+        )
+
 
 def select_decision_provider(repo_root: Path | None = None):
     """Return DecisionProvider from COMPASS_DECISION_PROVIDER (default stub)."""
@@ -125,4 +182,9 @@ def select_decision_provider(repo_root: Path | None = None):
 
 def decision_shadow_enabled() -> bool:
     raw = os.environ.get("COMPASS_DECISION_SHADOW", "").strip().lower()
+    return raw in {"1", "true", "yes", "on"}
+
+
+def decision_review_shadow_enabled() -> bool:
+    raw = os.environ.get("COMPASS_DECISION_REVIEW_SHADOW", "").strip().lower()
     return raw in {"1", "true", "yes", "on"}
