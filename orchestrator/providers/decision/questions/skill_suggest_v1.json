@@ -1,0 +1,19 @@
+{
+  "revision": "skill_suggest_v1",
+  "pass": "rank",
+  "questions": {
+    "needs_skill": {
+      "type": "noul",
+      "instructions": "Does this objective clearly need loading a specialized skill rather than general conversation or ad-hoc coding?",
+      "criteria": {
+        "true": "A specialized skill would materially improve correctness or process",
+        "false": "No specialized skill is needed"
+      }
+    },
+    "which_skill": {
+      "type": "choice",
+      "instructions": "Which eligible skill best fits the objective? Prefer the single best fit. Use none if nothing applies.",
+      "criteria_from": "eligible_skill_ids_plus_none"
+    }
+  }
+}

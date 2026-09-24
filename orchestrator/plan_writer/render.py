@@ -67,6 +67,41 @@ def render_reusable_capabilities(artifacts: CapabilityPlanArtifacts) -> str:
     return "\n".join(lines)
 
 
+def render_decision_shadow(artifacts: CapabilityPlanArtifacts) -> str:
+    """Shadow DecisionProvider suggestions — never applied to rankings (M41)."""
+    lines = [
+        "## Decision Shadow (not applied)",
+        "",
+        "> Optional DecisionProvider comparison vs the deterministic matcher. "
+        "**Does not change** `recommended_skill_ids`. Full artifact lives under "
+        "`.agent/evidence/` only; this section references path/ID.",
+        "",
+    ]
+    shadow = (artifacts.resolve or {}).get("decision_shadow")
+    if not shadow:
+        lines.append("*No decision shadow run (provider stub or `COMPASS_DECISION_SHADOW` unset).*")
+        lines.append("")
+        return "\n".join(lines)
+    evidence_path = shadow.get("evidence_path") or "(none)"
+    evidence_id = shadow.get("evidence_id") or "(none)"
+    lines.extend(
+        [
+            f"- Evidence ID: `{evidence_id}`",
+            f"- Evidence path: `{evidence_path}`",
+            f"- Provider: `{shadow.get('provider') or 'unknown'}`",
+            f"- Model: `{shadow.get('model_id') or 'n/a'}`",
+            f"- Abstain: `{shadow.get('abstain')}`",
+            f"- Disagreement count: `{shadow.get('disagreement_count')}`",
+            f"- Suggested skill (not applied): `{shadow.get('suggested_skill_id') or 'none'}`",
+            "- Applied: `false`",
+            "",
+        ]
+    )
+    if shadow.get("error"):
+        lines.extend([f"- Error: {shadow.get('error')}", ""])
+    return "\n".join(lines)
+
+
 def render_technology_intelligence_candidates(artifacts: CapabilityPlanArtifacts) -> str:
     import os
 
@@ -341,6 +376,7 @@ def render_capability_plan_sections(artifacts: CapabilityPlanArtifacts) -> str:
     sections = [
         render_required_capabilities(artifacts),
         render_reusable_capabilities(artifacts),
+        render_decision_shadow(artifacts),
         render_technology_intelligence_candidates(artifacts),
         render_experience_signals(artifacts),
         render_knowledge_context(artifacts),

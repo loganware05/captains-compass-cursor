@@ -137,6 +137,29 @@ PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m40_manifest_pwd -v
 ./scripts/run-code-review.sh --repo-root /path/to/repo --no-boundary-check
 ```
 
+DecisionProvider shadow skill suggestion (M41; hermetic file/stub; live Jev Captain-local):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m41_decision_provider -v
+
+# Defaults: stub provider, no shadow — rankings unchanged, no network
+./scripts/capability-resolve.sh "Build accessible forms with React"
+
+# Offline shadow compare (writes under .agent/evidence/ only; rankings unchanged)
+COMPASS_DECISION_PROVIDER=file \
+COMPASS_DECISION_SHADOW=1 \
+./scripts/capability-resolve.sh "Build accessible forms with React"
+
+# Live Jev (Captain-local; pin model; never CI default)
+# COMPASS_DECISION_PROVIDER=jev \
+# COMPASS_DECISION_SHADOW=1 \
+# COMPASS_JEV_MODEL_ID=jev-1.13.0 \
+# COMPASS_JEV_API_KEY=… \
+# ./scripts/capability-resolve.sh "…"
+```
+
+See `docs/integrations/decision-provider.md`.
+
 Single launcher UX (M34 / C1; hermetic help + docs index):
 
 ```bash

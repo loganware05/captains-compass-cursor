@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "description": "Hermetic labeled cases for M41 DecisionProvider file-shadow eval",
+  "cases": [
+    {
+      "case_id": "covered-accessible-forms",
+      "objective": "Build accessible forms with React",
+      "gold_skill_id": "react-engineering",
+      "matcher_top": ["react-engineering", "accessibility-review", "testing-validation"],
+      "eligible": [
+        {"skill_id": "react-engineering", "name": "React", "description": "React forms UI"},
+        {"skill_id": "accessibility-review", "name": "A11y", "description": "accessibility review"},
+        {"skill_id": "testing-validation", "name": "Test", "description": "validation tests"}
+      ]
+    },
+    {
+      "case_id": "uncovered-gibberish",
+      "objective": "no skill should match this gibberish xyzzy-plugh",
+      "gold_skill_id": null,
+      "matcher_top": ["repository-discovery"],
+      "eligible": [
+        {"skill_id": "react-engineering", "name": "React", "description": "React UI"},
+        {"skill_id": "repository-discovery", "name": "Discovery", "description": "repo scout"}
+      ]
+    },
+    {
+      "case_id": "covered-forms-alt-matcher",
+      "objective": "Need accessible forms components",
+      "gold_skill_id": "react-engineering",
+      "matcher_top": ["accessibility-review", "react-engineering"],
+      "eligible": [
+        {"skill_id": "react-engineering", "name": "React", "description": "forms"},
+        {"skill_id": "accessibility-review", "name": "A11y", "description": "a11y"}
+      ]
+    }
+  ]
+}

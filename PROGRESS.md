@@ -2,44 +2,36 @@
 
 ## Current status
 
-**Release: v1.41.0** — M40 Filesystem-Gated Context & Dependency Architecture
-shipped 2026-09-19.
+**Ready for Captain merge: M41 / v1.42.0** — Jev Decision Service shadow skill
+suggestion. Plan status **COMPLETE**.
 
 | Item | Value |
 |---|---|
-| Tagged | **v1.41.0** @ `a6039b0` (control #177 merged; sandbox #59 merged) |
-| Plan | `m40-filesystem-gated-context` — **COMPLETE** |
-| Rollback | `rollback/pre-m40-filesystem-gated-context` @ `125d53e` |
-| Evidence | `.agent/evidence/m40-filesystem-gated-context/` |
-| Carry-over | Approved by Captain 2026-09-19 for `capability-planning`, `code-reviewer`, `skill-lifecycle` (inodes `captain_approved: true`) |
+| Baseline | **v1.41.0** @ `cec4da2` |
+| Branch | `cursor/m41-jev-decision-service-753c` |
+| PR | [#179](https://github.com/loganware05/captains-compass-cursor/pull/179) |
+| Plan | `IMPLEMENTATION_PLAN.md` — **COMPLETE** (`m41-jev-decision-service`) |
+| Rollback | `rollback/pre-m41-jev-decision-service` @ `cec4da2` |
+| Evidence | `.agent/evidence/m41-jev-decision-service/` |
+| Validation | doctor 0; suite **125**; evals **43** |
 
 ## In flight
 
-- Nothing. Awaiting next Captain-directed milestone.
+- Awaiting Captain merge of control PR #179 and tag **v1.42.0**
 
-## Completed
+## Completed (this branch)
 
-- **M40 → v1.41.0** — inode store, context route walker, hard/symlink
-  dependency graph, boundary review gate (precision 1.0 fixture + sandbox),
-  content-addressed Skill inodes, subagent `pwd` isolation; adversarial
-  remediation (19 findings) with 26 regression tests
-- M39 → v1.40.0 / v1.40.1 (agentic security ingest + opaque forge gate)
-- M37 → v1.39.0; Track B complete through B5 / v1.36.0
+- Optional DecisionProvider (stub / file / jev) with shadow-only skill suggestion
+- WS0: `SKILL_SLUGS` includes `code-reviewer` + `northstar-connected-routine`
+- Pinned live model `jev-1.13.0`; evidence under `.agent/evidence/` only
+- ADR-058 + integration docs; security harden (base URL allowlist, no redirects)
 
-## Known follow-ups (observed during M40; not in scope)
+## Known follow-ups (deferred)
 
-- M37 specialist `sec-hook-checkout-shortcircuit` fires on *removed* diff lines
-  (FP when a diff removes the legacy pattern) — detectors should scan added
-  lines only
-- `orchestrator/registry/compiler.py` SKILL_SLUGS predates M21/M27: missing
-  `code-reviewer` and `northstar-connected-routine` (drift warnings now
-  surface both)
+1. M37 specialist FP on *removed* diff lines (scan added lines only)
+2. Next Decision Service trials (separate plans): ranking enablement → review
+   triage → agent routing
 
 ## Blockers
 
 None.
-
-## Recommended sequence
-
-1. File follow-up plans for the two known follow-ups above when the Captain
-   prioritizes them

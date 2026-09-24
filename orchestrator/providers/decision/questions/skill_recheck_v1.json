@@ -1,0 +1,19 @@
+{
+  "revision": "skill_recheck_v1",
+  "pass": "recheck",
+  "questions": {
+    "which_of_shortlist": {
+      "type": "choice",
+      "instructions": "Given fuller descriptions, which shortlisted skill fits best? Choose none if none fit.",
+      "criteria_from": "shortlist_plus_none"
+    },
+    "top_fits": {
+      "type": "noul",
+      "instructions": "Does the top shortlisted skill actually address the objective?",
+      "criteria": {
+        "true": "Clear fit",
+        "false": "Poor or no fit"
+      }
+    }
+  }
+}

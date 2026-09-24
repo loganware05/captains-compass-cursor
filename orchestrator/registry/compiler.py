@@ -53,6 +53,8 @@ SKILL_SLUGS = (
     "package-registry-ti",
     "skill-learning-loop",
     "context-inodes",
+    "code-reviewer",
+    "northstar-connected-routine",
 )
 
 AGENT_PROFILES = (
@@ -152,8 +154,8 @@ def compile_registry(repo_root: Path) -> CompileResult:
         skills.append(capability)
 
     # Drift visibility: skill directories on disk that are not registered in
-    # SKILL_SLUGS never enter the compiled registry (pre-existing gap for
-    # code-reviewer / northstar-connected-routine — see PROGRESS follow-ups).
+    # SKILL_SLUGS never enter the compiled registry (warn so new Skills are
+    # not silently omitted).
     skills_root = repo_root / ".cursor" / "skills"
     if skills_root.is_dir():
         for path in sorted(skills_root.iterdir()):

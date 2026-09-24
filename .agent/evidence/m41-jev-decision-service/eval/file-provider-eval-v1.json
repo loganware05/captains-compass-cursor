@@ -1,0 +1,21 @@
+{
+  "applied": false,
+  "case_count": 3,
+  "covered_count": 2,
+  "metrics": {
+    "cost_usd": 0,
+    "disagreement_count": 2,
+    "disagreement_rate": 0.6666666666666666,
+    "latency_ms": 0,
+    "missed_useful_skills": 0.0,
+    "missed_useful_skills_count": 0,
+    "unnecessary_skill_loads": 0.0,
+    "unnecessary_skill_loads_count": 0,
+    "wrong_skill_loads": 0.0,
+    "wrong_skill_loads_count": 0
+  },
+  "model_id": "jev-1.13.0",
+  "provider": "file",
+  "schema": "northstar.decision_eval.v1",
+  "uncovered_count": 1
+}

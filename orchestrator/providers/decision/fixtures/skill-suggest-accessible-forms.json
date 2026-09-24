@@ -1,0 +1,30 @@
+{
+  "objective_contains": "accessible forms",
+  "model_id": "jev-1.13.0",
+  "question_revision_rank": "skill_suggest_v1",
+  "question_revision_recheck": "skill_recheck_v1",
+  "abstain": false,
+  "suggested_skill_id": "react-engineering",
+  "ranked": [
+    {"skill_id": "react-engineering", "score": 0.82, "confidence": 0.71, "rationale": "fixture: accessible React forms"},
+    {"skill_id": "accessibility-review", "score": 0.61, "confidence": 0.55, "rationale": "fixture: a11y follow-up"},
+    {"skill_id": "testing-validation", "score": 0.44, "confidence": 0.40, "rationale": "fixture: validation"}
+  ],
+  "raw_answers": {
+    "needs_skill": {"type": "noul", "noul": 0.91},
+    "which_skill": {
+      "type": "choice",
+      "choice": "react-engineering",
+      "probabilities": {
+        "react-engineering": 0.82,
+        "accessibility-review": 0.12,
+        "testing-validation": 0.06,
+        "none": 0.0
+      },
+      "confidence": 0.71
+    }
+  },
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0
+}

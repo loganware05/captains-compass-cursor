@@ -1,0 +1,22 @@
+{
+  "objective_contains": "no skill should match this gibberish xyzzy-plugh",
+  "model_id": "jev-1.13.0",
+  "question_revision_rank": "skill_suggest_v1",
+  "question_revision_recheck": "skill_recheck_v1",
+  "abstain": true,
+  "abstain_reason": "fixture: no suitable skill",
+  "suggested_skill_id": null,
+  "ranked": [],
+  "raw_answers": {
+    "needs_skill": {"type": "noul", "noul": 0.12},
+    "which_skill": {
+      "type": "choice",
+      "choice": "none",
+      "probabilities": {"none": 0.9},
+      "confidence": 0.8
+    }
+  },
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0
+}
