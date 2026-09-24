@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.42.1 — 2026-09-24
+
+### Fixed
+
+- **M42 / M37 specialist FP** — fail-closed hook detectors
+  (`sec-hook-checkout-shortcircuit` and siblings) now scan **added lines in
+  executable hook scripts / `hooks.json` only**. Removed lines and docs/README
+  prose describing legacy short-circuits no longer false-positive (closes M40
+  sandbox clean FP).
+
 ## 1.42.0 — 2026-09-24
 
 ### Added

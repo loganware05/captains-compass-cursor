@@ -160,6 +160,15 @@ COMPASS_DECISION_SHADOW=1 \
 
 See `docs/integrations/decision-provider.md`.
 
+Fail-closed hook detectors — added-line / executable-hook scope (M42):
+
+```bash
+PYTHONPATH=. python3 -B -m unittest tests.orchestrator.test_m37_agentic_security_review -v
+```
+
+Detectors scan added lines in `.cursor/hooks/*.{sh,bash,zsh}` and `hooks.json`
+only (not removed lines; not docs/README under hooks).
+
 Single launcher UX (M34 / C1; hermetic help + docs index):
 
 ```bash

@@ -159,6 +159,84 @@ class FailClosedHookDetectorTests(unittest.TestCase):
         self.assertIn("security-review", skills)
         self.assertIn("sec-hook-plan-self-serve", {c["id"] for c in candidates})
 
+    def test_removing_checkout_shortcircuit_is_not_a_finding(self) -> None:
+        """Removed lines must not trigger sec-hook-checkout-shortcircuit (M42)."""
+        diff = """diff --git a/.cursor/hooks/protected-branch.sh b/.cursor/hooks/protected-branch.sh
+--- a/.cursor/hooks/protected-branch.sh
++++ b/.cursor/hooks/protected-branch.sh
+@@ -10,8 +10,4 @@
+ some_guard() {
+-  if echo "$COMMAND" | grep -Eqi 'git[[:space:]]+checkout[[:space:]]+(-b|--branch)[[:space:]]+(feature|fix)/'; then
+-    allow
+-  fi
+   deny_if_protected
+ }
+"""
+        ids = {
+            f["id"]
+            for f in emit_security_candidates(
+                detection={"changed_paths": [".cursor/hooks/protected-branch.sh"]},
+                context_pack={"diff": diff},
+            )
+        }
+        self.assertNotIn("sec-hook-checkout-shortcircuit", ids)
+
+    def test_docs_describing_shortcircuit_do_not_fp_when_hook_removes_it(self) -> None:
+        """M40 sandbox FP: docs mention the pattern while the hook deletes it."""
+        diff = """diff --git a/.cursor/hooks/protected-branch.sh b/.cursor/hooks/protected-branch.sh
+--- a/.cursor/hooks/protected-branch.sh
++++ b/.cursor/hooks/protected-branch.sh
+@@ -1,6 +1,3 @@
+-if echo "$COMMAND" | grep -Eqi 'git[[:space:]]+checkout[[:space:]]+(-b|--branch)[[:space:]]+(feature|fix)/'; then
+-  allow
+-fi
++deny_if_protected
+diff --git a/docs/integrations/code-reviewer.md b/docs/integrations/code-reviewer.md
+--- a/docs/integrations/code-reviewer.md
++++ b/docs/integrations/code-reviewer.md
+@@ -1,2 +1,4 @@
++# Hook refresh
++Do not short-circuit on a `checkout -b feature/` substring in the same command.
++| `sec-hook-checkout-shortcircuit` | Protected-branch `checkout -b feature/` substring allow |
+"""
+        ids = {
+            f["id"]
+            for f in emit_security_candidates(
+                detection={
+                    "changed_paths": [
+                        ".cursor/hooks/protected-branch.sh",
+                        "docs/integrations/code-reviewer.md",
+                    ]
+                },
+                context_pack={"diff": diff},
+            )
+        }
+        self.assertNotIn("sec-hook-checkout-shortcircuit", ids)
+
+    def test_m40_sandbox_clean_context_pack_no_longer_fps(self) -> None:
+        """Replay recorded M40 sandbox clean pack — must not emit checkout FP."""
+        pack_path = Path(
+            "/agent/repos/captain-compass-sandbox/.agent/evidence/"
+            "code-review/m40-sandbox-clean/context-pack.json"
+        )
+        if not pack_path.is_file():
+            self.skipTest("sandbox M40 context pack not mounted")
+        import json
+
+        pack = json.loads(pack_path.read_text(encoding="utf-8"))
+        ids = {
+            f["id"]
+            for f in emit_security_candidates(
+                detection={
+                    "changed_paths": pack.get("changed_paths") or [],
+                    "domains": pack.get("domains") or [],
+                },
+                context_pack={"diff": pack.get("diff") or ""},
+            )
+            if f["id"].startswith("sec-hook-")
+        }
+        self.assertNotIn("sec-hook-checkout-shortcircuit", ids)
+
 
 if __name__ == "__main__":
     unittest.main()
