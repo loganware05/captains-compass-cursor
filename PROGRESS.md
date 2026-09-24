@@ -2,25 +2,26 @@
 
 ## Current status
 
-**In flight: M42 / v1.42.1** — Specialist added-line scope (M37 FP fix).
+**Ready for merge: M43 ranking enablement** — APPROVED (OVA-55); PR [#181](https://github.com/loganware05/captains-compass-cursor/pull/181) rebaselined onto post-M42 `main` (v1.42.1).
 
 | Item | Value |
 |---|---|
-| On main | **v1.42.0** — M41 Decision Service (#179) @ `ed20499` |
-| In flight | **M42** — branch `cursor/m42-specialist-added-line-scope-753c` |
-| Plan | `IMPLEMENTATION_PLAN.md` — **APPROVED — IMPLEMENTING** |
-| Rollback | `rollback/pre-m42-specialist-added-line-scope` @ `ed20499` |
+| On main | **v1.42.1** M42 (#180) @ `0219300` |
+| Active PR | **M43** [#181](https://github.com/loganware05/captains-compass-cursor/pull/181) — v1.43.0 default-off |
+| Plan | `m43-jev-ranking-enablement` — **APPROVED** |
+| Rollback | `rollback/pre-m43-jev-ranking-enablement` @ post-M42 `main` |
 
-## Completed
+## Captain-ordered Decision Service sequence
 
-- **M41 → v1.42.0** — optional Jev DecisionProvider shadow skill suggestion
-- M40 → v1.41.0; M39 → v1.40.x; M37 → v1.39.0
+1. ~~Shadow skill suggestion (M41)~~ merged
+2. Ranking enablement ← **ready to merge**
+3. Review triage
+4. Agent routing
 
-## Next (Captain-ordered after M42)
+## Completed recently
 
-1. Ranking enablement (Decision Service trial)
-2. Review triage
-3. Agent routing
+- **M42 → v1.42.1** — M37 specialist added-line scope (#180)
+- **M41 → v1.42.0** — Jev DecisionProvider shadow skill suggestion (#179)
 
 ## Blockers
 

@@ -47,7 +47,7 @@ def resolve_capabilities(
 
     decision_shadow: dict[str, Any] | None = None
     try:
-        from orchestrator.providers.decision.shadow import maybe_run_decision_shadow
+        from orchestrator.providers.decision.shadow import run_decision_provider_pass
 
         skills_by_id = {
             str(skill.get("id") or ""): skill
@@ -59,7 +59,7 @@ def resolve_capabilities(
             for item in ranked
             if item.skill_id in skills_by_id
         ]
-        decision_shadow = maybe_run_decision_shadow(
+        recommended, decision_shadow = run_decision_provider_pass(
             repo_root,
             objective=objective,
             eligible_skills=eligible_docs,
@@ -68,10 +68,10 @@ def resolve_capabilities(
             top_n=top_n,
             plan_id=plan_id or context.get("plan_id"),
         )
-    except Exception as exc:  # noqa: BLE001 — shadow must never break resolve
+    except Exception as exc:  # noqa: BLE001 — decision pass must never break resolve
         decision_shadow = {
             "applied": False,
-            "error": f"decision shadow withheld: {exc}",
+            "error": f"decision provider withheld: {exc}",
             "evidence_path": None,
             "evidence_id": None,
         }
@@ -109,12 +109,13 @@ def resolve_to_dict(repo_root: Path, objective: str, context: dict | None = None
         payload["decision_shadow"] = {
             "evidence_id": result.decision_shadow.get("evidence_id"),
             "evidence_path": result.decision_shadow.get("evidence_path"),
-            "applied": False,
+            "applied": bool(result.decision_shadow.get("applied")),
             "provider": result.decision_shadow.get("provider"),
             "model_id": result.decision_shadow.get("model_id"),
             "abstain": result.decision_shadow.get("abstain"),
             "disagreement_count": result.decision_shadow.get("disagreement_count"),
             "suggested_skill_id": result.decision_shadow.get("suggested_skill_id"),
+            "apply_reason": result.decision_shadow.get("apply_reason"),
             "error": result.decision_shadow.get("error"),
         }
     return payload

@@ -90,7 +90,7 @@ class SkillSuggestionResult:
     raw_answers: dict[str, Any] = field(default_factory=dict)
     error: str | None = None
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self, *, applied: bool = False) -> dict[str, Any]:
         return {
             "provider": self.provider,
             "model_id": self.model_id,
@@ -105,5 +105,5 @@ class SkillSuggestionResult:
             "output_tokens": self.output_tokens,
             "raw_answers": dict(self.raw_answers),
             "error": self.error,
-            "applied": False,
+            "applied": bool(applied),
         }

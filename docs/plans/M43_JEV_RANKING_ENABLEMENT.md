@@ -1,3 +1,5 @@
+> **APPROVED** 2026-09-24. Active root plan mirrors this file. Linear: OVA-55.
+
 # Implementation Plan — M43 / Jev Decision Service (Ranking Enablement)
 
 ## Metadata

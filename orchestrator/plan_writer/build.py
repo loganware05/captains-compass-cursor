@@ -212,11 +212,11 @@ def build_capability_plan(
         ],
     }
     if resolve_result.decision_shadow is not None:
-        # Reference only — full shadow artifact is under .agent/evidence/
+        # Reference only — full shadow/apply artifact is under .agent/evidence/
         resolve_doc["decision_shadow"] = {
             "evidence_id": resolve_result.decision_shadow.get("evidence_id"),
             "evidence_path": resolve_result.decision_shadow.get("evidence_path"),
-            "applied": False,
+            "applied": bool(resolve_result.decision_shadow.get("applied")),
             "provider": resolve_result.decision_shadow.get("provider"),
             "model_id": resolve_result.decision_shadow.get("model_id"),
             "abstain": resolve_result.decision_shadow.get("abstain"),
@@ -226,6 +226,7 @@ def build_capability_plan(
             "suggested_skill_id": resolve_result.decision_shadow.get(
                 "suggested_skill_id"
             ),
+            "apply_reason": resolve_result.decision_shadow.get("apply_reason"),
             "error": resolve_result.decision_shadow.get("error"),
         }
     with resolve_path.open("w", encoding="utf-8") as handle:
