@@ -1,0 +1,27 @@
+{
+  "objective_contains": "wakeability",
+  "model_id": "jev-1.13.0",
+  "question_revision": "agent_routing_v1",
+  "abstain": false,
+  "suggested_agent_id": "agent-cloud-reviewer",
+  "ranked": [
+    {"skill_id": "agent-cloud-reviewer", "score": 0.84, "confidence": 0.78, "rationale": "fixture: wakeability review agent"},
+    {"skill_id": "agent-generalist", "score": 0.41, "confidence": 0.40, "rationale": "fixture: generalist"}
+  ],
+  "raw_answers": {
+    "needs_agent": {"type": "noul", "noul": 0.86},
+    "which_agent": {
+      "type": "choice",
+      "choice": "agent-cloud-reviewer",
+      "confidence": 0.78,
+      "probabilities": {
+        "agent-cloud-reviewer": 0.84,
+        "agent-generalist": 0.16,
+        "none": 0.0
+      }
+    }
+  },
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0
+}

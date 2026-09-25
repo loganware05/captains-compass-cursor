@@ -22,6 +22,11 @@ M26 live probe:
   --cloud-agents-json PATH  Cursor Cloud agent list snapshot (MCP list-cloud-agents
                             dump). When set, live probe is preferred over stale
                             registry wakeability_status.
+
+M45 DecisionProvider shadow (opt-in):
+  COMPASS_DECISION_AGENT_ROUTING_SHADOW=1 with COMPASS_DECISION_PROVIDER=file|jev
+  writes evidence under .agent/evidence/m45-jev-agent-routing/ without changing
+  selected_agent_id or dispatch_ready.
 USAGE
 }
 
@@ -43,7 +48,7 @@ if [[ -z "$REGISTRY" || -z "$OBJECTIVE" ]]; then
 fi
 
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python3 - "$REGISTRY" "$OBJECTIVE" "$OUT" "$CLOUD_AGENTS_JSON" <<'PY'
+python3 - "$ROOT" "$REGISTRY" "$OBJECTIVE" "$OUT" "$CLOUD_AGENTS_JSON" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -59,12 +64,14 @@ from orchestrator.routing.cloud_wakeability_probe import (
     load_cloud_agents_payload,
 )
 
-registry_path = Path(sys.argv[1])
-objective_path = Path(sys.argv[2])
-out_arg = sys.argv[3]
-cloud_arg = sys.argv[4]
+repo_root = Path(sys.argv[1])
+registry_path = Path(sys.argv[2])
+objective_path = Path(sys.argv[3])
+out_arg = sys.argv[4]
+cloud_arg = sys.argv[5]
 
 registry = json.loads(registry_path.read_text(encoding="utf-8"))
+agents = load_registry(registry)
 objective_raw = json.loads(objective_path.read_text(encoding="utf-8"))
 objective = RouteObjective(
     title=str(objective_raw.get("title") or objective_raw.get("objective") or "untitled"),
@@ -84,7 +91,7 @@ if cloud_arg:
     prefer_probe = True
 
 decision = route_agents(
-    load_registry(registry),
+    agents,
     objective,
     probe=probe,
     prefer_probe=prefer_probe,
@@ -96,6 +103,36 @@ if prefer_probe:
         "cloud_agents_json": cloud_arg,
         "prefer_probe": True,
     }
+
+try:
+    from orchestrator.providers.decision.agent_routing_shadow import (
+        maybe_run_agent_routing_shadow,
+    )
+
+    shadow_ref = maybe_run_agent_routing_shadow(
+        repo_root,
+        decision=decision,
+        agents=agents,
+    )
+except Exception as exc:  # noqa: BLE001 — shadow must never break routing CLI
+    shadow_ref = {
+        "applied": False,
+        "error": f"decision agent routing withheld: {exc}",
+        "evidence_path": None,
+        "evidence_id": None,
+    }
+if shadow_ref is not None:
+    payload["decision_agent_routing"] = {
+        "evidence_id": shadow_ref.get("evidence_id"),
+        "evidence_path": shadow_ref.get("evidence_path"),
+        "applied": False,
+        "provider": shadow_ref.get("provider"),
+        "model_id": shadow_ref.get("model_id"),
+        "abstain": shadow_ref.get("abstain"),
+        "suggested_agent_id": shadow_ref.get("suggested_agent_id"),
+        "error": shadow_ref.get("error"),
+    }
+
 text = json.dumps(payload, indent=2) + "\n"
 if out_arg:
     Path(out_arg).write_text(text, encoding="utf-8")

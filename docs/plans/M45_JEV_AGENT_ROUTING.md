@@ -1,3 +1,5 @@
+> **APPROVED** 2026-09-25. Active root plan mirrors this file. Linear: OVA-57.
+
 # Implementation Plan — M45 / Jev Decision Service (Agent Routing Shadow)
 
 ## Metadata

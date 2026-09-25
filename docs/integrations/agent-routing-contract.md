@@ -10,6 +10,11 @@ CLI: `northstar skills route-agents --registry PATH --objective PATH`
 - Does **not** hardcode a single dispatcher.
 - Does **not** originate Captain approval.
 - Linear may record the decision; repository JSON is canonical.
+- Optional DecisionProvider agent-routing shadow (M45,
+  `COMPASS_DECISION_AGENT_ROUTING_SHADOW`) may record a semantic task-fit
+  suggestion over **already hard-filtered** agents only; it never changes
+  `selected_agent_id` or `dispatch_ready`. See
+  `docs/integrations/decision-provider.md`.
 
 ## Hard filters
 

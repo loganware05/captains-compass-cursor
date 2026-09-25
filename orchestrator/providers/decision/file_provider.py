@@ -11,6 +11,8 @@ from orchestrator.providers.decision.types import (
     PINNED_JEV_MODEL_ID,
     PRIORITY_CHOICES,
     WARRANT_CHOICES,
+    AgentRoutingRequest,
+    AgentRoutingResult,
     RankedSuggestion,
     ReviewTriageRequest,
     ReviewTriageResult,
@@ -54,6 +56,9 @@ class FileDecisionProvider:
             needle = str(fixture.get("objective_contains") or "").lower().strip()
             if not needle:
                 # Skip non-suggestion JSON accidentally placed in fixtures/.
+                continue
+            # Agent-routing fixtures use suggested_agent_id — keep surfaces separate.
+            if "suggested_agent_id" in fixture:
                 continue
             if needle not in objective:
                 continue
@@ -163,6 +168,74 @@ class FileDecisionProvider:
             abstain_reason="no matching file fixture for review paths",
         )
 
+    def suggest_agents(self, request: AgentRoutingRequest) -> AgentRoutingResult:
+        objective = (request.objective_title or "").lower()
+        eligible_ids = {a.agent_id for a in request.eligible_agents}
+        for fixture in self._load_fixtures():
+            needle = str(fixture.get("objective_contains") or "").lower().strip()
+            # Agent-routing fixtures must name a suggested_agent_id or ranked agents.
+            if not needle or (
+                fixture.get("suggested_agent_id") is None and not fixture.get("ranked")
+            ):
+                continue
+            # Skip skill-only fixtures that lack agent markers when they would
+            # collide — require suggested_agent_id key OR ranked with agent ids.
+            if "suggested_agent_id" not in fixture and not any(
+                isinstance(item, dict) and str(item.get("skill_id") or "").startswith("agent-")
+                for item in (fixture.get("ranked") or [])
+            ):
+                continue
+            if needle not in objective:
+                continue
+            ranked_raw = fixture.get("ranked") or []
+            ranked: list[RankedSuggestion] = []
+            for item in ranked_raw:
+                if not isinstance(item, dict):
+                    continue
+                agent_id = str(item.get("skill_id") or item.get("agent_id") or "")
+                if agent_id and agent_id not in eligible_ids:
+                    continue
+                ranked.append(
+                    RankedSuggestion(
+                        skill_id=agent_id,
+                        score=float(item.get("score") or 0.0),
+                        confidence=(
+                            float(item["confidence"])
+                            if item.get("confidence") is not None
+                            else None
+                        ),
+                        rationale=str(item.get("rationale") or "file-fixture"),
+                    )
+                )
+            abstain = bool(fixture.get("abstain"))
+            suggested = fixture.get("suggested_agent_id")
+            if suggested is not None:
+                suggested = str(suggested)
+                if suggested and suggested not in eligible_ids:
+                    suggested = None
+                    abstain = True
+            return AgentRoutingResult(
+                provider=self.name,
+                model_id=str(fixture.get("model_id") or PINNED_JEV_MODEL_ID),
+                ranked=ranked,
+                suggested_agent_id=None if abstain else suggested,
+                abstain=abstain,
+                abstain_reason=str(fixture.get("abstain_reason") or ""),
+                question_revision=str(
+                    fixture.get("question_revision") or request.question_revision
+                ),
+                latency_ms=float(fixture.get("latency_ms") or 0.0),
+                input_tokens=int(fixture.get("input_tokens") or 0),
+                output_tokens=int(fixture.get("output_tokens") or 0),
+                raw_answers=dict(fixture.get("raw_answers") or {}),
+            )
+        return AgentRoutingResult(
+            provider=self.name,
+            model_id=PINNED_JEV_MODEL_ID,
+            abstain=True,
+            abstain_reason="no matching file fixture for agent routing objective",
+        )
+
 
 def select_decision_provider(repo_root: Path | None = None):
     """Return DecisionProvider from COMPASS_DECISION_PROVIDER (default stub)."""
@@ -187,4 +260,9 @@ def decision_shadow_enabled() -> bool:
 
 def decision_review_shadow_enabled() -> bool:
     raw = os.environ.get("COMPASS_DECISION_REVIEW_SHADOW", "").strip().lower()
+    return raw in {"1", "true", "yes", "on"}
+
+
+def decision_agent_routing_shadow_enabled() -> bool:
+    raw = os.environ.get("COMPASS_DECISION_AGENT_ROUTING_SHADOW", "").strip().lower()
     return raw in {"1", "true", "yes", "on"}
