@@ -16,6 +16,8 @@ from orchestrator.providers.decision.types import (
     PINNED_JEV_MODEL_ID,
     PRIORITY_CHOICES,
     WARRANT_CHOICES,
+    AgentRoutingRequest,
+    AgentRoutingResult,
     RankedSuggestion,
     ReviewTriageRequest,
     ReviewTriageResult,
@@ -26,7 +28,7 @@ from orchestrator.providers.decision.types import (
 DEFAULT_BASE_URL = "https://api.typesafe.ai/v1"
 QUESTIONS_DIR = Path(__file__).resolve().parent / "questions"
 ALLOWED_QUESTION_REVISIONS = frozenset(
-    {"skill_suggest_v1", "skill_recheck_v1", "review_triage_v1"}
+    {"skill_suggest_v1", "skill_recheck_v1", "review_triage_v1", "agent_routing_v1"}
 )
 HttpPost = Callable[[str, dict[str, str], bytes, float], bytes]
 
@@ -510,6 +512,115 @@ class JevDecisionProvider:
                 model_id=self.model_id,
                 abstain=True,
                 abstain_reason="jev provider error — withhold review triage",
+                error=_safe_error(exc),
+                latency_ms=(time.perf_counter() - started) * 1000.0,
+            )
+
+    def suggest_agents(self, request: AgentRoutingRequest) -> AgentRoutingResult:
+        started = time.perf_counter()
+        if self._model_error or self._base_error:
+            return AgentRoutingResult(
+                provider=self.name,
+                model_id=None,
+                abstain=True,
+                abstain_reason="jev provider refused — model/base URL not allowed",
+                error=self._model_error or self._base_error,
+                latency_ms=(time.perf_counter() - started) * 1000.0,
+            )
+        allowed = {a.agent_id for a in request.eligible_agents if a.agent_id}
+        try:
+            summaries = {
+                a.agent_id: f"{redact_text(a.name)}: {a.description}"
+                for a in request.eligible_agents
+            }
+            state = {
+                "objective_title": request.objective_title,
+                "objective_category": request.objective_category,
+                "target_repository": request.target_repository,
+                "required_skills": list(request.required_skills),
+                "eligible_agents": [a.to_dict() for a in request.eligible_agents],
+                "roster_hash": request.roster_hash,
+            }
+            assert_state_safe(state)
+            template = _load_question_template(request.question_revision)
+            questions = dict(template.get("questions") or {})
+            which = dict(questions.get("which_agent") or {})
+            criteria: dict[str, str | None] = {"none": "No eligible agent fits the objective"}
+            for agent_id in [a.agent_id for a in request.eligible_agents]:
+                criteria[agent_id] = redact_text(summaries.get(agent_id) or agent_id)
+            which["criteria"] = criteria
+            which.pop("criteria_from", None)
+            questions["which_agent"] = which
+            resp = self._post_systemone(state, questions)
+            answers = dict(resp.get("answers") or {})
+            usage = dict(resp.get("usage") or {})
+            model_reported = str(resp.get("model") or self.model_id)
+
+            needs = answers.get("needs_agent") or {}
+            needs_noul = float(needs.get("noul") or 0.0) if isinstance(needs, dict) else 0.0
+            which_ans = answers.get("which_agent") or {}
+            choice = str(which_ans.get("choice") or "") if isinstance(which_ans, dict) else ""
+            confidence = (
+                float(which_ans["confidence"])
+                if isinstance(which_ans, dict) and which_ans.get("confidence") is not None
+                else None
+            )
+            probs = dict(which_ans.get("probabilities") or {}) if isinstance(which_ans, dict) else {}
+
+            if needs_noul < self.gate_threshold or choice in {"", "none"}:
+                return AgentRoutingResult(
+                    provider=self.name,
+                    model_id=model_reported,
+                    abstain=True,
+                    abstain_reason="agent routing abstain (needs_agent gate or none)",
+                    question_revision=request.question_revision,
+                    latency_ms=(time.perf_counter() - started) * 1000.0,
+                    input_tokens=int(usage.get("input_tokens") or 0),
+                    output_tokens=int(usage.get("output_tokens") or 0),
+                    raw_answers=answers,
+                )
+            if choice not in allowed:
+                return AgentRoutingResult(
+                    provider=self.name,
+                    model_id=model_reported,
+                    abstain=True,
+                    abstain_reason="out_of_roster",
+                    question_revision=request.question_revision,
+                    latency_ms=(time.perf_counter() - started) * 1000.0,
+                    input_tokens=int(usage.get("input_tokens") or 0),
+                    output_tokens=int(usage.get("output_tokens") or 0),
+                    raw_answers=answers,
+                )
+            ranked = [
+                RankedSuggestion(
+                    skill_id=agent_id,
+                    score=float(score),
+                    confidence=confidence if agent_id == choice else None,
+                    rationale="jev-agent-route",
+                )
+                for agent_id, score in sorted(
+                    probs.items(), key=lambda kv: (-float(kv[1]), kv[0])
+                )
+                if agent_id != "none" and agent_id in allowed
+            ]
+            return AgentRoutingResult(
+                provider=self.name,
+                model_id=model_reported,
+                ranked=ranked,
+                suggested_agent_id=choice,
+                abstain=False,
+                question_revision=request.question_revision,
+                latency_ms=(time.perf_counter() - started) * 1000.0,
+                input_tokens=int(usage.get("input_tokens") or 0),
+                output_tokens=int(usage.get("output_tokens") or 0),
+                raw_answers=answers,
+            )
+        except (ValueError, OSError, urllib.error.URLError, json.JSONDecodeError, TimeoutError) as exc:
+            return AgentRoutingResult(
+                provider=self.name,
+                model_id=self.model_id,
+                abstain=True,
+                abstain_reason="jev provider error — withhold agent routing",
                 error=_safe_error(exc),
                 latency_ms=(time.perf_counter() - started) * 1000.0,
             )

@@ -1,5 +1,27 @@
 # Decisions
 
+## ADR-062: Opt-in DecisionProvider agent-routing shadow (v1.45.0 M45)
+
+- **Status:** Accepted
+- **Date:** 2026-09-25
+- **Context:** After M44 review triage, Captain ordered agent routing — the final
+  item in the Decision Service sequence. Notion assigns Jev a semantic task-fit
+  signal over eligible agent profiles; wakeability, allowlist, budget, and hard
+  filters remain sole eligibility/dispatch authority. Captain: proceed after #182.
+- **Decision:**
+  1. Extend DecisionProvider with `suggest_agents` (stub/file/jev); question
+     revision `agent_routing_v1`; pin remains `jev-1.13.0`.
+  2. Shadow via `COMPASS_DECISION_AGENT_ROUTING_SHADOW` (default off). Provider
+     roster is strictly post-hard-filter `eligible_agent_ids`.
+  3. Evidence under `.agent/evidence/m45-jev-agent-routing/`; CLI may attach
+     path/ID refs only; never mutate `selected_agent_id` / `dispatch_ready`
+     (`applied: false`).
+  4. Mutating selection / tool-call triage remain separate Captain-gated plans.
+- **Consequences:** Agent-routing shadow is inert until env opt-in. Unset
+  `COMPASS_DECISION_AGENT_ROUTING_SHADOW` restores baseline. Rollback tag
+  `rollback/pre-m45-jev-agent-routing`.
+
+
 ## ADR-061: Opt-in DecisionProvider review triage shadow (v1.44.0 M44)
 
 - **Status:** Accepted

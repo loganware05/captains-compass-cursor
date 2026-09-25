@@ -1,7 +1,7 @@
-"""DecisionProvider boundary — optional skill suggestion + review triage.
+"""DecisionProvider boundary — skills, review triage, agent routing suggestions.
 
-Authority: suggestions never mutate matcher rankings or review findings, never
-set ``approved_for_execution``, and never bypass Captain gates.
+Authority: suggestions never mutate matcher rankings, review findings, or agent
+selection; never set ``approved_for_execution``; never bypass Captain gates.
 """
 
 from __future__ import annotations
@@ -10,6 +10,8 @@ from typing import Protocol
 
 from orchestrator.providers.decision.types import (
     PINNED_JEV_MODEL_ID,
+    AgentRoutingRequest,
+    AgentRoutingResult,
     ReviewTriageRequest,
     ReviewTriageResult,
     SkillSuggestionRequest,
@@ -18,7 +20,7 @@ from orchestrator.providers.decision.types import (
 
 
 class DecisionProvider(Protocol):
-    """Suggestion-only DecisionProvider surface (skills + review triage)."""
+    """Suggestion-only DecisionProvider surface."""
 
     name: str
 
@@ -27,6 +29,9 @@ class DecisionProvider(Protocol):
 
     def triage_review(self, request: ReviewTriageRequest) -> ReviewTriageResult:
         """Return review investigation priority signals or abstain."""
+
+    def suggest_agents(self, request: AgentRoutingRequest) -> AgentRoutingResult:
+        """Return ranked agent suggestions over an eligible roster or abstain."""
 
 
 class StubDecisionProvider:
@@ -52,6 +57,15 @@ class StubDecisionProvider:
             abstain_reason="stub provider (decision service disabled)",
         )
 
+    def suggest_agents(self, request: AgentRoutingRequest) -> AgentRoutingResult:
+        del request
+        return AgentRoutingResult(
+            provider=self.name,
+            model_id=None,
+            abstain=True,
+            abstain_reason="stub provider (decision service disabled)",
+        )
+
 
 __all__ = [
     "DecisionProvider",
@@ -61,4 +75,6 @@ __all__ = [
     "SkillSuggestionResult",
     "ReviewTriageRequest",
     "ReviewTriageResult",
+    "AgentRoutingRequest",
+    "AgentRoutingResult",
 ]

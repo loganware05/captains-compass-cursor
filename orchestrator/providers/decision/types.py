@@ -187,3 +187,90 @@ class ReviewTriageResult:
             "error": self.error,
             "applied": bool(applied),
         }
+
+
+QUESTION_REVISION_AGENT_ROUTING = "agent_routing_v1"
+
+
+@dataclass(frozen=True)
+class EligibleAgentSummary:
+    """Compact eligible-agent metadata for DecisionProvider (post hard filters)."""
+
+    agent_id: str
+    name: str
+    categories: tuple[str, ...] = ()
+    skill_scopes: tuple[str, ...] = ()
+    description: str = ""
+    wakeability_status: str = ""
+    effective_availability: float = 0.0
+    baseline_score: float | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "agent_id": self.agent_id,
+            "name": self.name,
+            "categories": list(self.categories),
+            "skill_scopes": list(self.skill_scopes),
+            "description": self.description,
+            "wakeability_status": self.wakeability_status,
+            "effective_availability": self.effective_availability,
+            "baseline_score": self.baseline_score,
+        }
+
+
+@dataclass
+class AgentRoutingRequest:
+    objective_title: str
+    objective_category: str
+    target_repository: str
+    eligible_agents: list[EligibleAgentSummary]
+    roster_hash: str
+    question_revision: str = QUESTION_REVISION_AGENT_ROUTING
+    required_skills: tuple[str, ...] = ()
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "objective_title": self.objective_title,
+            "objective_category": self.objective_category,
+            "target_repository": self.target_repository,
+            "required_skills": list(self.required_skills),
+            "eligible_agents": [a.to_dict() for a in self.eligible_agents],
+            "roster_hash": self.roster_hash,
+            "question_revision": self.question_revision,
+        }
+
+
+@dataclass
+class AgentRoutingResult:
+    """Suggestion-only — never mutates selection or grants dispatch authority."""
+
+    provider: str
+    model_id: str | None
+    ranked: list[RankedSuggestion] = field(default_factory=list)
+    suggested_agent_id: str | None = None
+    abstain: bool = False
+    abstain_reason: str = ""
+    question_revision: str = QUESTION_REVISION_AGENT_ROUTING
+    latency_ms: float | None = None
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    raw_answers: dict[str, Any] = field(default_factory=dict)
+    error: str | None = None
+
+    def to_dict(self, *, applied: bool = False) -> dict[str, Any]:
+        return {
+            "provider": self.provider,
+            "model_id": self.model_id,
+            "ranked": [item.to_dict() for item in self.ranked],
+            "suggested_agent_id": self.suggested_agent_id,
+            "abstain": self.abstain,
+            "abstain_reason": self.abstain_reason,
+            "question_revision": self.question_revision,
+            "latency_ms": self.latency_ms,
+            "input_tokens": self.input_tokens,
+            "output_tokens": self.output_tokens,
+            "raw_answers": dict(self.raw_answers),
+            "error": self.error,
+            "applied": bool(applied),
+        }
+

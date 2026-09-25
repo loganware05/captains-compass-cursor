@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.45.0 — 2026-09-25
+
+### Added
+
+- **M45 Jev agent-routing shadow (default-off)** — DecisionProvider
+  `suggest_agents` over hard-filtered eligible agents:
+  - `COMPASS_DECISION_AGENT_ROUTING_SHADOW` records semantic task-fit without
+    mutating selection or `dispatch_ready`
+  - Evidence under `.agent/evidence/m45-jev-agent-routing/`; ADR-062; plan
+    `m45-jev-agent-routing` (OVA-57)
+
+
 ## 1.44.0 — 2026-09-24
 
 ### Added

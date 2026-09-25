@@ -1,0 +1,19 @@
+{
+  "revision": "agent_routing_v1",
+  "pass": "route",
+  "questions": {
+    "needs_agent": {
+      "type": "noul",
+      "instructions": "Does this objective clearly need routing to a specialized Cursor agent rather than remaining unassigned or First Mate proxy-only?",
+      "criteria": {
+        "true": "A specialized eligible agent would materially improve execution",
+        "false": "No specialized agent assignment is needed"
+      }
+    },
+    "which_agent": {
+      "type": "choice",
+      "instructions": "Which eligible agent best fits the objective? Prefer the single best semantic task fit. Use none if nothing applies.",
+      "criteria_from": "eligible_agent_ids_plus_none"
+    }
+  }
+}

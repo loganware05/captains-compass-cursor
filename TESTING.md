@@ -181,6 +181,20 @@ COMPASS_DECISION_REVIEW_SHADOW=1 \
 
 See `.agent/evidence/m44-jev-review-triage/VALIDATION.md`.
 
+Agent routing shadow (M45; default-off; never mutates selection):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m45_agent_routing_shadow -v
+
+COMPASS_DECISION_PROVIDER=file \
+COMPASS_DECISION_AGENT_ROUTING_SHADOW=1 \
+./scripts/score-agent-routing.sh \
+  --registry path/to/agents.json \
+  --objective path/to/objective.json
+```
+
+See `.agent/evidence/m45-jev-agent-routing/VALIDATION.md`.
+
 Fail-closed hook detectors — added-line / executable-hook scope (M42):
 
 ```bash
