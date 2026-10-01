@@ -8,7 +8,7 @@
 | Plan ID | `m48-instruction-registry` |
 | Linear | [OVA-60](https://linear.app/ovaltechnologysolutions/issue/OVA-60/m48-instruction-registry-prompt-composer-v1480) · Milestone **M48 — Instruction Registry + Prompt Composer** |
 | Spec source | [Notion: Behavioral Intelligence Loop Sprint](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) (M48 section) |
-| Notion plan mirror | *(create with this PR)* |
+| Notion plan mirror | [M48 Implementation Plan](https://app.notion.com/p/3ece6a901c43811c8c11ee59ccf913ba) |
 | Prerequisite | **M47 merged** — PR [#185](https://github.com/loganware05/captains-compass-cursor/pull/185) → `main` @ `402573e` (v1.47.0); OVA-59 Done |
 | Supersedes | — (consumes M47 candidates; no Policy activation / live prompt injection) |
 | Product | **NorthStar** (control repo `captains-compass-cursor`) |
