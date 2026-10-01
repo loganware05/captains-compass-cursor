@@ -9,10 +9,18 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from orchestrator.providers.decision.state import redact_text
 from orchestrator.schemas.validate import ValidationError, validate_document
 
 INSTRUCTION_SCHEMA_VERSION = "1"
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,120}$")
+_SCOPE_DIRS = {
+    "global": "global",
+    "agent": "agents",
+    "task-type": "task-types",
+    "model": "models",
+    "proposal": "proposals",
+}
 
 
 class InstructionStoreError(ValueError):
@@ -48,7 +56,11 @@ def registry_path(repo_root: Path) -> Path:
 def ensure_layout(repo_root: Path) -> None:
     root = instructions_root(repo_root)
     for sub in ("global", "agents", "task-types", "models", "proposals", "bundles"):
-        (root / sub).mkdir(parents=True, exist_ok=True)
+        path = root / sub
+        path.mkdir(parents=True, exist_ok=True)
+        keep = path / ".gitkeep"
+        if not keep.exists():
+            keep.write_text("", encoding="utf-8")
     keep = root / ".gitkeep"
     if not keep.exists():
         keep.write_text("", encoding="utf-8")
@@ -99,6 +111,13 @@ def instruction_id_for_key(*, scope: str, title: str, agent: str = "", skill_id:
     return f"instr-{digest}"
 
 
+def _path_for_instruction(repo_root: Path, instruction: dict[str, Any]) -> Path:
+    scope = str(instruction.get("scope") or "proposal")
+    sub = _SCOPE_DIRS.get(scope, "proposals")
+    iid = _safe_id(str(instruction["instruction_id"]), label="instruction_id")
+    return instructions_root(repo_root) / sub / f"{iid}.json"
+
+
 def build_instruction(
     *,
     title: str,
@@ -118,11 +137,15 @@ def build_instruction(
         scope=scope, title=title, agent=agent, skill_id=skill_id
     )
     _safe_id(iid, label="instruction_id")
+    if approval_state not in {"draft", "candidate"}:
+        raise InstructionStoreError(
+            f"M48 approval_state must be draft|candidate, got {approval_state!r}"
+        )
     return {
         "instruction_id": iid,
         "scope": scope,
         "title": title,
-        "body": body,
+        "body": redact_text(body),
         "body_path": body_path,
         "agent": agent,
         "skill_id": skill_id,
@@ -139,19 +162,19 @@ def build_instruction(
 
 
 def write_instruction(repo_root: Path, instruction: dict[str, Any]) -> Path:
-    iid = _safe_id(str(instruction["instruction_id"]), label="instruction_id")
     ensure_layout(repo_root)
-    if instruction.get("scope") == "proposal" or instruction.get("approval_state") == "draft":
-        path = proposals_dir(repo_root) / f"{iid}.json"
-    else:
-        path = instructions_root(repo_root) / f"{iid}.json"
-    payload = _preserve_created_at(path, instruction)
+    payload = dict(instruction)
+    payload["body"] = redact_text(str(payload.get("body") or ""))
+    payload["approved_for_execution"] = False
+    payload["authority_mutation"] = False
+    path = _path_for_instruction(repo_root, payload)
+    payload = _preserve_created_at(path, payload)
     try:
         validate_document(payload, "instruction.schema.json")
     except ValidationError as exc:
         raise InstructionStoreError(str(exc)) from exc
     _write_json(path, payload)
-    _register_instruction_id(repo_root, iid)
+    _register_instruction_id(repo_root, str(payload["instruction_id"]))
     return path
 
 
@@ -174,14 +197,15 @@ def _register_instruction_id(repo_root: Path, instruction_id: str) -> None:
 
 
 def list_instructions(repo_root: Path) -> list[dict[str, Any]]:
-    ensure_layout(repo_root)
+    root = instructions_root(repo_root)
+    if not root.is_dir():
+        return []
     out: list[dict[str, Any]] = []
-    roots = [
-        instructions_root(repo_root),
-        proposals_dir(repo_root),
-    ]
     seen: set[str] = set()
-    for base in roots:
+    for sub in _SCOPE_DIRS.values():
+        base = root / sub
+        if not base.is_dir():
+            continue
         for path in sorted(base.glob("instr-*.json")):
             try:
                 with path.open(encoding="utf-8") as handle:
@@ -189,6 +213,10 @@ def list_instructions(repo_root: Path) -> list[dict[str, Any]]:
             except (OSError, json.JSONDecodeError):
                 continue
             if not isinstance(doc, dict):
+                continue
+            try:
+                validate_document(doc, "instruction.schema.json")
+            except ValidationError:
                 continue
             iid = str(doc.get("instruction_id") or "")
             if not iid or iid in seen:
@@ -201,8 +229,9 @@ def list_instructions(repo_root: Path) -> list[dict[str, Any]]:
 
 def load_instruction(repo_root: Path, instruction_id: str) -> dict[str, Any]:
     iid = _safe_id(instruction_id, label="instruction_id")
-    for base in (proposals_dir(repo_root), instructions_root(repo_root)):
-        path = base / f"{iid}.json"
+    root = instructions_root(repo_root)
+    for sub in _SCOPE_DIRS.values():
+        path = root / sub / f"{iid}.json"
         if path.is_file():
             with path.open(encoding="utf-8") as handle:
                 doc = json.load(handle)
@@ -236,9 +265,20 @@ def bundle_id_for_hash(prompt_bundle_hash: str) -> str:
 
 def write_bundle(repo_root: Path, bundle: dict[str, Any]) -> Path:
     ensure_layout(repo_root)
-    bid = _safe_id(str(bundle["bundle_id"]), label="bundle_id")
+    payload = dict(bundle)
+    payload["persona"] = redact_text(str(payload.get("persona") or ""))
+    payload["output"] = redact_text(str(payload.get("output") or ""))
+    payload["instructions"] = [
+        redact_text(str(item)) for item in (payload.get("instructions") or [])
+    ]
+    payload["constraints"] = [
+        redact_text(str(item)) for item in (payload.get("constraints") or [])
+    ]
+    payload["approved_for_execution"] = False
+    payload["authority_mutation"] = False
+    bid = _safe_id(str(payload["bundle_id"]), label="bundle_id")
     path = bundles_dir(repo_root) / f"{bid}.json"
-    payload = _preserve_created_at(path, bundle)
+    payload = _preserve_created_at(path, payload)
     try:
         validate_document(payload, "prompt-bundle.schema.json")
     except ValidationError as exc:
@@ -247,16 +287,23 @@ def write_bundle(repo_root: Path, bundle: dict[str, Any]) -> Path:
 
 
 def list_bundles(repo_root: Path) -> list[dict[str, Any]]:
-    ensure_layout(repo_root)
+    base = bundles_dir(repo_root)
+    if not base.is_dir():
+        return []
     out: list[dict[str, Any]] = []
-    for path in sorted(bundles_dir(repo_root).glob("pbundle-*.json")):
+    for path in sorted(base.glob("pbundle-*.json")):
         try:
             with path.open(encoding="utf-8") as handle:
                 doc = json.load(handle)
         except (OSError, json.JSONDecodeError):
             continue
-        if isinstance(doc, dict):
-            out.append(doc)
+        if not isinstance(doc, dict):
+            continue
+        try:
+            validate_document(doc, "prompt-bundle.schema.json")
+        except ValidationError:
+            continue
+        out.append(doc)
     return out
 
 
@@ -269,6 +316,32 @@ def load_bundle(repo_root: Path, bundle_id: str) -> dict[str, Any]:
         doc = json.load(handle)
     validate_document(doc, "prompt-bundle.schema.json")
     return doc
+
+
+def find_bundle_for_context(
+    repo_root: Path,
+    *,
+    agent: str = "",
+    skill_id: str = "",
+) -> dict[str, Any] | None:
+    """Return best matching persisted bundle without composing."""
+    matches: list[dict[str, Any]] = []
+    for bundle in list_bundles(repo_root):
+        if agent and str(bundle.get("agent") or "") not in {"", agent}:
+            continue
+        if skill_id and str(bundle.get("skill_id") or "") not in {"", skill_id}:
+            continue
+        matches.append(bundle)
+    if not matches:
+        return None
+    # Prefer exact agent+skill, then agent-only, then generic
+    def score(b: dict[str, Any]) -> tuple[int, str]:
+        exact_agent = 1 if agent and b.get("agent") == agent else 0
+        exact_skill = 1 if skill_id and b.get("skill_id") == skill_id else 0
+        return (exact_agent + exact_skill, str(b.get("created_at") or ""))
+
+    matches.sort(key=score)
+    return matches[-1]
 
 
 def seed_global_operating_brief(repo_root: Path) -> dict[str, Any]:
@@ -290,8 +363,5 @@ def seed_global_operating_brief(repo_root: Path) -> dict[str, Any]:
         body_path="global/operating-brief.md",
         approval_state="candidate",
     )
-    # M48: even seed entries stay non-executing
-    instruction["approved_for_execution"] = False
-    instruction["authority_mutation"] = False
     write_instruction(repo_root, instruction)
     return instruction

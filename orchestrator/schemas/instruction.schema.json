@@ -39,7 +39,7 @@
     },
     "approval_state": {
       "type": "string",
-      "enum": ["draft", "candidate", "active", "proven"]
+      "enum": ["draft", "candidate"]
     },
     "schema_version": { "type": "string", "minLength": 1 },
     "created_at": { "type": "string", "minLength": 1 },

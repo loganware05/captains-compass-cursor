@@ -33,6 +33,7 @@ from orchestrator.behavior.instructions.store import (
     seed_global_operating_brief,
     write_instruction,
 )
+# write_instruction imported for scope-dir test
 from orchestrator.behavior.patterns.store import build_candidate, build_pattern, write_candidate
 from orchestrator.schemas.validate import ValidationError, validate_document
 
@@ -173,24 +174,33 @@ class RegistryComposerTests(unittest.TestCase):
         self.assertEqual(payload["status"], "composed")
         self.assertTrue(payload["bundle"]["prompt_bundle_hash"].startswith("sha256:"))
 
-    def test_no_cursor_mutation(self) -> None:
-        cursor_rules = ROOT / ".cursor" / "rules"
-        before = {p.name for p in cursor_rules.glob("*")} if cursor_rules.is_dir() else set()
+    def test_writes_only_under_behavior_instructions(self) -> None:
         with mock.patch.dict(os.environ, {"COMPASS_INSTRUCTIONS_ENABLED": "1"}):
             compose(self.tmp, agent="implementation-agent")
             list_registry(self.tmp)
-        after = {p.name for p in cursor_rules.glob("*")} if cursor_rules.is_dir() else set()
-        self.assertEqual(before, after)
-        self.assertTrue(
-            (
-                self.tmp
-                / ".agent"
-                / "evaluations"
-                / "behavior"
-                / "instructions"
-                / "bundles"
-            ).is_dir()
-        )
+            draft_from_candidates(self.tmp)
+        root = self.tmp / ".agent" / "evaluations" / "behavior" / "instructions"
+        self.assertTrue((root / "global").is_dir())
+        self.assertTrue((root / "bundles").is_dir())
+        # Global seed lands under global/
+        self.assertTrue(any((root / "global").glob("instr-*.json")))
+        # No writes outside behavior instructions
+        self.assertFalse((self.tmp / ".cursor").exists())
+        self.assertFalse((self.tmp / ".agent" / "routing").exists())
+
+    def test_scope_dirs_used(self) -> None:
+        with mock.patch.dict(os.environ, {"COMPASS_INSTRUCTIONS_ENABLED": "1"}):
+            instruction = build_instruction(
+                title="agent-overlay",
+                body="Prefer small diffs.",
+                scope="agent",
+                agent="implementation-agent",
+                approval_state="candidate",
+            )
+            path = write_instruction(self.tmp, instruction)
+            self.assertIn("/agents/", str(path).replace("\\", "/"))
+            loaded = list_instructions(self.tmp)
+            self.assertTrue(any(i["instruction_id"] == instruction["instruction_id"] for i in loaded))
 
 
 class EvaluateHashWireTests(unittest.TestCase):
@@ -206,20 +216,26 @@ class EvaluateHashWireTests(unittest.TestCase):
     def tearDown(self) -> None:
         shutil.rmtree(self.tmp, ignore_errors=True)
 
-    def test_prompt_bundle_hash_for_packet(self) -> None:
+    def test_prompt_bundle_hash_for_packet_requires_existing_bundle(self) -> None:
         packet = {
             "execution_id": "run-x",
             "agent": "implementation-agent",
             "skill_ids": ["testing-validation"],
         }
+        self.assertEqual(prompt_bundle_hash_for_packet(self.tmp, packet), "")
+        with mock.patch.dict(os.environ, {"COMPASS_INSTRUCTIONS_ENABLED": "1"}):
+            composed = compose_prompt_bundle(
+                self.tmp, agent="implementation-agent", skill_id="testing-validation"
+            )
         digest = prompt_bundle_hash_for_packet(self.tmp, packet)
-        self.assertTrue(digest.startswith("sha256:"))
-        again = prompt_bundle_hash_for_packet(self.tmp, packet)
-        self.assertEqual(digest, again)
+        self.assertEqual(digest, composed["prompt_bundle_hash"])
 
-    def test_evaluate_records_bundle_hash(self) -> None:
+    def test_evaluate_records_bundle_hash_without_seeding(self) -> None:
         from orchestrator.behavior.service import evaluate_execution
 
+        instr_root = (
+            self.tmp / ".agent" / "evaluations" / "behavior" / "instructions"
+        )
         with mock.patch.dict(
             os.environ,
             {
@@ -227,10 +243,22 @@ class EvaluateHashWireTests(unittest.TestCase):
                 "COMPASS_DECISION_PROVIDER": "file",
             },
         ):
-            result = evaluate_execution(self.tmp, "run-fixture-contact-counter")
-            record = result["record"]
+            # No composed bundle yet → empty hash; must not create registry artifacts
+            empty = evaluate_execution(self.tmp, "run-fixture-contact-counter")
+            self.assertEqual(
+                str(empty["record"].get("evaluator", {}).get("prompt_bundle_hash") or ""),
+                "",
+            )
+            self.assertFalse(instr_root.exists())
+
+            with mock.patch.dict(os.environ, {"COMPASS_INSTRUCTIONS_ENABLED": "1"}):
+                compose_prompt_bundle(self.tmp, agent="implementation-agent")
+
+            result = evaluate_execution(
+                self.tmp, "run-fixture-contact-counter", force=True
+            )
             self.assertTrue(
-                str(record.get("evaluator", {}).get("prompt_bundle_hash") or "").startswith(
+                str(result["record"].get("evaluator", {}).get("prompt_bundle_hash") or "").startswith(
                     "sha256:"
                 )
             )
