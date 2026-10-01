@@ -111,6 +111,7 @@ class SchemaTests(unittest.TestCase):
         )
         validate_document(pattern, "behavior-pattern.schema.json")
         self.assertFalse(pattern["authority_mutation"])
+        self.assertFalse(pattern["approved_for_execution"])
         candidate = build_candidate(pattern)
         validate_document(candidate, "behavior-candidate.schema.json")
         self.assertFalse(candidate["approved_for_execution"])
@@ -128,9 +129,18 @@ class SchemaTests(unittest.TestCase):
             threshold=0.7,
             min_occurrence=1,
         )
-        pattern["authority_mutation"] = True
+        bad_auth = dict(pattern)
+        bad_auth["authority_mutation"] = True
         with self.assertRaises(ValidationError):
-            validate_document(pattern, "behavior-pattern.schema.json")
+            validate_document(bad_auth, "behavior-pattern.schema.json")
+        bad_approve = dict(pattern)
+        bad_approve["approved_for_execution"] = True
+        with self.assertRaises(ValidationError):
+            validate_document(bad_approve, "behavior-pattern.schema.json")
+        polluted = dict(pattern)
+        polluted["api_key"] = "sk-secret"
+        with self.assertRaises(ValidationError):
+            validate_document(polluted, "behavior-pattern.schema.json")
         candidate = build_candidate(pattern)
         candidate["approved_for_execution"] = True
         with self.assertRaises(ValidationError):
@@ -269,19 +279,42 @@ class ServiceAndCliTests(unittest.TestCase):
             listed = list_learned_patterns(self.tmp)
             self.assertEqual(listed["count"], 1)
             pid = listed["patterns"][0]["pattern_id"]
+            created = listed["patterns"][0]["created_at"]
             shown = show_pattern(self.tmp, pid)
             self.assertEqual(shown["pattern"]["pattern_id"], pid)
             self.assertEqual(len(shown["candidates"]), 1)
             self.assertFalse(shown["candidates"][0]["approved_for_execution"])
-            # Idempotent overwrite (stable candidate id)
+            # Idempotent overwrite (stable candidate id); preserve created_at
             again = scan_and_persist(self.tmp)
             self.assertEqual(again["pattern_count"], 1)
+            listed2 = list_learned_patterns(self.tmp)
+            self.assertEqual(listed2["patterns"][0]["created_at"], created)
+            self.assertIn("updated_at", listed2["patterns"][0])
             dest = self.tmp / "out.csv"
             export_patterns_csv(self.tmp, dest)
             with dest.open(encoding="utf-8") as handle:
                 rows = list(csv.DictReader(handle))
             self.assertEqual(len(rows), 1)
             self.assertEqual(rows[0]["pattern_id"], pid)
+
+    def test_scan_prunes_stale_patterns(self) -> None:
+        with mock.patch.dict(
+            os.environ,
+            {
+                "COMPASS_BEHAVIOR_LEARN_ENABLED": "1",
+                "COMPASS_BEHAVIOR_LEARN_MIN_OCCURRENCE": "3",
+            },
+        ):
+            for i in range(3):
+                _write_eval(self.tmp, evaluation_id=f"beval-stale-{i}")
+            first = scan_and_persist(self.tmp)
+            self.assertEqual(first["pattern_count"], 1)
+            # Drop evidence below min_occurrence
+            (self.tmp / ".agent" / "evaluations" / "behavior" / "beval-stale-2.json").unlink()
+            second = scan_and_persist(self.tmp)
+            self.assertEqual(second["pattern_count"], 0)
+            self.assertEqual(len(second["removed_patterns"]), 1)
+            self.assertEqual(list_learned_patterns(self.tmp)["count"], 0)
 
     def test_scan_disabled(self) -> None:
         with mock.patch.dict(os.environ, {}, clear=False):

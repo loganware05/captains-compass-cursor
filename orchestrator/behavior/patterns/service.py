@@ -13,6 +13,7 @@ from orchestrator.behavior.patterns.store import (
     list_candidates,
     list_patterns,
     load_pattern,
+    prune_stale,
     write_candidate,
     write_pattern,
 )
@@ -27,6 +28,8 @@ def scan_and_persist(repo_root: Path) -> dict[str, Any]:
     root = Path(repo_root).resolve()
     written_patterns: list[str] = []
     written_candidates: list[str] = []
+    active_pattern_ids: set[str] = set()
+    active_candidate_ids: set[str] = set()
     pairs = patterns_with_candidates(root)
     try:
         for pattern, candidate in pairs:
@@ -35,6 +38,13 @@ def scan_and_persist(repo_root: Path) -> dict[str, Any]:
             c_path = write_candidate(root, candidate)
             written_patterns.append(str(p_path))
             written_candidates.append(str(c_path))
+            active_pattern_ids.add(str(pattern["pattern_id"]))
+            active_candidate_ids.add(str(candidate["candidate_id"]))
+        pruned = prune_stale(
+            root,
+            active_pattern_ids=active_pattern_ids,
+            active_candidate_ids=active_candidate_ids,
+        )
     except BehaviorPatternStoreError as exc:
         raise BehaviorLearnServiceError(str(exc)) from exc
     return {
@@ -43,6 +53,8 @@ def scan_and_persist(repo_root: Path) -> dict[str, Any]:
         "candidate_count": len(written_candidates),
         "patterns": written_patterns,
         "candidates": written_candidates,
+        "removed_patterns": pruned["removed_patterns"],
+        "removed_candidates": pruned["removed_candidates"],
     }
 
 

@@ -95,6 +95,7 @@ def build_pattern(
         "summary": summary,
         "schema_version": PATTERN_SCHEMA_VERSION,
         "created_at": _utc_now(),
+        "approved_for_execution": False,
         "authority_mutation": False,
     }
 
@@ -139,36 +140,79 @@ def build_candidate(pattern: dict[str, Any], *, candidate_id: str | None = None)
     }
 
 
+def _preserve_created_at(path: Path, doc: dict[str, Any]) -> dict[str, Any]:
+    """Keep first-write created_at; stamp updated_at on overwrite."""
+    out = dict(doc)
+    if path.is_file():
+        try:
+            with path.open(encoding="utf-8") as handle:
+                existing = json.load(handle)
+        except (OSError, json.JSONDecodeError):
+            existing = None
+        if isinstance(existing, dict) and existing.get("created_at"):
+            out["created_at"] = str(existing["created_at"])
+            out["updated_at"] = _utc_now()
+    return out
+
+
 def write_pattern(repo_root: Path, pattern: dict[str, Any]) -> Path:
-    try:
-        validate_document(pattern, "behavior-pattern.schema.json")
-    except ValidationError as exc:
-        raise BehaviorPatternStoreError(str(exc)) from exc
     pid = _safe_id(str(pattern["pattern_id"]), label="pattern_id")
     ensure_layout(repo_root)
     path = patterns_dir(repo_root) / f"{pid}.json"
+    payload = _preserve_created_at(path, pattern)
+    try:
+        validate_document(payload, "behavior-pattern.schema.json")
+    except ValidationError as exc:
+        raise BehaviorPatternStoreError(str(exc)) from exc
     tmp = path.with_suffix(".json.tmp")
     with tmp.open("w", encoding="utf-8") as handle:
-        json.dump(pattern, handle, indent=2, sort_keys=True)
+        json.dump(payload, handle, indent=2, sort_keys=True)
         handle.write("\n")
     tmp.replace(path)
     return path
 
 
 def write_candidate(repo_root: Path, candidate: dict[str, Any]) -> Path:
-    try:
-        validate_document(candidate, "behavior-candidate.schema.json")
-    except ValidationError as exc:
-        raise BehaviorPatternStoreError(str(exc)) from exc
     cid = _safe_id(str(candidate["candidate_id"]), label="candidate_id")
     ensure_layout(repo_root)
     path = candidates_dir(repo_root) / f"{cid}.json"
+    payload = _preserve_created_at(path, candidate)
+    try:
+        validate_document(payload, "behavior-candidate.schema.json")
+    except ValidationError as exc:
+        raise BehaviorPatternStoreError(str(exc)) from exc
     tmp = path.with_suffix(".json.tmp")
     with tmp.open("w", encoding="utf-8") as handle:
-        json.dump(candidate, handle, indent=2, sort_keys=True)
+        json.dump(payload, handle, indent=2, sort_keys=True)
         handle.write("\n")
     tmp.replace(path)
     return path
+
+
+def prune_stale(
+    repo_root: Path,
+    *,
+    active_pattern_ids: set[str],
+    active_candidate_ids: set[str],
+) -> dict[str, list[str]]:
+    """Remove pattern/candidate JSON not in the active detection set."""
+    ensure_layout(repo_root)
+    removed_patterns: list[str] = []
+    removed_candidates: list[str] = []
+    for path in sorted(patterns_dir(repo_root).glob("bpat-*.json")):
+        pid = path.stem
+        if pid not in active_pattern_ids:
+            path.unlink(missing_ok=True)
+            removed_patterns.append(pid)
+    for path in sorted(candidates_dir(repo_root).glob("bcand-*.json")):
+        cid = path.stem
+        if cid not in active_candidate_ids:
+            path.unlink(missing_ok=True)
+            removed_candidates.append(cid)
+    return {
+        "removed_patterns": removed_patterns,
+        "removed_candidates": removed_candidates,
+    }
 
 
 def list_patterns(repo_root: Path) -> list[dict[str, Any]]:

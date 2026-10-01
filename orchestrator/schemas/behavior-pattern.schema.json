@@ -15,9 +15,10 @@
     "evidence_evaluation_ids",
     "schema_version",
     "created_at",
+    "approved_for_execution",
     "authority_mutation"
   ],
-  "additionalProperties": true,
+  "additionalProperties": false,
   "properties": {
     "pattern_id": { "type": "string", "minLength": 1 },
     "signal": { "type": "string", "minLength": 1 },
@@ -36,6 +37,8 @@
     "summary": { "type": "string" },
     "schema_version": { "type": "string", "minLength": 1 },
     "created_at": { "type": "string", "minLength": 1 },
+    "updated_at": { "type": "string", "minLength": 1 },
+    "approved_for_execution": { "type": "boolean", "const": false },
     "authority_mutation": { "type": "boolean", "const": false }
   }
 }
