@@ -222,6 +222,77 @@ class ProviderTests(unittest.TestCase):
         self.assertNotIn("nope", signals)
 
 
+class SecurityAndIdempotencyTests(unittest.TestCase):
+    def test_objective_secrets_redacted_in_packet(self) -> None:
+        tmp = Path(tempfile.mkdtemp(prefix="m46-secret-"))
+        try:
+            (tmp / ".agent" / "runs").mkdir(parents=True)
+            (tmp / "VERSION").write_text("1.46.0\n", encoding="utf-8")
+            run_doc = {
+                "run_id": "run-secret",
+                "plan_id": "p",
+                "task_id": "t",
+                "objective": "deploy with api_key=sk-abcdefghijklmnopqrstuvwxyz012345",
+                "outcome": "success",
+                "agents": [],
+                "models": [],
+                "skills": [],
+                "provenance": {},
+                "recorded_at": "2026-10-01T00:00:00Z",
+                "retries": 0,
+                "lessons": [],
+            }
+            write_execution_run(tmp, run_doc)
+            packet = build_evaluation_packet(tmp, "run-secret")
+            self.assertNotIn("sk-abcdefghijklmnopqrstuvwxyz012345", packet["objective"])
+            self.assertIn("[REDACTED]", packet["objective"])
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+
+    def test_find_by_execution_prefers_newest(self) -> None:
+        tmp = Path(tempfile.mkdtemp(prefix="m46-newest-"))
+        try:
+            packet = {
+                "execution_id": "run-x",
+                "task_id": "t",
+                "plan_id": "p",
+                "agent": "a",
+                "model": "m",
+                "skill_ids": [],
+                "repository_sha": "sha",
+                "northstar_version": "1.46.0",
+                "outcome": "success",
+                "objective": "o",
+                "diff_meta": {},
+                "evidence": [],
+                "content_hash": "samehash",
+                "schema_version": "1",
+            }
+            older = build_behavior_evaluation(
+                packet,
+                signals={},
+                provider="file",
+                model_id="jev-1.13.0",
+                evaluation_id="beval-aaaaaaaaaaaa",
+            )
+            older["created_at"] = "2026-01-01T00:00:00Z"
+            newer = build_behavior_evaluation(
+                packet,
+                signals=normalize_signals({"praise": 0.9}),
+                provider="file",
+                model_id="jev-1.13.0",
+                evaluation_id="beval-zzzzzzzzzzzz",
+            )
+            newer["created_at"] = "2026-10-01T00:00:00Z"
+            write_behavior_evaluation(tmp, older)
+            write_behavior_evaluation(tmp, newer)
+            found = find_by_execution(tmp, "run-x", content_hash="samehash")
+            self.assertIsNotNone(found)
+            self.assertEqual(found["evaluation_id"], "beval-zzzzzzzzzzzz")
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+
+
 class NoMutationTests(unittest.TestCase):
     def test_evaluate_does_not_touch_routing_or_skills(self) -> None:
         tmp = Path(tempfile.mkdtemp(prefix="m46-nomut-"))

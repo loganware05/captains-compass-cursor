@@ -42,3 +42,10 @@ COMPASS_DECISION_PROVIDER=file \
 - Jev path reuses Typesafe allowlist + pinned `jev-1.13.0`
 - Fail closed on abstain/error
 - Observe-only — no authority mutation
+
+## Adversarial fixes (iteration 2)
+
+- Skip `evaluations/behavior/**` in Knowledge Steward ingest (M3 isolation)
+- Redact secrets in packet objectives before persist
+- `find_by_execution` prefers newest `created_at`
+- Dual-write: temp JSON → JSONL append → atomic rename; repair missing JSONL

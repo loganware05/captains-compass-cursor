@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from orchestrator.behavior.signals import SCHEMA_VERSION
+from orchestrator.providers.decision.state import redact_text
 from orchestrator.telemetry.store import load_execution_run
 
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,120}$")
@@ -130,7 +131,8 @@ def build_evaluation_packet(
         "task_id": str(run.get("task_id") or ""),
         "plan_id": str(run.get("plan_id") or ""),
         "plan_ref": plan_ref or str(run.get("plan_id") or ""),
-        "objective": str(run.get("objective") or ""),
+        # Redact before hash/persist — secrets must not enter the ledger.
+        "objective": redact_text(str(run.get("objective") or "")),
         "outcome": str(run.get("outcome") or ""),
         "agents": agents,
         "agent": agents[0] if agents else "",

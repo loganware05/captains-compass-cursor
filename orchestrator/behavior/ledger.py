@@ -113,9 +113,10 @@ def find_by_execution(
     *,
     content_hash: str = "",
 ) -> dict[str, Any] | None:
-    """Return matching finalized record if present (idempotency helper)."""
+    """Return newest matching finalized record if present (idempotency helper)."""
     ensure_layout(repo_root)
-    for path in sorted(behavior_dir(repo_root).glob("beval-*.json")):
+    matches: list[dict[str, Any]] = []
+    for path in behavior_dir(repo_root).glob("beval-*.json"):
         try:
             with path.open(encoding="utf-8") as handle:
                 doc = json.load(handle)
@@ -125,11 +126,13 @@ def find_by_execution(
             continue
         if doc.get("execution_id") != execution_id:
             continue
-        if content_hash and doc.get("content_hash") == content_hash:
-            return doc
-        if not content_hash:
-            return doc
-    return None
+        if content_hash and doc.get("content_hash") != content_hash:
+            continue
+        matches.append(doc)
+    if not matches:
+        return None
+    matches.sort(key=lambda d: (str(d.get("created_at") or ""), str(d.get("evaluation_id") or "")))
+    return matches[-1]
 
 
 def execution_ids_in_ledger(repo_root: Path) -> set[str]:
@@ -148,8 +151,34 @@ def execution_ids_in_ledger(repo_root: Path) -> set[str]:
     return ids
 
 
+def _jsonl_has_evaluation_id(repo_root: Path, evaluation_id: str) -> bool:
+    path = ledger_path(repo_root)
+    if not path.is_file():
+        return False
+    try:
+        with path.open(encoding="utf-8") as handle:
+            for line in handle:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    doc = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if isinstance(doc, dict) and doc.get("evaluation_id") == evaluation_id:
+                    return True
+    except OSError:
+        return False
+    return False
+
+
 def write_behavior_evaluation(repo_root: Path, record: dict[str, Any]) -> Path:
-    """Validate and persist dual formats; return per-record JSON path."""
+    """Validate and persist dual formats; return per-record JSON path.
+
+    Writes temp JSON → append JSONL → atomic rename so a crash mid-write does
+    not leave a finalized JSON without a JSONL line. Also repairs missing JSONL
+    entries when JSON already exists.
+    """
     try:
         validate_document(record, "behavior-evaluation.schema.json")
     except ValidationError as exc:
@@ -157,13 +186,15 @@ def write_behavior_evaluation(repo_root: Path, record: dict[str, Any]) -> Path:
     eid = _safe_id(str(record["evaluation_id"]), label="evaluation_id")
     ensure_layout(repo_root)
     path = record_path(repo_root, eid)
-    with path.open("w", encoding="utf-8") as handle:
+    tmp = path.with_suffix(".json.tmp")
+    with tmp.open("w", encoding="utf-8") as handle:
         json.dump(record, handle, indent=2, sort_keys=True)
         handle.write("\n")
-    # Append JSONL (one line)
-    with ledger_path(repo_root).open("a", encoding="utf-8") as handle:
-        handle.write(json.dumps(record, sort_keys=True, separators=(",", ":")))
-        handle.write("\n")
+    if not _jsonl_has_evaluation_id(repo_root, eid):
+        with ledger_path(repo_root).open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(record, sort_keys=True, separators=(",", ":")))
+            handle.write("\n")
+    tmp.replace(path)
     return path
 
 
