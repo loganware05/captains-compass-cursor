@@ -376,6 +376,14 @@ def ingest_path(repo_root: Path, path: Path) -> list[dict]:
             validate_document(doc, "experience.schema.json")
             item = item_from_experience(doc, rel)
         elif "evaluation_id" in doc:
+            # M46 behavior ledger shares evaluation_id but is not M3 Compass Evaluator.
+            # Skip observe-only behavior records (and any path under evaluations/behavior/).
+            if "/evaluations/behavior/" in rel.replace("\\", "/") or (
+                doc.get("authority_mutation") is False
+                and isinstance(doc.get("signals"), dict)
+                and isinstance(doc.get("evaluator"), dict)
+            ):
+                raise IngestError(f"skip behavior-evaluation artifact: {path}")
             validate_document(doc, "evaluation.schema.json")
             item = item_from_evaluation(doc, rel)
         elif doc.get("kind") == "routing-proposal" or doc.get("kind") == "routing-apply":
@@ -445,6 +453,13 @@ def ingest_store_roots(
                 sources.append(rel)
                 continue
             for path in sorted(base.rglob("*")):
+                # M46: never walk behavior ledger into M3 evaluation ingest.
+                try:
+                    rel_parts = path.relative_to(base).parts
+                except ValueError:
+                    rel_parts = ()
+                if key == "evaluations" and rel_parts and rel_parts[0] == "behavior":
+                    continue
                 if path.suffix == ".json" or path.name == "DECISIONS.md":
                     try:
                         all_written.extend(ingest_path(repo_root, path))

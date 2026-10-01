@@ -1,5 +1,30 @@
 # Decisions
 
+## ADR-063: Observe-only Behavior Intelligence Foundation (v1.46.0 M46)
+
+- **Status:** Accepted
+- **Date:** 2026-10-01
+- **Context:** Captain approved plan `m46-behavior-intelligence-foundation`
+  (OVA-58) from the Notion Behavioral Intelligence Loop sprint. NorthStar needs
+  an observation/evaluation layer before M47+ pattern learning or Policy
+  promotion. Existing Compass Evaluator (`evaluation.schema.json`) must not be
+  overloaded.
+- **Decision:**
+  1. Add `behavior-evaluation.schema.json` and package `orchestrator/behavior/`.
+  2. Extend DecisionProvider with `evaluate_behavior` (stub/file/jev);
+     question revision `behavior_eval_v1`; pin remains `jev-1.13.0`.
+  3. Dual ledger under `.agent/evaluations/behavior/` — per-record JSON **and**
+     `ledger.jsonl`.
+  4. Operator surface `northstar evaluate …` requires
+     `COMPASS_BEHAVIOR_EVAL_ENABLED=1` (default off) **and** explicit CLI.
+  5. Observe-only: `authority_mutation: false` always; never mutates routing,
+     Skills, instructions, reputation, or approval state.
+  6. `weak_verification`, `weak_test_coverage`, and `unverified_claim` are
+     distinct canonical signals.
+- **Consequences:** Behavior eval is inert until the enable flag is set.
+  Rollback tag `rollback/pre-m46-behavior-intelligence` @ `0d125c7`.
+
+
 ## ADR-062: Opt-in DecisionProvider agent-routing shadow (v1.45.0 M45)
 
 - **Status:** Accepted

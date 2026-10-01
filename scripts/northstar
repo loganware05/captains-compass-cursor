@@ -2,7 +2,7 @@
 # northstar — topology-free launcher for NorthStar control-plane operations (M24 / M34).
 #
 # One product surface for Skills Learning Loop + Code Reviewer:
-#   northstar skills … | review | intent | outcomes | repair | precision
+#   northstar skills … | review | intent | outcomes | repair | precision | evaluate
 #
 # Scripts always live in this control repository. Product/sandbox checkouts do
 # not contain ./scripts/run-skill-learning-loop.sh (or siblings).
@@ -26,6 +26,7 @@ Usage:
   northstar repair <subcommand> …
   northstar precision <subcommand> …
   northstar context <subcommand> …
+  northstar evaluate <subcommand> …
 
 Surfaces (one-line purpose):
   skills      Learning Loop — refresh TI, learn, promote, sync-ledger, route-agents
@@ -36,6 +37,7 @@ Surfaces (one-line purpose):
   repair      FIND→PROVE→packet from verified findings (never auto-merge)
   precision   Aggregate finding outcomes into precision ledger / dashboard
   context     Filesystem-gated context (M40) — build inode store + walk context routes
+  evaluate    Behavior evaluation (M46) — observe-only; requires COMPASS_BEHAVIOR_EVAL_ENABLED=1
 
 Commands:
   northstar skills refresh [--repo PATH] [refresh-ti-cache.sh options]
@@ -51,6 +53,11 @@ Commands:
   northstar precision aggregate (--outcomes PATH | --outcomes-dir PATH) [aggregate-precision-ledger.sh options]
   northstar context build --repo PATH [--check]
   northstar context walk --repo PATH --route domain/module
+  northstar evaluate pending [--repo PATH]
+  northstar evaluate run <execution-id> [--repo PATH] [--force]
+  northstar evaluate review [--repo PATH]
+  northstar evaluate retry <evaluation-id> [--repo PATH]
+  northstar evaluate export --format csv [--out PATH] [--repo PATH]
 
 Topology:
   CONTROL  = directory containing this launcher (captains-compass-cursor)
@@ -62,6 +69,7 @@ Docs:
   docs/PRODUCT_ONBOARDING.md    Install into a product repo
   docs/integrations/code-reviewer.md
   docs/integrations/linear-skills-learning-loop.md
+  docs/integrations/decision-provider.md
 
 Locks:
   Never clones or executes starred repositories.
@@ -73,6 +81,8 @@ Locks:
   Finding outcomes (M31) write Experience; RoutingProposal stays proposal-only.
   Repair loop (M32 / B4) is Captain-gated, verified-only, never auto-merges.
   Precision ledger (M33 / B5) never auto-applies reputation / priority.
+  Behavior evaluate (M46) is observe-only; requires COMPASS_BEHAVIOR_EVAL_ENABLED=1;
+  never mutates routing, Skills, instructions, reputation, or authority.
 USAGE
 }
 
@@ -296,6 +306,29 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown context subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  evaluate)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      pending|run|review|retry|export)
+        exec "$ROOT/scripts/run-behavior-evaluate.sh" "$sub" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown evaluate subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;

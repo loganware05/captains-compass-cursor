@@ -1,0 +1,30 @@
+{
+  "run_id": "run-fixture-contact-counter",
+  "plan_id": "sandbox-behavioral-plan-feature-2026-08-20",
+  "task_id": "task-close-workstream",
+  "objective": "Add accessible message character counter to contact form",
+  "outcome": "success",
+  "agents": ["implementation-agent"],
+  "models": ["coding-strong"],
+  "skills": [
+    "react-engineering",
+    "testing-validation",
+    "accessibility-review",
+    "capability-planning"
+  ],
+  "provenance": {
+    "issue": "local/sandbox-behavioral-plan-feature",
+    "branch": "feature/local-contact-message-counter",
+    "commits": ["abc123def456"],
+    "pull_request": "https://github.com/loganware05/captain-compass-sandbox/pull/15",
+    "files_changed": [
+      "src/components/ContactForm.tsx",
+      "src/lib/contactValidation.ts"
+    ]
+  },
+  "recorded_at": "2026-08-20T18:10:00Z",
+  "retries": 0,
+  "lessons": [
+    "Limit live-region announcements to boundary conditions"
+  ]
+}

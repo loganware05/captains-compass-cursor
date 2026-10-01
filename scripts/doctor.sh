@@ -326,6 +326,21 @@ PY
   else
     fail "missing .agent/evaluations/.gitkeep"
   fi
+  if [[ -f "$ROOT/.agent/evaluations/behavior/.gitkeep" ]]; then
+    ok ".agent/evaluations/behavior layout"
+  else
+    fail "missing .agent/evaluations/behavior/.gitkeep"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/behavior-evaluation.schema.json" ]]; then
+    ok "behavior-evaluation.schema.json present"
+  else
+    fail "missing orchestrator/schemas/behavior-evaluation.schema.json"
+  fi
+  if [[ -x "$ROOT/scripts/run-behavior-evaluate.sh" ]]; then
+    ok "scripts/run-behavior-evaluate.sh present"
+  else
+    fail "missing executable scripts/run-behavior-evaluate.sh"
+  fi
   if [[ -f "$ROOT/scripts/run-evaluation.sh" ]]; then
     ok "scripts/run-evaluation.sh present"
   else

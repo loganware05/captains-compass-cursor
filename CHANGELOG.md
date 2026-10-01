@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.46.0 — 2026-10-01
+
+### Added
+
+- **M46 Behavior Intelligence Foundation (observe-only)** — DecisionProvider
+  `evaluate_behavior` + dual ledger + `northstar evaluate`:
+  - Requires `COMPASS_BEHAVIOR_EVAL_ENABLED=1` (default off) and explicit CLI
+  - Packet normalizer from ExecutionRun; stub/file/jev providers; fail closed
+  - Persist under `.agent/evaluations/behavior/` (JSON + `ledger.jsonl`)
+  - Distinct from M3 Compass Evaluator; never mutates authority
+  - ADR-063; plan `m46-behavior-intelligence-foundation` (OVA-58)
+
+
 ## 1.45.0 — 2026-09-25
 
 ### Added

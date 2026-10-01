@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/behavior-evaluation.schema.json",
+  "title": "BehaviorEvaluation",
+  "description": "Observe-only behavior evaluation record (M46). Distinct from Compass Evaluator evaluation.schema.json.",
+  "type": "object",
+  "required": [
+    "evaluation_id",
+    "execution_id",
+    "outcome",
+    "signals",
+    "evaluator",
+    "schema_version",
+    "created_at",
+    "authority_mutation"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "evaluation_id": { "type": "string", "minLength": 1 },
+    "execution_id": { "type": "string", "minLength": 1 },
+    "task_id": { "type": "string" },
+    "plan_id": { "type": "string" },
+    "agent": { "type": "string" },
+    "model": { "type": "string" },
+    "skill_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "outcome": {
+      "type": "string",
+      "enum": ["pending", "success", "partial", "failed", "cancelled"]
+    },
+    "objective": { "type": "string" },
+    "signals": {
+      "type": "object",
+      "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "diff_meta": { "type": "object", "additionalProperties": true },
+    "content_hash": { "type": "string" },
+    "crossings": {
+      "type": "array",
+      "items": { "type": "object", "additionalProperties": true }
+    },
+    "abstain": { "type": "boolean" },
+    "abstain_reason": { "type": "string" },
+    "evaluator": {
+      "type": "object",
+      "required": ["provider", "schema_version"],
+      "additionalProperties": true,
+      "properties": {
+        "provider": { "type": "string", "minLength": 1 },
+        "model": {},
+        "schema_version": { "type": "string", "minLength": 1 },
+        "prompt_bundle_hash": { "type": "string" }
+      }
+    },
+    "schema_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}
