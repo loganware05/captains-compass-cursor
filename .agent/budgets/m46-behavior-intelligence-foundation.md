@@ -7,7 +7,7 @@
 - Branch: cursor/m46-behavior-intelligence-plan-3192
 - Created: 2026-10-01
 - Last updated: 2026-10-01
-- Status: ACTIVE
+- Status: COMPLETE (merged #184 → main @ cb4f463)
 
 ## Limits (from approved plan)
 
