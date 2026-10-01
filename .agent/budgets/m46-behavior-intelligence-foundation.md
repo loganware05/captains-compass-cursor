@@ -21,7 +21,7 @@
 
 ## Usage
 
-- Iterations used: 0
+- Iterations used: 1
 - Failed validation cycles: 0
 - Estimated cost used (USD): 0
 - Cost is estimate: true
@@ -30,6 +30,7 @@
 ## Cycle log
 
 | 2026-10-01 | iteration 0 | start | Captain approved; rollback tag rollback/pre-m46-behavior-intelligence |
+| 2026-10-01 | iteration 1 | pass | Implemented WS1–WS7; doctor green; tests 125/125; m46 unit 15/15 |
 
 ## Stop condition
 

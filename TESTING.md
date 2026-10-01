@@ -195,6 +195,20 @@ COMPASS_DECISION_AGENT_ROUTING_SHADOW=1 \
 
 See `.agent/evidence/m45-jev-agent-routing/VALIDATION.md`.
 
+Behavior evaluation (M46; observe-only; requires enable flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m46_behavior_evaluation -v
+
+COMPASS_BEHAVIOR_EVAL_ENABLED=1 \
+COMPASS_DECISION_PROVIDER=file \
+./scripts/northstar evaluate run run-fixture-contact-counter --repo .
+```
+
+Unset `COMPASS_BEHAVIOR_EVAL_ENABLED` → CLI exits non-zero. Dual ledger under
+`.agent/evaluations/behavior/`. See
+`.agent/evidence/m46-behavior-intelligence-foundation/VALIDATION.md`.
+
 Fail-closed hook detectors — added-line / executable-hook scope (M42):
 
 ```bash

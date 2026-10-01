@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 
+from orchestrator.behavior.signals import normalize_signals
 from orchestrator.providers.decision import StubDecisionProvider
 from orchestrator.providers.decision.types import (
     PINNED_JEV_MODEL_ID,
@@ -13,6 +14,8 @@ from orchestrator.providers.decision.types import (
     WARRANT_CHOICES,
     AgentRoutingRequest,
     AgentRoutingResult,
+    BehaviorEvalRequest,
+    BehaviorEvalResult,
     RankedSuggestion,
     ReviewTriageRequest,
     ReviewTriageResult,
@@ -234,6 +237,50 @@ class FileDecisionProvider:
             model_id=PINNED_JEV_MODEL_ID,
             abstain=True,
             abstain_reason="no matching file fixture for agent routing objective",
+        )
+
+    def evaluate_behavior(self, request: BehaviorEvalRequest) -> BehaviorEvalResult:
+        packet = request.packet or {}
+        execution_id = str(packet.get("execution_id") or "").lower()
+        objective = str(packet.get("objective") or "").lower()
+        for fixture in self._load_fixtures():
+            if not fixture.get("signals") and not fixture.get("behavior_eval"):
+                continue
+            # Require an explicit behavior-eval marker to avoid colliding with
+            # skill / agent / review fixtures that happen to share substrings.
+            if not fixture.get("behavior_eval") and "signals" not in fixture:
+                continue
+            if fixture.get("behavior_eval") is False:
+                continue
+            needle_exec = str(fixture.get("execution_id_contains") or "").lower().strip()
+            needle_obj = str(fixture.get("objective_contains") or "").lower().strip()
+            if needle_exec and needle_exec not in execution_id:
+                continue
+            if needle_obj and needle_obj not in objective:
+                continue
+            if not needle_exec and not needle_obj:
+                continue
+            abstain = bool(fixture.get("abstain"))
+            signals = normalize_signals(fixture.get("signals") or {})
+            return BehaviorEvalResult(
+                provider=self.name,
+                model_id=str(fixture.get("model_id") or PINNED_JEV_MODEL_ID),
+                signals={} if abstain else signals,
+                abstain=abstain,
+                abstain_reason=str(fixture.get("abstain_reason") or ""),
+                question_revision=str(
+                    fixture.get("question_revision") or request.question_revision
+                ),
+                latency_ms=float(fixture.get("latency_ms") or 0.0),
+                input_tokens=int(fixture.get("input_tokens") or 0),
+                output_tokens=int(fixture.get("output_tokens") or 0),
+                raw_answers=dict(fixture.get("raw_answers") or {}),
+            )
+        return BehaviorEvalResult(
+            provider=self.name,
+            model_id=PINNED_JEV_MODEL_ID,
+            abstain=True,
+            abstain_reason="no matching file fixture for behavior evaluation",
         )
 
 

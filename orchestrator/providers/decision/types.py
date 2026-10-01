@@ -274,3 +274,54 @@ class AgentRoutingResult:
             "applied": bool(applied),
         }
 
+
+QUESTION_REVISION_BEHAVIOR_EVAL = "behavior_eval_v1"
+
+
+@dataclass
+class BehaviorEvalRequest:
+    """Bounded packet for observe-only behavior evaluation (M46)."""
+
+    packet: dict[str, Any]
+    question_revision: str = QUESTION_REVISION_BEHAVIOR_EVAL
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "packet": dict(self.packet),
+            "question_revision": self.question_revision,
+        }
+
+
+@dataclass
+class BehaviorEvalResult:
+    """Suggestion-only — never mutates routing, Skills, instructions, or authority."""
+
+    provider: str
+    model_id: str | None
+    signals: dict[str, float] = field(default_factory=dict)
+    abstain: bool = False
+    abstain_reason: str = ""
+    question_revision: str = QUESTION_REVISION_BEHAVIOR_EVAL
+    latency_ms: float | None = None
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    raw_answers: dict[str, Any] = field(default_factory=dict)
+    error: str | None = None
+
+    def to_dict(self, *, applied: bool = False) -> dict[str, Any]:
+        return {
+            "provider": self.provider,
+            "model_id": self.model_id,
+            "signals": dict(self.signals),
+            "abstain": self.abstain,
+            "abstain_reason": self.abstain_reason,
+            "question_revision": self.question_revision,
+            "latency_ms": self.latency_ms,
+            "input_tokens": self.input_tokens,
+            "output_tokens": self.output_tokens,
+            "raw_answers": dict(self.raw_answers),
+            "error": self.error,
+            # Observe-only: never applied / never mutates authority.
+            "applied": False,
+        }
+

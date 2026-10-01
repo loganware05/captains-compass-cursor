@@ -1,7 +1,8 @@
-"""DecisionProvider boundary — skills, review triage, agent routing suggestions.
+"""DecisionProvider boundary — skills, review triage, agent routing, behavior eval.
 
-Authority: suggestions never mutate matcher rankings, review findings, or agent
-selection; never set ``approved_for_execution``; never bypass Captain gates.
+Authority: suggestions never mutate matcher rankings, review findings, agent
+selection, prompts, Skills, or instructions; never set ``approved_for_execution``;
+never bypass Captain gates. Behavior evaluation (M46) is observe-only.
 """
 
 from __future__ import annotations
@@ -12,6 +13,8 @@ from orchestrator.providers.decision.types import (
     PINNED_JEV_MODEL_ID,
     AgentRoutingRequest,
     AgentRoutingResult,
+    BehaviorEvalRequest,
+    BehaviorEvalResult,
     ReviewTriageRequest,
     ReviewTriageResult,
     SkillSuggestionRequest,
@@ -32,6 +35,9 @@ class DecisionProvider(Protocol):
 
     def suggest_agents(self, request: AgentRoutingRequest) -> AgentRoutingResult:
         """Return ranked agent suggestions over an eligible roster or abstain."""
+
+    def evaluate_behavior(self, request: BehaviorEvalRequest) -> BehaviorEvalResult:
+        """Return behavior signal probabilities or abstain (observe-only)."""
 
 
 class StubDecisionProvider:
@@ -66,6 +72,15 @@ class StubDecisionProvider:
             abstain_reason="stub provider (decision service disabled)",
         )
 
+    def evaluate_behavior(self, request: BehaviorEvalRequest) -> BehaviorEvalResult:
+        del request
+        return BehaviorEvalResult(
+            provider=self.name,
+            model_id=None,
+            abstain=True,
+            abstain_reason="stub provider (decision service disabled)",
+        )
+
 
 __all__ = [
     "DecisionProvider",
@@ -77,4 +92,6 @@ __all__ = [
     "ReviewTriageResult",
     "AgentRoutingRequest",
     "AgentRoutingResult",
+    "BehaviorEvalRequest",
+    "BehaviorEvalResult",
 ]

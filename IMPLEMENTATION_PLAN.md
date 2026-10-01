@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
+| Status | **IN PROGRESS** |
 | Plan ID | `m46-behavior-intelligence-foundation` |
 | Approved | 2026-10-01 — Captain: "I approve" |
 | Linear | [OVA-58](https://linear.app/ovaltechnologysolutions/issue/OVA-58/m46-behavior-intelligence-foundation-v1460) · Project [P-OVA-4](https://linear.app/ovaltechnologysolutions/project/northstar-behavioral-intelligence-loop-e24174b3f1ef) · Milestone **M46 — Behavior Intelligence Foundation** |

@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from orchestrator.providers.decision.state import assert_state_safe, redact_text
+from orchestrator.behavior.signals import BEHAVIOR_SIGNALS, normalize_signals
 from orchestrator.providers.decision.types import (
     FORBIDDEN_MODEL_ALIASES,
     PINNED_JEV_MODEL_ID,
@@ -18,6 +19,8 @@ from orchestrator.providers.decision.types import (
     WARRANT_CHOICES,
     AgentRoutingRequest,
     AgentRoutingResult,
+    BehaviorEvalRequest,
+    BehaviorEvalResult,
     RankedSuggestion,
     ReviewTriageRequest,
     ReviewTriageResult,
@@ -28,7 +31,13 @@ from orchestrator.providers.decision.types import (
 DEFAULT_BASE_URL = "https://api.typesafe.ai/v1"
 QUESTIONS_DIR = Path(__file__).resolve().parent / "questions"
 ALLOWED_QUESTION_REVISIONS = frozenset(
-    {"skill_suggest_v1", "skill_recheck_v1", "review_triage_v1", "agent_routing_v1"}
+    {
+        "skill_suggest_v1",
+        "skill_recheck_v1",
+        "review_triage_v1",
+        "agent_routing_v1",
+        "behavior_eval_v1",
+    }
 )
 HttpPost = Callable[[str, dict[str, str], bytes, float], bytes]
 
@@ -621,6 +630,81 @@ class JevDecisionProvider:
                 model_id=self.model_id,
                 abstain=True,
                 abstain_reason="jev provider error — withhold agent routing",
+                error=_safe_error(exc),
+                latency_ms=(time.perf_counter() - started) * 1000.0,
+            )
+
+    def evaluate_behavior(self, request: BehaviorEvalRequest) -> BehaviorEvalResult:
+        started = time.perf_counter()
+        if self._model_error or self._base_error:
+            return BehaviorEvalResult(
+                provider=self.name,
+                model_id=None,
+                abstain=True,
+                abstain_reason="jev provider refused — model/base URL not allowed",
+                error=self._model_error or self._base_error,
+                latency_ms=(time.perf_counter() - started) * 1000.0,
+            )
+        try:
+            packet = dict(request.packet or {})
+            # Compact, redacted state — no secrets / full diffs.
+            state = {
+                "execution_id": packet.get("execution_id"),
+                "task_id": packet.get("task_id"),
+                "plan_id": packet.get("plan_id"),
+                "objective": redact_text(str(packet.get("objective") or "")),
+                "outcome": packet.get("outcome"),
+                "agent": packet.get("agent"),
+                "skill_ids": list(packet.get("skill_ids") or []),
+                "repository_sha": packet.get("repository_sha"),
+                "northstar_version": packet.get("northstar_version"),
+                "diff_meta": dict(packet.get("diff_meta") or {}),
+                "evidence": list(packet.get("evidence") or []),
+                "content_hash": packet.get("content_hash"),
+            }
+            assert_state_safe(state)
+            template = _load_question_template(request.question_revision)
+            questions = dict(template.get("questions") or {})
+            resp = self._post_systemone(state, questions)
+            answers = dict(resp.get("answers") or {})
+            usage = dict(resp.get("usage") or {})
+            model_reported = str(resp.get("model") or self.model_id)
+            signals_raw: dict[str, float] = {}
+            for name in BEHAVIOR_SIGNALS:
+                ans = answers.get(name) or {}
+                if isinstance(ans, dict) and ans.get("noul") is not None:
+                    signals_raw[name] = float(ans.get("noul") or 0.0)
+            signals = normalize_signals(signals_raw)
+            if not any(signals.values()):
+                # Empty / unusable answers → fail closed abstain
+                return BehaviorEvalResult(
+                    provider=self.name,
+                    model_id=model_reported,
+                    abstain=True,
+                    abstain_reason="behavior eval abstain (no usable signal scores)",
+                    question_revision=request.question_revision,
+                    latency_ms=(time.perf_counter() - started) * 1000.0,
+                    input_tokens=int(usage.get("input_tokens") or 0),
+                    output_tokens=int(usage.get("output_tokens") or 0),
+                    raw_answers=answers,
+                )
+            return BehaviorEvalResult(
+                provider=self.name,
+                model_id=model_reported,
+                signals=signals,
+                abstain=False,
+                question_revision=request.question_revision,
+                latency_ms=(time.perf_counter() - started) * 1000.0,
+                input_tokens=int(usage.get("input_tokens") or 0),
+                output_tokens=int(usage.get("output_tokens") or 0),
+                raw_answers=answers,
+            )
+        except (ValueError, OSError, urllib.error.URLError, json.JSONDecodeError, TimeoutError) as exc:
+            return BehaviorEvalResult(
+                provider=self.name,
+                model_id=self.model_id,
+                abstain=True,
+                abstain_reason="jev provider error — withhold behavior evaluation",
                 error=_safe_error(exc),
                 latency_ms=(time.perf_counter() - started) * 1000.0,
             )

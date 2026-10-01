@@ -1,8 +1,9 @@
-# Decision Provider (M41–M45) — skills, ranking apply, review triage, agent routing
+# Decision Provider (M41–M46) — skills, ranking apply, review triage, agent routing, behavior eval
 
 Canonical package: `orchestrator/providers/decision/`  
 Plans: `m41-jev-decision-service`, `m43-jev-ranking-enablement`,
-`m44-jev-review-triage`, `m45-jev-agent-routing`  
+`m44-jev-review-triage`, `m45-jev-agent-routing`,
+`m46-behavior-intelligence-foundation`  
 Pinned live model: **`jev-1.13.0`** (aliases `jev-latest` / `jev-preview` refused)
 
 ## Authority
@@ -12,9 +13,12 @@ Pinned live model: **`jev-1.13.0`** (aliases `jev-latest` / `jev-preview` refuse
   required review or boundary/verify gates, never bypasses agent hard filters.
 - Matcher-eligible roster is the only allowed skill set for ranking apply.
 - Agent-routing suggestions only see post-hard-filter eligible agents.
+- Behavior evaluation (M46) is **observe-only** — never mutates routing, Skills,
+  instructions, reputation, or authority (`authority_mutation: false`).
 - On API failure, unsupported input, abstain, or gate miss → **fail closed** to
   baseline (matcher / deterministic review / hard-filtered router).
-- Default / CI: provider **stub**; APPLY and all shadow flags unset.
+- Default / CI: provider **stub**; APPLY, shadow flags, and
+  `COMPASS_BEHAVIOR_EVAL_ENABLED` unset.
 
 ## Env contract
 
@@ -27,6 +31,8 @@ Pinned live model: **`jev-1.13.0`** (aliases `jev-latest` / `jev-preview` refuse
 | `COMPASS_DECISION_CONF_MIN` | `0.60` | Apply Choice confidence floor |
 | `COMPASS_DECISION_REVIEW_SHADOW` | unset/off | Review triage shadow (M44); never mutates findings |
 | `COMPASS_DECISION_AGENT_ROUTING_SHADOW` | unset/off | Agent routing shadow (M45); never mutates selection |
+| `COMPASS_BEHAVIOR_EVAL_ENABLED` | unset/off | Required for `northstar evaluate` (M46); default off |
+| `COMPASS_BEHAVIOR_EVAL_THRESHOLDS` | defaults | Optional JSON path for threshold overrides |
 | `COMPASS_DECISION_FIXTURES_DIR` | package fixtures | Offline file-provider fixtures |
 | `COMPASS_JEV_MODEL_ID` | *(required for `jev`)* | Must be exactly `jev-1.13.0` (aliases refused) |
 | `COMPASS_JEV_API_KEY` or `TYPESAFE_API_KEY` | unset | Captain-local only; never commit |
@@ -86,11 +92,26 @@ Evidence:
 
 CLI payload may include path/ID refs only (`applied: false`).
 
+## Behavior evaluation (M46, observe-only)
+
+```bash
+COMPASS_BEHAVIOR_EVAL_ENABLED=1 \
+COMPASS_DECISION_PROVIDER=file \
+./scripts/northstar evaluate run <execution-id> --repo .
+```
+
+Dual ledger (canonical): `.agent/evaluations/behavior/{evaluation_id}.json` and
+`ledger.jsonl`. CSV export is non-canonical (`evaluate export --format csv`).
+
+Package: `orchestrator/behavior/`. Distinct from M3 Compass Evaluator
+(`evaluation.schema.json` / `.agent/evaluations/{id}.json`).
+
 ## Protocols (Jev)
 
 - Skills: two-pass `skill_suggest_v1` → `skill_recheck_v1`
 - Review triage: single-pass `review_triage_v1`
 - Agent routing: single-pass `agent_routing_v1`
+- Behavior eval: single-pass `behavior_eval_v1` (noul per signal)
 
 Question revision JSON: `orchestrator/providers/decision/questions/`.
 
@@ -100,11 +121,13 @@ Question revision JSON: `orchestrator/providers/decision/questions/`.
 2. ~~Ranking enablement (M43)~~
 3. ~~Review triage shadow (M44)~~
 4. ~~Agent routing shadow (M45)~~
-5. (Later, separate plans) Mutating review/agent apply; tool-call security triage (Notion §B)
+5. ~~Behavior Intelligence Foundation observe-only (M46)~~
+6. (Later) M47+ pattern learning / Policy promotion; mutating review/agent apply
 
 ## Related
 
 - Notion research draft: NorthStar × Jev — Decision Service Implementation Draft
+- Notion sprint: NorthStar Behavioral Intelligence Loop — Sprint Development Plan
 - TypeSafe: https://docs.typesafe.ai/models (`jev-1.13.0`)
-- ADR-058 / ADR-060 / ADR-061 / ADR-062
+- ADR-058 / ADR-060 / ADR-061 / ADR-062 / ADR-063
 - Agent routing contract: `docs/integrations/agent-routing-contract.md`
