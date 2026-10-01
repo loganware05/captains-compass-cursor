@@ -209,6 +209,19 @@ Unset `COMPASS_BEHAVIOR_EVAL_ENABLED` → CLI exits non-zero. Dual ledger under
 `.agent/evaluations/behavior/`. See
 `.agent/evidence/m46-behavior-intelligence-foundation/VALIDATION.md`.
 
+Behavior pattern learning (M47; proposal-only; requires enable flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m47_behavior_pattern_learning -v
+
+COMPASS_BEHAVIOR_LEARN_ENABLED=1 \
+./scripts/northstar learn scan --repo .
+```
+
+Unset `COMPASS_BEHAVIOR_LEARN_ENABLED` → CLI exits non-zero. Patterns under
+`.agent/evaluations/behavior/patterns/`. See
+`.agent/evidence/m47-behavior-pattern-learning/VALIDATION.md`.
+
 Fail-closed hook detectors — added-line / executable-hook scope (M42):
 
 ```bash

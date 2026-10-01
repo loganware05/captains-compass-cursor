@@ -2,38 +2,31 @@
 
 ## Current status
 
-**Implementing / validating: M46 Behavior Intelligence Foundation** — Captain
-approved 2026-10-01 (OVA-58). Observe-only behavior evaluation on
-`cursor/m46-behavior-intelligence-plan-3192` → PR #184.
+**Ready for merge: M47 Behavior Pattern Learning** — PR [#185](https://github.com/loganware05/captains-compass-cursor/pull/185)
+(OVA-59). Proposal-only patterns from M46 ledger → `northstar learn`.
+Branch: `cursor/m47-behavior-pattern-learning-plan-3192` @ `a5a2ca4`.
 
 | Item | Value |
 |---|---|
-| On main | **v1.45.0** M45 (#183) @ `0d125c7` |
-| Active plan | `m46-behavior-intelligence-foundation` — **APPROVED** |
-| Linear | [OVA-58](https://linear.app/ovaltechnologysolutions/issue/OVA-58/m46-behavior-intelligence-foundation-v1460) |
-| Release | **v1.46.0** |
-| Rollback | `rollback/pre-m46-behavior-intelligence` @ `0d125c7` |
-
-## Captain-ordered Decision Service sequence
-
-1. ~~Shadow skill suggestion (M41)~~ merged
-2. ~~Ranking enablement (M43)~~ merged
-3. ~~Review triage (M44)~~ merged
-4. ~~Agent routing (M45)~~ merged (#183)
-5. Behavior Intelligence Foundation (M46) ← **this milestone**
+| On main | **v1.46.0** M46 (#184) @ `cb4f463` |
+| Active plan | `m47-behavior-pattern-learning` — **APPROVED** / impl complete |
+| Linear | [OVA-59](https://linear.app/ovaltechnologysolutions/issue/OVA-59/m47-behavior-pattern-learning-v1470) In Progress |
+| Spec | [Notion](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) · [plan mirror](https://app.notion.com/p/3ece6a901c438155825fd9cc9c15756d) |
+| Release | **v1.47.0** |
+| Rollback | `rollback/pre-m47-behavior-pattern-learning` @ `cb4f463` |
+| Validation | doctor OK · 18/18 M47 · 17/17 M46 · suite 125 passed |
 
 ## Behavioral Intelligence Loop
 
-1. **M46 Behavior Intelligence Foundation** ← active
-2. M47 Pattern learning (deferred)
+1. ~~**M46 Behavior Intelligence Foundation**~~ merged (#184) — OVA-58 Done
+2. **M47 Pattern learning** ← implementing (v1.47.0)
 3. M48–M50 Instruction / Policy lifecycle (deferred)
 4. M51 Kimi K3 Project Overseer (deferred)
 
 ## Completed recently
 
+- **M46 → v1.46.0** — Behavior Intelligence Foundation (#184)
 - **M45 → v1.45.0** — agent-routing shadow (#183)
-- **M44 → v1.44.0** — review triage shadow (#182)
-- **M43 → v1.43.0** — ranking enablement default-off (#181)
 
 ## Blockers
 

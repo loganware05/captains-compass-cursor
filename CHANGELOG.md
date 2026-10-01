@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.47.0 — 2026-10-01
+
+### Added
+
+- **M47 Behavior Pattern Learning (proposal-only)** — ledger scan → patterns +
+  candidate guidance via `northstar learn`:
+  - Requires `COMPASS_BEHAVIOR_LEARN_ENABLED=1` (default off) and explicit CLI
+  - Groups by signal + agent + skill with `polarity` (praise positive / friction
+    negative); `min_occurrence` default 3
+  - Persist under `.agent/evaluations/behavior/patterns/` (+ `candidates/`)
+  - Candidates always `approved_for_execution: false` / `authority_mutation: false`
+  - ADR-064; plan `m47-behavior-pattern-learning` (OVA-59)
+
+
 ## 1.46.0 — 2026-10-01
 
 ### Added

@@ -34,6 +34,8 @@ SCHEMA_FILES = (
     "context-route.schema.json",
     "skill-inode.schema.json",
     "behavior-evaluation.schema.json",
+    "behavior-pattern.schema.json",
+    "behavior-candidate.schema.json",
 )
 
 
