@@ -184,8 +184,8 @@ Compare produces per-case deltas and an aggregate `non_regression: pass|fail`.
 - [x] `northstar prompt-eval` requires enable flag + explicit CLI
 - [x] No write to `.cursor/rules|skills|agents`; no Skill/routing/Policy activation
 - [x] No live LLM/Jev required for CI
-- [ ] M46 evaluate + M47 learn + M48 instructions paths still pass *(validate before merge)*
-- [ ] Doctor/tests green; secrets never enter reports *(validate before merge)*
+- [x] M46 evaluate + M47 learn + M48 instructions paths still pass
+- [x] Doctor/tests green; secrets never enter reports
 - [x] Evidence + ADR-066 + VERSION 1.49.0
 
 ## Test Matrix
