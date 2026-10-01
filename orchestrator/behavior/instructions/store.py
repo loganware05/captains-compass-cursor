@@ -18,7 +18,8 @@ _SCOPE_DIRS = {
     "global": "global",
     "agent": "agents",
     "task-type": "task-types",
-    "model": "models",
+    # Named model-hints/ (not models/) — repo .gitignore ignores models/
+    "model": "model-hints",
     "proposal": "proposals",
 }
 
@@ -55,7 +56,7 @@ def registry_path(repo_root: Path) -> Path:
 
 def ensure_layout(repo_root: Path) -> None:
     root = instructions_root(repo_root)
-    for sub in ("global", "agents", "task-types", "models", "proposals", "bundles"):
+    for sub in ("global", "agents", "task-types", "model-hints", "proposals", "bundles"):
         path = root / sub
         path.mkdir(parents=True, exist_ok=True)
         keep = path / ".gitkeep"
