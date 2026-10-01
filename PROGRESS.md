@@ -10,8 +10,9 @@ Branch: `cursor/m46-behavior-intelligence-plan-3192` (plan docs only).
 |---|---|
 | On main | **v1.45.0** M45 (#183) @ `0d125c7` |
 | Active plan | `m46-behavior-intelligence-foundation` — **AWAITING APPROVAL** |
-| Spec | [Notion sprint plan](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) |
-| Proposed release | **v1.46.0** (observe-only) |
+| Linear | [OVA-58](https://linear.app/ovaltechnologysolutions/issue/OVA-58/m46-behavior-intelligence-foundation-v1460) · [BIL project](https://linear.app/ovaltechnologysolutions/project/northstar-behavioral-intelligence-loop-e24174b3f1ef) |
+| Spec | [Notion sprint](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) · [plan mirror](https://app.notion.com/p/3ece6a901c4381a0826dcc5e553daa40) |
+| Release | **v1.46.0** (confirmed; observe-only) |
 | Rollback (post-approval) | `rollback/pre-m46-behavior-intelligence` @ `0d125c7` |
 
 ## Captain-ordered Decision Service sequence

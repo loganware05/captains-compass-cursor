@@ -7,13 +7,15 @@
 | Status | **AWAITING APPROVAL** |
 | Plan ID | `m46-behavior-intelligence-foundation` |
 | Approved | — |
-| Linear | *TBD after approval* (no existing M46 issue found) |
+| Linear | [OVA-58](https://linear.app/ovaltechnologysolutions/issue/OVA-58/m46-behavior-intelligence-foundation-v1460) · Project [P-OVA-4](https://linear.app/ovaltechnologysolutions/project/northstar-behavioral-intelligence-loop-e24174b3f1ef) · Milestone **M46 — Behavior Intelligence Foundation** |
 | Spec source | [Notion: NorthStar Behavioral Intelligence Loop — Sprint Development Plan](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) (fetched 2026-09-30) |
+| Notion plan mirror | [M46 Implementation Plan (Notion)](https://app.notion.com/p/3ece6a901c4381a0826dcc5e553daa40) |
 | Supersedes | — (builds on M41–M45 DecisionProvider; new **observation-only** behavior surface) |
 | Product | **NorthStar** (control repo `captains-compass-cursor`) |
 | Baseline | **v1.45.0** @ `0d125c7` (post-M45 #183) |
 | Prepared | 2026-09-30 |
-| Proposed release | **v1.46.0** (observe-only; hermetic CI default) |
+| Last updated | 2026-10-01 — Captain resolved open questions |
+| Release | **v1.46.0** (confirmed; observe-only; hermetic CI default) |
 | Rollback | Tag `rollback/pre-m46-behavior-intelligence` @ `0d125c7` (create after approval) |
 | Proposed branch | `cursor/m46-behavior-intelligence-foundation-3192` *(implementation branch after approval; this PR is plan-only)* |
 | Captain | Logan Ware |
@@ -67,9 +69,11 @@ reputation, approval gates, or authority.
 | Observe only | No prompt / Policy / Skill / routing / reputation mutation in M46 |
 | Separate object | New `behavior-evaluation` schema — **do not overload** existing Compass Evaluator `evaluation.schema.json` |
 | Nested ledger | Persist under `.agent/evaluations/behavior/` so M3 experiment JSON files stay undisturbed |
+| Dual ledger formats | Per-record JSON files **and** append-only `ledger.jsonl` (both canonical; keep in sync) |
+| Enable flag | `COMPASS_BEHAVIOR_EVAL_ENABLED` required (default off) **in addition to** explicit CLI |
 | DecisionProvider | Add `evaluate_behavior` beside `suggest_skills` / `triage_review` / `suggest_agents` |
 | Fail closed | Abstain / error / malformed / stub → no ledger false-positives that grant authority; never mutate |
-| Hermetic CI | Default `COMPASS_DECISION_PROVIDER=stub`; no network |
+| Hermetic CI | Default stub provider + behavior-eval flag unset; no network |
 | Compact packets | Diff metadata + evidence refs + plan refs — not full repo / secrets / raw tool dumps |
 | Thresholds configurable | General 0.70; stricter floors for security / boundary (reviewable config) |
 | Captain authority | `IMPLEMENTATION_PLAN.md` approval gate unchanged |
@@ -110,9 +114,9 @@ migrations. Human workstreams below supersede the machine graph for execution.
 1. Versioned `behavior-evaluation` JSON schema + signal definitions
 2. Evaluation packet normalizer (ExecutionRun → bounded packet)
 3. DecisionProvider `evaluate_behavior` on stub / file / jev
-4. Persistence: `.agent/evaluations/behavior/` (ledger JSONL + per-record files as needed)
+4. Persistence: `.agent/evaluations/behavior/` — **both** per-record `{evaluation_id}.json` **and** append-only `ledger.jsonl`
 5. Threshold config (general / security / boundary)
-6. `northstar evaluate` CLI: `pending`, `run`, `review`, `retry`, `export`
+6. `northstar evaluate` CLI gated by `COMPASS_BEHAVIOR_EVAL_ENABLED`: `pending`, `run`, `review`, `retry`, `export`
 7. Hermetic fixtures + unit/integration tests
 8. Provenance fields (repo SHA, NorthStar version, provider/model, schema version, optional prompt_bundle_hash)
 9. Docs: ADR, TESTING, PROGRESS, CHANGELOG, decision-provider integration, VERSION → 1.46.0
@@ -166,8 +170,9 @@ behavior-evaluation record (schema-valid) → ledger
 `test_workaround`, `unsafe_git_operation`, `excessive_context`,
 `unnecessary_abstraction`, `missing_evidence`, `rework_required`
 
-(Plus Notion packet examples `weak_verification` if retained as alias or explicit
-signal — resolve in WS1 to one canonical name.)
+**Canonical signals include all of the above plus `weak_verification`** (Notion
+packet example). `weak_verification`, `weak_test_coverage`, and
+`unverified_claim` are **distinct** — not aliases.
 
 ### Threshold defaults (config, not hard-coded sole constant)
 
@@ -187,11 +192,12 @@ beyond recording / CLI review display.
 | Variable | Default | Meaning |
 |---|---|---|
 | *(reuse)* `COMPASS_DECISION_PROVIDER` | `stub` | stub \| file \| jev |
-| `COMPASS_BEHAVIOR_EVAL_ENABLED` | unset/off *(or always-on observe via explicit CLI)* | Optional gate so background hooks never auto-fire in CI |
+| `COMPASS_BEHAVIOR_EVAL_ENABLED` | unset/off | **Required** for `northstar evaluate` to run (Captain: flag + CLI) |
 | `COMPASS_BEHAVIOR_EVAL_THRESHOLDS` | path or inline defaults | Optional override path |
 
-Prefer **explicit CLI invocation** over silent auto-evaluation in M46 so CI stays
-bit-identical unless tests call evaluate.
+CLI alone is insufficient: operators must set `COMPASS_BEHAVIOR_EVAL_ENABLED=1`
+**and** invoke `northstar evaluate …`. Unset flag → CLI exits non-zero with a
+clear message; CI stays bit-identical.
 
 ## Workstreams
 
@@ -385,13 +391,15 @@ After approval, create `.agent/budgets/m46-behavior-intelligence-foundation.md`:
 4. `jev-1.13.0` pin remains; OPENROUTER is not required if Typesafe key path works.
 5. Sandbox repo is out of scope unless Captain requests a dogfood install after merge.
 
-## Open Questions (Captain)
+## Resolved Decisions (Captain — 2026-10-01)
 
-1. Should `COMPASS_BEHAVIOR_EVAL_ENABLED` gate CLI, or is explicit `northstar evaluate` enough?
-2. Prefer per-file JSON records, append-only `ledger.jsonl`, or both (Notion shows both conceptually)?
-3. Create Linear issue now vs after approval?
-4. Confirm release bump **v1.46.0** naming.
-5. Resolve signal alias: `weak_verification` vs `weak_test_coverage` / `unverified_claim`.
+| # | Decision |
+|---|---|
+| 1 | **Both:** `COMPASS_BEHAVIOR_EVAL_ENABLED` (default off) **and** explicit `northstar evaluate` CLI |
+| 2 | **Both** ledger formats: per-record JSON + append-only `ledger.jsonl` |
+| 3 | Create Linear issue now; create Linear project + M46–M51 sprint milestone now |
+| 4 | Release naming **confirmed: v1.46.0** |
+| 5 | Keep `weak_verification` as a distinct canonical signal alongside `weak_test_coverage` and `unverified_claim` (not aliases) |
 
 ## Definition of Done
 
