@@ -1,5 +1,30 @@
 # Decisions
 
+## ADR-064: Proposal-only Behavior Pattern Learning (v1.47.0 M47)
+
+- **Status:** Accepted
+- **Date:** 2026-10-01
+- **Context:** Captain approved plan `m47-behavior-pattern-learning` (OVA-59)
+  after M46 observe-only ledger landed on `main` (v1.46.0 / #184). Pattern
+  detection must feed later Policy/instruction governance (M48–M50) without
+  granting activation authority.
+- **Decision:**
+  1. Add `behavior-pattern.schema.json` + `behavior-candidate.schema.json` and
+     package `orchestrator/behavior/patterns/`.
+  2. Deterministic detector over the M46 dual ledger; group by
+     **signal + agent + skill** with shared **polarity**
+     (`positive` for `praise`, `negative` for friction).
+  3. Default `min_occurrence=3` (`COMPASS_BEHAVIOR_LEARN_MIN_OCCURRENCE`);
+     exclude abstaining / below-threshold samples.
+  4. Persist under `.agent/evaluations/behavior/patterns/` (+ `candidates/`).
+  5. Operator surface `northstar learn …` requires
+     `COMPASS_BEHAVIOR_LEARN_ENABLED=1` (default off) **and** explicit CLI.
+  6. Candidates are proposal-only: `approved_for_execution: false` and
+     `authority_mutation: false` always; never mutate Skills/routing/Policies.
+- **Consequences:** Learning is inert until the enable flag is set. Rollback
+  tag `rollback/pre-m47-behavior-pattern-learning` @ `cb4f463`.
+
+
 ## ADR-063: Observe-only Behavior Intelligence Foundation (v1.46.0 M46)
 
 - **Status:** Accepted

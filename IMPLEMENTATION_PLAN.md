@@ -170,14 +170,14 @@ tests/fixtures, docs/plans/M47_…, evidence dir.
 
 ## Acceptance Criteria
 
-- [ ] Ledger with ≥3 qualifying evaluations yields a pattern; fewer does not
-- [ ] `min_occurrence` configurable; default 3
-- [ ] Candidates always `approved_for_execution: false` / `authority_mutation: false`
-- [ ] `northstar learn` requires enable flag (if approved) + explicit CLI
-- [ ] Hermetic CI; no network; doctor/tests green
-- [ ] No Skill/routing/instruction/Policy mutation
-- [ ] M46 evaluate paths unchanged and still pass
-- [ ] Secrets never enter pattern artifacts
+- [x] Ledger with ≥3 qualifying evaluations yields a pattern; fewer does not
+- [x] `min_occurrence` configurable; default 3
+- [x] Candidates always `approved_for_execution: false` / `authority_mutation: false`
+- [x] `northstar learn` requires enable flag + explicit CLI
+- [x] Hermetic CI; no network; doctor/tests green *(validate before merge)*
+- [x] No Skill/routing/instruction/Policy mutation
+- [x] M46 evaluate paths unchanged and still pass *(regression suite)*
+- [x] Secrets never enter pattern artifacts
 
 ## Testing Strategy
 

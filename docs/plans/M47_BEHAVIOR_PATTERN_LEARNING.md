@@ -1,4 +1,4 @@
-> **APPROVED** (2026-10-01) — Captain must approve before product implementation.
+> **APPROVED / IMPLEMENTING** (2026-10-01) — Captain approved; product impl in progress.
 > Active root plan: `IMPLEMENTATION_PLAN.md` (Plan ID `m47-behavior-pattern-learning`).
 
 # M47 — Behavior Pattern Learning
@@ -18,4 +18,14 @@ candidate guidance via `northstar learn` — no Policy/Skill/routing activation.
 
 ## Baseline
 
-v1.46.0 @ `cb4f463` → proposed release **v1.47.0**
+v1.46.0 @ `cb4f463` → release **v1.47.0**
+
+## Operator surface
+
+```bash
+COMPASS_BEHAVIOR_LEARN_ENABLED=1 ./scripts/northstar learn scan --repo .
+COMPASS_BEHAVIOR_LEARN_ENABLED=1 ./scripts/northstar learn list --repo .
+COMPASS_BEHAVIOR_LEARN_ENABLED=1 ./scripts/northstar learn show <pattern-id> --repo .
+```
+
+Artifacts: `.agent/evaluations/behavior/patterns/` (+ `candidates/`).

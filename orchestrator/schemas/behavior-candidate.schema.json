@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/behavior-candidate.schema.json",
+  "title": "BehaviorGuidanceCandidate",
+  "description": "Proposal-only behavioral guidance candidate from a pattern (M47).",
+  "type": "object",
+  "required": [
+    "candidate_id",
+    "pattern_id",
+    "kind",
+    "summary",
+    "signal",
+    "polarity",
+    "evidence_evaluation_ids",
+    "approved_for_execution",
+    "authority_mutation",
+    "schema_version",
+    "created_at"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "candidate_id": { "type": "string", "minLength": 1 },
+    "pattern_id": { "type": "string", "minLength": 1 },
+    "kind": { "type": "string", "const": "behavioral-guidance" },
+    "summary": { "type": "string", "minLength": 1 },
+    "signal": { "type": "string", "minLength": 1 },
+    "polarity": { "type": "string", "enum": ["positive", "negative"] },
+    "agent": { "type": "string" },
+    "skill_id": { "type": "string" },
+    "evidence_evaluation_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "schema_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 }
+  }
+}
