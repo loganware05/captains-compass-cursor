@@ -1,5 +1,28 @@
 # Decisions
 
+## ADR-066: Eval-only Prompt Evaluation Harness (v1.49.0 M49)
+
+- **Status:** Accepted
+- **Date:** 2026-10-01
+- **Context:** Captain approved plan `m49-prompt-evaluation-harness` (OVA-61)
+  after M48 instruction registry shipped (v1.48.0 / #186). Candidate
+  instructions need measurable non-regression before M50 promotion.
+- **Decision:**
+  1. Add `prompt-eval-report.schema.json` and package
+     `orchestrator/behavior/prompt_eval/`.
+  2. Operator surface `northstar prompt-eval …` requires
+     `COMPASS_PROMPT_EVAL_ENABLED=1` (default off) **and** explicit CLI.
+  3. Baseline compose uses `include_proposals=false`; candidate uses `true`.
+  4. v1.49.0 scoring is **deterministic fixture expectations** (no live LLM/Jev).
+  5. Persist canonical reports under
+     `.agent/evaluations/behavior/prompt-eval/` plus evidence summaries under
+     `.agent/evidence/m49-prompt-evaluation-harness/`.
+  6. Reports always `approved_for_execution: false` / `authority_mutation: false`;
+     never promote instructions or mutate `.cursor/` / Skills / routing.
+- **Consequences:** Prompt-eval is inert until the enable flag is set.
+  Rollback tag `rollback/pre-m49-prompt-evaluation-harness` @ `2d388cf`.
+
+
 ## ADR-065: Proposal-only Instruction Registry + Prompt Composer (v1.48.0 M48)
 
 - **Status:** Accepted

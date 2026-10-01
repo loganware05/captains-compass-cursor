@@ -4,8 +4,9 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING APPROVAL** |
+| Status | **APPROVED** |
 | Plan ID | `m49-prompt-evaluation-harness` |
+| Approved | 2026-10-01 — Captain: "I approve" + open-question answers |
 | Linear | [OVA-61](https://linear.app/ovaltechnologysolutions/issue/OVA-61/m49-prompt-evaluation-harness-v1490) · Milestone **M49 — Prompt Evaluation Harness** |
 | Spec source | [Notion: Behavioral Intelligence Loop Sprint](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) (M49 section) |
 | Notion plan mirror | [M49 Implementation Plan](https://app.notion.com/p/3ece6a901c4381cb8488e32b9b0e6634) |
@@ -15,7 +16,7 @@
 | Baseline | **v1.48.0** @ `2d388cf` |
 | Prepared | 2026-10-01 |
 | Proposed release | **v1.49.0** (prompt eval harness; proposal/eval-only; hermetic CI default) |
-| Rollback | Tag `rollback/pre-m49-prompt-evaluation-harness` @ `2d388cf` (create after approval) |
+| Rollback | Tag `rollback/pre-m49-prompt-evaluation-harness` @ `2d388cf` |
 | Proposed branch | `cursor/m49-prompt-evaluation-harness-plan-3192` |
 | Captain | Logan Ware |
 
@@ -67,15 +68,15 @@ Skills/routing, or set `approved_for_execution`.
 | Fail closed | Missing fixtures / invalid candidate → fail report; never mutate authority |
 | Enable gate | Dual gate (env + explicit CLI), mirroring M46–M48 |
 
-## Open Questions (Captain)
+## Resolved Decisions (Captain — 2026-10-01)
 
-| # | Question | Recommendation |
-|---|---|---|
-| 1 | CLI surface: top-level `northstar prompt-eval` **or** `northstar instructions eval`? | **`northstar prompt-eval`** — keeps M48 CLI stable; mirrors DecisionProvider eval separation |
-| 2 | Enable flag: new `COMPASS_PROMPT_EVAL_ENABLED` **or** reuse `COMPASS_INSTRUCTIONS_ENABLED`? | **New `COMPASS_PROMPT_EVAL_ENABLED`** (default off) — independent gate for eval surface |
-| 3 | Scoring mode for v1.49.0: deterministic fixture expectations only **or** also stub DecisionProvider-style signal scoring? | **Deterministic fixtures first** (gold expectations + hash/diff); stub signal scorer optional if cheap |
-| 4 | Release naming **v1.49.0** confirmed? | Yes |
-| 5 | Persist reports under `.agent/evaluations/behavior/prompt-eval/` **or** only `.agent/evidence/m49-…`? | **Both:** canonical JSON under `…/behavior/prompt-eval/`; summary copy in evidence |
+| # | Decision |
+|---|---|
+| 1 | Top-level **`northstar prompt-eval`** |
+| 2 | New **`COMPASS_PROMPT_EVAL_ENABLED`** (default off) **and** explicit CLI |
+| 3 | **Deterministic fixtures first** |
+| 4 | Release naming **confirmed: v1.49.0** |
+| 5 | Persist under **`.agent/evaluations/behavior/prompt-eval/` + evidence** |
 
 ## Scope
 
@@ -177,15 +178,15 @@ Compare produces per-case deltas and an aggregate `non_regression: pass|fail`.
 
 ## Acceptance Criteria
 
-- [ ] Harness composes baseline (`include_proposals=False`) vs candidate bundles
-- [ ] Fixture cases score the listed non-regression properties hermetically
-- [ ] Report schema rejects `approved_for_execution: true` / authority mutation
-- [ ] `northstar prompt-eval` requires enable flag + explicit CLI
-- [ ] No write to `.cursor/rules|skills|agents`; no Skill/routing/Policy activation
-- [ ] No live LLM/Jev required for CI
-- [ ] M46 evaluate + M47 learn + M48 instructions paths still pass
-- [ ] Doctor/tests green; secrets never enter reports
-- [ ] Evidence + ADR-066 + VERSION 1.49.0
+- [x] Harness composes baseline (`include_proposals=False`) vs candidate bundles
+- [x] Fixture cases score the listed non-regression properties hermetically
+- [x] Report schema rejects `approved_for_execution: true` / authority mutation
+- [x] `northstar prompt-eval` requires enable flag + explicit CLI
+- [x] No write to `.cursor/rules|skills|agents`; no Skill/routing/Policy activation
+- [x] No live LLM/Jev required for CI
+- [ ] M46 evaluate + M47 learn + M48 instructions paths still pass *(validate before merge)*
+- [ ] Doctor/tests green; secrets never enter reports *(validate before merge)*
+- [x] Evidence + ADR-066 + VERSION 1.49.0
 
 ## Test Matrix
 
@@ -218,15 +219,13 @@ Compare produces per-case deltas and an aggregate `non_regression: pass|fail`.
 
 ## Approval Boundary
 
-**Implementation must not begin until the Captain explicitly approves this plan.**
-
-Please answer open questions 1–5 (or accept recommendations) with approval.
+**Implementation proceeds under this approved revision.**
 
 ## Approval Record
 
 | Field | Value |
 |---|---|
-| Approved by | — |
-| Approval date | — |
-| Approval text | — |
-| Approved revision | — |
+| Approved by | Captain (Logan Ware) |
+| Approval date | 2026-10-01 |
+| Approval text | "I approve" + answers 1–5 |
+| Approved revision | `northstar prompt-eval`, `COMPASS_PROMPT_EVAL_ENABLED`, deterministic fixtures, v1.49.0, persist under behavior/prompt-eval + evidence |

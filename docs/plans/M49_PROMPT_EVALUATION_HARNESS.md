@@ -1,4 +1,4 @@
-> **AWAITING APPROVAL** (2026-10-01) — Plan only; no product implementation until Captain approves.
+> **APPROVED / IMPLEMENTING** (2026-10-01) — Captain approved; product impl in progress.
 > Active root plan: `IMPLEMENTATION_PLAN.md` (Plan ID `m49-prompt-evaluation-harness`).
 
 # M49 — Prompt Evaluation Harness
@@ -14,31 +14,24 @@ Prerequisite: M48 merged (#186 / v1.48.0).
 ## One-line summary
 
 Hermetic baseline-vs-candidate prompt evaluation harness via `northstar prompt-eval`
-— proposal/eval-only; no Policy/Skill/`.cursor/` activation.
+— eval/proposal-only; no Policy/Skill/`.cursor/` activation.
 
 ## Baseline
 
-v1.48.0 @ `2d388cf` → proposed release **v1.49.0**
+v1.48.0 @ `2d388cf` → release **v1.49.0**
 
-## Recommended decisions (pending Captain)
+## Resolved decisions
 
-1. Top-level `northstar prompt-eval` (not nested under `instructions`)
+1. Top-level `northstar prompt-eval`
 2. New `COMPASS_PROMPT_EVAL_ENABLED` (default off)
 3. Deterministic fixture scoring first
 4. v1.49.0
-5. Canonical reports under `.agent/evaluations/behavior/prompt-eval/` + evidence summary
+5. Persist under `.agent/evaluations/behavior/prompt-eval/` + evidence
 
-## Proposed operator surface
+## Operator surface
 
 ```bash
 COMPASS_PROMPT_EVAL_ENABLED=1 ./scripts/northstar prompt-eval run --repo .
-COMPASS_PROMPT_EVAL_ENABLED=1 ./scripts/northstar prompt-eval compare --repo .
-COMPASS_PROMPT_EVAL_ENABLED=1 ./scripts/northstar prompt-eval export --repo .
+COMPASS_PROMPT_EVAL_ENABLED=1 ./scripts/northstar prompt-eval compare --agent implementation-agent --repo .
+COMPASS_PROMPT_EVAL_ENABLED=1 ./scripts/northstar prompt-eval export --format csv --repo .
 ```
-
-## Non-goals
-
-- Policy promotion / shadow apply (M50)
-- Live `.cursor/` mutation
-- Live LLM scoring in CI
-- Project Overseer (M51)

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/prompt-eval-report.schema.json",
+  "title": "PromptEvalReport",
+  "description": "Baseline-vs-candidate prompt evaluation report (M49). Eval/proposal-only; never promotes instructions.",
+  "type": "object",
+  "required": [
+    "report_id",
+    "schema_version",
+    "created_at",
+    "non_regression",
+    "case_count",
+    "passed_count",
+    "failed_count",
+    "cases",
+    "baseline_mode",
+    "candidate_mode",
+    "approved_for_execution",
+    "authority_mutation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "report_id": { "type": "string", "minLength": 1 },
+    "schema_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "updated_at": { "type": "string", "minLength": 1 },
+    "non_regression": {
+      "type": "string",
+      "enum": ["pass", "fail"]
+    },
+    "case_count": { "type": "integer", "minimum": 0 },
+    "passed_count": { "type": "integer", "minimum": 0 },
+    "failed_count": { "type": "integer", "minimum": 0 },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "case_id",
+          "non_regression",
+          "baseline_hash",
+          "candidate_hash",
+          "metrics"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "case_id": { "type": "string", "minLength": 1 },
+          "non_regression": {
+            "type": "string",
+            "enum": ["pass", "fail"]
+          },
+          "baseline_hash": { "type": "string" },
+          "candidate_hash": { "type": "string" },
+          "observed_non_regression": {
+            "type": "string",
+            "enum": ["pass", "fail"]
+          },
+          "expect_non_regression": {
+            "type": "string",
+            "enum": ["pass", "fail"]
+          },
+          "baseline_instruction_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "candidate_instruction_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "metrics": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "required": ["status"],
+              "additionalProperties": true,
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": ["pass", "fail", "skip"]
+                },
+                "detail": { "type": "string" }
+              }
+            }
+          },
+          "failures": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "baseline_mode": { "type": "string", "const": "include_proposals=false" },
+    "candidate_mode": { "type": "string", "const": "include_proposals=true" },
+    "cases_path": { "type": "string" },
+    "evidence_path": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}

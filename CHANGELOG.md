@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.49.0 — 2026-10-01
+
+### Added
+
+- **M49 Prompt Evaluation Harness (eval/proposal-only)** — hermetic
+  baseline-vs-candidate prompt scoring via `northstar prompt-eval`:
+  - Requires `COMPASS_PROMPT_EVAL_ENABLED=1` (default off) and explicit CLI
+  - Baseline compose forces `include_proposals=false`; candidate includes proposals
+  - Deterministic fixture metrics: instruction adherence, schema validity,
+    hallucinated repository state, unnecessary scope, verified-review precision,
+    evidence completeness, approval-boundary compliance
+  - Reports under `.agent/evaluations/behavior/prompt-eval/` + evidence summary
+  - ADR-066; plan `m49-prompt-evaluation-harness` (OVA-61)
+
+
 ## 1.48.0 — 2026-10-01
 
 ### Added

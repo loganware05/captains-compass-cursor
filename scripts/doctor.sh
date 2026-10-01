@@ -381,6 +381,27 @@ PY
   else
     fail "missing executable scripts/run-instructions.sh"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/prompt-eval-report.schema.json" ]]; then
+    ok "prompt-eval-report.schema.json present"
+  else
+    fail "missing orchestrator/schemas/prompt-eval-report.schema.json"
+  fi
+  if [[ -f "$ROOT/.agent/evaluations/behavior/prompt-eval/.gitkeep" ]]; then
+    ok ".agent/evaluations/behavior/prompt-eval layout"
+  else
+    fail "missing .agent/evaluations/behavior/prompt-eval/.gitkeep"
+  fi
+  if [[ -x "$ROOT/scripts/run-prompt-eval.sh" ]]; then
+    ok "scripts/run-prompt-eval.sh present"
+  else
+    fail "missing executable scripts/run-prompt-eval.sh"
+  fi
+  # Fail-closed smoke: prompt-eval must refuse when enable flag is unset.
+  if env -u COMPASS_PROMPT_EVAL_ENABLED "$ROOT/scripts/run-prompt-eval.sh" run --repo-root "$ROOT" >/dev/null 2>&1; then
+    fail "prompt-eval should fail closed when COMPASS_PROMPT_EVAL_ENABLED unset"
+  else
+    ok "prompt-eval fail-closed when COMPASS_PROMPT_EVAL_ENABLED unset"
+  fi
   if [[ -f "$ROOT/scripts/run-evaluation.sh" ]]; then
     ok "scripts/run-evaluation.sh present"
   else

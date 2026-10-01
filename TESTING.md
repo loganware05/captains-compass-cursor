@@ -236,6 +236,20 @@ Unset `COMPASS_INSTRUCTIONS_ENABLED` → CLI exits non-zero. Registry under
 `prompt_bundle_hash` when a bundle resolves (record-only). See
 `.agent/evidence/m48-instruction-registry/VALIDATION.md`.
 
+Prompt evaluation harness (M49; eval/proposal-only; requires enable flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m49_prompt_evaluation_harness -v
+
+COMPASS_PROMPT_EVAL_ENABLED=1 \
+./scripts/northstar prompt-eval run --repo .
+```
+
+Unset `COMPASS_PROMPT_EVAL_ENABLED` → CLI exits non-zero. Reports under
+`.agent/evaluations/behavior/prompt-eval/` (+ evidence summary). Never promotes
+instructions or mutates `.cursor/`. See
+`.agent/evidence/m49-prompt-evaluation-harness/VALIDATION.md`.
+
 Fail-closed hook detectors — added-line / executable-hook scope (M42):
 
 ```bash

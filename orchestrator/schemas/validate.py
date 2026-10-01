@@ -38,6 +38,7 @@ SCHEMA_FILES = (
     "behavior-candidate.schema.json",
     "instruction.schema.json",
     "prompt-bundle.schema.json",
+    "prompt-eval-report.schema.json",
 )
 
 
