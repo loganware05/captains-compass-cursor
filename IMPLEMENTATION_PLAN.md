@@ -4,11 +4,12 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING APPROVAL** |
+| Status | **APPROVED** |
 | Plan ID | `m47-behavior-pattern-learning` |
-| Approved | — |
+| Approved | 2026-10-01 — Captain: "I approve" + open-question answers |
 | Linear | [OVA-59](https://linear.app/ovaltechnologysolutions/issue/OVA-59/m47-behavior-pattern-learning-v1470) · Milestone **M47 — Behavior Pattern Learning** |
 | Spec source | [Notion: Behavioral Intelligence Loop Sprint](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) (M47 section) |
+| Notion plan mirror | [M47 Implementation Plan](https://app.notion.com/p/3ece6a901c438155825fd9cc9c15756d) |
 | Prerequisite | **M46 merged** — PR [#184](https://github.com/loganware05/captains-compass-cursor/pull/184) → `main` @ `cb4f463` (v1.46.0); OVA-58 Done |
 | Supersedes | — (consumes M46 behavior ledger; no Policy activation) |
 | Product | **NorthStar** (control repo `captains-compass-cursor`) |
@@ -57,6 +58,9 @@ No path may activate Policies, mutate Skills/routing/instructions, or set
 |---|---|
 | Proposal only | Patterns / candidates never auto-activate |
 | Min occurrence | Default **3** matching evaluations; configurable |
+| Grouping | Pattern key = signal + agent + skill (+ polarity) |
+| Polarity | Shared detector: `positive` (praise) vs `negative` (friction) |
+| Enable flag | `COMPASS_BEHAVIOR_LEARN_ENABLED` required (default off) + CLI |
 | Sample quality | Prefer non-abstaining, threshold-crossing (or praise) records; configurable |
 | Deterministic CI | Pure ledger scan; no network required |
 | Separate CLI | `northstar learn` distinct from `evaluate` / `outcomes` |
@@ -212,12 +216,14 @@ Additive. Empty patterns dir until first `learn scan`. No backfill required.
 | Over-firing on noise | min_occurrence + quality filters |
 | Scope creep into M48 | Hard Non-Goals |
 
-## Open Questions (Captain)
+## Resolved Decisions (Captain — 2026-10-01)
 
-1. Confirm enable flag `COMPASS_BEHAVIOR_LEARN_ENABLED` (mirror M46) vs CLI-only?
-2. Group patterns by signal only, or also by agent/skill dimensions in M47?
-3. Confirm release naming **v1.47.0**?
-4. Should positive (`praise`) and negative patterns share one detector with a `polarity` field?
+| # | Decision |
+|---|---|
+| 1 | **Both:** `COMPASS_BEHAVIOR_LEARN_ENABLED` (default off) **and** explicit `northstar learn` CLI |
+| 2 | Group by **signal + agent + skill** dimensions (not signal-only) |
+| 3 | Release naming **confirmed: v1.47.0** |
+| 4 | Shared detector with `polarity` field for praise (positive) vs friction (negative) |
 
 ## Assumptions
 
@@ -237,4 +243,9 @@ with evidence, and grant **no new mutating authority**.
 
 ## Approval Record
 
-<!-- After Captain approval, record who/when/revision; set Status APPROVED. -->
+| Field | Value |
+|---|---|
+| Approved by | Captain (Logan Ware) |
+| Approval date | 2026-10-01 |
+| Approval text | "I approve" + answers 1–4 |
+| Approved revision | plan with grouping agent/skill, polarity, enable flag, v1.47.0 |

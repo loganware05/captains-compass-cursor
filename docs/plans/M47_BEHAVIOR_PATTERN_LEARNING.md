@@ -1,4 +1,4 @@
-> **AWAITING APPROVAL** — Captain must approve before product implementation.
+> **APPROVED** (2026-10-01) — Captain must approve before product implementation.
 > Active root plan: `IMPLEMENTATION_PLAN.md` (Plan ID `m47-behavior-pattern-learning`).
 
 # M47 — Behavior Pattern Learning
