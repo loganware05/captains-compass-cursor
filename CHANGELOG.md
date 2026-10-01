@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.48.0 — 2026-10-01
+
+### Added
+
+- **M48 Instruction Registry + Prompt Composer (proposal-only)** — PICCO
+  bundles + `northstar instructions`:
+  - Requires `COMPASS_INSTRUCTIONS_ENABLED=1` (default off) and explicit CLI
+  - Registry under `.agent/evaluations/behavior/instructions/`
+  - `draft-from-candidates` from M47 `bcand-*`; compose deterministic
+    `prompt_bundle_hash`
+  - Evaluate records `prompt_bundle_hash` (record-only; no live prompt injection)
+  - ADR-065; plan `m48-instruction-registry` (OVA-60)
+
+
 ## 1.47.0 — 2026-10-01
 
 ### Added
