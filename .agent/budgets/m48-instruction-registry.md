@@ -21,7 +21,7 @@
 
 ## Usage
 
-- Iterations used: 1
+- Iterations used: 2
 - Failed validation cycles: 0
 - Estimated cost used (USD): 0
 - Cost is estimate: true
@@ -31,6 +31,7 @@
 
 | 2026-10-01 | iteration 0 | start | Captain approved; rollback/pre-m48-instruction-registry @ 402573e |
 | 2026-10-01 | iteration 1 | implement | registry under behavior, PICCO compose, draft-from-candidates, evaluate hash wire, v1.48.0 |
+| 2026-10-01 | iteration 2 | adversarial | evaluate lookup-only; scope subdirs; redact bodies; draft|candidate only |
 
 ## Stop condition
 

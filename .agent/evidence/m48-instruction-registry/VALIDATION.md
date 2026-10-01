@@ -22,18 +22,27 @@ PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m47_behavior_pattern_le
 | Check | Result |
 |---|---|
 | doctor | passed (0 errors, 0 warnings) |
-| test_m48_instruction_registry | 11/11 OK |
+| test_m48_instruction_registry | 12/12 OK |
 | M46/M47 regression | 35/35 OK |
 | full suite | 125 passed |
 | enable flag default off | covered |
 | PICCO hash deterministic | covered |
 | draft-from-candidates proposal-only | covered |
-| evaluate records prompt_bundle_hash | covered |
+| evaluate records prompt_bundle_hash | covered (lookup only; no seed) |
+| scope subdirs (global/agents/…) | covered |
 | no `.cursor/` mutation | covered |
 
 ## Security notes
 
 - Proposal-only locks on instruction + bundle schemas
 - Enable flag default off
-- Evaluate hash is record-only (no live prompt injection)
+- Evaluate hash is record-only (no live prompt injection; no registry seed)
+- Bodies redacted via `redact_text`
 - Distinct from `northstar skills learn`
+
+## Adversarial fixes (iteration 2)
+
+- Evaluate resolves existing bundles only (no seed/persist side effects)
+- Instructions persist under scope subdirs; list validates on read
+- `approval_state` limited to `draft|candidate` in M48
+- Model scope included in composer selection
