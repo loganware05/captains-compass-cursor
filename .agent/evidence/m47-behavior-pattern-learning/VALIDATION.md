@@ -22,13 +22,16 @@ PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m46_behavior_evaluation
 | Check | Result |
 |---|---|
 | doctor | passed (0 errors, 0 warnings) |
-| test_m47_behavior_pattern_learning | 17/17 OK |
+| test_m47_behavior_pattern_learning | 18/18 OK |
 | test_m46_behavior_evaluation (regression) | 17/17 OK |
 | min_occurrence default 3 | covered |
 | polarity praise/friction | covered |
 | candidates proposal-only | covered |
 | enable flag default off | covered |
 | no Skill/routing/Policy mutation | covered |
+| stale pattern prune on rescan | covered |
+| schema additionalProperties false | covered |
+| created_at preserved on overwrite | covered |
 
 ## Operator smoke (optional)
 
@@ -44,3 +47,10 @@ COMPASS_BEHAVIOR_LEARN_ENABLED=1 \
 - Candidates cannot grant authority
 - Enable flag default off
 - Distinct from `northstar skills learn`
+
+## Adversarial fixes (iteration 2)
+
+- Prune stale pattern/candidate JSON when they fall below min_occurrence
+- Schemas: `additionalProperties: false`; pattern requires
+  `approved_for_execution: false`
+- Preserve `created_at` on overwrite; set `updated_at`

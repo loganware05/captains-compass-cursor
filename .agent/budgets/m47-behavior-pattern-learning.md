@@ -21,7 +21,7 @@
 
 ## Usage
 
-- Iterations used: 1
+- Iterations used: 2
 - Failed validation cycles: 0
 - Estimated cost used (USD): 0
 - Cost is estimate: true
@@ -31,6 +31,7 @@
 
 | 2026-10-01 | iteration 0 | start | Captain approved; rollback/pre-m47-behavior-pattern-learning @ cb4f463 |
 | 2026-10-01 | iteration 1 | implement | schemas, detector, store, northstar learn, tests, docs v1.47.0 |
+| 2026-10-01 | iteration 2 | adversarial | prune stale patterns; schema allowlist; preserve created_at |
 
 ## Stop condition
 
