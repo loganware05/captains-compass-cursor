@@ -1,5 +1,5 @@
-> **APPROVED / IMPLEMENTING** (2026-10-01) — Captain approved; product impl in progress.
-> Active root plan: `IMPLEMENTATION_PLAN.md` (Plan ID `m48-instruction-registry`).
+> **COMPLETE** (2026-10-01) — Merged #186 → `main` @ `2d388cf` (v1.48.0). OVA-60 Done.
+> Next: M49 Prompt Evaluation Harness (`IMPLEMENTATION_PLAN.md`, Plan ID `m49-prompt-evaluation-harness`).
 
 # M48 — Instruction Registry + Prompt Composer
 
@@ -16,9 +16,9 @@ Prerequisite: M47 merged (#185 / v1.47.0).
 Governed instruction registry + PICCO prompt composer via `northstar instructions`
 — proposal-only; no Policy/Skill/`.cursor/` activation.
 
-## Baseline
+## Shipped
 
-v1.47.0 @ `402573e` → release **v1.48.0**
+v1.48.0 @ `2d388cf` (#186)
 
 ## Resolved decisions
 

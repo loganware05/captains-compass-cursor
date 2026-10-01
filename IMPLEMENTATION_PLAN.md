@@ -1,52 +1,56 @@
-# Implementation Plan — M48 / Instruction Registry + Prompt Composer
+# Implementation Plan — M49 / Prompt Evaluation Harness
 
 ## Metadata
 
 | Field | Value |
 |---|---|
 | Status | **APPROVED** |
-| Plan ID | `m48-instruction-registry` |
+| Plan ID | `m49-prompt-evaluation-harness` |
 | Approved | 2026-10-01 — Captain: "I approve" + open-question answers |
-| Linear | [OVA-60](https://linear.app/ovaltechnologysolutions/issue/OVA-60/m48-instruction-registry-prompt-composer-v1480) · Milestone **M48 — Instruction Registry + Prompt Composer** |
-| Spec source | [Notion: Behavioral Intelligence Loop Sprint](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) (M48 section) |
-| Notion plan mirror | [M48 Implementation Plan](https://app.notion.com/p/3ece6a901c43811c8c11ee59ccf913ba) |
-| Prerequisite | **M47 merged** — PR [#185](https://github.com/loganware05/captains-compass-cursor/pull/185) → `main` @ `402573e` (v1.47.0); OVA-59 Done |
-| Supersedes | — (consumes M47 candidates; no Policy activation / live prompt injection) |
+| Linear | [OVA-61](https://linear.app/ovaltechnologysolutions/issue/OVA-61/m49-prompt-evaluation-harness-v1490) · Milestone **M49 — Prompt Evaluation Harness** |
+| Spec source | [Notion: Behavioral Intelligence Loop Sprint](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) (M49 section) |
+| Notion plan mirror | [M49 Implementation Plan](https://app.notion.com/p/3ece6a901c4381cb8488e32b9b0e6634) |
+| Prerequisite | **M48 merged** — PR [#186](https://github.com/loganware05/captains-compass-cursor/pull/186) → `main` @ `2d388cf` (v1.48.0); OVA-60 Done |
+| Supersedes | — (consumes M48 bundles; no Policy activation / live prompt injection) |
 | Product | **NorthStar** (control repo `captains-compass-cursor`) |
-| Baseline | **v1.47.0** @ `402573e` |
+| Baseline | **v1.48.0** @ `2d388cf` |
 | Prepared | 2026-10-01 |
-| Proposed release | **v1.48.0** (registry + composer; proposal-only; hermetic CI default) |
-| Rollback | Tag `rollback/pre-m48-instruction-registry` @ `402573e` (create after approval) |
-| Proposed branch | `cursor/m48-instruction-registry-plan-3192` |
+| Proposed release | **v1.49.0** (prompt eval harness; proposal/eval-only; hermetic CI default) |
+| Rollback | Tag `rollback/pre-m49-prompt-evaluation-harness` @ `2d388cf` |
+| Proposed branch | `cursor/m49-prompt-evaluation-harness-plan-3192` |
 | Captain | Logan Ware |
 
 ## Request
 
-After M47 proposal-only pattern learning, establish **M48 Instruction Registry +
-Prompt Composer**: a governed registry of behavioral instructions and a
-PICCO-like composer that produces reproducible prompt bundles — without
+After M48 instruction registry + PICCO composer, establish **M49 Prompt
+Evaluation Harness**: hermetic regression fixtures that compare baseline
+instruction/prompt bundles against candidates before any promotion — without
 activating Policies, writing live `.cursor/` guidance, or granting authority.
 
 ## Problem Statement
 
-M47 emits `bcand-*` behavioral-guidance candidates, but NorthStar cannot yet:
+M48 can compose baseline vs proposal-inclusive bundles (`include_proposals`),
+but NorthStar cannot yet:
 
-1. Store versioned instructions with provenance, scope, and approval state
-2. Compose Persona / Instructions / Context / Constraints / Output bundles
-3. Produce stable `prompt_bundle_hash` values (schema hook exists; producers empty)
-4. Expose a stable `northstar instructions` operator surface
+1. Run labeled fixture scenarios against baseline vs candidate bundles
+2. Score non-regression on instruction adherence, schema validity, hallucinated
+   repository state, unnecessary scope, review precision, evidence completeness,
+   and approval-boundary compliance
+3. Emit a proposal-only comparison report that M50 can consume before promotion
+4. Expose a stable operator surface for prompt evaluation
 
-Without this, M49 prompt evaluation and M50 Policy promotion have no registry
-or composed-bundle layer to consume.
+Without this, candidate instructions can only “sound better” — not prove
+measurable non-regression before Captain-gated promotion (M50).
 
 ## Desired Outcome
 
 ```
-M47 patterns/candidates (+ seed templates)
-  → instruction registry (.agent/evaluations/behavior/instructions/)
-  → PICCO composer → prompt bundles + prompt_bundle_hash
-  → northstar instructions …
-  → evaluate records prompt_bundle_hash (record-only)
+M48 baseline bundle (include_proposals=False)
+  + candidate bundle (include_proposals=True | explicit candidate ids)
+  → fixture scenarios under tests/fixtures/behavior/prompt-eval/
+  → scored comparison report (proposal-only)
+  → northstar prompt-eval …
+  → evidence for M50 promotion gates (no activation)
 ```
 
 No path may activate Policies, mutate `.cursor/rules|skills|agents`, mutate
@@ -56,92 +60,166 @@ Skills/routing, or set `approved_for_execution`.
 
 | Principle | Implication |
 |---|---|
-| Proposal only | Draft instructions / bundles never auto-activate into live prompts |
-| Separate from Skills | Capability (Skills) ≠ behavior (Policies/instructions) |
-| PICCO contract | Composer emits Persona, Instructions, Context, Constraints, Output |
-| Provenance | Each entry carries evidence refs, source candidate/pattern ids, version |
-| Enable flag | `COMPASS_INSTRUCTIONS_ENABLED` (default off) **and** explicit CLI |
-| Registry root | `.agent/evaluations/behavior/instructions/` (under behavior) |
-| M47 intake | `draft-from-candidates` included in M48 |
-| Evaluate wire | Record `prompt_bundle_hash` on evaluate (no live prompt injection) |
-| Deterministic CI | Compose from fixtures; no network required |
-| Fail closed | Missing registry / invalid entry → no bundle; never mutate authority |
+| Eval / proposal only | Reports never auto-promote or activate instructions |
+| Separate from behavior evaluate | `northstar evaluate` = run scoring (M46); prompt-eval = instruction non-regression |
+| Separate from Compass Evaluator | Do not overload `evaluation.schema.json` (ADR-063 / ADR-065) |
+| Baseline fork | Baseline compose forces `include_proposals=False` |
+| Hermetic CI | Fixture/file scoring only; no live LLM/Jev in CI |
+| Fail closed | Missing fixtures / invalid candidate → fail report; never mutate authority |
+| Enable gate | Dual gate (env + explicit CLI), mirroring M46–M48 |
 
 ## Resolved Decisions (Captain — 2026-10-01)
 
 | # | Decision |
 |---|---|
-| 1 | **Both:** `COMPASS_INSTRUCTIONS_ENABLED` (default off) **and** explicit `northstar instructions` CLI |
-| 2 | Registry under **`.agent/evaluations/behavior/instructions/`** |
-| 3 | Release naming **confirmed: v1.48.0** |
-| 4 | **Include** M47 `draft-from-candidates` in M48 |
-| 5 | **Wire** `prompt_bundle_hash` into evaluate in M48 (record-only) |
+| 1 | Top-level **`northstar prompt-eval`** |
+| 2 | New **`COMPASS_PROMPT_EVAL_ENABLED`** (default off) **and** explicit CLI |
+| 3 | **Deterministic fixtures first** |
+| 4 | Release naming **confirmed: v1.49.0** |
+| 5 | Persist under **`.agent/evaluations/behavior/prompt-eval/` + evidence** |
 
 ## Scope
 
-### In (M48)
+### In (M49)
 
-1. `instruction.schema.json` + `prompt-bundle.schema.json`
-2. Registry layout under `.agent/evaluations/behavior/instructions/`
-3. Deterministic PICCO composer → bundle JSON + content hash
-4. Draft instruction proposals from M47 `bcand-*` candidates
-5. Persist bundles under `…/instructions/bundles/`
-6. `northstar instructions` CLI: `list`, `show`, `compose`, `draft-from-candidates`, `export`
-7. Enable gate: `COMPASS_INSTRUCTIONS_ENABLED` (default off) **and** explicit CLI
-8. Wire `prompt_bundle_hash` on `northstar evaluate` (record-only)
-9. Hermetic fixtures + unit/integration tests
-10. Docs: ADR-065, TESTING, PROGRESS, CHANGELOG, VERSION → 1.48.0
-11. Evidence under `.agent/evidence/m48-instruction-registry/`
+1. `prompt-eval-report.schema.json` — fail-closed (`approved_for_execution: false`, `authority_mutation: false`, `additionalProperties: false`)
+2. `orchestrator/behavior/prompt_eval/` — cases loader, baseline/candidate compose, compare, report, service
+3. Fixture pack under `tests/fixtures/behavior/prompt-eval/` (mini registry + cases + gold expectations)
+4. Metrics (at least): instruction adherence, schema validity, hallucinated repository state, unnecessary scope, verified-review precision, evidence completeness, approval-boundary compliance
+5. `northstar prompt-eval` CLI: `run`, `compare`, `export` (exact verbs may trim to `run` + `export` if sufficient)
+6. Enable gate: `COMPASS_PROMPT_EVAL_ENABLED` (default off) **and** explicit CLI *(pending Q2)*
+7. Persist reports under `.agent/evaluations/behavior/prompt-eval/` *(pending Q5)*
+8. Hermetic unit/integration tests (`tests/orchestrator/test_m49_prompt_evaluation_harness.py`)
+9. Docs: ADR-066, TESTING, PROGRESS, CHANGELOG, VERSION → 1.49.0
+10. Evidence under `.agent/evidence/m49-prompt-evaluation-harness/`
+11. Doctor smoke: fail-closed when flag unset
 
 ### Out (Non-Goals)
 
-- Live activation into `.cursor/rules|skills|agents` (M50)
-- Prompt evaluation harness / regression scoring (M49)
-- Policy promotion / shadow apply / Active→Proven lifecycle (M50)
-- Project Overseer (M51)
+- Policy / instruction activation or shadow apply (M50)
+- Live writes to `.cursor/rules|skills|agents`
 - Mutating Skills, routing, reputation, or Captain approval
+- Live Jev/LLM scoring in CI
+- Folding into `northstar evaluate` (behavior ledger) or Compass Evaluator schema
+- Project Overseer (M51)
 - Database / Prisma / frontend
 
 ## Proposed Architecture
 
 ```
-scripts/northstar instructions …
+scripts/northstar prompt-eval …
         │
         ▼
-scripts/run-instructions.sh
+scripts/run-prompt-eval.sh
         │
         ▼
-orchestrator/behavior/instructions/
-  registry.py / store.py / composer.py / draft.py / service.py
+orchestrator/behavior/prompt_eval/
+  cases.py / compare.py / report.py / service.py
+        │
+        ├─► composer.compose_prompt_bundle(include_proposals=False)  # baseline
+        └─► composer.compose_prompt_bundle(include_proposals=True)   # candidate
         │
         ▼
-.agent/evaluations/behavior/instructions/
-  registry.json
-  global/  agents/  task-types/  models/
-  proposals/  bundles/
+.agent/evaluations/behavior/prompt-eval/<report-id>.json
+(+ evidence summary under .agent/evidence/m49-prompt-evaluation-harness/)
 ```
+
+### Scoring model (hermetic)
+
+Reuse patterns from:
+
+- `orchestrator/providers/decision/eval.py` — labeled cases + wrong/missed metrics
+- DecisionProvider shadow — baseline vs candidate disagreement (evidence only)
+- Precision ledger — aggregate labeled outcomes without auto-apply
+
+Each fixture case supplies:
+
+- context (`agent`, `skill_id`, `task_type`, `model_hint`)
+- optional candidate instruction ids / proposal fixtures
+- gold expectations (must-pass properties + allowed regressions)
+
+Compare produces per-case deltas and an aggregate `non_regression: pass|fail`.
+
+## Files to Add / Modify
+
+### Add
+
+| Path | Purpose |
+|---|---|
+| `orchestrator/behavior/prompt_eval/__init__.py` | Package |
+| `orchestrator/behavior/prompt_eval/cases.py` | Load fixture cases |
+| `orchestrator/behavior/prompt_eval/compare.py` | Baseline vs candidate compare |
+| `orchestrator/behavior/prompt_eval/report.py` | Persist / validate report |
+| `orchestrator/behavior/prompt_eval/service.py` | CLI service layer |
+| `orchestrator/schemas/prompt-eval-report.schema.json` | Report contract |
+| `tests/fixtures/behavior/prompt-eval/` | Mini registry + cases |
+| `scripts/run-prompt-eval.sh` | Enable-gated runner |
+| `tests/orchestrator/test_m49_prompt_evaluation_harness.py` | Hermetic tests |
+| `docs/plans/M49_PROMPT_EVALUATION_HARNESS.md` | Plan archive |
+| `.agent/budgets/m49-prompt-evaluation-harness.md` | Autonomy budget |
+| `.agent/evidence/m49-prompt-evaluation-harness/` | Validation evidence |
+
+### Modify (thin)
+
+| Path | Change |
+|---|---|
+| `orchestrator/behavior/enabled.py` | `prompt_eval_enabled()` / `require_prompt_eval_enabled()` |
+| `scripts/northstar` | Dispatch `prompt-eval` |
+| `scripts/doctor.sh` | Fail-closed smoke when unset |
+| `orchestrator/schemas/validate.py` | Register report schema |
+| `TESTING.md`, `CHANGELOG.md`, `PROGRESS.md`, `DECISIONS.md`, `VERSION` | M49 docs/release |
+| Optional thin: `composer.py` | Document/export baseline helper if needed (flag already exists) |
+
+### Explicit non-touch
+
+- No M50 Policy promotion / `.cursor/` writes
+- No changes to M46 evaluate authority boundaries
+- No live provider keys in fixtures
 
 ## Acceptance Criteria
 
-- [x] Registry can list/show validated instruction entries
-- [x] Composer produces deterministic PICCO bundles + stable `prompt_bundle_hash`
-- [x] Drafts from M47 candidates stay `approval_state: draft` / `approved_for_execution: false`
-- [x] `northstar instructions` requires enable flag + explicit CLI
-- [x] Evaluate records `prompt_bundle_hash` when a bundle resolves (record-only)
-- [x] Hermetic CI; no network; doctor/tests green *(validate before merge)*
+- [x] Harness composes baseline (`include_proposals=False`) vs candidate bundles
+- [x] Fixture cases score the listed non-regression properties hermetically
+- [x] Report schema rejects `approved_for_execution: true` / authority mutation
+- [x] `northstar prompt-eval` requires enable flag + explicit CLI
 - [x] No write to `.cursor/rules|skills|agents`; no Skill/routing/Policy activation
-- [x] M46 evaluate + M47 learn paths still pass
-- [x] Secrets never enter instruction/bundle artifacts
+- [x] No live LLM/Jev required for CI
+- [x] M46 evaluate + M47 learn + M48 instructions paths still pass
+- [x] Doctor/tests green; secrets never enter reports
+- [x] Evidence + ADR-066 + VERSION 1.49.0
+
+## Test Matrix
+
+| Layer | Coverage |
+|---|---|
+| Unit | Case load, hash/diff compare, schema reject, enable gate |
+| Integration | CLI `run` / `export` against fixture registry |
+| Regression | Existing M46/M47/M48 suites unchanged |
+| Security | No `.cursor/` writes; fail-closed gates; redaction |
+| Doctor | Flag unset → prompt-eval unavailable |
 
 ## Rollback Plan
 
-1. Unset `COMPASS_INSTRUCTIONS_ENABLED`; stop using `northstar instructions`
-2. Checkout `rollback/pre-m48-instruction-registry`
-3. Delete `.agent/evaluations/behavior/instructions/` if needed (M46/M47 ledgers intact)
+1. Unset `COMPASS_PROMPT_EVAL_ENABLED`; stop using `northstar prompt-eval`
+2. Checkout `rollback/pre-m49-prompt-evaluation-harness`
+3. Delete `.agent/evaluations/behavior/prompt-eval/` if needed (M46–M48 artifacts intact)
+
+## Migration Impact
+
+- Additive only; default-off gate
+- No database / schema migrations
+- Existing instruction registry layout unchanged
+
+## Security Considerations
+
+- Proposal-only report schema (`additionalProperties: false`)
+- Fail closed on missing/invalid inputs
+- No secrets in fixture packs or reports (reuse `redact_text`)
+- No authority or live-prompt mutation paths
 
 ## Approval Boundary
 
-**Implementation must not begin until the Captain explicitly approves this plan.**
+**Implementation proceeds under this approved revision.**
 
 ## Approval Record
 
@@ -150,4 +228,4 @@ orchestrator/behavior/instructions/
 | Approved by | Captain (Logan Ware) |
 | Approval date | 2026-10-01 |
 | Approval text | "I approve" + answers 1–5 |
-| Approved revision | under-behavior registry, draft-from-candidates, evaluate hash wire, v1.48.0 |
+| Approved revision | `northstar prompt-eval`, `COMPASS_PROMPT_EVAL_ENABLED`, deterministic fixtures, v1.49.0, persist under behavior/prompt-eval + evidence |

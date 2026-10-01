@@ -1,10 +1,10 @@
-# Decision Provider (M41–M48) — skills, ranking, review, routing, behavior eval/learn/instructions
+# Decision Provider (M41–M49) — skills, ranking, review, routing, behavior eval/learn/instructions/prompt-eval
 
 Canonical package: `orchestrator/providers/decision/`  
 Plans: `m41-jev-decision-service`, `m43-jev-ranking-enablement`,
 `m44-jev-review-triage`, `m45-jev-agent-routing`,
 `m46-behavior-intelligence-foundation`, `m47-behavior-pattern-learning`,
-`m48-instruction-registry`  
+`m48-instruction-registry`, `m49-prompt-evaluation-harness`  
 Pinned live model: **`jev-1.13.0`** (aliases `jev-latest` / `jev-preview` refused)
 
 ## Authority
@@ -20,11 +20,13 @@ Pinned live model: **`jev-1.13.0`** (aliases `jev-latest` / `jev-preview` refuse
   candidates; never activates Policies or mutates Skills/routing/instructions.
 - Instruction registry (M48) is **proposal-only** — PICCO bundles + drafts;
   never activates Policies or writes live `.cursor/` guidance.
+- Prompt evaluation (M49) is **eval/proposal-only** — baseline-vs-candidate
+  reports; never promotes instructions or mutates `.cursor/` / Skills / routing.
 - On API failure, unsupported input, abstain, or gate miss → **fail closed** to
   baseline (matcher / deterministic review / hard-filtered router).
 - Default / CI: provider **stub**; APPLY, shadow flags,
-  `COMPASS_BEHAVIOR_EVAL_ENABLED`, `COMPASS_BEHAVIOR_LEARN_ENABLED`, and
-  `COMPASS_INSTRUCTIONS_ENABLED` unset.
+  `COMPASS_BEHAVIOR_EVAL_ENABLED`, `COMPASS_BEHAVIOR_LEARN_ENABLED`,
+  `COMPASS_INSTRUCTIONS_ENABLED`, and `COMPASS_PROMPT_EVAL_ENABLED` unset.
 
 ## Env contract
 
@@ -42,6 +44,7 @@ Pinned live model: **`jev-1.13.0`** (aliases `jev-latest` / `jev-preview` refuse
 | `COMPASS_BEHAVIOR_LEARN_ENABLED` | unset/off | Required for `northstar learn` (M47); default off |
 | `COMPASS_BEHAVIOR_LEARN_MIN_OCCURRENCE` | `3` | Minimum qualifying evaluations per pattern |
 | `COMPASS_INSTRUCTIONS_ENABLED` | unset/off | Required for `northstar instructions` (M48); default off |
+| `COMPASS_PROMPT_EVAL_ENABLED` | unset/off | Required for `northstar prompt-eval` (M49); default off |
 | `COMPASS_DECISION_FIXTURES_DIR` | package fixtures | Offline file-provider fixtures |
 | `COMPASS_JEV_MODEL_ID` | *(required for `jev`)* | Must be exactly `jev-1.13.0` (aliases refused) |
 | `COMPASS_JEV_API_KEY` or `TYPESAFE_API_KEY` | unset | Captain-local only; never commit |
@@ -141,6 +144,18 @@ Registry + bundles under `.agent/evaluations/behavior/instructions/`.
 `draft-from-candidates` consumes M47 `bcand-*`. Distinct from
 `northstar skills learn`. Never writes `.cursor/` or activates Policies.
 
+## Prompt evaluation harness (M49, eval/proposal-only)
+
+```bash
+COMPASS_PROMPT_EVAL_ENABLED=1 \
+./scripts/northstar prompt-eval run --repo .
+```
+
+Compares baseline (`include_proposals=false`) vs candidate
+(`include_proposals=true`) using hermetic fixtures. Reports under
+`.agent/evaluations/behavior/prompt-eval/` (+ evidence summary). Never
+promotes instructions or activates Policies. No live LLM/Jev required for CI.
+
 ## Protocols (Jev)
 
 - Skills: two-pass `skill_suggest_v1` → `skill_recheck_v1`
@@ -159,12 +174,13 @@ Question revision JSON: `orchestrator/providers/decision/questions/`.
 5. ~~Behavior Intelligence Foundation observe-only (M46)~~
 6. ~~Behavior Pattern Learning proposal-only (M47)~~
 7. ~~Instruction Registry + Prompt Composer proposal-only (M48)~~
-8. (Later) M49–M50 prompt eval / Policy promotion; mutating review/agent apply
+8. ~~Prompt Evaluation Harness eval-only (M49)~~
+9. (Later) M50 Policy promotion; mutating review/agent apply
 
 ## Related
 
 - Notion research draft: NorthStar × Jev — Decision Service Implementation Draft
 - Notion sprint: NorthStar Behavioral Intelligence Loop — Sprint Development Plan
 - TypeSafe: https://docs.typesafe.ai/models (`jev-1.13.0`)
-- ADR-058 / ADR-060 / ADR-061 / ADR-062 / ADR-063 / ADR-064 / ADR-065
+- ADR-058 / ADR-060 / ADR-061 / ADR-062 / ADR-063 / ADR-064 / ADR-065 / ADR-066
 - Agent routing contract: `docs/integrations/agent-routing-contract.md`

@@ -6,7 +6,7 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.48.0
+## Current version: 1.49.0
 
 ### Included
 
@@ -18,10 +18,10 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 - Six Cursor phase slash commands (`.cursor/commands/`)
 - Autonomy budgets + session notes (`.agent/budgets/`, `.agent/sessions/`)
 - Evidence matrix, multi-runtime docs, technology-intelligence adapter contract, harness evals + sandbox behavioral checklist
-- Behavior Intelligence (M46 evaluate) + Pattern Learning (M47 learn) + Instruction Registry (M48) — proposal/observe-only
+- Behavior Intelligence (M46–M49): evaluate → learn → instructions → prompt-eval — proposal/observe/eval-only
 - Structural-test examples (`examples/structural-tests/`)
 - Thin `CLAUDE.md` adapter when missing
-- Topology-free `scripts/northstar` launcher (skills + review + outcomes + repair + precision + evaluate + learn + instructions)
+- Topology-free `scripts/northstar` launcher (skills + review + outcomes + repair + precision + evaluate + learn + instructions + prompt-eval)
 - Operator docs index: [`docs/INDEX.md`](docs/INDEX.md)
 - `install.sh`, `update.sh`, `uninstall.sh`, `doctor.sh`
 - Control-repo CI (doctor + tests + evals)

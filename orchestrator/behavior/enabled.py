@@ -44,3 +44,15 @@ def require_instructions_enabled() -> None:
             "behavior instructions disabled — set COMPASS_INSTRUCTIONS_ENABLED=1 "
             "and invoke northstar instructions explicitly"
         )
+
+
+def prompt_eval_enabled() -> bool:
+    return _truthy("COMPASS_PROMPT_EVAL_ENABLED")
+
+
+def require_prompt_eval_enabled() -> None:
+    if not prompt_eval_enabled():
+        raise PermissionError(
+            "prompt evaluation disabled — set COMPASS_PROMPT_EVAL_ENABLED=1 "
+            "and invoke northstar prompt-eval explicitly"
+        )

@@ -2,7 +2,7 @@
 # northstar — topology-free launcher for NorthStar control-plane operations (M24 / M34).
 #
 # One product surface for Skills Learning Loop + Code Reviewer:
-#   northstar skills … | review | intent | outcomes | repair | precision | evaluate | learn | instructions
+#   northstar skills … | review | intent | outcomes | repair | precision | evaluate | learn | instructions | prompt-eval
 #
 # Scripts always live in this control repository. Product/sandbox checkouts do
 # not contain ./scripts/run-skill-learning-loop.sh (or siblings).
@@ -29,6 +29,7 @@ Usage:
   northstar evaluate <subcommand> …
   northstar learn <subcommand> …
   northstar instructions <subcommand> …
+  northstar prompt-eval <subcommand> …
 
 Surfaces (one-line purpose):
   skills      Learning Loop — refresh TI, learn, promote, sync-ledger, route-agents
@@ -42,6 +43,7 @@ Surfaces (one-line purpose):
   evaluate    Behavior evaluation (M46) — observe-only; requires COMPASS_BEHAVIOR_EVAL_ENABLED=1
   learn       Behavior pattern learning (M47) — proposal-only; requires COMPASS_BEHAVIOR_LEARN_ENABLED=1
   instructions Instruction registry + PICCO composer (M48) — proposal-only; requires COMPASS_INSTRUCTIONS_ENABLED=1
+  prompt-eval Prompt evaluation harness (M49) — eval-only; requires COMPASS_PROMPT_EVAL_ENABLED=1
 
 Commands:
   northstar skills refresh [--repo PATH] [refresh-ti-cache.sh options]
@@ -71,6 +73,9 @@ Commands:
   northstar instructions compose [--agent NAME] [--skill-id ID] [--repo PATH]
   northstar instructions draft-from-candidates [--repo PATH]
   northstar instructions export --format csv [--out PATH] [--repo PATH]
+  northstar prompt-eval run [--cases PATH] [--repo PATH]
+  northstar prompt-eval compare [--agent NAME] [--skill-id ID] [--repo PATH]
+  northstar prompt-eval export --format csv [--out PATH] [--repo PATH]
 
 Topology:
   CONTROL  = directory containing this launcher (captains-compass-cursor)
@@ -100,6 +105,8 @@ Locks:
   never activates Policies or mutates Skills/routing/instructions/authority.
   Instructions (M48) are proposal-only; requires COMPASS_INSTRUCTIONS_ENABLED=1;
   never activates Policies or writes live .cursor/Skills/routing/authority.
+  Prompt-eval (M49) is eval/proposal-only; requires COMPASS_PROMPT_EVAL_ENABLED=1;
+  never promotes instructions or mutates .cursor/Skills/routing/authority.
 USAGE
 }
 
@@ -392,6 +399,29 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown instructions subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  prompt-eval)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      run|compare|export)
+        exec "$ROOT/scripts/run-prompt-eval.sh" "$sub" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown prompt-eval subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;
