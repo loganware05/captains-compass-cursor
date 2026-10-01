@@ -4,9 +4,9 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING APPROVAL** |
+| Status | **APPROVED** |
 | Plan ID | `m46-behavior-intelligence-foundation` |
-| Approved | — |
+| Approved | 2026-10-01 — Captain: "I approve" |
 | Linear | [OVA-58](https://linear.app/ovaltechnologysolutions/issue/OVA-58/m46-behavior-intelligence-foundation-v1460) · Project [P-OVA-4](https://linear.app/ovaltechnologysolutions/project/northstar-behavioral-intelligence-loop-e24174b3f1ef) · Milestone **M46 — Behavior Intelligence Foundation** |
 | Spec source | [Notion: NorthStar Behavioral Intelligence Loop — Sprint Development Plan](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) (fetched 2026-09-30) |
 | Notion plan mirror | [M46 Implementation Plan (Notion)](https://app.notion.com/p/3ece6a901c4381a0826dcc5e553daa40) |
@@ -428,7 +428,9 @@ This cloud turn produces **plan documentation only** (no product implementation)
 
 ## Approval Record
 
-<!-- After Captain approval, record who approved, when, and the plan revision.
-     Set Status to APPROVED. Promoting Status via Write/StrReplace requires
-     COMPASS_CAPTAIN_APPROVE=1. Commit the approved plan before product-source
-     edits. -->
+| Field | Value |
+|---|---|
+| Approved by | Captain (Logan Ware) |
+| Approval date | 2026-10-01 |
+| Approval text | "I approve" |
+| Approved revision | plan with Captain-resolved open questions (OVA-58, Notion mirror) |
