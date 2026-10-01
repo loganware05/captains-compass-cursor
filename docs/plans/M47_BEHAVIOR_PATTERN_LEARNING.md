@@ -1,24 +1,23 @@
-> **APPROVED / IMPLEMENTING** (2026-10-01) — Captain approved; product impl in progress.
-> Active root plan: `IMPLEMENTATION_PLAN.md` (Plan ID `m47-behavior-pattern-learning`).
+> **COMPLETE** (2026-10-01) — Merged [#185](https://github.com/loganware05/captains-compass-cursor/pull/185) → `main` @ `402573e` (v1.47.0).
 
 # M47 — Behavior Pattern Learning
 
 Spec source: [Notion — Behavioral Intelligence Loop Sprint](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) (Post-M46 → M47)
 
-Linear: [OVA-59](https://linear.app/ovaltechnologysolutions/issue/OVA-59/m47-behavior-pattern-learning-v1470)
-
-Prerequisite: M46 merged (#184 / v1.46.0).
-
-See root `IMPLEMENTATION_PLAN.md` for the full approval-gated contract.
+Linear: [OVA-59](https://linear.app/ovaltechnologysolutions/issue/OVA-59/m47-behavior-pattern-learning-v1470) **Done**
 
 ## One-line summary
 
 Detect recurring patterns from the M46 behavior ledger and emit **proposal-only**
 candidate guidance via `northstar learn` — no Policy/Skill/routing activation.
 
-## Baseline
+## Shipped
 
-v1.46.0 @ `cb4f463` → release **v1.47.0**
+- Release **v1.47.0**
+- `COMPASS_BEHAVIOR_LEARN_ENABLED` + `northstar learn`
+- Grouping: signal + agent + skill + polarity; `min_occurrence` default 3
+- Artifacts: `.agent/evaluations/behavior/patterns/` (+ `candidates/`)
+- ADR-064; evidence `.agent/evidence/m47-behavior-pattern-learning/`
 
 ## Operator surface
 
@@ -27,5 +26,3 @@ COMPASS_BEHAVIOR_LEARN_ENABLED=1 ./scripts/northstar learn scan --repo .
 COMPASS_BEHAVIOR_LEARN_ENABLED=1 ./scripts/northstar learn list --repo .
 COMPASS_BEHAVIOR_LEARN_ENABLED=1 ./scripts/northstar learn show <pattern-id> --repo .
 ```
-
-Artifacts: `.agent/evaluations/behavior/patterns/` (+ `candidates/`).

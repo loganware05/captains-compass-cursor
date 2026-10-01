@@ -6,21 +6,22 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.37.0
+## Current version: 1.47.0
 
 ### Included
 
 - Approval-gated operating model (`AGENTS.md` + five core rules)
-- Forty-one Skills (including skill-learning-loop, knowledge-steward, persistent-role-promotion, bounded-autonomy, compass-evaluator, experience-routing, capability-planning, execution-telemetry, candidate-promotion, experience-skill-training)
+- Forty-four Skills (including skill-learning-loop, knowledge-steward, code-reviewer, persistent-role-promotion, bounded-autonomy, compass-evaluator, experience-routing, capability-planning, execution-telemetry, candidate-promotion, experience-skill-training)
 - Capability-aware planning orchestrator (`orchestrator/`, `scripts/capability-plan.sh`)
-- Ten specialist subagents (also indexed as reference agent profiles)
+- Eleven specialist subagents (also indexed as reference agent profiles)
 - Seven safety hooks (critical fail-closed; soft skips via env / command string / marker)
 - Six Cursor phase slash commands (`.cursor/commands/`)
 - Autonomy budgets + session notes (`.agent/budgets/`, `.agent/sessions/`)
 - Evidence matrix, multi-runtime docs, technology-intelligence adapter contract, harness evals + sandbox behavioral checklist
+- Behavior Intelligence (M46 evaluate) + Pattern Learning (M47 learn) — proposal/observe-only
 - Structural-test examples (`examples/structural-tests/`)
 - Thin `CLAUDE.md` adapter when missing
-- Topology-free `scripts/northstar` launcher (skills + review + outcomes + repair + precision)
+- Topology-free `scripts/northstar` launcher (skills + review + outcomes + repair + precision + evaluate + learn)
 - Operator docs index: [`docs/INDEX.md`](docs/INDEX.md)
 - `install.sh`, `update.sh`, `uninstall.sh`, `doctor.sh`
 - Control-repo CI (doctor + tests + evals)

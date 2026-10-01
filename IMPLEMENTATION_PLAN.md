@@ -1,149 +1,168 @@
-# Implementation Plan — M47 / Behavior Pattern Learning
+# Implementation Plan — M48 / Instruction Registry + Prompt Composer
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
-| Plan ID | `m47-behavior-pattern-learning` |
-| Approved | 2026-10-01 — Captain: "I approve" + open-question answers |
-| Linear | [OVA-59](https://linear.app/ovaltechnologysolutions/issue/OVA-59/m47-behavior-pattern-learning-v1470) · Milestone **M47 — Behavior Pattern Learning** |
-| Spec source | [Notion: Behavioral Intelligence Loop Sprint](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) (M47 section) |
-| Notion plan mirror | [M47 Implementation Plan](https://app.notion.com/p/3ece6a901c438155825fd9cc9c15756d) |
-| Prerequisite | **M46 merged** — PR [#184](https://github.com/loganware05/captains-compass-cursor/pull/184) → `main` @ `cb4f463` (v1.46.0); OVA-58 Done |
-| Supersedes | — (consumes M46 behavior ledger; no Policy activation) |
+| Status | **AWAITING APPROVAL** |
+| Plan ID | `m48-instruction-registry` |
+| Linear | [OVA-60](https://linear.app/ovaltechnologysolutions/issue/OVA-60/m48-instruction-registry-prompt-composer-v1480) · Milestone **M48 — Instruction Registry + Prompt Composer** |
+| Spec source | [Notion: Behavioral Intelligence Loop Sprint](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) (M48 section) |
+| Notion plan mirror | *(create with this PR)* |
+| Prerequisite | **M47 merged** — PR [#185](https://github.com/loganware05/captains-compass-cursor/pull/185) → `main` @ `402573e` (v1.47.0); OVA-59 Done |
+| Supersedes | — (consumes M47 candidates; no Policy activation / live prompt injection) |
 | Product | **NorthStar** (control repo `captains-compass-cursor`) |
-| Baseline | **v1.46.0** @ `cb4f463` |
+| Baseline | **v1.47.0** @ `402573e` |
 | Prepared | 2026-10-01 |
-| Proposed release | **v1.47.0** (proposal-only patterns; hermetic CI default) |
-| Rollback | Tag `rollback/pre-m47-behavior-pattern-learning` @ `cb4f463` (create after approval) |
-| Proposed branch | `cursor/m47-behavior-pattern-learning-3192` *(implementation after approval; this PR is plan + M46 closeout)* |
+| Proposed release | **v1.48.0** (registry + composer; proposal-only; hermetic CI default) |
+| Rollback | Tag `rollback/pre-m48-instruction-registry` @ `402573e` (create after approval) |
+| Proposed branch | `cursor/m48-instruction-registry-3192` *(implementation after approval; this PR is plan + M47 closeout)* |
 | Captain | Logan Ware |
 
 ## Request
 
-After M46 observe-only evaluation, establish **M47 Behavior Pattern Learning**:
-detect recurring patterns from the behavior evaluation ledger, group evidence,
-and emit **candidate** behavioral guidance — without activating Policies,
-mutating prompts/Skills/routing, or granting authority.
+After M47 proposal-only pattern learning, establish **M48 Instruction Registry +
+Prompt Composer**: a governed registry of behavioral instructions and a
+PICCO-like composer that produces reproducible prompt bundles — without
+activating Policies, writing live `.cursor/` guidance, or granting authority.
 
 ## Problem Statement
 
-M46 persists per-execution behavior scores, but NorthStar cannot yet:
+M47 emits `bcand-*` behavioral-guidance candidates, but NorthStar cannot yet:
 
-1. Detect recurring friction / praise patterns across multiple evaluations
-2. Require repeated evidence (not a single bad run) before surfacing a pattern
-3. Emit inspectable candidate guidance for later M48–M50 governance
-4. Expose a stable `northstar learn` operator surface
+1. Store versioned instructions with provenance, scope, and approval state
+2. Compose Persona / Instructions / Context / Constraints / Output bundles
+3. Produce stable `prompt_bundle_hash` values (schema hook exists; producers empty)
+4. Expose a stable `northstar instructions` operator surface
 
-Without this, Policy/instruction promotion (M48–M50) has no evidence-backed
-pattern layer to consume.
+Without this, M49 prompt evaluation and M50 Policy promotion have no registry
+or composed-bundle layer to consume.
 
 ## Desired Outcome
 
 ```
-.agent/evaluations/behavior/ (M46 ledger)
-  → pattern detector (min_occurrence default 3 + quality gates)
-  → pattern records + evidence grouping
-  → candidate behavioral guidance (proposal-only)
-  → northstar learn …
+M47 patterns/candidates (+ optional seed templates)
+  → instruction registry (.agent/instructions/)
+  → PICCO composer → prompt bundles + prompt_bundle_hash
+  → northstar instructions …
 ```
 
-No path may activate Policies, mutate Skills/routing/instructions, or set
-`approved_for_execution`.
+No path may activate Policies, mutate `.cursor/rules|skills|agents`, mutate
+Skills/routing, or set `approved_for_execution`.
 
 ## Decision Summary
 
 | Principle | Implication |
 |---|---|
-| Proposal only | Patterns / candidates never auto-activate |
-| Min occurrence | Default **3** matching evaluations; configurable |
-| Grouping | Pattern key = signal + agent + skill (+ polarity) |
-| Polarity | Shared detector: `positive` (praise) vs `negative` (friction) |
-| Enable flag | `COMPASS_BEHAVIOR_LEARN_ENABLED` required (default off) + CLI |
-| Sample quality | Prefer non-abstaining, threshold-crossing (or praise) records; configurable |
-| Deterministic CI | Pure ledger scan; no network required |
-| Separate CLI | `northstar learn` distinct from `evaluate` / `outcomes` |
-| Fail closed | Insufficient evidence → no candidate; never mutate authority |
-| Builds on M46 | Read dual ledger; do not overload M3 Compass Evaluator |
+| Proposal only | Draft instructions / bundles never auto-activate into live prompts |
+| Separate from Skills | Capability (Skills) ≠ behavior (Policies/instructions) |
+| PICCO contract | Composer emits Persona, Instructions, Context, Constraints, Output |
+| Provenance | Each entry carries evidence refs, source candidate/pattern ids, version |
+| Enable flag | Proposed: `COMPASS_INSTRUCTIONS_ENABLED` (default off) + explicit CLI |
+| Deterministic CI | Compose from fixtures; no network required |
+| Separate CLI | `northstar instructions` distinct from `evaluate` / `learn` / `skills` |
+| Fail closed | Missing registry / invalid entry → no bundle; never mutate authority |
+| Builds on M47 | Optional intake from `bcand-*`; does not overload Skill promotion |
 
-## Current-State Analysis (live repo @ `cb4f463`)
+## Current-State Analysis (live repo @ `402573e`)
 
-| Area | Location | M47 use |
+| Area | Location | M48 use |
 |---|---|---|
-| Behavior ledger | `orchestrator/behavior/ledger.py`, `.agent/evaluations/behavior/` | Input |
-| Signals / thresholds | `orchestrator/behavior/{signals,thresholds}.py` | Grouping keys + quality |
-| CLI launcher | `scripts/northstar` (`evaluate` exists; no `learn`) | Add `learn` |
-| Skill learning (distinct) | `orchestrator/learning/` Skills loop | **Do not conflate** — behavior patterns are separate |
-| Candidate promotion | `orchestrator/promotion/` | Optional later; M47 stays proposal-only |
-| Routing proposals | `.agent/routing/proposals/` | Pattern for proposal-only artifacts |
+| M47 candidates | `.agent/evaluations/behavior/patterns/candidates/` | Optional draft intake |
+| Empty hash hook | `evaluator.prompt_bundle_hash` on behavior eval | Composer output target |
+| Live guidance today | `.cursor/rules`, `.cursor/skills`, `.cursor/agents` | **Read-only reference; do not write** |
+| Proposal analogs | routing proposals, skill candidates, persistent-role staging | Pattern for proposal-only |
+| CLI launcher | `scripts/northstar` (`evaluate`, `learn`; no `instructions`) | Add `instructions` |
+| Skill learning | `orchestrator/learning/` | **Do not conflate** |
+| Instruction registry | **absent** | Create under `.agent/instructions/` |
 
 ### Capability-plan note
 
-`capability-plan.sh` incorrectly inferred a **frontend/React** workstream.
-**Rejected.** M47 is control-plane Python/CLI only.
+Reject any frontend/DB workstreams. M48 is control-plane Python/CLI + markdown
+registry artifacts only.
 
 ## Scope
 
-### In (M47)
+### In (M48)
 
-1. `behavior-pattern.schema.json` (+ optional candidate schema)
-2. Deterministic pattern detector over behavior ledger records
-3. Configurable `min_occurrence` (default 3) and sample-quality filters
-4. Persist under `.agent/evaluations/behavior/patterns/` (JSON + optional index/JSONL)
-5. Candidate behavioral guidance objects (proposal-only; `approved_for_execution: false`)
-6. `northstar learn` CLI: e.g. `scan`, `list`, `show <pattern-id>`, `export`
-7. Enable gate: `COMPASS_BEHAVIOR_LEARN_ENABLED` (default off) **and** explicit CLI — mirror M46 Captain preference unless revised
-8. Hermetic fixtures + unit/integration tests
-9. Docs: ADR-064, TESTING, PROGRESS, CHANGELOG, VERSION → 1.47.0
-10. Evidence under `.agent/evidence/m47-behavior-pattern-learning/`
+1. `instruction.schema.json` + `prompt-bundle.schema.json`
+2. Registry layout under `.agent/instructions/` (see architecture)
+3. Deterministic PICCO composer → bundle JSON + content hash
+4. Optional: draft instruction proposals from M47 `bcand-*` candidates
+5. Persist bundles under `.agent/instructions/bundles/`
+6. `northstar instructions` CLI: e.g. `list`, `show`, `compose`, `draft-from-candidates`, `export`
+7. Enable gate: `COMPASS_INSTRUCTIONS_ENABLED` (default off) **and** explicit CLI *(open Q1)*
+8. Wire `prompt_bundle_hash` when composing for a known execution context (record-only; no live prompt injection)
+9. Hermetic fixtures + unit/integration tests
+10. Docs: ADR-065, TESTING, PROGRESS, CHANGELOG, VERSION → 1.48.0
+11. Evidence under `.agent/evidence/m48-instruction-registry/`
 
 ### Out (Non-Goals)
 
-- Policy / instruction registry or activation (M48–M50)
-- Prompt mutation or shadow apply into live agent prompts
-- Skill promotion / reputation / routing mutation
-- Kimi Project Overseer (M51)
-- Replacing DecisionProvider or M46 evaluate
-- Auto-writing `.cursor/rules` or Skills from patterns
-- Database / Prisma
+- Live activation into `.cursor/rules|skills|agents` (M50)
+- Prompt evaluation harness / regression scoring (M49)
+- Policy promotion / shadow apply / Active→Proven lifecycle (M50)
+- Project Overseer (M51)
+- Mutating Skills, routing, reputation, or Captain approval
+- Database / Prisma / frontend
 
 ## Proposed Architecture
 
 ```
-scripts/northstar learn …
+scripts/northstar instructions …
         │
         ▼
-scripts/run-behavior-learn.sh
+scripts/run-instructions.sh
         │
         ▼
-orchestrator/behavior/patterns/
-  detect.py      # scan ledger → PatternCandidate[]
-  store.py       # persist patterns/
-  quality.py     # min_occurrence + sample filters
-  export.py      # optional CSV/JSON export
+orchestrator/instructions/
+  registry.py    # load/validate registry entries
+  composer.py    # PICCO compose → prompt-bundle + hash
+  draft.py       # optional M47 candidate → draft instruction
+  store.py       # persist bundles / proposals
+  enabled.py     # COMPASS_INSTRUCTIONS_ENABLED
         │
         ▼
-.agent/evaluations/behavior/patterns/{pattern_id}.json
+.agent/instructions/
+  registry.yaml          # index of instruction ids + paths
+  global/                # operating brief, shared constraints
+  agents/                # per-agent overlays
+  task-types/            # implementation / research / review / planning
+  models/                # model-specific rendering notes (optional)
+  proposals/             # draft instructions (proposal-only)
+  bundles/               # composed prompt-bundle JSON
 ```
 
-### Pattern key (initial)
-
-Group by: `signal` (+ optional `agent`, `skill_id`, `task_type` if present).
-A pattern fires when ≥ `min_occurrence` non-abstaining evaluations have that
-signal score ≥ the signal’s threshold (or `praise` ≥ general threshold for
-positive patterns).
-
-### Candidate guidance (proposal-only)
+### Instruction entry (conceptual)
 
 ```json
 {
-  "candidate_id": "bcand-...",
-  "pattern_id": "bpat-...",
-  "kind": "behavioral-guidance",
-  "summary": "...",
-  "signal": "rework_required",
-  "evidence_evaluation_ids": [],
+  "instruction_id": "instr-...",
+  "scope": "agent|task-type|global|model",
+  "title": "...",
+  "body_path": "agents/code-reviewer.md",
+  "source_candidate_ids": ["bcand-..."],
+  "evidence_pattern_ids": ["bpat-..."],
+  "schema_version": "1",
+  "approval_state": "draft",
+  "approved_for_execution": false,
+  "authority_mutation": false
+}
+```
+
+### Prompt bundle (conceptual)
+
+```json
+{
+  "bundle_id": "pbundle-...",
+  "prompt_bundle_hash": "sha256:...",
+  "persona": "...",
+  "instructions": ["..."],
+  "context": {},
+  "constraints": ["..."],
+  "output": "...",
+  "instruction_ids": ["instr-..."],
+  "model_hint": "",
   "approved_for_execution": false,
   "authority_mutation": false
 }
@@ -153,46 +172,48 @@ positive patterns).
 
 | ID | Work |
 |---|---|
-| WS1 | Pattern + candidate schemas |
-| WS2 | Detector + quality gates |
-| WS3 | Persistence under `patterns/` |
-| WS4 | `northstar learn` CLI + enable flag |
-| WS5 | Hermetic tests + fixtures (multi-eval ledger) |
-| WS6 | Docs ADR-064 / VERSION 1.47.0 / doctor |
+| WS1 | Instruction + prompt-bundle schemas |
+| WS2 | Registry layout + loader/validator |
+| WS3 | PICCO composer + deterministic hashing |
+| WS4 | Optional draft-from-M47-candidates |
+| WS5 | `northstar instructions` CLI + enable flag |
+| WS6 | Hermetic tests + fixtures; docs ADR-065 / VERSION 1.48.0 / doctor |
 
 ## Files Expected to Change
 
-**New:** `orchestrator/behavior/patterns/`, schemas, `scripts/run-behavior-learn.sh`,
-tests/fixtures, docs/plans/M47_…, evidence dir.
+**New:** `orchestrator/instructions/`, schemas, `scripts/run-instructions.sh`,
+`.agent/instructions/**`, tests/fixtures, `docs/plans/M48_…`, evidence dir.
 
 **Modify:** `scripts/northstar`, `scripts/doctor.sh`, DECISIONS/TESTING/PROGRESS/CHANGELOG/VERSION,
-`docs/integrations/decision-provider.md` (cross-link learn vs evaluate).
+`docs/integrations/decision-provider.md` (cross-link instructions vs evaluate/learn),
+optionally thin hook to record `prompt_bundle_hash` on behavior eval when a bundle is composed.
 
 ## Acceptance Criteria
 
-- [x] Ledger with ≥3 qualifying evaluations yields a pattern; fewer does not
-- [x] `min_occurrence` configurable; default 3
-- [x] Candidates always `approved_for_execution: false` / `authority_mutation: false`
-- [x] `northstar learn` requires enable flag + explicit CLI
-- [x] Hermetic CI; no network; doctor/tests green *(validate before merge)*
-- [x] No Skill/routing/instruction/Policy mutation
-- [x] M46 evaluate paths unchanged and still pass *(regression suite)*
-- [x] Secrets never enter pattern artifacts
+- [ ] Registry can list/show validated instruction entries from `.agent/instructions/`
+- [ ] Composer produces deterministic PICCO bundles + stable `prompt_bundle_hash`
+- [ ] Drafts from M47 candidates (if enabled) stay `approval_state: draft` / `approved_for_execution: false`
+- [ ] `northstar instructions` requires enable flag (if approved) + explicit CLI
+- [ ] Hermetic CI; no network; doctor/tests green
+- [ ] No write to `.cursor/rules|skills|agents`; no Skill/routing/Policy activation
+- [ ] M46 evaluate + M47 learn paths unchanged and still pass
+- [ ] Secrets never enter instruction/bundle artifacts
 
 ## Testing Strategy
 
 | Layer | What |
 |---|---|
-| Unit | Detector thresholds, min_occurrence edges, abstain exclusion |
-| Integration | `northstar learn scan` over fixture ledger |
-| Regression | Skills/routing/evaluate untouched |
-| Security | No secret leakage; proposal-only locks |
+| Unit | Schema locks, hash stability, PICCO field presence |
+| Integration | `northstar instructions compose` over fixture registry |
+| Regression | evaluate / learn / skills untouched |
+| Security | No secret leakage; proposal-only locks; no `.cursor/` writes |
 
 ## Security Review
 
-- Read-only over M46 ledger; redaction inherited from stored packets
-- Candidates cannot grant authority
+- Read M47 candidates / seed templates only; redaction inherited
+- Bundles cannot grant authority
 - Enable flag default off
+- Never write secrets into registry markdown or bundle JSON
 
 ## Accessibility Review
 
@@ -200,42 +221,46 @@ N/A (CLI / control-plane).
 
 ## Migration Plan
 
-Additive. Empty patterns dir until first `learn scan`. No backfill required.
+Additive. Empty `.agent/instructions/` until first seed/compose. Optional seed
+of a minimal global operating-brief template (proposal-only). No backfill of
+historical evals required.
 
 ## Rollback Plan
 
-1. Unset `COMPASS_BEHAVIOR_LEARN_ENABLED`; stop using `northstar learn`
-2. Checkout `rollback/pre-m47-behavior-pattern-learning`
-3. Delete `.agent/evaluations/behavior/patterns/` if needed (ledger intact)
+1. Unset `COMPASS_INSTRUCTIONS_ENABLED`; stop using `northstar instructions`
+2. Checkout `rollback/pre-m48-instruction-registry`
+3. Delete `.agent/instructions/` if needed (M46/M47 ledgers intact)
 
 ## Risks and Mitigations
 
 | Risk | Mitigation |
 |---|---|
-| Conflate with Skills learning loop | Separate package path + CLI surface |
-| Over-firing on noise | min_occurrence + quality filters |
-| Scope creep into M48 | Hard Non-Goals |
+| Conflate with Skills Learning Loop | Separate package + CLI surface |
+| Accidental `.cursor/` mutation | Hard Non-Goal + tests asserting no writes |
+| Scope creep into M49/M50 | No eval harness / activation in M48 |
+| Monolithic mega-prompt | PICCO sections + scoped overlays |
 
-## Resolved Decisions (Captain — 2026-10-01)
+## Open Questions (Captain)
 
-| # | Decision |
-|---|---|
-| 1 | **Both:** `COMPASS_BEHAVIOR_LEARN_ENABLED` (default off) **and** explicit `northstar learn` CLI |
-| 2 | Group by **signal + agent + skill** dimensions (not signal-only) |
-| 3 | Release naming **confirmed: v1.47.0** |
-| 4 | Shared detector with `polarity` field for praise (positive) vs friction (negative) |
+| # | Question | Options |
+|---|---|---|
+| 1 | Enable gate? | **A)** `COMPASS_INSTRUCTIONS_ENABLED` + CLI (mirror M46/M47) · **B)** CLI-only |
+| 2 | Registry root? | **A)** `.agent/instructions/` (Notion layout) · **B)** under `.agent/evaluations/behavior/instructions/` |
+| 3 | Release naming? | Confirm **v1.48.0** |
+| 4 | M47 intake in M48? | **A)** Yes — `draft-from-candidates` · **B)** Registry+composer only; intake deferred to M50 |
+| 5 | Wire `prompt_bundle_hash` into evaluate path in M48? | **A)** Record-only when bundle composed · **B)** Defer wiring to M49 |
 
 ## Assumptions
 
-1. M46 ledger on `main` is the sole input.
-2. Proposal-only is sufficient for M47; activation waits for M48–M50.
+1. M47 on `main` is the candidate feed (if intake approved).
+2. Proposal-only registry is sufficient for M48; activation waits for M49–M50.
 3. Control repo is the implementation target.
 
 ## Definition of Done
 
-M47 complete when NorthStar can scan the behavior ledger, emit evidence-backed
-patterns and proposal-only candidates via `northstar learn`, pass validation
-with evidence, and grant **no new mutating authority**.
+M48 complete when NorthStar can maintain a governed instruction registry, compose
+PICCO prompt bundles with stable hashes via `northstar instructions`, pass
+validation with evidence, and grant **no new mutating authority**.
 
 ## Approval Boundary
 
@@ -245,7 +270,7 @@ with evidence, and grant **no new mutating authority**.
 
 | Field | Value |
 |---|---|
-| Approved by | Captain (Logan Ware) |
-| Approval date | 2026-10-01 |
-| Approval text | "I approve" + answers 1–4 |
-| Approved revision | plan with grouping agent/skill, polarity, enable flag, v1.47.0 |
+| Approved by | — |
+| Approval date | — |
+| Approval text | — |
+| Approved revision | — |
