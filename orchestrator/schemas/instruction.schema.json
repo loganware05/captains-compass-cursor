@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/instruction.schema.json",
+  "title": "BehaviorInstruction",
+  "description": "Governed behavioral instruction registry entry (M48). Proposal-only until M50.",
+  "type": "object",
+  "required": [
+    "instruction_id",
+    "scope",
+    "title",
+    "body",
+    "approval_state",
+    "schema_version",
+    "created_at",
+    "approved_for_execution",
+    "authority_mutation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "instruction_id": { "type": "string", "minLength": 1 },
+    "scope": {
+      "type": "string",
+      "enum": ["global", "agent", "task-type", "model", "proposal"]
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "body": { "type": "string", "minLength": 1 },
+    "body_path": { "type": "string" },
+    "agent": { "type": "string" },
+    "skill_id": { "type": "string" },
+    "task_type": { "type": "string" },
+    "model_hint": { "type": "string" },
+    "source_candidate_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "evidence_pattern_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "approval_state": {
+      "type": "string",
+      "enum": ["draft", "candidate", "active", "proven"]
+    },
+    "schema_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "updated_at": { "type": "string", "minLength": 1 },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}

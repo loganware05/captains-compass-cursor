@@ -1,5 +1,28 @@
 # Decisions
 
+## ADR-065: Proposal-only Instruction Registry + Prompt Composer (v1.48.0 M48)
+
+- **Status:** Accepted
+- **Date:** 2026-10-01
+- **Context:** Captain approved plan `m48-instruction-registry` (OVA-60) after
+  M47 pattern learning shipped (v1.47.0 / #185). Behavioral guidance needs a
+  governed registry and PICCO composer before M49 eval / M50 activation.
+- **Decision:**
+  1. Add `instruction.schema.json` + `prompt-bundle.schema.json` and package
+     `orchestrator/behavior/instructions/`.
+  2. Registry root under `.agent/evaluations/behavior/instructions/` (global /
+     agents / task-types / models / proposals / bundles).
+  3. Deterministic PICCO composer emits `prompt_bundle_hash` (`sha256:…`).
+  4. Include `draft-from-candidates` from M47 `bcand-*` (draft / proposal-only).
+  5. Operator surface `northstar instructions …` requires
+     `COMPASS_INSTRUCTIONS_ENABLED=1` (default off) **and** explicit CLI.
+  6. `northstar evaluate` records composed `prompt_bundle_hash` when available
+     (record-only; never injects into live prompts / `.cursor/`).
+  7. Entries always `approved_for_execution: false` / `authority_mutation: false`.
+- **Consequences:** Instructions are inert until the enable flag is set.
+  Rollback tag `rollback/pre-m48-instruction-registry` @ `402573e`.
+
+
 ## ADR-064: Proposal-only Behavior Pattern Learning (v1.47.0 M47)
 
 - **Status:** Accepted

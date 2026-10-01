@@ -1,4 +1,4 @@
-> **AWAITING APPROVAL** — Captain must approve before product implementation.
+> **APPROVED / IMPLEMENTING** (2026-10-01) — Captain approved; product impl in progress.
 > Active root plan: `IMPLEMENTATION_PLAN.md` (Plan ID `m48-instruction-registry`).
 
 # M48 — Instruction Registry + Prompt Composer
@@ -11,8 +11,6 @@ Notion plan mirror: [M48 Implementation Plan](https://app.notion.com/p/3ece6a901
 
 Prerequisite: M47 merged (#185 / v1.47.0).
 
-See root `IMPLEMENTATION_PLAN.md` for the full approval-gated contract.
-
 ## One-line summary
 
 Governed instruction registry + PICCO prompt composer via `northstar instructions`
@@ -20,4 +18,20 @@ Governed instruction registry + PICCO prompt composer via `northstar instruction
 
 ## Baseline
 
-v1.47.0 @ `402573e` → proposed release **v1.48.0**
+v1.47.0 @ `402573e` → release **v1.48.0**
+
+## Resolved decisions
+
+1. `COMPASS_INSTRUCTIONS_ENABLED` + CLI
+2. Registry under `.agent/evaluations/behavior/instructions/`
+3. v1.48.0
+4. Include `draft-from-candidates`
+5. Wire `prompt_bundle_hash` into evaluate (record-only)
+
+## Operator surface
+
+```bash
+COMPASS_INSTRUCTIONS_ENABLED=1 ./scripts/northstar instructions list --repo .
+COMPASS_INSTRUCTIONS_ENABLED=1 ./scripts/northstar instructions compose --agent implementation-agent --repo .
+COMPASS_INSTRUCTIONS_ENABLED=1 ./scripts/northstar instructions draft-from-candidates --repo .
+```

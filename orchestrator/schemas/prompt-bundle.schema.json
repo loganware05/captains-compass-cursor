@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/prompt-bundle.schema.json",
+  "title": "PromptBundle",
+  "description": "PICCO prompt bundle composed from the instruction registry (M48). Record-only; never auto-injected.",
+  "type": "object",
+  "required": [
+    "bundle_id",
+    "prompt_bundle_hash",
+    "persona",
+    "instructions",
+    "context",
+    "constraints",
+    "output",
+    "instruction_ids",
+    "schema_version",
+    "created_at",
+    "approved_for_execution",
+    "authority_mutation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "bundle_id": { "type": "string", "minLength": 1 },
+    "prompt_bundle_hash": { "type": "string", "minLength": 1 },
+    "persona": { "type": "string" },
+    "instructions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "context": { "type": "object", "additionalProperties": true },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "output": { "type": "string" },
+    "instruction_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "agent": { "type": "string" },
+    "skill_id": { "type": "string" },
+    "task_type": { "type": "string" },
+    "model_hint": { "type": "string" },
+    "schema_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "updated_at": { "type": "string", "minLength": 1 },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}

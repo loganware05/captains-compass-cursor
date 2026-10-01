@@ -222,6 +222,20 @@ Unset `COMPASS_BEHAVIOR_LEARN_ENABLED` → CLI exits non-zero. Patterns under
 `.agent/evaluations/behavior/patterns/`. See
 `.agent/evidence/m47-behavior-pattern-learning/VALIDATION.md`.
 
+Instruction registry + PICCO composer (M48; proposal-only; requires enable flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_m48_instruction_registry -v
+
+COMPASS_INSTRUCTIONS_ENABLED=1 \
+./scripts/northstar instructions compose --agent implementation-agent --repo .
+```
+
+Unset `COMPASS_INSTRUCTIONS_ENABLED` → CLI exits non-zero. Registry under
+`.agent/evaluations/behavior/instructions/`. Evaluate records
+`prompt_bundle_hash` when a bundle resolves (record-only). See
+`.agent/evidence/m48-instruction-registry/VALIDATION.md`.
+
 Fail-closed hook detectors — added-line / executable-hook scope (M42):
 
 ```bash

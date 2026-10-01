@@ -361,6 +361,26 @@ PY
   else
     fail "missing executable scripts/run-behavior-learn.sh"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/instruction.schema.json" ]]; then
+    ok "instruction.schema.json present"
+  else
+    fail "missing orchestrator/schemas/instruction.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/prompt-bundle.schema.json" ]]; then
+    ok "prompt-bundle.schema.json present"
+  else
+    fail "missing orchestrator/schemas/prompt-bundle.schema.json"
+  fi
+  if [[ -f "$ROOT/.agent/evaluations/behavior/instructions/.gitkeep" ]]; then
+    ok ".agent/evaluations/behavior/instructions layout"
+  else
+    fail "missing .agent/evaluations/behavior/instructions/.gitkeep"
+  fi
+  if [[ -x "$ROOT/scripts/run-instructions.sh" ]]; then
+    ok "scripts/run-instructions.sh present"
+  else
+    fail "missing executable scripts/run-instructions.sh"
+  fi
   if [[ -f "$ROOT/scripts/run-evaluation.sh" ]]; then
     ok "scripts/run-evaluation.sh present"
   else

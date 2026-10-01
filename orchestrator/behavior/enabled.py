@@ -32,3 +32,15 @@ def require_behavior_learn_enabled() -> None:
             "behavior learning disabled — set COMPASS_BEHAVIOR_LEARN_ENABLED=1 "
             "and invoke northstar learn explicitly"
         )
+
+
+def instructions_enabled() -> bool:
+    return _truthy("COMPASS_INSTRUCTIONS_ENABLED")
+
+
+def require_instructions_enabled() -> None:
+    if not instructions_enabled():
+        raise PermissionError(
+            "behavior instructions disabled — set COMPASS_INSTRUCTIONS_ENABLED=1 "
+            "and invoke northstar instructions explicitly"
+        )

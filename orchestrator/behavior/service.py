@@ -7,6 +7,7 @@ from typing import Any
 
 from orchestrator.behavior.enabled import require_behavior_eval_enabled
 from orchestrator.behavior.export import export_csv
+from orchestrator.behavior.instructions.composer import prompt_bundle_hash_for_packet
 from orchestrator.behavior.ledger import (
     BehaviorLedgerError,
     build_behavior_evaluation,
@@ -74,6 +75,9 @@ def evaluate_execution(
     signals, abstain, reason = _result_to_signals(result)
     thresholds = load_thresholds()
     crossings = [] if abstain else signals_crossing_threshold(signals, thresholds)
+    # M48: record composed PICCO hash when available (never injects into live prompts).
+    composed_hash = prompt_bundle_hash_for_packet(root, packet)
+    provider_hash = str((result.raw_answers or {}).get("prompt_bundle_hash") or "")
     record = build_behavior_evaluation(
         packet,
         signals=signals,
@@ -82,7 +86,7 @@ def evaluate_execution(
         abstain=abstain,
         abstain_reason=reason,
         crossings=crossings,
-        prompt_bundle_hash=str((result.raw_answers or {}).get("prompt_bundle_hash") or ""),
+        prompt_bundle_hash=composed_hash or provider_hash,
     )
     # Never mutate authority — hard constant on every write
     record["authority_mutation"] = False
