@@ -396,11 +396,15 @@ PY
   else
     fail "missing executable scripts/run-prompt-eval.sh"
   fi
-  # Fail-closed smoke: prompt-eval must refuse when enable flag is unset.
-  if env -u COMPASS_PROMPT_EVAL_ENABLED "$ROOT/scripts/run-prompt-eval.sh" run --repo-root "$ROOT" >/dev/null 2>&1; then
-    fail "prompt-eval should fail closed when COMPASS_PROMPT_EVAL_ENABLED unset"
-  else
+  # Fail-closed smoke: prompt-eval must refuse when enable flag is unset (exit 2).
+  set +e
+  pe_out="$(env -u COMPASS_PROMPT_EVAL_ENABLED "$ROOT/scripts/run-prompt-eval.sh" run --repo-root "$ROOT" 2>&1)"
+  pe_rc=$?
+  set -e
+  if [[ "$pe_rc" -eq 2 && "$pe_out" == *"COMPASS_PROMPT_EVAL_ENABLED"* ]]; then
     ok "prompt-eval fail-closed when COMPASS_PROMPT_EVAL_ENABLED unset"
+  else
+    fail "prompt-eval should exit 2 mentioning COMPASS_PROMPT_EVAL_ENABLED when unset (rc=$pe_rc)"
   fi
   if [[ -f "$ROOT/scripts/run-evaluation.sh" ]]; then
     ok "scripts/run-evaluation.sh present"

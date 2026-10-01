@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -87,7 +88,9 @@ def compare_bundles(
             seed_global=True,
         )
     try:
-        baseline, candidate = compose_baseline_and_candidate(repo_root, case)
+        # Isolated temp registry — never write fixture proposals into operator M48 store.
+        with tempfile.TemporaryDirectory(prefix="m49-compare-") as tmp:
+            baseline, candidate = compose_baseline_and_candidate(Path(tmp), case)
     except PromptEvalCompareError as exc:
         raise PromptEvalServiceError(str(exc)) from exc
     return {

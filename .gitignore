@@ -40,6 +40,10 @@ wandb/
 !.agent/experience/.gitkeep
 .agent/evaluations/*.json
 !.agent/evaluations/.gitkeep
+# Nested behavior eval/instruction/prompt-eval runtime JSON (M46–M49)
+.agent/evaluations/behavior/**/*.json
+!.agent/evaluations/behavior/**/.gitkeep
+.agent/evaluations/behavior/**/export.csv
 .agent/routing/proposals/*.json
 !.agent/routing/proposals/.gitkeep
 .agent/agents/proficiency/*.json

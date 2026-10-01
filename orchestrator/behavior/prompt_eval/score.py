@@ -99,16 +99,21 @@ def score_hallucinated_repository_state(
     allowed = [str(x) for x in (cfg.get("allowed_path_prefixes") or [])]
     if not allowed:
         return _metric("skip", "no allowed_path_prefixes configured")
+    def _strip_dot_slash(value: str) -> str:
+        return value[2:] if value.startswith("./") else value
+
     text = _joined_text(candidate)
+    allowed_norm = [_strip_dot_slash(str(p)) for p in allowed]
     for match in _PATH_RE.findall(text):
-        path = match.lstrip("./")
+        # Only strip a leading "./" — never str.lstrip("./") (strips every . and /).
+        path = _strip_dot_slash(match)
         # Absolute paths are always treated as hallucinated repo/ops state unless
         # explicitly allowlisted (fixtures never allow /etc, /tmp secrets, etc.).
         if path.startswith("/"):
-            if not any(path.startswith(prefix) for prefix in allowed if prefix.startswith("/")):
+            if not any(path.startswith(prefix) for prefix in allowed_norm if prefix.startswith("/")):
                 return _metric("fail", f"disallowed path reference: {path}")
             continue
-        if not any(path.startswith(prefix.lstrip("./")) for prefix in allowed):
+        if not any(path.startswith(prefix) for prefix in allowed_norm):
             return _metric("fail", f"disallowed path reference: {path}")
     return _metric("pass")
 

@@ -1,11 +1,17 @@
-"""Baseline vs candidate prompt-bundle comparison (M49)."""
+"""Baseline vs candidate prompt-bundle comparison (M49).
+
+Compose always runs against a per-case temporary registry so the operator
+repo's M48 instruction store is never mutated.
+"""
 
 from __future__ import annotations
 
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from orchestrator.behavior.enabled import require_prompt_eval_enabled
 from orchestrator.behavior.instructions.composer import compose_prompt_bundle
 from orchestrator.behavior.instructions.store import (
     InstructionStoreError,
@@ -42,9 +48,10 @@ def _read_version(repo_root: Path) -> str:
     return ""
 
 
-def _seed_case_registry(repo_root: Path, case: PromptEvalCase) -> None:
+def _seed_case_registry(work_root: Path, case: PromptEvalCase) -> None:
+    """Seed a throwaway registry root for one case (never the operator repo)."""
     if case.seed_global:
-        seed_global_operating_brief(repo_root)
+        seed_global_operating_brief(work_root)
     for item in case.global_instructions:
         instruction = build_instruction(
             title=str(item.get("title") or f"global-{case.case_id}"),
@@ -53,7 +60,7 @@ def _seed_case_registry(repo_root: Path, case: PromptEvalCase) -> None:
             approval_state=str(item.get("approval_state") or "draft"),
             instruction_id=item.get("instruction_id"),
         )
-        write_instruction(repo_root, instruction)
+        write_instruction(work_root, instruction)
     for item in case.proposal_instructions:
         instruction = build_instruction(
             title=str(item.get("title") or f"proposal-{case.case_id}"),
@@ -66,20 +73,20 @@ def _seed_case_registry(repo_root: Path, case: PromptEvalCase) -> None:
             approval_state=str(item.get("approval_state") or "draft"),
             instruction_id=item.get("instruction_id"),
         )
-        write_instruction(repo_root, instruction)
+        write_instruction(work_root, instruction)
 
 
 def compose_baseline_and_candidate(
-    repo_root: Path,
+    work_root: Path,
     case: PromptEvalCase,
     *,
     persist_bundles: bool = False,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    """Compose baseline (no proposals) and candidate (with proposals)."""
-    _seed_case_registry(repo_root, case)
+    """Compose baseline (no proposals) and candidate (with proposals) in work_root."""
+    _seed_case_registry(work_root, case)
     try:
         baseline = compose_prompt_bundle(
-            repo_root,
+            work_root,
             agent=case.agent,
             skill_id=case.skill_id,
             task_type=case.task_type,
@@ -89,7 +96,7 @@ def compose_baseline_and_candidate(
             seed_if_empty=case.seed_global,
         )
         candidate = compose_prompt_bundle(
-            repo_root,
+            work_root,
             agent=case.agent,
             skill_id=case.skill_id,
             task_type=case.task_type,
@@ -103,32 +110,34 @@ def compose_baseline_and_candidate(
     return baseline, candidate
 
 
-def evaluate_case(repo_root: Path, case: PromptEvalCase) -> dict[str, Any]:
-    baseline, candidate = compose_baseline_and_candidate(repo_root, case)
-    scored = score_case(case, baseline, candidate)
-    observed = scored["non_regression"]
-    # Negative fixtures expect the scorer to fail; suite pass when expectation matches.
-    expectation_met = observed == case.expect_non_regression
-    return {
-        "case_id": case.case_id,
-        "non_regression": "pass" if expectation_met else "fail",
-        "observed_non_regression": observed,
-        "expect_non_regression": case.expect_non_regression,
-        "baseline_hash": str(baseline.get("prompt_bundle_hash") or ""),
-        "candidate_hash": str(candidate.get("prompt_bundle_hash") or ""),
-        "baseline_instruction_ids": list(baseline.get("instruction_ids") or []),
-        "candidate_instruction_ids": list(candidate.get("instruction_ids") or []),
-        "metrics": scored["metrics"],
-        "failures": list(scored["failures"])
-        + (
-            []
-            if expectation_met
-            else [
-                f"expected observed_non_regression={case.expect_non_regression}, "
-                f"got {observed}"
-            ]
-        ),
-    }
+def evaluate_case(_repo_root: Path, case: PromptEvalCase) -> dict[str, Any]:
+    """Evaluate one case in an isolated temporary registry (no live M48 writes)."""
+    with tempfile.TemporaryDirectory(prefix=f"m49-{case.case_id}-") as tmp:
+        work = Path(tmp)
+        baseline, candidate = compose_baseline_and_candidate(work, case)
+        scored = score_case(case, baseline, candidate)
+        observed = scored["non_regression"]
+        expectation_met = observed == case.expect_non_regression
+        return {
+            "case_id": case.case_id,
+            "non_regression": "pass" if expectation_met else "fail",
+            "observed_non_regression": observed,
+            "expect_non_regression": case.expect_non_regression,
+            "baseline_hash": str(baseline.get("prompt_bundle_hash") or ""),
+            "candidate_hash": str(candidate.get("prompt_bundle_hash") or ""),
+            "baseline_instruction_ids": list(baseline.get("instruction_ids") or []),
+            "candidate_instruction_ids": list(candidate.get("instruction_ids") or []),
+            "metrics": scored["metrics"],
+            "failures": list(scored["failures"])
+            + (
+                []
+                if expectation_met
+                else [
+                    f"expected observed_non_regression={case.expect_non_regression}, "
+                    f"got {observed}"
+                ]
+            ),
+        }
 
 
 def run_prompt_eval(
@@ -139,6 +148,7 @@ def run_prompt_eval(
     persist: bool = True,
 ) -> dict[str, Any]:
     """Run hermetic baseline-vs-candidate prompt evaluation for all cases."""
+    require_prompt_eval_enabled()
     control = Path(control_root or repo_root)
     path = Path(cases_path) if cases_path else default_cases_path(control)
     try:
