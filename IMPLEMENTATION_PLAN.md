@@ -4,16 +4,16 @@
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING APPROVAL** |
+| Status | **APPROVED** |
 | Plan ID | `ahf-p01-intake-adapter` |
-| Linear | [OVA-62](https://linear.app/ovaltechnologysolutions/issue/OVA-62/ahf-p01-ai-hedge-fund-intake-read-only-northstar-adapter) |
+| Linear | [OVA-62](https://linear.app/ovaltechnologysolutions/issue/OVA-62/ahf-p01-ai-hedge-fund-intake-read-only-northstar-adapter) · Project [P-OVA-5](https://linear.app/ovaltechnologysolutions/project/northstar-on-chain-ai-hedge-fund-67b1475ea115) |
 | Spec sources | [On-Chain Intelligence Integration](https://app.notion.com/p/3efe6a901c4381d38d6eccdb85c5899c) · [Existing Systems Utilization Map](https://app.notion.com/p/3efe6a901c438145aacfce97e28fc7a1) |
 | Prerequisite | **v1.49.0** on `main` (M49 merged #187 @ `b007dc4`) |
 | Supersedes | Active plan was M49 (complete). Does **not** supersede deferred **M50** Policy/instruction promotion |
 | Product | **NorthStar** (control repo `captains-compass-cursor`) |
 | Baseline | **v1.49.0** @ `b007dc4` |
 | Prepared | 2026-10-04 |
-| Proposed release | **v1.50.0** *(open question — see below; avoid colliding with deferred M50 naming)* |
+| Proposed release | **v1.50.0** |
 | Rollback | Tag `rollback/pre-ahf-p01-intake-adapter` @ `b007dc4` (create after approval) |
 | Proposed branch | `cursor/ahf-p01-intake-adapter-8613` |
 | Captain | Logan Ware |
@@ -107,13 +107,15 @@ Pinned ai-hedge-fund SHA (research-only)
 
 ## Open Questions (Captain)
 
-| # | Question | Recommendation |
-|---|---|---|
-| 1 | Release naming: claim **v1.50.0** for AHF-P01, or ship without a VERSION bump / use a different number so **M50** Policy promotion keeps v1.50.0? | Prefer **v1.50.0 for AHF-P01** and renumber Policy promotion to **M52 / v1.52.0** when resumed — or keep AHF as docs-only until Captain assigns a VERSION |
-| 2 | Dependency form: git submodule of a fork, documented external pin + subprocess, or sparse vendor? | Documented pin + optional local path / subprocess; avoid submodule unless Captain prefers |
-| 3 | New Linear project for On-Chain / AHF track? | Optional; OVA-62 can stay unprojectized or under Skills Learning Loop until a project exists |
-| 4 | Include any BTC collector stubs in this PR? | **No** — separate AHF-P03 plan in `bitcoin-data-collector` |
-| 5 | Adapter depth for `run_strategy_agents`: real AHF invoke vs fixture-only in v1? | Fixture-only in CI; optional Captain-local invoke behind second flag |
+**Resolved 2026-10-04** — Captain: "I approve" + answers below.
+
+| # | Decision |
+|---|---|
+| 1 | Release **v1.50.0** for AHF-P01 |
+| 2 | Documented SHA + optional local path (no submodule) |
+| 3 | New Linear project **NorthStar On-Chain / AI Hedge Fund** — also tracks `bitcoin-data-collector` milestones |
+| 4 | Separate plan for on-chain work — **yes, on the existing `bitcoin-data-collector` repo** (AHF-P03) |
+| 5 | `run_strategy_agents` — **fixture-only in v1** |
 
 ## Current-State Analysis
 
@@ -341,5 +343,11 @@ accompany approval.
 
 ## Approval Record
 
-<!-- After Captain approval, record who approved, when, open-question answers,
-     and set Status to APPROVED (requires COMPASS_CAPTAIN_APPROVE=1). -->
+| Field | Value |
+|---|---|
+| Approved by | Captain Logan Ware |
+| Approved at | 2026-10-04 |
+| Method | Explicit message: "I approve" + open-question answers 1–5 |
+| Linear project | [NorthStar On-Chain / AI Hedge Fund](https://linear.app/ovaltechnologysolutions/project/northstar-on-chain-ai-hedge-fund-67b1475ea115) (P-OVA-5) |
+| Linear issue | [OVA-62](https://linear.app/ovaltechnologysolutions/issue/OVA-62/ahf-p01-ai-hedge-fund-intake-read-only-northstar-adapter) |
+| Plan revision | Pre-implementation approval on branch `cursor/ahf-p01-intake-adapter-8613` |
