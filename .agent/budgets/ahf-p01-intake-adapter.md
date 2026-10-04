@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | Plan ID | `ahf-p01-intake-adapter` |
-| Phase | Planning (AWAITING APPROVAL 2026-10-04) |
+| Phase | Implementing (APPROVED 2026-10-04) |
 | Prepared | 2026-10-04 |
-| Linear | OVA-62 |
+| Linear | OVA-62 · P-OVA-5 |
 
 ## Limits (post-approval)
 

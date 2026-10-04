@@ -58,6 +58,14 @@ File TI (offline fixtures; still NOT APPROVED FOR EXECUTION):
 COMPASS_TI_PROVIDER=file ./scripts/capability-plan.sh --plan-id ti-demo "accessible forms"
 ```
 
+AI Hedge Fund adapter (AHF-P01; default off; fixture-only):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_ahf_adapter -v
+COMPASS_AHF_ADAPTER_ENABLED=1 COMPASS_TI_PROVIDER=file \
+  ./scripts/capability-plan.sh --plan-id ahf-demo "paper portfolio backtesting"
+```
+
 Record ExecutionRun + Experience:
 
 ```bash

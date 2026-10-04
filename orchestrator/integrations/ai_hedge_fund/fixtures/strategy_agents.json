@@ -1,0 +1,7 @@
+{
+  "opinions": [
+    {"agent": "warren_buffett", "signal": "bullish", "confidence": 0.62},
+    {"agent": "cathie_wood", "signal": "bullish", "confidence": 0.71},
+    {"agent": "risk", "signal": "neutral", "confidence": 0.55}
+  ]
+}

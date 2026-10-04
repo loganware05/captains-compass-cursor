@@ -1,0 +1,7 @@
+{
+  "agents": ["portfolio_manager"],
+  "fills": [
+    {"symbol": "AAPL", "side": "buy", "qty": 2, "price": 189.5}
+  ],
+  "pnl": 125.0
+}

@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
+| Status | **IN PROGRESS** |
 | Plan ID | `ahf-p01-intake-adapter` |
 | Linear | [OVA-62](https://linear.app/ovaltechnologysolutions/issue/OVA-62/ahf-p01-ai-hedge-fund-intake-read-only-northstar-adapter) · Project [P-OVA-5](https://linear.app/ovaltechnologysolutions/project/northstar-on-chain-ai-hedge-fund-67b1475ea115) |
 | Spec sources | [On-Chain Intelligence Integration](https://app.notion.com/p/3efe6a901c4381d38d6eccdb85c5899c) · [Existing Systems Utilization Map](https://app.notion.com/p/3efe6a901c438145aacfce97e28fc7a1) |
@@ -75,16 +75,16 @@ Pinned ai-hedge-fund SHA (research-only)
 
 ## Acceptance Criteria
 
-- [ ] Architecture inventory + dependency/SBOM notes for pinned AHF commit under `.agent/evidence/ahf-p01-intake-adapter/intake/`
-- [ ] TI fixture (and optional live path docs) registers AHF with capabilities such as financial-research-orchestration, paper-portfolio-management, historical-backtesting; `approved_for_execution: false`
-- [ ] Package `orchestrator/integrations/ai_hedge_fund/` with `adapter.py`, `schemas.py`, `capabilities.yaml`, `policy.py`, `evaluators.py`, `README.md`
-- [ ] Schemas for run requests/results and run manifests (repo SHA, data sources, agents, model versions, instruction hashes, results)
-- [ ] Operations: `create_research_run`, `run_strategy_agents` *(stub/fixture ok)*, `get_market_state`, `get_portfolio_state`, `run_backtest`, `run_paper_session`, `get_decision_ledger`, `compare_runs`
-- [ ] `policy.py` hard-denies live execution; unit tests prove deny path
-- [ ] Env gate `COMPASS_AHF_ADAPTER_ENABLED` default off; CI stays hermetic
-- [ ] Hermetic unit/integration tests for schemas, policy, fixture adapter
-- [ ] Docs: `docs/integrations/ai-hedge-fund.md` + PROGRESS/CHANGELOG/DECISIONS updates
-- [ ] Rollback tag documented; uninstall/disable = unset flag + revert merge
+- [x] Architecture inventory + dependency/SBOM notes for pinned AHF commit under `.agent/evidence/ahf-p01-intake-adapter/intake/`
+- [x] TI fixture (and optional live path docs) registers AHF with capabilities such as financial-research-orchestration, paper-portfolio-management, historical-backtesting; `approved_for_execution: false`
+- [x] Package `orchestrator/integrations/ai_hedge_fund/` with `adapter.py`, `schemas.py`, `capabilities.yaml`, `policy.py`, `evaluators.py`, `README.md`
+- [x] Schemas for run requests/results and run manifests (repo SHA, data sources, agents, model versions, instruction hashes, results)
+- [x] Operations: `create_research_run`, `run_strategy_agents` *(stub/fixture ok)*, `get_market_state`, `get_portfolio_state`, `run_backtest`, `run_paper_session`, `get_decision_ledger`, `compare_runs`
+- [x] `policy.py` hard-denies live execution; unit tests prove deny path
+- [x] Env gate `COMPASS_AHF_ADAPTER_ENABLED` default off; CI stays hermetic
+- [x] Hermetic unit/integration tests for schemas, policy, fixture adapter
+- [x] Docs: `docs/integrations/ai-hedge-fund.md` + PROGRESS/CHANGELOG/DECISIONS updates
+- [x] Rollback tag documented; uninstall/disable = unset flag + revert merge
 
 ## Non-Goals
 

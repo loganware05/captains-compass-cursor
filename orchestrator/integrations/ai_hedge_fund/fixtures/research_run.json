@@ -1,0 +1,7 @@
+{
+  "notes": "Hermetic research-run fixture for AHF-P01",
+  "data_sources": ["fixture", "financial-datasets:redacted"],
+  "selected_agents": ["warren_buffett", "cathie_wood", "risk"],
+  "model_versions": {"analyst": "fixture-1.0"},
+  "instruction_hashes": {"research_bundle": "sha256:fixture-research-v1"}
+}

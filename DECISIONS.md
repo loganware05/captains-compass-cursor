@@ -1,5 +1,31 @@
 # Decisions
 
+## ADR-067: Read-only AI Hedge Fund adapter + TI intake (v1.50.0 AHF-P01)
+
+- **Status:** Accepted
+- **Date:** 2026-10-04
+- **Context:** Captain approved plan `ahf-p01-intake-adapter` (OVA-62) with
+  open-question answers: release v1.50.0; documented SHA + optional local path;
+  new Linear project for On-Chain/AHF (also tracks `bitcoin-data-collector`);
+  separate on-chain plan on that repo; fixture-only strategy agents in v1.
+- **Decision:**
+  1. Pin `virattt/ai-hedge-fund` at
+     `78b779c1389e2d1452dc29606d2c4126d859b964` (documented SHA; optional
+     `COMPASS_AHF_LOCAL_PATH` recorded only).
+  2. Add `orchestrator/integrations/ai_hedge_fund/` with fixture-backed ops,
+     policy deny for live/broker/wallet/signing, and run manifests that always
+     set `approved_for_execution: false` / `authority_mutation: false`.
+  3. Gate with `COMPASS_AHF_ADAPTER_ENABLED` (default off; hermetic CI).
+  4. Register a file TI fixture (`stars-ai-hedge-fund.json`) as a discovery
+     candidate only — never an executable Skill.
+  5. Track work under Linear project **NorthStar On-Chain / AI Hedge Fund**
+     (P-OVA-5); AHF-P03 on-chain metrics land in `bitcoin-data-collector` under
+     a separate plan.
+- **Consequences:** Control repo gains a replaceable research/paper boundary
+  without live trading. Jev packs and BTC on-chain remain later milestones.
+  Rollback tag `rollback/pre-ahf-p01-intake-adapter` @ `b007dc4`.
+
+
 ## ADR-066: Eval-only Prompt Evaluation Harness (v1.49.0 M49)
 
 - **Status:** Accepted

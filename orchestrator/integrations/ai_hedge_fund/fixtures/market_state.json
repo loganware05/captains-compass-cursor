@@ -1,0 +1,10 @@
+{
+  "data_sources": ["fixture"],
+  "market": {
+    "as_of": "2026-10-04T00:00:00+00:00",
+    "symbols": {
+      "AAPL": {"price": 190.0, "change_pct_1d": 0.8},
+      "MSFT": {"price": 420.0, "change_pct_1d": 0.3}
+    }
+  }
+}

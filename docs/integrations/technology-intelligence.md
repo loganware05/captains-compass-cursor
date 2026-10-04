@@ -207,8 +207,11 @@ Scripts:
 
 - Schema: `orchestrator/schemas/candidate-capability.schema.json`
 - File fixtures: `orchestrator/providers/technology_intelligence/fixtures/`
+  (includes AHF-P01 `stars-ai-hedge-fund.json` — research candidate only)
 - Stub/file tests: `tests/orchestrator/test_schemas.py`,
-  `tests/orchestrator/test_file_ti_and_promotion.py`
+  `tests/orchestrator/test_file_ti_and_promotion.py`,
+  `tests/orchestrator/test_ahf_adapter.py`
 - Eval isolation: `tests/evals/run.sh` (stub + file TI sensors)
 - Skills: `capability-planning`, `candidate-promotion`, `experience-skill-training`,
   `technology-intelligence-live`, `skill-learning-loop`
+- Domain adapter: `docs/integrations/ai-hedge-fund.md`

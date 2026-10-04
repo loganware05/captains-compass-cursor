@@ -1,0 +1,18 @@
+test_backtest_manifest_invariants (tests.orchestrator.test_ahf_adapter.AhfAdapterTests.test_backtest_manifest_invariants) ... ok
+test_compare_runs (tests.orchestrator.test_ahf_adapter.AhfAdapterTests.test_compare_runs) ... ok
+test_disabled_by_default (tests.orchestrator.test_ahf_adapter.AhfAdapterTests.test_disabled_by_default) ... ok
+test_live_denied_through_adapter (tests.orchestrator.test_ahf_adapter.AhfAdapterTests.test_live_denied_through_adapter) ... ok
+test_optional_local_path_recorded_not_executed (tests.orchestrator.test_ahf_adapter.AhfAdapterTests.test_optional_local_path_recorded_not_executed) ... ok
+test_paper_and_ledger (tests.orchestrator.test_ahf_adapter.AhfAdapterTests.test_paper_and_ledger) ... ok
+test_strategy_agents_fixture_only (tests.orchestrator.test_ahf_adapter.AhfAdapterTests.test_strategy_agents_fixture_only) ... ok
+test_allowed_modes (tests.orchestrator.test_ahf_adapter.AhfPolicyTests.test_allowed_modes) ... ok
+test_denies_broker_token_in_extras (tests.orchestrator.test_ahf_adapter.AhfPolicyTests.test_denies_broker_token_in_extras) ... ok
+test_denies_live_mode (tests.orchestrator.test_ahf_adapter.AhfPolicyTests.test_denies_live_mode) ... ok
+test_denies_wallet_token (tests.orchestrator.test_ahf_adapter.AhfPolicyTests.test_denies_wallet_token) ... ok
+test_file_ti_includes_ahf_candidate (tests.orchestrator.test_ahf_adapter.AhfTiFixtureTests.test_file_ti_includes_ahf_candidate) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.002s
+
+OK
+exit:0

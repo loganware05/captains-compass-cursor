@@ -1,0 +1,11 @@
+{
+  "agents": ["warren_buffett", "risk"],
+  "data_sources": ["fixture", "historical-prices:redacted"],
+  "metrics": {
+    "cumulative_return": 0.042,
+    "max_drawdown": -0.015,
+    "sharpe": 1.1,
+    "hit_rate": 0.55,
+    "turnover": 0.2
+  }
+}

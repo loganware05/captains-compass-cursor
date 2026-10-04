@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.50.0 — 2026-10-04
+
+### Added
+
+- **AHF-P01 AI Hedge Fund intake + read-only adapter** — research/paper/backtest
+  boundary for pinned `virattt/ai-hedge-fund`:
+  - Package `orchestrator/integrations/ai_hedge_fund/` (schemas, policy,
+    fixture adapter, evaluators, capabilities.yaml)
+  - Env gate `COMPASS_AHF_ADAPTER_ENABLED` (default off); optional
+    `COMPASS_AHF_LOCAL_PATH` recorded only (not executed in v1)
+  - Hard deny for live/broker/wallet/signing modes
+  - TI fixture `stars-ai-hedge-fund.json` (`approved_for_execution: false`)
+  - Docs `docs/integrations/ai-hedge-fund.md`; ADR-067; OVA-62 / P-OVA-5
+
+
 ## 1.49.0 — 2026-10-01
 
 ### Added
