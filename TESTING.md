@@ -66,6 +66,20 @@ COMPASS_AHF_ADAPTER_ENABLED=1 COMPASS_TI_PROVIDER=file \
   ./scripts/capability-plan.sh --plan-id ahf-demo "paper portfolio backtesting"
 ```
 
+AHF Jev shadow (AHF-P02; default off):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_ahf_p02_shadow -v
+COMPASS_DECISION_PROVIDER=file COMPASS_DECISION_AHF_SHADOW=1 \
+COMPASS_AHF_ADAPTER_ENABLED=1 PYTHONPATH=. python3 - <<'PY'
+from pathlib import Path
+from orchestrator.integrations.ai_hedge_fund import get_adapter, maybe_run_ahf_strategy_shadow
+a = get_adapter(enabled=True)
+r = a.create_research_run(objective='BTC paper allocation')
+print(maybe_run_ahf_strategy_shadow(Path('.'), objective='BTC paper allocation', adapter_manifest=r))
+PY
+```
+
 Record ExecutionRun + Experience:
 
 ```bash

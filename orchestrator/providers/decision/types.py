@@ -325,3 +325,140 @@ class BehaviorEvalResult:
             "applied": False,
         }
 
+
+QUESTION_REVISION_AHF_STRATEGY = "ahf_strategy_select_v1"
+QUESTION_REVISION_AHF_SIGNAL = "ahf_signal_triage_v1"
+AHF_SIGNAL_CHOICES = frozenset(
+    {"bullish", "bearish", "neutral", "uncertain"}
+)
+
+
+@dataclass(frozen=True)
+class EligibleAhfAgentSummary:
+    """Compact AHF investor/strategy agent card (no secrets)."""
+
+    agent_id: str
+    name: str
+    description: str = ""
+    baseline_signal: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "agent_id": self.agent_id,
+            "name": self.name,
+            "description": self.description,
+            "baseline_signal": self.baseline_signal,
+        }
+
+
+@dataclass
+class AhfStrategyRequest:
+    """Roster-bounded AHF strategy/agent selection (AHF-P02)."""
+
+    objective: str
+    mandate: str
+    eligible_agents: list[EligibleAhfAgentSummary]
+    roster_hash: str
+    question_revision: str = QUESTION_REVISION_AHF_STRATEGY
+    market_snapshot: dict[str, Any] = field(default_factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "objective": self.objective,
+            "mandate": self.mandate,
+            "eligible_agents": [a.to_dict() for a in self.eligible_agents],
+            "roster_hash": self.roster_hash,
+            "question_revision": self.question_revision,
+            "market_snapshot": dict(self.market_snapshot),
+        }
+
+
+@dataclass
+class AhfStrategyResult:
+    """Suggestion-only — never mutates adapter agent composition."""
+
+    provider: str
+    model_id: str | None
+    ranked: list[RankedSuggestion] = field(default_factory=list)
+    suggested_agent_id: str | None = None
+    abstain: bool = False
+    abstain_reason: str = ""
+    question_revision: str = QUESTION_REVISION_AHF_STRATEGY
+    latency_ms: float | None = None
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    raw_answers: dict[str, Any] = field(default_factory=dict)
+    error: str | None = None
+
+    def to_dict(self, *, applied: bool = False) -> dict[str, Any]:
+        del applied
+        return {
+            "provider": self.provider,
+            "model_id": self.model_id,
+            "ranked": [item.to_dict() for item in self.ranked],
+            "suggested_agent_id": self.suggested_agent_id,
+            "abstain": self.abstain,
+            "abstain_reason": self.abstain_reason,
+            "question_revision": self.question_revision,
+            "latency_ms": self.latency_ms,
+            "input_tokens": self.input_tokens,
+            "output_tokens": self.output_tokens,
+            "raw_answers": dict(self.raw_answers),
+            "error": self.error,
+            "applied": False,
+        }
+
+
+@dataclass
+class AhfSignalRequest:
+    """Normalized market/on-chain-ish state for AHF signal triage."""
+
+    asset: str
+    state: dict[str, Any]
+    state_hash: str
+    question_revision: str = QUESTION_REVISION_AHF_SIGNAL
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "asset": self.asset,
+            "state": dict(self.state),
+            "state_hash": self.state_hash,
+            "question_revision": self.question_revision,
+        }
+
+
+@dataclass
+class AhfSignalResult:
+    """Suggestion-only triage label — never authorizes trades."""
+
+    provider: str
+    model_id: str | None
+    signal: str | None = None
+    escalate: bool | None = None
+    abstain: bool = False
+    abstain_reason: str = ""
+    question_revision: str = QUESTION_REVISION_AHF_SIGNAL
+    latency_ms: float | None = None
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    raw_answers: dict[str, Any] = field(default_factory=dict)
+    error: str | None = None
+
+    def to_dict(self, *, applied: bool = False) -> dict[str, Any]:
+        del applied
+        return {
+            "provider": self.provider,
+            "model_id": self.model_id,
+            "signal": self.signal,
+            "escalate": self.escalate,
+            "abstain": self.abstain,
+            "abstain_reason": self.abstain_reason,
+            "question_revision": self.question_revision,
+            "latency_ms": self.latency_ms,
+            "input_tokens": self.input_tokens,
+            "output_tokens": self.output_tokens,
+            "raw_answers": dict(self.raw_answers),
+            "error": self.error,
+            "applied": False,
+        }
+

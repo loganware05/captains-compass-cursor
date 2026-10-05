@@ -1,0 +1,24 @@
+{
+  "revision": "ahf_signal_triage_v1",
+  "pass": "triage",
+  "questions": {
+    "signal": {
+      "type": "choice",
+      "instructions": "Given this bounded market/on-chain state, classify the directional signal. Prefer uncertain when evidence is weak.",
+      "criteria": {
+        "bullish": "Net evidence favors upside / accumulation",
+        "bearish": "Net evidence favors downside / distribution",
+        "neutral": "Evidence is mixed or low-information",
+        "uncertain": "Insufficient or conflicting evidence — abstain from direction"
+      }
+    },
+    "escalate": {
+      "type": "noul",
+      "instructions": "Should NorthStar escalate this asset for a full specialist portfolio research run?",
+      "criteria": {
+        "true": "Signal is high-value enough to warrant expensive specialist agents",
+        "false": "Signal is low-value noise — log and ignore"
+      }
+    }
+  }
+}

@@ -39,6 +39,7 @@ Pinned live model: **`jev-1.13.0`** (aliases `jev-latest` / `jev-preview` refuse
 | `COMPASS_DECISION_CONF_MIN` | `0.60` | Apply Choice confidence floor |
 | `COMPASS_DECISION_REVIEW_SHADOW` | unset/off | Review triage shadow (M44); never mutates findings |
 | `COMPASS_DECISION_AGENT_ROUTING_SHADOW` | unset/off | Agent routing shadow (M45); never mutates selection |
+| `COMPASS_DECISION_AHF_SHADOW` | unset/off | AHF strategy/signal shadow (AHF-P02); never mutates adapter |
 | `COMPASS_BEHAVIOR_EVAL_ENABLED` | unset/off | Required for `northstar evaluate` (M46); default off |
 | `COMPASS_BEHAVIOR_EVAL_THRESHOLDS` | defaults | Optional JSON path for threshold overrides |
 | `COMPASS_BEHAVIOR_LEARN_ENABLED` | unset/off | Required for `northstar learn` (M47); default off |
@@ -103,6 +104,31 @@ Evidence:
 ```
 
 CLI payload may include path/ID refs only (`applied: false`).
+
+## AHF strategy + signal shadow (AHF-P02, opt-in)
+
+```bash
+COMPASS_DECISION_PROVIDER=file \
+COMPASS_DECISION_AHF_SHADOW=1 \
+COMPASS_AHF_ADAPTER_ENABLED=1 \
+PYTHONPATH=. python3 - <<'PY'
+from pathlib import Path
+from orchestrator.integrations.ai_hedge_fund import (
+    get_adapter,
+    maybe_run_ahf_strategy_shadow,
+    maybe_run_ahf_signal_shadow,
+)
+root = Path('.')
+run = get_adapter(enabled=True).create_research_run(objective='BTC paper allocation')
+print(maybe_run_ahf_strategy_shadow(root, objective='BTC paper allocation', adapter_manifest=run))
+print(maybe_run_ahf_signal_shadow(root, asset='BTC', state={'price_change_24h': 2.8, 'exchange_netflow': -1000}))
+PY
+```
+
+Live Jev (Captain-local): `COMPASS_DECISION_PROVIDER=jev`,
+`COMPASS_JEV_MODEL_ID=jev-1.13.0`, plus `COMPASS_JEV_API_KEY` or `TYPESAFE_API_KEY`.
+Never commit API keys. Evidence:
+`.agent/evidence/ahf-p02-jev-shadow/shadow/<run-id>/`.
 
 ## Behavior evaluation (M46, observe-only)
 

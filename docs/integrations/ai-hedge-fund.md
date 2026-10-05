@@ -50,7 +50,8 @@ Candidate remains `approved_for_execution: false`.
 
 ## Related next plans
 
-- **AHF-P02** — Jev shadow decision packs over this adapter
+- **AHF-P02** — Jev shadow decision packs over this adapter ← shipped in v1.51.0
+  (`COMPASS_DECISION_AHF_SHADOW`, see `docs/integrations/decision-provider.md`)
 - **AHF-P03** — BTC on-chain metric family in **`bitcoin-data-collector`** (separate repo plan)
 
 ## Evidence

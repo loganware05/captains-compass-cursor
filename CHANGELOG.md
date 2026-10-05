@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.51.0 — 2026-10-05
+
+### Added
+
+- **AHF-P02 Jev shadow over AHF adapter** — observe-only DecisionProvider
+  surfaces for strategy/agent selection and signal triage:
+  - Types + Protocol methods `suggest_ahf_strategies` / `triage_ahf_signal`
+  - Question packs `ahf_strategy_select_v1`, `ahf_signal_triage_v1`
+  - Env gate `COMPASS_DECISION_AHF_SHADOW` (default off); file fixtures in CI
+  - `orchestrator/integrations/ai_hedge_fund/shadow.py` evidence writer
+  - Live Jev path via existing `COMPASS_DECISION_PROVIDER=jev` + pinned
+    `jev-1.13.0` (Captain-local API key)
+  - ADR-068; plan `ahf-p02-jev-shadow` (OVA-63)
+
+
 ## 1.50.0 — 2026-10-04
 
 ### Added

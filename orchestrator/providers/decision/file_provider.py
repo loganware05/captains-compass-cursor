@@ -12,8 +12,13 @@ from orchestrator.providers.decision.types import (
     PINNED_JEV_MODEL_ID,
     PRIORITY_CHOICES,
     WARRANT_CHOICES,
+    AHF_SIGNAL_CHOICES,
     AgentRoutingRequest,
     AgentRoutingResult,
+    AhfSignalRequest,
+    AhfSignalResult,
+    AhfStrategyRequest,
+    AhfStrategyResult,
     BehaviorEvalRequest,
     BehaviorEvalResult,
     RankedSuggestion,
@@ -283,6 +288,106 @@ class FileDecisionProvider:
             abstain_reason="no matching file fixture for behavior evaluation",
         )
 
+    def suggest_ahf_strategies(self, request: AhfStrategyRequest) -> AhfStrategyResult:
+        objective = (request.objective or "").lower()
+        mandate = (request.mandate or "").lower()
+        haystack = f"{objective} {mandate}"
+        eligible_ids = {a.agent_id for a in request.eligible_agents}
+        for fixture in self._load_fixtures():
+            if not fixture.get("ahf_strategy"):
+                continue
+            needle = str(fixture.get("objective_contains") or "").lower().strip()
+            if not needle or needle not in haystack:
+                continue
+            ranked_raw = fixture.get("ranked") or []
+            ranked: list[RankedSuggestion] = []
+            for item in ranked_raw:
+                if not isinstance(item, dict):
+                    continue
+                agent_id = str(item.get("skill_id") or item.get("agent_id") or "")
+                if agent_id and agent_id not in eligible_ids:
+                    continue
+                ranked.append(
+                    RankedSuggestion(
+                        skill_id=agent_id,
+                        score=float(item.get("score") or 0.0),
+                        confidence=(
+                            float(item["confidence"])
+                            if item.get("confidence") is not None
+                            else None
+                        ),
+                        rationale=str(item.get("rationale") or "file-fixture"),
+                    )
+                )
+            abstain = bool(fixture.get("abstain"))
+            suggested = fixture.get("suggested_agent_id")
+            if suggested is not None:
+                suggested = str(suggested)
+                if suggested and suggested not in eligible_ids:
+                    suggested = None
+                    abstain = True
+            return AhfStrategyResult(
+                provider=self.name,
+                model_id=str(fixture.get("model_id") or PINNED_JEV_MODEL_ID),
+                ranked=ranked,
+                suggested_agent_id=None if abstain else suggested,
+                abstain=abstain,
+                abstain_reason=str(fixture.get("abstain_reason") or ""),
+                question_revision=str(
+                    fixture.get("question_revision") or request.question_revision
+                ),
+                latency_ms=float(fixture.get("latency_ms") or 0.0),
+                input_tokens=int(fixture.get("input_tokens") or 0),
+                output_tokens=int(fixture.get("output_tokens") or 0),
+                raw_answers=dict(fixture.get("raw_answers") or {}),
+            )
+        return AhfStrategyResult(
+            provider=self.name,
+            model_id=PINNED_JEV_MODEL_ID,
+            abstain=True,
+            abstain_reason="no matching file fixture for AHF strategy selection",
+        )
+
+    def triage_ahf_signal(self, request: AhfSignalRequest) -> AhfSignalResult:
+        asset = (request.asset or "").upper()
+        for fixture in self._load_fixtures():
+            if not fixture.get("ahf_signal"):
+                continue
+            needle = str(fixture.get("asset_contains") or "").upper().strip()
+            if not needle or needle not in asset:
+                continue
+            abstain = bool(fixture.get("abstain"))
+            signal = fixture.get("signal")
+            if signal is not None:
+                signal = str(signal).lower()
+                if signal not in AHF_SIGNAL_CHOICES:
+                    signal = None
+                    abstain = True
+            escalate = fixture.get("escalate")
+            if escalate is not None:
+                escalate = bool(escalate)
+            return AhfSignalResult(
+                provider=self.name,
+                model_id=str(fixture.get("model_id") or PINNED_JEV_MODEL_ID),
+                signal=None if abstain else signal,
+                escalate=None if abstain else escalate,
+                abstain=abstain,
+                abstain_reason=str(fixture.get("abstain_reason") or ""),
+                question_revision=str(
+                    fixture.get("question_revision") or request.question_revision
+                ),
+                latency_ms=float(fixture.get("latency_ms") or 0.0),
+                input_tokens=int(fixture.get("input_tokens") or 0),
+                output_tokens=int(fixture.get("output_tokens") or 0),
+                raw_answers=dict(fixture.get("raw_answers") or {}),
+            )
+        return AhfSignalResult(
+            provider=self.name,
+            model_id=PINNED_JEV_MODEL_ID,
+            abstain=True,
+            abstain_reason="no matching file fixture for AHF signal triage",
+        )
+
 
 def select_decision_provider(repo_root: Path | None = None):
     """Return DecisionProvider from COMPASS_DECISION_PROVIDER (default stub)."""
@@ -312,4 +417,9 @@ def decision_review_shadow_enabled() -> bool:
 
 def decision_agent_routing_shadow_enabled() -> bool:
     raw = os.environ.get("COMPASS_DECISION_AGENT_ROUTING_SHADOW", "").strip().lower()
+    return raw in {"1", "true", "yes", "on"}
+
+
+def decision_ahf_shadow_enabled() -> bool:
+    raw = os.environ.get("COMPASS_DECISION_AHF_SHADOW", "").strip().lower()
     return raw in {"1", "true", "yes", "on"}

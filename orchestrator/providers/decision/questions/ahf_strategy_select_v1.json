@@ -1,0 +1,19 @@
+{
+  "revision": "ahf_strategy_select_v1",
+  "pass": "rank",
+  "questions": {
+    "needs_specialist": {
+      "type": "noul",
+      "instructions": "Given the mandate and market snapshot, should NorthStar compose a specialist AHF investor/strategy agent rather than skip?",
+      "criteria": {
+        "true": "A specialist agent would materially improve the research run",
+        "false": "No specialist agent is warranted"
+      }
+    },
+    "which_agent": {
+      "type": "choice",
+      "instructions": "Which eligible AHF agent best fits the mandate? Prefer the single best fit. Use none if nothing applies.",
+      "criteria_from": "eligible_agent_ids_plus_none"
+    }
+  }
+}

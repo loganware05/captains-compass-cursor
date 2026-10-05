@@ -21,6 +21,10 @@ from orchestrator.integrations.ai_hedge_fund.schemas import (
     PINNED_SHA,
     RunManifest,
 )
+from orchestrator.integrations.ai_hedge_fund.shadow import (
+    maybe_run_ahf_signal_shadow,
+    maybe_run_ahf_strategy_shadow,
+)
 
 __all__ = [
     "ALLOWED_MODES",
@@ -32,4 +36,6 @@ __all__ = [
     "adapter_enabled",
     "assert_research_mode",
     "get_adapter",
+    "maybe_run_ahf_signal_shadow",
+    "maybe_run_ahf_strategy_shadow",
 ]
