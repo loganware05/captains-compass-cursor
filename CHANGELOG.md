@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.52.0 — 2026-10-05
+
+### Added
+
+- **AHF-P04 On-Chain Analyst + Captain runbook** — deterministic analyst over
+  normalized BTC on-chain features with evidence refs; compose with AHF adapter
+  + optional Jev shadow:
+  - `orchestrator/integrations/ai_hedge_fund/onchain_analyst.py`
+  - Demo `scripts/ahf-onchain-demo.sh`
+  - Captain guide `docs/integrations/ahf-captain-runbook.md`
+  - ADR-069; plan `ahf-p04-onchain-analyst` (OVA-65)
+
+
 ## 1.51.0 — 2026-10-05
 
 ### Added

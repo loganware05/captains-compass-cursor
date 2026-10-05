@@ -11,6 +11,11 @@ from orchestrator.integrations.ai_hedge_fund.adapter import (
     adapter_enabled,
     get_adapter,
 )
+from orchestrator.integrations.ai_hedge_fund.onchain_analyst import (
+    OnChainAnalyst,
+    compose_with_ahf,
+    write_analysis_evidence,
+)
 from orchestrator.integrations.ai_hedge_fund.policy import (
     ALLOWED_MODES,
     LiveExecutionDenied,
@@ -30,12 +35,15 @@ __all__ = [
     "ALLOWED_MODES",
     "AiHedgeFundAdapter",
     "LiveExecutionDenied",
+    "OnChainAnalyst",
     "PINNED_REPO",
     "PINNED_SHA",
     "RunManifest",
     "adapter_enabled",
     "assert_research_mode",
+    "compose_with_ahf",
     "get_adapter",
     "maybe_run_ahf_signal_shadow",
     "maybe_run_ahf_strategy_shadow",
+    "write_analysis_evidence",
 ]

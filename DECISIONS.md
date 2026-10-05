@@ -1,5 +1,23 @@
 # Decisions
 
+## ADR-069: On-Chain Analyst + Captain runbook (v1.52.0 AHF-P04)
+
+- **Status:** Accepted
+- **Date:** 2026-10-05
+- **Context:** After AHF-P01–P03 merges, Captain asked to proceed with next steps
+  and for step-by-step utilization of the foundation.
+- **Decision:**
+  1. Add deterministic `OnChainAnalyst` over normalized on-chain schema
+     (compatible with bitcoin-data-collector AHF-P03 fields).
+  2. Require evidence references on notable signals; always
+     `approved_for_execution: false`.
+  3. Provide `compose_with_ahf` + optional Jev signal shadow wiring (observe-only).
+  4. Ship `docs/integrations/ahf-captain-runbook.md` as the Captain operating guide.
+- **Consequences:** Operators can run collect → analyze → paper research → Jev
+  shadow without live trading authority. Rollback
+  `rollback/pre-ahf-p04-onchain-analyst` @ `b809c75`.
+
+
 ## ADR-068: AHF Jev shadow strategy + signal triage (v1.51.0 AHF-P02)
 
 - **Status:** Accepted
