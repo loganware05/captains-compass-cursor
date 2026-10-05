@@ -105,6 +105,31 @@ Evidence:
 
 CLI payload may include path/ID refs only (`applied: false`).
 
+## AHF strategy + signal shadow (AHF-P02, opt-in)
+
+```bash
+COMPASS_DECISION_PROVIDER=file \
+COMPASS_DECISION_AHF_SHADOW=1 \
+COMPASS_AHF_ADAPTER_ENABLED=1 \
+PYTHONPATH=. python3 - <<'PY'
+from pathlib import Path
+from orchestrator.integrations.ai_hedge_fund import (
+    get_adapter,
+    maybe_run_ahf_strategy_shadow,
+    maybe_run_ahf_signal_shadow,
+)
+root = Path('.')
+run = get_adapter(enabled=True).create_research_run(objective='BTC paper allocation')
+print(maybe_run_ahf_strategy_shadow(root, objective='BTC paper allocation', adapter_manifest=run))
+print(maybe_run_ahf_signal_shadow(root, asset='BTC', state={'price_change_24h': 2.8, 'exchange_netflow': -1000}))
+PY
+```
+
+Live Jev (Captain-local): `COMPASS_DECISION_PROVIDER=jev`,
+`COMPASS_JEV_MODEL_ID=jev-1.13.0`, plus `COMPASS_JEV_API_KEY` or `TYPESAFE_API_KEY`.
+Never commit API keys. Evidence:
+`.agent/evidence/ahf-p02-jev-shadow/shadow/<run-id>/`.
+
 ## Behavior evaluation (M46, observe-only)
 
 ```bash
