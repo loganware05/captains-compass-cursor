@@ -1,0 +1,26 @@
+{
+  "id": "ti-ai-hedge-fund",
+  "version": "0.1.0",
+  "full_name": "virattt/ai-hedge-fund",
+  "html_url": "https://github.com/virattt/ai-hedge-fund",
+  "description": "Educational AI hedge-fund proof of concept — paper trading, backtesting, multi-agent investor strategies. Pinned for NorthStar AHF-P01 research-only intake.",
+  "star_signal": "github-stars:virattt/ai-hedge-fund:pinned",
+  "discovery_signal": "ahf-p01-intake:78b779c1389e2d1452dc29606d2c4126d859b964",
+  "stargazers_count_bucket": "10000+",
+  "topics_redacted": ["ai", "finance", "agents", "paper-trading"],
+  "capabilities_provided": [
+    "financial-research-orchestration",
+    "multi-agent-investment-analysis",
+    "paper-portfolio-management",
+    "historical-backtesting",
+    "strategy-comparison",
+    "portfolio-risk-evaluation",
+    "persistent-decision-ledgering"
+  ],
+  "source": {
+    "type": "external-candidate",
+    "path": "github.com/virattt/ai-hedge-fund@78b779c1389e2d1452dc29606d2c4126d859b964",
+    "provenance_url": "https://github.com/virattt/ai-hedge-fund/tree/78b779c1389e2d1452dc29606d2c4126d859b964"
+  },
+  "notes": "AHF-P01 TI fixture — NOT APPROVED FOR EXECUTION. NorthStar adapter is fixture-only in v1.50.0."
+}

@@ -1,0 +1,18 @@
+{
+  "entries": [
+    {
+      "run_id": "fixture-ledger-1",
+      "decision": "PAPER_BUY",
+      "symbol": "AAPL",
+      "qty": 2,
+      "evidence_ref": "fixture://paper_session"
+    },
+    {
+      "run_id": "fixture-ledger-1",
+      "decision": "HOLD",
+      "symbol": "MSFT",
+      "qty": 0,
+      "evidence_ref": "fixture://research_run"
+    }
+  ]
+}

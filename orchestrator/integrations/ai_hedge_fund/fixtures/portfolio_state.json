@@ -1,0 +1,10 @@
+{
+  "portfolio": {
+    "cash": 100000.0,
+    "equity": 102500.0,
+    "positions": [
+      {"symbol": "AAPL", "qty": 10, "avg_price": 185.0},
+      {"symbol": "MSFT", "qty": 5, "avg_price": 410.0}
+    ]
+  }
+}

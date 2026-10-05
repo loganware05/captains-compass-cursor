@@ -1,0 +1,23 @@
+# AI Hedge Fund domain capabilities surfaced via Technology Intelligence.
+# Candidates remain NOT APPROVED FOR EXECUTION.
+
+package: ai-hedge-fund
+pinned_repo: https://github.com/virattt/ai-hedge-fund
+pinned_sha: "78b779c1389e2d1452dc29606d2c4126d859b964"
+approved_for_execution: false
+
+capabilities:
+  - id: financial-research-orchestration
+    description: Multi-agent investment research workflow surface
+  - id: multi-agent-investment-analysis
+    description: Investor-agent opinion composition
+  - id: paper-portfolio-management
+    description: Simulated portfolio / paper trading session
+  - id: historical-backtesting
+    description: Historical strategy evaluation harness
+  - id: strategy-comparison
+    description: Compare strategy / run metrics
+  - id: portfolio-risk-evaluation
+    description: Portfolio and risk state inspection
+  - id: persistent-decision-ledgering
+    description: Hash-chained / persistent decision ledger reads

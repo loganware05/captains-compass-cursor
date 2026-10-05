@@ -126,8 +126,8 @@ gh auth status
 
 ## Current Priorities
 
-**M41 implementing** — Jev Decision Service shadow-mode skill suggestion
-(`IMPLEMENTATION_PLAN.md`, APPROVED 2026-09-24): optional version-pinned
-DecisionProvider (`jev-1.13.0`); shadow evidence under `.agent/evidence/` only;
-WS0 SKILL_SLUGS registration. Next trials (later plans): ranking enablement →
-review triage → agent routing. Deferred: M37 removed-line FP. See PROGRESS.md.
+**AHF-P01 implementing** — AI Hedge Fund intake + read-only adapter
+(`IMPLEMENTATION_PLAN.md`, APPROVED 2026-10-04 / IN PROGRESS): pin
+`virattt/ai-hedge-fund`, TI fixture, fixture-backed adapter, v1.50.0.
+Linear OVA-62 / P-OVA-5. Deferred: AHF-P02 Jev packs; AHF-P03 on-chain in
+`bitcoin-data-collector`; Behavioral Loop M50 Policy promotion.
