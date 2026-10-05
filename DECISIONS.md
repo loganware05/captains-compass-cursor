@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-068: AHF Jev shadow strategy + signal triage (v1.51.0 AHF-P02)
+
+- **Status:** Accepted
+- **Date:** 2026-10-05
+- **Context:** Captain directed proceed with AHF-P02 after AHF-P01 merge (#188).
+  Need observe-only Jev decisions beside the hedge-fund adapter without
+  mutating selections or authorizing trades.
+- **Decision:**
+  1. Extend DecisionProvider with `suggest_ahf_strategies` and
+     `triage_ahf_signal` (stub/file/jev).
+  2. Pin questions `ahf_strategy_select_v1` / `ahf_signal_triage_v1`; model
+     `jev-1.13.0`.
+  3. Gate with `COMPASS_DECISION_AHF_SHADOW` (default off); evidence under
+     `.agent/evidence/ahf-p02-jev-shadow/`; always `applied: false`.
+  4. Hermetic file fixtures for CI; live Jev remains Captain-local via existing
+     API key env vars (never commit secrets).
+- **Consequences:** AHF adapter path unchanged unless shadow flag set.
+  Rollback tag `rollback/pre-ahf-p02-jev-shadow` @ `d771e6e`.
+
+
 ## ADR-067: Read-only AI Hedge Fund adapter + TI intake (v1.50.0 AHF-P01)
 
 - **Status:** Accepted

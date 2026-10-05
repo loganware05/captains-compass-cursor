@@ -1,8 +1,9 @@
-"""DecisionProvider boundary — skills, review triage, agent routing, behavior eval.
+"""DecisionProvider boundary — skills, review, routing, behavior, AHF shadow.
 
 Authority: suggestions never mutate matcher rankings, review findings, agent
-selection, prompts, Skills, or instructions; never set ``approved_for_execution``;
-never bypass Captain gates. Behavior evaluation (M46) is observe-only.
+selection, AHF adapter outputs, prompts, Skills, or instructions; never set
+``approved_for_execution``; never bypass Captain gates. AHF-P02 surfaces are
+shadow/observe-only.
 """
 
 from __future__ import annotations
@@ -13,6 +14,10 @@ from orchestrator.providers.decision.types import (
     PINNED_JEV_MODEL_ID,
     AgentRoutingRequest,
     AgentRoutingResult,
+    AhfSignalRequest,
+    AhfSignalResult,
+    AhfStrategyRequest,
+    AhfStrategyResult,
     BehaviorEvalRequest,
     BehaviorEvalResult,
     ReviewTriageRequest,
@@ -38,6 +43,12 @@ class DecisionProvider(Protocol):
 
     def evaluate_behavior(self, request: BehaviorEvalRequest) -> BehaviorEvalResult:
         """Return behavior signal probabilities or abstain (observe-only)."""
+
+    def suggest_ahf_strategies(self, request: AhfStrategyRequest) -> AhfStrategyResult:
+        """Return AHF strategy/agent suggestions or abstain (AHF-P02 shadow)."""
+
+    def triage_ahf_signal(self, request: AhfSignalRequest) -> AhfSignalResult:
+        """Return AHF signal triage label or abstain (AHF-P02 shadow)."""
 
 
 class StubDecisionProvider:
@@ -81,6 +92,24 @@ class StubDecisionProvider:
             abstain_reason="stub provider (decision service disabled)",
         )
 
+    def suggest_ahf_strategies(self, request: AhfStrategyRequest) -> AhfStrategyResult:
+        del request
+        return AhfStrategyResult(
+            provider=self.name,
+            model_id=None,
+            abstain=True,
+            abstain_reason="stub provider (decision service disabled)",
+        )
+
+    def triage_ahf_signal(self, request: AhfSignalRequest) -> AhfSignalResult:
+        del request
+        return AhfSignalResult(
+            provider=self.name,
+            model_id=None,
+            abstain=True,
+            abstain_reason="stub provider (decision service disabled)",
+        )
+
 
 __all__ = [
     "DecisionProvider",
@@ -94,4 +123,8 @@ __all__ = [
     "AgentRoutingResult",
     "BehaviorEvalRequest",
     "BehaviorEvalResult",
+    "AhfStrategyRequest",
+    "AhfStrategyResult",
+    "AhfSignalRequest",
+    "AhfSignalResult",
 ]

@@ -39,6 +39,7 @@ Pinned live model: **`jev-1.13.0`** (aliases `jev-latest` / `jev-preview` refuse
 | `COMPASS_DECISION_CONF_MIN` | `0.60` | Apply Choice confidence floor |
 | `COMPASS_DECISION_REVIEW_SHADOW` | unset/off | Review triage shadow (M44); never mutates findings |
 | `COMPASS_DECISION_AGENT_ROUTING_SHADOW` | unset/off | Agent routing shadow (M45); never mutates selection |
+| `COMPASS_DECISION_AHF_SHADOW` | unset/off | AHF strategy/signal shadow (AHF-P02); never mutates adapter |
 | `COMPASS_BEHAVIOR_EVAL_ENABLED` | unset/off | Required for `northstar evaluate` (M46); default off |
 | `COMPASS_BEHAVIOR_EVAL_THRESHOLDS` | defaults | Optional JSON path for threshold overrides |
 | `COMPASS_BEHAVIOR_LEARN_ENABLED` | unset/off | Required for `northstar learn` (M47); default off |

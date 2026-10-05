@@ -1,0 +1,10 @@
+test_signal_fixture (tests.orchestrator.test_ahf_p02_shadow.AhfDecisionProviderTests.test_signal_fixture) ... ok
+test_strategy_fixture (tests.orchestrator.test_ahf_p02_shadow.AhfDecisionProviderTests.test_strategy_fixture) ... ok
+test_shadow_flag_default_off (tests.orchestrator.test_ahf_p02_shadow.AhfShadowOrchestrationTests.test_shadow_flag_default_off) ... ok
+test_signal_shadow_writes_evidence (tests.orchestrator.test_ahf_p02_shadow.AhfShadowOrchestrationTests.test_signal_shadow_writes_evidence) ... ok
+test_strategy_shadow_writes_evidence_without_mutating_adapter (tests.orchestrator.test_ahf_p02_shadow.AhfShadowOrchestrationTests.test_strategy_shadow_writes_evidence_without_mutating_adapter) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+OK

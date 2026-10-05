@@ -1,0 +1,11 @@
+{
+  "ahf_signal": true,
+  "asset_contains": "BTC",
+  "model_id": "jev-1.13.0",
+  "signal": "bullish",
+  "escalate": true,
+  "latency_ms": 8,
+  "input_tokens": 80,
+  "output_tokens": 0,
+  "raw_answers": {"fixture": true}
+}

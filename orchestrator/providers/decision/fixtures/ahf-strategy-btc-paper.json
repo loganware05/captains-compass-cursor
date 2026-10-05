@@ -1,0 +1,14 @@
+{
+  "ahf_strategy": true,
+  "objective_contains": "btc paper allocation",
+  "model_id": "jev-1.13.0",
+  "suggested_agent_id": "warren_buffett",
+  "ranked": [
+    {"skill_id": "warren_buffett", "score": 0.72, "confidence": 0.7, "rationale": "fixture"},
+    {"skill_id": "risk", "score": 0.55, "confidence": 0.5, "rationale": "fixture"}
+  ],
+  "latency_ms": 12,
+  "input_tokens": 100,
+  "output_tokens": 0,
+  "raw_answers": {"fixture": true}
+}
