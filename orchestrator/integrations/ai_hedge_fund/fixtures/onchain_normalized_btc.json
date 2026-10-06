@@ -1,0 +1,13 @@
+{
+  "transaction_count": 312000,
+  "hash_rate": 5.2e20,
+  "exchange_inflow_btc": 12500.0,
+  "exchange_outflow_btc": 18420.0,
+  "exchange_netflow_btc": -5920.0,
+  "exchange_flow_provider": "file",
+  "exchange_flow_freshness_seconds": 3600,
+  "exchange_flow_coverage": 1.0,
+  "exchange_flow_as_of": "2026-10-05T00:00:00+00:00",
+  "exchange_flow_source": "fixtures/exchange_flow_btc.json",
+  "whale_movement_note": "Hermetic AHF-P04 fixture"
+}

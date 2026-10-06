@@ -1,0 +1,8 @@
+test_compose_and_evidence (tests.orchestrator.test_ahf_p04_onchain_analyst.OnChainAnalystTests.test_compose_and_evidence) ... ok
+test_fixture_bullish_net_outflow (tests.orchestrator.test_ahf_p04_onchain_analyst.OnChainAnalystTests.test_fixture_bullish_net_outflow) ... ok
+test_uncertain_without_flow (tests.orchestrator.test_ahf_p04_onchain_analyst.OnChainAnalystTests.test_uncertain_without_flow) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK

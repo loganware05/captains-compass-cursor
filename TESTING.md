@@ -80,6 +80,14 @@ print(maybe_run_ahf_strategy_shadow(Path('.'), objective='BTC paper allocation',
 PY
 ```
 
+On-Chain Analyst + Captain demo (AHF-P04):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_ahf_p04_onchain_analyst -v
+COMPASS_AHF_ADAPTER_ENABLED=1 ./scripts/ahf-onchain-demo.sh
+# Full utilization guide: docs/integrations/ahf-captain-runbook.md
+```
+
 Record ExecutionRun + Experience:
 
 ```bash

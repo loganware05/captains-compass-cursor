@@ -50,9 +50,11 @@ Candidate remains `approved_for_execution: false`.
 
 ## Related next plans
 
-- **AHF-P02** — Jev shadow decision packs over this adapter ← shipped in v1.51.0
-  (`COMPASS_DECISION_AHF_SHADOW`, see `docs/integrations/decision-provider.md`)
-- **AHF-P03** — BTC on-chain metric family in **`bitcoin-data-collector`** (separate repo plan)
+- ~~**AHF-P02** — Jev shadow~~ shipped v1.51.0
+- ~~**AHF-P03** — BTC exchange netflow~~ shipped in `bitcoin-data-collector` #11
+- ~~**AHF-P04** — On-Chain Analyst + Captain runbook~~ see
+  `docs/integrations/ahf-captain-runbook.md` (v1.52.0)
+- **AHF-P05+** — portfolio experimentation program (deferred)
 
 ## Evidence
 
