@@ -1,5 +1,24 @@
 # Decisions
 
+## ADR-070: Portfolio experimentation program (v1.53.0 AHF-P05)
+
+- **Status:** Accepted
+- **Date:** 2026-10-07
+- **Context:** Captain completed utilization steps 0–4 with live Jev (TypeSafe)
+  via the Technical development plan IDE agent, then directed proceed with
+  AHF-P05 (Notion Phase 5 — portfolio experimentation).
+- **Decision:**
+  1. Add fixture-backed three-arm experiment harness
+     (`baseline` / `onchain` / `jev_onchain`) reusing AHF adapter,
+     OnChainAnalyst, and optional Jev shadow.
+  2. Gate with `COMPASS_AHF_EXPERIMENT_ENABLED` (default off).
+  3. Deterministic acceptance criteria must pass before paper session.
+  4. Always `approved_for_execution: false`; live Jev remains Captain-local.
+- **Consequences:** Operators can isolate on-chain and Jev contribution vs
+  baseline without live trading. Rollback
+  `rollback/pre-ahf-p05-portfolio-experiment` @ `c23eb51`.
+
+
 ## ADR-069: On-Chain Analyst + Captain runbook (v1.52.0 AHF-P04)
 
 - **Status:** Accepted

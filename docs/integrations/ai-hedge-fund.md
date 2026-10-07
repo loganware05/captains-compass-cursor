@@ -19,6 +19,7 @@ Pinned upstream: [`virattt/ai-hedge-fund`](https://github.com/virattt/ai-hedge-f
 |---|---|---|
 | `COMPASS_AHF_ADAPTER_ENABLED` | unset/off | Must be `1`/`true`/`yes`/`on` to use adapter |
 | `COMPASS_AHF_LOCAL_PATH` | unset | Optional local checkout path recorded on manifests only (not executed in v1) |
+| `COMPASS_AHF_EXPERIMENT_ENABLED` | unset/off | Must be on to run AHF-P05 portfolio experiment harness |
 
 ## Operations
 
@@ -34,6 +35,10 @@ adapter.run_backtest()
 adapter.run_paper_session()
 adapter.get_decision_ledger()
 adapter.compare_runs(left, right)
+
+# AHF-P05 multi-arm experiment
+from orchestrator.integrations.ai_hedge_fund import run_portfolio_experiment
+run_portfolio_experiment(Path("."), run_paper_if_accepted=True)
 ```
 
 ## Technology Intelligence
@@ -54,7 +59,8 @@ Candidate remains `approved_for_execution: false`.
 - ~~**AHF-P03** — BTC exchange netflow~~ shipped in `bitcoin-data-collector` #11
 - ~~**AHF-P04** — On-Chain Analyst + Captain runbook~~ see
   `docs/integrations/ahf-captain-runbook.md` (v1.52.0)
-- **AHF-P05+** — portfolio experimentation program (deferred)
+- ~~**AHF-P05** — portfolio experimentation~~ shipped v1.53.0 (`experiment.py`, `COMPASS_AHF_EXPERIMENT_ENABLED`)
+- **AHF-P06+** — behavioral ledger coupling (deferred)
 
 ## Evidence
 

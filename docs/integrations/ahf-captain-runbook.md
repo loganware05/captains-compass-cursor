@@ -15,6 +15,7 @@ Nothing here authorizes live trading, broker access, or `approved_for_execution`
 | **AHF-P02** Jev shadow | control repo | Strategy selection + signal triage (observe-only) | `COMPASS_DECISION_AHF_SHADOW=1` |
 | **AHF-P03** Exchange netflow | `bitcoin-data-collector` | Fills inflow/outflow/netflow on snapshots | `COMPASS_EXCHANGE_FLOW_PROVIDER=file` or Glassnode key |
 | **AHF-P04** On-Chain Analyst | control repo | Normalized features → evidence-referenced signal | Always available (deterministic) |
+| **AHF-P05** Portfolio experiment | control repo | Baseline vs on-chain vs Jev+on-chain compare + acceptance | `COMPASS_AHF_EXPERIMENT_ENABLED=1` |
 
 Pinned AHF upstream: `virattt/ai-hedge-fund` @ `78b779c1389e2d1452dc29606d2c4126d859b964`
 
@@ -25,7 +26,7 @@ Pinned AHF upstream: `virattt/ai-hedge-fund` @ `78b779c1389e2d1452dc29606d2c4126
 ### 0. One-time setup
 
 1. Pull latest:
-   - Control: `git pull` on `captains-compass-cursor` `main` (need **≥ v1.52.0** after this PR merges; **v1.51.0** already has P01–P02).
+   - Control: `git pull` on `captains-compass-cursor` `main` (need **≥ v1.53.0** for P05; **v1.52.0** has P01–P04).
    - BTC: `git pull` on `bitcoin-data-collector` base branch (includes P03).
 2. Optional secrets (Captain machine only — **never commit**):
    - TypeSafe Jev: `COMPASS_JEV_API_KEY` or `TYPESAFE_API_KEY`
@@ -150,8 +151,9 @@ Evidence lands under `.agent/evidence/ahf-p02-jev-shadow/` and
 2. Run On-Chain Analyst on that snapshot (step 2).
 3. Open an AHF research/backtest run (step 3).
 4. Optionally enable Jev shadow for strategy + signal (step 4).
-5. Review evidence folders — **do not** treat high confidence as trade authority.
-6. If a change to routing/instructions is desired, feed outcomes into NorthStar
+5. Run AHF-P05 portfolio experiment (step 7) and review acceptance.
+6. Review evidence folders — **do not** treat high confidence as trade authority.
+7. If a change to routing/instructions is desired, feed outcomes into NorthStar
    behavioral loop (`northstar evaluate` / `learn` / `prompt-eval`) as
    **proposal-only** — still requires Captain approval for authority changes.
 
@@ -177,12 +179,43 @@ COMPASS_TI_PROVIDER=file ./scripts/capability-plan.sh --plan-id ahf-demo \
 
 ---
 
-## What comes next (AHF-P05+)
+## 7. Portfolio experimentation (AHF-P05)
+
+Hermetic (CI / first run):
+
+```bash
+export COMPASS_AHF_ADAPTER_ENABLED=1
+export COMPASS_AHF_EXPERIMENT_ENABLED=1
+export COMPASS_DECISION_PROVIDER=file
+export COMPASS_DECISION_AHF_SHADOW=1
+./scripts/ahf-portfolio-experiment.sh
+```
+
+Live Jev (Captain-local — same as step 4):
+
+```bash
+export COMPASS_DECISION_PROVIDER=jev
+export COMPASS_JEV_MODEL_ID=jev-1.13.0
+export COMPASS_JEV_API_KEY='…'   # never commit
+export COMPASS_AHF_ADAPTER_ENABLED=1
+export COMPASS_AHF_EXPERIMENT_ENABLED=1
+export COMPASS_DECISION_AHF_SHADOW=1
+./scripts/ahf-portfolio-experiment.sh
+```
+
+Inspect `.agent/evidence/ahf-p05-portfolio-experiment/<id>/experiment.json`:
+
+- `arms.baseline` / `onchain` / `jev_onchain` metrics
+- `acceptance.passed` / `winner_arm` / checks
+- `paper_session` only when acceptance passes
+- Always `approved_for_execution: false`
+
+## What comes next (AHF-P06+)
 
 Deferred until you want them:
 
-- Portfolio experimentation program (baseline vs on-chain vs Jev+on-chain backtests)
-- Deeper on-chain families (whale cohorts, stablecoin supply, etc.)
 - Behavioral ledger coupling of investment outcomes → proposal-only routing
+- Deeper on-chain families (whale cohorts, stablecoin supply, etc.)
+- Optional Jev backtest-triage question pack (promising / reject / needs analysis)
 
 Track: [NorthStar On-Chain / AI Hedge Fund](https://linear.app/ovaltechnologysolutions/project/northstar-on-chain-ai-hedge-fund-67b1475ea115)

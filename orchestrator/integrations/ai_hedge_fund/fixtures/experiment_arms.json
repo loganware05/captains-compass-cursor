@@ -1,0 +1,67 @@
+{
+  "schema": "northstar.ahf_experiment_arms.v1",
+  "arms": {
+    "baseline": {
+      "id": "baseline",
+      "label": "Baseline (no on-chain)",
+      "uses_onchain": false,
+      "uses_jev_shadow": false,
+      "agents": ["warren_buffett", "risk"],
+      "metrics": {
+        "cumulative_return": 0.042,
+        "max_drawdown": -0.015,
+        "sharpe": 1.1,
+        "hit_rate": 0.55,
+        "turnover": 0.2,
+        "volatility": 0.12,
+        "decision_latency_ms": 40.0,
+        "model_cost_usd": 0.0,
+        "evidence_coverage": 0.7
+      }
+    },
+    "onchain": {
+      "id": "onchain",
+      "label": "On-chain analyst only",
+      "uses_onchain": true,
+      "uses_jev_shadow": false,
+      "agents": ["warren_buffett", "risk", "on_chain_analyst"],
+      "metrics": {
+        "cumulative_return": 0.051,
+        "max_drawdown": -0.014,
+        "sharpe": 1.25,
+        "hit_rate": 0.58,
+        "turnover": 0.22,
+        "volatility": 0.115,
+        "decision_latency_ms": 55.0,
+        "model_cost_usd": 0.0,
+        "evidence_coverage": 0.9
+      }
+    },
+    "jev_onchain": {
+      "id": "jev_onchain",
+      "label": "Jev triage + on-chain",
+      "uses_onchain": true,
+      "uses_jev_shadow": true,
+      "agents": ["warren_buffett", "risk", "on_chain_analyst"],
+      "metrics": {
+        "cumulative_return": 0.057,
+        "max_drawdown": -0.013,
+        "sharpe": 1.35,
+        "hit_rate": 0.6,
+        "turnover": 0.19,
+        "volatility": 0.11,
+        "decision_latency_ms": 95.0,
+        "model_cost_usd": 0.02,
+        "evidence_coverage": 0.95
+      }
+    }
+  },
+  "acceptance": {
+    "min_cumulative_return_delta_vs_baseline": 0.005,
+    "max_drawdown_not_worse_than_baseline_by": 0.01,
+    "min_sharpe_delta_vs_baseline": 0.05,
+    "max_turnover": 0.5,
+    "require_evidence_coverage": 0.8,
+    "winning_arm_preference": ["jev_onchain", "onchain"]
+  }
+}

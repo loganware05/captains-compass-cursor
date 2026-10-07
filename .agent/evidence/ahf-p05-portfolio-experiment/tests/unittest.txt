@@ -1,0 +1,11 @@
+test_evaluate_acceptance_from_config (tests.orchestrator.test_ahf_p05_experiment.AcceptanceUnitTests.test_evaluate_acceptance_from_config) ... ok
+test_disabled_by_default (tests.orchestrator.test_ahf_p05_experiment.ExperimentGateTests.test_disabled_by_default) ... ok
+test_enabled_flag (tests.orchestrator.test_ahf_p05_experiment.ExperimentGateTests.test_enabled_flag) ... ok
+test_paper_blocked_when_acceptance_fails (tests.orchestrator.test_ahf_p05_experiment.ExperimentRunTests.test_paper_blocked_when_acceptance_fails) ... ok
+test_require_enabled_raises (tests.orchestrator.test_ahf_p05_experiment.ExperimentRunTests.test_require_enabled_raises) ... ok
+test_three_arms_and_acceptance (tests.orchestrator.test_ahf_p05_experiment.ExperimentRunTests.test_three_arms_and_acceptance) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.008s
+
+OK
