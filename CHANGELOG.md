@@ -1,5 +1,19 @@
 # Changelog
 
+
+## 1.53.0 — 2026-10-07
+
+### Added
+
+- **AHF-P05 Portfolio Experimentation Program** — multi-arm fixture-backed
+  backtest compare (baseline vs on-chain vs Jev+on-chain) with deterministic
+  acceptance gate before paper:
+  - `orchestrator/integrations/ai_hedge_fund/experiment.py`
+  - Arm fixtures `fixtures/experiment_arms.json`
+  - Env gate `COMPASS_AHF_EXPERIMENT_ENABLED` (default off)
+  - Demo `scripts/ahf-portfolio-experiment.sh`
+  - ADR-070; plan `ahf-p05-portfolio-experiment`
+
 ## 1.52.0 — 2026-10-05
 
 ### Added

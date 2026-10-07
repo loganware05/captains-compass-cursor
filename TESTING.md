@@ -88,6 +88,17 @@ COMPASS_AHF_ADAPTER_ENABLED=1 ./scripts/ahf-onchain-demo.sh
 # Full utilization guide: docs/integrations/ahf-captain-runbook.md
 ```
 
+Portfolio experimentation (AHF-P05):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_ahf_p05_experiment -v
+COMPASS_AHF_ADAPTER_ENABLED=1 COMPASS_AHF_EXPERIMENT_ENABLED=1 \
+COMPASS_DECISION_PROVIDER=file COMPASS_DECISION_AHF_SHADOW=1 \
+./scripts/ahf-portfolio-experiment.sh
+```
+
+
+
 Record ExecutionRun + Experience:
 
 ```bash

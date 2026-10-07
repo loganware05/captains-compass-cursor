@@ -16,6 +16,12 @@ from orchestrator.integrations.ai_hedge_fund.onchain_analyst import (
     compose_with_ahf,
     write_analysis_evidence,
 )
+from orchestrator.integrations.ai_hedge_fund.experiment import (
+    evaluate_acceptance,
+    experiment_enabled,
+    run_portfolio_experiment,
+    write_experiment_evidence,
+)
 from orchestrator.integrations.ai_hedge_fund.policy import (
     ALLOWED_MODES,
     LiveExecutionDenied,
@@ -42,7 +48,11 @@ __all__ = [
     "adapter_enabled",
     "assert_research_mode",
     "compose_with_ahf",
+    "evaluate_acceptance",
+    "experiment_enabled",
     "get_adapter",
+    "run_portfolio_experiment",
+    "write_experiment_evidence",
     "maybe_run_ahf_signal_shadow",
     "maybe_run_ahf_strategy_shadow",
     "write_analysis_evidence",
