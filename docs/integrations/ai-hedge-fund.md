@@ -20,6 +20,7 @@ Pinned upstream: [`virattt/ai-hedge-fund`](https://github.com/virattt/ai-hedge-f
 | `COMPASS_AHF_ADAPTER_ENABLED` | unset/off | Must be `1`/`true`/`yes`/`on` to use adapter |
 | `COMPASS_AHF_LOCAL_PATH` | unset | Optional local checkout path recorded on manifests only (not executed in v1) |
 | `COMPASS_AHF_EXPERIMENT_ENABLED` | unset/off | Must be on to run AHF-P05 portfolio experiment harness |
+| `COMPASS_AHF_BEHAVIOR_COUPLING_ENABLED` | unset/off | Must be on to ingest experiments into behavior loop (AHF-P06) |
 
 ## Operations
 
@@ -60,7 +61,8 @@ Candidate remains `approved_for_execution: false`.
 - ~~**AHF-P04** — On-Chain Analyst + Captain runbook~~ see
   `docs/integrations/ahf-captain-runbook.md` (v1.52.0)
 - ~~**AHF-P05** — portfolio experimentation~~ shipped v1.53.0 (`experiment.py`, `COMPASS_AHF_EXPERIMENT_ENABLED`)
-- **AHF-P06+** — behavioral ledger coupling (deferred)
+- ~~**AHF-P06** — behavioral coupling + execution readiness~~ shipped v1.54.0
+- **AHF-P07+** — deeper on-chain / live-execution program (deferred; gated)
 
 ## Evidence
 

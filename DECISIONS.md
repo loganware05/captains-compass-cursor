@@ -1,5 +1,26 @@
 # Decisions
 
+## ADR-071: Behavioral coupling + deny live execution readiness (v1.54.0 AHF-P06)
+
+- **Status:** Accepted
+- **Date:** 2026-10-07
+- **Context:** Captain merged AHF-P05 (#191), ran live Jev experiment
+  (`exp-20261007T211148Z-23fa367a`), directed proceed with AHF-P06, and asked
+  whether confidence is strong enough to approve for execution.
+- **Decision:**
+  1. Couple AHF-P05 experiment.json → ExecutionRun/Experience (proposal-only).
+  2. Optional M46 evaluate / M47 learn behind existing behavior gates.
+  3. Ship `assess_execution_readiness` with explicit maturity gates; under the
+     current fixture-backed research stack the assessor **must** return
+     `recommend_approved_for_execution: false`.
+  4. Never auto-set `approved_for_execution: true` from confidence or Jev output.
+- **Consequences:** Investment outcomes enter the behavioral loop without
+  granting trade authority. Live execution remains blocked until non-fixture
+  evidence, paper track record, risk controls, security review, and Captain
+  written approval all exist. Rollback
+  `rollback/pre-ahf-p06-behavioral-coupling` @ `9cd671c`.
+
+
 ## ADR-070: Portfolio experimentation program (v1.53.0 AHF-P05)
 
 - **Status:** Accepted

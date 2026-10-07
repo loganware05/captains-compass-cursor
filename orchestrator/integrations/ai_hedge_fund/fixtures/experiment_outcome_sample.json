@@ -1,0 +1,349 @@
+{
+  "acceptance": {
+    "approved_for_execution": false,
+    "checks": [
+      {
+        "detail": "delta=0.015000 min=0.005",
+        "name": "cumulative_return_delta",
+        "ok": true
+      },
+      {
+        "detail": "winner=-0.013 baseline=-0.015 slack=0.01",
+        "name": "max_drawdown_bound",
+        "ok": true
+      },
+      {
+        "detail": "delta=0.250000 min=0.05",
+        "name": "sharpe_delta",
+        "ok": true
+      },
+      {
+        "detail": "turnover=0.19 max=0.5",
+        "name": "turnover_cap",
+        "ok": true
+      },
+      {
+        "detail": "coverage=0.95 min=0.8",
+        "name": "evidence_coverage",
+        "ok": true
+      }
+    ],
+    "comparison": {
+      "baseline_metrics": {
+        "cumulative_return": 0.042,
+        "decision_latency_ms": 40.0,
+        "evidence_coverage": 0.7,
+        "hit_rate": 0.55,
+        "max_drawdown": -0.015,
+        "model_cost_usd": 0.0,
+        "sharpe": 1.1,
+        "turnover": 0.2,
+        "volatility": 0.12
+      },
+      "pairwise_vs_baseline": {
+        "jev_onchain": {
+          "approved_for_execution": false,
+          "improved_keys": [
+            "cumulative_return",
+            "decision_latency_ms",
+            "evidence_coverage",
+            "hit_rate",
+            "max_drawdown",
+            "model_cost_usd",
+            "sharpe"
+          ],
+          "left_operation": "run_backtest",
+          "left_run_id": "ahf-aa5b8bb76e4f",
+          "metric_deltas": {
+            "cumulative_return": 0.015,
+            "decision_latency_ms": 55.0,
+            "evidence_coverage": 0.25,
+            "hit_rate": 0.05,
+            "max_drawdown": 0.002,
+            "model_cost_usd": 0.02,
+            "sharpe": 0.25,
+            "turnover": -0.01,
+            "volatility": -0.01
+          },
+          "regressed_keys": [
+            "turnover",
+            "volatility"
+          ],
+          "right_operation": "run_backtest",
+          "right_run_id": "ahf-11c233523518",
+          "unchanged_keys": []
+        },
+        "onchain": {
+          "approved_for_execution": false,
+          "improved_keys": [
+            "cumulative_return",
+            "decision_latency_ms",
+            "evidence_coverage",
+            "hit_rate",
+            "max_drawdown",
+            "sharpe",
+            "turnover"
+          ],
+          "left_operation": "run_backtest",
+          "left_run_id": "ahf-aa5b8bb76e4f",
+          "metric_deltas": {
+            "cumulative_return": 0.009,
+            "decision_latency_ms": 15.0,
+            "evidence_coverage": 0.2,
+            "hit_rate": 0.03,
+            "max_drawdown": 0.001,
+            "model_cost_usd": 0.0,
+            "sharpe": 0.15,
+            "turnover": 0.02,
+            "volatility": -0.005
+          },
+          "regressed_keys": [
+            "volatility"
+          ],
+          "right_operation": "run_backtest",
+          "right_run_id": "ahf-60e77112cee1",
+          "unchanged_keys": [
+            "model_cost_usd"
+          ]
+        }
+      },
+      "ranking_by_return_then_sharpe": [
+        "jev_onchain",
+        "onchain",
+        "baseline"
+      ]
+    },
+    "paper_eligible": true,
+    "passed": true,
+    "winner_arm": "jev_onchain"
+  },
+  "approved_for_execution": false,
+  "arms": {
+    "baseline": {
+      "approved_for_execution": false,
+      "authority_mutation": false,
+      "created_at": "2026-10-07T21:17:53+00:00",
+      "data_sources": [
+        "fixture",
+        "historical-prices:redacted"
+      ],
+      "instruction_hashes": {},
+      "local_path": null,
+      "mode": "backtest",
+      "model_versions": {},
+      "operation": "run_backtest",
+      "pinned_sha": "78b779c1389e2d1452dc29606d2c4126d859b964",
+      "provider": "fixture",
+      "repo": "https://github.com/virattt/ai-hedge-fund",
+      "results": {
+        "arm": "baseline",
+        "arm_label": "Baseline (no on-chain)",
+        "fixture": true,
+        "metrics": {
+          "cumulative_return": 0.042,
+          "decision_latency_ms": 40.0,
+          "evidence_coverage": 0.7,
+          "hit_rate": 0.55,
+          "max_drawdown": -0.015,
+          "model_cost_usd": 0.0,
+          "sharpe": 1.1,
+          "turnover": 0.2,
+          "volatility": 0.12
+        },
+        "parent_run_id": "ahf-e85b21b63738",
+        "strategy": "baseline",
+        "uses_jev_shadow": false,
+        "uses_onchain": false
+      },
+      "run_id": "ahf-aa5b8bb76e4f",
+      "selected_agents": [
+        "warren_buffett",
+        "risk"
+      ]
+    },
+    "jev_onchain": {
+      "approved_for_execution": false,
+      "authority_mutation": false,
+      "created_at": "2026-10-07T21:17:53+00:00",
+      "data_sources": [
+        "fixture",
+        "historical-prices:redacted"
+      ],
+      "instruction_hashes": {},
+      "local_path": null,
+      "mode": "backtest",
+      "model_versions": {},
+      "operation": "run_backtest",
+      "pinned_sha": "78b779c1389e2d1452dc29606d2c4126d859b964",
+      "provider": "fixture",
+      "repo": "https://github.com/virattt/ai-hedge-fund",
+      "results": {
+        "arm": "jev_onchain",
+        "arm_label": "Jev triage + on-chain",
+        "fixture": true,
+        "metrics": {
+          "cumulative_return": 0.057,
+          "decision_latency_ms": 95.0,
+          "evidence_coverage": 0.95,
+          "hit_rate": 0.6,
+          "max_drawdown": -0.013,
+          "model_cost_usd": 0.02,
+          "sharpe": 1.35,
+          "turnover": 0.19,
+          "volatility": 0.11
+        },
+        "parent_run_id": "ahf-e85b21b63738",
+        "strategy": "jev_onchain",
+        "uses_jev_shadow": true,
+        "uses_onchain": true
+      },
+      "run_id": "ahf-11c233523518",
+      "selected_agents": [
+        "warren_buffett",
+        "risk",
+        "on_chain_analyst"
+      ]
+    },
+    "onchain": {
+      "approved_for_execution": false,
+      "authority_mutation": false,
+      "created_at": "2026-10-07T21:17:53+00:00",
+      "data_sources": [
+        "fixture",
+        "historical-prices:redacted"
+      ],
+      "instruction_hashes": {},
+      "local_path": null,
+      "mode": "backtest",
+      "model_versions": {},
+      "operation": "run_backtest",
+      "pinned_sha": "78b779c1389e2d1452dc29606d2c4126d859b964",
+      "provider": "fixture",
+      "repo": "https://github.com/virattt/ai-hedge-fund",
+      "results": {
+        "arm": "onchain",
+        "arm_label": "On-chain analyst only",
+        "fixture": true,
+        "metrics": {
+          "cumulative_return": 0.051,
+          "decision_latency_ms": 55.0,
+          "evidence_coverage": 0.9,
+          "hit_rate": 0.58,
+          "max_drawdown": -0.014,
+          "model_cost_usd": 0.0,
+          "sharpe": 1.25,
+          "turnover": 0.22,
+          "volatility": 0.115
+        },
+        "parent_run_id": "ahf-e85b21b63738",
+        "strategy": "onchain",
+        "uses_jev_shadow": false,
+        "uses_onchain": true
+      },
+      "run_id": "ahf-60e77112cee1",
+      "selected_agents": [
+        "warren_buffett",
+        "risk",
+        "on_chain_analyst"
+      ]
+    }
+  },
+  "authority_mutation": false,
+  "cloud_mirror_note": "Hermetic fixture sample for AHF-P06 tests. Not Captain live-Jev evidence.",
+  "created_at": "2026-10-07T21:17:53+00:00",
+  "experiment_id": "exp-fixture-ahf-p06-sample",
+  "jev_shadow": {
+    "signal": {
+      "abstain": false,
+      "applied": false,
+      "escalate": true,
+      "evidence_path": ".agent/evidence/ahf-p02-jev-shadow/shadow/20261007T211753Z-b6b33a35/decision-ahf-signal.json",
+      "kind": "signal",
+      "run_id": "20261007T211753Z-b6b33a35",
+      "signal": "bullish"
+    },
+    "strategy": {
+      "abstain": false,
+      "applied": false,
+      "evidence_path": ".agent/evidence/ahf-p02-jev-shadow/shadow/20261007T211753Z-f00a02a5/decision-ahf-strategy.json",
+      "kind": "strategy",
+      "run_id": "20261007T211753Z-f00a02a5",
+      "suggested_agent_id": "warren_buffett"
+    }
+  },
+  "objective": "BTC paper allocation experiment",
+  "onchain_analysis": {
+    "analysis_id": "oca-d8d87dd4489b",
+    "approved_for_execution": false,
+    "asset": "BTC",
+    "confidence": 0.65,
+    "coverage": 1.0,
+    "created_at": "2026-10-07T21:17:53+00:00",
+    "drivers": [
+      "Net exchange outflow -5920.0 BTC",
+      "tx_count=312000"
+    ],
+    "evidence": [
+      {
+        "label": "exchange_netflow_btc",
+        "note": "netflow=-5920.0",
+        "path": "fixtures/exchange_flow_btc.json"
+      },
+      {
+        "label": "transaction_count",
+        "note": "312000.0",
+        "path": "fixtures/exchange_flow_btc.json"
+      },
+      {
+        "label": "exchange_flow_provider",
+        "note": "file",
+        "path": "fixtures/exchange_flow_btc.json"
+      }
+    ],
+    "freshness_seconds": 3600.0,
+    "netflow_btc": -5920.0,
+    "provider": "file",
+    "signal": "bullish",
+    "warnings": []
+  },
+  "onchain_evidence_path": "{'analysis_id': 'oca-d8d87dd4489b', 'evidence_path': '.agent/evidence/ahf-p04-onchain-analyst/oca-d8d87dd4489b/analysis.json', 'applied': False}",
+  "paper_blocked_reason": null,
+  "paper_session": {
+    "approved_for_execution": false,
+    "authority_mutation": false,
+    "created_at": "2026-10-07T21:17:53+00:00",
+    "data_sources": [
+      "fixture"
+    ],
+    "instruction_hashes": {},
+    "local_path": null,
+    "mode": "paper",
+    "model_versions": {},
+    "operation": "run_paper_session",
+    "pinned_sha": "78b779c1389e2d1452dc29606d2c4126d859b964",
+    "provider": "fixture",
+    "repo": "https://github.com/virattt/ai-hedge-fund",
+    "results": {
+      "fills": [
+        {
+          "price": 189.5,
+          "qty": 2,
+          "side": "buy",
+          "symbol": "AAPL"
+        }
+      ],
+      "fixture": true,
+      "pnl": 125.0,
+      "session_label": "ahf-p05-jev_onchain"
+    },
+    "run_id": "ahf-109653de3e0e",
+    "selected_agents": [
+      "portfolio_manager"
+    ]
+  },
+  "parent_research_run_id": "ahf-e85b21b63738",
+  "plan_id": "ahf-p05-portfolio-experiment",
+  "provider_note": "Fixture-backed arm metrics; live Jev only when COMPASS_DECISION_PROVIDER=jev and COMPASS_DECISION_AHF_SHADOW=1",
+  "provider_note_live": "Captain reported COMPASS_DECISION_PROVIDER=jev for original run",
+  "schema": "northstar.ahf_portfolio_experiment.v1"
+}

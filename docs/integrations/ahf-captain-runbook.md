@@ -16,6 +16,7 @@ Nothing here authorizes live trading, broker access, or `approved_for_execution`
 | **AHF-P03** Exchange netflow | `bitcoin-data-collector` | Fills inflow/outflow/netflow on snapshots | `COMPASS_EXCHANGE_FLOW_PROVIDER=file` or Glassnode key |
 | **AHF-P04** On-Chain Analyst | control repo | Normalized features → evidence-referenced signal | Always available (deterministic) |
 | **AHF-P05** Portfolio experiment | control repo | Baseline vs on-chain vs Jev+on-chain compare + acceptance | `COMPASS_AHF_EXPERIMENT_ENABLED=1` |
+| **AHF-P06** Behavior coupling | control repo | Experiment → telemetry/evaluate + readiness deny-by-default | `COMPASS_AHF_BEHAVIOR_COUPLING_ENABLED=1` |
 
 Pinned AHF upstream: `virattt/ai-hedge-fund` @ `78b779c1389e2d1452dc29606d2c4126d859b964`
 
@@ -26,7 +27,7 @@ Pinned AHF upstream: `virattt/ai-hedge-fund` @ `78b779c1389e2d1452dc29606d2c4126
 ### 0. One-time setup
 
 1. Pull latest:
-   - Control: `git pull` on `captains-compass-cursor` `main` (need **≥ v1.53.0** for P05; **v1.52.0** has P01–P04).
+   - Control: `git pull` on `captains-compass-cursor` `main` (need **≥ v1.54.0** for P06; **v1.53.0** has P01–P05).
    - BTC: `git pull` on `bitcoin-data-collector` base branch (includes P03).
 2. Optional secrets (Captain machine only — **never commit**):
    - TypeSafe Jev: `COMPASS_JEV_API_KEY` or `TYPESAFE_API_KEY`
@@ -210,12 +211,29 @@ Inspect `.agent/evidence/ahf-p05-portfolio-experiment/<id>/experiment.json`:
 - `paper_session` only when acceptance passes
 - Always `approved_for_execution: false`
 
-## What comes next (AHF-P06+)
+## 8. Behavioral coupling + execution readiness (AHF-P06)
 
-Deferred until you want them:
+```bash
+export COMPASS_AHF_BEHAVIOR_COUPLING_ENABLED=1
+# Optional: also enable M46 evaluate
+# export COMPASS_BEHAVIOR_EVAL_ENABLED=1
+# export COMPASS_DECISION_PROVIDER=file   # or jev
+./scripts/ahf-behavioral-coupling.sh \
+  .agent/evidence/ahf-p05-portfolio-experiment/exp-20261007T211148Z-23fa367a/experiment.json
+```
 
-- Behavioral ledger coupling of investment outcomes → proposal-only routing
+Readiness evidence lands under `.agent/evidence/ahf-p06-behavioral-coupling/`.
+Expect `recommend_approved_for_execution: false` until non-fixture backtests,
+sustained paper results, live risk controls, security review, and Captain
+written approval all exist.
+
+## What comes next (AHF-P07+)
+
+Deferred / gated:
+
 - Deeper on-chain families (whale cohorts, stablecoin supply, etc.)
-- Optional Jev backtest-triage question pack (promising / reject / needs analysis)
+- Optional Jev backtest-triage question pack
+- Any live-execution program — only after readiness gates flip and Captain
+  writes explicit approval (confidence alone is never enough)
 
 Track: [NorthStar On-Chain / AI Hedge Fund](https://linear.app/ovaltechnologysolutions/project/northstar-on-chain-ai-hedge-fund-67b1475ea115)
