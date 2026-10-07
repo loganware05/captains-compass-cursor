@@ -22,6 +22,12 @@ from orchestrator.integrations.ai_hedge_fund.experiment import (
     run_portfolio_experiment,
     write_experiment_evidence,
 )
+from orchestrator.integrations.ai_hedge_fund.behavioral import (
+    assess_execution_readiness,
+    coupling_enabled,
+    ingest_experiment_outcome,
+    run_behavioral_coupling,
+)
 from orchestrator.integrations.ai_hedge_fund.policy import (
     ALLOWED_MODES,
     LiveExecutionDenied,
@@ -46,11 +52,15 @@ __all__ = [
     "PINNED_SHA",
     "RunManifest",
     "adapter_enabled",
+    "assess_execution_readiness",
     "assert_research_mode",
+    "coupling_enabled",
     "compose_with_ahf",
     "evaluate_acceptance",
     "experiment_enabled",
     "get_adapter",
+    "ingest_experiment_outcome",
+    "run_behavioral_coupling",
     "run_portfolio_experiment",
     "write_experiment_evidence",
     "maybe_run_ahf_signal_shadow",

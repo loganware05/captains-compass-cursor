@@ -1,6 +1,20 @@
 # Changelog
 
 
+
+## 1.54.0 — 2026-10-07
+
+### Added
+
+- **AHF-P06 Behavioral coupling + execution readiness** — ingest AHF-P05
+  experiment outcomes into ExecutionRun/Experience, optional M46 evaluate,
+  and a hard-gated readiness assessor that **never** recommends
+  `approved_for_execution` under the current research-only foundation:
+  - `orchestrator/integrations/ai_hedge_fund/behavioral.py`
+  - Env gate `COMPASS_AHF_BEHAVIOR_COUPLING_ENABLED` (default off)
+  - Demo `scripts/ahf-behavioral-coupling.sh`
+  - ADR-071; plan `ahf-p06-behavioral-coupling`
+
 ## 1.53.0 — 2026-10-07
 
 ### Added

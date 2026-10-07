@@ -486,3 +486,12 @@ Cursor approval-gate and failure exercises must be run interactively in that san
 ## Deliberate failure tests
 
 See design doc Part 9 and `docs/SANDBOX_VALIDATION.md`. All six exercises passed 2026-07-14 (evidence under `.agent/evidence/sandbox-failure-tests/`): bypass approval, scope expansion, failing test, hard-coded secret, parallel conflict, budget stop.
+
+Behavioral coupling + readiness (AHF-P06):
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_ahf_p06_behavioral -v
+COMPASS_AHF_BEHAVIOR_COUPLING_ENABLED=1 ./scripts/ahf-behavioral-coupling.sh \
+  .agent/evidence/ahf-p05-portfolio-experiment/exp-20261007T211148Z-23fa367a/experiment.json
+```
+
