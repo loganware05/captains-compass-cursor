@@ -406,6 +406,41 @@ PY
   else
     fail "prompt-eval should exit 2 mentioning COMPASS_PROMPT_EVAL_ENABLED when unset (rc=$pe_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/behavior-policy.schema.json" ]]; then
+    ok "behavior-policy.schema.json present"
+  else
+    fail "missing orchestrator/schemas/behavior-policy.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/policy-promotion-event.schema.json" ]]; then
+    ok "policy-promotion-event.schema.json present"
+  else
+    fail "missing orchestrator/schemas/policy-promotion-event.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/shadow-report.schema.json" ]]; then
+    ok "shadow-report.schema.json present"
+  else
+    fail "missing orchestrator/schemas/shadow-report.schema.json"
+  fi
+  if [[ -f "$ROOT/.agent/evaluations/behavior/policies/.gitkeep" ]]; then
+    ok ".agent/evaluations/behavior/policies layout"
+  else
+    fail "missing .agent/evaluations/behavior/policies/.gitkeep"
+  fi
+  if [[ -x "$ROOT/scripts/run-policy.sh" ]]; then
+    ok "scripts/run-policy.sh present"
+  else
+    fail "missing executable scripts/run-policy.sh"
+  fi
+  # Fail-closed smoke: policy promote must refuse when enable flag is unset (exit 2).
+  set +e
+  pol_out="$(env -u COMPASS_POLICY_PROMOTE_ENABLED "$ROOT/scripts/run-policy.sh" list --repo-root "$ROOT" 2>&1)"
+  pol_rc=$?
+  set -e
+  if [[ "$pol_rc" -eq 2 && "$pol_out" == *"COMPASS_POLICY_PROMOTE_ENABLED"* ]]; then
+    ok "policy fail-closed when COMPASS_POLICY_PROMOTE_ENABLED unset"
+  else
+    fail "policy should exit 2 mentioning COMPASS_POLICY_PROMOTE_ENABLED when unset (rc=$pol_rc)"
+  fi
   if [[ -f "$ROOT/scripts/run-evaluation.sh" ]]; then
     ok "scripts/run-evaluation.sh present"
   else

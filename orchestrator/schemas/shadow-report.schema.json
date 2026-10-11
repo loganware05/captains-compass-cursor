@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/shadow-report.schema.json",
+  "title": "PolicyShadowReport",
+  "description": "Would-have-changed compose shadow for a Policy candidate (M50). Never applied.",
+  "type": "object",
+  "required": [
+    "shadow_id",
+    "policy_id",
+    "baseline_hash",
+    "candidate_hash",
+    "would_have_changed",
+    "applied",
+    "schema_version",
+    "created_at",
+    "approved_for_execution",
+    "authority_mutation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "shadow_id": { "type": "string", "minLength": 1 },
+    "policy_id": { "type": "string", "minLength": 1 },
+    "instruction_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "baseline_hash": { "type": "string" },
+    "candidate_hash": { "type": "string" },
+    "baseline_instruction_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "candidate_instruction_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "would_have_changed": { "type": "boolean" },
+    "diff_summary": { "type": "string" },
+    "applied": { "type": "boolean", "const": false },
+    "agent": { "type": "string" },
+    "skill_id": { "type": "string" },
+    "schema_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}

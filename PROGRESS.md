@@ -2,16 +2,25 @@
 
 ## Current status
 
-**AHF-P06 Behavioral coupling + execution readiness** — plan
-`ahf-p06-behavioral-coupling`
-· Branch `cursor/ahf-p06-behavioral-coupling-8613` · Release **v1.54.0**.
+**M50 Policy / Instruction Promotion Lifecycle** — plan
+`m50-policy-promotion-lifecycle`
+· Branch `feature/OVA-66-m50-policy-promotion-lifecycle` · Release **v1.55.0**.
 
 | Item | Value |
 |---|---|
-| On main | **v1.53.0** AHF-P05 (#191) @ `9cd671c` |
-| Active plan | `ahf-p06-behavioral-coupling` — **APPROVED** / implementing |
-| Readiness verdict | **NOT approved for execution** (research_operable) |
-| Rollback | `rollback/pre-ahf-p06-behavioral-coupling` @ `9cd671c` |
+| On main (pre-merge) | **v1.54.0** AHF-P06 (#192) @ `dad671f` |
+| Active plan | `m50-policy-promotion-lifecycle` — **APPROVED** / implementing |
+| Linear | [OVA-66](https://linear.app/ovaltechnologysolutions/issue/OVA-66/m50-policy-instruction-promotion-lifecycle-v1550) |
+| Rollback | `rollback/pre-m50-policy-promotion` @ `dad671f` |
+
+## Behavioral Intelligence Loop
+
+1. ~~M46 Behavior Intelligence Foundation~~ — v1.46.0 (#184)
+2. ~~M47 Behavior Pattern Learning~~ — v1.47.0 (#185)
+3. ~~M48 Instruction Registry + Prompt Composer~~ — v1.48.0 (#186)
+4. ~~M49 Prompt Evaluation Harness~~ — v1.49.0 (#187)
+5. **M50 Policy / Instruction Promotion Lifecycle** ← implementing
+6. M51 Kimi K3 Project Overseer — deferred
 
 ## Parallel track — On-Chain / AI Hedge Fund (AHF)
 
@@ -20,9 +29,10 @@
 3. ~~AHF-P03~~ merged (bitcoin-data-collector #11)
 4. ~~AHF-P04~~ merged (#190) · v1.52.0
 5. ~~AHF-P05~~ merged (#191) · v1.53.0
-6. **AHF-P06 Behavioral coupling + readiness** ← implementing
+6. ~~AHF-P06~~ merged (#192) · v1.54.0
 7. Deeper on-chain / live-execution program — deferred (requires Captain gates)
 
 ## Blockers
 
-None for research track. Live execution blocked by readiness gates.
+None for research / behavior tracks. Live execution blocked by readiness gates.
+Live `.cursor/` Policy materialization remains Captain PR-only.

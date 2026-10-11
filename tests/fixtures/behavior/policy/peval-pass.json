@@ -1,0 +1,28 @@
+{
+  "report_id": "peval-fixture-pass",
+  "schema_version": "1",
+  "created_at": "2026-10-11T00:00:00Z",
+  "non_regression": "pass",
+  "case_count": 1,
+  "passed_count": 1,
+  "failed_count": 0,
+  "cases": [
+    {
+      "case_id": "pe-fixture",
+      "non_regression": "pass",
+      "baseline_hash": "sha256:baseline",
+      "candidate_hash": "sha256:candidate",
+      "baseline_instruction_ids": ["instr-global"],
+      "candidate_instruction_ids": ["instr-global", "instr-candidate"],
+      "metrics": {
+        "instruction_adherence": { "status": "pass" },
+        "schema_validity": { "status": "pass" },
+        "approval_boundary_compliance": { "status": "pass" }
+      }
+    }
+  ],
+  "baseline_mode": "include_proposals=false",
+  "candidate_mode": "include_proposals=true",
+  "approved_for_execution": false,
+  "authority_mutation": false
+}

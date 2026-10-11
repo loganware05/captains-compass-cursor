@@ -2,6 +2,22 @@
 
 
 
+## 1.55.0 — 2026-10-11
+
+### Added
+
+- **M50 Policy / Instruction Promotion Lifecycle** — governed promotion from
+  candidate → sandbox_evaluated (M49 gate) → shadowed → Captain-approved →
+  active → proven:
+  - `orchestrator/behavior/policy/` + schemas (`behavior-policy`,
+    `policy-promotion-event`, `shadow-report`)
+  - Operator surface `northstar policy …` behind
+    `COMPASS_POLICY_PROMOTE_ENABLED` (default off)
+  - Active compose-include behind `COMPASS_POLICY_APPLY_ENABLED` (default off)
+  - Shadow reports always `applied: false`; materialize proposals never write
+    `.cursor/`
+  - ADR-072; plan `m50-policy-promotion-lifecycle` (OVA-66)
+
 ## 1.54.0 — 2026-10-07
 
 ### Added

@@ -14,6 +14,18 @@ from orchestrator.schemas.validate import ValidationError, validate_document
 
 INSTRUCTION_SCHEMA_VERSION = "1"
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,120}$")
+APPROVAL_STATES = frozenset(
+    {
+        "draft",
+        "candidate",
+        "sandbox_evaluated",
+        "shadowed",
+        "approved",
+        "active",
+        "proven",
+        "retired",
+    }
+)
 _SCOPE_DIRS = {
     "global": "global",
     "agent": "agents",
@@ -133,16 +145,17 @@ def build_instruction(
     evidence_pattern_ids: list[str] | None = None,
     approval_state: str = "draft",
     instruction_id: str | None = None,
+    policy_id: str = "",
 ) -> dict[str, Any]:
     iid = instruction_id or instruction_id_for_key(
         scope=scope, title=title, agent=agent, skill_id=skill_id
     )
     _safe_id(iid, label="instruction_id")
-    if approval_state not in {"draft", "candidate"}:
+    if approval_state not in APPROVAL_STATES:
         raise InstructionStoreError(
-            f"M48 approval_state must be draft|candidate, got {approval_state!r}"
+            f"approval_state must be one of {sorted(APPROVAL_STATES)}, got {approval_state!r}"
         )
-    return {
+    doc: dict[str, Any] = {
         "instruction_id": iid,
         "scope": scope,
         "title": title,
@@ -160,6 +173,9 @@ def build_instruction(
         "approved_for_execution": False,
         "authority_mutation": False,
     }
+    if policy_id:
+        doc["policy_id"] = policy_id
+    return doc
 
 
 def write_instruction(repo_root: Path, instruction: dict[str, Any]) -> Path:
