@@ -44,6 +44,12 @@ wandb/
 .agent/evaluations/behavior/**/*.json
 !.agent/evaluations/behavior/**/.gitkeep
 .agent/evaluations/behavior/**/export.csv
+# Project Overseer runtime snapshots / proposals (M51)
+.agent/status/snapshots/**/*.json
+!.agent/status/snapshots/**/.gitkeep
+.agent/status/reconcile-proposals/**
+!.agent/status/reconcile-proposals/**/.gitkeep
+.agent/status/export.csv
 .agent/routing/proposals/*.json
 !.agent/routing/proposals/.gitkeep
 .agent/agents/proficiency/*.json

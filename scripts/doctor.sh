@@ -441,6 +441,41 @@ PY
   else
     fail "policy should exit 2 mentioning COMPASS_POLICY_PROMOTE_ENABLED when unset (rc=$pol_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/project-status-snapshot.schema.json" ]]; then
+    ok "project-status-snapshot.schema.json present"
+  else
+    fail "missing orchestrator/schemas/project-status-snapshot.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/status-reconcile-proposal.schema.json" ]]; then
+    ok "status-reconcile-proposal.schema.json present"
+  else
+    fail "missing orchestrator/schemas/status-reconcile-proposal.schema.json"
+  fi
+  if [[ -f "$ROOT/.agent/status/snapshots/.gitkeep" ]]; then
+    ok ".agent/status/snapshots layout"
+  else
+    fail "missing .agent/status/snapshots/.gitkeep"
+  fi
+  if [[ -f "$ROOT/.agent/status/reconcile-proposals/.gitkeep" ]]; then
+    ok ".agent/status/reconcile-proposals layout"
+  else
+    fail "missing .agent/status/reconcile-proposals/.gitkeep"
+  fi
+  if [[ -x "$ROOT/scripts/run-status.sh" ]]; then
+    ok "scripts/run-status.sh present"
+  else
+    fail "missing executable scripts/run-status.sh"
+  fi
+  # Fail-closed smoke: status must refuse when enable flag is unset (exit 2).
+  set +e
+  st_out="$(env -u COMPASS_STATUS_ENABLED "$ROOT/scripts/run-status.sh" snapshot --repo-root "$ROOT" 2>&1)"
+  st_rc=$?
+  set -e
+  if [[ "$st_rc" -eq 2 && "$st_out" == *"COMPASS_STATUS_ENABLED"* ]]; then
+    ok "status fail-closed when COMPASS_STATUS_ENABLED unset"
+  else
+    fail "status should exit 2 mentioning COMPASS_STATUS_ENABLED when unset (rc=$st_rc)"
+  fi
   if [[ -f "$ROOT/scripts/run-evaluation.sh" ]]; then
     ok "scripts/run-evaluation.sh present"
   else

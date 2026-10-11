@@ -58,7 +58,7 @@ agentic engineering process across multiple product repositories.
 7. Documentation, budget/session templates, evidence matrix, multi-runtime adapters, evals
 8. Installation, update, uninstall, and doctor scripts
 9. Control-repo CI (doctor + tests + harness evals)
-10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3), persistent roles + bounded weight apply (v1.8.0 M4), knowledge steward (v1.9.0 M5), hybrid vector search (v1.10.0 M6), performance knowledge + live Stars TI (v1.11.0 M7), procedure ingest + TI cache (v1.12.0 M8), skill lifecycle + Artifact Context (v1.13.0 M9), external knowledge + HF file TI (v1.14.0 M10), fixture embeddings + package-registry file TI (v1.15.0 M11), **code review pipeline (v1.30.0 M27)**, **filesystem-gated context (v1.41.0 M40)**, **optional DecisionProvider / Jev shadow skill suggestion (v1.42.0 M41)**, **behavior loop M46–M50 (evaluate → learn → instructions → prompt-eval → policy promotion)**
+10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3), persistent roles + bounded weight apply (v1.8.0 M4), knowledge steward (v1.9.0 M5), hybrid vector search (v1.10.0 M6), performance knowledge + live Stars TI (v1.11.0 M7), procedure ingest + TI cache (v1.12.0 M8), skill lifecycle + Artifact Context (v1.13.0 M9), external knowledge + HF file TI (v1.14.0 M10), fixture embeddings + package-registry file TI (v1.15.0 M11), **code review pipeline (v1.30.0 M27)**, **filesystem-gated context (v1.41.0 M40)**, **optional DecisionProvider / Jev shadow skill suggestion (v1.42.0 M41)**, **behavior loop M46–M51 (evaluate → learn → instructions → prompt-eval → policy promotion → Project Overseer status)**
 
 ## External Services
 
@@ -126,7 +126,7 @@ gh auth status
 
 ## Current Priorities
 
-**M50 implementing** — Policy / Instruction Promotion Lifecycle
-(`IMPLEMENTATION_PLAN.md`, APPROVED 2026-10-11): `northstar policy`, shadow
-mode, Captain-gated Active/Proven, v1.55.0. Linear OVA-66 / P-OVA-4.
-Next deferred: M51 Project Overseer. AHF live execution remains denied.
+**M51 implemented** — Kimi K3 Project Overseer (`northstar status`
+snapshot/explain/compare/reconcile) behind `COMPASS_STATUS_ENABLED`; release
+**v1.56.0**. Linear OVA-67 / P-OVA-4. M50 shipped v1.55.0 (#193). AHF live
+execution remains denied.
