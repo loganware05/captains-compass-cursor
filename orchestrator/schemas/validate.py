@@ -39,6 +39,9 @@ SCHEMA_FILES = (
     "instruction.schema.json",
     "prompt-bundle.schema.json",
     "prompt-eval-report.schema.json",
+    "behavior-policy.schema.json",
+    "policy-promotion-event.schema.json",
+    "shadow-report.schema.json",
 )
 
 

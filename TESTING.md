@@ -291,6 +291,25 @@ Unset `COMPASS_PROMPT_EVAL_ENABLED` → CLI exits non-zero. Reports under
 instructions or mutates `.cursor/`. See
 `.agent/evidence/m49-prompt-evaluation-harness/VALIDATION.md`.
 
+Policy / instruction promotion lifecycle (M50; requires enable flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_m50_policy_promotion.py' -v
+
+COMPASS_POLICY_PROMOTE_ENABLED=1 \
+./scripts/northstar policy list --repo .
+
+COMPASS_POLICY_PROMOTE_ENABLED=1 \
+./scripts/northstar policy promote --to sandbox_evaluated \
+  --instruction-id <id> --prompt-eval-report <peval-id> --repo .
+```
+
+Unset `COMPASS_POLICY_PROMOTE_ENABLED` → CLI exits non-zero. Active
+compose-include requires `COMPASS_POLICY_APPLY_ENABLED=1`. Policies under
+`.agent/evaluations/behavior/policies/`. Shadow always `applied: false`. Never
+auto-writes `.cursor/`. See
+`.agent/evidence/m50-policy-promotion-lifecycle/VALIDATION.md`.
+
 Fail-closed hook detectors — added-line / executable-hook scope (M42):
 
 ```bash

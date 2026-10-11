@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/behavior-policy.schema.json",
+  "title": "BehaviorPolicy",
+  "description": "Governed Policy / instruction promotion object (M50). Never grants execution authority.",
+  "type": "object",
+  "required": [
+    "policy_id",
+    "instruction_ids",
+    "lifecycle_state",
+    "schema_version",
+    "created_at",
+    "approved_for_execution",
+    "authority_mutation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "policy_id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string" },
+    "instruction_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "lifecycle_state": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "sandbox_evaluated",
+        "shadowed",
+        "approved",
+        "active",
+        "proven",
+        "retired"
+      ]
+    },
+    "prompt_eval_report_id": { "type": "string" },
+    "shadow_report_id": { "type": "string" },
+    "prompt_bundle_hash": { "type": "string" },
+    "agent": { "type": "string" },
+    "skill_id": { "type": "string" },
+    "task_type": { "type": "string" },
+    "model_hint": { "type": "string" },
+    "captain_approved_at": { "type": "string" },
+    "proven_evaluation_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "evidence_paths": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "schema_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "updated_at": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}

@@ -56,3 +56,19 @@ def require_prompt_eval_enabled() -> None:
             "prompt evaluation disabled — set COMPASS_PROMPT_EVAL_ENABLED=1 "
             "and invoke northstar prompt-eval explicitly"
         )
+
+
+def policy_promote_enabled() -> bool:
+    return _truthy("COMPASS_POLICY_PROMOTE_ENABLED")
+
+
+def require_policy_promote_enabled() -> None:
+    if not policy_promote_enabled():
+        raise PermissionError(
+            "policy promotion disabled — set COMPASS_POLICY_PROMOTE_ENABLED=1 "
+            "and invoke northstar policy explicitly"
+        )
+
+
+def policy_apply_enabled() -> bool:
+    return _truthy("COMPASS_POLICY_APPLY_ENABLED")

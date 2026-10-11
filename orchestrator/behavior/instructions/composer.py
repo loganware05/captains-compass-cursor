@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from orchestrator.behavior.enabled import policy_apply_enabled
 from orchestrator.behavior.instructions.store import (
     InstructionStoreError,
     _utc_now,
@@ -16,6 +17,11 @@ from orchestrator.behavior.instructions.store import (
     write_bundle,
 )
 from orchestrator.providers.decision.state import redact_text
+
+# States included when COMPASS_POLICY_APPLY_ENABLED is on (M50).
+_ACTIVE_STATES = frozenset({"active", "proven"})
+# Always-eligible content states for baseline compose (pre-activation).
+_BASELINE_STATES = frozenset({"draft", "candidate", "sandbox_evaluated", "shadowed", "approved"})
 
 DEFAULT_PERSONA = (
     "You are a NorthStar engineering agent operating under Captain authority. "
@@ -32,6 +38,17 @@ DEFAULT_OUTPUT = (
 )
 
 
+def _state_eligible(entry: dict[str, Any], *, include_active: bool) -> bool:
+    state = str(entry.get("approval_state") or "candidate")
+    if state == "retired":
+        return False
+    if state in _ACTIVE_STATES:
+        return include_active
+    if state in _BASELINE_STATES:
+        return True
+    return False
+
+
 def _select_instructions(
     repo_root: Path,
     *,
@@ -40,10 +57,15 @@ def _select_instructions(
     task_type: str = "",
     model_hint: str = "",
     include_proposals: bool = True,
+    include_active: bool | None = None,
 ) -> list[dict[str, Any]]:
+    if include_active is None:
+        include_active = policy_apply_enabled()
     entries = list_instructions(repo_root)
     selected: list[dict[str, Any]] = []
     for entry in entries:
+        if not _state_eligible(entry, include_active=bool(include_active)):
+            continue
         scope = str(entry.get("scope") or "")
         if scope == "global":
             selected.append(entry)
@@ -83,6 +105,7 @@ def compose_prompt_bundle(
     model_hint: str = "",
     persist: bool = True,
     include_proposals: bool = True,
+    include_active: bool | None = None,
     seed_if_empty: bool = True,
 ) -> dict[str, Any]:
     """Compose a deterministic PICCO bundle. Never injects into live prompts."""
@@ -93,6 +116,7 @@ def compose_prompt_bundle(
         task_type=task_type,
         model_hint=model_hint,
         include_proposals=include_proposals,
+        include_active=include_active,
     )
     if not selected and seed_if_empty:
         seed_global_operating_brief(repo_root)
@@ -103,6 +127,7 @@ def compose_prompt_bundle(
             task_type=task_type,
             model_hint=model_hint,
             include_proposals=include_proposals,
+            include_active=include_active,
         )
     if not selected:
         raise InstructionStoreError("no instructions available to compose")

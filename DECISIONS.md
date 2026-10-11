@@ -1,5 +1,31 @@
 # Decisions
 
+## ADR-072: Policy / Instruction Promotion Lifecycle (v1.55.0 M50)
+
+- **Status:** Accepted
+- **Date:** 2026-10-11
+- **Context:** Captain approved plan `m50-policy-promotion-lifecycle` (OVA-66)
+  after M46–M49 and AHF-P06 landed on `main` (v1.54.0). Behavioral guidance
+  needed a governed Active/Proven path without silent `.cursor/` or authority
+  mutation.
+- **Decision:**
+  1. Add Policy objects under `.agent/evaluations/behavior/policies/` with
+     lifecycle `candidate → sandbox_evaluated → shadowed → approved → active →
+     proven` (+ `retired`).
+  2. Gate sandbox with M49 `non_regression=pass`; shadow records would-have
+     compose diffs with `applied: false`.
+  3. Require `--captain-approved` for approved/active/proven/retired.
+  4. Operator surface `northstar policy` requires
+     `COMPASS_POLICY_PROMOTE_ENABLED=1`; Active compose-include requires
+     `COMPASS_POLICY_APPLY_ENABLED=1`.
+  5. Materialize drafts are proposal-only; never auto-write `.cursor/`.
+  6. Always `approved_for_execution: false` / `authority_mutation: false`.
+  7. Release as **v1.55.0** (v1.50.x reserved by AHF track).
+- **Consequences:** Policies can graduate under Captain gates without granting
+  execution authority. M51 Project Overseer remains deferred. Rollback
+  `rollback/pre-m50-policy-promotion` @ `dad671f`.
+
+
 ## ADR-071: Behavioral coupling + deny live execution readiness (v1.54.0 AHF-P06)
 
 - **Status:** Accepted

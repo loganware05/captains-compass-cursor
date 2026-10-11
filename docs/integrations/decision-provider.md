@@ -1,10 +1,11 @@
-# Decision Provider (M41–M49) — skills, ranking, review, routing, behavior eval/learn/instructions/prompt-eval
+# Decision Provider (M41–M50) — skills, ranking, review, routing, behavior eval/learn/instructions/prompt-eval/policy
 
-Canonical package: `orchestrator/providers/decision/`  
+Canonical package: `orchestrator/providers/decision/` (+ `orchestrator/behavior/`)  
 Plans: `m41-jev-decision-service`, `m43-jev-ranking-enablement`,
 `m44-jev-review-triage`, `m45-jev-agent-routing`,
 `m46-behavior-intelligence-foundation`, `m47-behavior-pattern-learning`,
-`m48-instruction-registry`, `m49-prompt-evaluation-harness`  
+`m48-instruction-registry`, `m49-prompt-evaluation-harness`,
+`m50-policy-promotion-lifecycle`  
 Pinned live model: **`jev-1.13.0`** (aliases `jev-latest` / `jev-preview` refused)
 
 ## Authority
@@ -22,11 +23,14 @@ Pinned live model: **`jev-1.13.0`** (aliases `jev-latest` / `jev-preview` refuse
   never activates Policies or writes live `.cursor/` guidance.
 - Prompt evaluation (M49) is **eval/proposal-only** — baseline-vs-candidate
   reports; never promotes instructions or mutates `.cursor/` / Skills / routing.
+- Policy promotion (M50) is **Captain-gated** — sandbox/shadow/Active/Proven
+  lifecycle; never auto-writes `.cursor/` or sets `approved_for_execution`.
 - On API failure, unsupported input, abstain, or gate miss → **fail closed** to
   baseline (matcher / deterministic review / hard-filtered router).
 - Default / CI: provider **stub**; APPLY, shadow flags,
   `COMPASS_BEHAVIOR_EVAL_ENABLED`, `COMPASS_BEHAVIOR_LEARN_ENABLED`,
-  `COMPASS_INSTRUCTIONS_ENABLED`, and `COMPASS_PROMPT_EVAL_ENABLED` unset.
+  `COMPASS_INSTRUCTIONS_ENABLED`, `COMPASS_PROMPT_EVAL_ENABLED`,
+  `COMPASS_POLICY_PROMOTE_ENABLED`, and `COMPASS_POLICY_APPLY_ENABLED` unset.
 
 ## Env contract
 
@@ -46,6 +50,9 @@ Pinned live model: **`jev-1.13.0`** (aliases `jev-latest` / `jev-preview` refuse
 | `COMPASS_BEHAVIOR_LEARN_MIN_OCCURRENCE` | `3` | Minimum qualifying evaluations per pattern |
 | `COMPASS_INSTRUCTIONS_ENABLED` | unset/off | Required for `northstar instructions` (M48); default off |
 | `COMPASS_PROMPT_EVAL_ENABLED` | unset/off | Required for `northstar prompt-eval` (M49); default off |
+| `COMPASS_POLICY_PROMOTE_ENABLED` | unset/off | Required for `northstar policy` (M50); default off |
+| `COMPASS_POLICY_APPLY_ENABLED` | unset/off | Include Active/Proven instructions in compose (M50); default off |
+| `COMPASS_POLICY_PROVEN_THRESHOLD` | `2` | Successful M46 evaluations required for Proven |
 | `COMPASS_DECISION_FIXTURES_DIR` | package fixtures | Offline file-provider fixtures |
 | `COMPASS_JEV_MODEL_ID` | *(required for `jev`)* | Must be exactly `jev-1.13.0` (aliases refused) |
 | `COMPASS_JEV_API_KEY` or `TYPESAFE_API_KEY` | unset | Captain-local only; never commit |
