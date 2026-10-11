@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/project-status-snapshot.schema.json",
+  "title": "ProjectStatusSnapshot",
+  "description": "Read-oriented Project Overseer snapshot (M51). Never grants authority.",
+  "type": "object",
+  "required": [
+    "snapshot_id",
+    "schema_version",
+    "created_at",
+    "repository_sha",
+    "northstar_version",
+    "findings",
+    "provider",
+    "approved_for_execution",
+    "authority_mutation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "snapshot_id": { "type": "string", "minLength": 1 },
+    "schema_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "memory_docs": {
+      "type": "object",
+      "additionalProperties": { "type": "boolean" }
+    },
+    "skill_count_fs": { "type": "integer", "minimum": 0 },
+    "skill_count_docs": { "type": ["integer", "null"], "minimum": 0 },
+    "active_plan_id": { "type": "string" },
+    "plan_status": { "type": "string" },
+    "progress_plan_id": { "type": "string" },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["finding_id", "kind", "severity", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "finding_id": { "type": "string", "minLength": 1 },
+          "kind": { "type": "string", "minLength": 1 },
+          "severity": {
+            "type": "string",
+            "enum": ["info", "warn", "error"]
+          },
+          "summary": { "type": "string", "minLength": 1 },
+          "evidence": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "provider": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "model": { "type": "string" }
+      }
+    },
+    "explanation": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}

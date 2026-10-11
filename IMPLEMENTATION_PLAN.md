@@ -1,4 +1,4 @@
-# Implementation Plan — M50 / Policy · Instruction Promotion Lifecycle
+# Implementation Plan — M51 / Kimi K3 Project Overseer
 
 ## Metadata
 
@@ -7,92 +7,90 @@
 | Field | Value |
 |---|---|
 | Status | **APPROVED** |
-| Plan ID | `m50-policy-promotion-lifecycle` |
+| Plan ID | `m51-project-overseer` |
 | Approved | 2026-10-11 — Captain: "I approve" (accepts recommended decisions 1–6) |
-| Linear | [OVA-66](https://linear.app/ovaltechnologysolutions/issue/OVA-66/m50-policy-instruction-promotion-lifecycle-v1550) · Milestone **M50 — Policy / Instruction Promotion Lifecycle** |
-| Spec source | [Notion: Behavioral Intelligence Loop Sprint](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) (M50 section) |
-| Notion plan mirror | [M50 Implementation Plan](https://app.notion.com/p/3f6e6a901c4381b4b7b3f04d2f848aa9) |
+| Linear | [OVA-67](https://linear.app/ovaltechnologysolutions/issue/OVA-67/m51-kimi-k3-project-overseer-v1560) · Milestone **M51 — Kimi K3 Project Overseer** |
+| Spec source | [Notion: Behavioral Intelligence Loop Sprint](https://app.notion.com/p/3ebe6a901c4381da93c8d5abaa694107) (M51 section) |
+| Notion plan mirror | [M51 Implementation Plan](https://app.notion.com/p/3f6e6a901c438131b2aacb3b7e1224c2) |
 | Linear project | [NorthStar Behavioral Intelligence Loop](https://linear.app/ovaltechnologysolutions/project/northstar-behavioral-intelligence-loop-e24174b3f1ef) (P-OVA-4) |
-| Prerequisite | **M49 shipped** — PR [#187](https://github.com/loganware05/captains-compass-cursor/pull/187) → v1.49.0; **AHF-P06 merged** — PR [#192](https://github.com/loganware05/captains-compass-cursor/pull/192) → **v1.54.0** @ `dad671f` |
-| Supersedes | Completed plan `ahf-p06-behavioral-coupling` (research track; live execution still denied) |
+| Prerequisite | **M50 merged** — PR [#193](https://github.com/loganware05/captains-compass-cursor/pull/193) → **v1.55.0** @ `5d108db`; OVA-66 Done |
+| Supersedes | Completed plan `m50-policy-promotion-lifecycle` |
 | Product | **NorthStar** (control repo `captains-compass-cursor`) |
-| Baseline | **v1.54.0** @ `dad671f` |
+| Baseline | **v1.55.0** @ `5d108db` |
 | Prepared | 2026-10-11 |
-| Proposed release | **v1.55.0** (v1.50.0 already claimed by AHF-P01) |
-| Rollback | Tag `rollback/pre-m50-policy-promotion` @ `dad671f` |
-| Proposed branch | `feature/OVA-66-m50-policy-promotion-lifecycle` |
-| Capability plan | `.agent/plans/m50-policy-promotion-lifecycle/` |
+| Proposed release | **v1.56.0** |
+| Rollback | Tag `rollback/pre-m51-project-overseer` @ `5d108db` |
+| Proposed branch | `feature/OVA-67-m51-project-overseer` |
+| Capability plan | `.agent/plans/m51-project-overseer/` |
 | Captain | Logan Ware |
 
 ## Request
 
-Continue the [NorthStar Behavioral Intelligence Loop](https://linear.app/ovaltechnologysolutions/project/northstar-behavioral-intelligence-loop-e24174b3f1ef)
-after M46–M49 and the AHF research track. Establish **M50 Policy / Instruction
-Promotion Lifecycle**: a governed state machine from candidate guidance through
-sandbox eval, shadow, Captain approval, Active, and Proven — without silent
-authority mutation.
+Continue the Behavioral Intelligence Loop after M50. Establish **M51 Project
+Overseer**: a read-oriented `northstar status` surface that snapshots repository
+reality, explains current understanding, compares evolution, and drafts
+reconciliation proposals for documentation/project-memory drift — without
+gaining mutating authority.
 
 ## Current state (evidence)
 
-| Track | Status |
+| Track | Reality |
 |---|---|
-| M46–M49 Behavior Loop | Shipped on `main` (v1.46.0–v1.49.0); Linear OVA-61 still stale In Progress |
-| AHF-P01–P06 | Shipped on `main` through **v1.54.0** (#192); readiness **deny** live execution |
-| M50 | Linear milestone exists (0%); **no issue / no plan** until this document |
-| M51 Project Overseer | Deferred until M50 lands |
-| Repo memory | `PROGRESS.md` / `PROJECT_CONTEXT.md` still describe AHF-P06 as active — refresh in M50 docs slice |
+| M46–M50 | Shipped through **v1.55.0** (#193 on `main`) |
+| M51 | Linear milestone exists; issue **OVA-67** created; plan awaiting approval |
+| Existing reconcile | `reconcile-northstar-run.sh` is Learning-Loop run reconcile — **not** Overseer |
+| Kimi K3 | No live provider wiring in control repo yet |
 
 ## Problem Statement
 
-M48 stores instructions as `draft|candidate` only. M49 can prove non-regression
-via prompt-eval reports. NorthStar still cannot:
+NorthStar accumulates project memory (`VERSION`, `PROJECT_CONTEXT.md`,
+`PROGRESS.md`, Skill/agent counts, ADRs) that can drift from repository reality.
+Operators cannot yet:
 
-1. Advance an instruction/Policy through sandbox → shadow → Captain-approved → Active → Proven
-2. Require M49 evidence (and related provenance) before promotion
-3. Run **shadow mode** that records what Active policy *would* change without applying it
-4. Expose a stable operator surface for promotion with dual enable gates + `--captain-approved`
-5. Keep `approved_for_execution: false` / `authority_mutation: false` through every state
+1. Snapshot a structured “current understanding” of the control/product repo
+2. Explain architecture / active work from memory + filesystem signals
+3. Compare understanding across git SHAs
+4. Draft reconcile proposals when docs disagree with reality (e.g. VERSION vs
+   prose counts)
 
-Without M50, candidates remain forever inert or risk ad-hoc activation outside
-the governed loop.
+Without M51, drift is discovered ad hoc (as the Notion sprint already noted).
 
 ## Desired Outcome
 
 ```
-M47 candidates → M48 draft/candidate instructions
-  → M49 prompt-eval report (non_regression=pass)
-  → promote sandbox_evaluated → shadowed (would-have record)
-  → Captain --captain-approved → active → proven
-  → northstar policy …
-  → evidence under .agent/evidence/m50-policy-promotion-lifecycle/
+repo reality + project memory
+  → status snapshot (schema-validated)
+  → explain / compare --since <sha>
+  → reconcile → proposal drafts only
+  → northstar status …
+  → evidence under .agent/evidence/m51-project-overseer/
 ```
 
-No path may auto-write `.cursor/rules|skills|agents`, mutate Skills/routing,
-grant trade/execution authority, or set `approved_for_execution: true`.
+No path may approve plans, promote Skills/Policies, alter routing, merge,
+deploy, or silently rewrite canonical memory docs.
 
 ## Decision Summary
 
 | Principle | Implication |
 |---|---|
-| Skills ≠ Policies | Promotion lifecycle for **behavior** (instructions/Policies), not TI Skills |
-| Mirror skill-lifecycle | Explicit stages + evidence + `--captain-approved` for mutating stages |
-| Shadow before Active | Persist would-have-changed compose diffs; never live-apply from shadow |
-| M49 gate | `sandbox_evaluated` requires referenced prompt-eval report with `non_regression=pass` |
-| Active ≠ `.cursor/` write | Active means eligible for compose-include under apply gate; materialize is proposal-only |
+| Read-oriented | Overseer inspects and proposes; never authorizes |
+| Hermetic CI first | Deterministic drift detectors; no live Kimi required |
+| Proposal-only reconcile | Write drafts under `.agent/status/reconcile-proposals/` |
 | Dual enable gate | Env flag (default off) **and** explicit CLI |
-| Fail closed | Illegal transitions / missing evidence → deny; never mutate authority |
-| Version | **v1.55.0** (avoid colliding with AHF v1.50–v1.54) |
+| Fail closed | Missing inputs / invalid snapshot → no authority mutation |
+| Distinct from run reconcile | Do not overload `reconcile-northstar-run.sh` |
+| Version | **v1.56.0** |
 
 ## Resolved Decisions (Captain — 2026-10-11)
 
 | # | Decision |
 |---|---|
-| 1 | Top-level **`northstar policy`** |
-| 2 | New **`COMPASS_POLICY_PROMOTE_ENABLED`** (default off) |
-| 3 | Active = compose-eligible only under **`COMPASS_POLICY_APPLY_ENABLED`** |
-| 4 | Materialize **proposals only** (no auto `.cursor/` copy) |
-| 5 | Proven threshold **≥2** (overrideable via env) |
-| 6 | Release **v1.55.0** |
+| 1 | Top-level **`northstar status`** |
+| 2 | New **`COMPASS_STATUS_ENABLED`** (default off) |
+| 3 | **Deterministic drift first** + stub provider interface (no live Kimi in CI) |
+| 4 | Persist under **`.agent/status/`** |
+| 5 | Reconcile **proposals only** (no auto memory rewrite) |
+| 6 | Release **v1.56.0** |
 
 ## Approval Record
 
@@ -100,92 +98,74 @@ Captain Logan Ware — 2026-10-11 — "I approve" (recommended decisions 1–6 a
 
 ## Scope
 
-### In (M50)
+### In (M51)
 
-1. Extend instruction `approval_state` (or introduce Policy wrapper) with lifecycle:
-   `draft → candidate → sandbox_evaluated → shadowed → approved → active → proven`
-   (plus terminal `retired` optional)
-2. Schemas: `behavior-policy.schema.json` + `policy-promotion-event.schema.json` + `shadow-report.schema.json` — fail-closed (`approved_for_execution: false`, `authority_mutation: false`)
-3. Package `orchestrator/behavior/policy/` — state machine, gates, shadow compare, materialize proposal, service
-4. Persist under `.agent/evaluations/behavior/policies/` (+ `shadow/` + `events/` + `materialize-proposals/`)
-5. Promotion gates:
-   - → `sandbox_evaluated`: M49 report id with `non_regression=pass`
-   - → `shadowed`: write shadow report (baseline compose vs candidate/active-would-be)
-   - → `approved` / `active` / `proven`: `--captain-approved` required
-   - → `proven`: ≥N successful M46 evaluations referencing policy / bundle hash
-6. `northstar policy` CLI: `list`, `show`, `promote`, `shadow`, `materialize-proposal`, `export` *(exact verbs may trim)*
-7. Enable gates: `COMPASS_POLICY_PROMOTE_ENABLED` (+ optional `COMPASS_POLICY_APPLY_ENABLED` for compose-include)
-8. Wire composer selection: Active policies includable only when apply flag set; proposals still excluded from observe-only evaluate path
-9. Hermetic fixtures + unit/integration tests
-10. Docs: ADR-072, TESTING, PROGRESS, PROJECT_CONTEXT, CHANGELOG, VERSION → 1.55.0
-11. Evidence under `.agent/evidence/m50-policy-promotion-lifecycle/`
-12. Doctor smoke: fail-closed when promote flag unset
-13. Linear hygiene: mark OVA-61 Done; attach this plan to new M50 issue
+1. Schemas: `project-status-snapshot.schema.json` + `status-reconcile-proposal.schema.json` — fail-closed (`approved_for_execution: false`, `authority_mutation: false`)
+2. Package `orchestrator/status/` — snapshot, explain, compare, drift detectors, reconcile proposals, service
+3. Deterministic drift checks (initial set):
+   - `VERSION` file vs mentions / implied version in `PROGRESS.md` current status
+   - Skill directory count vs Skill count prose in `PROJECT_CONTEXT.md` (when countable)
+   - `IMPLEMENTATION_PLAN.md` Status vs `PROGRESS.md` active plan consistency
+   - Presence of required memory docs (`AGENTS.md`, `PROJECT_CONTEXT.md`, `DECISIONS.md`, `PROGRESS.md`, `TESTING.md`)
+4. Persist snapshots under `.agent/status/snapshots/`; proposals under `.agent/status/reconcile-proposals/`
+5. `northstar status` CLI: `snapshot`, `explain`, `compare`, `reconcile`, `export`
+6. Enable gate: `COMPASS_STATUS_ENABLED` (default off) **and** explicit CLI
+7. Hermetic fixtures + unit/integration tests
+8. Docs: ADR-073, TESTING, PROGRESS, PROJECT_CONTEXT, CHANGELOG, VERSION → 1.56.0
+9. Evidence under `.agent/evidence/m51-project-overseer/`
+10. Doctor smoke: fail-closed when flag unset
+11. Optional stub provider interface `StatusProvider` (`stub` only in v1.56.0) for future Kimi
 
 ### Out (Non-Goals)
 
-- Auto-writing or merging into `.cursor/rules|skills|agents`
-- Auto-setting `approved_for_execution: true` (including AHF readiness)
-- Project Overseer (`northstar status…`) — **M51**
-- Live Jev/LLM required for CI
-- Mutating Skills, TI candidate lifecycle, routing weights, or merge authority
+- Live Kimi K3 / OpenRouter calls in CI
+- Auto-apply reconcile to memory docs / ADRs
+- Approving plans, promoting Skills/Policies, routing mutation
+- Merge / deploy / release automation
+- Replacing `reconcile-northstar-run.sh` (Learning Loop)
 - Database / Prisma / frontend
-- Closing Linear project epic without Captain confirmation
 
 ## Proposed Architecture
 
 ```
-scripts/northstar policy …
+scripts/northstar status …
         │
         ▼
-scripts/run-policy.sh
+scripts/run-status.sh
         │
         ▼
-orchestrator/behavior/policy/
-  states.py / gates.py / shadow.py / promote.py / materialize.py / service.py
-        │
-        ├─► M48 instruction store (approval_state transitions)
-        ├─► M49 prompt-eval reports (sandbox gate)
-        ├─► M46 behavior ledger (proven gate)
-        └─► composer (apply-flag gated Active include)
+orchestrator/status/
+  snapshot.py / explain.py / compare.py / drift.py / reconcile.py / service.py
+  providers/stub.py   # future: kimi.py
         │
         ▼
-.agent/evaluations/behavior/policies/
-  <policy-id>.json
-  shadow/<shadow-id>.json
-  events/<event-id>.json
-  materialize-proposals/<policy-id>/
-(+ evidence under .agent/evidence/m50-policy-promotion-lifecycle/)
+.agent/status/snapshots/<snapshot-id>.json
+.agent/status/reconcile-proposals/<proposal-id>/
+(+ evidence under .agent/evidence/m51-project-overseer/)
 ```
 
-### Lifecycle (governed)
+### Operator surface (proposed)
 
+```bash
+COMPASS_STATUS_ENABLED=1 ./scripts/northstar status snapshot --repo .
+COMPASS_STATUS_ENABLED=1 ./scripts/northstar status explain --repo .
+COMPASS_STATUS_ENABLED=1 ./scripts/northstar status compare --since HEAD~5 --repo .
+COMPASS_STATUS_ENABLED=1 ./scripts/northstar status reconcile --repo .
 ```
-Observed (M46/M47)
-  → Candidate (M48 draft/candidate)
-  → Sandbox Evaluated (M49 non_regression=pass)
-  → Shadowed (would-have record; applied=false)
-  → Captain Approved (--captain-approved)
-  → Active (compose-eligible under apply flag)
-  → Proven (≥N successful evaluations)
-```
-
-Illegal transitions fail closed. Shadow never sets `applied: true`.
 
 ## Capability / Agent Plan (adjusted)
 
-Capability planner emitted a generic frontend-heavy graph; **override for this
-control-repo milestone**:
+Capability planner emitted an irrelevant docker-heavy graph; **override**:
 
 | Task | Profile | Notes |
 |---|---|---|
-| discovery | `repository-scout` | Confirm M48/M49 store + CLI seams |
-| architecture | `architecture-agent` | Schema + state machine + gates |
-| implementation | `implementation-agent` | `orchestrator/behavior/policy/` + CLI (no UI) |
+| discovery | `repository-scout` | Locate memory docs + VERSION/Skill count seams |
+| architecture | `architecture-agent` | Snapshot schema + drift contracts |
+| implementation | `implementation-agent` | `orchestrator/status/` + CLI (no UI/Docker) |
 | validation | `test-engineer` | Hermetic unit/integration + doctor |
 | documentation | `documentation-agent` | ADR/PROGRESS/VERSION/Linear |
 
-Machine artifacts: `.agent/plans/m50-policy-promotion-lifecycle/`.
+Machine artifacts: `.agent/plans/m51-project-overseer/`.
 
 ## Files to Add / Modify
 
@@ -193,63 +173,59 @@ Machine artifacts: `.agent/plans/m50-policy-promotion-lifecycle/`.
 
 | Path | Purpose |
 |---|---|
-| `orchestrator/behavior/policy/` | Lifecycle package |
-| `orchestrator/schemas/behavior-policy.schema.json` | Policy object |
-| `orchestrator/schemas/policy-promotion-event.schema.json` | Transition events |
-| `orchestrator/schemas/shadow-report.schema.json` | Shadow would-have report |
-| `scripts/run-policy.sh` | Enable-gated runner |
-| `tests/fixtures/behavior/policy/` | Hermetic fixtures |
-| `tests/orchestrator/test_m50_policy_promotion.py` | Tests |
-| `docs/plans/M50_POLICY_PROMOTION_LIFECYCLE.md` | Plan archive |
-| `.agent/budgets/m50-policy-promotion-lifecycle.md` | Autonomy budget |
-| `.agent/evidence/m50-policy-promotion-lifecycle/` | Validation evidence |
+| `orchestrator/status/` | Overseer package |
+| `orchestrator/schemas/project-status-snapshot.schema.json` | Snapshot contract |
+| `orchestrator/schemas/status-reconcile-proposal.schema.json` | Proposal contract |
+| `scripts/run-status.sh` | Enable-gated runner |
+| `tests/fixtures/status/` | Hermetic fixtures |
+| `tests/orchestrator/test_m51_project_overseer.py` | Tests |
+| `docs/plans/M51_PROJECT_OVERSEER.md` | Plan archive |
+| `.agent/budgets/m51-project-overseer.md` | Autonomy budget |
+| `.agent/evidence/m51-project-overseer/` | Validation evidence |
+| `.agent/status/` layout | Snapshots + proposals |
 
 ### Modify (thin)
 
 | Path | Change |
 |---|---|
-| `orchestrator/schemas/instruction.schema.json` | Extend `approval_state` enum (or keep instruction states and map via Policy wrapper) |
-| `orchestrator/behavior/instructions/store.py` / `composer.py` | Controlled Active include + transition helpers |
-| `orchestrator/behavior/enabled.py` | Promote / apply gates |
-| `scripts/northstar` | Dispatch `policy` |
+| `orchestrator/behavior/enabled.py` **or** new `orchestrator/status/enabled.py` | Status enable gate |
+| `scripts/northstar` | Dispatch `status` |
 | `scripts/doctor.sh` | Fail-closed smoke |
-| `orchestrator/schemas/validate.py` | Register new schemas |
-| `TESTING.md`, `CHANGELOG.md`, `PROGRESS.md`, `PROJECT_CONTEXT.md`, `DECISIONS.md`, `VERSION` | M50 docs/release |
+| `orchestrator/schemas/validate.py` | Register schemas |
+| `TESTING.md`, `CHANGELOG.md`, `PROGRESS.md`, `PROJECT_CONTEXT.md`, `DECISIONS.md`, `VERSION` | M51 docs/release |
 
 ### Explicit non-touch
 
+- No Policy Active auto-apply changes
 - No AHF live-execution enablement
-- No M51 Project Overseer CLI
-- No live provider keys in fixtures
-- No silent Linear epic close
+- No live Kimi keys in fixtures
 
 ## Acceptance Criteria
 
-- [x] Lifecycle transitions enforce evidence gates and `--captain-approved` where required
-- [x] Shadow reports persist would-have compose diffs with `applied: false`
+- [x] `northstar status snapshot|explain|compare|reconcile` behind enable gate
+- [x] Deterministic drift detectors produce schema-valid findings hermetically
+- [x] Reconcile writes proposal drafts only; never mutates memory docs in-place
 - [x] Schemas reject `approved_for_execution: true` / `authority_mutation: true`
-- [x] `northstar policy` requires enable flag + explicit CLI
-- [x] Active does not write `.cursor/`; materialize is proposal-only
-- [x] Composer Active-include requires apply flag; evaluate path remains observe-only for proposals
-- [x] M46–M49 suites still pass; doctor green
-- [x] Evidence + ADR-072 + VERSION 1.55.0
-- [x] Linear M50 issue linked; OVA-61 marked Done
+- [x] No Skill/Policy/routing/plan-approval mutation
+- [x] Doctor/tests green; no live Kimi required
+- [x] Evidence + ADR-073 + VERSION 1.56.0
+- [x] Linear OVA-67 linked
 
 ## Test Matrix
 
 | Layer | Coverage |
 |---|---|
-| Unit | Illegal transitions, missing M49 evidence, shadow applied=false, enable gates |
-| Integration | CLI promote/shadow/materialize against fixtures |
-| Regression | M46/M47/M48/M49 + AHF-P06 readiness deny unchanged |
-| Security | No `.cursor/` writes; fail-closed gates; redaction |
-| Doctor | Flag unset → policy promote unavailable |
+| Unit | Drift detectors, schema locks, enable gate |
+| Integration | CLI snapshot/explain/compare/reconcile against fixtures |
+| Regression | M46–M50 suites unchanged |
+| Security | No memory auto-write; fail-closed gates |
+| Doctor | Flag unset → status unavailable |
 
 ## Rollback Plan
 
-1. Tag `rollback/pre-m50-policy-promotion` @ `dad671f` after approval
-2. Revert M50 PR / reset to tag
-3. Remove `.agent/evaluations/behavior/policies/` artifacts if needed (non-canonical operator state)
+1. Tag `rollback/pre-m51-project-overseer` @ `5d108db` after approval
+2. Revert M51 PR / reset to tag
+3. Remove `.agent/status/` operator artifacts if needed
 4. VERSION / docs roll back with the revert
 
 ## Autonomy Budget
@@ -260,16 +236,16 @@ Machine artifacts: `.agent/plans/m50-policy-promotion-lifecycle/`.
 | Max wall time | 4 hours |
 | Stop on | Illegal authority mutation, failing security invariants, budget exhaustion |
 
-Track in `.agent/budgets/m50-policy-promotion-lifecycle.md`.
+Track in `.agent/budgets/m51-project-overseer.md`.
 
 ## Security Considerations
 
-- Dual enable gates + Captain flag for Active/Proven
-- Fail closed on malformed evidence / missing prompt-eval
-- Never commit secrets; redact instruction bodies in exports as M48 does
-- Shadow and materialize are evidence/proposal only
+- Dual enable gate
+- Proposal-only reconcile
+- No secrets in snapshots; redact paths/bodies as elsewhere
+- Fail closed on malformed git/compare inputs
 
 ## Approval Boundary
 
-**Approved.** Implementation may proceed on `feature/OVA-66-m50-policy-promotion-lifecycle`
-with rollback `rollback/pre-m50-policy-promotion` @ `dad671f`.
+**Approved.** Implementation may proceed on `feature/OVA-67-m51-project-overseer`
+with rollback `rollback/pre-m51-project-overseer` @ `5d108db`.

@@ -2,6 +2,19 @@
 
 
 
+## 1.56.0 — 2026-10-11
+
+### Added
+
+- **M51 Kimi K3 Project Overseer** — read-oriented `northstar status` surface:
+  - `orchestrator/status/` (snapshot, explain, compare, drift, reconcile,
+    stub provider)
+  - Schemas `project-status-snapshot` + `status-reconcile-proposal`
+  - Operator surface behind `COMPASS_STATUS_ENABLED` (default off)
+  - Reconcile drafts under `.agent/status/reconcile-proposals/` only
+    (`applied: false`); never auto-rewrites project memory
+  - ADR-073; plan `m51-project-overseer` (OVA-67)
+
 ## 1.55.0 — 2026-10-11
 
 ### Added

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/status-reconcile-proposal.schema.json",
+  "title": "StatusReconcileProposal",
+  "description": "Proposal-only Project Overseer reconcile draft (M51). Never auto-applies.",
+  "type": "object",
+  "required": [
+    "proposal_id",
+    "snapshot_id",
+    "schema_version",
+    "created_at",
+    "applied",
+    "actions",
+    "approved_for_execution",
+    "authority_mutation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "proposal_id": { "type": "string", "minLength": 1 },
+    "snapshot_id": { "type": "string", "minLength": 1 },
+    "schema_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "applied": { "type": "boolean", "const": false },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action_id", "target", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "action_id": { "type": "string", "minLength": 1 },
+          "target": { "type": "string", "minLength": 1 },
+          "summary": { "type": "string", "minLength": 1 },
+          "finding_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "suggested_patch": { "type": "string" }
+        }
+      }
+    },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}

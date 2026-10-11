@@ -42,6 +42,8 @@ SCHEMA_FILES = (
     "behavior-policy.schema.json",
     "policy-promotion-event.schema.json",
     "shadow-report.schema.json",
+    "project-status-snapshot.schema.json",
+    "status-reconcile-proposal.schema.json",
 )
 
 

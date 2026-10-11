@@ -310,6 +310,26 @@ compose-include requires `COMPASS_POLICY_APPLY_ENABLED=1`. Policies under
 auto-writes `.cursor/`. See
 `.agent/evidence/m50-policy-promotion-lifecycle/VALIDATION.md`.
 
+Project Overseer / status (M51; requires enable flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_m51_project_overseer.py' -v
+
+COMPASS_STATUS_ENABLED=1 \
+./scripts/northstar status snapshot --repo .
+
+COMPASS_STATUS_ENABLED=1 \
+./scripts/northstar status explain --repo .
+
+COMPASS_STATUS_ENABLED=1 \
+./scripts/northstar status reconcile --repo .
+```
+
+Unset `COMPASS_STATUS_ENABLED` → CLI exits non-zero. Reconcile writes proposal
+drafts only under `.agent/status/reconcile-proposals/` (`applied: false`). Never
+auto-rewrites project memory. See
+`.agent/evidence/m51-project-overseer/VALIDATION.md`.
+
 Fail-closed hook detectors — added-line / executable-hook scope (M42):
 
 ```bash

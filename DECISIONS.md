@@ -1,5 +1,28 @@
 # Decisions
 
+## ADR-073: Kimi K3 Project Overseer (v1.56.0 M51)
+
+- **Status:** Accepted
+- **Date:** 2026-10-11
+- **Context:** Captain approved plan `m51-project-overseer` (OVA-67) after M50
+  Policy lifecycle landed on `main` (v1.55.0). Project memory can drift from
+  repository reality without a read-oriented inspection surface.
+- **Decision:**
+  1. Add `northstar status` (`snapshot` / `explain` / `compare` / `reconcile` /
+     `export`) behind `COMPASS_STATUS_ENABLED` (default off).
+  2. Persist under `.agent/status/` with schema-validated snapshots and
+     proposal-only reconcile drafts (`applied: false`).
+  3. Ship deterministic hermetic drift detectors first; stub `StatusProvider`
+     only (no live Kimi in CI for v1.56.0).
+  4. Never approve plans, promote Skills/Policies, mutate routing, merge,
+     deploy, or auto-rewrite canonical memory docs.
+  5. Always `approved_for_execution: false` / `authority_mutation: false`.
+  6. Release as **v1.56.0**.
+- **Consequences:** Operators can snapshot and propose memory reconcile without
+  granting execution authority. Live Kimi wiring remains a future opt-in.
+  Rollback `rollback/pre-m51-project-overseer` @ `5d108db`.
+
+
 ## ADR-072: Policy / Instruction Promotion Lifecycle (v1.55.0 M50)
 
 - **Status:** Accepted

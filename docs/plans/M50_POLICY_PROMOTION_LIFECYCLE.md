@@ -1,6 +1,5 @@
-> **APPROVED / IMPLEMENTING** (2026-10-11) — Captain approved; product impl on
-> `feature/OVA-66-m50-policy-promotion-lifecycle` (v1.55.0).
-> Active root plan: `IMPLEMENTATION_PLAN.md` (Plan ID `m50-policy-promotion-lifecycle`).
+> **COMPLETE** (2026-10-11) — Merged #193 → `main` @ `5d108db` (v1.55.0). OVA-66 Done.
+> Next: M51 Project Overseer (`IMPLEMENTATION_PLAN.md`, Plan ID `m51-project-overseer`).
 
 # M50 — Policy / Instruction Promotion Lifecycle
 
