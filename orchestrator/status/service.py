@@ -1,4 +1,4 @@
-"""Operator service layer for northstar status (M51)."""
+"""Operator service layer for northstar status (M51/M52)."""
 
 from __future__ import annotations
 
@@ -9,6 +9,7 @@ from typing import Any
 from orchestrator.status.compare import StatusCompareError, compare_since
 from orchestrator.status.enabled import require_status_enabled
 from orchestrator.status.explain import explain_status
+from orchestrator.status.providers.select import StatusProviderSelectError
 from orchestrator.status.reconcile import draft_reconcile
 from orchestrator.status.snapshot import take_snapshot
 from orchestrator.status.store import StatusStoreError, list_snapshots
@@ -21,8 +22,10 @@ class StatusServiceError(ValueError):
 def snapshot(repo_root: Path) -> dict[str, Any]:
     require_status_enabled()
     try:
-        doc = take_snapshot(repo_root, persist=True, include_explanation=False)
-    except StatusStoreError as exc:
+        doc = take_snapshot(
+            repo_root, persist=True, include_explanation=False, write_memory=True
+        )
+    except (StatusStoreError, StatusProviderSelectError) as exc:
         raise StatusServiceError(str(exc)) from exc
     return {"status": "snapshotted", "snapshot": doc}
 
@@ -30,8 +33,10 @@ def snapshot(repo_root: Path) -> dict[str, Any]:
 def explain(repo_root: Path, *, snapshot_id: str = "") -> dict[str, Any]:
     require_status_enabled()
     try:
-        doc = explain_status(repo_root, snapshot_id=snapshot_id, persist=True)
-    except StatusStoreError as exc:
+        doc = explain_status(
+            repo_root, snapshot_id=snapshot_id, persist=True, write_memory=True
+        )
+    except (StatusStoreError, StatusProviderSelectError) as exc:
         raise StatusServiceError(str(exc)) from exc
     return {"status": "explained", "snapshot": doc}
 

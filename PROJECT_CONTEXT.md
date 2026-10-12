@@ -51,14 +51,14 @@ agentic engineering process across multiple product repositories.
 
 1. AGENTS.md operating contract
 2. Five always-applied core rules
-3. Forty-three Skills (including `code-reviewer`, `context-inodes`, northstar-connected-routine, skill-learning-loop, embedding-providers, package-registry-ti, external-knowledge-ingest, skill-lifecycle, procedure-playbooks, knowledge-steward, technology-intelligence-live, persistent-role-promotion, bounded-autonomy, compass-evaluator, experience-routing, capability-planning, execution-telemetry, candidate-promotion, experience-skill-training)
-4. Eleven specialist subagents (including `code-reviewer`, `compass-evaluator`, `knowledge-steward`)
+3. Forty-four Skills (including `project-overseer`, `code-reviewer`, `context-inodes`, northstar-connected-routine, skill-learning-loop, embedding-providers, package-registry-ti, external-knowledge-ingest, skill-lifecycle, procedure-playbooks, knowledge-steward, technology-intelligence-live, persistent-role-promotion, bounded-autonomy, compass-evaluator, experience-routing, capability-planning, execution-telemetry, candidate-promotion, experience-skill-training)
+4. Twelve specialist subagents (including `project-overseer`, `code-reviewer`, `compass-evaluator`, `knowledge-steward`)
 5. Seven safety hooks (three critical fail-closed; four soft fail-open with multi-path skips)
 6. Six Cursor phase commands under `.cursor/commands/`
 7. Documentation, budget/session templates, evidence matrix, multi-runtime adapters, evals
 8. Installation, update, uninstall, and doctor scripts
 9. Control-repo CI (doctor + tests + harness evals)
-10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3), persistent roles + bounded weight apply (v1.8.0 M4), knowledge steward (v1.9.0 M5), hybrid vector search (v1.10.0 M6), performance knowledge + live Stars TI (v1.11.0 M7), procedure ingest + TI cache (v1.12.0 M8), skill lifecycle + Artifact Context (v1.13.0 M9), external knowledge + HF file TI (v1.14.0 M10), fixture embeddings + package-registry file TI (v1.15.0 M11), **code review pipeline (v1.30.0 M27)**, **filesystem-gated context (v1.41.0 M40)**, **optional DecisionProvider / Jev shadow skill suggestion (v1.42.0 M41)**, **behavior loop M46–M51 (evaluate → learn → instructions → prompt-eval → policy promotion → Project Overseer status)**
+10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3), persistent roles + bounded weight apply (v1.8.0 M4), knowledge steward (v1.9.0 M5), hybrid vector search (v1.10.0 M6), performance knowledge + live Stars TI (v1.11.0 M7), procedure ingest + TI cache (v1.12.0 M8), skill lifecycle + Artifact Context (v1.13.0 M9), external knowledge + HF file TI (v1.14.0 M10), fixture embeddings + package-registry file TI (v1.15.0 M11), **code review pipeline (v1.30.0 M27)**, **filesystem-gated context (v1.41.0 M40)**, **optional DecisionProvider / Jev shadow skill suggestion (v1.42.0 M41)**, **behavior loop M46–M52 (evaluate → learn → instructions → prompt-eval → policy promotion → Project Overseer status/Skill)**
 
 ## External Services
 
@@ -126,7 +126,6 @@ gh auth status
 
 ## Current Priorities
 
-**M51 implemented** — Kimi K3 Project Overseer (`northstar status`
-snapshot/explain/compare/reconcile) behind `COMPASS_STATUS_ENABLED`; release
-**v1.56.0**. Linear OVA-67 / P-OVA-4. M50 shipped v1.55.0 (#193). AHF live
-execution remains denied.
+**M52 implementing** — Overseer Skill + opt-in live StatusProvider +
+system-map/scope-ledger (`IMPLEMENTATION_PLAN.md`, APPROVED): v1.57.0.
+Linear OVA-68 / P-OVA-4. M51 shipped v1.56.0 (#194). AHF-P07+ deferred.

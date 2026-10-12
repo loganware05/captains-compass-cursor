@@ -1,5 +1,5 @@
 {
-  "skill_count": 43,
+  "skill_count": 44,
   "skills": {
     "accessibility-review": {
       "content_hash": "1bc05cf1b3b769ac134964c94d95b649c86b21ea8056beb9c93e57002d737990",
@@ -279,6 +279,15 @@
         "carry_over_from": null
       },
       "skill_inode_id": "skl-27c364541360ddf3"
+    },
+    "project-overseer": {
+      "content_hash": "13816078aeefcb480dea0510f1bf6673e292147dfe1eaa78adc4048834c65edf",
+      "lifecycle_stage": "PROVEN_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-13816078aeefcb48"
     },
     "pull-request-preparation": {
       "content_hash": "3aa00c2d28085eaafa70578213e34a6205cc613862191684b456f6f06cd88658",

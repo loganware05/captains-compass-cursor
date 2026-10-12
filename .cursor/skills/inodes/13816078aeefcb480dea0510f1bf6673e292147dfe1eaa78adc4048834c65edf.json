@@ -1,0 +1,15 @@
+{
+  "content_hash": "13816078aeefcb480dea0510f1bf6673e292147dfe1eaa78adc4048834c65edf",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-13816078aeefcb48",
+  "slug": "project-overseer",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

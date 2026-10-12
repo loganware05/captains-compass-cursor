@@ -1,4 +1,4 @@
-"""Build and persist Project Overseer snapshots (M51)."""
+"""Build and persist Project Overseer snapshots (M51/M52)."""
 
 from __future__ import annotations
 
@@ -7,6 +7,12 @@ from pathlib import Path
 from typing import Any
 
 from orchestrator.status.drift import detect_drift
+from orchestrator.status.memory import write_overseer_memory
+from orchestrator.status.providers.base import StatusProvider
+from orchestrator.status.providers.select import (
+    StatusProviderSelectError,
+    select_status_provider,
+)
 from orchestrator.status.providers.stub import StubStatusProvider
 from orchestrator.status.store import (
     StatusStoreError,
@@ -33,11 +39,15 @@ def _git_sha(repo_root: Path) -> str:
 def build_snapshot(
     repo_root: Path,
     *,
-    provider: StubStatusProvider | None = None,
+    provider: StatusProvider | None = None,
     include_explanation: bool = False,
 ) -> dict[str, Any]:
     drift = detect_drift(repo_root)
-    provider = provider or StubStatusProvider()
+    if provider is None:
+        try:
+            provider = select_status_provider()
+        except StatusProviderSelectError:
+            provider = StubStatusProvider()
     snapshot: dict[str, Any] = {
         "repository_sha": _git_sha(repo_root),
         "northstar_version": drift.get("northstar_version") or "",
@@ -48,7 +58,10 @@ def build_snapshot(
         "plan_status": drift.get("plan_status") or "",
         "progress_plan_id": drift.get("progress_plan_id") or "",
         "findings": list(drift.get("findings") or []),
-        "provider": {"name": provider.name, "model": ""},
+        "provider": {
+            "name": getattr(provider, "name", "stub"),
+            "model": getattr(provider, "model", "") or "",
+        },
         "approved_for_execution": False,
         "authority_mutation": False,
     }
@@ -63,6 +76,7 @@ def take_snapshot(
     *,
     persist: bool = True,
     include_explanation: bool = False,
+    write_memory: bool = True,
 ) -> dict[str, Any]:
     snapshot = build_snapshot(
         repo_root, include_explanation=include_explanation
@@ -72,4 +86,6 @@ def take_snapshot(
             write_snapshot(repo_root, snapshot)
         except StatusStoreError:
             raise
+        if write_memory:
+            write_overseer_memory(repo_root, snapshot)
     return snapshot

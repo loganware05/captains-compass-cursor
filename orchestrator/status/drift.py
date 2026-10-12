@@ -17,12 +17,14 @@ REQUIRED_MEMORY_DOCS = (
 )
 
 _SKILL_COUNT_RE = re.compile(
-    r"(?i)\b(forty-three|forty three|forty|\d+)\s+skills?\b"
+    r"(?i)\b(forty-four|forty four|forty-three|forty three|forty|\d+)\s+skills?\b"
 )
 _WORD_NUMBERS = {
     "forty": 40,
     "forty-three": 43,
     "forty three": 43,
+    "forty-four": 44,
+    "forty four": 44,
 }
 
 
@@ -112,6 +114,7 @@ def detect_drift(repo_root: Path) -> dict[str, Any]:
                 "finding_id": "drift-missing-memory-docs",
                 "kind": "missing_memory_docs",
                 "severity": "error",
+                "claim_kind": "observed",
                 "summary": f"Required project memory docs missing: {', '.join(missing)}",
                 "evidence": missing,
             }
@@ -122,6 +125,7 @@ def detect_drift(repo_root: Path) -> dict[str, Any]:
                 "finding_id": "drift-memory-docs-present",
                 "kind": "memory_docs",
                 "severity": "info",
+                "claim_kind": "observed",
                 "summary": "All required project memory docs are present.",
                 "evidence": list(REQUIRED_MEMORY_DOCS),
             }
@@ -133,6 +137,7 @@ def detect_drift(repo_root: Path) -> dict[str, Any]:
                 "finding_id": "drift-version-progress",
                 "kind": "version_progress_mismatch",
                 "severity": "warn",
+                "claim_kind": "documented",
                 "summary": (
                     f"VERSION={version} not mentioned in PROGRESS.md current status text."
                 ),
@@ -146,6 +151,7 @@ def detect_drift(repo_root: Path) -> dict[str, Any]:
                 "finding_id": "drift-skill-count",
                 "kind": "skill_count_mismatch",
                 "severity": "warn",
+                "claim_kind": "documented",
                 "summary": (
                     f"PROJECT_CONTEXT.md reports {skill_docs} Skills but "
                     f".cursor/skills has {skill_fs}."
@@ -163,6 +169,7 @@ def detect_drift(repo_root: Path) -> dict[str, Any]:
                 "finding_id": "drift-plan-id",
                 "kind": "plan_id_mismatch",
                 "severity": "warn",
+                "claim_kind": "documented",
                 "summary": (
                     f"IMPLEMENTATION_PLAN Plan ID `{plan_id}` differs from "
                     f"PROGRESS plan `{progress_plan_id}`."
@@ -181,6 +188,7 @@ def detect_drift(repo_root: Path) -> dict[str, Any]:
                         "finding_id": "drift-plan-status",
                         "kind": "plan_status_mismatch",
                         "severity": "warn",
+                        "claim_kind": "documented",
                         "summary": (
                             f"Plan status is {plan_status!r} while PROGRESS may imply "
                             "active implementation."

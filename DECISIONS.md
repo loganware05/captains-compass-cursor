@@ -1,5 +1,30 @@
 # Decisions
 
+## ADR-074: Overseer Skill + Opt-in Live StatusProvider (v1.57.0 M52)
+
+- **Status:** Accepted
+- **Date:** 2026-10-11
+- **Context:** Captain approved plan `m52-overseer-skill-live-provider`
+  (OVA-68) after M51 stub Overseer landed on `main` (v1.56.0). Notion Overseer
+  design still required a Skill/agent profile, opt-in live provider, and durable
+  system-map / scope-ledger without canonical memory rewrites.
+- **Decision:**
+  1. Add `.cursor/skills/project-overseer/` and `.cursor/agents/project-overseer.md`
+     (advisory only).
+  2. Select provider via `COMPASS_STATUS_PROVIDER=stub|http` (default stub).
+  3. HTTP adapter is OpenRouter-compatible; requires env secrets +
+     `COMPASS_STATUS_MODEL`; https-only; fail closed on errors.
+  4. Persist `system-map.md` + `scope-ledger.json` under `.agent/status/` only;
+     never auto-edit `PROJECT_CONTEXT.md` / ADRs / `PROGRESS.md`.
+  5. Findings carry `claim_kind` (`observed` / `documented` / `external` /
+     `proposed`).
+  6. Always `approved_for_execution: false` / `authority_mutation: false`.
+  7. Release as **v1.57.0**.
+- **Consequences:** Operators can use an Overseer Skill and optional live
+  explanations while CI remains hermetic. Provenance/exemplars remain deferred
+  (M53). Rollback `rollback/pre-m52-overseer-skill-live-provider` @ `bf5ee25`.
+
+
 ## ADR-073: Kimi K3 Project Overseer (v1.56.0 M51)
 
 - **Status:** Accepted

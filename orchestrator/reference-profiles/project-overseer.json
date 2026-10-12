@@ -1,0 +1,42 @@
+{
+  "agent_affinity": [
+    "project-overseer"
+  ],
+  "capabilities_provided": [
+    "project-status-snapshot",
+    "project-status-explain",
+    "project-memory-drift-detect",
+    "project-reconcile-proposal",
+    "project-system-map"
+  ],
+  "categories": [
+    "process",
+    "governance",
+    "discovery",
+    "memory"
+  ],
+  "compatible_stacks": [
+    "any"
+  ],
+  "confidence": 0.9,
+  "id": "project-overseer",
+  "kind": "agent-profile",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "maturity": "proven",
+  "provenance": {
+    "authored_by": "compass",
+    "confidence": 0.9,
+    "inferred": false
+  },
+  "security_sensitivity": "low",
+  "source": {
+    "path": ".cursor/agents/project-overseer.md",
+    "type": "compass-agent"
+  },
+  "tags": [
+    "overseer",
+    "status",
+    "drift"
+  ],
+  "version": "1.0.0"
+}

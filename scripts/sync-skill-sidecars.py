@@ -47,6 +47,20 @@ SKILLS: dict[str, dict] = {
         "security_sensitivity": "high",
         "agent_affinity": ["security-reviewer", "architecture-agent"],
     },
+    "project-overseer": {
+        "categories": ["process", "governance", "discovery", "memory"],
+        "tags": ["overseer", "status", "drift", "system-map"],
+        "capabilities_provided": [
+            "project-status-snapshot",
+            "project-status-explain",
+            "project-memory-drift-detect",
+            "project-reconcile-proposal",
+            "project-system-map",
+        ],
+        "compatible_stacks": ["any"],
+        "security_sensitivity": "medium",
+        "agent_affinity": ["project-overseer", "repository-scout", "documentation-agent"],
+    },
     "skill-lifecycle": {
         "categories": ["process", "learning", "orchestration", "promotion"],
         "tags": ["skill-lifecycle", "promotion", "proficiency", "proven"],
@@ -562,6 +576,18 @@ PROFILES: dict[str, dict] = {
             "skill-recommendation",
         ],
         "agent_affinity": ["repository-scout"],
+    },
+    "project-overseer": {
+        "categories": ["process", "governance", "discovery", "memory"],
+        "tags": ["overseer", "status", "drift"],
+        "capabilities_provided": [
+            "project-status-snapshot",
+            "project-status-explain",
+            "project-memory-drift-detect",
+            "project-reconcile-proposal",
+            "project-system-map",
+        ],
+        "agent_affinity": ["project-overseer"],
     },
     "security-reviewer": {
         "categories": ["security", "quality", "review"],

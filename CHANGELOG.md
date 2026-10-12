@@ -2,6 +2,18 @@
 
 
 
+## 1.57.0 — 2026-10-11
+
+### Added
+
+- **M52 Project Overseer Skill + opt-in live StatusProvider**:
+  - Skill `project-overseer` + agent profile (advisory)
+  - `COMPASS_STATUS_PROVIDER=stub|http` (default stub; CI hermetic)
+  - OpenRouter-compatible HTTP provider (env secrets; https-only; fail closed)
+  - Durable `.agent/status/system-map.md` + `scope-ledger.json`
+  - Finding `claim_kind` labels (observed / documented / external / proposed)
+  - ADR-074; plan `m52-overseer-skill-live-provider` (OVA-68)
+
 ## 1.56.0 — 2026-10-11
 
 ### Added
