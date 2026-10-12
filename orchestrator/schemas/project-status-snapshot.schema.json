@@ -66,6 +66,21 @@
       }
     },
     "explanation": { "type": "string" },
+    "provenance_refs": {
+      "type": "array",
+      "description": "Read-only refs to recent execution provenance (M54).",
+      "items": {
+        "type": "object",
+        "required": ["provenance_id"],
+        "additionalProperties": false,
+        "properties": {
+          "provenance_id": { "type": "string", "minLength": 1 },
+          "execution_id": { "type": "string" },
+          "path": { "type": "string" },
+          "prompt_bundle_hash": { "type": "string" }
+        }
+      }
+    },
     "approved_for_execution": { "type": "boolean", "const": false },
     "authority_mutation": { "type": "boolean", "const": false }
   }

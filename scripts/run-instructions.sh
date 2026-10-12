@@ -15,13 +15,15 @@ AGENT=""
 SKILL_ID=""
 TASK_TYPE=""
 MODEL_HINT=""
+EXECUTION_ID=""
 
 usage() {
   cat <<'USAGE'
 Usage:
   run-instructions.sh list [--repo-root PATH]
   run-instructions.sh show <instruction-id> [--repo-root PATH]
-  run-instructions.sh compose [--agent NAME] [--skill-id ID] [--task-type TYPE] [--model-hint ID] [--repo-root PATH]
+  run-instructions.sh compose [--agent NAME] [--skill-id ID] [--task-type TYPE] [--model-hint ID]
+                              [--execution-id ID] [--repo-root PATH]
   run-instructions.sh draft-from-candidates [--repo-root PATH]
   run-instructions.sh export --format csv [--out PATH] [--repo-root PATH]
 
@@ -64,6 +66,10 @@ while [[ $# -gt 0 ]]; do
       MODEL_HINT="$2"
       shift 2
       ;;
+    --execution-id)
+      EXECUTION_ID="$2"
+      shift 2
+      ;;
     -h|--help)
       usage
       exit 0
@@ -88,7 +94,7 @@ fi
 
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 python3 - "$ROOT" "$REPO_ROOT" "$CMD" "$INSTRUCTION_ID" "$EXPORT_FORMAT" "$EXPORT_PATH" \
-  "$AGENT" "$SKILL_ID" "$TASK_TYPE" "$MODEL_HINT" <<'PY'
+  "$AGENT" "$SKILL_ID" "$TASK_TYPE" "$MODEL_HINT" "$EXECUTION_ID" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -103,6 +109,7 @@ agent = sys.argv[7]
 skill_id = sys.argv[8]
 task_type = sys.argv[9]
 model_hint = sys.argv[10]
+execution_id = sys.argv[11]
 
 sys.path.insert(0, str(control_root))
 
@@ -139,6 +146,7 @@ try:
             skill_id=skill_id,
             task_type=task_type,
             model_hint=model_hint,
+            execution_id=execution_id,
         )
     elif cmd == "draft-from-candidates":
         result = draft_candidates(repo_root)

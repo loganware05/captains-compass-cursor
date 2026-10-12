@@ -1,5 +1,24 @@
 # Decisions
 
+## ADR-076: Behavior Loop Operator Closure (v1.59.0 M54)
+
+- **Status:** Accepted
+- **Date:** 2026-10-11
+- **Context:** Captain approved plan `m54-behavior-loop-closure` (OVA-70)
+  after M53 landed on `main` (v1.58.0). Sprint leftovers required connecting
+  exemplars, provenance, prompt-eval, and Overseer status without new authority.
+- **Decision:**
+  1. Opt-in `COMPASS_PROMPT_EVAL_INCLUDE_EXEMPLARS` maps curated exemplars to
+     prompt-eval cases (default off; never auto-promotes).
+  2. Compose accepts `--execution-id` and best-effort emits provenance when
+     `COMPASS_PROVENANCE_ENABLED=1`.
+  3. Status snapshots expose bounded read-only `provenance_refs`.
+  4. Defer AHF-P07 and scheduled Overseer; release **v1.59.0**.
+- **Consequences:** Operators can close the Behavior Loop end-to-end in
+  hermetic/CI-safe modes. P-OVA-4 may be marked complete after merge.
+  Rollback `rollback/pre-m54-behavior-loop-closure` @ `47f3241`.
+
+
 ## ADR-075: Prompt/Policy Provenance + Behavior Exemplars (v1.58.0 M53)
 
 - **Status:** Accepted
