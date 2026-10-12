@@ -1,0 +1,104 @@
+{
+  "kind": "skill-learning-run",
+  "run_id": "learning-20261012T040232Z",
+  "ran_at": "2026-10-12T04:02:32Z",
+  "objective": "accessible react forms",
+  "source": "fixtures",
+  "top_n": 3,
+  "category_filter": null,
+  "similarity_threshold": 0.28,
+  "approved_for_execution": false,
+  "captain_approval_required_for_live_skills": true,
+  "auto_install": false,
+  "starred_provenance_required": true,
+  "draft_requires_security_and_supply_chain": true,
+  "candidate_count": 1,
+  "results": [
+    {
+      "candidate_id": "github-stars-example-org-accessible-react-forms",
+      "full_name": "example-org/accessible-react-forms",
+      "star_category": "frontend-ui",
+      "staging_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/capabilities/candidates/staging/github-stars-example-org-accessible-react-forms.json",
+      "scorecard": {
+        "scorecard_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/evidence/ti-scorecards/github-stars-example-org-accessible-react-forms/scorecard.json",
+        "evidence_paths": [
+          "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/evidence/ti-scorecards/github-stars-example-org-accessible-react-forms/security-review.md",
+          "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/evidence/ti-scorecards/github-stars-example-org-accessible-react-forms/dependency-supply-chain.md"
+        ],
+        "out_dir": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/evidence/ti-scorecards/github-stars-example-org-accessible-react-forms",
+        "star_category": "frontend-ui",
+        "candidate_id": "github-stars-example-org-accessible-react-forms",
+        "full_name": "example-org/accessible-react-forms",
+        "approved_for_execution": false
+      },
+      "similar_skills": [
+        {
+          "skill_slug": "react-engineering",
+          "similarity": 1.0,
+          "skill_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.cursor/skills/react-engineering",
+          "capabilities_provided": [
+            "react-component-development",
+            "typescript-ui",
+            "client-state-management",
+            "component-testing"
+          ]
+        },
+        {
+          "skill_slug": "accessibility-review",
+          "similarity": 0.4836,
+          "skill_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.cursor/skills/accessibility-review",
+          "capabilities_provided": [
+            "keyboard-navigation-review",
+            "screen-reader-review",
+            "semantic-markup-review",
+            "color-contrast-check",
+            "accessibility-evidence-capture"
+          ]
+        },
+        {
+          "skill_slug": "playwright-browser-validation",
+          "similarity": 0.4836,
+          "skill_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.cursor/skills/playwright-browser-validation",
+          "capabilities_provided": [
+            "playwright-execution",
+            "e2e-testing",
+            "browser-screenshots",
+            "ui-evidence-capture"
+          ]
+        }
+      ],
+      "mode": "improve-existing",
+      "target_skill_slug": "react-engineering",
+      "improvement_proposal": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/capabilities/candidates/skill-improvement-proposals/react-engineering/from-github-stars-example-org-accessible-react-forms.json",
+      "draft": {
+        "skill_md": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/capabilities/candidates/skill-drafts/from-stars-example-org-accessible-react-forms/SKILL.md",
+        "capability_yaml": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/capabilities/candidates/skill-drafts/from-stars-example-org-accessible-react-forms/capability.yaml",
+        "source_candidate": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/capabilities/candidates/skill-drafts/from-stars-example-org-accessible-react-forms/source-candidate.json"
+      },
+      "harness": {
+        "passed": true,
+        "evidence_dir": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/evidence/candidate-sandbox-test/github-stars-example-org-accessible-react-forms",
+        "report_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/evidence/candidate-sandbox-test/github-stars-example-org-accessible-react-forms/sandbox-test.json",
+        "summary_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/evidence/candidate-sandbox-test/github-stars-example-org-accessible-react-forms/summary.md",
+        "staging_candidate": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/capabilities/candidates/staging/github-stars-example-org-accessible-react-forms.json",
+        "lifecycle_stage": "SANDBOX_TESTED",
+        "harness_kind": "fixture-file-checks"
+      }
+    }
+  ],
+  "notes": "Staging + evidence only. Promote live Skills with promote-candidate.sh --captain-approved after Captain review. Skill drafts require security-review + dependency-supply-chain evidence.",
+  "ledger": {
+    "provider": "linear",
+    "project_id": null,
+    "project_name": "NorthStar Skills Learning Loop",
+    "parent_issue_id": null,
+    "milestone": null,
+    "last_synced_at": null,
+    "control_revision": "c2db26be711c7dc173fadba844a7e1bcc6e2f4cd",
+    "product_revision": "c2db26be711c7dc173fadba844a7e1bcc6e2f4cd",
+    "delegated_agent": null,
+    "authoritative_approval": false,
+    "notes": "Linear records state only. Captain approval must exist in GitHub/repository evidence; Linear must not originate CAPTAIN_APPROVED."
+  },
+  "report_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/learning-runs/learning-20261012T040232Z.json"
+}

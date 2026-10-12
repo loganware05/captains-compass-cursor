@@ -2,6 +2,18 @@
 
 
 
+## Unreleased
+
+### Added
+
+- **M55 Captain Handbook + Skills library fill (A1)** (OVA-71):
+  - `docs/guides/captain-handbook.md` — day-to-day Captain operating map
+  - `docs/guides/skills-library-fill-a1.md` — A1 selection criteria + fixture/live checklists
+  - Starred catalog import + library ranking (`docs/guides/starred-library-ranking.md`,
+    `.agent/intelligence/starred-catalog/`)
+  - INDEX / README start-here links; Stars guide cross-links
+  - Evidence: `.agent/evidence/m55-captain-handbook-skills-a1/`
+
 ## 1.59.0 — 2026-10-11
 
 ### Added

@@ -126,8 +126,7 @@ gh auth status
 
 ## Current Priorities
 
-**M54 implementing** — Behavior Loop Operator Closure
-(`IMPLEMENTATION_PLAN.md`, APPROVED): v1.59.0 on
-`feature/OVA-70-m54-behavior-loop-closure`. Linear OVA-70 / P-OVA-4.
-M53 shipped v1.58.0 (#196). Opt-in `COMPASS_PROMPT_EVAL_INCLUDE_EXEMPLARS`.
-AHF-P07+ deferred; live execution denied.
+**M55** — Captain Handbook + Skills library fill (A1) on
+`feature/OVA-71-m55-captain-handbook-skills-a1` ([OVA-71](https://linear.app/ovaltechnologysolutions/issue/OVA-71/m55-captain-handbook-skills-library-fill-a1)).
+Start here: `docs/guides/captain-handbook.md`. Behavior Loop (M46–M54) remains
+complete at **v1.59.0**. Live trading / AHF execution remains denied.

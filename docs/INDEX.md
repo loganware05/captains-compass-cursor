@@ -7,17 +7,20 @@ Launcher: `scripts/northstar` (control repo only).
 
 | Goal | Doc / command |
 |---|---|
+| **Captain Handbook (start here)** | [`guides/captain-handbook.md`](guides/captain-handbook.md) |
 | Install into a product repo | [`PRODUCT_ONBOARDING.md`](PRODUCT_ONBOARDING.md) · `./scripts/install.sh <repo>` |
 | Upgrade an existing install | [`UPGRADING.md`](UPGRADING.md) · `./scripts/update.sh <repo>` |
 | Sandbox validation | [`SANDBOX_VALIDATION.md`](SANDBOX_VALIDATION.md) |
 | Evidence expectations | [`EVIDENCE_MATRIX.md`](EVIDENCE_MATRIX.md) |
 | Star → Skill Learning Run | [`guides/starred-repos-to-skills.md`](guides/starred-repos-to-skills.md) |
+| A1 Skills library fill | [`guides/skills-library-fill-a1.md`](guides/skills-library-fill-a1.md) |
+| Starred catalog ranking | [`guides/starred-library-ranking.md`](guides/starred-library-ranking.md) · `.agent/intelligence/starred-catalog/` |
 
 ## Launcher surfaces (`northstar …`)
 
 | Surface | Purpose | Primary docs |
 |---|---|---|
-| `skills` | TI refresh, learn, promote, ledger sync, agent routing | [`integrations/linear-skills-learning-loop.md`](integrations/linear-skills-learning-loop.md), [`integrations/technology-intelligence.md`](integrations/technology-intelligence.md) |
+| `skills` | TI refresh, learn, promote, ledger sync, agent routing | [`guides/captain-handbook.md`](guides/captain-handbook.md), [`integrations/linear-skills-learning-loop.md`](integrations/linear-skills-learning-loop.md), [`integrations/technology-intelligence.md`](integrations/technology-intelligence.md) |
 | `review` | Code review detect→…→verify→report | [`integrations/code-reviewer.md`](integrations/code-reviewer.md) |
 | `intent` | Intent pack export (never Captain approval) | [`integrations/code-reviewer.md`](integrations/code-reviewer.md) (intent packs) |
 | `outcomes` | Finding triage → Experience (+ proposal-only routing) | [`integrations/code-reviewer.md`](integrations/code-reviewer.md) |

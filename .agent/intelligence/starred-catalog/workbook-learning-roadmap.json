@@ -1,0 +1,51 @@
+[
+  {
+    "Phase": 1,
+    "Focus Area": "Core CS + AI Foundations",
+    "Recommended Repositories": "codecrafters-io/build-your-own-x; harvard-edge/cs249r_book; LucasHJin/vit",
+    "Goal": "Strengthen fundamentals in systems, edge AI, and computer vision.",
+    "Outcome": "Stronger technical base for internships and ML projects."
+  },
+  {
+    "Phase": 2,
+    "Focus Area": "LLM Apps + RAG",
+    "Recommended Repositories": "unclecode/crawl4ai; Shubhamsaboo/awesome-llm-apps; patchy631/ai-engineering-hub; googleapis/mcp-toolbox",
+    "Goal": "Learn to build real LLM apps with retrieval, tools, APIs, and model context.",
+    "Outcome": "Deployable AI apps and portfolio projects."
+  },
+  {
+    "Phase": 3,
+    "Focus Area": "AI Agents + Skills",
+    "Recommended Repositories": "anthropics/skills; aaif-goose/goose; microsoft/agent-lightning; bytedance/deer-flow; rowboatlabs/rowboat",
+    "Goal": "Understand agent architecture, skills, evaluation, and orchestration.",
+    "Outcome": "Ability to design agentic workflows for products and startups."
+  },
+  {
+    "Phase": 4,
+    "Focus Area": "Startup Infrastructure",
+    "Recommended Repositories": "coollabsio/coolify; medusajs/medusa; plausible/analytics; penpot/penpot; TryGhost/Ghost",
+    "Goal": "Learn deployment, commerce, analytics, design, and publishing stack.",
+    "Outcome": "Full-stack startup MVP capability."
+  },
+  {
+    "Phase": 5,
+    "Focus Area": "Finance + Prediction Markets",
+    "Recommended Repositories": "ryanfrigo/kalshi-ai-trading-bot; HKUDS/AI-Trader; TauricResearch/TradingAgents; moondevonyt/Harvard-Algorithmic-Trading-with-AI",
+    "Goal": "Explore AI-assisted trading and market simulation responsibly.",
+    "Outcome": "Research prototypes for finance/market AI apps."
+  },
+  {
+    "Phase": 6,
+    "Focus Area": "Media + Creative AI",
+    "Recommended Repositories": "harry0703/MoneyPrinterTurbo; calesthio/OpenMontage; meituan-longcat/LongCat-Video; ahujasid/blender-mcp",
+    "Goal": "Automate video, visuals, and 3D content generation.",
+    "Outcome": "Marketing/content creation workflows for startups or music promotion."
+  },
+  {
+    "Phase": 7,
+    "Focus Area": "Quality, Security & Compute",
+    "Recommended Repositories": "cloudflare/security-audit-skill; TestSprite/testsprite-cli; morluto/rea; deepseek-ai/DeepGEMM",
+    "Goal": "Add security and QA gates, explore authorized reverse engineering, and learn GPU-kernel acceleration.",
+    "Outcome": "Safer NorthStar delivery and ML infrastructure performance research."
+  }
+]

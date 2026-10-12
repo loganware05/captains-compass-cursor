@@ -1,0 +1,93 @@
+[
+  {
+    "Broad Category": "AI Agents & Workflow Automation",
+    "Repository Count": 14,
+    "High AI Relevance": 9,
+    "Five-Star Priority": 2,
+    "Representative Repos": "hiring-agent, deer-flow, agency-agents, ruflo, floci"
+  },
+  {
+    "Broad Category": "AI Coding, Skills & Evaluation",
+    "Repository Count": 17,
+    "High AI Relevance": 17,
+    "Five-Star Priority": 9,
+    "Representative Repos": "SkillSpector, mattpocock/skills, SkillOpt, ui-ux-pro-max-skill, emilkowalski/skills, testsprite-cli"
+  },
+  {
+    "Broad Category": "Career & Personal Automation",
+    "Repository Count": 3,
+    "High AI Relevance": 3,
+    "Five-Star Priority": 1,
+    "Representative Repos": "career-ops, marketingskills, linkedin-skills"
+  },
+  {
+    "Broad Category": "Creative AI & Media",
+    "Repository Count": 9,
+    "High AI Relevance": 5,
+    "Five-Star Priority": 2,
+    "Representative Repos": "blender-mcp, LongCat-Video, yt-dlp, OpenMontage, ComfyUI-NKD-VFX-Tools"
+  },
+  {
+    "Broad Category": "Design, UI & Productivity",
+    "Repository Count": 9,
+    "High AI Relevance": 2,
+    "Five-Star Priority": 2,
+    "Representative Repos": "penpot, AppFlowy, screenshot-to-code, impeccable, huashu-design"
+  },
+  {
+    "Broad Category": "Developer Tools & Utilities",
+    "Repository Count": 9,
+    "High AI Relevance": 4,
+    "Five-Star Priority": 4,
+    "Representative Repos": "tauri, DevToys, GitNexus, opensrc, playwright, rea"
+  },
+  {
+    "Broad Category": "Documentation, Publishing & Content",
+    "Repository Count": 2,
+    "High AI Relevance": 0,
+    "Five-Star Priority": 0,
+    "Representative Repos": "Ghost, quarkdown"
+  },
+  {
+    "Broad Category": "LLM, RAG & MCP Infrastructure",
+    "Repository Count": 7,
+    "High AI Relevance": 7,
+    "Five-Star Priority": 4,
+    "Representative Repos": "crawl4ai, mcp-toolbox, PixelRAG, awesome-freellm-apis, RelateAnything"
+  },
+  {
+    "Broad Category": "Learning & Project Libraries",
+    "Repository Count": 8,
+    "High AI Relevance": 8,
+    "Five-Star Priority": 6,
+    "Representative Repos": "build-your-own-x, ai-engineering-hub, llm-twin-course, dictionary-of-ai-coding, x-algorithm"
+  },
+  {
+    "Broad Category": "ML, Computer Vision & Edge AI",
+    "Repository Count": 4,
+    "High AI Relevance": 4,
+    "Five-Star Priority": 1,
+    "Representative Repos": "cs249r_book, flash-moe, vit, DeepGEMM"
+  },
+  {
+    "Broad Category": "Security & Cryptography",
+    "Repository Count": 4,
+    "High AI Relevance": 1,
+    "Five-Star Priority": 1,
+    "Representative Repos": "ECC, hackingtool-plugin, sherlock, security-audit-skill"
+  },
+  {
+    "Broad Category": "Startup, Web & Business Infrastructure",
+    "Repository Count": 7,
+    "High AI Relevance": 4,
+    "Five-Star Priority": 3,
+    "Representative Repos": "coolify, medusa, analytics, cal.diy, trycompai/crm"
+  },
+  {
+    "Broad Category": "Trading & Financial AI",
+    "Repository Count": 5,
+    "High AI Relevance": 5,
+    "Five-Star Priority": 2,
+    "Representative Repos": "kalshi-ai-trading-bot, AI-Trader, TradingAgents, ai-hedge-fund, Harvard-Algorithmic-Trading-with-AI"
+  }
+]
