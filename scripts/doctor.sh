@@ -491,6 +491,40 @@ PY
   else
     fail "missing .cursor/agents/project-overseer.md"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/execution-provenance.schema.json" ]]; then
+    ok "execution-provenance.schema.json present"
+  else
+    fail "missing orchestrator/schemas/execution-provenance.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/behavior-exemplar.schema.json" ]]; then
+    ok "behavior-exemplar.schema.json present"
+  else
+    fail "missing orchestrator/schemas/behavior-exemplar.schema.json"
+  fi
+  if [[ -f "$ROOT/.agent/evaluations/behavior/provenance/.gitkeep" ]]; then
+    ok ".agent/evaluations/behavior/provenance layout"
+  else
+    fail "missing .agent/evaluations/behavior/provenance/.gitkeep"
+  fi
+  if [[ -f "$ROOT/.agent/examples/positive/.gitkeep" && -f "$ROOT/.agent/examples/negative/.gitkeep" ]]; then
+    ok ".agent/examples positive/negative layout"
+  else
+    fail "missing .agent/examples/{positive,negative}/.gitkeep"
+  fi
+  if [[ -x "$ROOT/scripts/run-provenance.sh" ]]; then
+    ok "scripts/run-provenance.sh present"
+  else
+    fail "missing executable scripts/run-provenance.sh"
+  fi
+  set +e
+  prov_out="$(env -u COMPASS_PROVENANCE_ENABLED "$ROOT/scripts/run-provenance.sh" list --repo-root "$ROOT" 2>&1)"
+  prov_rc=$?
+  set -e
+  if [[ "$prov_rc" -eq 2 && "$prov_out" == *"COMPASS_PROVENANCE_ENABLED"* ]]; then
+    ok "provenance fail-closed when COMPASS_PROVENANCE_ENABLED unset"
+  else
+    fail "provenance should exit 2 mentioning COMPASS_PROVENANCE_ENABLED when unset (rc=$prov_rc)"
+  fi
   if [[ -f "$ROOT/scripts/run-evaluation.sh" ]]; then
     ok "scripts/run-evaluation.sh present"
   else

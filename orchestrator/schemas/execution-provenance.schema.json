@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/execution-provenance.schema.json",
+  "title": "ExecutionProvenance",
+  "description": "Execution provenance record (M53). Never grants authority.",
+  "type": "object",
+  "required": [
+    "provenance_id",
+    "schema_version",
+    "created_at",
+    "execution_id",
+    "authority_mutation",
+    "approved_for_execution"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "provenance_id": { "type": "string", "minLength": 1 },
+    "schema_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "execution_id": { "type": "string", "minLength": 1 },
+    "evaluation_id": { "type": "string" },
+    "prompt_bundle_hash": { "type": "string" },
+    "instruction_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "policy_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "skill_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "skill_versions": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "model": { "type": "string" },
+    "model_provider": { "type": "string" },
+    "context_route": { "type": "string" },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "agent": { "type": "string" },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}

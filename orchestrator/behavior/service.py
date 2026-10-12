@@ -94,7 +94,22 @@ def evaluate_execution(
         path = write_behavior_evaluation(root, record)
     except BehaviorLedgerError as exc:
         raise BehaviorEvalServiceError(str(exc)) from exc
-    return {"status": "written", "record": record, "path": str(path)}
+    # M53: best-effort provenance emit when COMPASS_PROVENANCE_ENABLED=1
+    provenance_info = None
+    try:
+        from orchestrator.behavior.provenance.service import capture_from_evaluation
+
+        provenance_info = capture_from_evaluation(root, record)
+    except Exception:
+        provenance_info = None
+    result_out: dict[str, Any] = {
+        "status": "written",
+        "record": record,
+        "path": str(path),
+    }
+    if provenance_info:
+        result_out["provenance"] = provenance_info
+    return result_out
 
 
 def evaluate_pending(repo_root: Path) -> dict[str, Any]:

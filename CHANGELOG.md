@@ -2,6 +2,18 @@
 
 
 
+## 1.58.0 — 2026-10-11
+
+### Added
+
+- **M53 Prompt/Policy Provenance + Behavior Exemplars**:
+  - Schemas `execution-provenance` + `behavior-exemplar`
+  - `northstar provenance` / `northstar examples` behind
+    `COMPASS_PROVENANCE_ENABLED` (default off)
+  - Best-effort provenance emit from behavior evaluate when gated
+  - Exemplar drafts under `.agent/examples/` (`auto_promoted: false`)
+  - ADR-075; plan `m53-prompt-policy-provenance` (OVA-69)
+
 ## 1.57.0 — 2026-10-11
 
 ### Added

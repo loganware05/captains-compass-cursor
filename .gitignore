@@ -44,6 +44,10 @@ wandb/
 .agent/evaluations/behavior/**/*.json
 !.agent/evaluations/behavior/**/.gitkeep
 .agent/evaluations/behavior/**/export.csv
+# Behavior exemplars runtime JSON (M53)
+.agent/examples/**/*.json
+!.agent/examples/**/.gitkeep
+.agent/examples/**/export.csv
 # Project Overseer runtime snapshots / proposals (M51/M52)
 .agent/status/snapshots/**/*.json
 !.agent/status/snapshots/**/.gitkeep

@@ -45,6 +45,8 @@ SCHEMA_FILES = (
     "project-status-snapshot.schema.json",
     "status-reconcile-proposal.schema.json",
     "scope-ledger.schema.json",
+    "execution-provenance.schema.json",
+    "behavior-exemplar.schema.json",
 )
 
 
