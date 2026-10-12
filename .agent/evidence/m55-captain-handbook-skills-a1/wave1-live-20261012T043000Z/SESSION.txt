@@ -1,0 +1,21 @@
+refresh_exit=0
+categorize_exit=0
+=== LEARN anthropics-skills ===
+learn_anthropics-skills_exit=1
+=== LEARN aaif-goose ===
+learn_aaif-goose_exit=1
+=== LEARN cloudflare-security-audit-skill ===
+learn_cloudflare-security-audit-skill_exit=1
+DONE
+=== LEARN anthropics-skills ===
+learn_anthropics-skills_exit=1
+=== LEARN aaif-goose ===
+learn_aaif-goose_exit=1
+=== LEARN cloudflare-security-audit-skill ===
+learn_cloudflare-security-audit-skill_exit=1
+=== LEARN anthropics-skills ===
+learn_anthropics-skills_exit=0
+=== LEARN aaif-goose ===
+learn_aaif-goose_exit=0
+=== LEARN cloudflare-security-audit-skill ===
+learn_cloudflare-security-audit-skill_exit=0

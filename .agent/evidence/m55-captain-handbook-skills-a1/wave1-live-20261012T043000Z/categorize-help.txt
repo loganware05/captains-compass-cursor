@@ -1,0 +1,11 @@
+Usage: categorize-github-stars.sh [--repo-root PATH] [--source ti-cache|live|fixtures]
+
+Train from manual label fixtures and write
+.agent/ti/github-stars-categorized/categorized.json.
+
+Sources:
+  ti-cache   Read .agent/intelligence/ti-cache/starred-repos.json (default)
+  live       Fetch via authenticated gh (Captain local only)
+  fixtures   Use tests/fixtures/ti/github-stars-recorded (offline)
+
+Explicit CLI only — never auto-runs on workstream close.

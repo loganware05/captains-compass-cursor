@@ -1,0 +1,37 @@
+{
+  "learns": [
+    {
+      "file": "learn-aaif-goose.json",
+      "run_id": null,
+      "objective": null,
+      "source": null,
+      "candidate_count": null,
+      "auto_install": null,
+      "results": null
+    },
+    {
+      "file": "learn-anthropics-skills.json",
+      "run_id": null,
+      "objective": null,
+      "source": null,
+      "candidate_count": null,
+      "auto_install": null,
+      "results": null
+    },
+    {
+      "file": "learn-cloudflare-security-audit-skill.json",
+      "run_id": null,
+      "objective": null,
+      "source": null,
+      "candidate_count": null,
+      "auto_install": null,
+      "results": null
+    }
+  ],
+  "sandbox": {
+    "learning_runs": [],
+    "scorecards": [],
+    "skill_drafts": [],
+    "improvement_proposals": []
+  }
+}
