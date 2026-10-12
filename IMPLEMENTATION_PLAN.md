@@ -1,5 +1,7 @@
 # Implementation Plan — M55 Captain Handbook + Skills Library Fill (A1)
 
+- Status: APPROVED
+
 ## Metadata
 
 | Field | Value |
