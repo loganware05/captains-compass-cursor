@@ -1,6 +1,6 @@
-> **APPROVED / IMPLEMENTING** (2026-10-11) — Captain approved; product impl on
-> `feature/OVA-68-m52-overseer-skill-live-provider` (v1.57.0).
-> Active root plan: `IMPLEMENTATION_PLAN.md` (Plan ID `m52-overseer-skill-live-provider`).
+> **COMPLETE** (2026-10-11) — Merged #195 → `main` @ `448ac25` (v1.57.0). OVA-68 Done.
+> Next: M53 Prompt/Policy Provenance (`IMPLEMENTATION_PLAN.md`,
+> Plan ID `m53-prompt-policy-provenance`).
 
 # M52 — Project Overseer Skill + Opt-in Live StatusProvider
 

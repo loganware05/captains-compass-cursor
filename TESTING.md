@@ -349,6 +349,23 @@ Default provider is stub. HTTP requires `COMPASS_STATUS_MODEL` and
 Writes `system-map.md` / `scope-ledger.json` under `.agent/status/` only.
 See `.agent/evidence/m52-overseer-skill-live-provider/VALIDATION.md`.
 
+Prompt/Policy Provenance + Behavior Exemplars (M53):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_m53_prompt_policy_provenance.py' -v
+
+# Fail-closed without gate:
+./scripts/northstar provenance list --repo .
+
+# Opt-in:
+COMPASS_PROVENANCE_ENABLED=1 ./scripts/northstar provenance list --repo .
+COMPASS_PROVENANCE_ENABLED=1 ./scripts/northstar examples list --repo .
+```
+
+Default gate is off. Exemplars never auto-promote Skills/Policies
+(`auto_promoted: false`). See
+`.agent/evidence/m53-prompt-policy-provenance/VALIDATION.md`.
+
 Fail-closed hook detectors — added-line / executable-hook scope (M42):
 
 ```bash

@@ -72,3 +72,15 @@ def require_policy_promote_enabled() -> None:
 
 def policy_apply_enabled() -> bool:
     return _truthy("COMPASS_POLICY_APPLY_ENABLED")
+
+
+def provenance_enabled() -> bool:
+    return _truthy("COMPASS_PROVENANCE_ENABLED")
+
+
+def require_provenance_enabled() -> None:
+    if not provenance_enabled():
+        raise PermissionError(
+            "execution provenance disabled — set COMPASS_PROVENANCE_ENABLED=1 "
+            "and invoke northstar provenance / examples explicitly"
+        )

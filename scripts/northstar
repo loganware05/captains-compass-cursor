@@ -2,7 +2,7 @@
 # northstar — topology-free launcher for NorthStar control-plane operations (M24 / M34).
 #
 # One product surface for Skills Learning Loop + Code Reviewer:
-#   northstar skills … | review | intent | outcomes | repair | precision | evaluate | learn | instructions | prompt-eval | policy | status
+#   northstar skills … | review | intent | outcomes | repair | precision | evaluate | learn | instructions | prompt-eval | policy | status | provenance | examples
 #
 # Scripts always live in this control repository. Product/sandbox checkouts do
 # not contain ./scripts/run-skill-learning-loop.sh (or siblings).
@@ -32,6 +32,8 @@ Usage:
   northstar prompt-eval <subcommand> …
   northstar policy <subcommand> …
   northstar status <subcommand> …
+  northstar provenance <subcommand> …
+  northstar examples <subcommand> …
 
 Surfaces (one-line purpose):
   skills      Learning Loop — refresh TI, learn, promote, sync-ledger, route-agents
@@ -47,7 +49,9 @@ Surfaces (one-line purpose):
   instructions Instruction registry + PICCO composer (M48) — proposal-only; requires COMPASS_INSTRUCTIONS_ENABLED=1
   prompt-eval Prompt evaluation harness (M49) — eval-only; requires COMPASS_PROMPT_EVAL_ENABLED=1
   policy      Policy promotion lifecycle (M50) — requires COMPASS_POLICY_PROMOTE_ENABLED=1
-  status      Project Overseer (M51) — read-oriented; requires COMPASS_STATUS_ENABLED=1
+  status      Project Overseer (M51/M52) — read-oriented; requires COMPASS_STATUS_ENABLED=1
+  provenance Execution provenance ledger (M53) — requires COMPASS_PROVENANCE_ENABLED=1
+  examples   Behavior exemplars (M53) — proposal-only; requires COMPASS_PROVENANCE_ENABLED=1
 
 Commands:
   northstar skills refresh [--repo PATH] [refresh-ti-cache.sh options]
@@ -92,6 +96,14 @@ Commands:
   northstar status compare --since SHA [--repo PATH]
   northstar status reconcile [--snapshot-id ID] [--repo PATH]
   northstar status export --format csv [--out PATH] [--repo PATH]
+  northstar provenance capture --execution-id ID [--repo PATH]
+  northstar provenance list [--repo PATH]
+  northstar provenance show --provenance-id ID [--repo PATH]
+  northstar provenance export --format csv [--out PATH] [--repo PATH]
+  northstar examples list [--polarity positive|negative] [--repo PATH]
+  northstar examples show --exemplar-id ID [--repo PATH]
+  northstar examples draft --polarity POLARITY [--evaluation-id ID] [--repo PATH]
+  northstar examples export --format csv [--out PATH] [--repo PATH]
 
 Topology:
   CONTROL  = directory containing this launcher (captains-compass-cursor)
@@ -128,6 +140,8 @@ Locks:
   approved_for_execution.
   Status (M51) requires COMPASS_STATUS_ENABLED=1; read-oriented / proposal-only;
   never approves plans, promotes Skills/Policies, or auto-rewrites project memory.
+  Provenance/examples (M53) require COMPASS_PROVENANCE_ENABLED=1; proposal-only;
+  never auto-promote Skills/Policies or grant approved_for_execution.
 USAGE
 }
 
@@ -489,6 +503,61 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown status subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  provenance)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      capture|list|show|export)
+        exec "$ROOT/scripts/run-provenance.sh" "$sub" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown provenance subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  examples)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      list)
+        exec "$ROOT/scripts/run-provenance.sh" examples-list "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      show)
+        exec "$ROOT/scripts/run-provenance.sh" examples-show "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      draft)
+        exec "$ROOT/scripts/run-provenance.sh" examples-draft "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      export)
+        exec "$ROOT/scripts/run-provenance.sh" examples-export "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown examples subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;

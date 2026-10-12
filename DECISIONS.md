@@ -1,5 +1,28 @@
 # Decisions
 
+## ADR-075: Prompt/Policy Provenance + Behavior Exemplars (v1.58.0 M53)
+
+- **Status:** Accepted
+- **Date:** 2026-10-11
+- **Context:** Captain approved plan `m53-prompt-policy-provenance` (OVA-69)
+  after M52 Overseer Skill landed on `main` (v1.57.0). The Behavior sprint
+  still required a unified execution provenance ledger and curated
+  positive/negative exemplars without auto-promotion.
+- **Decision:**
+  1. Add `execution-provenance` + `behavior-exemplar` schemas with
+     `approved_for_execution: false` / `authority_mutation: false` /
+     `auto_promoted: false`.
+  2. Gate operator surfaces with `COMPASS_PROVENANCE_ENABLED` (default off).
+  3. Persist under `.agent/evaluations/behavior/provenance/` and
+     `.agent/examples/{positive,negative}/`.
+  4. Best-effort emit provenance from `northstar evaluate run` when gated.
+  5. Exemplar drafts are proposal-only and never auto-promote Skills/Policies.
+  6. Release as **v1.58.0**.
+- **Consequences:** Operators can explain run-to-run behavioral differences and
+  curate exemplars without granting authority. AHF-P07 remains deferred.
+  Rollback `rollback/pre-m53-prompt-policy-provenance` @ `448ac25`.
+
+
 ## ADR-074: Overseer Skill + Opt-in Live StatusProvider (v1.57.0 M52)
 
 - **Status:** Accepted
