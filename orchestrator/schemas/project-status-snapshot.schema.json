@@ -45,6 +45,10 @@
             "enum": ["info", "warn", "error"]
           },
           "summary": { "type": "string", "minLength": 1 },
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "documented", "external", "proposed"]
+          },
           "evidence": {
             "type": "array",
             "items": { "type": "string" }

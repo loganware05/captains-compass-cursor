@@ -476,6 +476,21 @@ PY
   else
     fail "status should exit 2 mentioning COMPASS_STATUS_ENABLED when unset (rc=$st_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/scope-ledger.schema.json" ]]; then
+    ok "scope-ledger.schema.json present"
+  else
+    fail "missing orchestrator/schemas/scope-ledger.schema.json"
+  fi
+  if [[ -f "$ROOT/.cursor/skills/project-overseer/SKILL.md" ]]; then
+    ok "project-overseer Skill present"
+  else
+    fail "missing .cursor/skills/project-overseer/SKILL.md"
+  fi
+  if [[ -f "$ROOT/.cursor/agents/project-overseer.md" ]]; then
+    ok "project-overseer agent present"
+  else
+    fail "missing .cursor/agents/project-overseer.md"
+  fi
   if [[ -f "$ROOT/scripts/run-evaluation.sh" ]]; then
     ok "scripts/run-evaluation.sh present"
   else

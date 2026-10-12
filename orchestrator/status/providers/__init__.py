@@ -1,7 +1,9 @@
-"""StatusProvider adapters (M51). Stub only in v1.56.0; future Kimi optional."""
+"""StatusProvider adapters (M51/M52). Default stub; opt-in http."""
 
 from __future__ import annotations
 
+from orchestrator.status.providers.http import HttpStatusProvider
+from orchestrator.status.providers.select import select_status_provider
 from orchestrator.status.providers.stub import StubStatusProvider
 
-__all__ = ["StubStatusProvider"]
+__all__ = ["HttpStatusProvider", "StubStatusProvider", "select_status_provider"]

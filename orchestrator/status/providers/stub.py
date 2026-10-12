@@ -1,4 +1,4 @@
-"""Deterministic stub StatusProvider (M51). Placeholder for future Kimi."""
+"""Deterministic stub StatusProvider (M51/M52). Default for CI."""
 
 from __future__ import annotations
 
@@ -9,6 +9,7 @@ class StubStatusProvider:
     """No-network provider — returns deterministic explanation text."""
 
     name = "stub"
+    model = ""
 
     def explain(self, snapshot: dict[str, Any]) -> str:
         findings = snapshot.get("findings") or []
@@ -23,11 +24,15 @@ class StubStatusProvider:
         if errors or warns:
             lines.append("Notable drift:")
             for finding in list(errors) + list(warns):
-                lines.append(f"- [{finding.get('severity')}] {finding.get('summary')}")
+                claim = finding.get("claim_kind") or "observed"
+                lines.append(
+                    f"- [{finding.get('severity')}/{claim}] {finding.get('summary')}"
+                )
         else:
             lines.append("No warn/error drift detected by hermetic detectors.")
         lines.append(
-            "This explanation is stub-generated (no live Kimi). "
-            "Reconcile proposals remain proposal-only."
+            "This explanation is stub-generated (COMPASS_STATUS_PROVIDER=stub). "
+            "Reconcile proposals remain proposal-only. "
+            "system-map/scope-ledger are Overseer artifacts, not canonical memory."
         )
         return "\n".join(lines)

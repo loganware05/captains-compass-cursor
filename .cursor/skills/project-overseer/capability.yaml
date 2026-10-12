@@ -1,0 +1,32 @@
+id: project-overseer
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/project-overseer/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+lifecycle_stage: PROVEN_SKILL
+categories: [process, governance, discovery, memory]
+tags:
+  - overseer
+  - status
+  - drift
+  - system-map
+capabilities_provided:
+  - project-status-snapshot
+  - project-status-explain
+  - project-memory-drift-detect
+  - project-reconcile-proposal
+  - project-system-map
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - project-overseer
+  - repository-scout
+  - documentation-agent
+maturity: proven
+confidence: 0.9

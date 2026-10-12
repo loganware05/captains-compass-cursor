@@ -330,6 +330,25 @@ drafts only under `.agent/status/reconcile-proposals/` (`applied: false`). Never
 auto-rewrites project memory. See
 `.agent/evidence/m51-project-overseer/VALIDATION.md`.
 
+Project Overseer Skill + live provider (M52):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_m52_overseer_skill_live_provider.py' -v
+
+COMPASS_STATUS_ENABLED=1 COMPASS_STATUS_PROVIDER=stub \
+./scripts/northstar status explain --repo .
+
+# Opt-in live (never required for CI):
+# COMPASS_STATUS_ENABLED=1 COMPASS_STATUS_PROVIDER=http \
+#   COMPASS_STATUS_MODEL=<model> OPENROUTER_API_KEY=… \
+#   ./scripts/northstar status explain --repo .
+```
+
+Default provider is stub. HTTP requires `COMPASS_STATUS_MODEL` and
+`OPENROUTER_API_KEY` or `COMPASS_STATUS_API_KEY`; failures fail closed.
+Writes `system-map.md` / `scope-ledger.json` under `.agent/status/` only.
+See `.agent/evidence/m52-overseer-skill-live-provider/VALIDATION.md`.
+
 Fail-closed hook detectors — added-line / executable-hook scope (M42):
 
 ```bash
