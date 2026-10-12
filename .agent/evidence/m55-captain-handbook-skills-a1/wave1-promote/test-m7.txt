@@ -1,0 +1,18 @@
+test_fails_closed_without_gh_auth (test_m7_performance_ti.GithubStarsTiTests.test_fails_closed_without_gh_auth) ... ok
+test_fetch_starred_repos_uses_get_query_params (test_m7_performance_ti.GithubStarsTiTests.test_fetch_starred_repos_uses_get_query_params)
+Regression: ``gh api -f`` POSTs form fields and 404s on user/starred. ... ok
+test_gh_authenticated_without_gh (test_m7_performance_ti.GithubStarsTiTests.test_gh_authenticated_without_gh) ... ok
+test_recorded_fixtures_map_to_candidates (test_m7_performance_ti.GithubStarsTiTests.test_recorded_fixtures_map_to_candidates) ... ok
+test_select_defaults_stub (test_m7_performance_ti.GithubStarsTiTests.test_select_defaults_stub) ... ok
+test_select_github_stars_provider (test_m7_performance_ti.GithubStarsTiTests.test_select_github_stars_provider) ... ok
+test_performance_query_after_ingest (test_m7_performance_ti.PerformanceContextTests.test_performance_query_after_ingest) ... ok
+test_plan_includes_performance_context_section (test_m7_performance_ti.PerformanceContextTests.test_plan_includes_performance_context_section) ... ok
+test_renders_empty_performance_context (test_m7_performance_ti.PerformanceContextTests.test_renders_empty_performance_context) ... ok
+test_execution_run_maps_to_performance_kind (test_m7_performance_ti.PerformanceIngestTests.test_execution_run_maps_to_performance_kind) ... ok
+test_experience_enriched_with_performance_metrics (test_m7_performance_ti.PerformanceIngestTests.test_experience_enriched_with_performance_metrics) ... ok
+test_reingest_overwrites_know_run_items (test_m7_performance_ti.PerformanceIngestTests.test_reingest_overwrites_know_run_items) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.162s
+
+OK

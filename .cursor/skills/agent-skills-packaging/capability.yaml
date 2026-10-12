@@ -1,0 +1,36 @@
+id: agent-skills-packaging
+version: "0.1.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/agent-skills-packaging/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.8
+  from_candidate: github-stars-anthropics-skills
+  discovery_signal: "github-stars:live:anthropics/skills|category:devtool"
+  captain_approval_required: true
+  starred_provenance_required: true
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, learning, skills]
+tags:
+  - agent-skills
+  - packaging
+  - skill-learning
+  - wave1
+capabilities_provided:
+  - agent-skill-packaging-review
+  - skill-sidecar-structure-check
+  - learning-loop-draft-hardening
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - skill-learning-loop
+  - skill-lifecycle
+  - candidate-promotion
+  - documentation-agent
+maturity: available
+confidence: 0.8
+notes: Wave 1 AVAILABLE_SKILL from anthropics/skills (metadata/procedure only)

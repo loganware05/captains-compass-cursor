@@ -76,7 +76,9 @@ Agents must stop at the approval gate. Saying “just implement” does not over
 
 Step-by-step: [`guides/starred-repos-to-skills.md`](starred-repos-to-skills.md).  
 Library-fill ops (A1): [`guides/skills-library-fill-a1.md`](skills-library-fill-a1.md).  
-Which Stars first: [`guides/starred-library-ranking.md`](starred-library-ranking.md).
+Which Stars first: [`guides/starred-library-ranking.md`](starred-library-ranking.md)
+(Wave 1 promoted: `agent-skills-packaging`, `goose-agent-orchestration`,
+`security-audit-procedures`).
 
 ### Hard non-goals (do not expect these)
 

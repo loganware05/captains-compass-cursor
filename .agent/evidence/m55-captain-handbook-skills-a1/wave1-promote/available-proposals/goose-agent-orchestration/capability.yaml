@@ -1,0 +1,19 @@
+id: goose-agent-orchestration
+version: "0.1.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/goose-agent-orchestration/SKILL.md
+lifecycle_stage: AVAILABLE_SKILL
+capabilities_provided:
+  - aaif
+  - goose
+  - open
+  - source
+  - extensible
+security_sensitivity: medium
+provenance:
+  inferred: false
+  from_candidate: github-stars-aaif-goose-goose
+  captain_approval_required: true
+notes: AVAILABLE_SKILL proposal — Captain PR required before registry use

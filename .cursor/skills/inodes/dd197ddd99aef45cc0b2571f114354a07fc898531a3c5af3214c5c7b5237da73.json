@@ -1,0 +1,15 @@
+{
+  "content_hash": "dd197ddd99aef45cc0b2571f114354a07fc898531a3c5af3214c5c7b5237da73",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-dd197ddd99aef45c",
+  "slug": "agent-skills-packaging",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

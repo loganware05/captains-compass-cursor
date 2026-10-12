@@ -1,0 +1,25 @@
+{
+  "changed": [
+    {
+      "full_name": "cloudflare/security-audit-skill",
+      "from": "ml-data",
+      "to": "devtool"
+    },
+    {
+      "full_name": "anthropics/skills",
+      "from": "ml-data",
+      "to": "devtool"
+    },
+    {
+      "full_name": "aaif-goose/goose",
+      "from": "ml-data",
+      "to": "devtool"
+    }
+  ],
+  "verify": {
+    "anthropics/skills": "devtool",
+    "aaif-goose/goose": "devtool",
+    "cloudflare/security-audit-skill": "devtool"
+  },
+  "devtool_count": 3
+}

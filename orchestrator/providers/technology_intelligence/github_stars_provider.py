@@ -67,7 +67,11 @@ def gh_authenticated() -> bool:
 
 
 def fetch_starred_repos(*, limit: int = _DEFAULT_LIMIT) -> list[dict]:
-    """Fetch starred repositories via gh API. Returns [] when gh unavailable."""
+    """Fetch starred repositories via gh API. Returns [] when gh unavailable.
+
+    Uses GET query parameters (not ``gh api -f``, which posts form fields and
+    404s on ``user/starred``).
+    """
     if not gh_authenticated():
         return []
     per_page = min(max(limit, 1), 100)
@@ -76,11 +80,7 @@ def fetch_starred_repos(*, limit: int = _DEFAULT_LIMIT) -> list[dict]:
             [
                 "gh",
                 "api",
-                "user/starred",
-                "-f",
-                f"per_page={per_page}",
-                "-f",
-                "page=1",
+                f"user/starred?per_page={per_page}&page=1",
             ],
             capture_output=True,
             text=True,
@@ -91,10 +91,13 @@ def fetch_starred_repos(*, limit: int = _DEFAULT_LIMIT) -> list[dict]:
         return []
     if result.returncode != 0 or not result.stdout.strip():
         return []
-    payload = json.loads(result.stdout)
+    try:
+        payload = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return []
     if not isinstance(payload, list):
         return []
-    return [item for item in payload if isinstance(item, dict)]
+    return [item for item in payload if isinstance(item, dict)][:limit]
 
 
 def discover_candidates_from_records(

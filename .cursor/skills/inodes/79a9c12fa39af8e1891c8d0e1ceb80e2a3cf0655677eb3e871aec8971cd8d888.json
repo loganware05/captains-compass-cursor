@@ -1,0 +1,15 @@
+{
+  "content_hash": "79a9c12fa39af8e1891c8d0e1ceb80e2a3cf0655677eb3e871aec8971cd8d888",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-79a9c12fa39af8e1",
+  "slug": "security-audit-procedures",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

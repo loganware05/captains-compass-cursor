@@ -37,17 +37,19 @@ they are **not** installed by NorthStar.
 
 ### Current Captain Stars of interest
 
-| Repo | Role in A1 |
-|---|---|
-| [morluto/rea](https://github.com/morluto/rea) | Starred for **metadata/procedure** candidacy only — not REA MCP/Hopper/Ghidra execution inside NorthStar |
+| Repo | Role in A1 | Outcome |
+|---|---|---|
+| [anthropics/skills](https://github.com/anthropics/skills) | Wave 1 live learn | **Promoted** → Skill `agent-skills-packaging` |
+| [aaif-goose/goose](https://github.com/aaif-goose/goose) | Wave 1 live learn | **Promoted** → Skill `goose-agent-orchestration` |
+| [cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill) | Wave 1 live learn | **Promoted** → Skill `security-audit-procedures` |
+| [morluto/rea](https://github.com/morluto/rea) | Metadata-only | Not promoted as RE runtime — procedure-only if later |
 
 Full imported catalog (98 repos) + NorthStar library ranking:
 
-- Guide: [`starred-library-ranking.md`](starred-library-ranking.md)
+- Guide: [`starred-library-ranking.md`](starred-library-ranking.md) (includes **Wave 1 promoted** table)
 - Machine data: `.agent/intelligence/starred-catalog/`
 - Source workbook copy: `.agent/evidence/m55-captain-handbook-skills-a1/v3_github_starred_repositories_categorized.xlsx`
-
-Start with **Wave 1** in the ranking guide (skills / evaluation / security / MCP / orchestration).
+- Promote evidence: `.agent/evidence/m55-captain-handbook-skills-a1/wave1-promote/`
 
 ## Path A — Hermetic dry run (required each M55 validation)
 

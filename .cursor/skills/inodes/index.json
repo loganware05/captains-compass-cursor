@@ -1,5 +1,5 @@
 {
-  "skill_count": 44,
+  "skill_count": 47,
   "skills": {
     "accessibility-review": {
       "content_hash": "1bc05cf1b3b769ac134964c94d95b649c86b21ea8056beb9c93e57002d737990",
@@ -9,6 +9,15 @@
         "carry_over_from": null
       },
       "skill_inode_id": "skl-1bc05cf1b3b769ac"
+    },
+    "agent-skills-packaging": {
+      "content_hash": "dd197ddd99aef45cc0b2571f114354a07fc898531a3c5af3214c5c7b5237da73",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-dd197ddd99aef45c"
     },
     "autonomy-budget": {
       "content_hash": "629843a00d054a9bdd0f9872970a17143fc1336ead7e4a86aab6a6aac3646200",
@@ -153,6 +162,15 @@
         "carry_over_from": null
       },
       "skill_inode_id": "skl-e0500739c3347b58"
+    },
+    "goose-agent-orchestration": {
+      "content_hash": "dbd0a8e3cbc3c90ee0aab59a7db9f04d6016f19d4eaf73e05fa528b6adecd15e",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-dbd0a8e3cbc3c90e"
     },
     "harness-gc": {
       "content_hash": "2d3166c53c1aa32ade92e16717e2f5917845432077e9c0ae84050b6be18766cf",
@@ -333,6 +351,15 @@
         "carry_over_from": null
       },
       "skill_inode_id": "skl-bc1fe3f389704a09"
+    },
+    "security-audit-procedures": {
+      "content_hash": "79a9c12fa39af8e1891c8d0e1ceb80e2a3cf0655677eb3e871aec8971cd8d888",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-79a9c12fa39af8e1"
     },
     "security-review": {
       "content_hash": "2b77d790b3641119d2f7e1c0ca1d7def81c6affd819f50976495a0d43e74d6af",

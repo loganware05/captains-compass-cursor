@@ -1,0 +1,36 @@
+id: security-audit-procedures
+version: "0.1.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/security-audit-procedures/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.82
+  from_candidate: github-stars-cloudflare-security-audit-skill
+  discovery_signal: "github-stars:live:cloudflare/security-audit-skill|category:devtool"
+  captain_approval_required: true
+  starred_provenance_required: true
+lifecycle_stage: AVAILABLE_SKILL
+categories: [security, process, audit]
+tags:
+  - security-audit
+  - skill-promotion
+  - wave1
+capabilities_provided:
+  - security-audit-checklist
+  - skill-promotion-security-gate
+  - agent-workflow-trust-boundary-review
+compatible_stacks:
+  - any
+security_sensitivity: high
+agent_affinity:
+  - security-review
+  - dependency-supply-chain
+  - candidate-promotion
+  - skill-lifecycle
+  - security-reviewer
+maturity: available
+confidence: 0.82
+notes: Wave 1 AVAILABLE_SKILL from cloudflare/security-audit-skill (metadata/procedure only)

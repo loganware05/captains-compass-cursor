@@ -1,0 +1,19 @@
+{
+  "categorized_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/ti/github-stars-categorized/categorized.json",
+  "record_count": 100,
+  "trained_from": 5,
+  "categories_seen": [
+    "backend-library",
+    "design-system",
+    "ml-data"
+  ],
+  "default_categories": [
+    "frontend-ui",
+    "design-system",
+    "backend-library",
+    "devtool",
+    "ml-data",
+    "other"
+  ],
+  "starred_provenance_required": true
+}

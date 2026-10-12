@@ -49,8 +49,9 @@ class InferTests(unittest.TestCase):
 class RegistryCompileTests(unittest.TestCase):
     def test_compile_control_repo_registry(self) -> None:
         result = compile_registry(ROOT)
-        # 43 pre-M52 registered skills + project-overseer (M52)
-        self.assertEqual(len(result.registry["skills"]), 44)
+        # 44 through M52 + Wave 1 Stars Skills (OVA-71): agent-skills-packaging,
+        # goose-agent-orchestration, security-audit-procedures
+        self.assertEqual(len(result.registry["skills"]), 47)
         self.assertEqual(len(result.registry["reference_profiles"]), 11)
         # SKILL_SLUGS must cover every on-disk Skill directory.
         self.assertEqual(result.warnings, [])

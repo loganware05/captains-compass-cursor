@@ -1,0 +1,37 @@
+{
+  "approved_for_execution": false,
+  "capabilities_provided": [
+    "cloudflare",
+    "security",
+    "audit",
+    "skill",
+    "coding"
+  ],
+  "captain_approved": true,
+  "discovery_signal": "github-stars:live:cloudflare/security-audit-skill|category:devtool",
+  "evidence_paths": [
+    "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-cloudflare-security-audit-skill/sandbox-test.json",
+    "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-cloudflare-security-audit-skill/summary.md",
+    "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-cloudflare-security-audit-skill/security-review.md",
+    "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-cloudflare-security-audit-skill/dependency-supply-chain.md"
+  ],
+  "id": "github-stars-cloudflare-security-audit-skill",
+  "kind": "candidate",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "notes": "[devtool] Live GitHub starred repo \u2014 NOT APPROVED FOR EXECUTION",
+  "provenance": {
+    "skill_slug": "security-audit-procedures",
+    "star_category": "devtool",
+    "star_category_confidence": 0.0173,
+    "starred": true,
+    "starred_provenance": true
+  },
+  "source": {
+    "path": "cloudflare/security-audit-skill",
+    "provenance_url": "https://github.com/cloudflare/security-audit-skill",
+    "type": "external-candidate"
+  },
+  "starred": true,
+  "starred_provenance": true,
+  "version": "0.1.0"
+}

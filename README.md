@@ -11,7 +11,11 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 ### Included
 
 - Approval-gated operating model (`AGENTS.md` + five core rules)
-- Forty-four Skills (including skill-learning-loop, knowledge-steward, code-reviewer, persistent-role-promotion, bounded-autonomy, compass-evaluator, experience-routing, capability-planning, execution-telemetry, candidate-promotion, experience-skill-training)
+- Forty-seven Skills (including Wave 1 `agent-skills-packaging`,
+  `goose-agent-orchestration`, `security-audit-procedures`, plus
+  skill-learning-loop, knowledge-steward, code-reviewer, persistent-role-promotion,
+  bounded-autonomy, compass-evaluator, experience-routing, capability-planning,
+  execution-telemetry, candidate-promotion, experience-skill-training)
 - Capability-aware planning orchestrator (`orchestrator/`, `scripts/capability-plan.sh`)
 - Eleven specialist subagents (also indexed as reference agent profiles)
 - Seven safety hooks (critical fail-closed; soft skips via env / command string / marker)

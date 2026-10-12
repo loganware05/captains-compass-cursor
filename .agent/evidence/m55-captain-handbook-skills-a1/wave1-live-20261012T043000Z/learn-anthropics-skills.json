@@ -1,0 +1,197 @@
+{
+  "kind": "skill-learning-run",
+  "run_id": "learning-20261012T043419Z",
+  "ran_at": "2026-10-12T04:34:19Z",
+  "objective": "anthropics/skills agent skills SKILL.md packaging promotion gates Cursor",
+  "source": "live",
+  "top_n": 5,
+  "category_filter": "devtool",
+  "similarity_threshold": 0.28,
+  "approved_for_execution": false,
+  "captain_approval_required_for_live_skills": true,
+  "auto_install": false,
+  "starred_provenance_required": true,
+  "draft_requires_security_and_supply_chain": true,
+  "candidate_count": 3,
+  "results": [
+    {
+      "candidate_id": "github-stars-anthropics-skills",
+      "full_name": "anthropics/skills",
+      "star_category": "devtool",
+      "staging_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/staging/github-stars-anthropics-skills.json",
+      "scorecard": {
+        "scorecard_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-anthropics-skills/scorecard.json",
+        "evidence_paths": [
+          "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-anthropics-skills/security-review.md",
+          "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-anthropics-skills/dependency-supply-chain.md"
+        ],
+        "out_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-anthropics-skills",
+        "star_category": "devtool",
+        "candidate_id": "github-stars-anthropics-skills",
+        "full_name": "anthropics/skills",
+        "approved_for_execution": false
+      },
+      "similar_skills": [
+        {
+          "skill_slug": "docker-cloud",
+          "similarity": 0.52,
+          "skill_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.cursor/skills/docker-cloud",
+          "capabilities_provided": [
+            "dockerfile-authoring",
+            "docker-compose-config",
+            "preview-deployment",
+            "deployment-rollback-planning"
+          ]
+        },
+        {
+          "skill_slug": "accessibility-review",
+          "similarity": 0.4,
+          "skill_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.cursor/skills/accessibility-review",
+          "capabilities_provided": [
+            "keyboard-navigation-review",
+            "screen-reader-review",
+            "semantic-markup-review",
+            "color-contrast-check",
+            "accessibility-evidence-capture"
+          ]
+        },
+        {
+          "skill_slug": "ios-engineering",
+          "similarity": 0.4,
+          "skill_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.cursor/skills/ios-engineering",
+          "capabilities_provided": [
+            "swiftui-development",
+            "xcode-project-management",
+            "ios-accessibility-labels",
+            "simulator-testing"
+          ]
+        }
+      ],
+      "mode": "improve-existing",
+      "target_skill_slug": "docker-cloud",
+      "improvement_proposal": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-improvement-proposals/docker-cloud/from-github-stars-anthropics-skills.json",
+      "draft": {
+        "skill_md": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-anthropics-skills/SKILL.md",
+        "capability_yaml": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-anthropics-skills/capability.yaml",
+        "source_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-anthropics-skills/source-candidate.json"
+      },
+      "harness": {
+        "passed": true,
+        "evidence_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-anthropics-skills",
+        "report_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-anthropics-skills/sandbox-test.json",
+        "summary_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-anthropics-skills/summary.md",
+        "staging_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/staging/github-stars-anthropics-skills.json",
+        "lifecycle_stage": "ANALYZED",
+        "harness_kind": "fixture-file-checks"
+      }
+    },
+    {
+      "candidate_id": "github-stars-cloudflare-security-audit-skill",
+      "full_name": "cloudflare/security-audit-skill",
+      "star_category": "devtool",
+      "staging_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/staging/github-stars-cloudflare-security-audit-skill.json",
+      "scorecard": {
+        "scorecard_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-cloudflare-security-audit-skill/scorecard.json",
+        "evidence_paths": [
+          "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-cloudflare-security-audit-skill/security-review.md",
+          "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-cloudflare-security-audit-skill/dependency-supply-chain.md"
+        ],
+        "out_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-cloudflare-security-audit-skill",
+        "star_category": "devtool",
+        "candidate_id": "github-stars-cloudflare-security-audit-skill",
+        "full_name": "cloudflare/security-audit-skill",
+        "approved_for_execution": false
+      },
+      "similar_skills": [],
+      "mode": "draft-new",
+      "draft": {
+        "skill_md": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-cloudflare-security-audit-skill/SKILL.md",
+        "capability_yaml": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-cloudflare-security-audit-skill/capability.yaml",
+        "source_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-cloudflare-security-audit-skill/source-candidate.json"
+      },
+      "harness": {
+        "passed": true,
+        "evidence_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-cloudflare-security-audit-skill",
+        "report_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-cloudflare-security-audit-skill/sandbox-test.json",
+        "summary_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-cloudflare-security-audit-skill/summary.md",
+        "staging_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/staging/github-stars-cloudflare-security-audit-skill.json",
+        "lifecycle_stage": "ANALYZED",
+        "harness_kind": "fixture-file-checks"
+      },
+      "skill_slug": "from-stars-cloudflare-security-audit-skill"
+    },
+    {
+      "candidate_id": "github-stars-aaif-goose-goose",
+      "full_name": "aaif-goose/goose",
+      "star_category": "devtool",
+      "staging_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/staging/github-stars-aaif-goose-goose.json",
+      "scorecard": {
+        "scorecard_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-aaif-goose-goose/scorecard.json",
+        "evidence_paths": [
+          "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-aaif-goose-goose/security-review.md",
+          "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-aaif-goose-goose/dependency-supply-chain.md"
+        ],
+        "out_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-aaif-goose-goose",
+        "star_category": "devtool",
+        "candidate_id": "github-stars-aaif-goose-goose",
+        "full_name": "aaif-goose/goose",
+        "approved_for_execution": false
+      },
+      "similar_skills": [
+        {
+          "skill_slug": "source-code-context",
+          "similarity": 0.3182,
+          "skill_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.cursor/skills/source-code-context",
+          "capabilities_provided": [
+            "package-source-fetch",
+            "dependency-source-search",
+            "api-discovery"
+          ]
+        },
+        {
+          "skill_slug": "github-integration",
+          "similarity": 0.3018,
+          "skill_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor/.cursor/skills/github-integration",
+          "capabilities_provided": [
+            "github-issue-create",
+            "github-pr-create",
+            "github-ci-status-inspection",
+            "github-auth-fallback"
+          ]
+        }
+      ],
+      "mode": "improve-existing",
+      "target_skill_slug": "source-code-context",
+      "improvement_proposal": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-improvement-proposals/source-code-context/from-github-stars-aaif-goose-goose.json",
+      "draft": {
+        "skill_md": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-aaif-goose-goose/SKILL.md",
+        "capability_yaml": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-aaif-goose-goose/capability.yaml",
+        "source_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-aaif-goose-goose/source-candidate.json"
+      },
+      "harness": {
+        "passed": true,
+        "evidence_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-aaif-goose-goose",
+        "report_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-aaif-goose-goose/sandbox-test.json",
+        "summary_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-aaif-goose-goose/summary.md",
+        "staging_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/staging/github-stars-aaif-goose-goose.json",
+        "lifecycle_stage": "ANALYZED",
+        "harness_kind": "fixture-file-checks"
+      }
+    }
+  ],
+  "notes": "Staging + evidence only. Promote live Skills with promote-candidate.sh --captain-approved after Captain review. Skill drafts require security-review + dependency-supply-chain evidence.",
+  "ledger": {
+    "provider": "linear",
+    "project_id": null,
+    "project_name": "NorthStar Skills Learning Loop",
+    "parent_issue_id": null,
+    "milestone": null,
+    "last_synced_at": null,
+    "control_revision": "3b90246a73498fbeea8b4534cf4416afbb01f443",
+    "product_revision": "1f1732ce49636e7ccc1df0ffe7be6d097d66fa21",
+    "delegated_agent": null,
+    "authoritative_approval": false,
+    "notes": "Linear records state only. Captain approval must exist in GitHub/repository evidence; Linear must not originate CAPTAIN_APPROVED."
+  },
+  "report_path": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/learning-runs/learning-20261012T043419Z.json"
+}

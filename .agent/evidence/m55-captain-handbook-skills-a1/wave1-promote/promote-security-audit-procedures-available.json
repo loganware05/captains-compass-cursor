@@ -1,0 +1,6 @@
+{
+  "staging_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/staging/github-stars-cloudflare-security-audit-skill.json",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "captain_approved": true,
+  "available_skill_proposal": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/available-proposals/security-audit-procedures/proposal.json"
+}

@@ -1,0 +1,15 @@
+{
+  "content_hash": "dbd0a8e3cbc3c90ee0aab59a7db9f04d6016f19d4eaf73e05fa528b6adecd15e",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-dbd0a8e3cbc3c90e",
+  "slug": "goose-agent-orchestration",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

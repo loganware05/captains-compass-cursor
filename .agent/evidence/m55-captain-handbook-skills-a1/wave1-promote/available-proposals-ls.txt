@@ -1,0 +1,15 @@
+total 0
+drwxr-xr-x@ 5 loganware  staff  160 Oct 11 23:38 .
+drwxr-xr-x@ 6 loganware  staff  192 Oct 11 23:38 ..
+drwxr-xr-x@ 4 loganware  staff  128 Oct 11 23:38 agent-skills-packaging
+drwxr-xr-x@ 4 loganware  staff  128 Oct 11 23:38 goose-agent-orchestration
+drwxr-xr-x@ 4 loganware  staff  128 Oct 11 23:38 security-audit-procedures
+---- agent-skills-packaging ----
+capability.yaml
+proposal.json
+---- goose-agent-orchestration ----
+capability.yaml
+proposal.json
+---- security-audit-procedures ----
+capability.yaml
+proposal.json

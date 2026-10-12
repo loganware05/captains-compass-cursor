@@ -1,0 +1,232 @@
+[
+  {
+    "file": "learn-aaif-goose.json",
+    "error": null,
+    "run_id": "learning-20261012T043420Z",
+    "source": "live",
+    "category_filter": "devtool",
+    "candidate_count": 3,
+    "auto_install": false,
+    "approved_for_execution": false,
+    "result_names": [
+      "aaif-goose/goose",
+      "cloudflare/security-audit-skill",
+      "anthropics/skills"
+    ],
+    "hit_targets": [
+      "aaif-goose/goose",
+      "anthropics/skills",
+      "cloudflare/security-audit-skill"
+    ],
+    "results": [
+      {
+        "full_name": "aaif-goose/goose",
+        "mode": "improve-existing",
+        "skill_slug": null,
+        "draft": {
+          "skill_md": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-aaif-goose-goose/SKILL.md",
+          "capability_yaml": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-aaif-goose-goose/capability.yaml",
+          "source_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-aaif-goose-goose/source-candidate.json"
+        },
+        "scorecard_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-aaif-goose-goose",
+        "harness_passed": true,
+        "lifecycle_stage": "ANALYZED",
+        "similar_skills": [
+          "source-code-context",
+          "github-integration"
+        ]
+      },
+      {
+        "full_name": "cloudflare/security-audit-skill",
+        "mode": "draft-new",
+        "skill_slug": "from-stars-cloudflare-security-audit-skill",
+        "draft": {
+          "skill_md": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-cloudflare-security-audit-skill/SKILL.md",
+          "capability_yaml": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-cloudflare-security-audit-skill/capability.yaml",
+          "source_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-cloudflare-security-audit-skill/source-candidate.json"
+        },
+        "scorecard_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-cloudflare-security-audit-skill",
+        "harness_passed": true,
+        "lifecycle_stage": "ANALYZED",
+        "similar_skills": []
+      },
+      {
+        "full_name": "anthropics/skills",
+        "mode": "improve-existing",
+        "skill_slug": null,
+        "draft": {
+          "skill_md": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-anthropics-skills/SKILL.md",
+          "capability_yaml": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-anthropics-skills/capability.yaml",
+          "source_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-anthropics-skills/source-candidate.json"
+        },
+        "scorecard_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-anthropics-skills",
+        "harness_passed": true,
+        "lifecycle_stage": "ANALYZED",
+        "similar_skills": [
+          "docker-cloud",
+          "accessibility-review",
+          "ios-engineering"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "learn-anthropics-skills.json",
+    "error": null,
+    "run_id": "learning-20261012T043419Z",
+    "source": "live",
+    "category_filter": "devtool",
+    "candidate_count": 3,
+    "auto_install": false,
+    "approved_for_execution": false,
+    "result_names": [
+      "anthropics/skills",
+      "cloudflare/security-audit-skill",
+      "aaif-goose/goose"
+    ],
+    "hit_targets": [
+      "aaif-goose/goose",
+      "anthropics/skills",
+      "cloudflare/security-audit-skill"
+    ],
+    "results": [
+      {
+        "full_name": "anthropics/skills",
+        "mode": "improve-existing",
+        "skill_slug": null,
+        "draft": {
+          "skill_md": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-anthropics-skills/SKILL.md",
+          "capability_yaml": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-anthropics-skills/capability.yaml",
+          "source_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-anthropics-skills/source-candidate.json"
+        },
+        "scorecard_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-anthropics-skills",
+        "harness_passed": true,
+        "lifecycle_stage": "ANALYZED",
+        "similar_skills": [
+          "docker-cloud",
+          "accessibility-review",
+          "ios-engineering"
+        ]
+      },
+      {
+        "full_name": "cloudflare/security-audit-skill",
+        "mode": "draft-new",
+        "skill_slug": "from-stars-cloudflare-security-audit-skill",
+        "draft": {
+          "skill_md": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-cloudflare-security-audit-skill/SKILL.md",
+          "capability_yaml": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-cloudflare-security-audit-skill/capability.yaml",
+          "source_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-cloudflare-security-audit-skill/source-candidate.json"
+        },
+        "scorecard_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-cloudflare-security-audit-skill",
+        "harness_passed": true,
+        "lifecycle_stage": "ANALYZED",
+        "similar_skills": []
+      },
+      {
+        "full_name": "aaif-goose/goose",
+        "mode": "improve-existing",
+        "skill_slug": null,
+        "draft": {
+          "skill_md": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-aaif-goose-goose/SKILL.md",
+          "capability_yaml": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-aaif-goose-goose/capability.yaml",
+          "source_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-aaif-goose-goose/source-candidate.json"
+        },
+        "scorecard_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-aaif-goose-goose",
+        "harness_passed": true,
+        "lifecycle_stage": "ANALYZED",
+        "similar_skills": [
+          "source-code-context",
+          "github-integration"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "learn-cloudflare-security-audit-skill.json",
+    "error": null,
+    "run_id": "learning-20261012T043420Z",
+    "source": "live",
+    "category_filter": "devtool",
+    "candidate_count": 3,
+    "auto_install": false,
+    "approved_for_execution": false,
+    "result_names": [
+      "cloudflare/security-audit-skill",
+      "aaif-goose/goose",
+      "anthropics/skills"
+    ],
+    "hit_targets": [
+      "aaif-goose/goose",
+      "anthropics/skills",
+      "cloudflare/security-audit-skill"
+    ],
+    "results": [
+      {
+        "full_name": "cloudflare/security-audit-skill",
+        "mode": "draft-new",
+        "skill_slug": "from-stars-cloudflare-security-audit-skill",
+        "draft": {
+          "skill_md": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-cloudflare-security-audit-skill/SKILL.md",
+          "capability_yaml": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-cloudflare-security-audit-skill/capability.yaml",
+          "source_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-cloudflare-security-audit-skill/source-candidate.json"
+        },
+        "scorecard_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-cloudflare-security-audit-skill",
+        "harness_passed": true,
+        "lifecycle_stage": "ANALYZED",
+        "similar_skills": []
+      },
+      {
+        "full_name": "aaif-goose/goose",
+        "mode": "improve-existing",
+        "skill_slug": null,
+        "draft": {
+          "skill_md": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-aaif-goose-goose/SKILL.md",
+          "capability_yaml": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-aaif-goose-goose/capability.yaml",
+          "source_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-aaif-goose-goose/source-candidate.json"
+        },
+        "scorecard_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-aaif-goose-goose",
+        "harness_passed": true,
+        "lifecycle_stage": "ANALYZED",
+        "similar_skills": [
+          "source-code-context",
+          "github-integration"
+        ]
+      },
+      {
+        "full_name": "anthropics/skills",
+        "mode": "improve-existing",
+        "skill_slug": null,
+        "draft": {
+          "skill_md": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-anthropics-skills/SKILL.md",
+          "capability_yaml": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-anthropics-skills/capability.yaml",
+          "source_candidate": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/capabilities/candidates/skill-drafts/from-stars-anthropics-skills/source-candidate.json"
+        },
+        "scorecard_dir": "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-anthropics-skills",
+        "harness_passed": true,
+        "lifecycle_stage": "ANALYZED",
+        "similar_skills": [
+          "docker-cloud",
+          "accessibility-review",
+          "ios-engineering"
+        ]
+      }
+    ]
+  }
+]
+TARGET_HITS {
+  "cloudflare/security-audit-skill": [
+    "learn-aaif-goose.json",
+    "learn-anthropics-skills.json",
+    "learn-cloudflare-security-audit-skill.json"
+  ],
+  "anthropics/skills": [
+    "learn-aaif-goose.json",
+    "learn-anthropics-skills.json",
+    "learn-cloudflare-security-audit-skill.json"
+  ],
+  "aaif-goose/goose": [
+    "learn-aaif-goose.json",
+    "learn-anthropics-skills.json",
+    "learn-cloudflare-security-audit-skill.json"
+  ]
+}

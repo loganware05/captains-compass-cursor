@@ -121,6 +121,28 @@ class GithubStarsTiTests(unittest.TestCase):
             provider = GithubStarsTechnologyIntelligenceProvider()
             self.assertEqual(provider.discover_candidates("react", {}), [])
 
+    def test_fetch_starred_repos_uses_get_query_params(self) -> None:
+        """Regression: ``gh api -f`` POSTs form fields and 404s on user/starred."""
+        from orchestrator.providers.technology_intelligence import github_stars_provider as mod
+
+        fake = mock.Mock(
+            returncode=0,
+            stdout=json.dumps(
+                [{"full_name": "anthropics/skills", "description": "Agent skills", "topics": ["skills"]}]
+            ),
+            stderr="",
+        )
+        with mock.patch.object(mod, "gh_authenticated", return_value=True), mock.patch.object(
+            mod.subprocess, "run", return_value=fake
+        ) as run:
+            rows = mod.fetch_starred_repos(limit=10)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["full_name"], "anthropics/skills")
+        cmd = run.call_args.args[0]
+        self.assertEqual(cmd[:2], ["gh", "api"])
+        self.assertIn("user/starred?per_page=", cmd[2])
+        self.assertNotIn("-f", cmd)
+
     def test_select_github_stars_provider(self) -> None:
         with mock.patch.dict(os.environ, {"COMPASS_TI_PROVIDER": "github-stars"}):
             provider = select_ti_provider()
