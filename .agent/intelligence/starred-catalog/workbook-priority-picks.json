@@ -1,0 +1,74 @@
+[
+  {
+    "workbook_rank": 1,
+    "repository": "unclecode/crawl4ai",
+    "why_it_matters": "Directly useful for RAG, research agents, Shop.py AI visibility, and web data extraction.",
+    "best_immediate_project": "Build a brand-visibility crawler for AI shopping recommendations."
+  },
+  {
+    "workbook_rank": 2,
+    "repository": "coollabsio/coolify",
+    "why_it_matters": "Helps deploy your own full-stack apps and databases without relying only on Vercel/Railway.",
+    "best_immediate_project": "Self-host a demo app with Postgres and analytics."
+  },
+  {
+    "workbook_rank": 3,
+    "repository": "medusajs/medusa",
+    "why_it_matters": "Strong foundation for marketplaces, commerce apps, and local seller platforms.",
+    "best_immediate_project": "Prototype a QuickCart seller/store backend."
+  },
+  {
+    "workbook_rank": 4,
+    "repository": "anthropics/skills",
+    "why_it_matters": "Matches your Cursor/workflow interests by packaging repeatable AI capabilities.",
+    "best_immediate_project": "Create a personal skill library for coding, school, and startup workflows."
+  },
+  {
+    "workbook_rank": 5,
+    "repository": "codecrafters-io/build-your-own-x",
+    "why_it_matters": "Best long-term repo for deep technical skill and interview preparation.",
+    "best_immediate_project": "Build a simple Git, Redis, shell, or database clone."
+  },
+  {
+    "workbook_rank": 6,
+    "repository": "Shubhamsaboo/awesome-llm-apps",
+    "why_it_matters": "Large set of practical LLM app patterns to copy, adapt, and learn from.",
+    "best_immediate_project": "Rebuild one RAG app and one agent app for your portfolio."
+  },
+  {
+    "workbook_rank": 7,
+    "repository": "googleapis/mcp-toolbox",
+    "why_it_matters": "Important for connecting agents to real tools and cloud/data systems.",
+    "best_immediate_project": "Create an MCP-powered data assistant."
+  },
+  {
+    "workbook_rank": 8,
+    "repository": "plausible/analytics",
+    "why_it_matters": "Great model for privacy-first analytics and product metrics.",
+    "best_immediate_project": "Use analytics concepts for Shop.py dashboards."
+  },
+  {
+    "workbook_rank": 9,
+    "repository": "tauri-apps/tauri",
+    "why_it_matters": "Useful for turning web tools into lightweight native desktop apps.",
+    "best_immediate_project": "Create a desktop automation utility for game/computer vision workflows."
+  },
+  {
+    "workbook_rank": 10,
+    "repository": "harvard-edge/cs249r_book",
+    "why_it_matters": "Strong fit for Verdant AI and edge/embedded ML.",
+    "best_immediate_project": "Study edge deployment patterns for agriculture sensors."
+  },
+  {
+    "workbook_rank": 11,
+    "repository": "cloudflare/security-audit-skill",
+    "why_it_matters": "Adds structured, machine-readable security audits to an agentic coding workflow.",
+    "best_immediate_project": "Prototype a security audit gate for NorthStar agent PRs."
+  },
+  {
+    "workbook_rank": 12,
+    "repository": "TestSprite/testsprite-cli",
+    "why_it_matters": "Introduces AI-assisted functional and end-to-end testing for agent-produced code.",
+    "best_immediate_project": "Run automated QA against the NorthStar sandbox and capture results."
+  }
+]

@@ -6,7 +6,7 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.49.0
+## Current version: 1.59.0
 
 ### Included
 
@@ -41,7 +41,7 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 ./tests/run.sh
 ```
 
-Operator map: [`docs/INDEX.md`](docs/INDEX.md).
+Captain Handbook: [`docs/guides/captain-handbook.md`](docs/guides/captain-handbook.md) · Operator map: [`docs/INDEX.md`](docs/INDEX.md).
 
 ## Install into a product repository
 

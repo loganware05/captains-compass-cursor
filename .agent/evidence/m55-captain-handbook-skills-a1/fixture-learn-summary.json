@@ -1,0 +1,12 @@
+{
+  "run_id": "learning-20261012T040232Z",
+  "source": "fixtures",
+  "objective": "accessible react forms",
+  "approved_for_execution": false,
+  "auto_install": false,
+  "captain_approval_required_for_live_skills": true,
+  "candidate_count": 1,
+  "result_kinds": [
+    null
+  ]
+}

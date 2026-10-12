@@ -1,21 +1,17 @@
-> **APPROVED / IMPLEMENTING** (2026-10-11) — Captain: "I approve".
-> Active root plan: `IMPLEMENTATION_PLAN.md` (Plan ID `m54-behavior-loop-closure`).
+> **COMPLETE** (2026-10-11) — Merged #197 → `main` @ `c2db26b` (v1.59.0). OVA-70 Done.
+> Behavioral Intelligence Loop (P-OVA-4) completed.
 
 # M54 — Behavior Loop Operator Closure
 
 Linear: [OVA-70](https://linear.app/ovaltechnologysolutions/issue/OVA-70/m54-behavior-loop-operator-closure-v1590)
 
-Prerequisite: M53 merged (#196 / v1.58.0).
+## Delivered
 
-## Resolved decisions
+- Opt-in `COMPASS_PROMPT_EVAL_INCLUDE_EXEMPLARS`
+- Compose `--execution-id` → provenance when gated
+- Status `provenance_refs` (read-only)
+- ADR-076; evidence `.agent/evidence/m54-behavior-loop-closure/VALIDATION.md`
 
-1. Operator closure wiring (not AHF-P07)
-2. Opt-in `COMPASS_PROMPT_EVAL_INCLUDE_EXEMPLARS`
-3. Compose provenance when gated + execution_id
-4. Status provenance_refs (read-only)
-5. Defer scheduled Overseer
-6. v1.59.0
+## Baseline
 
-## Evidence
-
-`.agent/evidence/m54-behavior-loop-closure/VALIDATION.md`
+v1.58.0 @ `47f3241` → **v1.59.0** @ `c2db26b`
