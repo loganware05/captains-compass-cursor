@@ -13,6 +13,15 @@
     `.agent/intelligence/starred-catalog/`)
   - INDEX / README start-here links; Stars guide cross-links
   - Evidence: `.agent/evidence/m55-captain-handbook-skills-a1/`
+  - **Wave 1 promoted Skills** (live learn → AVAILABLE):
+    - `agent-skills-packaging` ← `anthropics/skills`
+    - `goose-agent-orchestration` ← `aaif-goose/goose`
+    - `security-audit-procedures` ← `cloudflare/security-audit-skill`
+
+### Fixed
+
+- Live GitHub Stars TI fetch: `gh api user/starred` now uses GET query params
+  (was `-f` form POST → 404 / empty cache)
 
 ## 1.59.0 — 2026-10-11
 

@@ -1,0 +1,3 @@
+=== PROMOTE github-stars-anthropics-skills -> agent-skills-packaging ===
+=== PROMOTE github-stars-aaif-goose-goose -> goose-agent-orchestration ===
+=== PROMOTE github-stars-cloudflare-security-audit-skill -> security-audit-procedures ===

@@ -1,0 +1,11 @@
+test_infer_from_description (test_registry.InferTests.test_infer_from_description) ... ok
+test_compile_control_repo_registry (test_registry.RegistryCompileTests.test_compile_control_repo_registry) ... ok
+test_id_mismatch_raises (test_registry.RegistryCompileTests.test_id_mismatch_raises) ... ok
+test_path_traversal_in_source_path_raises (test_registry.RegistryCompileTests.test_path_traversal_in_source_path_raises) ... ok
+test_skill_ids_are_unique (test_registry.RegistryCompileTests.test_skill_ids_are_unique) ... ok
+test_parse_nested_sidecar (test_registry.YamlSimpleTests.test_parse_nested_sidecar) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.086s
+
+OK

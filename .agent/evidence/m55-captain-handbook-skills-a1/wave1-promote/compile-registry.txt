@@ -1,0 +1,1 @@
+registry written: /Users/loganware/Documents/Personal/Code/captains-compass-cursor/.agent/capabilities/compiled/registry.json

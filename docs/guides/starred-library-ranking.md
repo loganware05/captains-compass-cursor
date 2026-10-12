@@ -14,6 +14,7 @@ Evidence copy: `.agent/evidence/m55-captain-handbook-skills-a1/v3_github_starred
 | `learn_soon` | Strong secondary wave |
 | `watchlist` | Useful reference; not first library fills |
 | `defer` | Poor control-repo Skill fit (personal/product/creative) |
+| `promoted` | Captain-promoted to AVAILABLE Skill in control `.cursor/skills/` |
 
 Workbook **Priority Picks** optimize personal products (Shop.py, etc.). This ranking optimizes the **NorthStar control Skill library**.
 
@@ -29,29 +30,32 @@ Workbook **Priority Picks** optimize personal products (Shop.py, etc.). This ran
 }
 ```
 
-## Wave 1 — learn first (A1 targets)
+## Wave 1 — promoted (A1)
 
-| # | Repository | Score | TI cat | Mode | Improve Skills | Flags |
-|---|---|---|---|---|---|---|
-| 1 | `Agents365-ai/drawio-skill` | 97.5 | `devtool` | improve_existing | candidate-promotion, capability-planning, compass-evaluator, execution-telemetry | — |
-| 2 | `TestSprite/testsprite-cli` | 97.5 | `devtool` | improve_existing | candidate-promotion, capability-planning, compass-evaluator, execution-telemetry | — |
-| 3 | `aaif-goose/goose` | 97.5 | `devtool` | improve_existing | candidate-promotion, capability-planning, compass-evaluator, execution-telemetry | — |
-| 4 | `anthropics/skills` | 97.5 | `devtool` | improve_existing | candidate-promotion, capability-planning, compass-evaluator, execution-telemetry | — |
-| 5 | `cloudflare/security-audit-skill` | 89.5 | `devtool` | improve_existing | candidate-promotion, capability-planning, code-reviewer, experience-routing | — |
-| 6 | `bytedance/deer-flow` | 88.5 | `devtool` | improve_existing | capability-planning, experience-routing, github-integration | — |
-| 7 | `Shubhamsaboo/awesome-llm-apps` | 82.5 | `backend-library` | improve_existing | capability-planning, embedding-providers, experience-routing, github-integration | — |
-| 8 | `googleapis/mcp-toolbox` | 82.5 | `backend-library` | improve_existing | capability-planning, embedding-providers, experience-routing, github-integration | — |
+Captain-selected live learn + promote (OVA-71). Evidence:
+`.agent/evidence/m55-captain-handbook-skills-a1/wave1-live-20261012T043000Z/` and
+`wave1-promote/`.
 
-### Suggested learn objectives
+| Star | Installed Skill | Mode | Status |
+|---|---|---|---|
+| `anthropics/skills` | [`agent-skills-packaging`](../../.cursor/skills/agent-skills-packaging/SKILL.md) | new AVAILABLE Skill | **promoted** |
+| `aaif-goose/goose` | [`goose-agent-orchestration`](../../.cursor/skills/goose-agent-orchestration/SKILL.md) | new AVAILABLE Skill | **promoted** |
+| `cloudflare/security-audit-skill` | [`security-audit-procedures`](../../.cursor/skills/security-audit-procedures/SKILL.md) | new AVAILABLE Skill | **promoted** |
 
-- `Agents365-ai/drawio-skill` — agent skill packaging and promotion gates
-- `TestSprite/testsprite-cli` — agent skill packaging and promotion gates
-- `aaif-goose/goose` — agent skill packaging and promotion gates
-- `anthropics/skills` — agent skill packaging and promotion gates
-- `cloudflare/security-audit-skill` — security review procedures for agent workflows
-- `bytedance/deer-flow` — multi-agent orchestration and routing procedures
-- `Shubhamsaboo/awesome-llm-apps` — MCP tool integration patterns for Cursor agents
-- `googleapis/mcp-toolbox` — MCP tool integration patterns for Cursor agents
+Lifecycle for each candidate: `ANALYZED → SECURITY_REVIEWED → SANDBOX_TESTED → APPROVED → AVAILABLE_SKILL` with `--captain-approved`.  
+Install is metadata/procedure Skills only — **no clone/exec** of the Stars.
+
+Carry into product repos with `"$CONTROL/scripts/update.sh" "$PRODUCT"` after this lands on a control release you choose.
+
+## Wave 1 — remaining learn-first queue
+
+| # | Repository | Score | TI cat | Notes |
+|---|---|---|---|---|
+| 1 | `Agents365-ai/drawio-skill` | 97.5 | `devtool` | Next learn candidate |
+| 2 | `TestSprite/testsprite-cli` | 97.5 | `devtool` | Next learn candidate |
+| 3 | `bytedance/deer-flow` | 88.5 | `devtool` | Orchestration patterns |
+| 4 | `Shubhamsaboo/awesome-llm-apps` | 82.5 | `backend-library` | LLM app patterns |
+| 5 | `googleapis/mcp-toolbox` | 82.5 | `backend-library` | MCP procedures |
 
 ## Metadata-only track
 
@@ -95,8 +99,7 @@ Workbook **Priority Picks** optimize personal products (Shop.py, etc.). This ran
 
 ## Next operator steps
 
-1. Refresh TI cache from control against sandbox.
-2. Run `northstar skills learn` for Wave 1 repos (one objective at a time).
-3. Scorecard → promote `--captain-approved` → PR into `.cursor/skills/`.
-4. `update.sh` into sandbox/product.
-5. Keep REA on metadata-only track.
+1. ~~Wave 1 trio learn + promote~~ (done — see table above).
+2. `update.sh` sandbox/product after merge to pick up the three Skills.
+3. Optionally learn remaining Wave 1 queue / Wave 2.
+4. Keep REA on metadata-only track.

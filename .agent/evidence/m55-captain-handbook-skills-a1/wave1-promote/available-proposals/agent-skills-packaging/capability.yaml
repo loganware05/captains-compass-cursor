@@ -1,0 +1,19 @@
+id: agent-skills-packaging
+version: "0.1.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/agent-skills-packaging/SKILL.md
+lifecycle_stage: AVAILABLE_SKILL
+capabilities_provided:
+  - anthropics
+  - skills
+  - public
+  - repository
+  - for
+security_sensitivity: medium
+provenance:
+  inferred: false
+  from_candidate: github-stars-anthropics-skills
+  captain_approval_required: true
+notes: AVAILABLE_SKILL proposal — Captain PR required before registry use

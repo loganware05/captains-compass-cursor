@@ -22,7 +22,8 @@ Baseline **v1.59.0** @ `c2db26b`. Rollback `rollback/pre-m55-captain-handbook-sk
 - [x] REA starred (metadata-only; not executed by NorthStar)
 - [x] Starred catalog import (98) + library ranking Wave 1/2
 - [x] Live Stars Wave 1 learn (anthropics/skills, aaif-goose/goose, cloudflare/security-audit-skill) — drafts/scorecards in sandbox; not promoted
-- [ ] Promote ≥3 Wave 1 drafts via Captain PR (Path B remaining)
+- [x] Promote Wave 1 trio → AVAILABLE Skills (`agent-skills-packaging`, `goose-agent-orchestration`, `security-audit-procedures`)
+- [ ] Merge promote PR + `update.sh` sandbox/product
 - [ ] PR merge + version bump closeout
 
 ## Behavioral Intelligence Loop (complete)

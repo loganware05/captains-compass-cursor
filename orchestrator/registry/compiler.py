@@ -56,6 +56,9 @@ SKILL_SLUGS = (
     "code-reviewer",
     "northstar-connected-routine",
     "project-overseer",
+    "agent-skills-packaging",
+    "goose-agent-orchestration",
+    "security-audit-procedures",
 )
 
 AGENT_PROFILES = (

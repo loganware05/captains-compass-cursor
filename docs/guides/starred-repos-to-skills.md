@@ -194,6 +194,7 @@ only; it never originates Captain approval.
 
 - Captain Handbook: [`captain-handbook.md`](captain-handbook.md)
 - A1 library fill: [`skills-library-fill-a1.md`](skills-library-fill-a1.md)
+- Library ranking + Wave 1 promoted Skills: [`starred-library-ranking.md`](starred-library-ranking.md)
 - Skill: `.cursor/skills/skill-learning-loop/SKILL.md`
 - Skill: `.cursor/skills/candidate-promotion/SKILL.md`
 - Docs: `docs/integrations/technology-intelligence.md`

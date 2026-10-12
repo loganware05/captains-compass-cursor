@@ -1,0 +1,23 @@
+{
+  "approved_for_execution": false,
+  "candidate_id": "github-stars-aaif-goose-goose",
+  "capabilities_provided": [
+    "aaif",
+    "goose",
+    "open",
+    "source",
+    "extensible"
+  ],
+  "captain_approval_required": true,
+  "evidence_paths": [
+    "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-aaif-goose-goose/sandbox-test.json",
+    "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-aaif-goose-goose/summary.md",
+    "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-aaif-goose-goose/security-review.md",
+    "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-aaif-goose-goose/dependency-supply-chain.md"
+  ],
+  "install_target": ".cursor/skills/goose-agent-orchestration/",
+  "kind": "available-skill-proposal",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "notes": "Proposal only \u2014 copy into .cursor/skills/ via Captain-reviewed PR; never auto-install",
+  "skill_slug": "goose-agent-orchestration"
+}

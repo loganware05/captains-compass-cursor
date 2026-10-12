@@ -1,0 +1,23 @@
+{
+  "approved_for_execution": false,
+  "candidate_id": "github-stars-anthropics-skills",
+  "capabilities_provided": [
+    "anthropics",
+    "skills",
+    "public",
+    "repository",
+    "for"
+  ],
+  "captain_approval_required": true,
+  "evidence_paths": [
+    "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-anthropics-skills/sandbox-test.json",
+    "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/candidate-sandbox-test/github-stars-anthropics-skills/summary.md",
+    "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-anthropics-skills/security-review.md",
+    "/Users/loganware/Documents/Personal/Code/captain-compass-sandbox/.agent/evidence/ti-scorecards/github-stars-anthropics-skills/dependency-supply-chain.md"
+  ],
+  "install_target": ".cursor/skills/agent-skills-packaging/",
+  "kind": "available-skill-proposal",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "notes": "Proposal only \u2014 copy into .cursor/skills/ via Captain-reviewed PR; never auto-install",
+  "skill_slug": "agent-skills-packaging"
+}

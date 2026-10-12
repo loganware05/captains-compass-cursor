@@ -1,0 +1,35 @@
+id: goose-agent-orchestration
+version: "0.1.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/goose-agent-orchestration/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.78
+  from_candidate: github-stars-aaif-goose-goose
+  discovery_signal: "github-stars:live:aaif-goose/goose|category:devtool"
+  captain_approval_required: true
+  starred_provenance_required: true
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, orchestration, agents]
+tags:
+  - agent-orchestration
+  - tool-routing
+  - wave1
+capabilities_provided:
+  - agent-orchestration-procedure
+  - tool-boundary-design
+  - multi-step-agent-routing
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - experience-routing
+  - capability-planning
+  - skill-learning-loop
+  - implementation-agent
+maturity: available
+confidence: 0.78
+notes: Wave 1 AVAILABLE_SKILL from aaif-goose/goose (metadata/procedure only)

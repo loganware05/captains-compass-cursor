@@ -51,7 +51,14 @@ agentic engineering process across multiple product repositories.
 
 1. AGENTS.md operating contract
 2. Five always-applied core rules
-3. Forty-four Skills (including `project-overseer`, `code-reviewer`, `context-inodes`, northstar-connected-routine, skill-learning-loop, embedding-providers, package-registry-ti, external-knowledge-ingest, skill-lifecycle, procedure-playbooks, knowledge-steward, technology-intelligence-live, persistent-role-promotion, bounded-autonomy, compass-evaluator, experience-routing, capability-planning, execution-telemetry, candidate-promotion, experience-skill-training)
+3. Forty-seven Skills (including Wave 1 Stars-derived `agent-skills-packaging`,
+   `goose-agent-orchestration`, `security-audit-procedures`, plus
+   `project-overseer`, `code-reviewer`, `context-inodes`, northstar-connected-routine,
+   skill-learning-loop, embedding-providers, package-registry-ti,
+   external-knowledge-ingest, skill-lifecycle, procedure-playbooks,
+   knowledge-steward, technology-intelligence-live, persistent-role-promotion,
+   bounded-autonomy, compass-evaluator, experience-routing, capability-planning,
+   execution-telemetry, candidate-promotion, experience-skill-training)
 4. Twelve specialist subagents (including `project-overseer`, `code-reviewer`, `compass-evaluator`, `knowledge-steward`)
 5. Seven safety hooks (three critical fail-closed; four soft fail-open with multi-path skips)
 6. Six Cursor phase commands under `.cursor/commands/`
