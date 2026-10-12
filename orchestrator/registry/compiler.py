@@ -55,6 +55,7 @@ SKILL_SLUGS = (
     "context-inodes",
     "code-reviewer",
     "northstar-connected-routine",
+    "project-overseer",
 )
 
 AGENT_PROFILES = (
@@ -68,6 +69,7 @@ AGENT_PROFILES = (
     "documentation-agent",
     "compass-evaluator",
     "knowledge-steward",
+    "project-overseer",
 )
 
 

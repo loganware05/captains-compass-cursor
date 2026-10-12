@@ -49,10 +49,10 @@ class InferTests(unittest.TestCase):
 class RegistryCompileTests(unittest.TestCase):
     def test_compile_control_repo_registry(self) -> None:
         result = compile_registry(ROOT)
-        # 41 pre-M41 registered skills + code-reviewer + northstar-connected-routine (M41 WS0)
-        self.assertEqual(len(result.registry["skills"]), 43)
-        self.assertEqual(len(result.registry["reference_profiles"]), 10)
-        # M41 WS0 closed the SKILL_SLUGS drift warnings.
+        # 43 pre-M52 registered skills + project-overseer (M52)
+        self.assertEqual(len(result.registry["skills"]), 44)
+        self.assertEqual(len(result.registry["reference_profiles"]), 11)
+        # SKILL_SLUGS must cover every on-disk Skill directory.
         self.assertEqual(result.warnings, [])
 
     def test_skill_ids_are_unique(self) -> None:
