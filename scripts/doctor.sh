@@ -406,6 +406,24 @@ PY
   else
     fail "prompt-eval should exit 2 mentioning COMPASS_PROMPT_EVAL_ENABLED when unset (rc=$pe_rc)"
   fi
+
+  # M54: exemplar include remains opt-in (default off) — gate helper present.
+  if grep -q "prompt_eval_include_exemplars" "$ROOT/orchestrator/behavior/enabled.py" \
+    && grep -q "COMPASS_PROMPT_EVAL_INCLUDE_EXEMPLARS" "$ROOT/orchestrator/behavior/enabled.py"; then
+    ok "COMPASS_PROMPT_EVAL_INCLUDE_EXEMPLARS gate present (M54)"
+  else
+    fail "missing COMPASS_PROMPT_EVAL_INCLUDE_EXEMPLARS gate in enabled.py"
+  fi
+  if [[ -f "$ROOT/orchestrator/behavior/prompt_eval/exemplars.py" ]]; then
+    ok "prompt_eval/exemplars.py present (M54)"
+  else
+    fail "missing orchestrator/behavior/prompt_eval/exemplars.py"
+  fi
+  if [[ -f "$ROOT/orchestrator/status/provenance_refs.py" ]]; then
+    ok "status/provenance_refs.py present (M54)"
+  else
+    fail "missing orchestrator/status/provenance_refs.py"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/behavior-policy.schema.json" ]]; then
     ok "behavior-policy.schema.json present"
   else

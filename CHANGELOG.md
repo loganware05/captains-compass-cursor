@@ -2,6 +2,16 @@
 
 
 
+## 1.59.0 — 2026-10-11
+
+### Added
+
+- **M54 Behavior Loop Operator Closure**:
+  - Opt-in `COMPASS_PROMPT_EVAL_INCLUDE_EXEMPLARS` (exemplars → prompt-eval cases)
+  - Compose `--execution-id` best-effort provenance emit when gated
+  - Status `provenance_refs` on snapshots / compare (read-only)
+  - ADR-076; plan `m54-behavior-loop-closure` (OVA-70)
+
 ## 1.58.0 — 2026-10-11
 
 ### Added

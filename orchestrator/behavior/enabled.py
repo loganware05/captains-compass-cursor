@@ -84,3 +84,8 @@ def require_provenance_enabled() -> None:
             "execution provenance disabled — set COMPASS_PROVENANCE_ENABLED=1 "
             "and invoke northstar provenance / examples explicitly"
         )
+
+
+def prompt_eval_include_exemplars() -> bool:
+    """Opt-in: append M53 exemplars as prompt-eval cases (M54). Default off."""
+    return _truthy("COMPASS_PROMPT_EVAL_INCLUDE_EXEMPLARS")

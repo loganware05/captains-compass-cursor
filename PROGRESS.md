@@ -2,18 +2,17 @@
 
 ## Current status
 
-**M53 Prompt/Policy Provenance + Behavior Exemplars** — plan
-`m53-prompt-policy-provenance` · Status **APPROVED / implementing** ·
-Release **v1.58.0**.
+**M54 Behavior Loop Operator Closure** — plan `m54-behavior-loop-closure` ·
+Status **APPROVED / implementing** · Release **v1.59.0**.
 
 | Item | Value |
 |---|---|
-| Baseline on main | **v1.57.0** M52 (#195) @ `448ac25` |
-| Active plan | `m53-prompt-policy-provenance` — **APPROVED** |
-| Branch | `feature/OVA-69-m53-prompt-policy-provenance` |
-| Linear | [OVA-69](https://linear.app/ovaltechnologysolutions/issue/OVA-69/m53-promptpolicy-provenance-behavior-exemplars-v1580) |
-| Rollback | `rollback/pre-m53-prompt-policy-provenance` @ `448ac25` |
-| Evidence | `.agent/evidence/m53-prompt-policy-provenance/VALIDATION.md` |
+| Baseline on main | **v1.58.0** M53 (#196) @ `47f3241` |
+| Active plan | `m54-behavior-loop-closure` — **APPROVED** |
+| Branch | `feature/OVA-70-m54-behavior-loop-closure` |
+| Linear | [OVA-70](https://linear.app/ovaltechnologysolutions/issue/OVA-70/m54-behavior-loop-operator-closure-v1590) |
+| Rollback | `rollback/pre-m54-behavior-loop-closure` @ `47f3241` |
+| Evidence | `.agent/evidence/m54-behavior-loop-closure/VALIDATION.md` |
 
 ## Behavioral Intelligence Loop
 
@@ -24,7 +23,8 @@ Release **v1.58.0**.
 5. ~~M50 Policy / Instruction Promotion Lifecycle~~ — v1.55.0 (#193)
 6. ~~M51 Kimi K3 Project Overseer~~ — v1.56.0 (#194)
 7. ~~M52 Overseer Skill + opt-in live StatusProvider~~ — v1.57.0 (#195)
-8. **M53 Prompt/Policy Provenance + Exemplars** ← implementing (v1.58.0)
+8. ~~M53 Prompt/Policy Provenance + Exemplars~~ — v1.58.0 (#196)
+9. **M54 Behavior Loop Operator Closure** ← implementing (v1.59.0)
 
 ## Parallel track — On-Chain / AI Hedge Fund (AHF)
 

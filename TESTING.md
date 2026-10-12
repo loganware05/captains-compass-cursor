@@ -366,6 +366,23 @@ Default gate is off. Exemplars never auto-promote Skills/Policies
 (`auto_promoted: false`). See
 `.agent/evidence/m53-prompt-policy-provenance/VALIDATION.md`.
 
+Behavior Loop Operator Closure (M54):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_m54_behavior_loop_closure.py' -v
+
+# Exemplars in prompt-eval (opt-in; default CI path unchanged):
+COMPASS_PROMPT_EVAL_ENABLED=1 COMPASS_PROMPT_EVAL_INCLUDE_EXEMPLARS=1 \
+  ./scripts/northstar prompt-eval run --repo .
+
+# Compose → provenance when gated + execution id:
+COMPASS_INSTRUCTIONS_ENABLED=1 COMPASS_PROVENANCE_ENABLED=1 \
+  ./scripts/northstar instructions compose --execution-id exec-demo --repo .
+```
+
+Status snapshots include bounded `provenance_refs` (read-only). See
+`.agent/evidence/m54-behavior-loop-closure/VALIDATION.md`.
+
 Fail-closed hook detectors — added-line / executable-hook scope (M42):
 
 ```bash

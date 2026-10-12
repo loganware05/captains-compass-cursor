@@ -62,15 +62,18 @@ def compare_since(repo_root: Path, since_sha: str) -> dict[str, Any]:
             "repository_sha": current.get("repository_sha"),
             "finding_count": len(current.get("findings") or []),
             "skill_count_fs": current.get("skill_count_fs"),
+            "provenance_ref_count": len(current.get("provenance_refs") or []),
         },
         "prior": {
             "northstar_version": prior.get("northstar_version"),
             "repository_sha": prior.get("repository_sha"),
             "finding_count": len(prior.get("findings") or []),
             "skill_count_fs": prior.get("skill_count_fs"),
+            "provenance_ref_count": len(prior.get("provenance_refs") or []),
         },
         "added_finding_kinds": added,
         "resolved_finding_kinds": resolved,
+        "provenance_refs": list(current.get("provenance_refs") or []),
         "approved_for_execution": False,
         "authority_mutation": False,
     }

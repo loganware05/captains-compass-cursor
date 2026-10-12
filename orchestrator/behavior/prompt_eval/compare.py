@@ -11,7 +11,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from orchestrator.behavior.enabled import require_prompt_eval_enabled
+from orchestrator.behavior.enabled import (
+    prompt_eval_include_exemplars,
+    require_prompt_eval_enabled,
+)
 from orchestrator.behavior.instructions.composer import compose_prompt_bundle
 from orchestrator.behavior.instructions.store import (
     InstructionStoreError,
@@ -24,6 +27,10 @@ from orchestrator.behavior.prompt_eval.cases import (
     PromptEvalCaseError,
     default_cases_path,
     load_cases,
+)
+from orchestrator.behavior.prompt_eval.exemplars import (
+    load_exemplar_cases,
+    merge_cases,
 )
 from orchestrator.behavior.prompt_eval.report import (
     PromptEvalReportError,
@@ -146,15 +153,27 @@ def run_prompt_eval(
     cases_path: Path | None = None,
     control_root: Path | None = None,
     persist: bool = True,
+    include_exemplars: bool | None = None,
 ) -> dict[str, Any]:
     """Run hermetic baseline-vs-candidate prompt evaluation for all cases."""
     require_prompt_eval_enabled()
     control = Path(control_root or repo_root)
+    root = Path(repo_root)
     path = Path(cases_path) if cases_path else default_cases_path(control)
     try:
         cases = load_cases(path)
     except PromptEvalCaseError as exc:
         raise PromptEvalCompareError(str(exc)) from exc
+    use_exemplars = (
+        prompt_eval_include_exemplars()
+        if include_exemplars is None
+        else bool(include_exemplars)
+    )
+    exemplar_count = 0
+    if use_exemplars:
+        exemplar_cases = load_exemplar_cases(root)
+        exemplar_count = len(exemplar_cases)
+        cases = merge_cases(cases, exemplar_cases)
 
     case_results: list[dict[str, Any]] = []
     for case in cases:
@@ -173,6 +192,8 @@ def run_prompt_eval(
         "baseline_mode": "include_proposals=false",
         "candidate_mode": "include_proposals=true",
         "cases_path": str(path),
+        "include_exemplars": use_exemplars,
+        "exemplar_case_count": exemplar_count,
         "northstar_version": _read_version(control),
         "approved_for_execution": False,
         "authority_mutation": False,

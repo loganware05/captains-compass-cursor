@@ -93,6 +93,8 @@
     "candidate_mode": { "type": "string", "const": "include_proposals=true" },
     "cases_path": { "type": "string" },
     "evidence_path": { "type": "string" },
+    "include_exemplars": { "type": "boolean" },
+    "exemplar_case_count": { "type": "integer", "minimum": 0 },
     "northstar_version": { "type": "string" },
     "approved_for_execution": { "type": "boolean", "const": false },
     "authority_mutation": { "type": "boolean", "const": false }

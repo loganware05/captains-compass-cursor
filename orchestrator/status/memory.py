@@ -61,6 +61,7 @@ def render_system_map(snapshot: dict[str, Any]) -> str:
         f"- Plan status (documented): `{snapshot.get('plan_status') or ''}`",
         f"- Skills on disk (observed): `{snapshot.get('skill_count_fs')}`",
         f"- Skills in docs (documented): `{snapshot.get('skill_count_docs')}`",
+        f"- Provenance refs (observed): `{len(snapshot.get('provenance_refs') or [])}`",
         "",
         "## Findings",
         "",

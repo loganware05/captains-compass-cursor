@@ -78,7 +78,7 @@ Commands:
   northstar learn export --format csv [--out PATH] [--repo PATH]
   northstar instructions list [--repo PATH]
   northstar instructions show <instruction-id> [--repo PATH]
-  northstar instructions compose [--agent NAME] [--skill-id ID] [--repo PATH]
+  northstar instructions compose [--agent NAME] [--skill-id ID] [--execution-id ID] [--repo PATH]
   northstar instructions draft-from-candidates [--repo PATH]
   northstar instructions export --format csv [--out PATH] [--repo PATH]
   northstar prompt-eval run [--cases PATH] [--repo PATH]
@@ -140,6 +140,8 @@ Locks:
   approved_for_execution.
   Status (M51) requires COMPASS_STATUS_ENABLED=1; read-oriented / proposal-only;
   never approves plans, promotes Skills/Policies, or auto-rewrites project memory.
+  Prompt-eval (M54) may set COMPASS_PROMPT_EVAL_INCLUDE_EXEMPLARS=1 to append
+  curated .agent/examples/ as cases (default off; never auto-promotes).
   Provenance/examples (M53) require COMPASS_PROVENANCE_ENABLED=1; proposal-only;
   never auto-promote Skills/Policies or grant approved_for_execution.
 USAGE

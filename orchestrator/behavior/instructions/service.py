@@ -56,6 +56,7 @@ def compose(
     skill_id: str = "",
     task_type: str = "",
     model_hint: str = "",
+    execution_id: str = "",
 ) -> dict[str, Any]:
     require_instructions_enabled()
     try:
@@ -70,7 +71,40 @@ def compose(
         )
     except InstructionStoreError as exc:
         raise InstructionServiceError(str(exc)) from exc
-    return {"status": "composed", "bundle": bundle}
+    result: dict[str, Any] = {"status": "composed", "bundle": bundle}
+    # M54: best-effort provenance when gated and execution_id present
+    eid = (execution_id or "").strip()
+    if eid:
+        try:
+            from orchestrator.behavior.enabled import provenance_enabled
+            from orchestrator.behavior.provenance.service import (
+                build_provenance_record,
+            )
+            from orchestrator.behavior.provenance.store import write_provenance
+
+            if provenance_enabled():
+                record = build_provenance_record(
+                    repo_root,
+                    execution_id=eid,
+                    packet={
+                        "execution_id": eid,
+                        "agent": agent,
+                        "skill_ids": [skill_id] if skill_id else [],
+                        "prompt_bundle_hash": str(
+                            bundle.get("prompt_bundle_hash") or ""
+                        ),
+                        "model": model_hint or "",
+                    },
+                )
+                path = write_provenance(repo_root, record)
+                result["provenance"] = {
+                    "status": "captured",
+                    "provenance": record,
+                    "path": str(path),
+                }
+        except Exception:
+            pass
+    return result
 
 
 def draft_candidates(repo_root: Path) -> dict[str, Any]:
