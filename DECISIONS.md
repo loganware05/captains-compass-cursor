@@ -1,5 +1,28 @@
 # Decisions
 
+## ADR-077: Cognitive Core C1 Source of Truth (v1.60.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-13
+- **Context:** Captain approved plan `c1-cognitive-core-source-of-truth`
+  (OVA-72) after Cognitive Core Notion design and M51/M52 Overseer landed.
+  NorthStar needed durable, SHA-cited project-state independent of chat models,
+  without expanding into retrieval, routing, REA, or training.
+- **Decision:**
+  1. Add gated `northstar brain` (`sync` / `status` / `show`) behind
+     `COMPASS_BRAIN_ENABLED` (default off).
+  2. Persist schema-validated snapshots under `.agent/project-state/` with
+     `freshness: fresh|stale` vs current HEAD.
+  3. Local Git is authoritative for C1; GitHub enrichment deferred; optional
+     Overseer status compose when `COMPASS_STATUS_ENABLED=1`.
+  4. Always `approved_for_execution: false` / `authority_mutation: false`;
+     never auto-rewrite canonical memory.
+  5. Release as **v1.60.0**. C2–C5 remain deferred.
+- **Consequences:** Operators can sync and detect stale project-state before
+  Adaptive Intelligence / Specialized Model work. Rollback
+  `rollback/pre-c1-cognitive-core-source-of-truth` @ `9b9d6bd`.
+
+
 ## ADR-076: Behavior Loop Operator Closure (v1.59.0 M54)
 
 - **Status:** Accepted

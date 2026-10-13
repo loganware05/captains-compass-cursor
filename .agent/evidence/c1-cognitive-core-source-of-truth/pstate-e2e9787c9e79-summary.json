@@ -1,0 +1,10 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "created_at": "2026-10-13T20:16:40Z",
+  "freshness": "fresh",
+  "northstar_version": "1.60.0",
+  "path": ".agent/project-state/snapshots/pstate-e2e9787c9e79.json",
+  "repository_sha": "9b9d6bd1300b47446e6a790a80830900baceaee9",
+  "snapshot_id": "pstate-e2e9787c9e79"
+}

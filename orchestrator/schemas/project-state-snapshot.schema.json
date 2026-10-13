@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/project-state-snapshot.schema.json",
+  "title": "ProjectStateSnapshot",
+  "description": "Cognitive Core C1 project-state snapshot. Versioned SHA-cited facts; never grants authority.",
+  "type": "object",
+  "required": [
+    "snapshot_id",
+    "schema_version",
+    "created_at",
+    "repository_sha",
+    "northstar_version",
+    "freshness",
+    "sources",
+    "citations",
+    "approved_for_execution",
+    "authority_mutation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "snapshot_id": { "type": "string", "minLength": 1 },
+    "schema_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "repository_sha": { "type": "string" },
+    "repository_branch": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "freshness": {
+      "type": "string",
+      "enum": ["fresh", "stale"]
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["local_git", "status_compose"]
+      }
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": ["git", "file", "status_snapshot", "version"]
+          },
+          "ref": { "type": "string", "minLength": 1 },
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "documented", "external", "proposed"]
+          }
+        }
+      }
+    },
+    "active_plan_id": { "type": "string" },
+    "plan_status": { "type": "string" },
+    "composed_status_snapshot_id": { "type": ["string", "null"] },
+    "skill_count_fs": { "type": "integer", "minimum": 0 },
+    "working_tree_dirty": { "type": "boolean" },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}

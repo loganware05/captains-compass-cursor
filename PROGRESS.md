@@ -2,46 +2,41 @@
 
 ## Current status
 
-**M55 IN PROGRESS** on `feature/OVA-71-m55-captain-handbook-skills-a1`
-([OVA-71](https://linear.app/ovaltechnologysolutions/issue/OVA-71/m55-captain-handbook-skills-library-fill-a1)).
-Baseline **v1.59.0** @ `c2db26b`. Rollback `rollback/pre-m55-captain-handbook-skills-a1`.
+**C1 Cognitive Core — IMPLEMENTED on branch** `feature/OVA-72-c1-cognitive-core-source-of-truth`
+([OVA-72](https://linear.app/ovaltechnologysolutions/issue/OVA-72/c1-cognitive-core-source-of-truth-git-sync-versioned-project-state)).
+Plan **APPROVED**. VERSION **1.60.0**. Rollback `rollback/pre-c1-cognitive-core-source-of-truth` @ `9b9d6bd`.
 
 | Item | Value |
 |---|---|
-| On main | **v1.59.0** M54 (#197) @ `c2db26b` |
-| Active plan | `m55-captain-handbook-skills-a1` **APPROVED** |
-| Branch | `feature/OVA-71-m55-captain-handbook-skills-a1` |
-| Next | Finish live Stars A1 fills (Captain) → PR → release closeout |
+| Baseline | v1.59.0 @ `9b9d6bd` |
+| Active plan | `c1-cognitive-core-source-of-truth` **APPROVED** |
+| Linear | [P-OVA-6](https://linear.app/ovaltechnologysolutions/project/northstar-cognitive-core-445cdc0f12d6) · Milestone **C1 — Source of Truth** |
+| Next | Captain review → PR → merge → release closeout |
 
-## M55 deliverables (this branch)
+## C1 deliverables (this branch)
 
-- [x] Captain Handbook — `docs/guides/captain-handbook.md`
-- [x] A1 runbook — `docs/guides/skills-library-fill-a1.md`
-- [x] INDEX / README / Stars guide links
-- [x] Fixture learn evidence — `.agent/evidence/m55-captain-handbook-skills-a1/`
-- [x] REA starred (metadata-only; not executed by NorthStar)
-- [x] Starred catalog import (98) + library ranking Wave 1/2
-- [x] Live Stars Wave 1 learn (anthropics/skills, aaif-goose/goose, cloudflare/security-audit-skill) — drafts/scorecards in sandbox; not promoted
-- [x] Promote Wave 1 trio → AVAILABLE Skills (`agent-skills-packaging`, `goose-agent-orchestration`, `security-audit-procedures`)
-- [ ] Merge promote PR + `update.sh` sandbox/product
-- [ ] PR merge + version bump closeout
+- [x] `COMPASS_BRAIN_ENABLED` gate + `northstar brain sync|status|show`
+- [x] Schema `project-state-snapshot` + store under `.agent/project-state/`
+- [x] Freshness: `fresh` at sync; `stale` when HEAD advances
+- [x] Hermetic tests (10) + doctor checks
+- [x] ADR-077 + handbook + TESTING + CHANGELOG
+- [x] Evidence `.agent/evidence/c1-cognitive-core-source-of-truth/`
+- [ ] PR opened / merged
 
-## Behavioral Intelligence Loop (complete)
+## Cognitive Core track
 
-1. ~~M46–M54~~ — v1.46.0–v1.59.0 (#184–#197); P-OVA-4 completed.
-
-## Recommended follow-ons (after M55)
-
-| Track | Scope |
+| Milestone | Status |
 |---|---|
-| A2 | Ledger automation (Linear M1–M7 from evidence) |
-| A | AHF-P07 paper-only (deferred) |
-| B | Opt-in scheduled Overseer (GHA) |
+| C1 — Source of Truth | Implemented on feature branch; awaiting PR |
+| C2 — Memory and Retrieval | Deferred |
+| C3 — Adaptive Routing | Deferred |
+| C4 — REA Deep Analysis | Deferred |
 
-## Parallel track — On-Chain / AI Hedge Fund (AHF)
+## Recently completed (main)
 
-AHF-P01–P06 shipped through v1.54.0. AHF-P07+ remains deferred / gated.
+- **M55 / OVA-71** — Captain Handbook + Wave 1 Stars Skills (#198 / #199)
+- **M46–M54** — Behavioral Intelligence Loop (P-OVA-4)
 
 ## Blockers
 
-None. Live A1 Path B needs Captain Stars objectives beyond REA metadata.
+None. Ready for PR when Captain requests.

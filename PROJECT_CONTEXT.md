@@ -65,7 +65,7 @@ agentic engineering process across multiple product repositories.
 7. Documentation, budget/session templates, evidence matrix, multi-runtime adapters, evals
 8. Installation, update, uninstall, and doctor scripts
 9. Control-repo CI (doctor + tests + harness evals)
-10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3), persistent roles + bounded weight apply (v1.8.0 M4), knowledge steward (v1.9.0 M5), hybrid vector search (v1.10.0 M6), performance knowledge + live Stars TI (v1.11.0 M7), procedure ingest + TI cache (v1.12.0 M8), skill lifecycle + Artifact Context (v1.13.0 M9), external knowledge + HF file TI (v1.14.0 M10), fixture embeddings + package-registry file TI (v1.15.0 M11), **code review pipeline (v1.30.0 M27)**, **filesystem-gated context (v1.41.0 M40)**, **optional DecisionProvider / Jev shadow skill suggestion (v1.42.0 M41)**, **behavior loop M46–M54 (evaluate → learn → instructions → prompt-eval → policy promotion → Project Overseer status/Skill → provenance + exemplars → operator closure wiring)**
+10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3), persistent roles + bounded weight apply (v1.8.0 M4), knowledge steward (v1.9.0 M5), hybrid vector search (v1.10.0 M6), performance knowledge + live Stars TI (v1.11.0 M7), procedure ingest + TI cache (v1.12.0 M8), skill lifecycle + Artifact Context (v1.13.0 M9), external knowledge + HF file TI (v1.14.0 M10), fixture embeddings + package-registry file TI (v1.15.0 M11), **code review pipeline (v1.30.0 M27)**, **filesystem-gated context (v1.41.0 M40)**, **optional DecisionProvider / Jev shadow skill suggestion (v1.42.0 M41)**, **behavior loop M46–M54 (evaluate → learn → instructions → prompt-eval → policy promotion → Project Overseer status/Skill → provenance + exemplars → operator closure wiring)**, **Cognitive Core C1 project-state / `northstar brain` (v1.60.0)**
 
 ## External Services
 
@@ -136,4 +136,4 @@ gh auth status
 **M55** — Captain Handbook + Skills library fill (A1) on
 `feature/OVA-71-m55-captain-handbook-skills-a1` ([OVA-71](https://linear.app/ovaltechnologysolutions/issue/OVA-71/m55-captain-handbook-skills-library-fill-a1)).
 Start here: `docs/guides/captain-handbook.md`. Behavior Loop (M46–M54) remains
-complete at **v1.59.0**. Live trading / AHF execution remains denied.
+complete at **v1.59.0**; Cognitive Core C1 at **v1.60.0**. Live trading / AHF execution remains denied.

@@ -23,6 +23,17 @@
 - Live GitHub Stars TI fetch: `gh api user/starred` now uses GET query params
   (was `-f` form POST → 404 / empty cache)
 
+## 1.60.0 — 2026-10-13
+
+### Added
+
+- **C1 Cognitive Core — Source of Truth** (OVA-72):
+  - Gated `northstar brain sync|status|show` (`COMPASS_BRAIN_ENABLED`)
+  - Schema `project-state-snapshot`; store under `.agent/project-state/`
+  - Freshness contract (`fresh` at sync; `stale` when HEAD advances)
+  - Optional Overseer status compose when `COMPASS_STATUS_ENABLED=1`
+  - ADR-077; evidence `.agent/evidence/c1-cognitive-core-source-of-truth/`
+
 ## 1.59.0 — 2026-10-11
 
 ### Added

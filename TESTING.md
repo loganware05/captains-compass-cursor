@@ -349,6 +349,26 @@ Default provider is stub. HTTP requires `COMPASS_STATUS_MODEL` and
 Writes `system-map.md` / `scope-ledger.json` under `.agent/status/` only.
 See `.agent/evidence/m52-overseer-skill-live-provider/VALIDATION.md`.
 
+Cognitive Core project-state / brain (C1; requires enable flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_c1_cognitive_core_source_of_truth.py' -v
+
+COMPASS_BRAIN_ENABLED=1 \
+./scripts/northstar brain sync --repo .
+
+COMPASS_BRAIN_ENABLED=1 \
+./scripts/northstar brain status --repo .
+
+COMPASS_BRAIN_ENABLED=1 \
+./scripts/northstar brain show --snapshot-id <id> --repo .
+```
+
+Unset `COMPASS_BRAIN_ENABLED` → CLI exits non-zero. Snapshots under
+`.agent/project-state/` only (`fresh` at sync; `stale` when HEAD advances).
+Never auto-rewrites canonical memory. See
+`.agent/evidence/c1-cognitive-core-source-of-truth/VALIDATION.md`.
+
 Prompt/Policy Provenance + Behavior Exemplars (M53):
 
 ```bash
