@@ -56,6 +56,11 @@ wandb/
 .agent/status/export.csv
 .agent/status/system-map.md
 .agent/status/scope-ledger.json
+# Cognitive Core project-state (C1)
+.agent/project-state/snapshots/**/*.json
+!.agent/project-state/snapshots/**/.gitkeep
+.agent/project-state/latest.json
+.agent/tmp-c1-tests/
 .agent/routing/proposals/*.json
 !.agent/routing/proposals/.gitkeep
 .agent/agents/proficiency/*.json

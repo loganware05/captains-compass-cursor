@@ -494,6 +494,31 @@ PY
   else
     fail "status should exit 2 mentioning COMPASS_STATUS_ENABLED when unset (rc=$st_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/project-state-snapshot.schema.json" ]]; then
+    ok "project-state-snapshot.schema.json present"
+  else
+    fail "missing orchestrator/schemas/project-state-snapshot.schema.json"
+  fi
+  if [[ -f "$ROOT/.agent/project-state/snapshots/.gitkeep" ]]; then
+    ok ".agent/project-state/snapshots layout"
+  else
+    fail "missing .agent/project-state/snapshots/.gitkeep"
+  fi
+  if [[ -x "$ROOT/scripts/run-brain.sh" ]]; then
+    ok "scripts/run-brain.sh present"
+  else
+    fail "missing executable scripts/run-brain.sh"
+  fi
+  # Fail-closed smoke: brain must refuse when enable flag is unset (exit 2).
+  set +e
+  br_out="$(env -u COMPASS_BRAIN_ENABLED "$ROOT/scripts/run-brain.sh" sync --repo-root "$ROOT" 2>&1)"
+  br_rc=$?
+  set -e
+  if [[ "$br_rc" -eq 2 && "$br_out" == *"COMPASS_BRAIN_ENABLED"* ]]; then
+    ok "brain fail-closed when COMPASS_BRAIN_ENABLED unset"
+  else
+    fail "brain should exit 2 mentioning COMPASS_BRAIN_ENABLED when unset (rc=$br_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/scope-ledger.schema.json" ]]; then
     ok "scope-ledger.schema.json present"
   else

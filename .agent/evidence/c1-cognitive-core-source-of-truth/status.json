@@ -1,0 +1,49 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "freshness": "fresh",
+  "repository_sha_head": "9b9d6bd1300b47446e6a790a80830900baceaee9",
+  "snapshot": {
+    "active_plan_id": "c1-cognitive-core-source-of-truth",
+    "approved_for_execution": false,
+    "authority_mutation": false,
+    "citations": [
+      {
+        "claim_kind": "observed",
+        "kind": "git",
+        "ref": "HEAD=9b9d6bd1300b47446e6a790a80830900baceaee9"
+      },
+      {
+        "claim_kind": "observed",
+        "kind": "version",
+        "ref": "VERSION=1.60.0"
+      },
+      {
+        "claim_kind": "documented",
+        "kind": "file",
+        "ref": "IMPLEMENTATION_PLAN.md"
+      },
+      {
+        "claim_kind": "documented",
+        "kind": "file",
+        "ref": "PROGRESS.md"
+      }
+    ],
+    "composed_status_snapshot_id": null,
+    "created_at": "2026-10-13T20:16:40Z",
+    "freshness": "fresh",
+    "northstar_version": "1.60.0",
+    "notes": "Cognitive Core C1 project-state snapshot (local Git). Does not approve plans or mutate authority.",
+    "plan_status": "**APPROVED**",
+    "repository_branch": "feature/OVA-72-c1-cognitive-core-source-of-truth",
+    "repository_sha": "9b9d6bd1300b47446e6a790a80830900baceaee9",
+    "schema_version": "1",
+    "skill_count_fs": 47,
+    "snapshot_id": "pstate-e2e9787c9e79",
+    "sources": [
+      "local_git"
+    ],
+    "working_tree_dirty": true
+  },
+  "status": "ok"
+}

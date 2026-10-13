@@ -2,7 +2,7 @@
 # northstar — topology-free launcher for NorthStar control-plane operations (M24 / M34).
 #
 # One product surface for Skills Learning Loop + Code Reviewer:
-#   northstar skills … | review | intent | outcomes | repair | precision | evaluate | learn | instructions | prompt-eval | policy | status | provenance | examples
+#   northstar skills … | review | intent | outcomes | repair | precision | evaluate | learn | instructions | prompt-eval | policy | status | brain | provenance | examples
 #
 # Scripts always live in this control repository. Product/sandbox checkouts do
 # not contain ./scripts/run-skill-learning-loop.sh (or siblings).
@@ -32,6 +32,7 @@ Usage:
   northstar prompt-eval <subcommand> …
   northstar policy <subcommand> …
   northstar status <subcommand> …
+  northstar brain <subcommand> …
   northstar provenance <subcommand> …
   northstar examples <subcommand> …
 
@@ -50,6 +51,7 @@ Surfaces (one-line purpose):
   prompt-eval Prompt evaluation harness (M49) — eval-only; requires COMPASS_PROMPT_EVAL_ENABLED=1
   policy      Policy promotion lifecycle (M50) — requires COMPASS_POLICY_PROMOTE_ENABLED=1
   status      Project Overseer (M51/M52) — read-oriented; requires COMPASS_STATUS_ENABLED=1
+  brain       Cognitive Core project-state (C1) — requires COMPASS_BRAIN_ENABLED=1
   provenance Execution provenance ledger (M53) — requires COMPASS_PROVENANCE_ENABLED=1
   examples   Behavior exemplars (M53) — proposal-only; requires COMPASS_PROVENANCE_ENABLED=1
 
@@ -96,6 +98,9 @@ Commands:
   northstar status compare --since SHA [--repo PATH]
   northstar status reconcile [--snapshot-id ID] [--repo PATH]
   northstar status export --format csv [--out PATH] [--repo PATH]
+  northstar brain sync [--repo PATH]
+  northstar brain status [--repo PATH]
+  northstar brain show --snapshot-id ID [--repo PATH]
   northstar provenance capture --execution-id ID [--repo PATH]
   northstar provenance list [--repo PATH]
   northstar provenance show --provenance-id ID [--repo PATH]
@@ -140,6 +145,8 @@ Locks:
   approved_for_execution.
   Status (M51) requires COMPASS_STATUS_ENABLED=1; read-oriented / proposal-only;
   never approves plans, promotes Skills/Policies, or auto-rewrites project memory.
+  Brain (C1) requires COMPASS_BRAIN_ENABLED=1; project-state under
+  .agent/project-state/; never grants authority or rewrites canonical memory.
   Prompt-eval (M54) may set COMPASS_PROMPT_EVAL_INCLUDE_EXEMPLARS=1 to append
   curated .agent/examples/ as cases (default off; never auto-promotes).
   Provenance/examples (M53) require COMPASS_PROVENANCE_ENABLED=1; proposal-only;
@@ -505,6 +512,29 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown status subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  brain)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      sync|status|show)
+        exec "$ROOT/scripts/run-brain.sh" "$sub" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown brain subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;
