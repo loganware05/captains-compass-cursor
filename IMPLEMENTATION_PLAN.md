@@ -38,7 +38,7 @@ Finish C1 post-merge closeout: ship the live `plan-approval-check.sh` Python &lt
 - [x] Handbook standing order: approve → commit → open PR
 - [x] Doctor + hook smoke
 - [x] Evidence under `.agent/evidence/c1-closeout-hook-compat/`
-- [ ] PR opened
+- [x] PR opened — https://github.com/loganware05/captains-compass-cursor/pull/202
 
 ## Non-Goals
 
