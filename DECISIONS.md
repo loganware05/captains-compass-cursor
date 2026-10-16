@@ -1,5 +1,22 @@
 # Decisions
 
+## ADR-078: Plan-approval hook PEP604 + approve→PR standing order (v1.60.1)
+
+- **Status:** Accepted
+- **Date:** 2026-10-16
+- **Context:** After C1 (#200) merged, `.cursor/hooks/plan-approval-check.sh`
+  crashed on Python &lt;3.10 (`str | None`), fail-closing all Shell/Write. Captain
+  also directed that plan approval includes commit + open PR.
+- **Decision:**
+  1. Add `from __future__ import annotations` to `plan-approval-check.sh` and
+     `protected-branch.sh` embedded Python.
+  2. Document standing order in Captain Handbook: approve → implement →
+     validate → commit → open PR; merge remains Captain-only.
+  3. Patch release **v1.60.1** (#201).
+- **Consequences:** Agent tooling works on older Python; fewer “commit/PR”
+  round-trips. Rollback `rollback/pre-c1-closeout-hook-compat` @ `2dbceea`.
+
+
 ## ADR-077: Cognitive Core C1 Source of Truth (v1.60.0)
 
 - **Status:** Accepted

@@ -136,4 +136,5 @@ gh auth status
 **M55** — Captain Handbook + Skills library fill (A1) on
 `feature/OVA-71-m55-captain-handbook-skills-a1` ([OVA-71](https://linear.app/ovaltechnologysolutions/issue/OVA-71/m55-captain-handbook-skills-library-fill-a1)).
 Start here: `docs/guides/captain-handbook.md`. Behavior Loop (M46–M54) remains
-complete at **v1.59.0**; Cognitive Core C1 at **v1.60.0**. Live trading / AHF execution remains denied.
+complete at **v1.59.0**; Cognitive Core C1 at **v1.60.0** (closeout **v1.60.1**).
+Live trading / AHF execution remains denied.

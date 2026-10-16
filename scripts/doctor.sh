@@ -178,6 +178,38 @@ for h in "${HOOK_SCRIPTS[@]}"; do
   fi
 done
 
+# C1 closeout / v1.60.1: PEP604 hooks must parse on Py<3.10.
+if command -v python3 >/dev/null 2>&1; then
+  for pep_hook in plan-approval-check.sh protected-branch.sh; do
+    pep_path="$ROOT/.cursor/hooks/$pep_hook"
+    if [[ ! -f "$pep_path" ]]; then
+      continue
+    fi
+    if python3 - "$pep_path" <<'PY'
+from pathlib import Path
+import ast, sys
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+marker = "python3 - <<'PY'"
+start = text.find(marker)
+if start < 0:
+    raise SystemExit(1)
+start += len(marker)
+end = text.find("\nPY", start)
+if end < 0:
+    raise SystemExit(1)
+py = text[start:end]
+if "from __future__ import annotations" not in py:
+    raise SystemExit(2)
+ast.parse(py)
+PY
+    then
+      ok "$pep_hook embedded Python (PEP604 + AST)"
+    else
+      fail "$pep_hook embedded Python missing future annotations or fails AST parse"
+    fi
+  done
+fi
+
 if [[ -f "$ROOT/.cursor/hooks/_common.sh" ]]; then
   ok "hooks _common.sh"
 else

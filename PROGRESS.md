@@ -2,41 +2,46 @@
 
 ## Current status
 
-**C1 Cognitive Core — IMPLEMENTED on branch** `feature/OVA-72-c1-cognitive-core-source-of-truth`
-([OVA-72](https://linear.app/ovaltechnologysolutions/issue/OVA-72/c1-cognitive-core-source-of-truth-git-sync-versioned-project-state)).
-Plan **APPROVED**. VERSION **1.60.0**. Rollback `rollback/pre-c1-cognitive-core-source-of-truth` @ `9b9d6bd`.
+**C1 Cognitive Core — SHIPPED** via [#200](https://github.com/loganware05/captains-compass-cursor/pull/200)
+@ `2dbceea` (**v1.60.0**). Closeout patch **v1.60.1** on `fix/201-c1-closeout-hook-compat`
+([#201](https://github.com/loganware05/captains-compass-cursor/issues/201)).
 
 | Item | Value |
 |---|---|
-| Baseline | v1.59.0 @ `9b9d6bd` |
-| Active plan | `c1-cognitive-core-source-of-truth` **APPROVED** |
-| Linear | [P-OVA-6](https://linear.app/ovaltechnologysolutions/project/northstar-cognitive-core-445cdc0f12d6) · Milestone **C1 — Source of Truth** |
-| Next | Captain review → PR → merge → release closeout |
-
-## C1 deliverables (this branch)
-
-- [x] `COMPASS_BRAIN_ENABLED` gate + `northstar brain sync|status|show`
-- [x] Schema `project-state-snapshot` + store under `.agent/project-state/`
-- [x] Freshness: `fresh` at sync; `stale` when HEAD advances
-- [x] Hermetic tests (10) + doctor checks
-- [x] ADR-077 + handbook + TESTING + CHANGELOG
-- [x] Evidence `.agent/evidence/c1-cognitive-core-source-of-truth/`
-- [ ] PR opened / merged
+| On main | **v1.60.0** C1 (#200) @ `2dbceea` |
+| Active plan | `c1-closeout-hook-compat` **APPROVED** |
+| Next | Merge closeout PR → prioritize C2 Memory and Retrieval |
 
 ## Cognitive Core track
 
 | Milestone | Status |
 |---|---|
-| C1 — Source of Truth | Implemented on feature branch; awaiting PR |
-| C2 — Memory and Retrieval | Deferred |
-| C3 — Adaptive Routing | Deferred |
-| C4 — REA Deep Analysis | Deferred |
+| C1 — Source of Truth | **Complete** (#200 / v1.60.0); closeout v1.60.1 |
+| C2 — Memory and Retrieval | Next (Notion) |
+| C3 — Difficulty and capability fit | Deferred |
+| C4 — Adaptive Development Loop | Deferred |
+| C5 — Adaptive routing | Deferred |
+| C6 — REA deep analysis | Deferred |
+| C7 — Training bridge | Deferred |
 
-## Recently completed (main)
+## Operator (C1)
 
-- **M55 / OVA-71** — Captain Handbook + Wave 1 Stars Skills (#198 / #199)
-- **M46–M54** — Behavioral Intelligence Loop (P-OVA-4)
+```bash
+COMPASS_BRAIN_ENABLED=1 ./scripts/northstar brain sync --repo .
+COMPASS_BRAIN_ENABLED=1 ./scripts/northstar brain status --repo .
+```
+
+## Standing order (Captain — 2026-10-13)
+
+When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
+**implement → validate → commit → open PR** without a separate ask. Merge remains Captain-only.
+
+## Recently completed
+
+- **C1 / #200** — Cognitive Core project-state / `northstar brain` (v1.60.0)
+- **M55 / OVA-71** — Captain Handbook + Wave 1 Stars Skills
+- **M46–M54** — Behavioral Intelligence Loop
 
 ## Blockers
 
-None. Ready for PR when Captain requests.
+None.

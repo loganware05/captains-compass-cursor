@@ -61,7 +61,11 @@ Full operator map: [`docs/INDEX.md`](../INDEX.md).
 3. You set Status → **APPROVED** (explicit).
 4. Branch + rollback tag (never implement on `main`).
 5. Implement within plan boundaries; run doctor/tests; store evidence under `.agent/evidence/`.
-6. Open PR; merge only after your review.
+6. First Mate **commits and opens the PR** (standing order — no separate ask).
+7. You merge only after your review.
+
+**Standing order (2026-10-13):** Plan approval authorizes implement → validate →
+commit → open PR. It does **not** authorize merge, deploy, or authority mutation.
 
 Agents must stop at the approval gate. Saying “just implement” does not override it.
 
