@@ -1,8 +1,8 @@
-> **APPROVED / IMPLEMENTED** (2026-10-13) — Plan ID `c1-cognitive-core-source-of-truth`.
-> Captain approved; branch `feature/OVA-72-c1-cognitive-core-source-of-truth`; VERSION **1.60.0**.
+> **COMPLETE** (2026-10-13) — Merged [#200](https://github.com/loganware05/captains-compass-cursor/pull/200)
+> → `main` @ `2dbceea` (**v1.60.0**). Plan ID `c1-cognitive-core-source-of-truth`.
 > Linear: [OVA-72](https://linear.app/ovaltechnologysolutions/issue/OVA-72/c1-cognitive-core-source-of-truth-git-sync-versioned-project-state) ·
-> Project [P-OVA-6 NorthStar Cognitive Core](https://linear.app/ovaltechnologysolutions/project/northstar-cognitive-core-445cdc0f12d6) ·
-> Milestone **C1 — Source of Truth**.
+> Project [P-OVA-6](https://linear.app/ovaltechnologysolutions/project/northstar-cognitive-core-445cdc0f12d6) · Milestone **C1**.
+> Closeout: `c1-closeout-hook-compat` (#201) → **v1.60.1**.
 > Evidence: `.agent/evidence/c1-cognitive-core-source-of-truth/VALIDATION.md`.
 
 # C1 — Cognitive Core Source of Truth

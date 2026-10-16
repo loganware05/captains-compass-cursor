@@ -7,6 +7,8 @@ input="$(cat)"
 export COMPASS_HOOK_INPUT="$input"
 
 python3 - <<'PY'
+from __future__ import annotations
+
 import json, os, re, subprocess, sys
 
 PROTECTED = {"main", "master", "develop", "release", "production"}

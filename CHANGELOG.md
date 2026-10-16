@@ -23,11 +23,24 @@
 - Live GitHub Stars TI fetch: `gh api user/starred` now uses GET query params
   (was `-f` form POST → 404 / empty cache)
 
+## 1.60.1 — 2026-10-16
+
+### Fixed
+
+- **Hook PEP604** — `from __future__ import annotations` in
+  `plan-approval-check.sh` and `protected-branch.sh` so Python &lt;3.10 no longer
+  crash-fail-closes Shell/Write/git (#201)
+
+### Changed
+
+- C1 closeout memory reconcile (PROGRESS / README / handbook standing order:
+  plan approval includes commit + open PR)
+
 ## 1.60.0 — 2026-10-13
 
 ### Added
 
-- **C1 Cognitive Core — Source of Truth** (OVA-72):
+- **C1 Cognitive Core — Source of Truth** (OVA-72 / #200):
   - Gated `northstar brain sync|status|show` (`COMPASS_BRAIN_ENABLED`)
   - Schema `project-state-snapshot`; store under `.agent/project-state/`
   - Freshness contract (`fresh` at sync; `stale` when HEAD advances)
