@@ -1,5 +1,6 @@
-> **AWAITING APPROVAL** (2026-10-17) — Plan ID `c3-cognitive-core-difficulty-fit`.
+> **APPROVED** (2026-10-17) — Plan ID `c3-cognitive-core-difficulty-fit`.
 > Issue: [#205](https://github.com/loganware05/captains-compass-cursor/issues/205).
+> Branch: `cursor/205-c3-difficulty-fit-64df` · Rollback `rollback/pre-c3-cognitive-core-difficulty-fit`.
 > Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
 
 # C3 — Cognitive Core Difficulty and Capability Fit
@@ -16,7 +17,7 @@ Gated `northstar assess project` producing SHA-cited `ProjectDifficultyAssessmen
 
 v1.61.0 @ `f1ae35d` → proposed release **v1.62.0**
 
-## Proposed operator surface
+## Operator surface
 
 ```bash
 COMPASS_ASSESS_ENABLED=1 \

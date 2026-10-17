@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/project-difficulty-assessment.schema.json",
+  "title": "ProjectDifficultyAssessment",
+  "description": "Cognitive Core C3 difficulty / capability-fit assessment. Evidence-backed; never grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "assessment_id",
+    "objective",
+    "difficulty_score",
+    "band",
+    "confidence",
+    "factors",
+    "weights",
+    "citations",
+    "recommendations",
+    "approved_for_execution",
+    "authority_mutation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "assessment_id": { "type": "string", "minLength": 1 },
+    "objective": { "type": "string", "minLength": 1 },
+    "difficulty_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "band": {
+      "type": "string",
+      "enum": ["low", "moderate", "high", "very_high"]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "factors": {
+      "type": "object",
+      "required": [
+        "gap_severity",
+        "skill_uncertainty",
+        "repository_complexity",
+        "task_graph_complexity",
+        "operational_risk",
+        "validation_burden"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "gap_severity": { "type": "number", "minimum": 0, "maximum": 100 },
+        "skill_uncertainty": { "type": "number", "minimum": 0, "maximum": 100 },
+        "repository_complexity": { "type": "number", "minimum": 0, "maximum": 100 },
+        "task_graph_complexity": { "type": "number", "minimum": 0, "maximum": 100 },
+        "operational_risk": { "type": "number", "minimum": 0, "maximum": 100 },
+        "validation_burden": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "weights": {
+      "type": "object",
+      "required": [
+        "gap_severity",
+        "skill_uncertainty",
+        "repository_complexity",
+        "task_graph_complexity",
+        "operational_risk",
+        "validation_burden"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "gap_severity": { "type": "number" },
+        "skill_uncertainty": { "type": "number" },
+        "repository_complexity": { "type": "number" },
+        "task_graph_complexity": { "type": "number" },
+        "operational_risk": { "type": "number" },
+        "validation_burden": { "type": "number" }
+      }
+    },
+    "factor_details": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "git",
+              "snapshot",
+              "skill",
+              "experience",
+              "task_graph",
+              "capability",
+              "file",
+              "version"
+            ]
+          },
+          "ref": { "type": "string", "minLength": 1 },
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "documented", "external", "proposed"]
+          }
+        }
+      }
+    },
+    "recommendations": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "decompose": { "type": "boolean" },
+        "validation_depth": {
+          "type": "string",
+          "enum": ["standard", "elevated", "maximum"]
+        },
+        "autonomy_budget_hint": {
+          "type": "string",
+          "enum": ["generous", "standard", "tight", "minimal"]
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "repository_sha": { "type": "string" },
+    "snapshot_id": { "type": ["string", "null"] },
+    "northstar_version": { "type": "string" },
+    "required_capabilities": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "capability_gaps": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "recommended_skill_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "task_count": { "type": "integer", "minimum": 0 },
+    "experience_count": { "type": "integer", "minimum": 0 },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}

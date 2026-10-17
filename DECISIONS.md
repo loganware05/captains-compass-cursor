@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-080: Cognitive Core C3 Difficulty and Capability Fit (v1.62.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-17
+- **Context:** Captain approved plan `c3-cognitive-core-difficulty-fit`
+  (#205) after C2 (#204 / v1.61.0). Notion Adaptive Intelligence requires an
+  evidence-backed `ProjectDifficultyAssessment` before C4 cycle work.
+- **Decision:**
+  1. Add gated `northstar assess project` behind `COMPASS_ASSESS_ENABLED`.
+  2. Score difficulty with Notion weights over gap severity, skill uncertainty,
+     repository complexity, task-graph complexity, operational risk, and
+     validation burden; return band + confidence + recommendations.
+  3. Cite git/snapshot/Skills/Experiences/task-graph evidence; lock authority
+     flags false; never bypass plan approval.
+  4. Ship hermetic backtest fixture; release **v1.62.0**. C4–C7 remain deferred.
+- **Consequences:** Operators can size validation/autonomy hints from a single
+  SHA-cited assessment. Rollback
+  `rollback/pre-c3-cognitive-core-difficulty-fit` @ `f1ae35d`.
+
+
 ## ADR-079: Cognitive Core C2 Memory and Retrieval (v1.61.0)
 
 - **Status:** Accepted

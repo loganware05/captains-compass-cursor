@@ -536,6 +536,25 @@ PY
   else
     fail "missing orchestrator/schemas/brain-context-response.schema.json"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/project-difficulty-assessment.schema.json" ]]; then
+    ok "project-difficulty-assessment.schema.json present"
+  else
+    fail "missing orchestrator/schemas/project-difficulty-assessment.schema.json"
+  fi
+  if [[ -x "$ROOT/scripts/run-assess.sh" ]]; then
+    ok "scripts/run-assess.sh present"
+  else
+    fail "missing executable scripts/run-assess.sh"
+  fi
+  set +e
+  as_out="$(env -u COMPASS_ASSESS_ENABLED "$ROOT/scripts/run-assess.sh" project --objective test --repo-root "$ROOT" 2>&1)"
+  as_rc=$?
+  set -e
+  if [[ "$as_rc" -eq 2 && "$as_out" == *"COMPASS_ASSESS_ENABLED"* ]]; then
+    ok "assess fail-closed when COMPASS_ASSESS_ENABLED unset"
+  else
+    fail "assess should exit 2 mentioning COMPASS_ASSESS_ENABLED when unset (rc=$as_rc)"
+  fi
   if [[ -f "$ROOT/.agent/project-state/snapshots/.gitkeep" ]]; then
     ok ".agent/project-state/snapshots layout"
   else

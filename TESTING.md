@@ -383,6 +383,20 @@ Composes project-state + knowledge hits + ADR decision links. Gold-set fixture:
 `tests/fixtures/brain-goldset/questions.json` (30 questions; ≥90% evidence-linked).
 See `.agent/evidence/c2-cognitive-core-memory-retrieval/VALIDATION.md`.
 
+Cognitive Core difficulty / capability-fit (C3; requires assess flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_c3_cognitive_core_difficulty_fit.py' -v
+
+COMPASS_ASSESS_ENABLED=1 \
+./scripts/northstar assess project --objective "…" --repo .
+```
+
+Unset `COMPASS_ASSESS_ENABLED` → CLI exits non-zero. Advisory only — never
+bypasses plan approval. Backtest fixture:
+`tests/fixtures/assess-backtest/cases.json`.
+See `.agent/evidence/c3-cognitive-core-difficulty-fit/VALIDATION.md`.
+
 Prompt/Policy Provenance + Behavior Exemplars (M53):
 
 ```bash
