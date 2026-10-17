@@ -13,6 +13,7 @@
 | Product | **NorthStar** (control repo) |
 | Baseline | **v1.63.0** @ `d8f1ac4` (C4 closeout #212 on main) |
 | Branch | `cursor/211-c5-adaptive-routing-64df` |
+| PR | [#213](https://github.com/loganware05/captains-compass-cursor/pull/213) (draft) |
 | Rollback | `rollback/pre-c5-cognitive-core-adaptive-routing` @ `d8f1ac4` |
 | Release | **v1.64.0** |
 | Captain | Logan Ware |

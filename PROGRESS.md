@@ -12,8 +12,9 @@ Baseline **v1.63.0** @ `d8f1ac4`; target **v1.64.0**.
 | Active plan | `c5-cognitive-core-adaptive-routing` **APPROVED** |
 | Issue | [#211](https://github.com/loganware05/captains-compass-cursor/issues/211) |
 | Branch | `cursor/211-c5-adaptive-routing-64df` |
+| PR | [#213](https://github.com/loganware05/captains-compass-cursor/pull/213) (draft) |
 | Rollback | `rollback/pre-c5-cognitive-core-adaptive-routing` @ `d8f1ac4` |
-| Next | Validate → PR → Captain merge |
+| Next | Captain merge of #213 |
 
 ## Cognitive Core track
 
