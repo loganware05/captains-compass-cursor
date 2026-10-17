@@ -7,7 +7,7 @@
 | Wall time (minutes) | 240 | ~45 |
 | Cost (USD) | 0 (no paid GPU) | 0 |
 
-Status: **ACTIVE** — implementation + validation complete; PR pending.
+Status: **COMPLETE** — merged #204 @ `f1ae35d` (v1.61.0).
 
 ## Cycle log
 
