@@ -397,6 +397,26 @@ bypasses plan approval. Backtest fixture:
 `tests/fixtures/assess-backtest/cases.json`.
 See `.agent/evidence/c3-cognitive-core-difficulty-fit/VALIDATION.md`.
 
+Cognitive Core Adaptive Development Loop (C4; requires cycle flag; begin also
+needs assess flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_c4_cognitive_core_adaptive_loop.py' -v
+
+COMPASS_CYCLE_ENABLED=1 COMPASS_ASSESS_ENABLED=1 \
+./scripts/northstar cycle begin --objective "…" --repo .
+COMPASS_CYCLE_ENABLED=1 \
+./scripts/northstar cycle checkpoint --execution-id ID --checkpoint-key KEY --repo .
+COMPASS_CYCLE_ENABLED=1 \
+./scripts/northstar cycle close --execution-id ID --repo .
+COMPASS_CYCLE_ENABLED=1 \
+./scripts/northstar learning review --repo .
+```
+
+Unset `COMPASS_CYCLE_ENABLED` → CLI exits non-zero. Draft proposals only —
+never auto-promotes Skills/Policies or expands authority. See
+`.agent/evidence/c4-cognitive-core-adaptive-loop/VALIDATION.md`.
+
 Prompt/Policy Provenance + Behavior Exemplars (M53):
 
 ```bash

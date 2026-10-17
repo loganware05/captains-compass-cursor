@@ -2,18 +2,18 @@
 
 ## Current status
 
-**C3 Cognitive Core — Difficulty and capability fit — SHIPPED** via
-[#207](https://github.com/loganware05/captains-compass-cursor/pull/207)
-@ `28ff856` (**v1.62.0**). Issue [#205](https://github.com/loganware05/captains-compass-cursor/issues/205) closed.
-
-Active plan: `c4-cognitive-core-adaptive-loop` **AWAITING APPROVAL**
-([#208](https://github.com/loganware05/captains-compass-cursor/issues/208)).
+**C4 Cognitive Core — Adaptive Development Loop** implementing on
+`cursor/208-c4-adaptive-loop-64df` after Captain approval (2026-10-17).
+Baseline **v1.62.0** @ `9f78bda`; target **v1.63.0**.
 
 | Item | Value |
 |---|---|
-| On main | **v1.62.0** C3 (#207) @ `28ff856` |
-| Active plan | `c4-cognitive-core-adaptive-loop` **AWAITING APPROVAL** |
-| Next | Captain approve C4 → implement |
+| On main | **v1.62.0** C3 + closeout (#207 / #209) @ `9f78bda` |
+| Active plan | `c4-cognitive-core-adaptive-loop` **APPROVED** |
+| Issue | [#208](https://github.com/loganware05/captains-compass-cursor/issues/208) |
+| Branch | `cursor/208-c4-adaptive-loop-64df` |
+| Rollback | `rollback/pre-c4-cognitive-core-adaptive-loop` @ `9f78bda` |
+| Next | Validate → PR → Captain merge |
 
 ## Cognitive Core track
 
@@ -22,17 +22,22 @@ Active plan: `c4-cognitive-core-adaptive-loop` **AWAITING APPROVAL**
 | C1 — Source of Truth | **Complete** (#200 / v1.60.0); closeout v1.60.1 |
 | C2 — Memory and Retrieval | **Complete** (#204 / v1.61.0) |
 | C3 — Difficulty and capability fit | **Complete** (#207 / v1.62.0) |
-| C4 — Adaptive Development Loop | **Plan awaiting approval** (#208) |
+| C4 — Adaptive Development Loop | **In progress** (#208 / v1.63.0) |
 | C5 — Adaptive routing | Deferred |
 | C6 — REA deep analysis | Deferred |
 | C7 — Training bridge | Deferred |
 
-## Operator (C1–C3 shipped)
+## Operator (C1–C4)
 
 ```bash
 COMPASS_BRAIN_ENABLED=1 ./scripts/northstar brain sync --repo .
 COMPASS_BRAIN_ENABLED=1 ./scripts/northstar brain context --query "…" --repo .
 COMPASS_ASSESS_ENABLED=1 ./scripts/northstar assess project --objective "…" --repo .
+COMPASS_CYCLE_ENABLED=1 COMPASS_ASSESS_ENABLED=1 \
+  ./scripts/northstar cycle begin --objective "…" --repo .
+COMPASS_CYCLE_ENABLED=1 ./scripts/northstar cycle checkpoint --execution-id ID --checkpoint-key KEY --repo .
+COMPASS_CYCLE_ENABLED=1 ./scripts/northstar cycle close --execution-id ID --repo .
+COMPASS_CYCLE_ENABLED=1 ./scripts/northstar learning review --repo .
 ```
 
 ## Standing order (Captain — 2026-10-13)
@@ -42,6 +47,7 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Recently completed
 
+- **C3 closeout / #209** — memory reconcile + C4 plan
 - **C3 / #207** — Cognitive Core difficulty / `assess project` (v1.62.0)
 - **C2 closeout / #206** — memory reconcile + C3 plan
 - **C2 / #204** — Cognitive Core memory/retrieval / `brain context` (v1.61.0)
@@ -50,4 +56,4 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Blockers
 
-None. Waiting on Captain approval of C4 plan.
+None.

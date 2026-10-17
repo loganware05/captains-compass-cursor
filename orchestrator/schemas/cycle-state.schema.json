@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/cycle-state.schema.json",
+  "title": "CycleState",
+  "description": "Cognitive Core C4 Adaptive Development Loop state. Evidence-backed; never grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "execution_id",
+    "phase",
+    "status",
+    "objective",
+    "plan_id",
+    "checkpoints",
+    "draft_proposals",
+    "citations",
+    "approved_for_execution",
+    "authority_mutation",
+    "created_at",
+    "updated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "execution_id": { "type": "string", "minLength": 1 },
+    "phase": {
+      "type": "string",
+      "enum": ["begun", "checkpointed", "closed"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "closed"]
+    },
+    "objective": { "type": "string", "minLength": 1 },
+    "plan_id": { "type": "string", "minLength": 1 },
+    "repository_sha": { "type": "string" },
+    "snapshot_id": { "type": ["string", "null"] },
+    "northstar_version": { "type": "string" },
+    "assessment": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "capability_gaps": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "recommended_skill_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "task_count": { "type": "integer", "minimum": 0 },
+    "similar_experiences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "checkpoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["checkpoint_key", "recorded_at", "outcome"],
+        "additionalProperties": false,
+        "properties": {
+          "checkpoint_key": { "type": "string", "minLength": 1 },
+          "recorded_at": { "type": "string", "minLength": 1 },
+          "outcome": { "type": "string" },
+          "retries": { "type": "integer", "minimum": 0 },
+          "notes": { "type": "string" },
+          "skills": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "cost_units": { "type": "number" }
+        }
+      }
+    },
+    "remaining_work_forecast": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "notes": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "scope_expanded": { "type": "boolean", "const": false }
+      }
+    },
+    "difficulty_estimate": {
+      "type": ["object", "null"],
+      "additionalProperties": true
+    },
+    "difficulty_actual": {
+      "type": ["object", "null"],
+      "additionalProperties": true
+    },
+    "execution_run_id": { "type": ["string", "null"] },
+    "experience_id": { "type": ["string", "null"] },
+    "draft_proposals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "title", "auto_promoted"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "summary": { "type": "string" },
+          "evidence_paths": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "auto_promoted": { "type": "boolean", "const": false }
+        }
+      }
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "git",
+              "snapshot",
+              "assessment",
+              "experience",
+              "task_graph",
+              "capability",
+              "skill",
+              "cycle",
+              "file",
+              "version"
+            ]
+          },
+          "ref": { "type": "string", "minLength": 1 },
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "documented", "external", "proposed"]
+          }
+        }
+      }
+    },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "created_at": { "type": "string", "minLength": 1 },
+    "updated_at": { "type": "string", "minLength": 1 }
+  }
+}
