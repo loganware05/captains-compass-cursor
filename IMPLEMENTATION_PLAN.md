@@ -13,6 +13,7 @@
 | Product | **NorthStar** (control repo) |
 | Baseline | **v1.61.0** @ `f1ae35d` (C2 merged #204) |
 | Branch | `cursor/205-c3-difficulty-fit-64df` |
+| PR | [#207](https://github.com/loganware05/captains-compass-cursor/pull/207) (draft; supersedes #206) |
 | Rollback | `rollback/pre-c3-cognitive-core-difficulty-fit` @ `f1ae35d` |
 | Release | **v1.62.0** |
 | Captain | Logan Ware |
@@ -47,7 +48,7 @@ COMPASS_ASSESS_ENABLED=1 \
 - [x] Hermetic backtest fixture comparing predicted bands vs recorded outcomes
 - [x] Doctor + unit tests green; evidence under `.agent/evidence/c3-cognitive-core-difficulty-fit/`
 - [x] Memory docs + CHANGELOG + VERSION **v1.62.0**; ADR-080
-- [ ] PR opened (standing order)
+- [x] PR opened (standing order) — [#207](https://github.com/loganware05/captains-compass-cursor/pull/207)
 
 ## Non-Goals
 

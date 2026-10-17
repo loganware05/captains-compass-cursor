@@ -7,7 +7,7 @@
 | Wall time (minutes) | 240 | ~55 |
 | Cost (USD) | 0 | 0 |
 
-Status: **ACTIVE** — scoring calibration + validation complete; PR pending.
+Status: **ACTIVE** — PR [#207](https://github.com/loganware05/captains-compass-cursor/pull/207) open; awaiting Captain merge.
 
 ## Cycle log
 

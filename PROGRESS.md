@@ -12,7 +12,8 @@ cherry-pick and post-adversarial scoring calibration.
 | Active plan | `c3-cognitive-core-difficulty-fit` **APPROVED** |
 | Issue | [#205](https://github.com/loganware05/captains-compass-cursor/issues/205) |
 | Branch | `cursor/205-c3-difficulty-fit-64df` |
-| Next | Captain merge (supersedes open closeout PR #206) |
+| PR | [#207](https://github.com/loganware05/captains-compass-cursor/pull/207) (draft) |
+| Next | Captain merge of #207 (supersedes open closeout PR #206) |
 
 ## Cognitive Core track
 
