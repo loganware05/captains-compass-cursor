@@ -61,6 +61,7 @@ wandb/
 !.agent/project-state/snapshots/**/.gitkeep
 .agent/project-state/latest.json
 .agent/tmp-c1-tests/
+.agent/tmp-c2-tests/
 .agent/routing/proposals/*.json
 !.agent/routing/proposals/.gitkeep
 .agent/agents/proficiency/*.json

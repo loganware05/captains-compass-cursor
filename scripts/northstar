@@ -51,7 +51,7 @@ Surfaces (one-line purpose):
   prompt-eval Prompt evaluation harness (M49) — eval-only; requires COMPASS_PROMPT_EVAL_ENABLED=1
   policy      Policy promotion lifecycle (M50) — requires COMPASS_POLICY_PROMOTE_ENABLED=1
   status      Project Overseer (M51/M52) — read-oriented; requires COMPASS_STATUS_ENABLED=1
-  brain       Cognitive Core project-state (C1) — requires COMPASS_BRAIN_ENABLED=1
+  brain       Cognitive Core project-state + context (C1/C2) — requires COMPASS_BRAIN_ENABLED=1
   provenance Execution provenance ledger (M53) — requires COMPASS_PROVENANCE_ENABLED=1
   examples   Behavior exemplars (M53) — proposal-only; requires COMPASS_PROVENANCE_ENABLED=1
 
@@ -101,6 +101,7 @@ Commands:
   northstar brain sync [--repo PATH]
   northstar brain status [--repo PATH]
   northstar brain show --snapshot-id ID [--repo PATH]
+  northstar brain context --query TEXT [--mode hybrid|keyword|vector] [--top N] [--repo PATH]
   northstar provenance capture --execution-id ID [--repo PATH]
   northstar provenance list [--repo PATH]
   northstar provenance show --provenance-id ID [--repo PATH]
@@ -530,7 +531,7 @@ case "$cmd" in
       mapped+=("$item")
     done < <(map_repo_flag "$@")
     case "$sub" in
-      sync|status|show)
+      sync|status|show|context)
         exec "$ROOT/scripts/run-brain.sh" "$sub" "${mapped[@]+"${mapped[@]}"}"
         ;;
       *)

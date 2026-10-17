@@ -47,7 +47,7 @@ Launcher: `"$CONTROL/scripts/northstar" <surface> …`
 | `review` | Detect→investigate→verify→report on a product PR/checkout | Evidence-only by default |
 | `evaluate` / `learn` / `instructions` / `prompt-eval` / `policy` | Behavior Loop (observe → pattern → compose → eval → promote policy) | Each needs `COMPASS_*_ENABLED=1`; never auto-promotes Skills |
 | `status` | Project Overseer snapshot / explain / reconcile | `COMPASS_STATUS_ENABLED=1`; proposal-only reconcile |
-| `brain` | Cognitive Core project-state sync / freshness | `COMPASS_BRAIN_ENABLED=1`; `.agent/project-state/` only |
+| `brain` | Cognitive Core project-state + memory/retrieval context | `COMPASS_BRAIN_ENABLED=1`; C1 snapshots under `.agent/project-state/`; C2 `brain context --query` |
 | `provenance` / `examples` | Explain run-to-run prompt/policy lineage; curate exemplars | `COMPASS_PROVENANCE_ENABLED=1`; `auto_promoted: false` |
 | `context` | Filesystem-gated context inodes | Build/walk only |
 | `intent` / `outcomes` / `repair` / `precision` | Review intent packs, triage, repair packets, precision ledger | Never Captain approval substitutes |

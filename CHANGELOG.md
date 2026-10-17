@@ -23,6 +23,18 @@
 - Live GitHub Stars TI fetch: `gh api user/starred` now uses GET query params
   (was `-f` form POST → 404 / empty cache)
 
+## 1.61.0 — 2026-10-17
+
+### Added
+
+- **C2 Cognitive Core — Memory and Retrieval** (#203):
+  - Gated `northstar brain context --query` (`COMPASS_BRAIN_ENABLED`)
+  - Composes C1 project-state freshness/SHA + Knowledge Steward hybrid/keyword/vector search
+  - Decision/ADR links from `DECISIONS.md` cited in responses
+  - Schema `brain-context-response` (authority flags locked false)
+  - Hermetic 30-question gold-set harness (target ≥90% evidence-linked)
+  - ADR-079; evidence `.agent/evidence/c2-cognitive-core-memory-retrieval/`
+
 ## 1.60.1 — 2026-10-16
 
 ### Fixed

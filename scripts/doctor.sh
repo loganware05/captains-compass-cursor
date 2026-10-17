@@ -531,6 +531,11 @@ PY
   else
     fail "missing orchestrator/schemas/project-state-snapshot.schema.json"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/brain-context-response.schema.json" ]]; then
+    ok "brain-context-response.schema.json present"
+  else
+    fail "missing orchestrator/schemas/brain-context-response.schema.json"
+  fi
   if [[ -f "$ROOT/.agent/project-state/snapshots/.gitkeep" ]]; then
     ok ".agent/project-state/snapshots layout"
   else
@@ -550,6 +555,15 @@ PY
     ok "brain fail-closed when COMPASS_BRAIN_ENABLED unset"
   else
     fail "brain should exit 2 mentioning COMPASS_BRAIN_ENABLED when unset (rc=$br_rc)"
+  fi
+  set +e
+  br_ctx_out="$(env -u COMPASS_BRAIN_ENABLED "$ROOT/scripts/run-brain.sh" context --query test --repo-root "$ROOT" 2>&1)"
+  br_ctx_rc=$?
+  set -e
+  if [[ "$br_ctx_rc" -eq 2 && "$br_ctx_out" == *"COMPASS_BRAIN_ENABLED"* ]]; then
+    ok "brain context fail-closed when COMPASS_BRAIN_ENABLED unset"
+  else
+    fail "brain context should exit 2 mentioning COMPASS_BRAIN_ENABLED when unset (rc=$br_ctx_rc)"
   fi
   if [[ -f "$ROOT/orchestrator/schemas/scope-ledger.schema.json" ]]; then
     ok "scope-ledger.schema.json present"

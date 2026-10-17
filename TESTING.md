@@ -369,6 +369,20 @@ Unset `COMPASS_BRAIN_ENABLED` → CLI exits non-zero. Snapshots under
 Never auto-rewrites canonical memory. See
 `.agent/evidence/c1-cognitive-core-source-of-truth/VALIDATION.md`.
 
+Cognitive Core memory/retrieval (C2; same enable flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_c2_cognitive_core_memory_retrieval.py' -v
+
+COMPASS_BRAIN_ENABLED=1 \
+./scripts/northstar brain context --query "Cognitive Core memory retrieval" \
+  --mode hybrid --top 10 --repo .
+```
+
+Composes project-state + knowledge hits + ADR decision links. Gold-set fixture:
+`tests/fixtures/brain-goldset/questions.json` (30 questions; ≥90% evidence-linked).
+See `.agent/evidence/c2-cognitive-core-memory-retrieval/VALIDATION.md`.
+
 Prompt/Policy Provenance + Behavior Exemplars (M53):
 
 ```bash
