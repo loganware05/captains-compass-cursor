@@ -23,7 +23,7 @@ Baseline **v1.62.0** @ `9f78bda`; target **v1.63.0**.
 | C1 — Source of Truth | **Complete** (#200 / v1.60.0); closeout v1.60.1 |
 | C2 — Memory and Retrieval | **Complete** (#204 / v1.61.0) |
 | C3 — Difficulty and capability fit | **Complete** (#207 / v1.62.0) |
-| C4 — Adaptive Development Loop | **In progress** (#208 / v1.63.0) |
+| C4 — Adaptive Development Loop | **PR ready** (#208 / v1.63.0) |
 | C5 — Adaptive routing | Deferred |
 | C6 — REA deep analysis | Deferred |
 | C7 — Training bridge | Deferred |

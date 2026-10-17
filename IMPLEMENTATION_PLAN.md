@@ -59,7 +59,7 @@ COMPASS_CYCLE_ENABLED=1 \
 - [x] Hermetic lifecycle fixture covering begin → checkpoint → close → review
 - [x] Doctor + unit tests green; evidence under `.agent/evidence/c4-cognitive-core-adaptive-loop/`
 - [x] Memory docs + CHANGELOG + VERSION **v1.63.0**; ADR-081
-- [ ] PR opened (standing order)
+- [x] PR opened (standing order) — [#210](https://github.com/loganware05/captains-compass-cursor/pull/210)
 
 ## Non-Goals
 
