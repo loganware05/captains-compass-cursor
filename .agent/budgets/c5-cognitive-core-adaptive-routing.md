@@ -2,15 +2,16 @@
 
 | Limit | Value | Used |
 |---|---|---|
-| Iterations | 10 | 0 |
+| Iterations | 10 | 1 |
 | Failed validation cycles | 3 | 0 |
-| Wall time (minutes) | 300 | 0 |
+| Wall time (minutes) | 300 | ~35 |
 | Cost (USD) | 0 | 0 |
 
-Status: **PENDING APPROVAL** — plan drafted; no implementation until Captain approves.
+Status: **ACTIVE** — implementation + validation complete; PR pending.
 
 ## Cycle log
 
 | date | iteration | result | notes |
 |---|---|---|---|
 | 2026-10-17 | — | plan | C4 closeout + C5 AWAITING APPROVAL (#211) |
+| 2026-10-17 | 1 | pass | route/evaluate + hermetic fixture + doctor |

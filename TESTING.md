@@ -417,6 +417,21 @@ Unset `COMPASS_CYCLE_ENABLED` → CLI exits non-zero. Draft proposals only —
 never auto-promotes Skills/Policies or expands authority. See
 `.agent/evidence/c4-cognitive-core-adaptive-loop/VALIDATION.md`.
 
+Cognitive Core Adaptive routing (C5; requires route flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_c5_cognitive_core_adaptive_routing.py' -v
+
+COMPASS_ROUTE_ENABLED=1 \
+./scripts/northstar model route --objective "…" --repo .
+COMPASS_ROUTE_ENABLED=1 \
+./scripts/northstar model evaluate --repo .
+```
+
+Unset `COMPASS_ROUTE_ENABLED` → CLI exits non-zero. Advisory only — never
+auto-switches live models. Fixture: `tests/fixtures/model-route-eval/cases.json`.
+See `.agent/evidence/c5-cognitive-core-adaptive-routing/VALIDATION.md`.
+
 Prompt/Policy Provenance + Behavior Exemplars (M53):
 
 ```bash

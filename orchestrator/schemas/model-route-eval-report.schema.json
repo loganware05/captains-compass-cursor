@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/model-route-eval-report.schema.json",
+  "title": "ModelRouteEvalReport",
+  "description": "Cognitive Core C5 hermetic model-route evaluate report. Never calls live models or grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "report_id",
+    "fixture_path",
+    "cases_evaluated",
+    "rankings",
+    "citations",
+    "approved_for_execution",
+    "authority_mutation",
+    "generated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "report_id": { "type": "string", "minLength": 1 },
+    "fixture_path": { "type": "string", "minLength": 1 },
+    "cases_evaluated": { "type": "integer", "minimum": 0 },
+    "rankings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "adapter_class",
+          "composite_score",
+          "rank"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "adapter_class": {
+            "type": "string",
+            "enum": ["local", "hosted", "premium"]
+          },
+          "profile_id": { "type": "string" },
+          "cost_per_accepted_task": { "type": "number" },
+          "retries": { "type": "number" },
+          "test_pass_rate": { "type": "number" },
+          "human_correction_hours": { "type": "number" },
+          "composite_score": { "type": "number" },
+          "rank": { "type": "integer", "minimum": 1 },
+          "label": { "type": "string" }
+        }
+      }
+    },
+    "recommended_adapter_class": {
+      "anyOf": [
+        { "type": "string", "enum": ["local", "hosted", "premium"] },
+        { "type": "null" }
+      ]
+    },
+    "metric_notes": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": ["fixture", "git", "version", "file"]
+          },
+          "ref": { "type": "string", "minLength": 1 },
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "documented", "external", "proposed"]
+          }
+        }
+      }
+    },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "generated_at": { "type": "string", "minLength": 1 }
+  }
+}

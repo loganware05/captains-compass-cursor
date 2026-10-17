@@ -23,6 +23,18 @@
 - Live GitHub Stars TI fetch: `gh api user/starred` now uses GET query params
   (was `-f` form POST → 404 / empty cache)
 
+## 1.64.0 — 2026-10-17
+
+### Added
+
+- **C5 Cognitive Core — Adaptive routing** (#211):
+  - Gated `northstar model route|evaluate` (`COMPASS_ROUTE_ENABLED`)
+  - Schemas `model-route-proposal` / `model-route-eval-report` (authority locked false;
+    `auto_switched: false`)
+  - Local/hosted/premium adapter classes mapped to model-profile catalog
+  - Hermetic evaluate fixture under `tests/fixtures/model-route-eval/`
+  - ADR-082; evidence `.agent/evidence/c5-cognitive-core-adaptive-routing/`
+
 ## 1.63.0 — 2026-10-17
 
 ### Added
