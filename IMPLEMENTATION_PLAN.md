@@ -13,6 +13,7 @@
 | Product | **NorthStar** (control repo) |
 | Baseline | **v1.62.0** @ `9f78bda` (C3 closeout #209 on main) |
 | Branch | `cursor/208-c4-adaptive-loop-64df` |
+| PR | [#210](https://github.com/loganware05/captains-compass-cursor/pull/210) (draft) |
 | Rollback | `rollback/pre-c4-cognitive-core-adaptive-loop` @ `9f78bda` |
 | Release | **v1.63.0** |
 | Captain | Logan Ware |

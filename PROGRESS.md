@@ -12,8 +12,9 @@ Baseline **v1.62.0** @ `9f78bda`; target **v1.63.0**.
 | Active plan | `c4-cognitive-core-adaptive-loop` **APPROVED** |
 | Issue | [#208](https://github.com/loganware05/captains-compass-cursor/issues/208) |
 | Branch | `cursor/208-c4-adaptive-loop-64df` |
+| PR | [#210](https://github.com/loganware05/captains-compass-cursor/pull/210) (draft) |
 | Rollback | `rollback/pre-c4-cognitive-core-adaptive-loop` @ `9f78bda` |
-| Next | Validate → PR → Captain merge |
+| Next | Captain merge of #210 |
 
 ## Cognitive Core track
 
