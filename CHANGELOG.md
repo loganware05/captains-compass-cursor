@@ -23,6 +23,19 @@
 - Live GitHub Stars TI fetch: `gh api user/starred` now uses GET query params
   (was `-f` form POST → 404 / empty cache)
 
+## 1.63.0 — 2026-10-17
+
+### Added
+
+- **C4 Cognitive Core — Adaptive Development Loop** (#208):
+  - Gated `northstar cycle begin|checkpoint|close` + `learning review`
+    (`COMPASS_CYCLE_ENABLED`; begin also needs `COMPASS_ASSESS_ENABLED`)
+  - Schemas `cycle-state` / `learning-review` with authority flags locked false
+  - Composes C1 snapshot (optional), C3 assessment, Experience similarity,
+    ExecutionRun/Experience closeout, and draft-only Learning Review packets
+  - Hermetic lifecycle tests; ADR-081; evidence
+    `.agent/evidence/c4-cognitive-core-adaptive-loop/`
+
 ## 1.62.0 — 2026-10-17
 
 ### Added

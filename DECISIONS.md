@@ -1,5 +1,28 @@
 # Decisions
 
+## ADR-081: Cognitive Core C4 Adaptive Development Loop (v1.63.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-17
+- **Context:** Captain approved plan `c4-cognitive-core-adaptive-loop`
+  (#208) after C3 (#207 / v1.62.0) and closeout (#209). Notion Adaptive
+  Intelligence requires an idempotent cycle controller before C5 routing.
+- **Decision:**
+  1. Add gated `northstar cycle begin|checkpoint|close` and
+     `northstar learning review` behind `COMPASS_CYCLE_ENABLED`.
+  2. `cycle begin` composes C3 assessment (also requires
+     `COMPASS_ASSESS_ENABLED`), optional C1 snapshot, Experience similarity,
+     and task-graph pointers into SHA-cited cycle state.
+  3. Checkpoints are idempotent by key and must not expand approved scope;
+     close records ExecutionRun/Experience and draft proposals only.
+  4. Learning Review aggregates drafts for Captain decision — never
+     auto-promotes Skills/Policies, merges, or grants authority.
+  5. Ship hermetic lifecycle tests; release **v1.63.0**. C5–C7 remain deferred.
+- **Consequences:** Operators get one resumable lifecycle surface over existing
+  Cognitive Core + telemetry + behavior/learning drafts. Rollback
+  `rollback/pre-c4-cognitive-core-adaptive-loop` @ `9f78bda`.
+
+
 ## ADR-080: Cognitive Core C3 Difficulty and Capability Fit (v1.62.0)
 
 - **Status:** Accepted

@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/learning-review.schema.json",
+  "title": "LearningReview",
+  "description": "Cognitive Core C4 Captain Learning Review packet. Advisory draft proposals only; never grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "review_id",
+    "cycles_scanned",
+    "open_proposals",
+    "citations",
+    "approved_for_execution",
+    "authority_mutation",
+    "generated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "review_id": { "type": "string", "minLength": 1 },
+    "cycles_scanned": { "type": "integer", "minimum": 0 },
+    "open_proposals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "execution_id",
+          "kind",
+          "title",
+          "auto_promoted"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "execution_id": { "type": "string", "minLength": 1 },
+          "kind": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "summary": { "type": "string" },
+          "evidence_paths": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "auto_promoted": { "type": "boolean", "const": false },
+          "cycle_status": { "type": "string" }
+        }
+      }
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "cycle",
+              "git",
+              "snapshot",
+              "assessment",
+              "experience",
+              "file",
+              "version"
+            ]
+          },
+          "ref": { "type": "string", "minLength": 1 },
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "documented", "external", "proposed"]
+          }
+        }
+      }
+    },
+    "northstar_version": { "type": "string" },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "generated_at": { "type": "string", "minLength": 1 }
+  }
+}

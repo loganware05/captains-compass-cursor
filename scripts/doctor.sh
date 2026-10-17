@@ -555,6 +555,30 @@ PY
   else
     fail "assess should exit 2 mentioning COMPASS_ASSESS_ENABLED when unset (rc=$as_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/cycle-state.schema.json" ]]; then
+    ok "cycle-state.schema.json present"
+  else
+    fail "missing orchestrator/schemas/cycle-state.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/learning-review.schema.json" ]]; then
+    ok "learning-review.schema.json present"
+  else
+    fail "missing orchestrator/schemas/learning-review.schema.json"
+  fi
+  if [[ -x "$ROOT/scripts/run-cycle.sh" ]]; then
+    ok "scripts/run-cycle.sh present"
+  else
+    fail "missing executable scripts/run-cycle.sh"
+  fi
+  set +e
+  cy_out="$(env -u COMPASS_CYCLE_ENABLED "$ROOT/scripts/run-cycle.sh" review --repo-root "$ROOT" 2>&1)"
+  cy_rc=$?
+  set -e
+  if [[ "$cy_rc" -eq 2 && "$cy_out" == *"COMPASS_CYCLE_ENABLED"* ]]; then
+    ok "cycle fail-closed when COMPASS_CYCLE_ENABLED unset"
+  else
+    fail "cycle should exit 2 mentioning COMPASS_CYCLE_ENABLED when unset (rc=$cy_rc)"
+  fi
   if [[ -f "$ROOT/.agent/project-state/snapshots/.gitkeep" ]]; then
     ok ".agent/project-state/snapshots layout"
   else
