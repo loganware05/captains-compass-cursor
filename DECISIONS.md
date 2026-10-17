@@ -1,5 +1,26 @@
 # Decisions
 
+## ADR-079: Cognitive Core C2 Memory and Retrieval (v1.61.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-17
+- **Context:** Captain approved plan `c2-cognitive-core-memory-retrieval`
+  (#203) after C1 closeout (v1.60.1). Notion Cognitive Core C2 requires
+  decision links + hybrid search over project-state/knowledge with a hermetic
+  gold-set before difficulty/routing/REA work.
+- **Decision:**
+  1. Add gated `northstar brain context --query` behind `COMPASS_BRAIN_ENABLED`.
+  2. Compose latest C1 project-state freshness/SHA with Knowledge Steward
+     hybrid/keyword/vector search and live ADR links from `DECISIONS.md`.
+  3. Schema-validate responses (`brain-context-response`) with
+     `approved_for_execution: false` / `authority_mutation: false`.
+  4. Ship hermetic 30-question gold-set harness targeting ≥90% evidence-linked.
+  5. Release as **v1.61.0**. C3–C7 remain deferred.
+- **Consequences:** Operators can retrieve evidence-linked memory without a
+  separate knowledge CLI. Rollback
+  `rollback/pre-c2-cognitive-core-memory-retrieval` @ `2314def`.
+
+
 ## ADR-078: Plan-approval hook PEP604 + approve→PR standing order (v1.60.1)
 
 - **Status:** Accepted

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# run-brain.sh — Cognitive Core project-state surface (C1).
+# run-brain.sh — Cognitive Core project-state + memory/retrieval (C1/C2).
 #
 # Requires COMPASS_BRAIN_ENABLED=1. Read-oriented: never approves plans,
 # promotes Skills/Policies, merges, deploys, or rewrites project memory.
@@ -9,6 +9,9 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REPO_ROOT="$ROOT"
 CMD=""
 SNAPSHOT_ID=""
+QUERY=""
+MODE="hybrid"
+TOP="10"
 
 usage() {
   cat <<'USAGE'
@@ -16,16 +19,17 @@ Usage:
   run-brain.sh sync [--repo-root PATH]
   run-brain.sh status [--repo-root PATH]
   run-brain.sh show --snapshot-id ID [--repo-root PATH]
+  run-brain.sh context --query TEXT [--mode hybrid|keyword|vector] [--top N] [--repo-root PATH]
 
 Requires COMPASS_BRAIN_ENABLED=1.
 Read-oriented: never mutates authority or auto-writes canonical memory docs.
-Persists under .agent/project-state/ only.
+C1 persists under .agent/project-state/; C2 context is ephemeral JSON.
 USAGE
 }
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    sync|status|show)
+    sync|status|show|context)
       CMD="$1"
       shift
       ;;
@@ -35,6 +39,18 @@ while [[ $# -gt 0 ]]; do
       ;;
     --snapshot-id)
       SNAPSHOT_ID="$2"
+      shift 2
+      ;;
+    --query)
+      QUERY="$2"
+      shift 2
+      ;;
+    --mode)
+      MODE="$2"
+      shift 2
+      ;;
+    --top)
+      TOP="$2"
       shift 2
       ;;
     -h|--help)
@@ -54,8 +70,14 @@ if [[ -z "$CMD" ]]; then
   exit 2
 fi
 
+if [[ "$CMD" == "context" && -z "$QUERY" ]]; then
+  echo "error: --query is required for brain context" >&2
+  usage >&2
+  exit 2
+fi
+
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python3 - "$ROOT" "$REPO_ROOT" "$CMD" "$SNAPSHOT_ID" <<'PY'
+python3 - "$ROOT" "$REPO_ROOT" "$CMD" "$SNAPSHOT_ID" "$QUERY" "$MODE" "$TOP" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -64,11 +86,24 @@ control_root = Path(sys.argv[1]).resolve()
 repo_root = Path(sys.argv[2]).resolve()
 cmd = sys.argv[3]
 snapshot_id = sys.argv[4]
+query = sys.argv[5]
+mode = sys.argv[6]
+try:
+    top_n = int(sys.argv[7] or "10")
+except ValueError:
+    print("error: --top must be an integer", file=sys.stderr)
+    sys.exit(2)
 
 sys.path.insert(0, str(control_root))
 
 from orchestrator.cognitive.enabled import brain_enabled
-from orchestrator.cognitive.service import BrainServiceError, show, status, sync
+from orchestrator.cognitive.service import (
+    BrainServiceError,
+    context,
+    show,
+    status,
+    sync,
+)
 
 if not brain_enabled():
     print(
@@ -85,10 +120,12 @@ try:
         result = status(repo_root)
     elif cmd == "show":
         result = show(repo_root, snapshot_id=snapshot_id)
+    elif cmd == "context":
+        result = context(repo_root, query=query, mode=mode, top_n=top_n)
     else:
         print(f"error: unknown command: {cmd}", file=sys.stderr)
         sys.exit(2)
-except (BrainServiceError, PermissionError) as exc:
+except (BrainServiceError, PermissionError, ValueError) as exc:
     print(f"error: {exc}", file=sys.stderr)
     sys.exit(1)
 

@@ -47,6 +47,8 @@ SCHEMA_FILES = (
     "scope-ledger.schema.json",
     "execution-provenance.schema.json",
     "behavior-exemplar.schema.json",
+    "project-state-snapshot.schema.json",
+    "brain-context-response.schema.json",
 )
 
 

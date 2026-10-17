@@ -1,0 +1,42 @@
+{
+  "schema_version": "1",
+  "description": "C2 hermetic gold set — query-grounded evidence-linked brain context",
+  "target_evidence_linked_rate": 0.9,
+  "questions": [
+    {"id": "q01", "query": "How does brain detect stale HEAD after sync?", "expect": ["decision"]},
+    {"id": "q02", "query": "Where is Cognitive Core source of truth documented?", "expect": ["decision"]},
+    {"id": "q03", "query": "What standing order follows plan approval?", "expect": ["decision"]},
+    {"id": "q04", "query": "Why did plan-approval hooks break on older Python?", "expect": ["decision"]},
+    {"id": "q05", "query": "Does Project Overseer mutate authority?", "expect": ["decision"]},
+    {"id": "q06", "query": "How do behavior exemplars close the operator loop?", "expect": ["decision"]},
+    {"id": "q07", "query": "Where is execution provenance stored for prompts?", "expect": ["decision"]},
+    {"id": "q08", "query": "Which milestone added TF-IDF hybrid knowledge ranking?", "expect": ["knowledge"]},
+    {"id": "q09", "query": "How are ADR headings turned into knowledge items?", "expect": ["knowledge"]},
+    {"id": "q10", "query": "What builds inodes for filesystem context route walks?", "expect": ["knowledge"]},
+    {"id": "q11", "query": "Which CLI syncs project-state snapshots?", "expect": ["knowledge", "decision"]},
+    {"id": "q12", "query": "What env var enables the brain surface?", "expect": ["knowledge", "decision"]},
+    {"id": "q13", "query": "How should agents checkpoint before feature work?", "expect": ["decision"]},
+    {"id": "q14", "query": "Where is the day-to-day Captain operating map?", "expect": ["knowledge"]},
+    {"id": "q15", "query": "Which Wave 1 skills came from starred repos?", "expect": ["knowledge"]},
+    {"id": "q16", "query": "What ADR covers approve then open PR?", "expect": ["decision"]},
+    {"id": "q17", "query": "What did M51 add for Kimi overseer status?", "expect": ["decision"]},
+    {"id": "q18", "query": "What did M52 add for live status providers?", "expect": ["decision"]},
+    {"id": "q19", "query": "Is skill promotion still Captain-gated?", "expect": ["knowledge"]},
+    {"id": "q20", "query": "How are task graphs produced for plans?", "expect": ["knowledge"]},
+    {"id": "q21", "query": "Must snapshots cite repository SHA?", "expect": ["decision"]},
+    {"id": "q22", "query": "Can agents silently rewrite PROJECT_CONTEXT?", "expect": ["decision"]},
+    {"id": "q23", "query": "Are brain responses allowed to set approved_for_execution?", "expect": ["decision"]},
+    {"id": "q24", "query": "What doctor checks cover Cognitive Core schemas?", "expect": ["knowledge"]},
+    {"id": "q25", "query": "Is adaptive model routing in scope for C2?", "expect": ["decision"]},
+    {"id": "q26", "query": "Is REA investigation part of this milestone?", "expect": ["decision"]},
+    {"id": "q27", "query": "What gold-set target applies to retrieval accuracy?", "expect": ["decision"]},
+    {"id": "q28", "query": "Where is the NorthStar VERSION tracked for releases?", "expect": ["knowledge"]},
+    {"id": "q29", "query": "What plan status unlocks product implementation?", "expect": ["decision", "knowledge"]},
+    {"id": "q30", "query": "Where are milestone validation reports stored?", "expect": ["knowledge"]}
+  ],
+  "negatives": [
+    {"id": "n01", "query": "zzzzqyxwvut nebula quark xylophone unrelated"},
+    {"id": "n02", "query": "recipe for pineapple upside-down cake frosting"},
+    {"id": "n03", "query": "martian weather balloon telemetry calibration"}
+  ]
+}

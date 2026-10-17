@@ -1,10 +1,11 @@
-"""Operator service layer for northstar brain (C1)."""
+"""Operator service layer for northstar brain (C1 + C2 context)."""
 
 from __future__ import annotations
 
 from pathlib import Path
 from typing import Any
 
+from orchestrator.cognitive.context import build_context
 from orchestrator.cognitive.enabled import require_brain_enabled
 from orchestrator.cognitive.git_facts import git_sha
 from orchestrator.cognitive.store import (
@@ -80,3 +81,18 @@ def show(repo_root: Path, *, snapshot_id: str) -> dict[str, Any]:
         "approved_for_execution": False,
         "authority_mutation": False,
     }
+
+
+def context(
+    repo_root: Path,
+    *,
+    query: str,
+    mode: str = "hybrid",
+    top_n: int = 10,
+) -> dict[str, Any]:
+    """C2 memory/retrieval — compose project-state + knowledge + ADR links."""
+    require_brain_enabled()
+    try:
+        return build_context(repo_root, query, mode=mode, top_n=top_n)
+    except ValueError as exc:
+        raise BrainServiceError(str(exc)) from exc

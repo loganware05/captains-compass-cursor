@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/brain-context-response.schema.json",
+  "title": "BrainContextResponse",
+  "description": "Cognitive Core C2 memory/retrieval context. Evidence-linked; never grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "query",
+    "mode",
+    "freshness",
+    "repository_sha",
+    "citations",
+    "hits",
+    "decision_links",
+    "approved_for_execution",
+    "authority_mutation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "query": { "type": "string", "minLength": 1 },
+    "mode": {
+      "type": "string",
+      "enum": ["hybrid", "keyword", "vector"]
+    },
+    "freshness": {
+      "type": "string",
+      "enum": ["fresh", "stale", "no_snapshot"]
+    },
+    "repository_sha": { "type": "string" },
+    "repository_sha_head": { "type": "string" },
+    "snapshot_id": { "type": ["string", "null"] },
+    "northstar_version": { "type": "string" },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "git",
+              "file",
+              "status_snapshot",
+              "version",
+              "knowledge",
+              "decision",
+              "snapshot"
+            ]
+          },
+          "ref": { "type": "string", "minLength": 1 },
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "documented", "external", "proposed"]
+          }
+        }
+      }
+    },
+    "hits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item_id", "kind", "title", "source_path", "query_score"],
+        "additionalProperties": true,
+        "properties": {
+          "item_id": { "type": "string", "minLength": 1 },
+          "kind": { "type": "string" },
+          "title": { "type": "string" },
+          "summary": { "type": "string" },
+          "source_path": { "type": "string" },
+          "query_score": { "type": "number" },
+          "search_mode": { "type": "string" }
+        }
+      }
+    },
+    "decision_links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["adr_id", "title", "source_path"],
+        "additionalProperties": false,
+        "properties": {
+          "adr_id": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "source_path": { "type": "string", "minLength": 1 },
+          "score": { "type": "number" },
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "documented", "external", "proposed"]
+          }
+        }
+      }
+    },
+    "evidence_linked": { "type": "boolean" },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}
