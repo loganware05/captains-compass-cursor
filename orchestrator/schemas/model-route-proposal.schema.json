@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/model-route-proposal.schema.json",
+  "title": "ModelRouteProposal",
+  "description": "Cognitive Core C5 adaptive model-route proposal. Advisory only; never binds live models or grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "proposal_id",
+    "objective",
+    "adapter_class",
+    "profile_id",
+    "rationale",
+    "expected_budget",
+    "fallbacks",
+    "citations",
+    "auto_switched",
+    "approved_for_execution",
+    "authority_mutation",
+    "generated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "proposal_id": { "type": "string", "minLength": 1 },
+    "objective": { "type": "string", "minLength": 1 },
+    "adapter_class": {
+      "type": "string",
+      "enum": ["local", "hosted", "premium"]
+    },
+    "profile_id": { "type": "string", "minLength": 1 },
+    "profile_class": { "type": "string" },
+    "rationale": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "expected_budget": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "fallbacks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["adapter_class", "profile_id"],
+        "additionalProperties": false,
+        "properties": {
+          "adapter_class": {
+            "type": "string",
+            "enum": ["local", "hosted", "premium"]
+          },
+          "profile_id": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "difficulty_band": { "type": ["string", "null"] },
+    "difficulty_score": { "type": ["number", "null"] },
+    "assessment_id": { "type": ["string", "null"] },
+    "freshness": { "type": ["string", "null"] },
+    "repository_sha": { "type": "string" },
+    "snapshot_id": { "type": ["string", "null"] },
+    "northstar_version": { "type": "string" },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "git",
+              "snapshot",
+              "assessment",
+              "profile",
+              "version",
+              "fixture",
+              "file"
+            ]
+          },
+          "ref": { "type": "string", "minLength": 1 },
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "documented", "external", "proposed"]
+          }
+        }
+      }
+    },
+    "notes": { "type": "string" },
+    "auto_switched": { "type": "boolean", "const": false },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "generated_at": { "type": "string", "minLength": 1 }
+  }
+}

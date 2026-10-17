@@ -52,6 +52,8 @@ SCHEMA_FILES = (
     "project-difficulty-assessment.schema.json",
     "cycle-state.schema.json",
     "learning-review.schema.json",
+    "model-route-proposal.schema.json",
+    "model-route-eval-report.schema.json",
 )
 
 

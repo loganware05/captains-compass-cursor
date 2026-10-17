@@ -1,0 +1,33 @@
+{
+  "schema_version": "1",
+  "description": "Hermetic C5 model-route evaluate fixture — cost/quality proxies only.",
+  "cases": [
+    {
+      "label": "local-fast-triage",
+      "adapter_class": "local",
+      "profile_id": "fast-iter",
+      "cost_per_accepted_task": 0.4,
+      "retries": 0,
+      "test_pass_rate": 0.95,
+      "human_correction_hours": 0.1
+    },
+    {
+      "label": "hosted-impl",
+      "adapter_class": "hosted",
+      "profile_id": "coding-strong",
+      "cost_per_accepted_task": 1.8,
+      "retries": 1,
+      "test_pass_rate": 0.9,
+      "human_correction_hours": 0.4
+    },
+    {
+      "label": "premium-hard",
+      "adapter_class": "premium",
+      "profile_id": "reasoning-strong",
+      "cost_per_accepted_task": 6.5,
+      "retries": 2,
+      "test_pass_rate": 0.85,
+      "human_correction_hours": 1.2
+    }
+  ]
+}

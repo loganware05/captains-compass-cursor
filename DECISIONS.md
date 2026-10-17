@@ -1,5 +1,27 @@
 # Decisions
 
+## ADR-082: Cognitive Core C5 Adaptive Routing (v1.64.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-17
+- **Context:** Captain approved plan `c5-cognitive-core-adaptive-routing`
+  (#211) after C4 (#210 / v1.63.0) and closeout (#212). Notion Adaptive
+  Intelligence requires local/hosted/premium routing before REA (C6).
+- **Decision:**
+  1. Add gated `northstar model route` and `northstar model evaluate` behind
+     `COMPASS_ROUTE_ENABLED`.
+  2. Recommend adapter class `local|hosted|premium` mapped onto existing
+     model-profile catalog ids; cite SHA / optional C3 assessment / freshness.
+  3. Hermetic evaluate ranks candidates by cost-per-accepted-task and quality
+     proxies (retries, test pass, human correction) — no live model calls in CI.
+  4. Lock `auto_switched`, `approved_for_execution`, and `authority_mutation`
+     false; never bind Cursor models or auto-spend.
+  5. Ship as **v1.64.0**. C6–C7 remain deferred.
+- **Consequences:** Operators get auditable model-class recommendations without
+  weakening approval gates. Rollback
+  `rollback/pre-c5-cognitive-core-adaptive-routing` @ `d8f1ac4`.
+
+
 ## ADR-081: Cognitive Core C4 Adaptive Development Loop (v1.63.0)
 
 - **Status:** Accepted

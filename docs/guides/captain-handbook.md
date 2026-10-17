@@ -50,6 +50,7 @@ Launcher: `"$CONTROL/scripts/northstar" <surface> …`
 | `brain` | Cognitive Core project-state + memory/retrieval context | `COMPASS_BRAIN_ENABLED=1`; C1 snapshots under `.agent/project-state/`; C2 `brain context --query` |
 | `assess` | Cognitive Core difficulty / capability-fit | `COMPASS_ASSESS_ENABLED=1`; advisory score/band only — never bypasses approval |
 | `cycle` / `learning` | Cognitive Core Adaptive Development Loop (begin→checkpoint→close + Learning Review) | `COMPASS_CYCLE_ENABLED=1`; begin also needs assess flag; draft proposals only — never auto-promote |
+| `model` | Cognitive Core Adaptive routing (`route` / `evaluate`) | `COMPASS_ROUTE_ENABLED=1`; advisory local/hosted/premium — never auto-switch live models |
 | `provenance` / `examples` | Explain run-to-run prompt/policy lineage; curate exemplars | `COMPASS_PROVENANCE_ENABLED=1`; `auto_promoted: false` |
 | `context` | Filesystem-gated context inodes | Build/walk only |
 | `intent` / `outcomes` / `repair` / `precision` | Review intent packs, triage, repair packets, precision ledger | Never Captain approval substitutes |

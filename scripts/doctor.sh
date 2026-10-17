@@ -579,6 +579,30 @@ PY
   else
     fail "cycle should exit 2 mentioning COMPASS_CYCLE_ENABLED when unset (rc=$cy_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/model-route-proposal.schema.json" ]]; then
+    ok "model-route-proposal.schema.json present"
+  else
+    fail "missing orchestrator/schemas/model-route-proposal.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/model-route-eval-report.schema.json" ]]; then
+    ok "model-route-eval-report.schema.json present"
+  else
+    fail "missing orchestrator/schemas/model-route-eval-report.schema.json"
+  fi
+  if [[ -x "$ROOT/scripts/run-model-route.sh" ]]; then
+    ok "scripts/run-model-route.sh present"
+  else
+    fail "missing executable scripts/run-model-route.sh"
+  fi
+  set +e
+  rt_out="$(env -u COMPASS_ROUTE_ENABLED "$ROOT/scripts/run-model-route.sh" evaluate --repo-root "$ROOT" 2>&1)"
+  rt_rc=$?
+  set -e
+  if [[ "$rt_rc" -eq 2 && "$rt_out" == *"COMPASS_ROUTE_ENABLED"* ]]; then
+    ok "model-route fail-closed when COMPASS_ROUTE_ENABLED unset"
+  else
+    fail "model-route should exit 2 mentioning COMPASS_ROUTE_ENABLED when unset (rc=$rt_rc)"
+  fi
   if [[ -f "$ROOT/.agent/project-state/snapshots/.gitkeep" ]]; then
     ok ".agent/project-state/snapshots layout"
   else
