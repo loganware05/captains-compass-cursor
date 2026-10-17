@@ -2,25 +2,26 @@
 
 ## Current status
 
-**C2 Cognitive Core — Memory and Retrieval** implementing on
-`cursor/203-c2-memory-retrieval-64df` after Captain approval (2026-10-17).
-Baseline **v1.60.1** @ `2314def`; target **v1.61.0**.
+**C2 Cognitive Core — Memory and Retrieval — SHIPPED** via
+[#204](https://github.com/loganware05/captains-compass-cursor/pull/204)
+@ `f1ae35d` (**v1.61.0**). Issue [#203](https://github.com/loganware05/captains-compass-cursor/issues/203) closed.
+
+Active plan: `c3-cognitive-core-difficulty-fit` **AWAITING APPROVAL**
+([#205](https://github.com/loganware05/captains-compass-cursor/issues/205)).
 
 | Item | Value |
 |---|---|
-| On main | **v1.60.1** C1 closeout (#202) @ `2314def` |
-| Active plan | `c2-cognitive-core-memory-retrieval` **APPROVED** |
-| Issue | [#203](https://github.com/loganware05/captains-compass-cursor/issues/203) |
-| PR | https://github.com/loganware05/captains-compass-cursor/pull/204 |
-| Next | Captain merge |
+| On main | **v1.61.0** C2 (#204) @ `f1ae35d` |
+| Active plan | `c3-cognitive-core-difficulty-fit` **AWAITING APPROVAL** |
+| Next | Captain approve C3 → implement |
 
 ## Cognitive Core track
 
 | Milestone | Status |
 |---|---|
 | C1 — Source of Truth | **Complete** (#200 / v1.60.0); closeout v1.60.1 |
-| C2 — Memory and Retrieval | **In progress** (#203) |
-| C3 — Difficulty and capability fit | Deferred |
+| C2 — Memory and Retrieval | **Complete** (#204 / v1.61.0) |
+| C3 — Difficulty and capability fit | **Plan awaiting approval** (#205) |
 | C4 — Adaptive Development Loop | Deferred |
 | C5 — Adaptive routing | Deferred |
 | C6 — REA deep analysis | Deferred |
@@ -41,6 +42,7 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Recently completed
 
+- **C2 / #204** — Cognitive Core memory/retrieval / `brain context` (v1.61.0)
 - **C1 closeout / #202** — hook PEP604 + memory reconcile (v1.60.1)
 - **C1 / #200** — Cognitive Core project-state / `northstar brain` (v1.60.0)
 - **M55 / OVA-71** — Captain Handbook + Wave 1 Stars Skills
@@ -48,4 +50,4 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Blockers
 
-None.
+None. Waiting on Captain approval of C3 plan.

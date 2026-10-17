@@ -1,117 +1,115 @@
-# Implementation Plan — C2 Cognitive Core Memory and Retrieval
+# Implementation Plan — C3 Cognitive Core Difficulty and Capability Fit
 
-- Status: **APPROVED**
+- Status: **AWAITING APPROVAL**
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
-| Plan ID | `c2-cognitive-core-memory-retrieval` |
-| Issue | [#203](https://github.com/loganware05/captains-compass-cursor/issues/203) |
-| Notion | [Cognitive Core — C2](https://app.notion.com/p/3f8e6a901c438110882bceb01d2dd249) |
+| Status | **AWAITING APPROVAL** |
+| Plan ID | `c3-cognitive-core-difficulty-fit` |
+| Issue | [#205](https://github.com/loganware05/captains-compass-cursor/issues/205) |
+| Notion | [Cognitive Core — C3](https://app.notion.com/p/3f8e6a901c438110882bceb01d2dd249) |
 | Product | **NorthStar** (control repo) |
-| Baseline | **v1.60.1** @ `2314def` |
-| Branch | `cursor/203-c2-memory-retrieval-64df` |
-| Rollback | `rollback/pre-c2-cognitive-core-memory-retrieval` @ `2314def` |
-| Release | **v1.61.0** |
+| Baseline | **v1.61.0** @ `f1ae35d` (C2 merged #204) |
+| Branch | *(create after approval)* `cursor/205-c3-difficulty-fit-64df` |
+| Rollback | *(create after approval)* `rollback/pre-c3-cognitive-core-difficulty-fit` |
+| Release | **v1.62.0** (proposed) |
 | Captain | Logan Ware |
-| Created | 2026-10-16 |
-| Approved | 2026-10-17 |
+| Created | 2026-10-17 |
 
 ## Approval record
 
 | Field | Value |
 |---|---|
-| Approved by | Captain (Logan Ware) |
-| Approval date | 2026-10-17 |
-| Notes | Chat continuation from prior IDE agents session (“M51 Kimi K3 project overseer”); explicit “approve the c2 plan”. Standing order: implement → validate → commit → open PR. Issue #203 already referenced this Plan ID at AWAITING APPROVAL; repo plan was missing and is reconstituted here from #203 + Notion C2 + C1 surfaces. |
+| Approved by | *(pending)* |
+| Approval date | *(pending)* |
+| Notes | Post-merge continuation after C2 (#204). Implementation must not begin until Captain explicitly approves this plan. |
 
 ## Request
 
-Ship Cognitive Core **C2 — Memory and Retrieval**: gated hybrid retrieval over C1 project-state + Knowledge Steward, with Decision/ADR citation links and a hermetic gold-set harness (target ≥90% evidence-linked answers on a 30-question held-out set).
+Ship Cognitive Core **C3 — Difficulty and capability fit**: an evidence-backed `ProjectDifficultyAssessment` that combines existing capability-plan signals (gaps, Skill coverage, Experiences, task graph, repo/context complexity, validation burden) into a calibrated 0–100 score + confidence, exposed via a gated operator command.
 
 ## Problem Statement
 
-C1 (`northstar brain sync|status|show`) persists SHA-cited project-state but does not answer task queries with evidence-linked memory. Knowledge Steward hybrid search exists separately (`query-knowledge.sh`) and is not composed with brain freshness, snapshot citations, or ADR decision links. Operators need one gated context surface before C3–C7 Adaptive Intelligence work.
+Capability planning already surfaces gaps, ranked Skills, and task graphs, but operators lack a single SHA-cited difficulty/capability-fit result to size autonomy budgets, validation depth, and decomposition. Notion Adaptive Intelligence requires this before C4 cycle controller work.
 
 ## Desired Outcome
 
 ```bash
-COMPASS_BRAIN_ENABLED=1 \
-./scripts/northstar brain context --query "…" [--mode hybrid|keyword|vector] [--top N] --repo .
+COMPASS_ASSESS_ENABLED=1 \
+./scripts/northstar assess project --objective "…" [--repo PATH]
 ```
 
-Returns JSON with project-state freshness/SHA, ranked knowledge hits, decision/ADR links, and citation refs. Always `approved_for_execution: false` / `authority_mutation: false`. Hermetic gold-set reports ≥90% evidence-linked.
+Returns schema-validated JSON with difficulty score, band, confidence, factor breakdown, and citations (snapshot SHA, Skills, Experiences, graph/plan artifacts). Always `approved_for_execution: false` / `authority_mutation: false`. Never bypasses the plan-approval gate.
+
+### Proposed score (Notion)
+
+`difficulty = 0.25 gap_severity + 0.20 skill_uncertainty + 0.15 repository_complexity + 0.15 task_graph_complexity + 0.15 operational_risk + 0.10 validation_burden`
+
+Bands: 0–24 low · 25–49 moderate · 50–74 high · 75–100 very high. Low historical coverage must lower confidence.
 
 ## Acceptance Criteria
 
-- [x] `northstar brain context --query` behind `COMPASS_BRAIN_ENABLED` (fail-closed when unset)
-- [x] Context composes latest C1 project-state (freshness + SHA) with Knowledge Steward hybrid/keyword/vector search
-- [x] Decision/ADR links from `DECISIONS.md` (and/or knowledge `kind=decision`) cited in the response
-- [x] Schema-validated response (`brain-context-response`) locking authority flags false
-- [x] Hermetic 30-question gold-set harness; ≥90% evidence-linked on fixture
-- [x] Doctor recognizes new schema; unit tests green
-- [x] Memory docs + CHANGELOG + VERSION **v1.61.0**; ADR-079
-- [x] Evidence under `.agent/evidence/c2-cognitive-core-memory-retrieval/`
-- [x] PR opened (standing order) — https://github.com/loganware05/captains-compass-cursor/pull/204
+- [ ] Gated `northstar assess project` (fail-closed when enable flag unset)
+- [ ] Schema `project-difficulty-assessment` with authority flags const false
+- [ ] Assessment cites snapshot SHA (reuse C1 brain when available), Skills, Experiences, and task-graph/capability-plan evidence
+- [ ] Factor breakdown matches Notion weights (documented constants; tunable only via config file, not silent)
+- [ ] Hermetic backtest fixture comparing predicted bands vs recorded outcomes for a small set of completed workstreams (M46–M55 / C1–C2 telemetry or fixtures)
+- [ ] Doctor + unit tests green; evidence under `.agent/evidence/c3-cognitive-core-difficulty-fit/`
+- [ ] Memory docs + CHANGELOG + VERSION **v1.62.0**; ADR-080
+- [ ] PR opened (standing order after approval)
 
 ## Non-Goals
 
-- C3 Difficulty / capability fit
-- C4 Adaptive Development Loop
+- C4 Adaptive Development Loop (`cycle begin|checkpoint|close`)
 - C5 Adaptive routing / model switching
 - C6 REA deep analysis
-- C7 Training bridge / weight export
-- Live embedding/API required for CI (keyword fallback sufficient)
-- Auto-rewrite of canonical memory docs
-- External cognitive-core package extract
+- C7 Training bridge
+- Auto-approve plans or expand autonomy based on difficulty
+- Live HTTP/model required for CI
+- Changing capability-plan matcher weights
 
 ## Affected systems
 
 | Area | Change |
 |---|---|
-| `orchestrator/cognitive/` | `context.py`, decision-link helper; `service.py` |
-| `orchestrator/schemas/` | `brain-context-response.schema.json` |
-| `scripts/run-brain.sh`, `scripts/northstar` | `context` subcommand |
-| `scripts/doctor.sh` | schema presence check |
-| `tests/orchestrator/` + fixtures | C2 unit + gold-set |
-| Project memory | PLAN / PROGRESS / CHANGELOG / DECISIONS / TESTING / VERSION / README |
+| `orchestrator/` | New `assess/` (or `cognitive/assess.py`) composing resolver + plan artifacts + brain snapshot |
+| `orchestrator/schemas/` | `project-difficulty-assessment.schema.json` |
+| `scripts/` | `run-assess.sh` + `northstar assess` |
+| `scripts/doctor.sh` | schema + fail-closed smoke |
+| Tests / fixtures | Hermetic assess + backtest |
+| Project memory | PLAN / PROGRESS / CHANGELOG / DECISIONS / TESTING / VERSION |
 
-## Workstreams (sequential)
+## Workstreams (after approval)
 
-1. **Schema + retrieval compose** — context builder, decision links, service API
-2. **CLI + launcher** — `brain context` wiring
-3. **Gold-set harness** — 30 hermetic questions + score report
-4. **Docs / evidence / release bump**
+1. Schema + scoring engine (deterministic, hermetic)
+2. CLI / launcher wiring
+3. Backtest fixture + evidence
+4. Docs / release bump
 
 ## Validation
 
-- Static: `./scripts/doctor.sh`
-- Unit: `test_c2_cognitive_core_memory_retrieval.py` (+ C1 still green)
-- Gold-set: hermetic ≥90% evidence-linked
-- Security: no secrets in context payload; authority flags const false
-- Rollback review: tag `rollback/pre-c2-cognitive-core-memory-retrieval`
+- Doctor; unit tests; backtest report; security (no authority expansion); rollback tag
 
-## Autonomy Budget
+## Autonomy Budget (proposed)
 
 | Limit | Value |
 |---|---|
 | Maximum iterations | 8 |
 | Maximum failed validation cycles | 3 |
 | Maximum elapsed minutes | 240 |
-| Maximum estimated cost (USD) | 0 (no paid GPU) |
+| Maximum estimated cost (USD) | 0 |
 | Stop on scope change | true |
-| Stop on destructive operation | true |
 
 ## Rollback
 
-```bash
-git checkout main
-git reset --hard rollback/pre-c2-cognitive-core-memory-retrieval
-# or revert the merge commit of the C2 PR
-```
+Documented SHA / tag created only after approval, before implementation.
 
 ## Definition of Done
 
 Acceptance criteria checked; evidence recorded; PR open; First Mate inspected.
+
+## Prior closeout (C2)
+
+C2 Memory and Retrieval **COMPLETE** — merged [#204](https://github.com/loganware05/captains-compass-cursor/pull/204) → `main` @ `f1ae35d` (**v1.61.0**). Plan ID `c2-cognitive-core-memory-retrieval`. Issue #203 closed.
