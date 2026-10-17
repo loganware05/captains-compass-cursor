@@ -23,6 +23,17 @@
 - Live GitHub Stars TI fetch: `gh api user/starred` now uses GET query params
   (was `-f` form POST → 404 / empty cache)
 
+## 1.62.0 — 2026-10-17
+
+### Added
+
+- **C3 Cognitive Core — Difficulty and capability fit** (#205):
+  - Gated `northstar assess project --objective` (`COMPASS_ASSESS_ENABLED`)
+  - Schema `project-difficulty-assessment` with Notion-weighted factors
+  - SHA-cited score/band/confidence + recommendations (authority flags locked false)
+  - Hermetic backtest fixture under `tests/fixtures/assess-backtest/`
+  - ADR-080; evidence `.agent/evidence/c3-cognitive-core-difficulty-fit/`
+
 ## 1.61.0 — 2026-10-17
 
 ### Added

@@ -1,0 +1,31 @@
+{
+  "schema_version": "1",
+  "description": "Hermetic C3 difficulty band backtest against synthetic objectives",
+  "cases": [
+    {
+      "id": "bt-docs-low",
+      "objective": "Update README version pointer and PROGRESS status table",
+      "expected_bands": ["low", "moderate"]
+    },
+    {
+      "id": "bt-c1-moderate",
+      "objective": "Add gated northstar brain sync status show for project-state snapshots",
+      "expected_bands": ["moderate", "high", "low"]
+    },
+    {
+      "id": "bt-security-high",
+      "objective": "Harden authentication secrets handling with security review and production deploy migration rollback",
+      "expected_bands": ["high", "very_high"]
+    },
+    {
+      "id": "bt-e2e-elevated",
+      "objective": "Ship accessibility e2e browser screenshot validation for the contact form",
+      "expected_bands": ["moderate", "high", "very_high"]
+    },
+    {
+      "id": "bt-overseer",
+      "objective": "Add Project Overseer status snapshot explain reconcile without mutating authority",
+      "expected_bands": ["low", "moderate", "high"]
+    }
+  ]
+}

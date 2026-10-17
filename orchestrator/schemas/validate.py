@@ -49,6 +49,7 @@ SCHEMA_FILES = (
     "behavior-exemplar.schema.json",
     "project-state-snapshot.schema.json",
     "brain-context-response.schema.json",
+    "project-difficulty-assessment.schema.json",
 )
 
 
