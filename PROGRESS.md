@@ -24,7 +24,7 @@ Baseline **v1.63.0** @ `d8f1ac4`; target **v1.64.0**.
 | C2 — Memory and Retrieval | **Complete** (#204 / v1.61.0) |
 | C3 — Difficulty and capability fit | **Complete** (#207 / v1.62.0) |
 | C4 — Adaptive Development Loop | **Complete** (#210 / v1.63.0) |
-| C5 — Adaptive routing | **In progress** (#211 / v1.64.0) |
+| C5 — Adaptive routing | **PR ready** (#211 / v1.64.0) |
 | C6 — REA deep analysis | Deferred |
 | C7 — Training bridge | Deferred |
 

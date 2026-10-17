@@ -53,7 +53,7 @@ COMPASS_ROUTE_ENABLED=1 \
 - [x] Composes with existing `orchestrator/model_profiles`, assess/brain when enabled
 - [x] Doctor + unit tests green; evidence under `.agent/evidence/c5-cognitive-core-adaptive-routing/`
 - [x] Memory docs + CHANGELOG + VERSION **v1.64.0**; ADR-082
-- [ ] PR opened (standing order)
+- [x] PR opened (standing order) — [#213](https://github.com/loganware05/captains-compass-cursor/pull/213)
 
 ## Non-Goals
 
