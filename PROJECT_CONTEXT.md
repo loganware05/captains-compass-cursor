@@ -133,8 +133,8 @@ gh auth status
 
 ## Current Priorities
 
-**M55** — Captain Handbook + Skills library fill (A1) on
-`feature/OVA-71-m55-captain-handbook-skills-a1` ([OVA-71](https://linear.app/ovaltechnologysolutions/issue/OVA-71/m55-captain-handbook-skills-library-fill-a1)).
-Start here: `docs/guides/captain-handbook.md`. Behavior Loop (M46–M54) remains
-complete at **v1.59.0**; Cognitive Core C1 at **v1.60.0** (closeout **v1.60.1**).
-Live trading / AHF execution remains denied.
+**Cognitive Core C4** — Adaptive Development Loop plan at **AWAITING APPROVAL**
+([#208](https://github.com/loganware05/captains-compass-cursor/issues/208)).
+C1–C3 shipped through **v1.62.0** (`brain` / `brain context` / `assess project`).
+Behavior Loop (M46–M54) remains complete at **v1.59.0**. Start here:
+`docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.
