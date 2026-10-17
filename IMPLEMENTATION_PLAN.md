@@ -13,7 +13,7 @@
 | Product | **NorthStar** (control repo) |
 | Baseline | **v1.61.0** @ `f1ae35d` (C2 merged #204) |
 | Branch | `cursor/205-c3-difficulty-fit-64df` |
-| PR | [#207](https://github.com/loganware05/captains-compass-cursor/pull/207) (draft; supersedes #206) |
+| PR | [#207](https://github.com/loganware05/captains-compass-cursor/pull/207) (rebased on main after #206) |
 | Rollback | `rollback/pre-c3-cognitive-core-difficulty-fit` @ `f1ae35d` |
 | Release | **v1.62.0** |
 | Captain | Logan Ware |
