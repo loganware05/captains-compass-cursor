@@ -10,7 +10,7 @@
     {
       "id": "bt-c1-moderate",
       "objective": "Add gated northstar brain sync status show for project-state snapshots",
-      "expected_bands": ["moderate", "high", "low"]
+      "expected_bands": ["moderate", "high"]
     },
     {
       "id": "bt-security-high",
@@ -25,7 +25,7 @@
     {
       "id": "bt-overseer",
       "objective": "Add Project Overseer status snapshot explain reconcile without mutating authority",
-      "expected_bands": ["low", "moderate", "high"]
+      "expected_bands": ["moderate", "high"]
     }
   ]
 }

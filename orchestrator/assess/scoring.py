@@ -40,8 +40,12 @@ def score_gap_severity(
     else:
         ratio = gap_count / required_count
         base = clamp(ratio * 100.0)
-    if security_sensitive and gap_count:
-        base = clamp(base + 15.0)
+        # Covered requirements still imply residual coordination load.
+        if gap_count == 0:
+            base = clamp(min(28.0, required_count * 5.0))
+    # Security-sensitive objectives always raise severity, even with zero gaps.
+    if security_sensitive:
+        base = clamp(base + (30.0 if gap_count == 0 else 20.0))
     return round(base, 2), {
         "required_count": required_count,
         "gap_count": gap_count,
@@ -90,8 +94,8 @@ def score_repository_complexity(
     context_inode_present: bool,
     memory_doc_missing: int,
 ) -> tuple[float, dict[str, Any]]:
-    # Control repos with many Skills are more complex to navigate.
-    skill_component = clamp(skill_count_fs * 1.2)
+    # Cap skill-count contribution so large control libraries do not dominate.
+    skill_component = clamp(min(skill_count_fs, 24) * 1.1)
     dirty = 12.0 if working_tree_dirty else 0.0
     inode = 8.0 if context_inode_present else 0.0
     missing = clamp(memory_doc_missing * 10.0)
@@ -215,6 +219,14 @@ def combine_difficulty(factors: dict[str, float]) -> float:
     total = 0.0
     for key, weight in WEIGHTS.items():
         total += weight * float(factors[key])
+    # Extreme operational risk must clear at least "high" when validation is heavy.
+    if float(factors.get("operational_risk") or 0) >= 90:
+        total = max(total, 52.0)
+    if (
+        float(factors.get("operational_risk") or 0) >= 90
+        and float(factors.get("validation_burden") or 0) >= 70
+    ):
+        total = max(total, 58.0)
     return round(clamp(total), 2)
 
 
