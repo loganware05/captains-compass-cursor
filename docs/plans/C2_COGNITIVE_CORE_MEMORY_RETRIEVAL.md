@@ -1,5 +1,6 @@
 > **APPROVED** (2026-10-17) — Plan ID `c2-cognitive-core-memory-retrieval`.
 > Issue: [#203](https://github.com/loganware05/captains-compass-cursor/issues/203).
+> PR: [#204](https://github.com/loganware05/captains-compass-cursor/pull/204).
 > Branch: `cursor/203-c2-memory-retrieval-64df` · Rollback `rollback/pre-c2-cognitive-core-memory-retrieval`.
 > Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
 

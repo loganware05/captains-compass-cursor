@@ -54,7 +54,7 @@ Returns JSON with project-state freshness/SHA, ranked knowledge hits, decision/A
 - [x] Doctor recognizes new schema; unit tests green
 - [x] Memory docs + CHANGELOG + VERSION **v1.61.0**; ADR-079
 - [x] Evidence under `.agent/evidence/c2-cognitive-core-memory-retrieval/`
-- [ ] PR opened (standing order)
+- [x] PR opened (standing order) — https://github.com/loganware05/captains-compass-cursor/pull/204
 
 ## Non-Goals
 

@@ -11,7 +11,8 @@ Baseline **v1.60.1** @ `2314def`; target **v1.61.0**.
 | On main | **v1.60.1** C1 closeout (#202) @ `2314def` |
 | Active plan | `c2-cognitive-core-memory-retrieval` **APPROVED** |
 | Issue | [#203](https://github.com/loganware05/captains-compass-cursor/issues/203) |
-| Next | Validate → PR → Captain merge |
+| PR | https://github.com/loganware05/captains-compass-cursor/pull/204 |
+| Next | Captain merge |
 
 ## Cognitive Core track
 
