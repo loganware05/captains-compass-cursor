@@ -1,6 +1,7 @@
-> **APPROVED / IN PROGRESS** — Plan ID `c7-cognitive-core-training-bridge`.
+> **PR OPEN** — [#219](https://github.com/loganware05/captains-compass-cursor/pull/219).
+> Plan ID `c7-cognitive-core-training-bridge`.
 > Issue: [#217](https://github.com/loganware05/captains-compass-cursor/issues/217).
-> Branch: `cursor/217-c7-training-bridge-64df`.
+> Branch: `cursor/217-c7-training-bridge-64df` @ `49ddcf4`.
 > Rollback: `rollback/pre-c7-cognitive-core-training-bridge` @ `f16e8bb`.
 > Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
 

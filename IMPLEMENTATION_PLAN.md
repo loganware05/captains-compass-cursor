@@ -1,12 +1,12 @@
 # Implementation Plan — C7 Cognitive Core Training Bridge
 
-- Status: **APPROVED**
+- Status: **PR OPEN** ([#219](https://github.com/loganware05/captains-compass-cursor/pull/219))
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
+| Status | **PR OPEN** ([#219](https://github.com/loganware05/captains-compass-cursor/pull/219)) |
 | Plan ID | `c7-cognitive-core-training-bridge` |
 | Issue | [#217](https://github.com/loganware05/captains-compass-cursor/issues/217) |
 | Notion | [Cognitive Core — C7 Training bridge](https://app.notion.com/p/3f8e6a901c438110882bceb01d2dd249) |
@@ -74,7 +74,7 @@ Default path is **hermetic/local** (writes under `.agent/training-exports/`). No
 - [x] Distinct from Experience→Skill draft path (`orchestrator/training/from_experience.py`) — may cite it; must not auto-promote Skills or weights
 - [x] Doctor + unit tests green; evidence under `.agent/evidence/c7-cognitive-core-training-bridge/`
 - [x] Memory docs + CHANGELOG + VERSION **v1.66.0**; ADR-084
-- [ ] PR opened (standing order after approval)
+- [x] PR opened (standing order after approval)
 
 ## Non-Goals
 

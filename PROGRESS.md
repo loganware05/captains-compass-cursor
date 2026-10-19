@@ -2,18 +2,19 @@
 
 ## Current status
 
-**C7 Cognitive Core — Training bridge — IN PROGRESS** on
-`cursor/217-c7-training-bridge-64df` (**v1.66.0** proposed).
+**C7 Cognitive Core — Training bridge — PR OPEN**
+[#219](https://github.com/loganware05/captains-compass-cursor/pull/219)
+on `cursor/217-c7-training-bridge-64df` (**v1.66.0**).
 Issue [#217](https://github.com/loganware05/captains-compass-cursor/issues/217).
 Plan ID `c7-cognitive-core-training-bridge` **APPROVED** 2026-10-19.
 
 | Item | Value |
 |---|---|
 | On main | **v1.65.0** C6 closeout (#218) @ `f16e8bb` |
-| Active plan | `c7-cognitive-core-training-bridge` **APPROVED** |
-| Branch | `cursor/217-c7-training-bridge-64df` |
+| Active plan | `c7-cognitive-core-training-bridge` **PR #219** |
+| Branch | `cursor/217-c7-training-bridge-64df` @ `49ddcf4` |
 | Rollback | `rollback/pre-c7-cognitive-core-training-bridge` @ `f16e8bb` |
-| Next | Validate → PR → Captain merge |
+| Next | Captain merge #219 |
 
 ## Cognitive Core track
 
