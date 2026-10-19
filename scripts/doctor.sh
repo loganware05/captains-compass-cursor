@@ -622,6 +622,35 @@ PY
   else
     fail "rea should exit 2 mentioning COMPASS_REA_ENABLED when unset (rc=$rea_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/training-export-manifest.schema.json" ]]; then
+    ok "training-export-manifest.schema.json present"
+  else
+    fail "missing orchestrator/schemas/training-export-manifest.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/training-export-review.schema.json" ]]; then
+    ok "training-export-review.schema.json present"
+  else
+    fail "missing orchestrator/schemas/training-export-review.schema.json"
+  fi
+  if [[ -x "$ROOT/scripts/run-train-bridge.sh" ]]; then
+    ok "scripts/run-train-bridge.sh present"
+  else
+    fail "missing executable scripts/run-train-bridge.sh"
+  fi
+  set +e
+  train_out="$(env -u COMPASS_TRAIN_BRIDGE_ENABLED "$ROOT/scripts/run-train-bridge.sh" export --from experiences --repo-root "$ROOT" 2>&1)"
+  train_rc=$?
+  set -e
+  if [[ "$train_rc" -eq 2 && "$train_out" == *"COMPASS_TRAIN_BRIDGE_ENABLED"* ]]; then
+    ok "train fail-closed when COMPASS_TRAIN_BRIDGE_ENABLED unset"
+  else
+    fail "train should exit 2 mentioning COMPASS_TRAIN_BRIDGE_ENABLED when unset (rc=$train_rc)"
+  fi
+  if [[ -f "$ROOT/.agent/training-exports/.gitkeep" ]]; then
+    ok ".agent/training-exports layout"
+  else
+    fail "missing .agent/training-exports/.gitkeep"
+  fi
   if [[ -f "$ROOT/.agent/project-state/snapshots/.gitkeep" ]]; then
     ok ".agent/project-state/snapshots layout"
   else

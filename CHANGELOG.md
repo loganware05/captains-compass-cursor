@@ -23,6 +23,19 @@
 - Live GitHub Stars TI fetch: `gh api user/starred` now uses GET query params
   (was `-f` form POST → 404 / empty cache)
 
+## 1.66.0 — 2026-10-19
+
+### Added
+
+- **C7 Cognitive Core — Training bridge** (#217):
+  - Gated `northstar train export|review` (`COMPASS_TRAIN_BRIDGE_ENABLED`)
+  - Schemas `training-export-manifest` / `training-export-review`
+    (authority locked false; `auto_uploaded: false`)
+  - Permission checklist + secret redaction; hermetic Experience fixture fallback
+  - Local hand-off under `.agent/training-exports/` — never trains weights or uploads
+  - ADR-084; evidence `.agent/evidence/c7-cognitive-core-training-bridge/`
+  - Completes Cognitive Core C1–C7 track
+
 ## 1.65.0 — 2026-10-19
 
 ### Added

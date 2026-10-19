@@ -55,6 +55,8 @@ SCHEMA_FILES = (
     "model-route-proposal.schema.json",
     "model-route-eval-report.schema.json",
     "rea-evidence-packet.schema.json",
+    "training-export-manifest.schema.json",
+    "training-export-review.schema.json",
 )
 
 

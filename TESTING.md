@@ -446,6 +446,27 @@ Unset `COMPASS_REA_ENABLED` → CLI exits non-zero. Hermetic fixture default;
 live needs `--allow-live` + checklist. See
 `.agent/evidence/c6-cognitive-core-rea-deep-analysis/VALIDATION.md`.
 
+Cognitive Core Training bridge (C7; requires train-bridge flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_c7_cognitive_core_training_bridge.py' -v
+
+COMPASS_TRAIN_BRIDGE_ENABLED=1 \
+./scripts/northstar train export \
+  --from experiences --fixture \
+  --export-authorized --secrets-redacted-ack \
+  --license-reviewed --pii-reviewed \
+  --specialized-model-handoff-ack \
+  --repo .
+
+COMPASS_TRAIN_BRIDGE_ENABLED=1 \
+./scripts/northstar train review --export-id ID --repo .
+```
+
+Unset `COMPASS_TRAIN_BRIDGE_ENABLED` → CLI exits non-zero. Local hermetic
+hand-off only (writes `.agent/training-exports/`); never uploads or trains
+weights. See `.agent/evidence/c7-cognitive-core-training-bridge/VALIDATION.md`.
+
 Prompt/Policy Provenance + Behavior Exemplars (M53):
 
 ```bash

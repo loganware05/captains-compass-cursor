@@ -52,6 +52,7 @@ Launcher: `"$CONTROL/scripts/northstar" <surface> …`
 | `cycle` / `learning` | Cognitive Core Adaptive Development Loop (begin→checkpoint→close + Learning Review) | `COMPASS_CYCLE_ENABLED=1`; begin also needs assess flag; draft proposals only — never auto-promote |
 | `model` | Cognitive Core Adaptive routing (`route` / `evaluate`) | `COMPASS_ROUTE_ENABLED=1`; advisory local/hosted/premium — never auto-switch live models |
 | `rea` | Cognitive Core REA deep analysis (`investigate`) | `COMPASS_REA_ENABLED=1`; hermetic fixture default; live needs checklist + `--allow-live` |
+| `train` | Cognitive Core Training bridge (`export` / `review`) | `COMPASS_TRAIN_BRIDGE_ENABLED=1`; local hand-off only — never auto-uploads or changes weights |
 | `provenance` / `examples` | Explain run-to-run prompt/policy lineage; curate exemplars | `COMPASS_PROVENANCE_ENABLED=1`; `auto_promoted: false` |
 | `context` | Filesystem-gated context inodes | Build/walk only |
 | `intent` / `outcomes` / `repair` / `precision` | Review intent packs, triage, repair packets, precision ledger | Never Captain approval substitutes |
