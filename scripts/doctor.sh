@@ -603,6 +603,25 @@ PY
   else
     fail "model-route should exit 2 mentioning COMPASS_ROUTE_ENABLED when unset (rc=$rt_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/rea-evidence-packet.schema.json" ]]; then
+    ok "rea-evidence-packet.schema.json present"
+  else
+    fail "missing orchestrator/schemas/rea-evidence-packet.schema.json"
+  fi
+  if [[ -x "$ROOT/scripts/run-rea.sh" ]]; then
+    ok "scripts/run-rea.sh present"
+  else
+    fail "missing executable scripts/run-rea.sh"
+  fi
+  set +e
+  rea_out="$(env -u COMPASS_REA_ENABLED "$ROOT/scripts/run-rea.sh" investigate --target /tmp/x --question test --repo-root "$ROOT" 2>&1)"
+  rea_rc=$?
+  set -e
+  if [[ "$rea_rc" -eq 2 && "$rea_out" == *"COMPASS_REA_ENABLED"* ]]; then
+    ok "rea fail-closed when COMPASS_REA_ENABLED unset"
+  else
+    fail "rea should exit 2 mentioning COMPASS_REA_ENABLED when unset (rc=$rea_rc)"
+  fi
   if [[ -f "$ROOT/.agent/project-state/snapshots/.gitkeep" ]]; then
     ok ".agent/project-state/snapshots layout"
   else

@@ -65,6 +65,7 @@ wandb/
 .agent/tmp-c3-tests/
 .agent/tmp-c4-tests/
 .agent/tmp-c5-tests/
+.agent/tmp-c6-tests/
 .agent/cycles/*
 !.agent/cycles/.gitkeep
 .agent/routing/proposals/*.json

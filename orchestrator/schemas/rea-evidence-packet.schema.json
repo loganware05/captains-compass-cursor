@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/rea-evidence-packet.schema.json",
+  "title": "ReaEvidencePacket",
+  "description": "Cognitive Core C6 governed REA evidence packet. Observed vs hypothesis claim kinds; never grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "packet_id",
+    "target",
+    "question",
+    "mode",
+    "run_mode",
+    "permission_checklist",
+    "tool_name",
+    "tool_version",
+    "commands",
+    "artifact_hash",
+    "observations",
+    "uncertainties",
+    "citations",
+    "live_attempted",
+    "approved_for_execution",
+    "authority_mutation",
+    "generated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "packet_id": { "type": "string", "minLength": 1 },
+    "target": { "type": "string", "minLength": 1 },
+    "question": { "type": "string", "minLength": 1 },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "native",
+        "js-electron",
+        "dotnet",
+        "browser",
+        "android",
+        "network-capture"
+      ]
+    },
+    "run_mode": {
+      "type": "string",
+      "enum": ["fixture", "live_unavailable", "live_stub", "live"]
+    },
+    "permission_checklist": {
+      "type": "object",
+      "required": [
+        "target_authorized",
+        "license_reviewed",
+        "execution_permitted",
+        "source_docs_insufficient",
+        "isolation_acknowledged"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "target_authorized": { "type": "boolean" },
+        "license_reviewed": { "type": "boolean" },
+        "execution_permitted": { "type": "boolean" },
+        "source_docs_insufficient": { "type": "boolean" },
+        "isolation_acknowledged": { "type": "boolean" }
+      }
+    },
+    "tool_name": { "type": "string", "minLength": 1 },
+    "tool_version": { "type": "string", "minLength": 1 },
+    "commands": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "artifact_hash": { "type": "string", "minLength": 1 },
+    "observations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["claim_kind", "text"],
+        "additionalProperties": false,
+        "properties": {
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "hypothesis"]
+          },
+          "text": { "type": "string", "minLength": 1 },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "fixture_path": { "type": ["string", "null"] },
+    "live_attempted": { "type": "boolean" },
+    "live_available": { "type": "boolean" },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "fixture",
+              "git",
+              "version",
+              "target",
+              "tool",
+              "file"
+            ]
+          },
+          "ref": { "type": "string", "minLength": 1 },
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "documented", "external", "proposed"]
+          }
+        }
+      }
+    },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "generated_at": { "type": "string", "minLength": 1 }
+  }
+}
