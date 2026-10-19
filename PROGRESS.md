@@ -2,19 +2,18 @@
 
 ## Current status
 
-**C6 Cognitive Core — REA deep analysis** implementing on
-`cursor/214-c6-rea-deep-analysis-64df` after Captain approval (2026-10-19).
-Baseline **v1.64.0** @ `735cb6a`; target **v1.65.0**.
+**C6 Cognitive Core — REA deep analysis — SHIPPED** via
+[#216](https://github.com/loganware05/captains-compass-cursor/pull/216)
+@ `1308b5f` (**v1.65.0**). Issue [#214](https://github.com/loganware05/captains-compass-cursor/issues/214) closed.
+
+Active plan: `c7-cognitive-core-training-bridge` **AWAITING APPROVAL**
+([#217](https://github.com/loganware05/captains-compass-cursor/issues/217)).
 
 | Item | Value |
 |---|---|
-| On main | **v1.64.0** C5 + closeout (#213 / #215) @ `735cb6a` |
-| Active plan | `c6-cognitive-core-rea-deep-analysis` **APPROVED** |
-| Issue | [#214](https://github.com/loganware05/captains-compass-cursor/issues/214) |
-| Branch | `cursor/214-c6-rea-deep-analysis-64df` |
-| PR | [#216](https://github.com/loganware05/captains-compass-cursor/pull/216) (draft) |
-| Rollback | `rollback/pre-c6-cognitive-core-rea-deep-analysis` @ `735cb6a` |
-| Next | Captain merge of #216 |
+| On main | **v1.65.0** C6 (#216) @ `1308b5f` |
+| Active plan | `c7-cognitive-core-training-bridge` **AWAITING APPROVAL** |
+| Next | Captain approve C7 → implement (completes C1–C7 track) |
 
 ## Cognitive Core track
 
@@ -25,10 +24,10 @@ Baseline **v1.64.0** @ `735cb6a`; target **v1.65.0**.
 | C3 — Difficulty and capability fit | **Complete** (#207 / v1.62.0) |
 | C4 — Adaptive Development Loop | **Complete** (#210 / v1.63.0) |
 | C5 — Adaptive routing | **Complete** (#213 / v1.64.0) |
-| C6 — REA deep analysis | **PR ready** (#214 / v1.65.0) |
-| C7 — Training bridge | Deferred |
+| C6 — REA deep analysis | **Complete** (#216 / v1.65.0) |
+| C7 — Training bridge | **Plan awaiting approval** (#217) |
 
-## Operator (C1–C6)
+## Operator (C1–C6 shipped)
 
 ```bash
 COMPASS_BRAIN_ENABLED=1 ./scripts/northstar brain sync --repo .
@@ -47,11 +46,12 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Recently completed
 
+- **C6 / #216** — Cognitive Core REA / `rea investigate` (v1.65.0)
 - **C5 closeout / #215** — memory reconcile + C6 plan
-- **C5 / #213** — Cognitive Core adaptive routing / `model route|evaluate` (v1.64.0)
+- **C5 / #213** — Cognitive Core adaptive routing (v1.64.0)
 - **C4 closeout / #212** — memory reconcile + C5 plan
 - **C4 / #210** — Cognitive Core adaptive cycle (v1.63.0)
 
 ## Blockers
 
-None.
+None. Waiting on Captain approval of C7 plan.

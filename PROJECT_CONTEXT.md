@@ -133,9 +133,8 @@ gh auth status
 
 ## Current Priorities
 
-**Cognitive Core C6** — REA deep analysis implementing on
-`cursor/214-c6-rea-deep-analysis-64df` (**v1.65.0**,
-[#214](https://github.com/loganware05/captains-compass-cursor/issues/214)).
-C1–C5 shipped through **v1.64.0**. Behavior Loop (M46–M54) remains complete at
-**v1.59.0**. Start here: `docs/guides/captain-handbook.md`. Live trading /
-AHF execution remains denied.
+**Cognitive Core C7** — Training bridge plan at **AWAITING APPROVAL**
+([#217](https://github.com/loganware05/captains-compass-cursor/issues/217)).
+C1–C6 shipped through **v1.65.0** (`brain` / `assess` / `cycle` / `model` /
+`rea`). Behavior Loop (M46–M54) remains complete at **v1.59.0**. Start here:
+`docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.
