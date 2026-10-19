@@ -7,7 +7,7 @@
 | Wall time (minutes) | 300 | ~35 |
 | Cost (USD) | 0 | 0 |
 
-Status: **ACTIVE** — PR [#213](https://github.com/loganware05/captains-compass-cursor/pull/213) open; awaiting Captain merge.
+Status: **CLOSED** — merged [#213](https://github.com/loganware05/captains-compass-cursor/pull/213) → `main` @ `56ac9de` (**v1.64.0**).
 
 ## Cycle log
 
