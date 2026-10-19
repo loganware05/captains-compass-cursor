@@ -12,8 +12,9 @@ Baseline **v1.64.0** @ `735cb6a`; target **v1.65.0**.
 | Active plan | `c6-cognitive-core-rea-deep-analysis` **APPROVED** |
 | Issue | [#214](https://github.com/loganware05/captains-compass-cursor/issues/214) |
 | Branch | `cursor/214-c6-rea-deep-analysis-64df` |
+| PR | [#216](https://github.com/loganware05/captains-compass-cursor/pull/216) (draft) |
 | Rollback | `rollback/pre-c6-cognitive-core-rea-deep-analysis` @ `735cb6a` |
-| Next | Validate → PR → Captain merge |
+| Next | Captain merge of #216 |
 
 ## Cognitive Core track
 

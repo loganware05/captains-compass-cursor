@@ -13,6 +13,7 @@
 | Product | **NorthStar** (control repo) |
 | Baseline | **v1.64.0** @ `735cb6a` (C5 closeout #215 on main) |
 | Branch | `cursor/214-c6-rea-deep-analysis-64df` |
+| PR | [#216](https://github.com/loganware05/captains-compass-cursor/pull/216) (draft) |
 | Rollback | `rollback/pre-c6-cognitive-core-rea-deep-analysis` @ `735cb6a` |
 | Release | **v1.65.0** |
 | Captain | Logan Ware |
