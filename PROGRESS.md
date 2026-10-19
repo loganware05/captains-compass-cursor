@@ -26,7 +26,7 @@ Plan ID `c7-cognitive-core-training-bridge` **APPROVED** 2026-10-19.
 | C4 — Adaptive Development Loop | **Complete** (#210 / v1.63.0) |
 | C5 — Adaptive routing | **Complete** (#213 / v1.64.0) |
 | C6 — REA deep analysis | **Complete** (#216 / v1.65.0) |
-| C7 — Training bridge | **Implementing** (#217 / v1.66.0) |
+| C7 — Training bridge | **PR open** ([#219](https://github.com/loganware05/captains-compass-cursor/pull/219) / v1.66.0) |
 
 ## Operator (C1–C7)
 

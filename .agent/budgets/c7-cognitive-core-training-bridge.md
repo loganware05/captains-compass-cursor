@@ -7,7 +7,7 @@
 | Wall time (minutes) | 300 | ~90 |
 | Cost (USD) | 0 | 0 |
 
-Status: **OPEN** — PR pending on `cursor/217-c7-training-bridge-64df`.
+Status: **OPEN** — PR [#219](https://github.com/loganware05/captains-compass-cursor/pull/219) on `cursor/217-c7-training-bridge-64df`.
 
 ## Cycle log
 
