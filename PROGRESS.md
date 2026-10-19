@@ -2,18 +2,19 @@
 
 ## Current status
 
-**C5 Cognitive Core — Adaptive routing — SHIPPED** via
-[#213](https://github.com/loganware05/captains-compass-cursor/pull/213)
-@ `56ac9de` (**v1.64.0**). Issue [#211](https://github.com/loganware05/captains-compass-cursor/issues/211) closed.
-
-Active plan: `c6-cognitive-core-rea-deep-analysis` **AWAITING APPROVAL**
-([#214](https://github.com/loganware05/captains-compass-cursor/issues/214)).
+**C6 Cognitive Core — REA deep analysis** implementing on
+`cursor/214-c6-rea-deep-analysis-64df` after Captain approval (2026-10-19).
+Baseline **v1.64.0** @ `735cb6a`; target **v1.65.0**.
 
 | Item | Value |
 |---|---|
-| On main | **v1.64.0** C5 (#213) @ `56ac9de` |
-| Active plan | `c6-cognitive-core-rea-deep-analysis` **AWAITING APPROVAL** |
-| Next | Captain approve C6 → implement |
+| On main | **v1.64.0** C5 + closeout (#213 / #215) @ `735cb6a` |
+| Active plan | `c6-cognitive-core-rea-deep-analysis` **APPROVED** |
+| Issue | [#214](https://github.com/loganware05/captains-compass-cursor/issues/214) |
+| Branch | `cursor/214-c6-rea-deep-analysis-64df` |
+| PR | [#216](https://github.com/loganware05/captains-compass-cursor/pull/216) (draft) |
+| Rollback | `rollback/pre-c6-cognitive-core-rea-deep-analysis` @ `735cb6a` |
+| Next | Captain merge of #216 |
 
 ## Cognitive Core track
 
@@ -24,19 +25,19 @@ Active plan: `c6-cognitive-core-rea-deep-analysis` **AWAITING APPROVAL**
 | C3 — Difficulty and capability fit | **Complete** (#207 / v1.62.0) |
 | C4 — Adaptive Development Loop | **Complete** (#210 / v1.63.0) |
 | C5 — Adaptive routing | **Complete** (#213 / v1.64.0) |
-| C6 — REA deep analysis | **Plan awaiting approval** (#214) |
+| C6 — REA deep analysis | **PR ready** (#214 / v1.65.0) |
 | C7 — Training bridge | Deferred |
 
-## Operator (C1–C5 shipped)
+## Operator (C1–C6)
 
 ```bash
 COMPASS_BRAIN_ENABLED=1 ./scripts/northstar brain sync --repo .
-COMPASS_BRAIN_ENABLED=1 ./scripts/northstar brain context --query "…" --repo .
 COMPASS_ASSESS_ENABLED=1 ./scripts/northstar assess project --objective "…" --repo .
 COMPASS_CYCLE_ENABLED=1 COMPASS_ASSESS_ENABLED=1 \
   ./scripts/northstar cycle begin --objective "…" --repo .
 COMPASS_ROUTE_ENABLED=1 ./scripts/northstar model route --objective "…" --repo .
-COMPASS_ROUTE_ENABLED=1 ./scripts/northstar model evaluate --repo .
+COMPASS_REA_ENABLED=1 ./scripts/northstar rea investigate \
+  --target PATH --question "…" --repo .
 ```
 
 ## Standing order (Captain — 2026-10-13)
@@ -46,12 +47,11 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Recently completed
 
+- **C5 closeout / #215** — memory reconcile + C6 plan
 - **C5 / #213** — Cognitive Core adaptive routing / `model route|evaluate` (v1.64.0)
 - **C4 closeout / #212** — memory reconcile + C5 plan
-- **C4 / #210** — Cognitive Core adaptive cycle / `cycle` + `learning review` (v1.63.0)
-- **C3 closeout / #209** — memory reconcile + C4 plan
-- **C3 / #207** — Cognitive Core difficulty / `assess project` (v1.62.0)
+- **C4 / #210** — Cognitive Core adaptive cycle (v1.63.0)
 
 ## Blockers
 
-None. Waiting on Captain approval of C6 plan.
+None.

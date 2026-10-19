@@ -432,6 +432,20 @@ Unset `COMPASS_ROUTE_ENABLED` → CLI exits non-zero. Advisory only — never
 auto-switches live models. Fixture: `tests/fixtures/model-route-eval/cases.json`.
 See `.agent/evidence/c5-cognitive-core-adaptive-routing/VALIDATION.md`.
 
+Cognitive Core REA deep analysis (C6; requires REA flag):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_c6_cognitive_core_rea_deep_analysis.py' -v
+
+COMPASS_REA_ENABLED=1 \
+./scripts/northstar rea investigate \
+  --target PATH_OR_URL --question "…" --repo .
+```
+
+Unset `COMPASS_REA_ENABLED` → CLI exits non-zero. Hermetic fixture default;
+live needs `--allow-live` + checklist. See
+`.agent/evidence/c6-cognitive-core-rea-deep-analysis/VALIDATION.md`.
+
 Prompt/Policy Provenance + Behavior Exemplars (M53):
 
 ```bash

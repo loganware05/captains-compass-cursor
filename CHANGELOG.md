@@ -23,6 +23,16 @@
 - Live GitHub Stars TI fetch: `gh api user/starred` now uses GET query params
   (was `-f` form POST → 404 / empty cache)
 
+## 1.65.0 — 2026-10-19
+
+### Added
+
+- **C6 Cognitive Core — REA deep analysis** (#214):
+  - Gated `northstar rea investigate` (`COMPASS_REA_ENABLED`)
+  - Schema `rea-evidence-packet` with observed/hypothesis claim kinds
+  - Hermetic fixture default; live needs `--allow-live` + permission checklist
+  - ADR-083; evidence `.agent/evidence/c6-cognitive-core-rea-deep-analysis/`
+
 ## 1.64.0 — 2026-10-17
 
 ### Added

@@ -1,5 +1,26 @@
 # Decisions
 
+## ADR-083: Cognitive Core C6 REA Deep Analysis (v1.65.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-19
+- **Context:** Captain approved plan `c6-cognitive-core-rea-deep-analysis`
+  (#214) after C5 (#213 / v1.64.0) and closeout (#215). Notion requires a
+  governed REA investigate path before training bridge (C7).
+- **Decision:**
+  1. Add gated `northstar rea investigate` behind `COMPASS_REA_ENABLED`.
+  2. Default to hermetic fixture evidence packets; live requires `--allow-live`
+     and a complete licensing/permission checklist.
+  3. Schema `rea-evidence-packet` distinguishes `observed` vs `hypothesis`
+     claims; uncertainties required; authority flags locked false.
+  4. Refuse speculative recovery of private training corpora / hidden optimizer
+     details; withhold auto-execution even when REA binary is detected.
+  5. Ship as **v1.65.0**. C7 remains deferred.
+- **Consequences:** Operators can capture governed REA evidence without
+  expanding authority or treating hypotheses as facts. Rollback
+  `rollback/pre-c6-cognitive-core-rea-deep-analysis` @ `735cb6a`.
+
+
 ## ADR-082: Cognitive Core C5 Adaptive Routing (v1.64.0)
 
 - **Status:** Accepted

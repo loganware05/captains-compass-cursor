@@ -1,0 +1,25 @@
+{
+  "tool_name": "rea-fixture",
+  "tool_version": "fixture-1.0.0",
+  "commands": [
+    "fixture:replay sample-native",
+    "fixture:hash artifact"
+  ],
+  "artifact_hash": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "observations": [
+    {
+      "claim_kind": "observed",
+      "text": "Fixture target exposes a version string in the binary header region.",
+      "confidence": 0.9
+    },
+    {
+      "claim_kind": "hypothesis",
+      "text": "String table layout may indicate Electron packaging — not confirmed without live REA.",
+      "confidence": 0.35
+    }
+  ],
+  "uncertainties": [
+    "Hermetic fixture — not a live REA execution",
+    "Hypothesis observations must not be treated as repository facts"
+  ]
+}
