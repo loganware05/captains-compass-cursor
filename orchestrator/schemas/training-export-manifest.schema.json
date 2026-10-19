@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/training-export-manifest.schema.json",
+  "title": "TrainingExportManifest",
+  "description": "Cognitive Core C7 training-bridge export manifest. Local hand-off only; never auto-uploads or grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "export_id",
+    "source",
+    "run_mode",
+    "trajectory_count",
+    "trajectories",
+    "permission_checklist",
+    "dataset_schema_version",
+    "citations",
+    "auto_uploaded",
+    "approved_for_execution",
+    "authority_mutation",
+    "generated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "export_id": { "type": "string", "minLength": 1 },
+    "source": {
+      "type": "string",
+      "enum": ["experiences", "cycles"]
+    },
+    "run_mode": {
+      "type": "string",
+      "enum": ["recorded", "fixture"]
+    },
+    "plan_id_filter": { "type": ["string", "null"] },
+    "trajectory_count": { "type": "integer", "minimum": 0 },
+    "trajectories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "objective", "outcome"],
+        "additionalProperties": true
+      }
+    },
+    "permission_checklist": {
+      "type": "object",
+      "required": [
+        "export_authorized",
+        "secrets_redacted_ack",
+        "license_reviewed",
+        "pii_reviewed",
+        "specialized_model_handoff_ack"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "export_authorized": { "type": "boolean" },
+        "secrets_redacted_ack": { "type": "boolean" },
+        "license_reviewed": { "type": "boolean" },
+        "pii_reviewed": { "type": "boolean" },
+        "specialized_model_handoff_ack": { "type": "boolean" }
+      }
+    },
+    "dataset_schema_version": { "type": "string", "minLength": 1 },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "export_path": { "type": "string" },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "git",
+              "version",
+              "experience",
+              "cycle",
+              "export",
+              "file"
+            ]
+          },
+          "ref": { "type": "string", "minLength": 1 },
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "documented", "external", "proposed"]
+          }
+        }
+      }
+    },
+    "notes": { "type": "string" },
+    "auto_uploaded": { "type": "boolean", "const": false },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "generated_at": { "type": "string", "minLength": 1 }
+  }
+}

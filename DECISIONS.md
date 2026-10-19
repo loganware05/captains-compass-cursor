@@ -1,5 +1,32 @@
 # Decisions
 
+## ADR-084: Cognitive Core C7 Training Bridge (v1.66.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-19
+- **Context:** Captain approved plan `c7-cognitive-core-training-bridge`
+  (#217) after C6 (#216 / v1.65.0) and closeout (#218). Notion assigns
+  Specialized Model ownership of weights/datasets; Cognitive Core owns
+  governed export of reviewed trajectories.
+- **Decision:**
+  1. Add gated `northstar train export|review` behind
+     `COMPASS_TRAIN_BRIDGE_ENABLED`.
+  2. Export permission-checked, redacted trajectories from Experiences
+     (fixture fallback) or closed cycles into
+     `.agent/training-exports/` manifests; cite SHA / Experience / cycle ids
+     and document the distinct `from_experience` Skill-draft path.
+  3. Schemas `training-export-manifest` / `training-export-review` lock
+     `auto_uploaded`, `approved_for_execution`, and `authority_mutation`
+     false; review packet requires independent eval + security + Captain
+     approval before `ready_for_specialized_model`.
+  4. Never train weights, auto-upload, or auto-promote Skills/adapters
+     inside NorthStar.
+  5. Ship as **v1.66.0**. Completes Cognitive Core C1–C7 track.
+- **Consequences:** Operators can produce local Specialized Model hand-off
+  packets without expanding authority. Rollback
+  `rollback/pre-c7-cognitive-core-training-bridge` @ `f16e8bb`.
+
+
 ## ADR-083: Cognitive Core C6 REA Deep Analysis (v1.65.0)
 
 - **Status:** Accepted

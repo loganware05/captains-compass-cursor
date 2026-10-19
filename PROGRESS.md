@@ -2,18 +2,18 @@
 
 ## Current status
 
-**C6 Cognitive Core — REA deep analysis — SHIPPED** via
-[#216](https://github.com/loganware05/captains-compass-cursor/pull/216)
-@ `1308b5f` (**v1.65.0**). Issue [#214](https://github.com/loganware05/captains-compass-cursor/issues/214) closed.
-
-Active plan: `c7-cognitive-core-training-bridge` **AWAITING APPROVAL**
-([#217](https://github.com/loganware05/captains-compass-cursor/issues/217)).
+**C7 Cognitive Core — Training bridge — IN PROGRESS** on
+`cursor/217-c7-training-bridge-64df` (**v1.66.0** proposed).
+Issue [#217](https://github.com/loganware05/captains-compass-cursor/issues/217).
+Plan ID `c7-cognitive-core-training-bridge` **APPROVED** 2026-10-19.
 
 | Item | Value |
 |---|---|
-| On main | **v1.65.0** C6 (#216) @ `1308b5f` |
-| Active plan | `c7-cognitive-core-training-bridge` **AWAITING APPROVAL** |
-| Next | Captain approve C7 → implement (completes C1–C7 track) |
+| On main | **v1.65.0** C6 closeout (#218) @ `f16e8bb` |
+| Active plan | `c7-cognitive-core-training-bridge` **APPROVED** |
+| Branch | `cursor/217-c7-training-bridge-64df` |
+| Rollback | `rollback/pre-c7-cognitive-core-training-bridge` @ `f16e8bb` |
+| Next | Validate → PR → Captain merge |
 
 ## Cognitive Core track
 
@@ -25,9 +25,9 @@ Active plan: `c7-cognitive-core-training-bridge` **AWAITING APPROVAL**
 | C4 — Adaptive Development Loop | **Complete** (#210 / v1.63.0) |
 | C5 — Adaptive routing | **Complete** (#213 / v1.64.0) |
 | C6 — REA deep analysis | **Complete** (#216 / v1.65.0) |
-| C7 — Training bridge | **Plan awaiting approval** (#217) |
+| C7 — Training bridge | **Implementing** (#217 / v1.66.0) |
 
-## Operator (C1–C6 shipped)
+## Operator (C1–C7)
 
 ```bash
 COMPASS_BRAIN_ENABLED=1 ./scripts/northstar brain sync --repo .
@@ -37,6 +37,11 @@ COMPASS_CYCLE_ENABLED=1 COMPASS_ASSESS_ENABLED=1 \
 COMPASS_ROUTE_ENABLED=1 ./scripts/northstar model route --objective "…" --repo .
 COMPASS_REA_ENABLED=1 ./scripts/northstar rea investigate \
   --target PATH --question "…" --repo .
+COMPASS_TRAIN_BRIDGE_ENABLED=1 ./scripts/northstar train export \
+  --from experiences --export-authorized --secrets-redacted-ack \
+  --license-reviewed --pii-reviewed --specialized-model-handoff-ack --repo .
+COMPASS_TRAIN_BRIDGE_ENABLED=1 ./scripts/northstar train review \
+  --export-id ID --repo .
 ```
 
 ## Standing order (Captain — 2026-10-13)
@@ -46,12 +51,11 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Recently completed
 
+- **C6 closeout / #218** — memory reconcile + C7 plan
 - **C6 / #216** — Cognitive Core REA / `rea investigate` (v1.65.0)
 - **C5 closeout / #215** — memory reconcile + C6 plan
 - **C5 / #213** — Cognitive Core adaptive routing (v1.64.0)
-- **C4 closeout / #212** — memory reconcile + C5 plan
-- **C4 / #210** — Cognitive Core adaptive cycle (v1.63.0)
 
 ## Blockers
 
-None. Waiting on Captain approval of C7 plan.
+None.

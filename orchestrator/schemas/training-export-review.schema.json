@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/training-export-review.schema.json",
+  "title": "TrainingExportReview",
+  "description": "Cognitive Core C7 Captain review packet for training-bridge hand-off. Never uploads or grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "review_id",
+    "export_id",
+    "trajectory_count",
+    "gates",
+    "ready_for_specialized_model",
+    "blocking_reasons",
+    "citations",
+    "auto_uploaded",
+    "approved_for_execution",
+    "authority_mutation",
+    "generated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "review_id": { "type": "string", "minLength": 1 },
+    "export_id": { "type": "string", "minLength": 1 },
+    "trajectory_count": { "type": "integer", "minimum": 0 },
+    "gates": {
+      "type": "object",
+      "required": [
+        "independent_eval_complete",
+        "security_review_complete",
+        "captain_approval_recorded",
+        "export_checklist_complete"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "independent_eval_complete": { "type": "boolean" },
+        "security_review_complete": { "type": "boolean" },
+        "captain_approval_recorded": { "type": "boolean" },
+        "export_checklist_complete": { "type": "boolean" }
+      }
+    },
+    "ready_for_specialized_model": { "type": "boolean" },
+    "blocking_reasons": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": ["export", "git", "version", "experience", "file"]
+          },
+          "ref": { "type": "string", "minLength": 1 },
+          "claim_kind": {
+            "type": "string",
+            "enum": ["observed", "documented", "external", "proposed"]
+          }
+        }
+      }
+    },
+    "notes": { "type": "string" },
+    "auto_uploaded": { "type": "boolean", "const": false },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "generated_at": { "type": "string", "minLength": 1 }
+  }
+}

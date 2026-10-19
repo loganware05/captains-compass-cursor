@@ -1,30 +1,31 @@
 # Implementation Plan — C7 Cognitive Core Training Bridge
 
-- Status: **AWAITING APPROVAL**
+- Status: **APPROVED**
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING APPROVAL** |
+| Status | **APPROVED** |
 | Plan ID | `c7-cognitive-core-training-bridge` |
 | Issue | [#217](https://github.com/loganware05/captains-compass-cursor/issues/217) |
 | Notion | [Cognitive Core — C7 Training bridge](https://app.notion.com/p/3f8e6a901c438110882bceb01d2dd249) |
 | Product | **NorthStar** (control repo) |
-| Baseline | **v1.65.0** @ `1308b5f` (C6 merged #216) |
-| Branch | *(create after approval)* `cursor/217-c7-training-bridge-64df` |
-| Rollback | *(create after approval)* `rollback/pre-c7-cognitive-core-training-bridge` |
+| Baseline | **v1.65.0** @ `f16e8bb` (C6 closeout #218) |
+| Branch | `cursor/217-c7-training-bridge-64df` |
+| Rollback | `rollback/pre-c7-cognitive-core-training-bridge` @ `f16e8bb` |
 | Release | **v1.66.0** (proposed) |
 | Captain | Logan Ware |
 | Created | 2026-10-19 |
+| Approved | 2026-10-19 |
 
 ## Approval record
 
 | Field | Value |
 |---|---|
-| Approved by | *(pending)* |
-| Approval date | *(pending)* |
-| Notes | Post-merge continuation after C6 (#216). Implementation must not begin until Captain explicitly approves this plan. Completes Cognitive Core C1–C7 track. |
+| Approved by | Logan Ware (Captain) |
+| Approval date | 2026-10-19 |
+| Notes | Standing-order approval: “I approve c7-cognitive-core-training-bridge”. Completes Cognitive Core C1–C7 track. |
 
 ## Request
 
@@ -65,14 +66,14 @@ Default path is **hermetic/local** (writes under `.agent/training-exports/`). No
 
 ## Acceptance Criteria
 
-- [ ] Gated `northstar train export` and `northstar train review` (fail-closed when enable flag unset)
-- [ ] Schema(s) for training-export manifest + review packet with authority flags const false; `auto_uploaded: false`
-- [ ] Export redacts secrets/sensitive paths; cites repository SHA + source Experience/cycle ids
-- [ ] Permission checklist required; incomplete → refuse export or mark not-ready
-- [ ] Hermetic fixture mode for CI (no live training/upload)
-- [ ] Distinct from Experience→Skill draft path (`orchestrator/training/from_experience.py`) — may cite it; must not auto-promote Skills or weights
-- [ ] Doctor + unit tests green; evidence under `.agent/evidence/c7-cognitive-core-training-bridge/`
-- [ ] Memory docs + CHANGELOG + VERSION **v1.66.0**; ADR-084
+- [x] Gated `northstar train export` and `northstar train review` (fail-closed when enable flag unset)
+- [x] Schema(s) for training-export manifest + review packet with authority flags const false; `auto_uploaded: false`
+- [x] Export redacts secrets/sensitive paths; cites repository SHA + source Experience/cycle ids
+- [x] Permission checklist required; incomplete → refuse export or mark not-ready
+- [x] Hermetic fixture mode for CI (no live training/upload)
+- [x] Distinct from Experience→Skill draft path (`orchestrator/training/from_experience.py`) — may cite it; must not auto-promote Skills or weights
+- [x] Doctor + unit tests green; evidence under `.agent/evidence/c7-cognitive-core-training-bridge/`
+- [x] Memory docs + CHANGELOG + VERSION **v1.66.0**; ADR-084
 - [ ] PR opened (standing order after approval)
 
 ## Non-Goals
@@ -89,15 +90,15 @@ Default path is **hermetic/local** (writes under `.agent/training-exports/`). No
 
 | Area | Change |
 |---|---|
-| `orchestrator/train_bridge/` (new) or `orchestrator/training/bridge.py` | Export + review services |
+| `orchestrator/train_bridge/` (new) | Export + review services |
 | `orchestrator/schemas/` | `training-export-manifest` / `training-export-review` |
-| Existing | Read Experiences / cycle state; optional cite `from_experience` |
+| Existing | Read Experiences / cycle state; cite `from_experience` |
 | `scripts/` | `run-train-bridge.sh` + `northstar train` wiring |
 | `scripts/doctor.sh` | schema + fail-closed smoke |
 | Tests / fixtures | Hermetic export/review |
 | Project memory | PLAN / PROGRESS / CHANGELOG / DECISIONS / TESTING / VERSION |
 
-## Workstreams (after approval)
+## Workstreams
 
 1. Schema + permission checklist + redaction helpers
 2. Hermetic export from fixture Experiences/cycles
@@ -110,7 +111,7 @@ Default path is **hermetic/local** (writes under `.agent/training-exports/`). No
 - Security: redaction; no auto-upload; no authority expansion
 - Rollback tag before implementation
 
-## Autonomy Budget (proposed)
+## Autonomy Budget
 
 | Limit | Value |
 |---|---|
@@ -122,7 +123,7 @@ Default path is **hermetic/local** (writes under `.agent/training-exports/`). No
 
 ## Rollback
 
-Documented SHA / tag created only after approval, before implementation.
+Tag `rollback/pre-c7-cognitive-core-training-bridge` @ `f16e8bb` (pre-implementation).
 
 ## Definition of Done
 
@@ -130,4 +131,4 @@ Acceptance criteria checked; evidence recorded; PR open; First Mate inspected.
 
 ## Prior closeout (C6)
 
-C6 REA deep analysis **COMPLETE** — merged [#216](https://github.com/loganware05/captains-compass-cursor/pull/216) → `main` @ `1308b5f` (**v1.65.0**). Plan ID `c6-cognitive-core-rea-deep-analysis`. Issue #214 closed.
+C6 REA deep analysis **COMPLETE** — merged [#216](https://github.com/loganware05/captains-compass-cursor/pull/216) → `main` @ `1308b5f` (**v1.65.0**); closeout [#218](https://github.com/loganware05/captains-compass-cursor/pull/218) @ `f16e8bb`. Plan ID `c6-cognitive-core-rea-deep-analysis`. Issue #214 closed.
