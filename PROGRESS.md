@@ -25,7 +25,7 @@ Baseline **v1.64.0** @ `735cb6a`; target **v1.65.0**.
 | C3 — Difficulty and capability fit | **Complete** (#207 / v1.62.0) |
 | C4 — Adaptive Development Loop | **Complete** (#210 / v1.63.0) |
 | C5 — Adaptive routing | **Complete** (#213 / v1.64.0) |
-| C6 — REA deep analysis | **In progress** (#214 / v1.65.0) |
+| C6 — REA deep analysis | **PR ready** (#214 / v1.65.0) |
 | C7 — Training bridge | Deferred |
 
 ## Operator (C1–C6)

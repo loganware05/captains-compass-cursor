@@ -50,7 +50,7 @@ COMPASS_REA_ENABLED=1 \
 - [x] Evidence cites artifact hash + tool version + command refs; uncertainties required
 - [x] Doctor + unit tests green; evidence under `.agent/evidence/c6-cognitive-core-rea-deep-analysis/`
 - [x] Memory docs + CHANGELOG + VERSION **v1.65.0**; ADR-083
-- [ ] PR opened (standing order)
+- [x] PR opened (standing order) — [#216](https://github.com/loganware05/captains-compass-cursor/pull/216)
 
 ## Non-Goals
 
