@@ -12,7 +12,7 @@ Plan ID `c7-cognitive-core-training-bridge` **APPROVED** 2026-10-19.
 |---|---|
 | On main | **v1.65.0** C6 closeout (#218) @ `f16e8bb` |
 | Active plan | `c7-cognitive-core-training-bridge` **PR #219** |
-| Branch | `cursor/217-c7-training-bridge-64df` @ `49ddcf4` |
+| Branch | `cursor/217-c7-training-bridge-64df` @ `a2dd860` |
 | Rollback | `rollback/pre-c7-cognitive-core-training-bridge` @ `f16e8bb` |
 | Next | Captain merge #219 |
 
