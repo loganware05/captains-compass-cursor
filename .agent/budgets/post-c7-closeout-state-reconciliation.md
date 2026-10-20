@@ -7,3 +7,6 @@
 | Scope | Docs/memory closeout only | held |
 
 Status: within budget.
+
+## Post-merge
+COMPLETE — merged #221 @ `96a8de3` (2026-10-20).
