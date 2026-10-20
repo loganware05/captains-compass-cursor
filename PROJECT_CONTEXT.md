@@ -133,9 +133,10 @@ gh auth status
 
 ## Current Priorities
 
-**Cognitive Core C7** — Training bridge **APPROVED / implementing**
-([#217](https://github.com/loganware05/captains-compass-cursor/issues/217),
-**v1.66.0**). C1–C6 shipped through **v1.65.0** (`brain` / `assess` / `cycle` /
-`model` / `rea`); C7 adds gated `northstar train export|review`. Behavior Loop
+**Cognitive Core C1–C7 complete** on `main` (**v1.66.0** @ `dbb3b96`,
+[#219](https://github.com/loganware05/captains-compass-cursor/pull/219)).
+Post-C7 closeout (**v1.66.1**, [#220](https://github.com/loganware05/captains-compass-cursor/issues/220))
+reconciles memory docs. **Next:** sandbox end-to-end Cognitive Core evaluation,
+then read-only persistent oversight and Specialized Model Level 0. Behavior Loop
 (M46–M54) remains complete at **v1.59.0**. Start here:
 `docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.

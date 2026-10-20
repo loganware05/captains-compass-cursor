@@ -6,7 +6,7 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.65.0
+## Current version: 1.66.1
 
 ### Included
 
@@ -17,7 +17,7 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
   bounded-autonomy, compass-evaluator, experience-routing, capability-planning,
   execution-telemetry, candidate-promotion, experience-skill-training)
 - Capability-aware planning orchestrator (`orchestrator/`, `scripts/capability-plan.sh`)
-- Eleven specialist subagents (also indexed as reference agent profiles)
+- Twelve specialist subagents (also indexed as reference agent profiles)
 - Seven safety hooks (critical fail-closed; soft skips via env / command string / marker)
 - Six Cursor phase slash commands (`.cursor/commands/`)
 - Autonomy budgets + session notes (`.agent/budgets/`, `.agent/sessions/`)

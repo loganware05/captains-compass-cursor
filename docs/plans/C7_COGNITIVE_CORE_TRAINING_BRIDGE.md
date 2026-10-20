@@ -1,8 +1,9 @@
-> **PR OPEN** — [#219](https://github.com/loganware05/captains-compass-cursor/pull/219).
-> Plan ID `c7-cognitive-core-training-bridge`.
-> Issue: [#217](https://github.com/loganware05/captains-compass-cursor/issues/217).
-> Branch: `cursor/217-c7-training-bridge-64df` @ `49ddcf4`.
+> **COMPLETE** (2026-10-19) — Merged [#219](https://github.com/loganware05/captains-compass-cursor/pull/219)
+> → `main` @ `dbb3b96` (**v1.66.0**). Plan ID `c7-cognitive-core-training-bridge`.
+> Issue: [#217](https://github.com/loganware05/captains-compass-cursor/issues/217) (closed).
 > Rollback: `rollback/pre-c7-cognitive-core-training-bridge` @ `f16e8bb`.
+> Evidence: `.agent/evidence/c7-cognitive-core-training-bridge/`.
+> Closeout: [#220](https://github.com/loganware05/captains-compass-cursor/issues/220) / **v1.66.1**.
 > Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
 
 # C7 — Cognitive Core Training Bridge

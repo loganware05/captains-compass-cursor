@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-085: Post-C7 Closeout State Reconciliation (v1.66.1)
+
+- **Status:** Accepted
+- **Date:** 2026-10-20
+- **Context:** Oct 20 repository-state PDF and live `main` inspection showed
+  C1–C7 shipped (v1.66.0 @ `dbb3b96`, #219 merged) while PROGRESS,
+  IMPLEMENTATION_PLAN, and README still described C7 as PR-open / main at
+  v1.65.0, with an under-count of specialist agents.
+- **Decision:**
+  1. Ship docs-only closeout **v1.66.1** (plan
+     `post-c7-closeout-state-reconciliation`, #220) with no Cognitive Core
+     product feature changes.
+  2. Mark C1–C7 complete in memory docs; set next priority to sandbox E2E
+     Cognitive Core evaluation.
+  3. Align README specialist count with `.cursor/agents/` (twelve).
+  4. Update Notion Cognitive Core status to match shipped track.
+- **Consequences:** Agents and operators plan from accurate post-C7 state.
+  Rollback `rollback/pre-post-c7-closeout-state-reconciliation` @ `dbb3b96`.
+
+
 ## ADR-084: Cognitive Core C7 Training Bridge (v1.66.0)
 
 - **Status:** Accepted

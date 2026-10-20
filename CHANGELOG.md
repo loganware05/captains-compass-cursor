@@ -23,6 +23,16 @@
 - Live GitHub Stars TI fetch: `gh api user/starred` now uses GET query params
   (was `-f` form POST → 404 / empty cache)
 
+## 1.66.1 — 2026-10-20
+
+### Fixed
+
+- **Post-C7 closeout** (#220): reconcile PROGRESS, IMPLEMENTATION_PLAN, README,
+  PROJECT_CONTEXT, and C7 plan docs after #219 merged to `main` @ `dbb3b96`.
+  README version → 1.66.1; specialist count → twelve. Notion Cognitive Core
+  status updated to C1–C7 shipped; next = E2E eval. Evidence:
+  `.agent/evidence/post-c7-closeout-state-reconciliation/`. ADR-085.
+
 ## 1.66.0 — 2026-10-19
 
 ### Added
