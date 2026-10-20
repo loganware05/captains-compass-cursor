@@ -2,20 +2,16 @@
 
 ## Current status
 
-**Post-C7 closeout — PR OPEN** on plan
-`post-c7-closeout-state-reconciliation`
-([#220](https://github.com/loganware05/captains-compass-cursor/issues/220)).
-Cognitive Core **C1–C7 complete** on `main` (**v1.66.0** @ `dbb3b96`,
-PR [#219](https://github.com/loganware05/captains-compass-cursor/pull/219) merged).
+**E2E Cognitive Core evaluation — AWAITING APPROVAL** on plan
+`e2e-cognitive-core-evaluation`
+([#222](https://github.com/loganware05/captains-compass-cursor/issues/222)).
+Post-C7 closeout **COMPLETE** (#221 / **v1.66.1** @ `96a8de3`).
 
 | Item | Value |
 |---|---|
-| On main | **v1.66.0** C7 Training bridge (#219) @ `dbb3b96` |
-| Active plan | `post-c7-closeout-state-reconciliation` **PR OPEN** ([#221](https://github.com/loganware05/captains-compass-cursor/pull/221)) |
-| Branch | `cursor/220-post-c7-closeout-3ec1` |
-| Rollback | `rollback/pre-post-c7-closeout-state-reconciliation` @ `dbb3b96` |
-| Proposed release | **v1.66.1** (docs / memory reconcile) |
-| Next after merge | End-to-end Cognitive Core evaluation (sandbox) |
+| On main | **v1.66.1** post-C7 closeout (#221) @ `96a8de3` |
+| Active plan | `e2e-cognitive-core-evaluation` **AWAITING APPROVAL** |
+| Next | Captain approve E2E → implement → commit → PR |
 
 ## Cognitive Core track
 
@@ -28,6 +24,8 @@ PR [#219](https://github.com/loganware05/captains-compass-cursor/pull/219) merge
 | C5 — Adaptive routing | **Complete** (#213 / v1.64.0) |
 | C6 — REA deep analysis | **Complete** (#216 / v1.65.0); closeout #218 |
 | C7 — Training bridge | **Complete** (#219 / v1.66.0) |
+| Post-C7 closeout | **Complete** (#221 / v1.66.1) |
+| E2E Cognitive Core evaluation | **Next** (#222) |
 
 ## Operator (C1–C7)
 
@@ -53,17 +51,16 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Recently completed
 
-- **C7 / #219** — Cognitive Core Training bridge / `train export|review` (v1.66.0)
+- **Post-C7 closeout / #221** — memory reconcile v1.66.1
+- **C7 / #219** — Cognitive Core Training bridge (v1.66.0)
 - **C6 closeout / #218** — memory reconcile + C7 plan
 - **C6 / #216** — Cognitive Core REA / `rea investigate` (v1.65.0)
-- **C5 closeout / #215** — memory reconcile + C6 plan
 
-## Follow-on (not this plan)
+## Follow-on (after E2E)
 
-1. End-to-end Cognitive Core evaluation on a sandbox project
-2. Read-only persistent oversight (opt-in post-merge snapshot / drift proposals)
-3. Specialized Model Level 0 (local baseline on reviewed C7 exports)
+1. Read-only persistent oversight (opt-in post-merge snapshot / drift proposals)
+2. Specialized Model Level 0 (local baseline on reviewed C7 exports)
 
 ## Blockers
 
-None.
+None — waiting on Captain approval of `e2e-cognitive-core-evaluation`.
