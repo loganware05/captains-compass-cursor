@@ -2,7 +2,7 @@
 
 ## Current status
 
-**E2E Cognitive Core evaluation — AWAITING APPROVAL** on plan
+**E2E Cognitive Core evaluation — AWAITING APPROVAL** (docs PR [#223](https://github.com/loganware05/captains-compass-cursor/pull/223)) on plan
 `e2e-cognitive-core-evaluation`
 ([#222](https://github.com/loganware05/captains-compass-cursor/issues/222)).
 Post-C7 closeout **COMPLETE** (#221 / **v1.66.1** @ `96a8de3`).
