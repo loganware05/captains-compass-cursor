@@ -11,7 +11,7 @@ PR [#219](https://github.com/loganware05/captains-compass-cursor/pull/219) merge
 | Item | Value |
 |---|---|
 | On main | **v1.66.0** C7 Training bridge (#219) @ `dbb3b96` |
-| Active plan | `post-c7-closeout-state-reconciliation` **PR OPEN** |
+| Active plan | `post-c7-closeout-state-reconciliation` **PR OPEN** ([#221](https://github.com/loganware05/captains-compass-cursor/pull/221)) |
 | Branch | `cursor/220-post-c7-closeout-3ec1` |
 | Rollback | `rollback/pre-post-c7-closeout-state-reconciliation` @ `dbb3b96` |
 | Proposed release | **v1.66.1** (docs / memory reconcile) |

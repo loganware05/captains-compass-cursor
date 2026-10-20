@@ -1,4 +1,4 @@
-> **IN PROGRESS** — [#220](https://github.com/loganware05/captains-compass-cursor/issues/220).
+> **PR OPEN** — [#221](https://github.com/loganware05/captains-compass-cursor/pull/221) / [#220](https://github.com/loganware05/captains-compass-cursor/issues/220).
 > Plan ID `post-c7-closeout-state-reconciliation`.
 > Branch: `cursor/220-post-c7-closeout-3ec1`.
 > Rollback: `rollback/pre-post-c7-closeout-state-reconciliation` @ `dbb3b96`.

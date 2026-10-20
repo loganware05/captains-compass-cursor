@@ -1,12 +1,12 @@
 # Implementation Plan — Post-C7 Closeout and State Reconciliation
 
-- Status: **PR OPEN**
+- Status: **PR OPEN** ([#221](https://github.com/loganware05/captains-compass-cursor/pull/221))
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **PR OPEN** |
+| Status | **PR OPEN** ([#221](https://github.com/loganware05/captains-compass-cursor/pull/221)) |
 | Plan ID | `post-c7-closeout-state-reconciliation` |
 | Issue | [#220](https://github.com/loganware05/captains-compass-cursor/issues/220) |
 | Notion | [Cognitive Core](https://app.notion.com/p/3f8e6a901c438110882bceb01d2dd249) |
