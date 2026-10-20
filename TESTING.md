@@ -446,6 +446,15 @@ Unset `COMPASS_REA_ENABLED` → CLI exits non-zero. Hermetic fixture default;
 live needs `--allow-live` + checklist. See
 `.agent/evidence/c6-cognitive-core-rea-deep-analysis/VALIDATION.md`.
 
+Cognitive Core e2e evaluation (C1–C7; requires all Cognitive Core gates or `--enable-gates`):
+
+```bash
+./scripts/run-cognitive-core-e2e.sh --repo-root . --enable-gates --mode hermetic
+./scripts/northstar cognitive e2e --repo . --enable-gates
+# Evidence: .agent/evidence/e2e-cognitive-core-evaluation/
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_e2e_cognitive_core_evaluation -v
+```
+
 Cognitive Core Training bridge (C7; requires train-bridge flag):
 
 ```bash

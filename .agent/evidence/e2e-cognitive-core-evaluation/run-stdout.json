@@ -1,0 +1,136 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "auto_uploaded": false,
+  "baselines": {
+    "assess_backtest_pass_rate": 1.0,
+    "brain_goldset_rate": 1.0,
+    "brain_goldset_target": 0.9,
+    "cycle_authority_locked": true,
+    "rea_claim_kinds_ok": true,
+    "route_eval_case_count": 3,
+    "train_auto_uploaded": false
+  },
+  "evidence_path": ".agent/evidence/e2e-cognitive-core-evaluation/e2e-cc-0dc684488d.json",
+  "generated_at": "2026-10-20T23:06:21Z",
+  "mode": "hermetic",
+  "northstar_version": "1.66.1",
+  "notes": "Cognitive Core C1\u2013C7 e2e report. Aspirational metric thresholds are warn-only. Never grants authority, uploads training data, or promotes weights.",
+  "overall_status": "pass",
+  "plan_id": "e2e-cognitive-core-evaluation",
+  "report_id": "e2e-cc-0dc684488d",
+  "repository_sha": "bb1b5b949769600bcb848700b513dc99998cb4e7",
+  "schema_version": "1",
+  "stages": [
+    {
+      "details": {
+        "freshness": "fresh",
+        "snapshot_id": "pstate-30ac93bdb513",
+        "status_freshness": "fresh"
+      },
+      "id": "c1-brain-sync",
+      "milestone": "C1",
+      "status": "pass",
+      "summary": "brain sync freshness=fresh status=ok"
+    },
+    {
+      "details": {
+        "context_freshness": "fresh",
+        "evidence_linked": true,
+        "goldset": {
+          "expect_failures": [
+            "q08",
+            "q09",
+            "q10",
+            "q11",
+            "q12",
+            "q14",
+            "q15",
+            "q19",
+            "q20",
+            "q24",
+            "q28",
+            "q29"
+          ],
+          "linked": 30,
+          "rate": 1.0,
+          "target": 0.9,
+          "total": 30
+        }
+      },
+      "id": "c2-brain-context-goldset",
+      "milestone": "C2",
+      "status": "pass",
+      "summary": "context evidence_linked=True; goldset evidence-linked 30/30 (100.0%; target 90%; expect_kinds 57%)"
+    },
+    {
+      "details": {
+        "assessment_id": "assess-fdf9cb5176e4-04f19e",
+        "backtest": {
+          "misses": [],
+          "pass_rate": 1.0,
+          "passed": 5,
+          "total": 5
+        },
+        "band": "moderate",
+        "confidence": 0.75,
+        "difficulty_score": 29.83
+      },
+      "id": "c3-assess",
+      "milestone": "C3",
+      "status": "pass",
+      "summary": "band=moderate score=29.83; assess backtest 5/5 (100%)"
+    },
+    {
+      "details": {
+        "checkpoint_count": 1,
+        "execution_id": "cycle-c18ee4118e2c-f6c4f0",
+        "phase": "closed",
+        "status": "closed"
+      },
+      "id": "c4-cycle",
+      "milestone": "C4",
+      "status": "pass",
+      "summary": "cycle cycle-c18ee4118e2c-f6c4f0 closed; authority_locked=True"
+    },
+    {
+      "details": {
+        "adapter_class": "hosted",
+        "eval_case_count": 3,
+        "profile_id": "coding-strong",
+        "proposal_id": "route-b17d0b67942a-4c916b"
+      },
+      "id": "c5-model-route",
+      "milestone": "C5",
+      "status": "pass",
+      "summary": "adapter=hosted eval_cases=3"
+    },
+    {
+      "details": {
+        "claim_kinds": [
+          "hypothesis",
+          "observed"
+        ],
+        "packet_id": "rea-7031a5014faa-8e8730",
+        "run_mode": "fixture"
+      },
+      "id": "c6-rea",
+      "milestone": "C6",
+      "status": "pass",
+      "summary": "rea packet claim_kinds=['hypothesis', 'observed'] artifact_hash=True"
+    },
+    {
+      "details": {
+        "export_id": "train-export-d73f16474245-f00981",
+        "ready_for_specialized_model": false,
+        "run_mode": "recorded",
+        "trajectory_count": 10
+      },
+      "id": "c7-train-bridge",
+      "milestone": "C7",
+      "status": "pass",
+      "summary": "export_id=train-export-d73f16474245-f00981 trajectories=10 auto_uploaded=False"
+    }
+  ],
+  "warnings": []
+}

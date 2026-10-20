@@ -4,6 +4,20 @@
 
 ## Unreleased
 
+## 1.67.0 — 2026-10-20
+
+### Added
+
+- **E2E Cognitive Core evaluation** (#222):
+  - Gated hermetic harness `./scripts/run-cognitive-core-e2e.sh` /
+    `northstar cognitive e2e` composing C1–C7
+  - Schema `e2e-cognitive-core-report` (authority locked false; `auto_uploaded: false`)
+  - Baselines: brain goldset, assess backtest, route eval, cycle/REA/train locks
+  - Doctor fail-closed gate check; unit tests; evidence under
+    `.agent/evidence/e2e-cognitive-core-evaluation/`
+  - ADR-086; aspirational metric thresholds warn-only
+
+
 ### Added
 
 - **M55 Captain Handbook + Skills library fill (A1)** (OVA-71):

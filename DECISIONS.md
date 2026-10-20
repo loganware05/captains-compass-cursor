@@ -1,5 +1,26 @@
 # Decisions
 
+## ADR-086: E2E Cognitive Core Evaluation (v1.67.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-20
+- **Context:** Captain approved plan `e2e-cognitive-core-evaluation` (#222)
+  after post-C7 closeout (#221 / v1.66.1) and docs PR #223. The Oct 20
+  repository-state PDF required a cross-surface Cognitive Core evaluation
+  before persistent oversight or Specialized Model work.
+- **Decision:**
+  1. Add hermetic `run-cognitive-core-e2e.sh` / `northstar cognitive e2e`
+     requiring all Cognitive Core `COMPASS_*_ENABLED` gates (or `--enable-gates`).
+  2. Compose C1–C7 services into a schema-validated report with authority flags
+     locked false and `auto_uploaded: false`.
+  3. Record baselines (goldset rate, assess backtest, route eval, cycle/REA/train
+     locks); aspirational thresholds are warn-only for v1.67.0.
+  4. Optional `--mode sandbox`; CI stays offline-friendly.
+  5. Ship as **v1.67.0**.
+- **Consequences:** Operators can measure C1–C7 together without expanding
+  authority. Rollback `rollback/pre-e2e-cognitive-core-evaluation` @ `bb1b5b9`.
+
+
 ## ADR-085: Post-C7 Closeout State Reconciliation (v1.66.1)
 
 - **Status:** Accepted

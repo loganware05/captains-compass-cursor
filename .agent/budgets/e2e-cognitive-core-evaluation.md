@@ -2,8 +2,8 @@
 
 | Limit | Value | Used |
 |---|---|---|
-| Iterations | 10 | 0 (planning) |
-| Wall time | 6 hours | — |
+| Iterations | 10 | ~4 |
+| Wall time | 6 hours | <2h |
 | Scope | Hermetic C1–C7 e2e harness + evidence; sandbox optional | held |
 
-Status: AWAITING APPROVAL — no implementation yet.
+Status: implementing toward v1.67.0 PR.

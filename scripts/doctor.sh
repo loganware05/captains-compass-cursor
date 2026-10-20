@@ -646,6 +646,25 @@ PY
   else
     fail "train should exit 2 mentioning COMPASS_TRAIN_BRIDGE_ENABLED when unset (rc=$train_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/e2e-cognitive-core-report.schema.json" ]]; then
+    ok "e2e-cognitive-core-report.schema.json present"
+  else
+    fail "missing orchestrator/schemas/e2e-cognitive-core-report.schema.json"
+  fi
+  if [[ -x "$ROOT/scripts/run-cognitive-core-e2e.sh" ]]; then
+    ok "scripts/run-cognitive-core-e2e.sh present"
+  else
+    fail "missing executable scripts/run-cognitive-core-e2e.sh"
+  fi
+  set +e
+  e2e_out="$(env -u COMPASS_BRAIN_ENABLED -u COMPASS_ASSESS_ENABLED -u COMPASS_CYCLE_ENABLED -u COMPASS_ROUTE_ENABLED -u COMPASS_REA_ENABLED -u COMPASS_TRAIN_BRIDGE_ENABLED "$ROOT/scripts/run-cognitive-core-e2e.sh" --repo-root "$ROOT" 2>&1)"
+  e2e_rc=$?
+  set -e
+  if [[ "$e2e_rc" -eq 2 && "$e2e_out" == *"COMPASS_"* ]]; then
+    ok "cognitive e2e fail-closed when COMPASS_* gates unset"
+  else
+    fail "cognitive e2e should exit 2 mentioning COMPASS_* when gates unset (rc=$e2e_rc)"
+  fi
   if [[ -f "$ROOT/.agent/training-exports/.gitkeep" ]]; then
     ok ".agent/training-exports layout"
   else
