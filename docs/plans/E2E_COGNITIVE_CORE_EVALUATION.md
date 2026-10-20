@@ -1,4 +1,4 @@
-> **IN PROGRESS** — [#222](https://github.com/loganware05/captains-compass-cursor/issues/222).
+> **PR OPEN** — [#224](https://github.com/loganware05/captains-compass-cursor/pull/224) / [#222](https://github.com/loganware05/captains-compass-cursor/issues/222).
 > Plan ID `e2e-cognitive-core-evaluation`.
 > Branch: `cursor/222-e2e-cognitive-core-evaluation-3ec1`.
 > Rollback: `rollback/pre-e2e-cognitive-core-evaluation` @ `bb1b5b9`.

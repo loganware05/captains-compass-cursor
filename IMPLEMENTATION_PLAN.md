@@ -1,12 +1,12 @@
 # Implementation Plan — E2E Cognitive Core Evaluation
 
-- Status: **IN PROGRESS**
+- Status: **PR OPEN** ([#224](https://github.com/loganware05/captains-compass-cursor/pull/224))
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **IN PROGRESS** |
+| Status | **PR OPEN** ([#224](https://github.com/loganware05/captains-compass-cursor/pull/224)) |
 | Plan ID | `e2e-cognitive-core-evaluation` |
 | Issue | [#222](https://github.com/loganware05/captains-compass-cursor/issues/222) |
 | Notion | [Cognitive Core](https://app.notion.com/p/3f8e6a901c438110882bceb01d2dd249) |
@@ -41,7 +41,7 @@ authority.
 - [x] Fail-closed without required `COMPASS_*_ENABLED` flags
 - [x] Optional sandbox mode documented (`--mode sandbox`)
 - [x] Doctor + unit tests; offline default
-- [ ] Docs/ADR/CHANGELOG; PR opened after approval (standing order)
+- [x] Docs/ADR/CHANGELOG; PR opened after approval (standing order)
 
 ## Non-Goals
 

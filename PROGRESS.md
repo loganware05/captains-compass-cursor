@@ -2,7 +2,7 @@
 
 ## Current status
 
-**E2E Cognitive Core evaluation — IN PROGRESS** on plan
+**E2E Cognitive Core evaluation — PR OPEN** ([#224](https://github.com/loganware05/captains-compass-cursor/pull/224)) on plan
 `e2e-cognitive-core-evaluation`
 ([#222](https://github.com/loganware05/captains-compass-cursor/issues/222)).
 Approved 2026-10-20 after #223 merged (**v1.66.1** @ `bb1b5b9`).
@@ -10,11 +10,11 @@ Approved 2026-10-20 after #223 merged (**v1.66.1** @ `bb1b5b9`).
 | Item | Value |
 |---|---|
 | On main | **v1.66.1** (#223) @ `bb1b5b9` |
-| Active plan | `e2e-cognitive-core-evaluation` **IN PROGRESS** |
+| Active plan | `e2e-cognitive-core-evaluation` **PR OPEN** ([#224](https://github.com/loganware05/captains-compass-cursor/pull/224)) |
 | Branch | `cursor/222-e2e-cognitive-core-evaluation-3ec1` |
 | Rollback | `rollback/pre-e2e-cognitive-core-evaluation` @ `bb1b5b9` |
 | Release | **v1.67.0** |
-| Next | Open PR → Captain merge |
+| Next | Captain merge #224 |
 
 ## Cognitive Core track
 
@@ -28,7 +28,7 @@ Approved 2026-10-20 after #223 merged (**v1.66.1** @ `bb1b5b9`).
 | C6 — REA deep analysis | **Complete** (#216 / v1.65.0); closeout #218 |
 | C7 — Training bridge | **Complete** (#219 / v1.66.0) |
 | Post-C7 closeout | **Complete** (#221 / v1.66.1); plan docs #223 |
-| E2E Cognitive Core evaluation | **Implementing** (#222 / v1.67.0) |
+| E2E Cognitive Core evaluation | **PR open** ([#224](https://github.com/loganware05/captains-compass-cursor/pull/224) / v1.67.0) |
 
 ## Operator (C1–C7 + e2e)
 
