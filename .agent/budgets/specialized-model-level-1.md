@@ -7,3 +7,6 @@
 | Scope | On-device LoRA harness + external train path; no weight commit; no auto-promote | held |
 
 Status: implementing toward v1.70.0 PR.
+
+## Post-merge
+COMPLETE — merged #232 @ `d76ebd0` (2026-10-21).
