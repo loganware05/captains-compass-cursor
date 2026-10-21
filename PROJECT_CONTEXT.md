@@ -133,10 +133,9 @@ gh auth status
 
 ## Current Priorities
 
-**Specialized Model Level 1 COMPLETE** (**v1.70.0** @ `d76ebd0`,
-[#232](https://github.com/loganware05/captains-compass-cursor/pull/232)).
-**Next:** Specialized Model Level 2 plan `specialized-model-level-2` —
-**AWAITING APPROVAL** (single rented GPU QLoRA; cost-ack; weights outside
-control repo). Behavior Loop (M46–M54) remains complete at **v1.59.0**. Start
-here: `docs/guides/captain-handbook.md`. Live trading / AHF execution remains
-denied.
+**Specialized Model Level 2** (`specialized-model-level-2`) — **APPROVED /
+implementing** toward **v1.71.0** (single rented GPU QLoRA; `--cost-ack`;
+weights outside control repo; no auto-promote). Level 1 **COMPLETE**
+(**v1.70.0** / #232). Behavior Loop (M46–M54) remains complete at **v1.59.0**.
+Start here: `docs/guides/captain-handbook.md`. Live trading / AHF execution
+remains denied.

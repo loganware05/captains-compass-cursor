@@ -4,6 +4,24 @@
 
 ## Unreleased
 
+## 1.71.0 — 2026-10-21
+
+### Added
+
+- **Specialized Model Level 2 — single rented GPU QLoRA harness**
+  (plan `specialized-model-level-2`):
+  - Gated `./scripts/run-specialized-model.sh gpu prepare|submit|evaluate|pipeline`
+    / `northstar specialized gpu …`
+  - Job prepare from Level 1 datasets → `.agent/specialized-gpu-jobs/`
+  - Non-dry-run submit requires `--cost-ack`; external
+    `COMPASS_SPECIALIZED_GPU_RUNNER` or hermetic `--dry-run`
+  - Schemas `specialized-model-gpu-job` + `specialized-model-gpu-run`
+    (`weights_committed: false`, `auto_promoted: false`)
+  - Doctor fail-closed; unit tests; evidence under
+    `.agent/evidence/specialized-model-level-2/`
+  - ADR-090; cost attestation + weights-outside-repo notes
+
+
 ## 1.70.0 — 2026-10-21
 
 ### Added

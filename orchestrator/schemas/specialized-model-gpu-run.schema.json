@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/specialized-model-gpu-run.schema.json",
+  "title": "SpecializedModelGpuRun",
+  "description": "Level 2 rented GPU QLoRA run report. Weights outside control repo; never auto-promotes.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "run_id",
+    "plan_id",
+    "level",
+    "phase",
+    "repository_sha",
+    "northstar_version",
+    "job_id",
+    "job_path",
+    "dataset_id",
+    "dry_run",
+    "cost_acknowledged",
+    "adapter_root",
+    "baseline_scores",
+    "adapter_scores",
+    "comparison",
+    "checklist",
+    "warnings",
+    "overall_status",
+    "go_no_go",
+    "weights_committed",
+    "auto_promoted",
+    "approved_for_execution",
+    "authority_mutation",
+    "generated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "run_id": { "type": "string", "minLength": 1 },
+    "plan_id": { "type": "string", "const": "specialized-model-level-2" },
+    "level": { "type": "integer", "const": 2 },
+    "phase": {
+      "type": "string",
+      "enum": ["prepare", "submit", "evaluate"]
+    },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "job_id": { "type": ["string", "null"] },
+    "job_path": { "type": ["string", "null"] },
+    "dataset_id": { "type": ["string", "null"] },
+    "dry_run": { "type": "boolean" },
+    "cost_acknowledged": { "type": "boolean" },
+    "adapter_root": { "type": ["string", "null"] },
+    "train_metrics": {
+      "type": ["object", "null"],
+      "additionalProperties": true
+    },
+    "baseline_scores": {
+      "type": ["object", "null"],
+      "additionalProperties": true
+    },
+    "level1_scores": {
+      "type": ["object", "null"],
+      "additionalProperties": true
+    },
+    "adapter_scores": {
+      "type": ["object", "null"],
+      "additionalProperties": true
+    },
+    "comparison": {
+      "type": ["object", "null"],
+      "additionalProperties": true
+    },
+    "checklist": {
+      "type": "object",
+      "required": [
+        "license_reviewed",
+        "secrets_redacted_ack",
+        "pii_reviewed",
+        "provenance_recorded",
+        "weights_outside_control_repo_ack",
+        "holdout_retained",
+        "cost_acknowledged"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "license_reviewed": { "type": "boolean" },
+        "secrets_redacted_ack": { "type": "boolean" },
+        "pii_reviewed": { "type": "boolean" },
+        "provenance_recorded": { "type": "boolean" },
+        "weights_outside_control_repo_ack": { "type": "boolean" },
+        "holdout_retained": { "type": "boolean" },
+        "cost_acknowledged": { "type": "boolean" }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "overall_status": {
+      "type": "string",
+      "enum": ["pass", "warn", "fail"]
+    },
+    "go_no_go": {
+      "type": "string",
+      "enum": ["go", "no-go", "hold"]
+    },
+    "evidence_path": { "type": ["string", "null"] },
+    "notes": { "type": "string" },
+    "weights_committed": { "type": "boolean", "const": false },
+    "auto_promoted": { "type": "boolean", "const": false },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "generated_at": { "type": "string", "minLength": 1 }
+  }
+}

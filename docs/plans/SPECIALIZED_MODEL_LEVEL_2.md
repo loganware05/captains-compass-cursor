@@ -1,33 +1,30 @@
-> **AWAITING APPROVAL** (2026-10-21) — Plan ID `specialized-model-level-2`.
+> **PR OPEN** — [#234](https://github.com/loganware05/captains-compass-cursor/pull/234).
+> Plan ID `specialized-model-level-2`.
 > Docs PR: [#233](https://github.com/loganware05/captains-compass-cursor/pull/233).
-> Prerequisite: Level 1 **v1.70.0** / [#232](https://github.com/loganware05/captains-compass-cursor/pull/232).
+> Branch: `cursor/specialized-model-level-2-3ec1`.
+> Rollback: `rollback/pre-specialized-model-level-2` @ `e5256f1`.
 > Notion: [Specialized Model](https://app.notion.com/p/3f8e6a901c43815a8d24f99ba617737a).
 > Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
-> Issue: Captain files GitHub issue before or on approval (agent cannot create issues).
 
 # Specialized Model Level 2 — Single Rented GPU (QLoRA)
 
-Prerequisite: Level 1 on-device LoRA harness shipped (**v1.70.0**).
+Shipped toward **v1.71.0**: gated prepare/submit/evaluate with external GPU
+runner or hermetic `--dry-run`. Non-dry-run submit requires `--cost-ack`.
+Weights stay outside the control repo; never auto-promotes.
 
-## One-line summary
-
-Captain-cost-gated single rented GPU (≈16–24GB VRAM) QLoRA path for 3B–8B
-students: job manifest + remote trainer contract, cost estimate/ack, eval vs
-Level 0/1 baselines on the held-out gold set — weights outside the control
-repo; never auto-promote into Adaptive Intelligence.
-
-## Proposed operator surface
+## Operator surface
 
 ```bash
-COMPASS_SPECIALIZED_MODEL_ENABLED=1 \
-  ./scripts/northstar specialized gpu prepare|submit|evaluate \
-    --repo . [--dataset PATH] [--cost-ack] [--dry-run]
+./scripts/run-specialized-model.sh gpu prepare|submit|evaluate|pipeline \
+  --repo-root . --enable-gates --dry-run \
+  [--dataset PATH] [--job PATH] [--adapter-root PATH] [--cost-ack]
+./scripts/northstar specialized gpu pipeline --repo . --enable-gates --dry-run
 ```
 
-`submit` invokes an **external** GPU job runner (env/path); control repo
-records manifests + cost + eval only. CI stays hermetic (`--dry-run`).
+Live submit: `--cost-ack` + `COMPASS_SPECIALIZED_GPU_RUNNER` +
+`COMPASS_SPECIALIZED_ADAPTER_ROOT` (outside this repo).
 
 ## Non-goals
 
-Level 3+ multi-GPU / research cluster; storing weights in this repo;
-automatic promotion; spending without Captain cost ack; live GPU jobs in CI.
+Level 3+ multi-GPU; storing weights in this repo; auto-promotion; unbounded
+GPU spend without cost ack.

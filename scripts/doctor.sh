@@ -583,6 +583,25 @@ PY
   else
     fail "specialized-model lora should exit 2 mentioning COMPASS_SPECIALIZED_MODEL_ENABLED when unset (rc=$sm1_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/specialized-model-gpu-job.schema.json" ]]; then
+    ok "specialized-model-gpu-job.schema.json present"
+  else
+    fail "missing orchestrator/schemas/specialized-model-gpu-job.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/specialized-model-gpu-run.schema.json" ]]; then
+    ok "specialized-model-gpu-run.schema.json present"
+  else
+    fail "missing orchestrator/schemas/specialized-model-gpu-run.schema.json"
+  fi
+  set +e
+  sm2_out="$(env -u COMPASS_SPECIALIZED_MODEL_ENABLED "$ROOT/scripts/run-specialized-model.sh" gpu prepare --repo-root "$ROOT" --dataset "$ROOT/tests/fixtures/specialized-model-gpu/sample-dataset.json" 2>&1)"
+  sm2_rc=$?
+  set -e
+  if [[ "$sm2_rc" -eq 2 && "$sm2_out" == *"COMPASS_SPECIALIZED_MODEL_ENABLED"* ]]; then
+    ok "specialized-model gpu fail-closed when COMPASS_SPECIALIZED_MODEL_ENABLED unset"
+  else
+    fail "specialized-model gpu should exit 2 mentioning COMPASS_SPECIALIZED_MODEL_ENABLED when unset (rc=$sm2_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/project-state-snapshot.schema.json" ]]; then
     ok "project-state-snapshot.schema.json present"
   else

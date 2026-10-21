@@ -1,0 +1,7 @@
+{
+  "auto_promoted": false,
+  "kind": "fixture-gpu-adapter",
+  "qlora": true,
+  "schema_version": "1",
+  "weights_present": false
+}
