@@ -7,3 +7,6 @@
 | Scope | Hermetic C1–C7 e2e harness + evidence; sandbox optional | held |
 
 Status: implementing toward v1.67.0 PR.
+
+## Post-merge
+COMPLETE — merged #224 @ `05dcfba` (2026-10-21).

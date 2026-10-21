@@ -133,9 +133,10 @@ gh auth status
 
 ## Current Priorities
 
-**E2E Cognitive Core evaluation** (`e2e-cognitive-core-evaluation`,
-[#222](https://github.com/loganware05/captains-compass-cursor/issues/222)) —
-**IN PROGRESS** toward **v1.67.0**. C1–C7 complete; post-C7 closeout **COMPLETE**
-(**v1.66.1** / #221). After E2E: read-only persistent oversight, then Specialized
-Model Level 0. Behavior Loop (M46–M54) remains complete at **v1.59.0**. Start
-here: `docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.
+**E2E Cognitive Core evaluation COMPLETE** (**v1.67.0** @ `05dcfba`,
+[#224](https://github.com/loganware05/captains-compass-cursor/pull/224)).
+**Next:** read-only persistent oversight plan
+`read-only-persistent-oversight` ([#225](https://github.com/loganware05/captains-compass-cursor/issues/225))
+— **AWAITING APPROVAL**. Then Specialized Model Level 0. Behavior Loop
+(M46–M54) remains complete at **v1.59.0**. Start here:
+`docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.

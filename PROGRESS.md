@@ -2,19 +2,16 @@
 
 ## Current status
 
-**E2E Cognitive Core evaluation — PR OPEN** ([#224](https://github.com/loganware05/captains-compass-cursor/pull/224)) on plan
-`e2e-cognitive-core-evaluation`
-([#222](https://github.com/loganware05/captains-compass-cursor/issues/222)).
-Approved 2026-10-20 after #223 merged (**v1.66.1** @ `bb1b5b9`).
+**Read-only persistent oversight — AWAITING APPROVAL** (docs PR pending) on plan
+`read-only-persistent-oversight`
+([#225](https://github.com/loganware05/captains-compass-cursor/issues/225)).
+E2E Cognitive Core evaluation **COMPLETE** (#224 / **v1.67.0** @ `05dcfba`).
 
 | Item | Value |
 |---|---|
-| On main | **v1.66.1** (#223) @ `bb1b5b9` |
-| Active plan | `e2e-cognitive-core-evaluation` **PR OPEN** ([#224](https://github.com/loganware05/captains-compass-cursor/pull/224)) |
-| Branch | `cursor/222-e2e-cognitive-core-evaluation-3ec1` |
-| Rollback | `rollback/pre-e2e-cognitive-core-evaluation` @ `bb1b5b9` |
-| Release | **v1.67.0** |
-| Next | Captain merge #224 |
+| On main | **v1.67.0** E2E Cognitive Core (#224) @ `05dcfba` |
+| Active plan | `read-only-persistent-oversight` **AWAITING APPROVAL** |
+| Next | Captain approve oversight → implement → commit → PR |
 
 ## Cognitive Core track
 
@@ -27,14 +24,14 @@ Approved 2026-10-20 after #223 merged (**v1.66.1** @ `bb1b5b9`).
 | C5 — Adaptive routing | **Complete** (#213 / v1.64.0) |
 | C6 — REA deep analysis | **Complete** (#216 / v1.65.0); closeout #218 |
 | C7 — Training bridge | **Complete** (#219 / v1.66.0) |
-| Post-C7 closeout | **Complete** (#221 / v1.66.1); plan docs #223 |
-| E2E Cognitive Core evaluation | **PR open** ([#224](https://github.com/loganware05/captains-compass-cursor/pull/224) / v1.67.0) |
+| Post-C7 closeout | **Complete** (#221 / v1.66.1) |
+| E2E Cognitive Core evaluation | **Complete** (#224 / v1.67.0) |
+| Read-only persistent oversight | **Next** (#225) |
 
 ## Operator (C1–C7 + e2e)
 
 ```bash
 ./scripts/run-cognitive-core-e2e.sh --repo-root . --enable-gates --mode hermetic
-# or
 ./scripts/northstar cognitive e2e --repo . --enable-gates
 ```
 
@@ -45,15 +42,14 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Recently completed
 
+- **E2E / #224** — Cognitive Core C1–C7 hermetic evaluation (v1.67.0)
 - **Docs PR / #223** — post-C7 COMPLETE + E2E plan
 - **Post-C7 closeout / #221** — memory reconcile v1.66.1
-- **C7 / #219** — Training bridge (v1.66.0)
 
-## Follow-on (after E2E)
+## Follow-on (after oversight)
 
-1. Read-only persistent oversight
-2. Specialized Model Level 0
+1. Specialized Model Level 0 (local baseline on reviewed C7 exports)
 
 ## Blockers
 
-None.
+None — waiting on Captain approval of `read-only-persistent-oversight`.
