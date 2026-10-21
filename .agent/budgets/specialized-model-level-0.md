@@ -7,3 +7,6 @@
 | Scope | Level 0 baseline only; no weight training | held |
 
 Status: implementing toward v1.69.0 PR.
+
+## Post-merge
+COMPLETE — merged #230 @ `e04169d` (2026-10-21).

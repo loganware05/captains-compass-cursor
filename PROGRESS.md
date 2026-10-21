@@ -2,19 +2,15 @@
 
 ## Current status
 
-**Specialized Model Level 0 — PR OPEN**
-([#230](https://github.com/loganware05/captains-compass-cursor/pull/230))
-on plan `specialized-model-level-0`
-([#228](https://github.com/loganware05/captains-compass-cursor/issues/228)).
-Implementation toward **v1.69.0** on branch
-`cursor/228-specialized-model-level-0-3ec1`. Rollback
-`rollback/pre-specialized-model-level-0` @ `6ffa7c7`.
+**Specialized Model Level 1 — AWAITING APPROVAL** (docs PR pending) on plan
+`specialized-model-level-1`.
+Specialized Model Level 0 **COMPLETE** (#230 / **v1.69.0** @ `e04169d`).
 
 | Item | Value |
 |---|---|
-| On main | **v1.68.0** oversight (#227) + docs (#229) @ `6ffa7c7` |
-| Active plan | `specialized-model-level-0` **APPROVED** / implementing |
-| Next | Merge Level 0 PR → Captain closeout |
+| On main | **v1.69.0** Level 0 (#230) @ `e04169d` |
+| Active plan | `specialized-model-level-1` **AWAITING APPROVAL** |
+| Next | Captain file issue + approve Level 1 → implement → commit → PR |
 
 ## Cognitive Core / Specialized Model track
 
@@ -24,13 +20,13 @@ Implementation toward **v1.69.0** on branch
 | Post-C7 closeout | **Complete** (#221 / v1.66.1) |
 | E2E Cognitive Core evaluation | **Complete** (#224 / v1.67.0) |
 | Read-only persistent oversight | **Complete** (#227 / v1.68.0) |
-| Specialized Model Level 0 | **In PR** (#228) → v1.69.0 |
+| Specialized Model Level 0 | **Complete** (#230 / v1.69.0) |
+| Specialized Model Level 1 | **Next** (on-device LoRA) |
 
 ## Operator
 
 ```bash
-./scripts/run-specialized-model.sh baseline --repo-root . --enable-gates \
-  [--export-path tests/fixtures/specialized-model-gold/sample-export.json]
+./scripts/run-specialized-model.sh baseline --repo-root . --enable-gates
 ./scripts/northstar specialized baseline --repo . --enable-gates
 ```
 
@@ -41,14 +37,15 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Recently completed
 
+- **Level 0 / #230** — Specialized Model Level 0 local baseline (v1.69.0)
 - **Docs PR / #229** — oversight COMPLETE + Level 0 plan
 - **Oversight / #227** — read-only persistent oversight (v1.68.0)
-- **E2E / #224** — Cognitive Core C1–C7 hermetic evaluation (v1.67.0)
 
-## Follow-on (after Level 0)
+## Follow-on (after Level 1)
 
-1. Specialized Model Level 1 (on-device LoRA) — only after Level 0 baseline
+1. Specialized Model Level 2 (single rented GPU) — only if Level 1 shows limits + ROI
 
 ## Blockers
 
-None — awaiting Captain merge of Level 0 PR.
+None — waiting on Captain approval of `specialized-model-level-1` (and a
+tracking GitHub issue).

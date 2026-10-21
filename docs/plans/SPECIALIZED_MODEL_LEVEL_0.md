@@ -1,15 +1,14 @@
-> **PR OPEN** — [#230](https://github.com/loganware05/captains-compass-cursor/pull/230) /
-> [#228](https://github.com/loganware05/captains-compass-cursor/issues/228).
-> Plan ID `specialized-model-level-0`.
-> Branch: `cursor/228-specialized-model-level-0-3ec1`.
+> **COMPLETE** (2026-10-21) — Merged [#230](https://github.com/loganware05/captains-compass-cursor/pull/230)
+> → `main` @ `e04169d` (**v1.69.0**). Plan ID `specialized-model-level-0`.
+> Issue: [#228](https://github.com/loganware05/captains-compass-cursor/issues/228) (close when convenient).
 > Rollback: `rollback/pre-specialized-model-level-0` @ `6ffa7c7`.
-> Notion: [Specialized Model](https://app.notion.com/p/3f8e6a901c43815a8d24f99ba617737a).
+> Evidence: `.agent/evidence/specialized-model-level-0/`.
 > Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
 
 # Specialized Model Level 0 — Local Baseline (No Fine-Tuning)
 
-Shipped toward **v1.69.0**: no-training local baseline over a held-out gold set
-with optional C7 export attach. Weights stay outside the control repo.
+Shipped **v1.69.0**: gated hermetic local baseline over a 24-task held-out gold
+set with optional C7 export attach. Weights stay outside the control repo.
 
 ## Operator surface
 
@@ -19,7 +18,6 @@ with optional C7 export attach. Weights stay outside the control repo.
 ./scripts/northstar specialized baseline --repo . --enable-gates
 ```
 
-## Non-goals
+## Next
 
-LoRA/QLoRA (Level 1+), weight promotion, training HEAD into weights as a
-retrieval substitute, automatic uploads, live GPU rental.
+Specialized Model Level 1 (`specialized-model-level-1`) — **AWAITING APPROVAL**.
