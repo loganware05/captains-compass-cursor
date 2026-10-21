@@ -2,7 +2,7 @@
 
 ## Current status
 
-**Read-only persistent oversight — AWAITING APPROVAL** (docs PR pending) on plan
+**Read-only persistent oversight — AWAITING APPROVAL** (docs PR [#226](https://github.com/loganware05/captains-compass-cursor/pull/226)) on plan
 `read-only-persistent-oversight`
 ([#225](https://github.com/loganware05/captains-compass-cursor/issues/225)).
 E2E Cognitive Core evaluation **COMPLETE** (#224 / **v1.67.0** @ `05dcfba`).
