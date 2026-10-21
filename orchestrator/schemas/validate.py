@@ -59,6 +59,7 @@ SCHEMA_FILES = (
     "training-export-review.schema.json",
     "e2e-cognitive-core-report.schema.json",
     "oversight-run.schema.json",
+    "specialized-model-baseline-report.schema.json",
 )
 
 

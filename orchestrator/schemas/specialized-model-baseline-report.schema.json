@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/specialized-model-baseline-report.schema.json",
+  "title": "SpecializedModelBaselineReport",
+  "description": "Specialized Model Level 0 local baseline report. No weight training; never auto-uploads or grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "report_id",
+    "plan_id",
+    "level",
+    "repository_sha",
+    "northstar_version",
+    "gold_set_path",
+    "gold_task_count",
+    "scores",
+    "export_attach",
+    "checklist",
+    "warnings",
+    "overall_status",
+    "go_no_go",
+    "weights_trained",
+    "auto_uploaded",
+    "approved_for_execution",
+    "authority_mutation",
+    "generated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "report_id": { "type": "string", "minLength": 1 },
+    "plan_id": { "type": "string", "const": "specialized-model-level-0" },
+    "level": { "type": "integer", "const": 0 },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "gold_set_path": { "type": "string", "minLength": 1 },
+    "gold_task_count": { "type": "integer", "minimum": 0 },
+    "scores": {
+      "type": "object",
+      "required": [
+        "retrieval_rate",
+        "prompt_rate",
+        "stub_student_rate",
+        "retrieval_passed",
+        "prompt_passed",
+        "stub_student_passed",
+        "task_total"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "retrieval_rate": { "type": ["number", "null"] },
+        "prompt_rate": { "type": ["number", "null"] },
+        "stub_student_rate": { "type": ["number", "null"] },
+        "retrieval_passed": { "type": "integer", "minimum": 0 },
+        "prompt_passed": { "type": "integer", "minimum": 0 },
+        "stub_student_passed": { "type": "integer", "minimum": 0 },
+        "task_total": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "export_attach": {
+      "type": "object",
+      "required": [
+        "attached",
+        "export_id",
+        "export_path",
+        "trajectory_count",
+        "checklist_complete",
+        "auto_uploaded"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "attached": { "type": "boolean" },
+        "export_id": { "type": ["string", "null"] },
+        "export_path": { "type": ["string", "null"] },
+        "trajectory_count": { "type": ["integer", "null"] },
+        "checklist_complete": { "type": "boolean" },
+        "auto_uploaded": { "type": "boolean", "const": false }
+      }
+    },
+    "checklist": {
+      "type": "object",
+      "required": [
+        "license_reviewed",
+        "secrets_redacted_ack",
+        "pii_reviewed",
+        "provenance_recorded",
+        "weights_outside_control_repo_ack"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "license_reviewed": { "type": "boolean" },
+        "secrets_redacted_ack": { "type": "boolean" },
+        "pii_reviewed": { "type": "boolean" },
+        "provenance_recorded": { "type": "boolean" },
+        "weights_outside_control_repo_ack": { "type": "boolean" }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "overall_status": {
+      "type": "string",
+      "enum": ["pass", "warn", "fail"]
+    },
+    "go_no_go": {
+      "type": "string",
+      "enum": ["go", "no-go", "hold"]
+    },
+    "evidence_path": { "type": ["string", "null"] },
+    "notes": { "type": "string" },
+    "weights_trained": { "type": "boolean", "const": false },
+    "auto_uploaded": { "type": "boolean", "const": false },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "generated_at": { "type": "string", "minLength": 1 }
+  }
+}

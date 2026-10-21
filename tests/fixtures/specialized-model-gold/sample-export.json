@@ -1,0 +1,42 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "auto_uploaded": false,
+  "citations": [
+    {
+      "claim_kind": "documented",
+      "kind": "file",
+      "ref": "tests/fixtures/specialized-model-gold/sample-export.json"
+    }
+  ],
+  "dataset_schema_version": "northstar.training-export.v1",
+  "export_id": "train-export-sm0-fixture-0001",
+  "export_path": "tests/fixtures/specialized-model-gold/sample-export.json",
+  "generated_at": "2026-10-21T00:00:00Z",
+  "northstar_version": "1.69.0",
+  "notes": "Hermetic C7 export fixture for Level 0 attach tests.",
+  "permission_checklist": {
+    "export_authorized": true,
+    "license_reviewed": true,
+    "pii_reviewed": true,
+    "secrets_redacted_ack": true,
+    "specialized_model_handoff_ack": true
+  },
+  "plan_id_filter": "specialized-model-level-0",
+  "repository_sha": "fixture",
+  "run_mode": "fixture",
+  "schema_version": "1",
+  "source": "experiences",
+  "trajectories": [
+    {
+      "experience_id": "exp-sm0-fixture-0001",
+      "lessons": [
+        "Level 0 baseline consumes reviewed C7 exports only."
+      ],
+      "objective": "Fixture trajectory for Specialized Model Level 0 attach",
+      "outcome": "success",
+      "source": "experience"
+    }
+  ],
+  "trajectory_count": 1
+}

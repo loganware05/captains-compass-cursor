@@ -1,0 +1,505 @@
+{
+  "schema_version": "1",
+  "description": "Specialized Model Level 0 held-out gold set (starter 24). Hermetic retrieval/prompt/stub-student baselines; no live models.",
+  "target_pass_rate": 0.9,
+  "task_count": 24,
+  "categories": [
+    "planning",
+    "review",
+    "state_citation",
+    "tools",
+    "triage"
+  ],
+  "tasks": [
+    {
+      "id": "sm0-01",
+      "category": "state_citation",
+      "query": "How does brain detect stale HEAD after sync?",
+      "expected_keywords": [
+        "snapshot",
+        "sha",
+        "stale"
+      ],
+      "evidence_snippets": [
+        "Project-state snapshots cite repository SHA.",
+        "Brain sync marks freshness stale when HEAD moves."
+      ],
+      "prompt_bundle": {
+        "objective": "How does brain detect stale HEAD after sync?",
+        "evidence": "Project-state snapshots cite repository SHA. | Brain sync marks freshness stale when HEAD moves.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-01 (state_citation): Project-state snapshots cite repository SHA.; Brain sync marks freshness stale when HEAD moves. Keywords: snapshot, sha, stale."
+    },
+    {
+      "id": "sm0-02",
+      "category": "state_citation",
+      "query": "Must snapshots cite repository SHA?",
+      "expected_keywords": [
+        "sha",
+        "snapshot",
+        "cite"
+      ],
+      "evidence_snippets": [
+        "Every project-state snapshot must cite the repository SHA."
+      ],
+      "prompt_bundle": {
+        "objective": "Must snapshots cite repository SHA?",
+        "evidence": "Every project-state snapshot must cite the repository SHA.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-02 (state_citation): Every project-state snapshot must cite the repository SHA. Keywords: sha, snapshot, cite."
+    },
+    {
+      "id": "sm0-03",
+      "category": "state_citation",
+      "query": "What env var enables the brain surface?",
+      "expected_keywords": [
+        "compass_brain_enabled",
+        "gate",
+        "brain"
+      ],
+      "evidence_snippets": [
+        "COMPASS_BRAIN_ENABLED=1 gates northstar brain sync|status|show."
+      ],
+      "prompt_bundle": {
+        "objective": "What env var enables the brain surface?",
+        "evidence": "COMPASS_BRAIN_ENABLED=1 gates northstar brain sync|status|show.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-03 (state_citation): COMPASS_BRAIN_ENABLED=1 gates northstar brain sync|status|show. Keywords: compass_brain_enabled, gate, brain."
+    },
+    {
+      "id": "sm0-04",
+      "category": "state_citation",
+      "query": "Where is NorthStar VERSION tracked?",
+      "expected_keywords": [
+        "version",
+        "changelog",
+        "release"
+      ],
+      "evidence_snippets": [
+        "VERSION file and CHANGELOG.md track NorthStar releases."
+      ],
+      "prompt_bundle": {
+        "objective": "Where is NorthStar VERSION tracked?",
+        "evidence": "VERSION file and CHANGELOG.md track NorthStar releases.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-04 (state_citation): VERSION file and CHANGELOG.md track NorthStar releases. Keywords: version, changelog, release."
+    },
+    {
+      "id": "sm0-05",
+      "category": "state_citation",
+      "query": "Where are milestone validation reports stored?",
+      "expected_keywords": [
+        "evidence",
+        "agent",
+        "report"
+      ],
+      "evidence_snippets": [
+        "Evidence packets live under .agent/evidence/<plan-id>/.",
+        "Keyword anchor: report."
+      ],
+      "prompt_bundle": {
+        "objective": "Where are milestone validation reports stored?",
+        "evidence": "Evidence packets live under .agent/evidence/<plan-id>/. | Keyword anchor: report.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-05 (state_citation): Evidence packets live under .agent/evidence/<plan-id>/.; Keyword anchor: report. Keywords: evidence, agent, report."
+    },
+    {
+      "id": "sm0-06",
+      "category": "triage",
+      "query": "Does Project Overseer mutate authority?",
+      "expected_keywords": [
+        "authority",
+        "proposal",
+        "read-only"
+      ],
+      "evidence_snippets": [
+        "Overseer is read-oriented; reconcile proposals never auto-apply.",
+        "Keyword anchor: authority.",
+        "Keyword anchor: read-only."
+      ],
+      "prompt_bundle": {
+        "objective": "Does Project Overseer mutate authority?",
+        "evidence": "Overseer is read-oriented; reconcile proposals never auto-apply. | Keyword anchor: authority. | Keyword anchor: read-only.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-06 (triage): Overseer is read-oriented; reconcile proposals never auto-apply.; Keyword anchor: authority.; Keyword anchor: read-only. Keywords: authority, proposal, read-only."
+    },
+    {
+      "id": "sm0-07",
+      "category": "triage",
+      "query": "Are brain responses allowed to set approved_for_execution?",
+      "expected_keywords": [
+        "approved_for_execution",
+        "false",
+        "authority"
+      ],
+      "evidence_snippets": [
+        "Brain responses keep approved_for_execution false.",
+        "Keyword anchor: authority."
+      ],
+      "prompt_bundle": {
+        "objective": "Are brain responses allowed to set approved_for_execution?",
+        "evidence": "Brain responses keep approved_for_execution false. | Keyword anchor: authority.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-07 (triage): Brain responses keep approved_for_execution false.; Keyword anchor: authority. Keywords: approved_for_execution, false, authority."
+    },
+    {
+      "id": "sm0-08",
+      "category": "triage",
+      "query": "Is skill promotion still Captain-gated?",
+      "expected_keywords": [
+        "captain",
+        "promotion",
+        "gate"
+      ],
+      "evidence_snippets": [
+        "Skill promotion remains Captain-gated after Learning Review."
+      ],
+      "prompt_bundle": {
+        "objective": "Is skill promotion still Captain-gated?",
+        "evidence": "Skill promotion remains Captain-gated after Learning Review.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-08 (triage): Skill promotion remains Captain-gated after Learning Review. Keywords: captain, promotion, gate."
+    },
+    {
+      "id": "sm0-09",
+      "category": "triage",
+      "query": "Can agents silently rewrite PROJECT_CONTEXT?",
+      "expected_keywords": [
+        "project_context",
+        "approval",
+        "plan"
+      ],
+      "evidence_snippets": [
+        "Agents must not silently rewrite PROJECT_CONTEXT without plan approval."
+      ],
+      "prompt_bundle": {
+        "objective": "Can agents silently rewrite PROJECT_CONTEXT?",
+        "evidence": "Agents must not silently rewrite PROJECT_CONTEXT without plan approval.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-09 (triage): Agents must not silently rewrite PROJECT_CONTEXT without plan approval. Keywords: project_context, approval, plan."
+    },
+    {
+      "id": "sm0-10",
+      "category": "triage",
+      "query": "What standing order follows plan approval?",
+      "expected_keywords": [
+        "implement",
+        "validate",
+        "pull request"
+      ],
+      "evidence_snippets": [
+        "Standing order: approve then implement, validate, commit, open PR.",
+        "Keyword anchor: pull request."
+      ],
+      "prompt_bundle": {
+        "objective": "What standing order follows plan approval?",
+        "evidence": "Standing order: approve then implement, validate, commit, open PR. | Keyword anchor: pull request.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-10 (triage): Standing order: approve then implement, validate, commit, open PR.; Keyword anchor: pull request. Keywords: implement, validate, pull request."
+    },
+    {
+      "id": "sm0-11",
+      "category": "planning",
+      "query": "How should agents checkpoint before feature work?",
+      "expected_keywords": [
+        "checkpoint",
+        "cycle",
+        "rollback"
+      ],
+      "evidence_snippets": [
+        "Use cycle checkpoint and a rollback tag before feature implementation."
+      ],
+      "prompt_bundle": {
+        "objective": "How should agents checkpoint before feature work?",
+        "evidence": "Use cycle checkpoint and a rollback tag before feature implementation.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-11 (planning): Use cycle checkpoint and a rollback tag before feature implementation. Keywords: checkpoint, cycle, rollback."
+    },
+    {
+      "id": "sm0-12",
+      "category": "planning",
+      "query": "What plan status unlocks product implementation?",
+      "expected_keywords": [
+        "approved",
+        "implementation_plan",
+        "awaiting"
+      ],
+      "evidence_snippets": [
+        "IMPLEMENTATION_PLAN must be APPROVED before product file changes.",
+        "Keyword anchor: awaiting."
+      ],
+      "prompt_bundle": {
+        "objective": "What plan status unlocks product implementation?",
+        "evidence": "IMPLEMENTATION_PLAN must be APPROVED before product file changes. | Keyword anchor: awaiting.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-12 (planning): IMPLEMENTATION_PLAN must be APPROVED before product file changes.; Keyword anchor: awaiting. Keywords: approved, implementation_plan, awaiting."
+    },
+    {
+      "id": "sm0-13",
+      "category": "planning",
+      "query": "How are task graphs produced for plans?",
+      "expected_keywords": [
+        "task",
+        "graph",
+        "planner"
+      ],
+      "evidence_snippets": [
+        "Planner produces task graphs from approved implementation plans."
+      ],
+      "prompt_bundle": {
+        "objective": "How are task graphs produced for plans?",
+        "evidence": "Planner produces task graphs from approved implementation plans.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-13 (planning): Planner produces task graphs from approved implementation plans. Keywords: task, graph, planner."
+    },
+    {
+      "id": "sm0-14",
+      "category": "planning",
+      "query": "What belongs in a rollback plan section?",
+      "expected_keywords": [
+        "rollback",
+        "tag",
+        "revert"
+      ],
+      "evidence_snippets": [
+        "Rollback plans name a git tag and revert strategy."
+      ],
+      "prompt_bundle": {
+        "objective": "What belongs in a rollback plan section?",
+        "evidence": "Rollback plans name a git tag and revert strategy.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-14 (planning): Rollback plans name a git tag and revert strategy. Keywords: rollback, tag, revert."
+    },
+    {
+      "id": "sm0-15",
+      "category": "planning",
+      "query": "Which milestone added TF-IDF hybrid knowledge ranking?",
+      "expected_keywords": [
+        "knowledge",
+        "hybrid",
+        "retrieval"
+      ],
+      "evidence_snippets": [
+        "C2 memory/retrieval added hybrid TF-IDF knowledge ranking."
+      ],
+      "prompt_bundle": {
+        "objective": "Which milestone added TF-IDF hybrid knowledge ranking?",
+        "evidence": "C2 memory/retrieval added hybrid TF-IDF knowledge ranking.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-15 (planning): C2 memory/retrieval added hybrid TF-IDF knowledge ranking. Keywords: knowledge, hybrid, retrieval."
+    },
+    {
+      "id": "sm0-16",
+      "category": "tools",
+      "query": "Which CLI syncs project-state snapshots?",
+      "expected_keywords": [
+        "northstar",
+        "brain",
+        "sync"
+      ],
+      "evidence_snippets": [
+        "northstar brain sync creates SHA-cited project-state snapshots."
+      ],
+      "prompt_bundle": {
+        "objective": "Which CLI syncs project-state snapshots?",
+        "evidence": "northstar brain sync creates SHA-cited project-state snapshots.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-16 (tools): northstar brain sync creates SHA-cited project-state snapshots. Keywords: northstar, brain, sync."
+    },
+    {
+      "id": "sm0-17",
+      "category": "tools",
+      "query": "What doctor checks cover Cognitive Core schemas?",
+      "expected_keywords": [
+        "doctor",
+        "schema",
+        "fail-closed"
+      ],
+      "evidence_snippets": [
+        "scripts/doctor.sh verifies schemas and fail-closed gates."
+      ],
+      "prompt_bundle": {
+        "objective": "What doctor checks cover Cognitive Core schemas?",
+        "evidence": "scripts/doctor.sh verifies schemas and fail-closed gates.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-17 (tools): scripts/doctor.sh verifies schemas and fail-closed gates. Keywords: doctor, schema, fail-closed."
+    },
+    {
+      "id": "sm0-18",
+      "category": "tools",
+      "query": "How do you run read-only persistent oversight?",
+      "expected_keywords": [
+        "oversight",
+        "enable-gates",
+        "status"
+      ],
+      "evidence_snippets": [
+        "run-oversight.sh --enable-gates composes brain and Overseer.",
+        "Keyword anchor: status."
+      ],
+      "prompt_bundle": {
+        "objective": "How do you run read-only persistent oversight?",
+        "evidence": "run-oversight.sh --enable-gates composes brain and Overseer. | Keyword anchor: status.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-18 (tools): run-oversight.sh --enable-gates composes brain and Overseer.; Keyword anchor: status. Keywords: oversight, enable-gates, status."
+    },
+    {
+      "id": "sm0-19",
+      "category": "tools",
+      "query": "How do you export C7 training trajectories?",
+      "expected_keywords": [
+        "train",
+        "export",
+        "checklist"
+      ],
+      "evidence_snippets": [
+        "northstar train export requires the permission checklist flags."
+      ],
+      "prompt_bundle": {
+        "objective": "How do you export C7 training trajectories?",
+        "evidence": "northstar train export requires the permission checklist flags.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-19 (tools): northstar train export requires the permission checklist flags. Keywords: train, export, checklist."
+    },
+    {
+      "id": "sm0-20",
+      "category": "tools",
+      "query": "How do you run hermetic Cognitive Core e2e?",
+      "expected_keywords": [
+        "cognitive",
+        "e2e",
+        "enable-gates"
+      ],
+      "evidence_snippets": [
+        "northstar cognitive e2e --enable-gates runs C1\u2013C7 hermetically."
+      ],
+      "prompt_bundle": {
+        "objective": "How do you run hermetic Cognitive Core e2e?",
+        "evidence": "northstar cognitive e2e --enable-gates runs C1\u2013C7 hermetically.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-20 (tools): northstar cognitive e2e --enable-gates runs C1\u2013C7 hermetically. Keywords: cognitive, e2e, enable-gates."
+    },
+    {
+      "id": "sm0-21",
+      "category": "review",
+      "query": "Is adaptive model routing automatic for weight promotion?",
+      "expected_keywords": [
+        "routing",
+        "promotion",
+        "false"
+      ],
+      "evidence_snippets": [
+        "Adaptive routing never auto-promotes model weights.",
+        "Keyword anchor: promotion.",
+        "Keyword anchor: false."
+      ],
+      "prompt_bundle": {
+        "objective": "Is adaptive model routing automatic for weight promotion?",
+        "evidence": "Adaptive routing never auto-promotes model weights. | Keyword anchor: promotion. | Keyword anchor: false.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-21 (review): Adaptive routing never auto-promotes model weights.; Keyword anchor: promotion.; Keyword anchor: false. Keywords: routing, promotion, false."
+    },
+    {
+      "id": "sm0-22",
+      "category": "review",
+      "query": "Does C7 training bridge auto-upload datasets?",
+      "expected_keywords": [
+        "auto_uploaded",
+        "false",
+        "train"
+      ],
+      "evidence_snippets": [
+        "Training export manifests lock auto_uploaded to false."
+      ],
+      "prompt_bundle": {
+        "objective": "Does C7 training bridge auto-upload datasets?",
+        "evidence": "Training export manifests lock auto_uploaded to false.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-22 (review): Training export manifests lock auto_uploaded to false. Keywords: auto_uploaded, false, train."
+    },
+    {
+      "id": "sm0-23",
+      "category": "review",
+      "query": "What claim kinds are allowed in REA evidence?",
+      "expected_keywords": [
+        "observed",
+        "documented",
+        "proposed"
+      ],
+      "evidence_snippets": [
+        "REA evidence packets use observed, documented, external, or proposed claims."
+      ],
+      "prompt_bundle": {
+        "objective": "What claim kinds are allowed in REA evidence?",
+        "evidence": "REA evidence packets use observed, documented, external, or proposed claims.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-23 (review): REA evidence packets use observed, documented, external, or proposed claims. Keywords: observed, documented, proposed."
+    },
+    {
+      "id": "sm0-24",
+      "category": "review",
+      "query": "Should Level 0 train weights in the control repo?",
+      "expected_keywords": [
+        "weights",
+        "outside",
+        "level"
+      ],
+      "evidence_snippets": [
+        "Level 0 does not train weights; adapters stay outside the control repo."
+      ],
+      "prompt_bundle": {
+        "objective": "Should Level 0 train weights in the control repo?",
+        "evidence": "Level 0 does not train weights; adapters stay outside the control repo.",
+        "constraints": "Level 0 only \u2014 no fine-tuning, no weight training, no auto-upload, authority flags remain false.",
+        "output_format": "Short evidence-linked answer citing keywords; do not claim weight training."
+      },
+      "stub_student_answer": "Stub student answer for sm0-24 (review): Level 0 does not train weights; adapters stay outside the control repo. Keywords: weights, outside, level."
+    }
+  ]
+}

@@ -545,6 +545,25 @@ PY
   else
     fail "oversight should exit 2 mentioning COMPASS_STATUS_ENABLED when unset (rc=$ov_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/specialized-model-baseline-report.schema.json" ]]; then
+    ok "specialized-model-baseline-report.schema.json present"
+  else
+    fail "missing orchestrator/schemas/specialized-model-baseline-report.schema.json"
+  fi
+  if [[ -x "$ROOT/scripts/run-specialized-model.sh" ]]; then
+    ok "scripts/run-specialized-model.sh present"
+  else
+    fail "missing executable scripts/run-specialized-model.sh"
+  fi
+  set +e
+  sm_out="$(env -u COMPASS_SPECIALIZED_MODEL_ENABLED "$ROOT/scripts/run-specialized-model.sh" baseline --repo-root "$ROOT" 2>&1)"
+  sm_rc=$?
+  set -e
+  if [[ "$sm_rc" -eq 2 && "$sm_out" == *"COMPASS_SPECIALIZED_MODEL_ENABLED"* ]]; then
+    ok "specialized-model fail-closed when COMPASS_SPECIALIZED_MODEL_ENABLED unset"
+  else
+    fail "specialized-model should exit 2 mentioning COMPASS_SPECIALIZED_MODEL_ENABLED when unset (rc=$sm_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/project-state-snapshot.schema.json" ]]; then
     ok "project-state-snapshot.schema.json present"
   else
