@@ -1,0 +1,44 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "auto_uploaded": false,
+  "checklist": {
+    "license_reviewed": true,
+    "pii_reviewed": true,
+    "provenance_recorded": true,
+    "secrets_redacted_ack": true,
+    "weights_outside_control_repo_ack": true
+  },
+  "evidence_path": ".agent/evidence/specialized-model-level-0/sm0-41ac292c54.json",
+  "export_attach": {
+    "attached": true,
+    "auto_uploaded": false,
+    "checklist_complete": true,
+    "export_id": "train-export-sm0-fixture-0001",
+    "export_path": "tests/fixtures/specialized-model-gold/sample-export.json",
+    "trajectory_count": 1
+  },
+  "generated_at": "2026-10-21T03:01:23Z",
+  "go_no_go": "go",
+  "gold_set_path": "/agent/repos/captains-compass-cursor/tests/fixtures/specialized-model-gold/tasks.json",
+  "gold_task_count": 24,
+  "level": 0,
+  "northstar_version": "1.69.0",
+  "notes": "Specialized Model Level 0 local baseline. No fine-tuning, no weight training, no auto-upload. Weights/adapters stay outside this control repo. Promote to Level 1 only after Captain review of go/no-go.",
+  "overall_status": "pass",
+  "plan_id": "specialized-model-level-0",
+  "report_id": "sm0-41ac292c54",
+  "repository_sha": "6ffa7c7b2a44d4760754a84064a0c12a971aa1ab",
+  "schema_version": "1",
+  "scores": {
+    "prompt_passed": 24,
+    "prompt_rate": 1.0,
+    "retrieval_passed": 24,
+    "retrieval_rate": 1.0,
+    "stub_student_passed": 24,
+    "stub_student_rate": 1.0,
+    "task_total": 24
+  },
+  "warnings": [],
+  "weights_trained": false
+}

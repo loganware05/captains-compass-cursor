@@ -456,6 +456,18 @@ Read-only persistent oversight (requires status gate; optional brain):
 PYTHONPATH=. python3 -m unittest tests.orchestrator.test_read_only_persistent_oversight -v
 ```
 
+Specialized Model Level 0 baseline (no fine-tuning; requires specialized-model gate):
+
+```bash
+./scripts/run-specialized-model.sh baseline --repo-root . --enable-gates \
+  [--gold PATH] [--export-id ID | --export-path PATH]
+./scripts/northstar specialized baseline --repo . --enable-gates
+# Gold: tests/fixtures/specialized-model-gold/
+# Evidence: .agent/evidence/specialized-model-level-0/
+# Weights/adapters stay outside this control repo.
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_specialized_model_level_0 -v
+```
+
 Cognitive Core e2e evaluation (C1–C7; requires all Cognitive Core gates or `--enable-gates`):
 
 ```bash

@@ -4,6 +4,22 @@
 
 ## Unreleased
 
+## 1.69.0 — 2026-10-21
+
+### Added
+
+- **Specialized Model Level 0 — local baseline** (#228):
+  - Gated `./scripts/run-specialized-model.sh baseline` /
+    `northstar specialized baseline` (`COMPASS_SPECIALIZED_MODEL_ENABLED`)
+  - Held-out gold set (`tests/fixtures/specialized-model-gold/`, 24 tasks)
+  - Schema `specialized-model-baseline-report` (`weights_trained: false`,
+    `auto_uploaded: false`, authority locked)
+  - Optional C7 training-export attach; license/redaction/provenance checklist
+  - Doctor fail-closed check; unit tests; evidence under
+    `.agent/evidence/specialized-model-level-0/`
+  - ADR-088; weights/adapters remain outside this control repo
+
+
 ## 1.68.0 — 2026-10-21
 
 ### Added

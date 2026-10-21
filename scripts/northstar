@@ -2,7 +2,7 @@
 # northstar — topology-free launcher for NorthStar control-plane operations (M24 / M34).
 #
 # One product surface for Skills Learning Loop + Code Reviewer:
-#   northstar skills … | review | intent | outcomes | repair | precision | evaluate | learn | instructions | prompt-eval | policy | status | brain | assess | cycle | learning | model | rea | train | cognitive | oversight | provenance | examples
+#   northstar skills … | review | intent | outcomes | repair | precision | evaluate | learn | instructions | prompt-eval | policy | status | brain | assess | cycle | learning | model | rea | train | cognitive | oversight | specialized | provenance | examples
 #
 # Scripts always live in this control repository. Product/sandbox checkouts do
 # not contain ./scripts/run-skill-learning-loop.sh (or siblings).
@@ -61,6 +61,7 @@ Surfaces (one-line purpose):
   train       Cognitive Core Training bridge (C7) — requires COMPASS_TRAIN_BRIDGE_ENABLED=1
   cognitive   Cognitive Core C1–C7 e2e evaluation — requires all COMPASS_* Cognitive Core gates
   oversight   Read-only persistent oversight — requires COMPASS_STATUS_ENABLED=1 (optional brain)
+  specialized Specialized Model Level 0 baseline — requires COMPASS_SPECIALIZED_MODEL_ENABLED=1
   provenance Execution provenance ledger (M53) — requires COMPASS_PROVENANCE_ENABLED=1
   examples   Behavior exemplars (M53) — proposal-only; requires COMPASS_PROVENANCE_ENABLED=1
 
@@ -127,6 +128,8 @@ Commands:
   northstar cognitive e2e [--repo PATH] [--mode hermetic|sandbox] [--enable-gates]
   northstar oversight run [--repo PATH] [--since SHA] [--enable-gates]
   northstar status post-merge [--repo PATH] [--since SHA] [--enable-gates]
+  northstar specialized baseline [--repo PATH] [--gold PATH]
+            [--export-id ID | --export-path PATH] [--enable-gates]
             [--independent-eval-complete] [--security-review-complete]
             [--captain-approval-recorded] [--repo PATH]
   northstar provenance capture --execution-id ID [--repo PATH]
@@ -762,6 +765,29 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown oversight subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  specialized)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      baseline)
+        exec "$ROOT/scripts/run-specialized-model.sh" baseline "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown specialized subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;

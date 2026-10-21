@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-088: Specialized Model Level 0 Local Baseline (v1.69.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-21
+- **Context:** Captain approved plan `specialized-model-level-0` (#228) after
+  oversight (#227 / v1.68.0) and docs PR #229. Notion Specialized Model ladder
+  requires no-training baselines before any LoRA.
+- **Decision:**
+  1. Add gated `run-specialized-model.sh baseline` / `northstar specialized
+     baseline` requiring `COMPASS_SPECIALIZED_MODEL_ENABLED`.
+  2. Freeze a 24-task hermetic gold set; score retrieval, prompt-bundle, and
+     stub-student offline (no live model download in CI).
+  3. Optionally attach a C7 training-export manifest; reuse permission checklist.
+  4. Lock `weights_trained`, `auto_uploaded`, and authority flags to false in
+     schema; weights/adapters stay outside the control repo.
+  5. Ship as **v1.69.0**.
+- **Consequences:** Operators can measure Level 0 go/no-go without training.
+  Rollback `rollback/pre-specialized-model-level-0` @ `6ffa7c7`.
+
+
 ## ADR-087: Read-Only Persistent Oversight (v1.68.0)
 
 - **Status:** Accepted
