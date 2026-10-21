@@ -1,0 +1,66 @@
+{
+  "action_count": 0,
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "brain_synced": true,
+  "compare_status": "compared",
+  "evidence_path": ".agent/evidence/read-only-persistent-oversight/oversight-149f19fc71.json",
+  "finding_count": 1,
+  "generated_at": "2026-10-21T01:57:25Z",
+  "northstar_version": "1.67.0",
+  "notes": "Read-only persistent oversight run. Compose of optional brain sync + Overseer snapshot/compare/reconcile. Reconcile proposals are never auto-applied; Captain reviews via PR if adopting suggestions.",
+  "overall_status": "pass",
+  "plan_id": "read-only-persistent-oversight",
+  "proposal_applied": false,
+  "proposal_id": "srec-b5d0855b445b",
+  "proposal_path": "/agent/repos/captains-compass-cursor/.agent/status/reconcile-proposals/srec-b5d0855b445b/proposal.json",
+  "repository_sha": "c5d435e1acd09ba210ab8aab5caa18b475ac80f9",
+  "run_id": "oversight-149f19fc71",
+  "schema_version": "1",
+  "since_sha": "05dcfba",
+  "snapshot_id": "psnap-7cbc2d6eaad3",
+  "steps": [
+    {
+      "details": {
+        "freshness": "fresh",
+        "snapshot_id": "pstate-cd72eff551e2"
+      },
+      "id": "brain-sync",
+      "status": "pass",
+      "summary": "brain sync freshness=fresh"
+    },
+    {
+      "details": {
+        "finding_count": 1,
+        "plan_status": "**AWAITING APPROVAL**",
+        "skill_count_fs": 47,
+        "snapshot_id": "psnap-7cbc2d6eaad3"
+      },
+      "id": "status-snapshot",
+      "status": "pass",
+      "summary": "snapshot psnap-7cbc2d6eaad3 findings=1"
+    },
+    {
+      "details": {
+        "added_finding_kinds": [],
+        "resolved_finding_kinds": [],
+        "since": "05dcfba"
+      },
+      "id": "status-compare",
+      "status": "pass",
+      "summary": "compared since 05dcfba added=0 resolved=0"
+    },
+    {
+      "details": {
+        "action_count": 0,
+        "applied": false,
+        "proposal_id": "srec-b5d0855b445b",
+        "proposal_path": "/agent/repos/captains-compass-cursor/.agent/status/reconcile-proposals/srec-b5d0855b445b/proposal.json"
+      },
+      "id": "status-reconcile",
+      "status": "pass",
+      "summary": "reconcile proposal srec-b5d0855b445b actions=0 applied=False"
+    }
+  ],
+  "warnings": []
+}

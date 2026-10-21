@@ -526,6 +526,25 @@ PY
   else
     fail "status should exit 2 mentioning COMPASS_STATUS_ENABLED when unset (rc=$st_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/oversight-run.schema.json" ]]; then
+    ok "oversight-run.schema.json present"
+  else
+    fail "missing orchestrator/schemas/oversight-run.schema.json"
+  fi
+  if [[ -x "$ROOT/scripts/run-oversight.sh" ]]; then
+    ok "scripts/run-oversight.sh present"
+  else
+    fail "missing executable scripts/run-oversight.sh"
+  fi
+  set +e
+  ov_out="$(env -u COMPASS_STATUS_ENABLED -u COMPASS_BRAIN_ENABLED "$ROOT/scripts/run-oversight.sh" --repo-root "$ROOT" 2>&1)"
+  ov_rc=$?
+  set -e
+  if [[ "$ov_rc" -eq 2 && "$ov_out" == *"COMPASS_STATUS_ENABLED"* ]]; then
+    ok "oversight fail-closed when COMPASS_STATUS_ENABLED unset"
+  else
+    fail "oversight should exit 2 mentioning COMPASS_STATUS_ENABLED when unset (rc=$ov_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/project-state-snapshot.schema.json" ]]; then
     ok "project-state-snapshot.schema.json present"
   else

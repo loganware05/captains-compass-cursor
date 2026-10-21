@@ -65,7 +65,7 @@ agentic engineering process across multiple product repositories.
 7. Documentation, budget/session templates, evidence matrix, multi-runtime adapters, evals
 8. Installation, update, uninstall, and doctor scripts
 9. Control-repo CI (doctor + tests + harness evals)
-10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3), persistent roles + bounded weight apply (v1.8.0 M4), knowledge steward (v1.9.0 M5), hybrid vector search (v1.10.0 M6), performance knowledge + live Stars TI (v1.11.0 M7), procedure ingest + TI cache (v1.12.0 M8), skill lifecycle + Artifact Context (v1.13.0 M9), external knowledge + HF file TI (v1.14.0 M10), fixture embeddings + package-registry file TI (v1.15.0 M11), **code review pipeline (v1.30.0 M27)**, **filesystem-gated context (v1.41.0 M40)**, **optional DecisionProvider / Jev shadow skill suggestion (v1.42.0 M41)**, **behavior loop M46–M54 (evaluate → learn → instructions → prompt-eval → policy promotion → Project Overseer status/Skill → provenance + exemplars → operator closure wiring)**, **Cognitive Core C1 project-state / `northstar brain` (v1.60.0)**, **Cognitive Core C2 memory/retrieval / `brain context` (v1.61.0)**, **Cognitive Core C3 difficulty / `assess project` (v1.62.0)**, **Cognitive Core C4 adaptive cycle / `cycle` + `learning review` (v1.63.0)**, **Cognitive Core C5 adaptive routing / `model route|evaluate` (v1.64.0)**, **Cognitive Core C6 REA / `rea investigate` (v1.65.0)**, **Cognitive Core C7 Training bridge / `train export|review` (v1.66.0)**, **Cognitive Core e2e evaluation / `cognitive e2e` (v1.67.0)**
+10. **Orchestrator module** (`orchestrator/`) — planning (v1.5.0+), telemetry/file TI (v1.6.0), evaluator/routing/proficiency (v1.7.0 M3), persistent roles + bounded weight apply (v1.8.0 M4), knowledge steward (v1.9.0 M5), hybrid vector search (v1.10.0 M6), performance knowledge + live Stars TI (v1.11.0 M7), procedure ingest + TI cache (v1.12.0 M8), skill lifecycle + Artifact Context (v1.13.0 M9), external knowledge + HF file TI (v1.14.0 M10), fixture embeddings + package-registry file TI (v1.15.0 M11), **code review pipeline (v1.30.0 M27)**, **filesystem-gated context (v1.41.0 M40)**, **optional DecisionProvider / Jev shadow skill suggestion (v1.42.0 M41)**, **behavior loop M46–M54 (evaluate → learn → instructions → prompt-eval → policy promotion → Project Overseer status/Skill → provenance + exemplars → operator closure wiring)**, **Cognitive Core C1 project-state / `northstar brain` (v1.60.0)**, **Cognitive Core C2 memory/retrieval / `brain context` (v1.61.0)**, **Cognitive Core C3 difficulty / `assess project` (v1.62.0)**, **Cognitive Core C4 adaptive cycle / `cycle` + `learning review` (v1.63.0)**, **Cognitive Core C5 adaptive routing / `model route|evaluate` (v1.64.0)**, **Cognitive Core C6 REA / `rea investigate` (v1.65.0)**, **Cognitive Core C7 Training bridge / `train export|review` (v1.66.0)**, **Cognitive Core e2e evaluation / `cognitive e2e` (v1.67.0)**, **read-only persistent oversight / `oversight run` (v1.68.0)**
 
 ## External Services
 
@@ -133,10 +133,9 @@ gh auth status
 
 ## Current Priorities
 
-**E2E Cognitive Core evaluation COMPLETE** (**v1.67.0** @ `05dcfba`,
-[#224](https://github.com/loganware05/captains-compass-cursor/pull/224)).
-**Next:** read-only persistent oversight plan
-`read-only-persistent-oversight` ([#225](https://github.com/loganware05/captains-compass-cursor/issues/225))
-— **AWAITING APPROVAL**. Then Specialized Model Level 0. Behavior Loop
-(M46–M54) remains complete at **v1.59.0**. Start here:
-`docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.
+**Read-only persistent oversight** (`read-only-persistent-oversight`,
+[#225](https://github.com/loganware05/captains-compass-cursor/issues/225)) —
+**IN PROGRESS** toward **v1.68.0**. E2E evaluation **COMPLETE** (**v1.67.0** /
+#224). After oversight: Specialized Model Level 0. Behavior Loop (M46–M54)
+remains complete at **v1.59.0**. Start here: `docs/guides/captain-handbook.md`.
+Live trading / AHF execution remains denied.

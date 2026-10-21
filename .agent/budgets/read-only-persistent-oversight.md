@@ -2,8 +2,8 @@
 
 | Limit | Value | Used |
 |---|---|---|
-| Iterations | 10 | 0 (planning) |
-| Wall time | 6 hours | — |
-| Scope | Opt-in oversight composer over status/brain; proposal-only | held |
+| Iterations | 10 | ~3 |
+| Wall time | 6 hours | <2h |
+| Scope | Opt-in oversight composer; proposal-only | held |
 
-Status: AWAITING APPROVAL — no implementation yet.
+Status: implementing toward v1.68.0 PR.
