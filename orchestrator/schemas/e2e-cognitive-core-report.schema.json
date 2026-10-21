@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/e2e-cognitive-core-report.schema.json",
+  "title": "E2ECognitiveCoreReport",
+  "description": "Hermetic C1–C7 Cognitive Core evaluation report. Evidence-only; never grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "report_id",
+    "mode",
+    "repository_sha",
+    "northstar_version",
+    "stages",
+    "baselines",
+    "warnings",
+    "overall_status",
+    "approved_for_execution",
+    "authority_mutation",
+    "auto_uploaded",
+    "generated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "report_id": { "type": "string", "minLength": 1 },
+    "mode": { "type": "string", "enum": ["hermetic", "sandbox"] },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "plan_id": { "type": ["string", "null"] },
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "milestone", "status", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "milestone": {
+            "type": "string",
+            "enum": ["C1", "C2", "C3", "C4", "C5", "C6", "C7"]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pass", "warn", "fail", "skipped"]
+          },
+          "summary": { "type": "string" },
+          "details": { "type": "object", "additionalProperties": true }
+        }
+      }
+    },
+    "baselines": {
+      "type": "object",
+      "required": [
+        "brain_goldset_rate",
+        "brain_goldset_target",
+        "assess_backtest_pass_rate",
+        "route_eval_case_count",
+        "cycle_authority_locked",
+        "rea_claim_kinds_ok",
+        "train_auto_uploaded"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "brain_goldset_rate": { "type": ["number", "null"] },
+        "brain_goldset_target": { "type": ["number", "null"] },
+        "assess_backtest_pass_rate": { "type": ["number", "null"] },
+        "route_eval_case_count": { "type": ["integer", "null"] },
+        "cycle_authority_locked": { "type": "boolean" },
+        "rea_claim_kinds_ok": { "type": "boolean" },
+        "train_auto_uploaded": { "type": "boolean" }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "overall_status": {
+      "type": "string",
+      "enum": ["pass", "warn", "fail"]
+    },
+    "evidence_path": { "type": ["string", "null"] },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "auto_uploaded": { "type": "boolean", "const": false },
+    "generated_at": { "type": "string", "minLength": 1 }
+  }
+}

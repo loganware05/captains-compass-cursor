@@ -6,7 +6,7 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.66.1
+## Current version: 1.67.0
 
 ### Included
 

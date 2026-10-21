@@ -57,6 +57,7 @@ SCHEMA_FILES = (
     "rea-evidence-packet.schema.json",
     "training-export-manifest.schema.json",
     "training-export-review.schema.json",
+    "e2e-cognitive-core-report.schema.json",
 )
 
 
