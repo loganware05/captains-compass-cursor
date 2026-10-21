@@ -1,0 +1,10 @@
+{
+  "dataset_id": "smds-604dc23cdd84",
+  "dry_run": true,
+  "generated_at": "2026-10-21T04:32:53Z",
+  "notes": "Hermetic dry-run \u2014 no weights trained or written.",
+  "sample_count": 1,
+  "schema_version": "1",
+  "status": "dry-run",
+  "steps": 0
+}

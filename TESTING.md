@@ -468,6 +468,17 @@ Specialized Model Level 0 baseline (no fine-tuning; requires specialized-model g
 PYTHONPATH=. python3 -m unittest tests.orchestrator.test_specialized_model_level_0 -v
 ```
 
+Specialized Model Level 1 on-device LoRA (same gate; CI uses `--dry-run`):
+
+```bash
+./scripts/run-specialized-model.sh lora pipeline --repo-root . --enable-gates \
+  --export-path tests/fixtures/specialized-model-gold/sample-export.json --dry-run
+./scripts/northstar specialized lora prepare|train|evaluate|pipeline --repo . --enable-gates
+# Live train: COMPASS_SPECIALIZED_LORA_TRAINER + COMPASS_SPECIALIZED_ADAPTER_ROOT (outside repo)
+# Evidence: .agent/evidence/specialized-model-level-1/
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_specialized_model_level_1 -v
+```
+
 Cognitive Core e2e evaluation (C1–C7; requires all Cognitive Core gates or `--enable-gates`):
 
 ```bash

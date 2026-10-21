@@ -1,0 +1,62 @@
+{
+  "adapter_root": "/agent/repos/captains-compass-cursor/tests/fixtures/specialized-model-lora/fixture-adapter",
+  "adapter_scores": {
+    "prompt_rate": 1.0,
+    "retrieval_rate": 1.0,
+    "stub_student_rate": 1.0,
+    "task_total": 24
+  },
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "auto_promoted": false,
+  "baseline_scores": {
+    "prompt_rate": 1.0,
+    "retrieval_rate": 1.0,
+    "stub_student_rate": 1.0,
+    "task_total": 24
+  },
+  "checklist": {
+    "holdout_retained": true,
+    "license_reviewed": true,
+    "pii_reviewed": true,
+    "provenance_recorded": true,
+    "secrets_redacted_ack": true,
+    "weights_outside_control_repo_ack": true
+  },
+  "comparison": {
+    "adapter_min_rate": 1.0,
+    "baseline_min_rate": 1.0,
+    "prompt_delta": 0.0,
+    "retrieval_delta": 0.0,
+    "stub_student_delta": 0.0
+  },
+  "dataset_id": "smds-604dc23cdd84",
+  "dataset_path": "/agent/repos/captains-compass-cursor/.agent/specialized-datasets/smds-604dc23cdd84.json",
+  "dry_run": true,
+  "evidence_path": ".agent/evidence/specialized-model-level-1/sm1-78559e1e33.json",
+  "generated_at": "2026-10-21T04:32:53Z",
+  "go_no_go": "hold",
+  "level": 1,
+  "northstar_version": "1.70.0",
+  "notes": "Specialized Model Level 1 LoRA evaluate. Weights/adapters stay outside this control repo. Never auto-promotes into Adaptive Intelligence routing.",
+  "overall_status": "warn",
+  "phase": "evaluate",
+  "plan_id": "specialized-model-level-1",
+  "repository_sha": "2507da66a70b4cb1e554bc7d1c2788ef517404e8",
+  "run_id": "sm1-78559e1e33",
+  "schema_version": "1",
+  "train_metrics": {
+    "dataset_id": "smds-604dc23cdd84",
+    "dry_run": true,
+    "generated_at": "2026-10-21T04:32:53Z",
+    "notes": "Hermetic dry-run \u2014 no weights trained or written.",
+    "sample_count": 1,
+    "schema_version": "1",
+    "status": "dry-run",
+    "steps": 0
+  },
+  "warnings": [
+    "dry-run evaluate \u2014 fixture adapter; no live LoRA weights"
+  ],
+  "weights_committed": false
+}

@@ -104,3 +104,12 @@ wandb/
 # Test scratch
 /tmp-install-*/
 *.log
+
+# Specialized Model weights/adapters (must stay outside control repo)
+*.safetensors
+*.gguf
+*.mlx
+*.npz
+.agent/specialized-adapters/
+.agent/specialized-datasets/**
+!.agent/specialized-datasets/.gitkeep
