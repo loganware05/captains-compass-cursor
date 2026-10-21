@@ -133,9 +133,10 @@ gh auth status
 
 ## Current Priorities
 
-**Read-only persistent oversight** (`read-only-persistent-oversight`,
-[#225](https://github.com/loganware05/captains-compass-cursor/issues/225)) —
-**IN PROGRESS** toward **v1.68.0**. E2E evaluation **COMPLETE** (**v1.67.0** /
-#224). After oversight: Specialized Model Level 0. Behavior Loop (M46–M54)
-remains complete at **v1.59.0**. Start here: `docs/guides/captain-handbook.md`.
-Live trading / AHF execution remains denied.
+**Read-only persistent oversight COMPLETE** (**v1.68.0** @ `f5bbf24`,
+[#227](https://github.com/loganware05/captains-compass-cursor/pull/227)).
+**Next:** Specialized Model Level 0 plan `specialized-model-level-0`
+([#228](https://github.com/loganware05/captains-compass-cursor/issues/228)) —
+**AWAITING APPROVAL** (no fine-tuning; local baseline + gold set). Behavior Loop
+(M46–M54) remains complete at **v1.59.0**. Start here:
+`docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.
