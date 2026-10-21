@@ -2,7 +2,9 @@
 
 ## Current status
 
-**Specialized Model Level 1 — PR OPEN** on plan `specialized-model-level-1`.
+**Specialized Model Level 1 — PR OPEN**
+([#232](https://github.com/loganware05/captains-compass-cursor/pull/232))
+on plan `specialized-model-level-1`.
 Implementation toward **v1.70.0** on branch
 `cursor/specialized-model-level-1-3ec1`. Rollback
 `rollback/pre-specialized-model-level-1` @ `2507da6`.

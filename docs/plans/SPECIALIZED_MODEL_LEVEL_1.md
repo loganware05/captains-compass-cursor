@@ -1,4 +1,5 @@
-> **PR OPEN** — Plan ID `specialized-model-level-1`.
+> **PR OPEN** — [#232](https://github.com/loganware05/captains-compass-cursor/pull/232).
+> Plan ID `specialized-model-level-1`.
 > Docs PR: [#231](https://github.com/loganware05/captains-compass-cursor/pull/231).
 > Branch: `cursor/specialized-model-level-1-3ec1`.
 > Rollback: `rollback/pre-specialized-model-level-1` @ `2507da6`.
