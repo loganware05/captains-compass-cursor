@@ -48,6 +48,7 @@ Launcher: `"$CONTROL/scripts/northstar" <surface> …`
 | `evaluate` / `learn` / `instructions` / `prompt-eval` / `policy` | Behavior Loop (observe → pattern → compose → eval → promote policy) | Each needs `COMPASS_*_ENABLED=1`; never auto-promotes Skills |
 | `status` | Project Overseer snapshot / explain / reconcile | `COMPASS_STATUS_ENABLED=1`; proposal-only reconcile |
 | `oversight` / `status post-merge` | Read-only persistent oversight compose | `COMPASS_STATUS_ENABLED=1`; optional brain; never auto-applies |
+| `specialized` | Specialized Model Level 0 local baseline | `COMPASS_SPECIALIZED_MODEL_ENABLED=1`; no fine-tuning; weights outside control repo |
 | `brain` | Cognitive Core project-state + memory/retrieval context | `COMPASS_BRAIN_ENABLED=1`; C1 snapshots under `.agent/project-state/`; C2 `brain context --query` |
 | `assess` | Cognitive Core difficulty / capability-fit | `COMPASS_ASSESS_ENABLED=1`; advisory score/band only — never bypasses approval |
 | `cycle` / `learning` | Cognitive Core Adaptive Development Loop (begin→checkpoint→close + Learning Review) | `COMPASS_CYCLE_ENABLED=1`; begin also needs assess flag; draft proposals only — never auto-promote |

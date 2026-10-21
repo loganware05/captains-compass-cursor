@@ -1,5 +1,6 @@
-> **PR OPEN** — Plan ID `specialized-model-level-0`.
-> Issue: [#228](https://github.com/loganware05/captains-compass-cursor/issues/228).
+> **PR OPEN** — [#230](https://github.com/loganware05/captains-compass-cursor/pull/230) /
+> [#228](https://github.com/loganware05/captains-compass-cursor/issues/228).
+> Plan ID `specialized-model-level-0`.
 > Branch: `cursor/228-specialized-model-level-0-3ec1`.
 > Rollback: `rollback/pre-specialized-model-level-0` @ `6ffa7c7`.
 > Notion: [Specialized Model](https://app.notion.com/p/3f8e6a901c43815a8d24f99ba617737a).

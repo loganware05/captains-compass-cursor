@@ -9,6 +9,7 @@
 | Status | **APPROVED** |
 | Plan ID | `specialized-model-level-0` |
 | Issue | [#228](https://github.com/loganware05/captains-compass-cursor/issues/228) |
+| Implementation PR | [#230](https://github.com/loganware05/captains-compass-cursor/pull/230) |
 | Docs PR | [#229](https://github.com/loganware05/captains-compass-cursor/pull/229) |
 | Notion | [Specialized Model — Mac M2 Training](https://app.notion.com/p/3f8e6a901c43815a8d24f99ba617737a) |
 | Product | **NorthStar** (control repo) |
