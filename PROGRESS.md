@@ -2,7 +2,7 @@
 
 ## Current status
 
-**Read-only persistent oversight — IN PROGRESS** on plan
+**Read-only persistent oversight — PR OPEN** ([#227](https://github.com/loganware05/captains-compass-cursor/pull/227)) on plan
 `read-only-persistent-oversight`
 ([#225](https://github.com/loganware05/captains-compass-cursor/issues/225)).
 Approved 2026-10-21 after #226 merged (**v1.67.0** @ `c5d435e`).
@@ -10,11 +10,11 @@ Approved 2026-10-21 after #226 merged (**v1.67.0** @ `c5d435e`).
 | Item | Value |
 |---|---|
 | On main | **v1.67.0** (#226) @ `c5d435e` |
-| Active plan | `read-only-persistent-oversight` **IN PROGRESS** |
+| Active plan | `read-only-persistent-oversight` **PR OPEN** ([#227](https://github.com/loganware05/captains-compass-cursor/pull/227)) |
 | Branch | `cursor/225-read-only-persistent-oversight-3ec1` |
 | Rollback | `rollback/pre-read-only-persistent-oversight` @ `c5d435e` |
 | Release | **v1.68.0** |
-| Next | Open PR → Captain merge |
+| Next | Captain merge #227 |
 
 ## Cognitive Core track
 
@@ -23,7 +23,7 @@ Approved 2026-10-21 after #226 merged (**v1.67.0** @ `c5d435e`).
 | C1–C7 | **Complete** through v1.66.0 |
 | Post-C7 closeout | **Complete** (#221 / v1.66.1) |
 | E2E Cognitive Core evaluation | **Complete** (#224 / v1.67.0) |
-| Read-only persistent oversight | **Implementing** (#225 / v1.68.0) |
+| Read-only persistent oversight | **PR open** ([#227](https://github.com/loganware05/captains-compass-cursor/pull/227) / v1.68.0) |
 
 ## Operator
 

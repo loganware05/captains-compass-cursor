@@ -1,12 +1,12 @@
 # Implementation Plan — Read-Only Persistent Oversight
 
-- Status: **IN PROGRESS**
+- Status: **PR OPEN** ([#227](https://github.com/loganware05/captains-compass-cursor/pull/227))
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **IN PROGRESS** |
+| Status | **PR OPEN** ([#227](https://github.com/loganware05/captains-compass-cursor/pull/227)) |
 | Plan ID | `read-only-persistent-oversight` |
 | Issue | [#225](https://github.com/loganware05/captains-compass-cursor/issues/225) |
 | Notion | [Cognitive Core](https://app.notion.com/p/3f8e6a901c438110882bceb01d2dd249) |
@@ -39,7 +39,7 @@ snapshot/compare/reconcile — proposal-only.
 - [x] Reconcile proposals never set `applied` / authority flags true
 - [x] Optional brain sync only when `COMPASS_BRAIN_ENABLED=1`
 - [x] Hermetic tests + doctor; evidence recorded
-- [ ] Docs/ADR/CHANGELOG; PR opened (standing order)
+- [x] Docs/ADR/CHANGELOG; PR opened (standing order)
 
 ## Rollback Plan
 
