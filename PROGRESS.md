@@ -2,8 +2,9 @@
 
 ## Current status
 
-**Specialized Model Level 0 — AWAITING APPROVAL** (docs PR pending) on plan
-`specialized-model-level-0`
+**Specialized Model Level 0 — AWAITING APPROVAL**
+([docs PR #229](https://github.com/loganware05/captains-compass-cursor/pull/229))
+on plan `specialized-model-level-0`
 ([#228](https://github.com/loganware05/captains-compass-cursor/issues/228)).
 Read-only persistent oversight **COMPLETE** (#227 / **v1.68.0** @ `f5bbf24`).
 

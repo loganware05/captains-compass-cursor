@@ -1,4 +1,5 @@
 > **AWAITING APPROVAL** (2026-10-21) — Plan ID `specialized-model-level-0`.
+> Docs PR: [#229](https://github.com/loganware05/captains-compass-cursor/pull/229).
 > Issue: [#228](https://github.com/loganware05/captains-compass-cursor/issues/228).
 > Notion: [Specialized Model](https://app.notion.com/p/3f8e6a901c43815a8d24f99ba617737a).
 > Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
