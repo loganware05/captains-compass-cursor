@@ -4,6 +4,22 @@
 
 ## Unreleased
 
+## 1.70.0 — 2026-10-21
+
+### Added
+
+- **Specialized Model Level 1 — on-device LoRA harness** (plan `specialized-model-level-1`):
+  - Gated `./scripts/run-specialized-model.sh lora prepare|train|evaluate|pipeline`
+    / `northstar specialized lora …` (same `COMPASS_SPECIALIZED_MODEL_ENABLED`)
+  - Dataset prepare from C7 exports → `.agent/specialized-datasets/` (metadata)
+  - External trainer via `COMPASS_SPECIALIZED_LORA_TRAINER` or hermetic `--dry-run`
+  - Schemas `specialized-model-dataset` + `specialized-model-lora-run`
+    (`weights_committed: false`, `auto_promoted: false`)
+  - Doctor fail-closed; unit tests; evidence under
+    `.agent/evidence/specialized-model-level-1/`
+  - ADR-089; weight/adapter binaries gitignored; stay outside control repo
+
+
 ## 1.69.0 — 2026-10-21
 
 ### Added

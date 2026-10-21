@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/specialized-model-dataset.schema.json",
+  "title": "SpecializedModelDataset",
+  "description": "Level 1 dataset manifest prepared from C7 exports. Metadata only; never embeds secrets or weight binaries.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "plan_id",
+    "source_export_id",
+    "source_export_path",
+    "sample_count",
+    "samples",
+    "permission_checklist",
+    "holdout_gold_path",
+    "external_blob_path",
+    "approved_for_execution",
+    "authority_mutation",
+    "generated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "dataset_id": { "type": "string", "minLength": 1 },
+    "plan_id": { "type": "string", "const": "specialized-model-level-1" },
+    "source_export_id": { "type": ["string", "null"] },
+    "source_export_path": { "type": ["string", "null"] },
+    "sample_count": { "type": "integer", "minimum": 0 },
+    "samples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sample_id", "objective", "outcome"],
+        "additionalProperties": false,
+        "properties": {
+          "sample_id": { "type": "string", "minLength": 1 },
+          "objective": { "type": "string" },
+          "outcome": { "type": "string" },
+          "source": { "type": "string" },
+          "experience_id": { "type": ["string", "null"] },
+          "lessons": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "permission_checklist": {
+      "type": "object",
+      "required": [
+        "export_authorized",
+        "secrets_redacted_ack",
+        "license_reviewed",
+        "pii_reviewed",
+        "specialized_model_handoff_ack"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "export_authorized": { "type": "boolean" },
+        "secrets_redacted_ack": { "type": "boolean" },
+        "license_reviewed": { "type": "boolean" },
+        "pii_reviewed": { "type": "boolean" },
+        "specialized_model_handoff_ack": { "type": "boolean" }
+      }
+    },
+    "holdout_gold_path": { "type": "string", "minLength": 1 },
+    "external_blob_path": { "type": ["string", "null"] },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "generated_at": { "type": "string", "minLength": 1 }
+  }
+}

@@ -564,6 +564,25 @@ PY
   else
     fail "specialized-model should exit 2 mentioning COMPASS_SPECIALIZED_MODEL_ENABLED when unset (rc=$sm_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/specialized-model-dataset.schema.json" ]]; then
+    ok "specialized-model-dataset.schema.json present"
+  else
+    fail "missing orchestrator/schemas/specialized-model-dataset.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/specialized-model-lora-run.schema.json" ]]; then
+    ok "specialized-model-lora-run.schema.json present"
+  else
+    fail "missing orchestrator/schemas/specialized-model-lora-run.schema.json"
+  fi
+  set +e
+  sm1_out="$(env -u COMPASS_SPECIALIZED_MODEL_ENABLED "$ROOT/scripts/run-specialized-model.sh" lora prepare --repo-root "$ROOT" --export-path "$ROOT/tests/fixtures/specialized-model-gold/sample-export.json" 2>&1)"
+  sm1_rc=$?
+  set -e
+  if [[ "$sm1_rc" -eq 2 && "$sm1_out" == *"COMPASS_SPECIALIZED_MODEL_ENABLED"* ]]; then
+    ok "specialized-model lora fail-closed when COMPASS_SPECIALIZED_MODEL_ENABLED unset"
+  else
+    fail "specialized-model lora should exit 2 mentioning COMPASS_SPECIALIZED_MODEL_ENABLED when unset (rc=$sm1_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/project-state-snapshot.schema.json" ]]; then
     ok "project-state-snapshot.schema.json present"
   else

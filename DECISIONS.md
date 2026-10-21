@@ -1,5 +1,26 @@
 # Decisions
 
+## ADR-089: Specialized Model Level 1 On-Device LoRA (v1.70.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-21
+- **Context:** Captain approved plan `specialized-model-level-1` after Level 0
+  (#230 / v1.69.0) and docs PR #231. Notion Level 1 requires on-device LoRA with
+  holdout retention before any rented-GPU work.
+- **Decision:**
+  1. Extend gated specialized surface with `lora prepare|train|evaluate|pipeline`
+     reusing `COMPASS_SPECIALIZED_MODEL_ENABLED`.
+  2. Prepare metadata datasets from C7 exports; train via external
+     `COMPASS_SPECIALIZED_LORA_TRAINER` or hermetic `--dry-run`.
+  3. Evaluate adapter vs Level 0 baseline on held-out gold; lock
+     `weights_committed` / `auto_promoted` false; never store weight binaries
+     in this repo.
+  4. Ship as **v1.70.0**.
+- **Consequences:** Operators can run governed LoRA experiments without
+  expanding routing authority. Rollback
+  `rollback/pre-specialized-model-level-1` @ `2507da6`.
+
+
 ## ADR-088: Specialized Model Level 0 Local Baseline (v1.69.0)
 
 - **Status:** Accepted
