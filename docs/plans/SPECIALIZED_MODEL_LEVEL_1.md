@@ -1,16 +1,13 @@
-> **PR OPEN** — [#232](https://github.com/loganware05/captains-compass-cursor/pull/232).
-> Plan ID `specialized-model-level-1`.
-> Docs PR: [#231](https://github.com/loganware05/captains-compass-cursor/pull/231).
-> Branch: `cursor/specialized-model-level-1-3ec1`.
+> **COMPLETE** (2026-10-21) — Merged [#232](https://github.com/loganware05/captains-compass-cursor/pull/232)
+> → `main` @ `d76ebd0` (**v1.70.0**). Plan ID `specialized-model-level-1`.
 > Rollback: `rollback/pre-specialized-model-level-1` @ `2507da6`.
-> Notion: [Specialized Model](https://app.notion.com/p/3f8e6a901c43815a8d24f99ba617737a).
+> Evidence: `.agent/evidence/specialized-model-level-1/`.
 > Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
 
 # Specialized Model Level 1 — On-Device LoRA
 
-Shipped toward **v1.70.0**: gated prepare/train/evaluate with external trainer
-or hermetic `--dry-run`. Weights stay outside the control repo; never
-auto-promotes.
+Shipped **v1.70.0**: gated prepare/train/evaluate with external trainer or
+hermetic `--dry-run`. Weights stay outside the control repo; never auto-promotes.
 
 ## Operator surface
 
@@ -21,10 +18,6 @@ auto-promotes.
 ./scripts/northstar specialized lora pipeline --repo . --enable-gates --dry-run
 ```
 
-Live train: set `COMPASS_SPECIALIZED_LORA_TRAINER` and
-`COMPASS_SPECIALIZED_ADAPTER_ROOT` (outside this repo).
+## Next
 
-## Non-goals
-
-Level 2+ rented GPU; storing weights in this repo; auto-promotion into Adaptive
-Intelligence routing.
+Specialized Model Level 2 (`specialized-model-level-2`) — **AWAITING APPROVAL**.
