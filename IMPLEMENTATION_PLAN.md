@@ -9,6 +9,7 @@
 | Status | **AWAITING APPROVAL** |
 | Plan ID | `specialized-model-level-2` |
 | Issue | *(Captain files before/on approval — agent cannot create GitHub issues)* |
+| Docs PR | [#233](https://github.com/loganware05/captains-compass-cursor/pull/233) |
 | Notion | [Specialized Model — Mac M2 Training](https://app.notion.com/p/3f8e6a901c43815a8d24f99ba617737a) |
 | Product | **NorthStar** (control repo) |
 | Baseline | **v1.70.0** @ `d76ebd0` (#232 merged) |

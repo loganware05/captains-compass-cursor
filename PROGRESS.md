@@ -2,8 +2,9 @@
 
 ## Current status
 
-**Specialized Model Level 2 — AWAITING APPROVAL** (docs PR pending) on plan
-`specialized-model-level-2`.
+**Specialized Model Level 2 — AWAITING APPROVAL**
+([docs PR #233](https://github.com/loganware05/captains-compass-cursor/pull/233))
+on plan `specialized-model-level-2`.
 Specialized Model Level 1 **COMPLETE** (#232 / **v1.70.0** @ `d76ebd0`).
 
 | Item | Value |
