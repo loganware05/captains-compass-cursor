@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-087: Read-Only Persistent Oversight (v1.68.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-21
+- **Context:** Captain approved plan `read-only-persistent-oversight` (#225)
+  after E2E Cognitive Core evaluation (#224 / v1.67.0). The Oct 20 PDF next
+  step was opt-in post-merge drift detection with reviewable reconcile proposals.
+- **Decision:**
+  1. Add gated `run-oversight.sh` / `northstar oversight run` (+ `status
+     post-merge` alias) requiring `COMPASS_STATUS_ENABLED`.
+  2. Optionally sync C1 brain when `COMPASS_BRAIN_ENABLED=1`.
+  3. Compose Overseer snapshot → compare (when `--since` or prior SHA) →
+     reconcile proposal with `applied: false` and authority flags locked false.
+  4. Document optional git post-merge hook; do not install hooks by default.
+  5. Ship as **v1.68.0**.
+- **Consequences:** Operators get one command for post-merge oversight without
+  expanding authority. Rollback
+  `rollback/pre-read-only-persistent-oversight` @ `c5d435e`.
+
+
 ## ADR-086: E2E Cognitive Core Evaluation (v1.67.0)
 
 - **Status:** Accepted

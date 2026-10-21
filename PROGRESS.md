@@ -2,37 +2,35 @@
 
 ## Current status
 
-**Read-only persistent oversight — AWAITING APPROVAL** (docs PR [#226](https://github.com/loganware05/captains-compass-cursor/pull/226)) on plan
+**Read-only persistent oversight — IN PROGRESS** on plan
 `read-only-persistent-oversight`
 ([#225](https://github.com/loganware05/captains-compass-cursor/issues/225)).
-E2E Cognitive Core evaluation **COMPLETE** (#224 / **v1.67.0** @ `05dcfba`).
+Approved 2026-10-21 after #226 merged (**v1.67.0** @ `c5d435e`).
 
 | Item | Value |
 |---|---|
-| On main | **v1.67.0** E2E Cognitive Core (#224) @ `05dcfba` |
-| Active plan | `read-only-persistent-oversight` **AWAITING APPROVAL** |
-| Next | Captain approve oversight → implement → commit → PR |
+| On main | **v1.67.0** (#226) @ `c5d435e` |
+| Active plan | `read-only-persistent-oversight` **IN PROGRESS** |
+| Branch | `cursor/225-read-only-persistent-oversight-3ec1` |
+| Rollback | `rollback/pre-read-only-persistent-oversight` @ `c5d435e` |
+| Release | **v1.68.0** |
+| Next | Open PR → Captain merge |
 
 ## Cognitive Core track
 
 | Milestone | Status |
 |---|---|
-| C1 — Source of Truth | **Complete** (#200 / v1.60.0); closeout v1.60.1 |
-| C2 — Memory and Retrieval | **Complete** (#204 / v1.61.0) |
-| C3 — Difficulty and capability fit | **Complete** (#207 / v1.62.0) |
-| C4 — Adaptive Development Loop | **Complete** (#210 / v1.63.0) |
-| C5 — Adaptive routing | **Complete** (#213 / v1.64.0) |
-| C6 — REA deep analysis | **Complete** (#216 / v1.65.0); closeout #218 |
-| C7 — Training bridge | **Complete** (#219 / v1.66.0) |
+| C1–C7 | **Complete** through v1.66.0 |
 | Post-C7 closeout | **Complete** (#221 / v1.66.1) |
 | E2E Cognitive Core evaluation | **Complete** (#224 / v1.67.0) |
-| Read-only persistent oversight | **Next** (#225) |
+| Read-only persistent oversight | **Implementing** (#225 / v1.68.0) |
 
-## Operator (C1–C7 + e2e)
+## Operator
 
 ```bash
-./scripts/run-cognitive-core-e2e.sh --repo-root . --enable-gates --mode hermetic
-./scripts/northstar cognitive e2e --repo . --enable-gates
+./scripts/run-oversight.sh --repo-root . --enable-gates [--since SHA]
+./scripts/northstar oversight run --repo . --enable-gates
+./scripts/northstar status post-merge --repo . --enable-gates
 ```
 
 ## Standing order (Captain — 2026-10-13)
@@ -42,9 +40,8 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Recently completed
 
+- **Docs PR / #226** — E2E COMPLETE + oversight plan
 - **E2E / #224** — Cognitive Core C1–C7 hermetic evaluation (v1.67.0)
-- **Docs PR / #223** — post-C7 COMPLETE + E2E plan
-- **Post-C7 closeout / #221** — memory reconcile v1.66.1
 
 ## Follow-on (after oversight)
 
@@ -52,4 +49,4 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Blockers
 
-None — waiting on Captain approval of `read-only-persistent-oversight`.
+None.

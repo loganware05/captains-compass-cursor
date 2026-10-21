@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/oversight-run.schema.json",
+  "title": "OversightRun",
+  "description": "Read-only persistent oversight run composing brain sync + Overseer snapshot/compare/reconcile. Proposal-only; never grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "run_id",
+    "repository_sha",
+    "northstar_version",
+    "steps",
+    "brain_synced",
+    "snapshot_id",
+    "proposal_id",
+    "proposal_applied",
+    "overall_status",
+    "approved_for_execution",
+    "authority_mutation",
+    "generated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "run_id": { "type": "string", "minLength": 1 },
+    "plan_id": { "type": ["string", "null"] },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "since_sha": { "type": ["string", "null"] },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "status", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "status": {
+            "type": "string",
+            "enum": ["pass", "warn", "fail", "skipped"]
+          },
+          "summary": { "type": "string" },
+          "details": { "type": "object", "additionalProperties": true }
+        }
+      }
+    },
+    "brain_synced": { "type": "boolean" },
+    "snapshot_id": { "type": ["string", "null"] },
+    "compare_status": {
+      "type": "string",
+      "enum": ["compared", "skipped", "failed"]
+    },
+    "proposal_id": { "type": ["string", "null"] },
+    "proposal_path": { "type": ["string", "null"] },
+    "proposal_applied": { "type": "boolean", "const": false },
+    "finding_count": { "type": ["integer", "null"] },
+    "action_count": { "type": ["integer", "null"] },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "overall_status": {
+      "type": "string",
+      "enum": ["pass", "warn", "fail"]
+    },
+    "evidence_path": { "type": ["string", "null"] },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "generated_at": { "type": "string", "minLength": 1 }
+  }
+}

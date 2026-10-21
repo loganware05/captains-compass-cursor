@@ -446,6 +446,16 @@ Unset `COMPASS_REA_ENABLED` → CLI exits non-zero. Hermetic fixture default;
 live needs `--allow-live` + checklist. See
 `.agent/evidence/c6-cognitive-core-rea-deep-analysis/VALIDATION.md`.
 
+Read-only persistent oversight (requires status gate; optional brain):
+
+```bash
+./scripts/run-oversight.sh --repo-root . --enable-gates [--since SHA]
+./scripts/northstar oversight run --repo . --enable-gates
+./scripts/northstar status post-merge --repo . --enable-gates
+# Optional hook docs: docs/guides/oversight-post-merge-hook.md
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_read_only_persistent_oversight -v
+```
+
 Cognitive Core e2e evaluation (C1–C7; requires all Cognitive Core gates or `--enable-gates`):
 
 ```bash

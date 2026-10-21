@@ -4,6 +4,21 @@
 
 ## Unreleased
 
+## 1.68.0 — 2026-10-21
+
+### Added
+
+- **Read-only persistent oversight** (#225):
+  - Gated `./scripts/run-oversight.sh` / `northstar oversight run` /
+    `northstar status post-merge`
+  - Composes optional brain sync + Overseer snapshot/compare/reconcile
+  - Schema `oversight-run` (authority locked; `proposal_applied: false`)
+  - Docs-only optional post-merge hook snippet
+  - Doctor fail-closed check; unit tests; evidence under
+    `.agent/evidence/read-only-persistent-oversight/`
+  - ADR-087
+
+
 ## 1.67.0 — 2026-10-20
 
 ### Added
