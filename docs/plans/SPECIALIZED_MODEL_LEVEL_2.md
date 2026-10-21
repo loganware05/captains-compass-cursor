@@ -1,16 +1,14 @@
-> **PR OPEN** — [#234](https://github.com/loganware05/captains-compass-cursor/pull/234).
-> Plan ID `specialized-model-level-2`.
-> Docs PR: [#233](https://github.com/loganware05/captains-compass-cursor/pull/233).
-> Branch: `cursor/specialized-model-level-2-3ec1`.
+> **COMPLETE** (2026-10-21) — Merged [#234](https://github.com/loganware05/captains-compass-cursor/pull/234)
+> → `main` @ `5727802` (**v1.71.0**). Plan ID `specialized-model-level-2`.
 > Rollback: `rollback/pre-specialized-model-level-2` @ `e5256f1`.
-> Notion: [Specialized Model](https://app.notion.com/p/3f8e6a901c43815a8d24f99ba617737a).
+> Evidence: `.agent/evidence/specialized-model-level-2/`.
 > Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
 
 # Specialized Model Level 2 — Single Rented GPU (QLoRA)
 
-Shipped toward **v1.71.0**: gated prepare/submit/evaluate with external GPU
-runner or hermetic `--dry-run`. Non-dry-run submit requires `--cost-ack`.
-Weights stay outside the control repo; never auto-promotes.
+Shipped **v1.71.0**: gated prepare/submit/evaluate with external GPU runner or
+hermetic `--dry-run`. Non-dry-run submit requires `--cost-ack`. Weights stay
+outside the control repo; never auto-promotes.
 
 ## Operator surface
 
@@ -21,10 +19,6 @@ Weights stay outside the control repo; never auto-promotes.
 ./scripts/northstar specialized gpu pipeline --repo . --enable-gates --dry-run
 ```
 
-Live submit: `--cost-ack` + `COMPASS_SPECIALIZED_GPU_RUNNER` +
-`COMPASS_SPECIALIZED_ADAPTER_ROOT` (outside this repo).
+## Next
 
-## Non-goals
-
-Level 3+ multi-GPU; storing weights in this repo; auto-promotion; unbounded
-GPU spend without cost ack.
+Specialized Model Level 3 (`specialized-model-level-3`) — **AWAITING APPROVAL**.

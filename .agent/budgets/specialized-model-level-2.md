@@ -6,4 +6,4 @@
 | Wall time | 8 hours | — |
 | Scope | Single rented GPU QLoRA harness; cost-ack; no weight commit; no auto-promote | held |
 
-Status: implementing toward v1.71.0 PR.
+Status: **COMPLETE** — merged #234 @ `5727802` (2026-10-21).
