@@ -113,3 +113,5 @@ wandb/
 .agent/specialized-adapters/
 .agent/specialized-datasets/**
 !.agent/specialized-datasets/.gitkeep
+.agent/specialized-gpu-jobs/**
+!.agent/specialized-gpu-jobs/.gitkeep

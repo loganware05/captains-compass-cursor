@@ -479,6 +479,17 @@ Specialized Model Level 1 on-device LoRA (same gate; CI uses `--dry-run`):
 PYTHONPATH=. python3 -m unittest tests.orchestrator.test_specialized_model_level_1 -v
 ```
 
+Specialized Model Level 2 single rented GPU QLoRA (same gate; CI `--dry-run` only):
+
+```bash
+./scripts/run-specialized-model.sh gpu pipeline --repo-root . --enable-gates \
+  --dataset tests/fixtures/specialized-model-gpu/sample-dataset.json --dry-run
+./scripts/northstar specialized gpu prepare|submit|evaluate|pipeline --repo . --enable-gates
+# Live submit: --cost-ack + COMPASS_SPECIALIZED_GPU_RUNNER + COMPASS_SPECIALIZED_ADAPTER_ROOT
+# Evidence: .agent/evidence/specialized-model-level-2/
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_specialized_model_level_2 -v
+```
+
 Cognitive Core e2e evaluation (C1–C7; requires all Cognitive Core gates or `--enable-gates`):
 
 ```bash

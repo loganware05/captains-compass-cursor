@@ -1,0 +1,73 @@
+{
+  "adapter_root": "/agent/repos/captains-compass-cursor/tests/fixtures/specialized-model-gpu/fixture-adapter",
+  "adapter_scores": {
+    "prompt_rate": 1.0,
+    "retrieval_rate": 1.0,
+    "stub_student_rate": 1.0,
+    "task_total": 24
+  },
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "auto_promoted": false,
+  "baseline_scores": {
+    "prompt_rate": 1.0,
+    "retrieval_rate": 1.0,
+    "stub_student_rate": 1.0,
+    "task_total": 24
+  },
+  "checklist": {
+    "cost_acknowledged": true,
+    "holdout_retained": true,
+    "license_reviewed": true,
+    "pii_reviewed": true,
+    "provenance_recorded": true,
+    "secrets_redacted_ack": true,
+    "weights_outside_control_repo_ack": true
+  },
+  "comparison": {
+    "adapter_min_rate": 1.0,
+    "baseline_min_rate": 1.0,
+    "level1_min_rate": 1.0,
+    "prompt_delta_vs_l0": 0.0,
+    "retrieval_delta_vs_l0": 0.0,
+    "stub_student_delta_vs_l0": 0.0
+  },
+  "cost_acknowledged": true,
+  "dataset_id": "smds-gpu-fixture-0001",
+  "dry_run": true,
+  "evidence_path": ".agent/evidence/specialized-model-level-2/sm2-798111faad.json",
+  "generated_at": "2026-10-21T07:17:02Z",
+  "go_no_go": "hold",
+  "job_id": "smgpu-ae461dee1692",
+  "job_path": "/agent/repos/captains-compass-cursor/.agent/specialized-gpu-jobs/smgpu-ae461dee1692.json",
+  "level": 2,
+  "level1_scores": {
+    "note": "level1 reference = hermetic gold rates (dry-run)",
+    "prompt_rate": 1.0,
+    "retrieval_rate": 1.0,
+    "stub_student_rate": 1.0,
+    "task_total": 24
+  },
+  "northstar_version": "1.71.0",
+  "notes": "Specialized Model Level 2 GPU evaluate. Weights/adapters stay outside this control repo. Cost ack is an attestation, not payment. Never auto-promotes into Adaptive Intelligence routing.",
+  "overall_status": "warn",
+  "phase": "evaluate",
+  "plan_id": "specialized-model-level-2",
+  "repository_sha": "e5256f115ac1726763b1112fe92e36df2c2fde97",
+  "run_id": "sm2-798111faad",
+  "schema_version": "1",
+  "train_metrics": {
+    "dataset_id": "smds-gpu-fixture-0001",
+    "dry_run": true,
+    "generated_at": "2026-10-21T07:17:02Z",
+    "job_id": "smgpu-ae461dee1692",
+    "notes": "Hermetic dry-run \u2014 no GPU rented, no weights written.",
+    "qlora": true,
+    "schema_version": "1",
+    "status": "dry-run"
+  },
+  "warnings": [
+    "dry-run evaluate \u2014 fixture GPU adapter; no live rental"
+  ],
+  "weights_committed": false
+}

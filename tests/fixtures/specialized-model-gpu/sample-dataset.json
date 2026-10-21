@@ -1,0 +1,35 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "dataset_id": "smds-gpu-fixture-0001",
+  "external_blob_path": null,
+  "generated_at": "2026-10-21T00:00:00Z",
+  "holdout_gold_path": "tests/fixtures/specialized-model-gold/tasks.json",
+  "northstar_version": "1.71.0",
+  "notes": "Hermetic Level 1 dataset fixture for Level 2 GPU tests.",
+  "permission_checklist": {
+    "export_authorized": true,
+    "license_reviewed": true,
+    "pii_reviewed": true,
+    "secrets_redacted_ack": true,
+    "specialized_model_handoff_ack": true
+  },
+  "plan_id": "specialized-model-level-1",
+  "repository_sha": "fixture",
+  "sample_count": 1,
+  "samples": [
+    {
+      "experience_id": "exp-sm2-fixture-0001",
+      "lessons": [
+        "Level 2 GPU harness consumes Level 1 datasets."
+      ],
+      "objective": "Fixture trajectory for Specialized Model Level 2",
+      "outcome": "success",
+      "sample_id": "sample-0001",
+      "source": "experience"
+    }
+  ],
+  "schema_version": "1",
+  "source_export_id": "train-export-sm0-fixture-0001",
+  "source_export_path": "tests/fixtures/specialized-model-gold/sample-export.json"
+}

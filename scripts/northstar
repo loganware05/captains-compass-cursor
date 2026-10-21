@@ -61,7 +61,7 @@ Surfaces (one-line purpose):
   train       Cognitive Core Training bridge (C7) — requires COMPASS_TRAIN_BRIDGE_ENABLED=1
   cognitive   Cognitive Core C1–C7 e2e evaluation — requires all COMPASS_* Cognitive Core gates
   oversight   Read-only persistent oversight — requires COMPASS_STATUS_ENABLED=1 (optional brain)
-  specialized Specialized Model Level 0/1 (baseline + LoRA) — requires COMPASS_SPECIALIZED_MODEL_ENABLED=1
+  specialized Specialized Model Level 0/1/2 (baseline + LoRA + GPU) — requires COMPASS_SPECIALIZED_MODEL_ENABLED=1
   provenance Execution provenance ledger (M53) — requires COMPASS_PROVENANCE_ENABLED=1
   examples   Behavior exemplars (M53) — proposal-only; requires COMPASS_PROVENANCE_ENABLED=1
 
@@ -133,6 +133,9 @@ Commands:
   northstar specialized lora prepare|train|evaluate|pipeline [--repo PATH]
             [--export-id ID | --export-path PATH] [--dataset PATH]
             [--adapter-root PATH] [--dry-run|--no-dry-run] [--enable-gates]
+  northstar specialized gpu prepare|submit|evaluate|pipeline [--repo PATH]
+            [--dataset PATH] [--job PATH] [--adapter-root PATH]
+            [--dry-run|--no-dry-run] [--cost-ack] [--enable-gates]
             [--independent-eval-complete] [--security-review-complete]
             [--captain-approval-recorded] [--repo PATH]
   northstar provenance capture --execution-id ID [--repo PATH]
@@ -796,6 +799,14 @@ case "$cmd" in
           exit 2
         fi
         exec "$ROOT/scripts/run-specialized-model.sh" lora "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      gpu)
+        if [[ ${#mapped[@]} -lt 1 ]]; then
+          echo "error: specialized gpu requires prepare|submit|evaluate|pipeline" >&2
+          usage >&2
+          exit 2
+        fi
+        exec "$ROOT/scripts/run-specialized-model.sh" gpu "${mapped[@]+"${mapped[@]}"}"
         ;;
       *)
         echo "error: unknown specialized subcommand: $sub" >&2

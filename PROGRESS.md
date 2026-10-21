@@ -2,16 +2,16 @@
 
 ## Current status
 
-**Specialized Model Level 2 — AWAITING APPROVAL**
-([docs PR #233](https://github.com/loganware05/captains-compass-cursor/pull/233))
-on plan `specialized-model-level-2`.
-Specialized Model Level 1 **COMPLETE** (#232 / **v1.70.0** @ `d76ebd0`).
+**Specialized Model Level 2 — PR OPEN** on plan `specialized-model-level-2`.
+Implementation toward **v1.71.0** on branch
+`cursor/specialized-model-level-2-3ec1`. Rollback
+`rollback/pre-specialized-model-level-2` @ `e5256f1`.
 
 | Item | Value |
 |---|---|
-| On main | **v1.70.0** Level 1 (#232) @ `d76ebd0` |
-| Active plan | `specialized-model-level-2` **AWAITING APPROVAL** |
-| Next | Captain file issue + approve Level 2 → implement → commit → PR |
+| On main | **v1.70.0** Level 1 (#232) + docs (#233) @ `e5256f1` |
+| Active plan | `specialized-model-level-2` **APPROVED** / implementing |
+| Next | Merge Level 2 PR → Captain closeout |
 
 ## Cognitive Core / Specialized Model track
 
@@ -23,14 +23,14 @@ Specialized Model Level 1 **COMPLETE** (#232 / **v1.70.0** @ `d76ebd0`).
 | Read-only persistent oversight | **Complete** (#227 / v1.68.0) |
 | Specialized Model Level 0 | **Complete** (#230 / v1.69.0) |
 | Specialized Model Level 1 | **Complete** (#232 / v1.70.0) |
-| Specialized Model Level 2 | **Next** (single rented GPU QLoRA) |
+| Specialized Model Level 2 | **In PR** → v1.71.0 |
 
 ## Operator
 
 ```bash
-./scripts/run-specialized-model.sh lora pipeline --repo-root . --enable-gates --dry-run \
-  --export-path tests/fixtures/specialized-model-gold/sample-export.json
-./scripts/northstar specialized lora pipeline --repo . --enable-gates --dry-run
+./scripts/run-specialized-model.sh gpu pipeline --repo-root . --enable-gates \
+  --dataset tests/fixtures/specialized-model-gpu/sample-dataset.json --dry-run
+./scripts/northstar specialized gpu pipeline --repo . --enable-gates --dry-run
 ```
 
 ## Standing order (Captain — 2026-10-13)
@@ -40,8 +40,8 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Recently completed
 
-- **Level 1 / #232** — Specialized Model Level 1 on-device LoRA (v1.70.0)
-- **Docs PR / #231** — Level 0 COMPLETE + Level 1 plan
+- **Docs PR / #233** — Level 1 COMPLETE + Level 2 plan
+- **Level 1 / #232** — Specialized Model Level 1 (v1.70.0)
 - **Level 0 / #230** — Specialized Model Level 0 (v1.69.0)
 
 ## Follow-on (after Level 2)
@@ -50,5 +50,4 @@ When the Captain approves an `IMPLEMENTATION_PLAN.md`, the First Mate shall
 
 ## Blockers
 
-None — waiting on Captain approval of `specialized-model-level-2` (and a
-tracking GitHub issue).
+None — awaiting Captain merge of Level 2 PR.

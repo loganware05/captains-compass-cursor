@@ -1,0 +1,10 @@
+{
+  "dataset_id": "smds-gpu-fixture-0001",
+  "dry_run": true,
+  "generated_at": "2026-10-21T07:17:02Z",
+  "job_id": "smgpu-ae461dee1692",
+  "notes": "Hermetic dry-run \u2014 no GPU rented, no weights written.",
+  "qlora": true,
+  "schema_version": "1",
+  "status": "dry-run"
+}

@@ -1,5 +1,27 @@
 # Decisions
 
+## ADR-090: Specialized Model Level 2 Single Rented GPU QLoRA (v1.71.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-21
+- **Context:** Captain approved plan `specialized-model-level-2` after Level 1
+  (#232 / v1.70.0) and docs PR #233. Notion Level 2 covers single rented GPU
+  (≈16–24GB) QLoRA when on-device LoRA hits memory/throughput limits.
+- **Decision:**
+  1. Extend gated specialized surface with `gpu prepare|submit|evaluate|pipeline`
+     reusing `COMPASS_SPECIALIZED_MODEL_ENABLED`.
+  2. Prepare job manifests from Level 1 datasets; require `--cost-ack` for
+     non-dry-run submit; invoke `COMPASS_SPECIALIZED_GPU_RUNNER` or hermetic
+     `--dry-run`.
+  3. Evaluate vs Level 0 (+ Level 1 reference) on held-out gold; lock
+     `weights_committed` / `auto_promoted` false; never store weight binaries
+     in this repo.
+  4. Ship as **v1.71.0**.
+- **Consequences:** Operators can run governed GPU QLoRA experiments with
+  explicit cost attestation. Rollback
+  `rollback/pre-specialized-model-level-2` @ `e5256f1`.
+
+
 ## ADR-089: Specialized Model Level 1 On-Device LoRA (v1.70.0)
 
 - **Status:** Accepted

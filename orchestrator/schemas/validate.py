@@ -62,6 +62,8 @@ SCHEMA_FILES = (
     "specialized-model-baseline-report.schema.json",
     "specialized-model-dataset.schema.json",
     "specialized-model-lora-run.schema.json",
+    "specialized-model-gpu-job.schema.json",
+    "specialized-model-gpu-run.schema.json",
 )
 
 
