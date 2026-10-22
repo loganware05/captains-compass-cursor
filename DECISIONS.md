@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-091: N1 Operational Reconciliation & Level 3 Deferral (v1.71.1)
+
+- **Status:** Accepted
+- **Date:** 2026-10-22
+- **Context:** Captain approved plan `n1-operational-reconciliation` after the
+  Oct 22 capability audit. Consolidation (issue/docs/operator drift) was
+  prioritized over Specialized Model Level 3 large-GPU expansion.
+- **Decision:**
+  1. Ship closeout ledger + read-only `status closeout` behind
+     `COMPASS_STATUS_ENABLED`; never auto-close issues or mutate authority.
+  2. Reconcile `docs/INDEX.md`, skill counts (48), and track namespaces
+     (`roadmap/*` vs `cognitive/*`).
+  3. Keep `specialized-model-level-3` **DEFERRED** until N1–N3 + Level 0–2
+     proof-of-value; preserve harness proposal (proposed v1.72.0).
+  4. Ship as **v1.71.1**.
+- **Consequences:** Release baseline and tracker dispositions are reviewable
+  before product-integration (N2) or paid large-GPU work. Rollback
+  `rollback/pre-n1-operational-reconciliation` @ `c7679bf`.
+
+
 ## ADR-090: Specialized Model Level 2 Single Rented GPU QLoRA (v1.71.0)
 
 - **Status:** Accepted

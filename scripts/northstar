@@ -51,7 +51,7 @@ Surfaces (one-line purpose):
   instructions Instruction registry + PICCO composer (M48) — proposal-only; requires COMPASS_INSTRUCTIONS_ENABLED=1
   prompt-eval Prompt evaluation harness (M49) — eval-only; requires COMPASS_PROMPT_EVAL_ENABLED=1
   policy      Policy promotion lifecycle (M50) — requires COMPASS_POLICY_PROMOTE_ENABLED=1
-  status      Project Overseer (M51/M52) — read-oriented; requires COMPASS_STATUS_ENABLED=1
+  status      Project Overseer (M51/M52/N1) — snapshot/explain/compare/reconcile/closeout; requires COMPASS_STATUS_ENABLED=1
   brain       Cognitive Core project-state + context (C1/C2) — requires COMPASS_BRAIN_ENABLED=1
   assess      Cognitive Core difficulty / capability-fit (C3) — requires COMPASS_ASSESS_ENABLED=1
   cycle       Cognitive Core Adaptive Development Loop (C4) — requires COMPASS_CYCLE_ENABLED=1
@@ -107,6 +107,7 @@ Commands:
   northstar status explain [--snapshot-id ID] [--repo PATH]
   northstar status compare --since SHA [--repo PATH]
   northstar status reconcile [--snapshot-id ID] [--repo PATH]
+  northstar status closeout [--snapshot-id ID] [--ledger PATH] [--repo PATH]
   northstar status export --format csv [--out PATH] [--repo PATH]
   northstar brain sync [--repo PATH]
   northstar brain status [--repo PATH]
@@ -556,7 +557,7 @@ case "$cmd" in
       mapped+=("$item")
     done < <(map_repo_flag "$@")
     case "$sub" in
-      snapshot|explain|compare|reconcile|export)
+      snapshot|explain|compare|reconcile|closeout|export)
         exec "$ROOT/scripts/run-status.sh" "$sub" "${mapped[@]+"${mapped[@]}"}"
         ;;
       post-merge)

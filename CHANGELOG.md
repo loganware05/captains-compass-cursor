@@ -4,6 +4,23 @@
 
 ## Unreleased
 
+## 1.71.1 — 2026-10-22
+
+### Added
+
+- **N1 Operational Reconciliation** (plan `n1-operational-reconciliation`):
+  - Closeout ledger under `.agent/evidence/n1-operational-reconciliation/`
+  - Read-only `northstar status closeout` / `run-status.sh closeout`
+    (`status-closeout-report` schema; authority + `issues_auto_closed` locked false)
+  - Operator `docs/INDEX.md` coverage for Cognitive Core, oversight, specialized,
+    Behavior Loop, and status closeout
+  - Track namespaces (`roadmap/*` vs `cognitive/*` vs `specialized/*` vs
+    `consolidation/*`) in INDEX + PROJECT_CONTEXT Terminology
+  - Skill count verified at **Forty-seven** Skills (`inodes/` is a content
+    store under `.cursor/skills/`, not a Skill)
+  - N2/N3 follow-on stubs; Specialized Model Level 3 remains **DEFERRED**
+  - ADR-091; doctor + unit tests
+
 ## 1.71.0 — 2026-10-21
 
 ### Added

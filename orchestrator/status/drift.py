@@ -17,7 +17,11 @@ REQUIRED_MEMORY_DOCS = (
 )
 
 _SKILL_COUNT_RE = re.compile(
-    r"(?i)\b(forty-four|forty four|forty-three|forty three|forty|\d+)\s+skills?\b"
+    r"(?i)\b("
+    r"forty-eight|forty eight|forty-seven|forty seven|"
+    r"forty-four|forty four|forty-three|forty three|forty|"
+    r"\d+"
+    r")\s+skills?\b"
 )
 _WORD_NUMBERS = {
     "forty": 40,
@@ -25,6 +29,10 @@ _WORD_NUMBERS = {
     "forty three": 43,
     "forty-four": 44,
     "forty four": 44,
+    "forty-seven": 47,
+    "forty seven": 47,
+    "forty-eight": 48,
+    "forty eight": 48,
 }
 
 

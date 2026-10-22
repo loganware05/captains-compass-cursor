@@ -53,12 +53,14 @@ agentic engineering process across multiple product repositories.
 2. Five always-applied core rules
 3. Forty-seven Skills (including Wave 1 Stars-derived `agent-skills-packaging`,
    `goose-agent-orchestration`, `security-audit-procedures`, plus
-   `project-overseer`, `code-reviewer`, `context-inodes`, northstar-connected-routine,
-   skill-learning-loop, embedding-providers, package-registry-ti,
-   external-knowledge-ingest, skill-lifecycle, procedure-playbooks,
-   knowledge-steward, technology-intelligence-live, persistent-role-promotion,
-   bounded-autonomy, compass-evaluator, experience-routing, capability-planning,
-   execution-telemetry, candidate-promotion, experience-skill-training)
+   `project-overseer`, `code-reviewer`, `context-inodes`,
+   northstar-connected-routine, skill-learning-loop, embedding-providers,
+   package-registry-ti, external-knowledge-ingest, skill-lifecycle,
+   procedure-playbooks, knowledge-steward, technology-intelligence-live,
+   persistent-role-promotion, bounded-autonomy, compass-evaluator,
+   experience-routing, capability-planning, execution-telemetry,
+   candidate-promotion, experience-skill-training).
+   `.cursor/skills/inodes/` is the context-inode content store (not a Skill).
 4. Twelve specialist subagents (including `project-overseer`, `code-reviewer`, `compass-evaluator`, `knowledge-steward`)
 5. Seven safety hooks (three critical fail-closed; four soft fail-open with multi-path skips)
 6. Six Cursor phase commands under `.cursor/commands/`
@@ -112,6 +114,11 @@ None blocking. Hosted vector DBs and live embedding/registry HTTP remain deferre
 - **Control repository** — this repo
 - **Product repository** — an application repo that installs Compass
 - **Approval gate** — no product file changes until IMPLEMENTATION_PLAN.md is APPROVED
+- **Track namespaces** — milestone IDs must carry a track prefix in prose when
+  ambiguous: `roadmap/*` (historical continuation / product install),
+  `cognitive/*` (Cognitive Core C1–C7), `specialized/*` (model levels),
+  `consolidation/*` (N1–N3). Example: `roadmap/C2` product-repo install ≠
+  `cognitive/C2` memory retrieval.
 
 ## Important Commands
 
@@ -133,13 +140,9 @@ gh auth status
 
 ## Current Priorities
 
-**Specialized Model Level 2 COMPLETE** (**v1.71.0** @ `15e8866` via
-[#234](https://github.com/loganware05/captains-compass-cursor/pull/234) /
-[#235](https://github.com/loganware05/captains-compass-cursor/pull/235)).
-**Next:** **N1 Operational Reconciliation** plan
-`n1-operational-reconciliation` — **AWAITING APPROVAL** (issue/plan ledger,
-docs INDEX drift, track namespaces, optional Overseer closeout-readiness;
-proposed **v1.71.1**). Specialized Model Level 3 remains **DEFERRED** until
-N1–N3 + Level 0–2 proof-of-value. Behavior Loop (M46–M54) remains complete at
-**v1.59.0**. Start here: `docs/guides/captain-handbook.md`. Live trading /
-AHF execution remains denied.
+**N1 Operational Reconciliation COMPLETE** (**v1.71.1**). Specialized Model
+Level 2 COMPLETE at **v1.71.0**. Specialized Model Level 3 remains **DEFERRED**
+until N1–N3 + Level 0–2 proof-of-value. **Next:** **N2** Product Integration
+Validation (`docs/plans/N2_PRODUCT_INTEGRATION_VALIDATION.md`). Behavior Loop
+(M46–M54) remains complete at **v1.59.0**. Start here:
+`docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.

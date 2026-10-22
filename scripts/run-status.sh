@@ -12,6 +12,7 @@ EXPORT_FORMAT=""
 EXPORT_PATH=""
 SINCE=""
 SNAPSHOT_ID=""
+LEDGER_PATH=""
 
 usage() {
   cat <<'USAGE'
@@ -20,16 +21,18 @@ Usage:
   run-status.sh explain [--snapshot-id ID] [--repo-root PATH]
   run-status.sh compare --since SHA [--repo-root PATH]
   run-status.sh reconcile [--snapshot-id ID] [--repo-root PATH]
+  run-status.sh closeout [--snapshot-id ID] [--ledger PATH] [--repo-root PATH]
   run-status.sh export --format csv [--out PATH] [--repo-root PATH]
 
 Requires COMPASS_STATUS_ENABLED=1.
-Read-oriented / proposal-only: never mutates authority or auto-writes memory docs.
+Read-oriented / proposal-only: never mutates authority, auto-writes memory docs,
+or auto-closes GitHub issues.
 USAGE
 }
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    snapshot|explain|compare|reconcile|export)
+    snapshot|explain|compare|reconcile|closeout|export)
       CMD="$1"
       shift
       ;;
@@ -43,6 +46,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --snapshot-id)
       SNAPSHOT_ID="$2"
+      shift 2
+      ;;
+    --ledger)
+      LEDGER_PATH="$2"
       shift 2
       ;;
     --format)
@@ -72,7 +79,7 @@ fi
 
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 python3 - "$ROOT" "$REPO_ROOT" "$CMD" "$EXPORT_FORMAT" "$EXPORT_PATH" \
-  "$SINCE" "$SNAPSHOT_ID" <<'PY'
+  "$SINCE" "$SNAPSHOT_ID" "$LEDGER_PATH" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -84,12 +91,14 @@ export_format = sys.argv[4]
 export_path = sys.argv[5]
 since = sys.argv[6]
 snapshot_id = sys.argv[7]
+ledger_path = sys.argv[8]
 
 sys.path.insert(0, str(control_root))
 
 from orchestrator.status.enabled import status_enabled
 from orchestrator.status.service import (
     StatusServiceError,
+    closeout,
     compare,
     explain,
     export_csv,
@@ -117,6 +126,10 @@ try:
         result = compare(repo_root, since=since)
     elif cmd == "reconcile":
         result = reconcile(repo_root, snapshot_id=snapshot_id)
+    elif cmd == "closeout":
+        result = closeout(
+            repo_root, snapshot_id=snapshot_id, ledger_path=ledger_path
+        )
     elif cmd == "export":
         if export_format and export_format != "csv":
             print("error: only --format csv is supported", file=sys.stderr)

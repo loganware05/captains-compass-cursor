@@ -53,6 +53,8 @@ wandb/
 !.agent/status/snapshots/**/.gitkeep
 .agent/status/reconcile-proposals/**
 !.agent/status/reconcile-proposals/**/.gitkeep
+.agent/status/closeout-reports/**
+!.agent/status/closeout-reports/**/.gitkeep
 .agent/status/export.csv
 .agent/status/system-map.md
 .agent/status/scope-ledger.json
@@ -115,3 +117,5 @@ wandb/
 !.agent/specialized-datasets/.gitkeep
 .agent/specialized-gpu-jobs/**
 !.agent/specialized-gpu-jobs/.gitkeep
+.agent/status/oversight-runs/**
+!.agent/status/oversight-runs/**/.gitkeep

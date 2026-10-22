@@ -1,6 +1,6 @@
 # NorthStar docs index
 
-Operator map for **one product**: Skills Learning Loop + Code Reviewer.
+Operator map for the **NorthStar** control repository.
 Launcher: `scripts/northstar` (control repo only).
 
 ## Start here
@@ -20,18 +20,26 @@ Launcher: `scripts/northstar` (control repo only).
 
 | Surface | Purpose | Primary docs |
 |---|---|---|
-| `skills` | TI refresh, learn, promote, ledger sync, agent routing | [`guides/captain-handbook.md`](guides/captain-handbook.md), [`integrations/linear-skills-learning-loop.md`](integrations/linear-skills-learning-loop.md), [`integrations/technology-intelligence.md`](integrations/technology-intelligence.md) |
+| `skills` | TI refresh, learn, promote, ledger sync, agent routing | [`guides/captain-handbook.md`](guides/captain-handbook.md), [`integrations/technology-intelligence.md`](integrations/technology-intelligence.md) |
 | `review` | Code review detect→…→verify→report | [`integrations/code-reviewer.md`](integrations/code-reviewer.md) |
-| `intent` | Intent pack export (never Captain approval) | [`integrations/code-reviewer.md`](integrations/code-reviewer.md) (intent packs) |
+| `intent` | Intent pack export (never Captain approval) | [`integrations/code-reviewer.md`](integrations/code-reviewer.md) |
 | `outcomes` | Finding triage → Experience (+ proposal-only routing) | [`integrations/code-reviewer.md`](integrations/code-reviewer.md) |
 | `repair` | FIND→PROVE→packet (never auto-merge) | [`integrations/code-reviewer.md`](integrations/code-reviewer.md), [`plans/B4_REPAIR_LOOP.md`](plans/B4_REPAIR_LOOP.md) |
 | `precision` | Precision ledger / dashboard from outcomes | [`integrations/code-reviewer.md`](integrations/code-reviewer.md), [`plans/B5_PRECISION_LEDGER.md`](plans/B5_PRECISION_LEDGER.md) |
 | `context` | Inode store build + context route walking (M40) | [`integrations/context-inodes.md`](integrations/context-inodes.md) |
+| `evaluate` / `learn` / `instructions` / `prompt-eval` / `policy` | Behavior Intelligence Loop (M46–M50) | [`plans/M46_BEHAVIOR_INTELLIGENCE_FOUNDATION.md`](plans/M46_BEHAVIOR_INTELLIGENCE_FOUNDATION.md) |
+| `status` | Project Overseer snapshot/explain/compare/reconcile/**closeout** | [`plans/M51_PROJECT_OVERSEER.md`](plans/M51_PROJECT_OVERSEER.md), [`plans/N1_OPERATIONAL_RECONCILIATION.md`](plans/N1_OPERATIONAL_RECONCILIATION.md) |
+| `provenance` / `examples` | Execution provenance + exemplars (M53) | [`plans/M53_PROMPT_POLICY_PROVENANCE.md`](plans/M53_PROMPT_POLICY_PROVENANCE.md) |
+| `brain` / `assess` / `cycle` / `learning` / `model` / `rea` / `train` | Cognitive Core C1–C7 | [`plans/C1_COGNITIVE_CORE_SOURCE_OF_TRUTH.md`](plans/C1_COGNITIVE_CORE_SOURCE_OF_TRUTH.md) |
+| `cognitive` | Hermetic C1–C7 e2e evaluation | [`plans/E2E_COGNITIVE_CORE_EVALUATION.md`](plans/E2E_COGNITIVE_CORE_EVALUATION.md) |
+| `oversight` | Read-only persistent oversight compose | [`plans/READ_ONLY_PERSISTENT_OVERSIGHT.md`](plans/READ_ONLY_PERSISTENT_OVERSIGHT.md) |
+| `specialized` | Specialized Model Level 0–2 (baseline / LoRA / GPU) | [`plans/SPECIALIZED_MODEL_LEVEL_0.md`](plans/SPECIALIZED_MODEL_LEVEL_0.md) |
 
 ```bash
 # From the control repo
 ./scripts/northstar help
 ./scripts/northstar review --repo /path/to/product
+./scripts/northstar status closeout --repo .
 ./scripts/northstar skills learn --repo /path/to/sandbox --objective "…"
 ```
 
@@ -42,13 +50,22 @@ Launcher: `scripts/northstar` (control repo only).
 | **Control** (`captains-compass-cursor`) | `scripts/northstar`, orchestrator, doctor, Learning Loop + repair/precision CLIs |
 | **Product** (after `install.sh`) | `.cursor/` Skills/rules/agents, memory docs, `.agent/` layout, product-scoped `docs/INDEX.md` from `templates/docs/INDEX.md` — **not** control `scripts/` |
 
-Full product-repo install polish for a specific app (e.g. `bitcoin-data-collector`) is roadmap **C2** — separate Captain plan.
+Full product-repo install polish for a specific app (e.g. `bitcoin-data-collector`) is track **`roadmap/C2`** (issue #164 / N2 follow-on) — separate Captain plan. Do not confuse with Cognitive Core **`cognitive/C2`** (memory retrieval).
 
-## Roadmap
+## Roadmap tracks (namespaces)
+
+Use a track prefix in prose and plan IDs when referring to milestones:
+
+| Track | Example | Meaning |
+|---|---|---|
+| `roadmap/*` | `roadmap/C2` product-repo install | Historical Captain continuation / product install ladder |
+| `cognitive/*` | `cognitive/C2` memory retrieval | Cognitive Core C1–C7 |
+| `specialized/*` | `specialized/L3` | Specialized Model Levels 0–3 |
+| `consolidation/*` | `consolidation/N1` | N1–N3 closeout / validation track |
 
 - Continuation roadmap: [`plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md`](plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md)
-- Track B (Code Reviewer) complete through B5 / v1.36.0
-- Track C starts at C1 (this launcher UX) → C2 product install
+- Consolidation: [`plans/N1_OPERATIONAL_RECONCILIATION.md`](plans/N1_OPERATIONAL_RECONCILIATION.md) → N2 → N3
+- Specialized Model Level 3 remains **DEFERRED**: [`plans/SPECIALIZED_MODEL_LEVEL_3.md`](plans/SPECIALIZED_MODEL_LEVEL_3.md)
 
 ## Integrations (selected)
 

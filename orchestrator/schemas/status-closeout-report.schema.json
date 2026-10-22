@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/status-closeout-report.schema.json",
+  "title": "StatusCloseoutReport",
+  "description": "Read-only closeout-readiness assessment (N1). Proposal-only; never grants authority or auto-closes issues.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "report_id",
+    "created_at",
+    "repository_sha",
+    "northstar_version",
+    "snapshot_id",
+    "readiness",
+    "ledger_items",
+    "drift_finding_ids",
+    "recommended_actions",
+    "approved_for_execution",
+    "authority_mutation",
+    "issues_auto_closed"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "report_id": { "type": "string", "minLength": 1 },
+    "plan_id": { "type": ["string", "null"] },
+    "created_at": { "type": "string", "minLength": 1 },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "snapshot_id": { "type": ["string", "null"] },
+    "readiness": {
+      "type": "string",
+      "enum": ["ready", "needs_captain_action", "blocked"]
+    },
+    "summary": { "type": "string" },
+    "ledger_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "item_id",
+          "kind",
+          "title",
+          "status",
+          "recommended_disposition",
+          "evidence"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "item_id": { "type": "string", "minLength": 1 },
+          "kind": {
+            "type": "string",
+            "enum": ["github_issue", "plan", "docs", "release", "other"]
+          },
+          "title": { "type": "string", "minLength": 1 },
+          "status": {
+            "type": "string",
+            "enum": [
+              "completed",
+              "superseded",
+              "deferred",
+              "still_actionable",
+              "open_unverified"
+            ]
+          },
+          "recommended_disposition": { "type": "string", "minLength": 1 },
+          "evidence": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "subsystem": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "drift_finding_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "recommended_actions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "ledger_path": { "type": ["string", "null"] },
+    "evidence_path": { "type": ["string", "null"] },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "issues_auto_closed": { "type": "boolean", "const": false }
+  }
+}
