@@ -1,0 +1,63 @@
+{
+  "action_count": 0,
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "brain_synced": false,
+  "compare_status": "compared",
+  "evidence_path": "/agent/repos/captains-compass-cursor/.agent/tmp-oversight-tests/ov-skip-zlwrxm1c/oversight-de2a842824.json",
+  "finding_count": 1,
+  "generated_at": "2026-10-22T23:30:41Z",
+  "northstar_version": "1.71.1",
+  "notes": "Read-only persistent oversight run. Compose of optional brain sync + Overseer snapshot/compare/reconcile. Reconcile proposals are never auto-applied; Captain reviews via PR if adopting suggestions.",
+  "overall_status": "pass",
+  "plan_id": "read-only-persistent-oversight",
+  "proposal_applied": false,
+  "proposal_id": "srec-d88d795794be",
+  "proposal_path": "/agent/repos/captains-compass-cursor/.agent/status/reconcile-proposals/srec-d88d795794be/proposal.json",
+  "repository_sha": "c7679bf42dd35254a08eed8cc39ebe2b9ec339bc",
+  "run_id": "oversight-de2a842824",
+  "schema_version": "1",
+  "since_sha": "c7679bf42dd35254a08eed8cc39ebe2b9ec339bc",
+  "snapshot_id": "psnap-2a2d6b2b3eec",
+  "steps": [
+    {
+      "details": {},
+      "id": "brain-sync",
+      "status": "skipped",
+      "summary": "brain sync skipped (COMPASS_BRAIN_ENABLED unset)"
+    },
+    {
+      "details": {
+        "finding_count": 1,
+        "plan_status": "**COMPLETE** (pending merge)",
+        "skill_count_fs": 47,
+        "snapshot_id": "psnap-2a2d6b2b3eec"
+      },
+      "id": "status-snapshot",
+      "status": "pass",
+      "summary": "snapshot psnap-2a2d6b2b3eec findings=1"
+    },
+    {
+      "details": {
+        "added_finding_kinds": [],
+        "resolved_finding_kinds": [],
+        "since": "c7679bf42dd35254a08eed8cc39ebe2b9ec339bc"
+      },
+      "id": "status-compare",
+      "status": "pass",
+      "summary": "compared since c7679bf42dd3 added=0 resolved=0"
+    },
+    {
+      "details": {
+        "action_count": 0,
+        "applied": false,
+        "proposal_id": "srec-d88d795794be",
+        "proposal_path": "/agent/repos/captains-compass-cursor/.agent/status/reconcile-proposals/srec-d88d795794be/proposal.json"
+      },
+      "id": "status-reconcile",
+      "status": "pass",
+      "summary": "reconcile proposal srec-d88d795794be actions=0 applied=False"
+    }
+  ],
+  "warnings": []
+}

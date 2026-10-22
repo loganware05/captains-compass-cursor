@@ -501,6 +501,16 @@ PY
   else
     fail "missing orchestrator/schemas/status-reconcile-proposal.schema.json"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/status-closeout-report.schema.json" ]]; then
+    ok "status-closeout-report.schema.json present"
+  else
+    fail "missing orchestrator/schemas/status-closeout-report.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/status/closeout.py" ]]; then
+    ok "status/closeout.py present (N1)"
+  else
+    fail "missing orchestrator/status/closeout.py"
+  fi
   if [[ -f "$ROOT/.agent/status/snapshots/.gitkeep" ]]; then
     ok ".agent/status/snapshots layout"
   else
@@ -510,6 +520,11 @@ PY
     ok ".agent/status/reconcile-proposals layout"
   else
     fail "missing .agent/status/reconcile-proposals/.gitkeep"
+  fi
+  if [[ -f "$ROOT/.agent/status/closeout-reports/.gitkeep" ]]; then
+    ok ".agent/status/closeout-reports layout"
+  else
+    fail "missing .agent/status/closeout-reports/.gitkeep"
   fi
   if [[ -x "$ROOT/scripts/run-status.sh" ]]; then
     ok "scripts/run-status.sh present"
@@ -525,6 +540,25 @@ PY
     ok "status fail-closed when COMPASS_STATUS_ENABLED unset"
   else
     fail "status should exit 2 mentioning COMPASS_STATUS_ENABLED when unset (rc=$st_rc)"
+  fi
+  set +e
+  st_close_out="$(env -u COMPASS_STATUS_ENABLED "$ROOT/scripts/run-status.sh" closeout --repo-root "$ROOT" 2>&1)"
+  st_close_rc=$?
+  set -e
+  if [[ "$st_close_rc" -eq 2 && "$st_close_out" == *"COMPASS_STATUS_ENABLED"* ]]; then
+    ok "status closeout fail-closed when COMPASS_STATUS_ENABLED unset"
+  else
+    fail "status closeout should exit 2 mentioning COMPASS_STATUS_ENABLED when unset (rc=$st_close_rc)"
+  fi
+  if grep -q 'status closeout' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents status closeout"
+  else
+    fail "northstar missing status closeout surface"
+  fi
+  if grep -q 'oversight\|specialized\|brain\|cognitive' "$ROOT/docs/INDEX.md" 2>/dev/null; then
+    ok "docs/INDEX.md covers newer northstar surfaces"
+  else
+    fail "docs/INDEX.md missing oversight/specialized/brain/cognitive coverage"
   fi
   if [[ -f "$ROOT/orchestrator/schemas/oversight-run.schema.json" ]]; then
     ok "oversight-run.schema.json present"

@@ -6,6 +6,7 @@ import csv
 from pathlib import Path
 from typing import Any
 
+from orchestrator.status.closeout import build_closeout_report
 from orchestrator.status.compare import StatusCompareError, compare_since
 from orchestrator.status.enabled import require_status_enabled
 from orchestrator.status.explain import explain_status
@@ -55,6 +56,26 @@ def reconcile(repo_root: Path, *, snapshot_id: str = "") -> dict[str, Any]:
         return draft_reconcile(repo_root, snapshot_id=snapshot_id)
     except StatusStoreError as exc:
         raise StatusServiceError(str(exc)) from exc
+
+
+def closeout(
+    repo_root: Path,
+    *,
+    snapshot_id: str = "",
+    ledger_path: str = "",
+) -> dict[str, Any]:
+    """Read-only closeout-readiness report (N1). Never auto-closes issues."""
+    require_status_enabled()
+    try:
+        report = build_closeout_report(
+            repo_root,
+            snapshot_id=snapshot_id,
+            ledger_path=Path(ledger_path) if ledger_path else None,
+            persist=True,
+        )
+    except StatusStoreError as exc:
+        raise StatusServiceError(str(exc)) from exc
+    return {"status": "closeout_assessed", "report": report}
 
 
 def export_csv(repo_root: Path, dest: Path) -> Path:

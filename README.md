@@ -6,7 +6,7 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.71.0
+## Current version: 1.71.1
 
 ### Included
 
@@ -15,17 +15,20 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
   `goose-agent-orchestration`, `security-audit-procedures`, plus
   skill-learning-loop, knowledge-steward, code-reviewer, persistent-role-promotion,
   bounded-autonomy, compass-evaluator, experience-routing, capability-planning,
-  execution-telemetry, candidate-promotion, experience-skill-training)
+  execution-telemetry, candidate-promotion, experience-skill-training,
+  `context-inodes`, `project-overseer`)
+  — note: `.cursor/skills/inodes/` is the context-inode content store, not a Skill
 - Capability-aware planning orchestrator (`orchestrator/`, `scripts/capability-plan.sh`)
 - Twelve specialist subagents (also indexed as reference agent profiles)
 - Seven safety hooks (critical fail-closed; soft skips via env / command string / marker)
 - Six Cursor phase slash commands (`.cursor/commands/`)
 - Autonomy budgets + session notes (`.agent/budgets/`, `.agent/sessions/`)
 - Evidence matrix, multi-runtime docs, technology-intelligence adapter contract, harness evals + sandbox behavioral checklist
-- Behavior Intelligence (M46–M49): evaluate → learn → instructions → prompt-eval — proposal/observe/eval-only
+- Behavior Intelligence (M46–M54): evaluate → learn → instructions → prompt-eval → policy → status/oversight → provenance — proposal/observe/eval-only
+- Cognitive Core C1–C7 + e2e + Specialized Model Levels 0–2 (gated; weights outside repo)
 - Structural-test examples (`examples/structural-tests/`)
 - Thin `CLAUDE.md` adapter when missing
-- Topology-free `scripts/northstar` launcher (skills + review + outcomes + repair + precision + evaluate + learn + instructions + prompt-eval)
+- Topology-free `scripts/northstar` launcher (skills, review, behavior, status/closeout, brain, assess, cycle, model, rea, train, cognitive, oversight, specialized, …)
 - Operator docs index: [`docs/INDEX.md`](docs/INDEX.md)
 - `install.sh`, `update.sh`, `uninstall.sh`, `doctor.sh`
 - Control-repo CI (doctor + tests + evals)

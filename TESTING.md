@@ -330,6 +330,19 @@ drafts only under `.agent/status/reconcile-proposals/` (`applied: false`). Never
 auto-rewrites project memory. See
 `.agent/evidence/m51-project-overseer/VALIDATION.md`.
 
+Closeout-readiness (N1; same status gate):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_n1_status_closeout.py' -v
+
+COMPASS_STATUS_ENABLED=1 \
+./scripts/northstar status closeout --repo .
+```
+
+Writes reports under `.agent/status/closeout-reports/` and evidence under
+`.agent/evidence/n1-operational-reconciliation/`. Authority flags and
+`issues_auto_closed` are locked false — never auto-closes GitHub issues.
+
 Project Overseer Skill + live provider (M52):
 
 ```bash
