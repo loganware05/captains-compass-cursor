@@ -6,7 +6,7 @@
 | Wall time | 8 hours | — |
 | Scope | Issue/plan ledger; docs drift; optional status closeout; N2/N3 stubs; Level 3 deferral | held |
 
-Status: APPROVED 2026-10-22 — implementing on
+Status: COMPLETE (PR pending merge) on
 `cursor/n1-operational-reconciliation-673a`.
 
-Constraints: no auto-close issues; no Level 3 / paid GPU; no Skill/policy promotion.
+Constraints honored: no auto-close issues; no Level 3 / paid GPU; no Skill/policy promotion.
