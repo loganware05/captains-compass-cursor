@@ -1,31 +1,26 @@
-> **DRAFT / FOLLOW-ON** (2026-10-22) — Plan ID `n2-product-integration-validation`.
-> Prerequisite: **N1** Operational Reconciliation complete.
-> Not the active root `IMPLEMENTATION_PLAN.md` until Captain promotes it.
-> Canonical promotion: copy/adapt into root plan at N2 planning time.
+> **COMPLETE** (2026-10-22) — Plan ID `n2-product-integration-validation`.
+> Baseline: **v1.71.1** @ `e0d813d` / [#238](https://github.com/loganware05/captains-compass-cursor/pull/238).
+> Release: **v1.72.0**.
+> Target: `captain-compass-sandbox` (Compass **1.71.1**).
+> Evidence: `.agent/evidence/n2-product-integration-validation/`.
+> Rollback: `rollback/pre-n2-product-integration-validation` @ `e0d813d`.
 
 # N2 — Product Integration Validation
 
 ## One-line summary
 
-Install and exercise NorthStar’s full engineering lifecycle in an independent
-product repository; produce reproducible end-to-end evidence and recovery tests.
+Refreshed sandbox to current control VERSION, exercised the full NorthStar
+lifecycle with evidence, shipped a bounded product feature, and fixed
+product-repo `assess` via `COMPASS_CONTROL_ROOT` profile fallback.
 
-## Candidate targets
+## Operator note
 
-1. **Preferred continuity:** [`#164`](https://github.com/loganware05/captains-compass-cursor/issues/164)
-   / `loganware05/bitcoin-data-collector` (roadmap product-install track).
-2. **Workspace alternate:** `captain-compass-sandbox` (currently refreshed to
-   workflow **v1.59.0** — would need control-repo update to current VERSION).
+```bash
+export COMPASS_CONTROL_ROOT=/path/to/captains-compass-cursor   # set by northstar
+COMPASS_ASSESS_ENABLED=1 ./scripts/northstar assess project \
+  --objective "…" --repo /path/to/product
+```
 
-Captain chooses at N2 approval.
+## Follow-on
 
-## Target acceptance scenario
-
-Objective → project-state / context → difficulty assess → Skills + model route
-→ implementation plan + Captain approval → implement + validate → review →
-Experience capture → PR → post-merge oversight → failure recovery.
-
-## Non-goals
-
-Level 3 GPU expansion; weakening approval gates; claiming production specialized
-model deployment.
+**N3** Adaptive Intelligence Validation · Level 3 remains **DEFERRED**.

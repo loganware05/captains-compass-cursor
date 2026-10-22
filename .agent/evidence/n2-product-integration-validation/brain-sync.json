@@ -1,0 +1,46 @@
+{
+  "freshness": "fresh",
+  "snapshot": {
+    "active_plan_id": "n2-compass-status-badge",
+    "approved_for_execution": false,
+    "authority_mutation": false,
+    "citations": [
+      {
+        "claim_kind": "observed",
+        "kind": "git",
+        "ref": "HEAD=90c48edef0a1ca0384772c05561270d7d48f8387"
+      },
+      {
+        "claim_kind": "observed",
+        "kind": "version",
+        "ref": "VERSION="
+      },
+      {
+        "claim_kind": "documented",
+        "kind": "file",
+        "ref": "IMPLEMENTATION_PLAN.md"
+      },
+      {
+        "claim_kind": "documented",
+        "kind": "file",
+        "ref": "PROGRESS.md"
+      }
+    ],
+    "composed_status_snapshot_id": null,
+    "created_at": "2026-10-22T23:39:27Z",
+    "freshness": "fresh",
+    "northstar_version": "",
+    "notes": "Cognitive Core C1 project-state snapshot (local Git). Does not approve plans or mutate authority.",
+    "plan_status": "**APPROVED**",
+    "repository_branch": "cursor/n2-product-integration-673a",
+    "repository_sha": "90c48edef0a1ca0384772c05561270d7d48f8387",
+    "schema_version": "1",
+    "skill_count_fs": 48,
+    "snapshot_id": "pstate-fb5aa7cac953",
+    "sources": [
+      "local_git"
+    ],
+    "working_tree_dirty": true
+  },
+  "status": "synced"
+}

@@ -32,8 +32,9 @@ def _hints_for_task(task_id: str) -> frozenset[str]:
 
 
 def _reference_profile_exists(repo_root: Path, profile_id: str) -> bool:
-    path = Path(repo_root) / "orchestrator" / "reference-profiles" / f"{profile_id}.json"
-    return path.is_file()
+    from orchestrator.registry.compiler import reference_profile_path
+
+    return reference_profile_path(Path(repo_root), profile_id).is_file()
 
 
 def _classification_overlap(classifications: list[str], hints: frozenset[str]) -> int:

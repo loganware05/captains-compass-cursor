@@ -140,9 +140,10 @@ gh auth status
 
 ## Current Priorities
 
-**N1 Operational Reconciliation COMPLETE** (**v1.71.1**). Specialized Model
-Level 2 COMPLETE at **v1.71.0**. Specialized Model Level 3 remains **DEFERRED**
-until N1–N3 + Level 0–2 proof-of-value. **Next:** **N2** Product Integration
-Validation (`docs/plans/N2_PRODUCT_INTEGRATION_VALIDATION.md`). Behavior Loop
-(M46–M54) remains complete at **v1.59.0**. Start here:
-`docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.
+**N2 Product Integration Validation COMPLETE** (**v1.72.0**) against
+`captain-compass-sandbox` at Compass **1.71.1**. N1 COMPLETE at **v1.71.1**.
+Specialized Model Level 3 remains **DEFERRED** until N3 + Level 0–2
+proof-of-value. **Next:** **N3** Adaptive Intelligence Validation
+(`docs/plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md`). Behavior Loop (M46–M54)
+remains complete at **v1.59.0**. Start here: `docs/guides/captain-handbook.md`.
+Live trading / AHF execution remains denied.

@@ -1,0 +1,28 @@
+{
+  "run_id": "cr-bede7114aa4c",
+  "report_path": "/agent/repos/captain-compass-sandbox/.agent/evidence/code-review/cr-bede7114aa4c/report.json",
+  "summary": {
+    "domains": [],
+    "skills_invoked": [
+      "code-reviewer",
+      "adversarial-reviewer",
+      "review-fix-loop"
+    ],
+    "findings_total": 1,
+    "verified": 0,
+    "unverified": 0,
+    "discarded": 1,
+    "intent_artifact": "/agent/repos/captain-compass-sandbox/IMPLEMENTATION_PLAN.md"
+  },
+  "github_review_posted": false,
+  "candidates_source": "specialists",
+  "intent_source": "plan",
+  "boundary": {
+    "enabled": true,
+    "notes": [
+      "boundary check skipped: inode store stale for 1 path(s) (e.g. src/App.tsx modified) \u2014 rerun scripts/build-context-inodes.sh"
+    ],
+    "candidates": 0
+  },
+  "github_draft": null
+}
