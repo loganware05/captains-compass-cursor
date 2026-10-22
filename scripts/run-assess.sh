@@ -58,6 +58,8 @@ if [[ "$CMD" == "project" && -z "$OBJECTIVE" ]]; then
 fi
 
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
+# Product repos lack orchestrator/reference-profiles; fall back to control.
+export COMPASS_CONTROL_ROOT="${COMPASS_CONTROL_ROOT:-$ROOT}"
 python3 - "$ROOT" "$REPO_ROOT" "$CMD" "$OBJECTIVE" <<'PY'
 import json
 import sys

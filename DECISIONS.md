@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-092: N2 Product Integration Validation (v1.72.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-22
+- **Context:** Captain approved `n2-product-integration-validation` after N1
+  (#238 / v1.71.1). Preferred historical target `bitcoin-data-collector` (#164)
+  already had M35 install evidence; writable workspace target is
+  `captain-compass-sandbox`.
+- **Decision:**
+  1. Refresh sandbox workflow **1.59.0 → 1.71.1** via `update.sh`; preserve memory.
+  2. Exercise brain → assess → capability-plan → implement → test → review →
+     oversight/closeout + ungated recovery evidence.
+  3. Fix product-repo assess by falling back to `COMPASS_CONTROL_ROOT` for
+     reference profiles (Skills remain product-local).
+  4. Ship control **v1.72.0**; keep Specialized Model Level 3 **DEFERRED**.
+- **Consequences:** NorthStar has current-VERSION product-repo lifecycle
+  evidence. Rollback
+  `rollback/pre-n2-product-integration-validation` @ `e0d813d`.
+
+
 ## ADR-091: N1 Operational Reconciliation & Level 3 Deferral (v1.71.1)
 
 - **Status:** Accepted

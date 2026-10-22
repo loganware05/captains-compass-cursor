@@ -4,6 +4,18 @@
 
 ## Unreleased
 
+## 1.72.0 — 2026-10-22
+
+### Added
+
+- **N2 Product Integration Validation** (plan `n2-product-integration-validation`):
+  - End-to-end lifecycle evidence against `captain-compass-sandbox` at control
+    **v1.71.1** → product refresh + `CompassStatusBadge` feature
+  - `COMPASS_CONTROL_ROOT` fallback so `northstar assess --repo <product>` can
+    load reference profiles from the control repo (product Skills still local)
+  - Evidence under `.agent/evidence/n2-product-integration-validation/`
+  - ADR-092; Level 3 remains **DEFERRED**
+
 ## 1.71.1 — 2026-10-22
 
 ### Added

@@ -1,0 +1,122 @@
+{
+  "approved_for_execution": false,
+  "assessment_id": "assess-4ea784fb8e1b-1700f4",
+  "authority_mutation": false,
+  "band": "moderate",
+  "capability_gaps": [],
+  "citations": [
+    {
+      "claim_kind": "observed",
+      "kind": "git",
+      "ref": "HEAD=90c48edef0a1ca0384772c05561270d7d48f8387"
+    },
+    {
+      "claim_kind": "documented",
+      "kind": "capability",
+      "ref": "implementation-plan-authoring"
+    },
+    {
+      "claim_kind": "documented",
+      "kind": "skill",
+      "ref": "implementation-planning"
+    },
+    {
+      "claim_kind": "documented",
+      "kind": "skill",
+      "ref": "accessibility-review"
+    },
+    {
+      "claim_kind": "documented",
+      "kind": "skill",
+      "ref": "autonomy-budget"
+    },
+    {
+      "claim_kind": "documented",
+      "kind": "skill",
+      "ref": "capability-planning"
+    },
+    {
+      "claim_kind": "documented",
+      "kind": "skill",
+      "ref": "code-structure-cleanup"
+    },
+    {
+      "claim_kind": "proposed",
+      "kind": "task_graph",
+      "ref": "tasks=5"
+    }
+  ],
+  "confidence": 0.35,
+  "difficulty_score": 27.33,
+  "experience_count": 0,
+  "factor_details": {
+    "gap_severity": {
+      "gap_count": 0,
+      "required_count": 1,
+      "security_sensitive": false
+    },
+    "operational_risk": {
+      "reasons": [],
+      "stacks": []
+    },
+    "repository_complexity": {
+      "context_inode_present": true,
+      "memory_doc_missing": 1,
+      "skill_count_fs": 48,
+      "working_tree_dirty": true
+    },
+    "skill_uncertainty": {
+      "available_count": 22,
+      "proven_count": 25,
+      "ranked_count": 47,
+      "top_score": 0.75
+    },
+    "task_graph_complexity": {
+      "dependency_depth": 3,
+      "task_count": 5
+    },
+    "validation_burden": {
+      "task_count": 5,
+      "tokens": []
+    }
+  },
+  "factors": {
+    "gap_severity": 5.0,
+    "operational_risk": 15.0,
+    "repository_complexity": 44.52,
+    "skill_uncertainty": 25.0,
+    "task_graph_complexity": 51.0,
+    "validation_burden": 45.0
+  },
+  "northstar_version": "",
+  "notes": "Cognitive Core C3 ProjectDifficultyAssessment. Advisory only \u2014 does not approve plans or mutate authority.",
+  "objective": "Add CompassStatusBadge showing NorthStar workflow version",
+  "recommendations": {
+    "autonomy_budget_hint": "standard",
+    "decompose": false,
+    "notes": "Moderate difficulty \u2014 prefer explicit task graph and elevated validation.",
+    "validation_depth": "elevated"
+  },
+  "recommended_skill_ids": [
+    "implementation-planning",
+    "accessibility-review",
+    "autonomy-budget",
+    "capability-planning",
+    "code-structure-cleanup"
+  ],
+  "repository_sha": "90c48edef0a1ca0384772c05561270d7d48f8387",
+  "required_capabilities": [
+    "implementation-plan-authoring"
+  ],
+  "schema_version": "1",
+  "snapshot_id": null,
+  "task_count": 5,
+  "weights": {
+    "gap_severity": 0.25,
+    "operational_risk": 0.15,
+    "repository_complexity": 0.15,
+    "skill_uncertainty": 0.2,
+    "task_graph_complexity": 0.15,
+    "validation_burden": 0.1
+  }
+}

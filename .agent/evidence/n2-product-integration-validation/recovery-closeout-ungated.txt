@@ -1,0 +1,2 @@
+error: COMPASS_STATUS_ENABLED is unset/off — set COMPASS_STATUS_ENABLED=1 to run northstar status
+rc=2

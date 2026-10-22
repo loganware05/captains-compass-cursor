@@ -166,6 +166,29 @@ class AssessServiceTests(unittest.TestCase):
         self.assertIn("COMPASS_ASSESS_ENABLED", proc.stderr)
 
 
+class ProductRepoControlFallbackTests(unittest.TestCase):
+    def test_assess_product_repo_uses_control_reference_profiles(self) -> None:
+        """N2: product checkouts lack orchestrator/; profiles come from control."""
+        product = _mk_fixture_dir("c3-product-")
+        _seed_mini_repo(product)
+        cursor = product / ".cursor"
+        cursor.mkdir(parents=True, exist_ok=True)
+        skills_link = cursor / "skills"
+        if not skills_link.exists():
+            skills_link.symlink_to(ROOT / ".cursor" / "skills")
+        env = {
+            "COMPASS_ASSESS_ENABLED": "1",
+            "COMPASS_CONTROL_ROOT": str(ROOT),
+        }
+        with mock.patch.dict(os.environ, env, clear=False):
+            doc = assess_project(
+                product, "Add accessible CompassStatusBadge on the home page"
+            )
+        self.assertFalse(doc["approved_for_execution"])
+        self.assertFalse(doc["authority_mutation"])
+        self.assertIn(doc["band"], {"trivial", "low", "moderate", "high", "extreme"})
+
+
 class BacktestTests(unittest.TestCase):
     def test_backtest_bands(self) -> None:
         spec = json.loads(BACKTEST.read_text(encoding="utf-8"))

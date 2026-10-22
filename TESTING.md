@@ -403,12 +403,18 @@ PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_c3_cogn
 
 COMPASS_ASSESS_ENABLED=1 \
 ./scripts/northstar assess project --objective "…" --repo .
+
+# Product repos (no local orchestrator/reference-profiles):
+COMPASS_ASSESS_ENABLED=1 \
+./scripts/northstar assess project --objective "…" --repo /path/to/product
+# northstar exports COMPASS_CONTROL_ROOT automatically for profile fallback
 ```
 
 Unset `COMPASS_ASSESS_ENABLED` → CLI exits non-zero. Advisory only — never
 bypasses plan approval. Backtest fixture:
 `tests/fixtures/assess-backtest/cases.json`.
-See `.agent/evidence/c3-cognitive-core-difficulty-fit/VALIDATION.md`.
+See `.agent/evidence/c3-cognitive-core-difficulty-fit/VALIDATION.md` and
+`.agent/evidence/n2-product-integration-validation/`.
 
 Cognitive Core Adaptive Development Loop (C4; requires cycle flag; begin also
 needs assess flag):

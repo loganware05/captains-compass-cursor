@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -10,6 +11,30 @@ from orchestrator.registry.infer import infer_capability
 from orchestrator.registry.loader import RegistryLoadError, load_skill_entry
 from orchestrator.registry.yaml_simple import load_simple_yaml
 from orchestrator.schemas.validate import ValidationError, validate_document
+
+
+def resolve_control_root() -> Path | None:
+    """Optional control-repo root for reference profiles when assessing product repos."""
+    raw = (os.environ.get("COMPASS_CONTROL_ROOT") or "").strip()
+    if not raw:
+        return None
+    path = Path(raw).expanduser().resolve()
+    if (path / "orchestrator" / "reference-profiles").is_dir():
+        return path
+    return None
+
+
+def reference_profile_path(repo_root: Path, profile_id: str) -> Path:
+    """Prefer product-repo profiles; fall back to COMPASS_CONTROL_ROOT."""
+    local = Path(repo_root) / "orchestrator" / "reference-profiles" / f"{profile_id}.json"
+    if local.is_file():
+        return local
+    control = resolve_control_root()
+    if control is not None:
+        fallback = control / "orchestrator" / "reference-profiles" / f"{profile_id}.json"
+        if fallback.is_file():
+            return fallback
+    return local
 
 SKILL_SLUGS = (
     "repository-discovery",
@@ -122,7 +147,7 @@ def _normalize_skill_capability(
 
 
 def load_reference_profile(repo_root: Path, profile_id: str) -> dict:
-    path = repo_root / "orchestrator" / "reference-profiles" / f"{profile_id}.json"
+    path = reference_profile_path(repo_root, profile_id)
     if not path.is_file():
         raise RegistryCompileError(f"missing reference profile: {path}")
     with path.open(encoding="utf-8") as handle:

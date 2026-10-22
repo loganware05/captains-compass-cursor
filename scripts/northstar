@@ -11,6 +11,8 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export PATH="$ROOT/scripts:$PATH"
+# Product repos omit orchestrator/reference-profiles; assess/plan fall back here.
+export COMPASS_CONTROL_ROOT="${COMPASS_CONTROL_ROOT:-$ROOT}"
 
 usage() {
   cat <<'USAGE'

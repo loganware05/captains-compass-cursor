@@ -1,0 +1,44 @@
+Captain's Compass update
+  target:  /agent/repos/captain-compass-sandbox
+  from:    1.59.0
+  to:      1.71.1
+
+keep: AGENTS.md (already exists; not overwritten)
+keep: PROJECT_CONTEXT.md (already exists; not overwritten)
+keep: IMPLEMENTATION_PLAN.md (already exists; not overwritten)
+keep: INTENT_PACK.md (already exists; not overwritten)
+keep: DECISIONS.md (already exists; not overwritten)
+keep: PROGRESS.md (already exists; not overwritten)
+keep: TESTING.md (already exists; not overwritten)
+keep: CHANGELOG.md (already exists; not overwritten)
+keep: .agent/review/github-allowlist.yml (already exists; not overwritten)
+keep: .agent/review/agentic-security-allowlist.yml (already exists; not overwritten)
+keep: CLAUDE.md (already exists; not overwritten)
+keep: docs/EVIDENCE_MATRIX.md (already exists; not overwritten)
+keep: docs/INDEX.md (already exists; not overwritten)
+keep: docs/integrations/code-reviewer.md (already exists; not overwritten)
+keep: docs/integrations/multi-runtime-agents.md (already exists; not overwritten)
+keep: docs/integrations/technology-intelligence.md (already exists; not overwritten)
+
+NorthStar / Captain's Compass v1.71.1 installed into:
+  /agent/repos/captain-compass-sandbox
+
+Next steps:
+  1. Fill in PROJECT_CONTEXT.md for this product.
+  2. Open the repository in Cursor.
+  3. Ask the First Mate to follow AGENTS.md for your next change.
+  4. Expect IMPLEMENTATION_PLAN.md to reach AWAITING APPROVAL before product code changes.
+  5. Run Learning Loop / Code Reviewer from the CONTROL repo:
+       <control>/scripts/northstar help
+       <control>/scripts/northstar review --repo /agent/repos/captain-compass-sandbox
+
+Control scripts/ were NOT copied (by design). See docs/INDEX.md.
+
+Do not install into critical production repos until you have validated the workflow in a disposable sandbox.
+
+Note: --force refreshes .cursor rules/skills/agents/hooks but does not overwrite existing
+product memory docs (PROJECT_CONTEXT.md, IMPLEMENTATION_PLAN.md, INTENT_PACK.md, etc.).
+Intent packs (M29) are review evidence only and never originate Captain approval.
+
+Update complete: 1.59.0 -> 1.71.1
+Review CHANGELOG.md in the control repo for what changed.
