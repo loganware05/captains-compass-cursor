@@ -1,5 +1,24 @@
 # Decisions
 
+## ADR-093: N3 Adaptive Intelligence Validation (v1.73.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-22
+- **Context:** Captain approved `n3-adaptive-intelligence-validation` after N2
+  (#239 / v1.72.0) with “proceed with N3”. Consolidation track completes with a
+  hermetic Adaptive Intelligence scorecard before any Level 3 large-GPU spend.
+- **Decision:**
+  1. Ship gated `adaptive scorecard` composing brain goldset, assess backtest,
+     model-route eval, Skill ranking/Experiences, review precision, context
+     retrieval, and Specialized Model Level 0 rates.
+  2. Lock authority flags false; Experiences may boost Skill reuse scoring only.
+  3. Emit `level3_recommendation` proposal-only; hermetic compare → **defer**.
+  4. Ship control **v1.73.0**; keep Specialized Model Level 3 **DEFERRED**
+     until Captain separately approves a Level 3 plan.
+- **Consequences:** Measurable adaptive-intelligence baseline exists. Rollback
+  `rollback/pre-n3-adaptive-intelligence-validation` @ `415c637`.
+
+
 ## ADR-092: N2 Product Integration Validation (v1.72.0)
 
 - **Status:** Accepted

@@ -34,6 +34,7 @@ Launcher: `scripts/northstar` (control repo only).
 | `cognitive` | Hermetic C1–C7 e2e evaluation | [`plans/E2E_COGNITIVE_CORE_EVALUATION.md`](plans/E2E_COGNITIVE_CORE_EVALUATION.md) |
 | `oversight` | Read-only persistent oversight compose | [`plans/READ_ONLY_PERSISTENT_OVERSIGHT.md`](plans/READ_ONLY_PERSISTENT_OVERSIGHT.md) |
 | `specialized` | Specialized Model Level 0–2 (baseline / LoRA / GPU) | [`plans/SPECIALIZED_MODEL_LEVEL_0.md`](plans/SPECIALIZED_MODEL_LEVEL_0.md) |
+| `adaptive` | N3 Adaptive Intelligence scorecard (proposal-only) | [`plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md`](plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md) |
 
 ```bash
 # From the control repo
@@ -64,7 +65,7 @@ Use a track prefix in prose and plan IDs when referring to milestones:
 | `consolidation/*` | `consolidation/N1` | N1–N3 closeout / validation track |
 
 - Continuation roadmap: [`plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md`](plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md)
-- Consolidation: [`plans/N1_OPERATIONAL_RECONCILIATION.md`](plans/N1_OPERATIONAL_RECONCILIATION.md) → N2 → N3
+- Consolidation: [`plans/N1_OPERATIONAL_RECONCILIATION.md`](plans/N1_OPERATIONAL_RECONCILIATION.md) → [`plans/N2_PRODUCT_INTEGRATION_VALIDATION.md`](plans/N2_PRODUCT_INTEGRATION_VALIDATION.md) → [`plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md`](plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md) (**complete**)
 - Specialized Model Level 3 remains **DEFERRED**: [`plans/SPECIALIZED_MODEL_LEVEL_3.md`](plans/SPECIALIZED_MODEL_LEVEL_3.md)
 
 ## Integrations (selected)

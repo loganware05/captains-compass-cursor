@@ -509,6 +509,18 @@ Specialized Model Level 2 single rented GPU QLoRA (same gate; CI `--dry-run` onl
 PYTHONPATH=. python3 -m unittest tests.orchestrator.test_specialized_model_level_2 -v
 ```
 
+N3 Adaptive Intelligence scorecard (requires adaptive gate; `--enable-gates` also
+enables brain/assess/route for hermetic compose):
+
+```bash
+./scripts/run-adaptive-intelligence.sh scorecard --phase compare --repo-root . --enable-gates
+./scripts/northstar adaptive scorecard --phase compare --repo . --enable-gates
+# Phases: baseline | with_evidence | compare
+# Evidence: .agent/evidence/n3-adaptive-intelligence-validation/
+# Proposal-only; never auto-applies weights/Skills/policies; Level 3 stays deferred unless consider + Captain plan
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_n3_adaptive_intelligence -v
+```
+
 Cognitive Core e2e evaluation (C1–C7; requires all Cognitive Core gates or `--enable-gates`):
 
 ```bash

@@ -1,14 +1,13 @@
 > **DEFERRED** (2026-10-22) — Plan ID `specialized-model-level-3`.
 > Prerequisite: Level 2 **v1.71.0** / [#234](https://github.com/loganware05/captains-compass-cursor/pull/234).
-> Consolidation prerequisites: **N1** Operational Reconciliation → **N2** Product
-> Integration Validation → **N3** Adaptive Intelligence Validation, plus
-> demonstrated Level 0–2 proof-of-value (VRAM/context/ROI limit) before paid
-> large-GPU execution.
+> Consolidation prerequisites **complete**: N1 (**v1.71.1** / #238) → N2
+> (**v1.72.0** / #239) → N3 (**v1.73.0**). N3 hermetic scorecard recommends
+> **`defer`** (stub_student ≈ retrieval). Still require demonstrated Level 0–2
+> proof-of-value (VRAM/context/ROI limit) before paid large-GPU execution.
 > Notion: [Specialized Model](https://app.notion.com/p/3f8e6a901c43815a8d24f99ba617737a).
-> Proposed release when later approved: **v1.72.0** (unchanged).
-> Active gate: root `IMPLEMENTATION_PLAN.md` is now **N1**
-> (`n1-operational-reconciliation`). Restore this plan to root only after
-> Captain explicit re-approval of Level 3.
+> Proposed release when later approved: **TBD** (Captain re-approves Level 3).
+> Restore this plan to root `IMPLEMENTATION_PLAN.md` only after Captain
+> explicit re-approval of Level 3.
 > Issue: Captain files GitHub issue before or on approval (agent cannot create issues).
 
 # Specialized Model Level 3 — Large Single GPU (48–80GB)

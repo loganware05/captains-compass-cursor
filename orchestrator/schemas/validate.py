@@ -64,6 +64,7 @@ SCHEMA_FILES = (
     "specialized-model-lora-run.schema.json",
     "specialized-model-gpu-job.schema.json",
     "specialized-model-gpu-run.schema.json",
+    "adaptive-intelligence-scorecard.schema.json",
 )
 
 

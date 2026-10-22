@@ -5,7 +5,7 @@
 > Evidence: `.agent/evidence/n1-operational-reconciliation/`.
 > Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
 > Specialized Model Level 3 remains **DEFERRED**.
-> Next: N2 Product Integration Validation.
+> Follow-on: N2 (**v1.72.0**) → N3 (**v1.73.0**) complete. Level 3 remains **DEFERRED**.
 
 # N1 — Operational Reconciliation & Development Closeout
 
@@ -34,9 +34,9 @@ See `.agent/evidence/n1-operational-reconciliation/CLOSEOUT_LEDGER.md`.
 
 ## Follow-on
 
-- **N2** — Product Integration Validation
-- **N3** — Adaptive Intelligence Validation
-- **Level 3** — DEFERRED until N1–N3 + Level 0–2 proof-of-value
+- **N2** — Product Integration Validation (**COMPLETE** / v1.72.0 / #239)
+- **N3** — Adaptive Intelligence Validation (**COMPLETE** / v1.73.0)
+- **Level 3** — DEFERRED (N3 scorecard recommends `defer`; still need Level 0–2 proof-of-value)
 
 ## Non-goals
 
