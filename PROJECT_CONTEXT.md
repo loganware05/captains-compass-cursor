@@ -133,10 +133,13 @@ gh auth status
 
 ## Current Priorities
 
-**Specialized Model Level 2 COMPLETE** (**v1.71.0** @ `5727802`,
-[#234](https://github.com/loganware05/captains-compass-cursor/pull/234)).
-**Next:** Specialized Model Level 3 plan `specialized-model-level-3` —
-**AWAITING APPROVAL** (48–80GB GPU job class; cost-ack; weights outside
-control repo). Behavior Loop (M46–M54) remains complete at **v1.59.0**. Start
-here: `docs/guides/captain-handbook.md`. Live trading / AHF execution remains
-denied.
+**Specialized Model Level 2 COMPLETE** (**v1.71.0** @ `15e8866` via
+[#234](https://github.com/loganware05/captains-compass-cursor/pull/234) /
+[#235](https://github.com/loganware05/captains-compass-cursor/pull/235)).
+**Next:** **N1 Operational Reconciliation** plan
+`n1-operational-reconciliation` — **AWAITING APPROVAL** (issue/plan ledger,
+docs INDEX drift, track namespaces, optional Overseer closeout-readiness;
+proposed **v1.71.1**). Specialized Model Level 3 remains **DEFERRED** until
+N1–N3 + Level 0–2 proof-of-value. Behavior Loop (M46–M54) remains complete at
+**v1.59.0**. Start here: `docs/guides/captain-handbook.md`. Live trading /
+AHF execution remains denied.

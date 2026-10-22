@@ -21,4 +21,7 @@ outside the control repo; never auto-promotes.
 
 ## Next
 
-Specialized Model Level 3 (`specialized-model-level-3`) — **AWAITING APPROVAL**.
+- **N1** Operational Reconciliation (`n1-operational-reconciliation`) —
+  **AWAITING APPROVAL** (consolidation before further model scaling).
+- Specialized Model Level 3 (`specialized-model-level-3`) — **DEFERRED**
+  until N1–N3 + Level 0–2 proof-of-value.
