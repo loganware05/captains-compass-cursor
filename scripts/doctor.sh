@@ -636,6 +636,25 @@ PY
   else
     fail "specialized-model gpu should exit 2 mentioning COMPASS_SPECIALIZED_MODEL_ENABLED when unset (rc=$sm2_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/adaptive-intelligence-scorecard.schema.json" ]]; then
+    ok "adaptive-intelligence-scorecard.schema.json present"
+  else
+    fail "missing orchestrator/schemas/adaptive-intelligence-scorecard.schema.json"
+  fi
+  if [[ -x "$ROOT/scripts/run-adaptive-intelligence.sh" ]]; then
+    ok "scripts/run-adaptive-intelligence.sh present"
+  else
+    fail "missing executable scripts/run-adaptive-intelligence.sh"
+  fi
+  set +e
+  ai_out="$(env -u COMPASS_ADAPTIVE_INTEL_ENABLED "$ROOT/scripts/run-adaptive-intelligence.sh" scorecard --phase baseline --repo-root "$ROOT" 2>&1)"
+  ai_rc=$?
+  set -e
+  if [[ "$ai_rc" -eq 2 && "$ai_out" == *"COMPASS_ADAPTIVE_INTEL_ENABLED"* ]]; then
+    ok "adaptive-intelligence fail-closed when COMPASS_ADAPTIVE_INTEL_ENABLED unset"
+  else
+    fail "adaptive-intelligence should exit 2 mentioning COMPASS_ADAPTIVE_INTEL_ENABLED when unset (rc=$ai_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/project-state-snapshot.schema.json" ]]; then
     ok "project-state-snapshot.schema.json present"
   else

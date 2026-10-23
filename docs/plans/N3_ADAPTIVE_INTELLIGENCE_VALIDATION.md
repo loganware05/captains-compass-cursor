@@ -1,30 +1,48 @@
-> **DRAFT / FOLLOW-ON** (2026-10-22) — Plan ID `n3-adaptive-intelligence-validation`.
-> Prerequisite: **N2** Product Integration Validation complete (or parallel
-> bounded evals with Captain approval).
-> Not the active root `IMPLEMENTATION_PLAN.md` until Captain promotes it.
+> **COMPLETE** (2026-10-22) — Plan ID `n3-adaptive-intelligence-validation`.
+> Baseline: **v1.72.0** @ `415c637` / [#239](https://github.com/loganware05/captains-compass-cursor/pull/239).
+> Release: **v1.73.0**.
+> Evidence: `.agent/evidence/n3-adaptive-intelligence-validation/`.
+> Rollback: `rollback/pre-n3-adaptive-intelligence-validation` @ `415c637`.
 
 # N3 — Adaptive Intelligence Validation
 
 ## One-line summary
 
-Connect execution outcomes to learning, routing, and specialized-model
-evaluations; measure whether recommendations improve against fixed baselines.
+Hermetic Adaptive Intelligence scorecard composing Cognitive Core, Behavior
+Loop, and Specialized Model Level 0 surfaces; compare phase recommends keeping
+Level 3 **DEFERRED**.
 
-## Suggested scorecard
+## Operator note
+
+```bash
+./scripts/northstar adaptive scorecard --phase compare --repo . --enable-gates
+# or:
+COMPASS_ADAPTIVE_INTEL_ENABLED=1 COMPASS_BRAIN_ENABLED=1 \
+  COMPASS_ASSESS_ENABLED=1 COMPASS_ROUTE_ENABLED=1 \
+  ./scripts/run-adaptive-intelligence.sh scorecard --phase compare --repo-root .
+```
+
+## Scorecard metrics
 
 | Metric | Definition |
 |---|---|
 | Project-state accuracy | Grounded claims / checked claims |
-| Difficulty calibration | Predicted vs observed effort/failures |
-| Routing effectiveness | Quality, latency, cost vs baseline |
-| Skill reuse | Successful reuse on independent tasks |
+| Difficulty calibration | Assess backtest pass rate |
+| Routing effectiveness | Model-route composite (inverse) |
+| Skill reuse | Held-out objective Skill hit-rate (+ Experiences in with_evidence) |
 | Review precision | Accepted verified findings / decided findings |
-| Context efficiency | Relevant evidence retrieved per token |
-| Training effectiveness | Held-out performance vs retrieval-only baseline |
+| Context efficiency | Evidence-linked retrieval density |
+| Training effectiveness | Level 0 stub_student vs retrieval rates |
 
-All policy/Skill/routing changes remain Captain-gated.
+Authority locks: `auto_applied`, `authority_mutation`, `approved_for_execution`
+are always **false**.
 
-## Non-goals
+## Level 3 recommendation
 
-Silent self-modification; auto-promotion of adapters; Level 3 spend without
-Level 0–2 proof-of-value.
+Hermetic compare: `level3_recommendation=defer` (stub_student_rate equals
+retrieval_rate). Specialized Model Level 3 stays **DEFERRED** until Captain
+separately approves a Level 3 plan.
+
+## Non-goals honored
+
+No paid GPU; no Skill/policy auto-promotion; no silent self-modification.

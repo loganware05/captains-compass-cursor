@@ -1,0 +1,180 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "auto_applied": false,
+  "baseline_report_id": null,
+  "created_at": "2026-10-22T23:57:15Z",
+  "evidence_path": "/agent/repos/captains-compass-cursor/.agent/evidence/n3-adaptive-intelligence-validation/adaptive-with_evidence-843a0a2a2ab3.json",
+  "evidence_report_id": null,
+  "level3_rationale": "Held-out stub_student_rate=1.000 vs retrieval=1.000 (delta=0.000) does not justify large-GPU expansion. Keep specialized-model-level-3 DEFERRED; continue N3 evidence accumulation.",
+  "level3_recommendation": "defer",
+  "metrics": {
+    "context_efficiency": {
+      "details": {
+        "evidence_linked": true,
+        "freshness": "fresh",
+        "hit_count": 0,
+        "top_n": 8
+      },
+      "name": "context_efficiency",
+      "status": "pass",
+      "summary": "evidence_linked=True hits=0/8",
+      "unit": "linked_density",
+      "value": 0.6
+    },
+    "difficulty_calibration": {
+      "details": {
+        "passed": 5,
+        "total": 5
+      },
+      "name": "difficulty_calibration",
+      "status": "pass",
+      "summary": "assess backtest 5/5 (100%)",
+      "unit": "backtest_pass_rate",
+      "value": 1.0
+    },
+    "project_state_accuracy": {
+      "details": {
+        "linked": 30,
+        "target": 0.9,
+        "total": 30
+      },
+      "name": "project_state_accuracy",
+      "status": "pass",
+      "summary": "goldset evidence-linked 30/30 (100.0%; target 90%; expect_kinds 57%)",
+      "unit": "grounded_claims_rate",
+      "value": 1.0
+    },
+    "review_precision": {
+      "details": {
+        "accepted_tp": 4,
+        "decided": 6
+      },
+      "name": "review_precision",
+      "status": "warn",
+      "summary": "accepted_tp=4 decided=6",
+      "unit": "precision",
+      "value": 0.6667
+    },
+    "routing_effectiveness": {
+      "details": {
+        "best_composite": 4.9,
+        "cases_evaluated": 3,
+        "recommended_adapter_class": "local"
+      },
+      "name": "routing_effectiveness",
+      "status": "pass",
+      "summary": "winner=local composite=4.9 cases=3",
+      "unit": "inverse_composite",
+      "value": 0.1695
+    },
+    "skill_reuse": {
+      "details": {
+        "cases": [
+          {
+            "expected": [
+              "implementation-planning",
+              "react-engineering"
+            ],
+            "hit": true,
+            "id": "n3-obj-plan",
+            "recommended": [
+              "accessibility-review",
+              "github-integration",
+              "implementation-planning",
+              "pull-request-preparation",
+              "react-engineering"
+            ]
+          },
+          {
+            "expected": [
+              "code-reviewer",
+              "security-review"
+            ],
+            "hit": true,
+            "id": "n3-obj-review",
+            "recommended": [
+              "accessibility-review",
+              "autonomy-budget",
+              "capability-planning",
+              "dependency-supply-chain",
+              "security-review"
+            ]
+          },
+          {
+            "expected": [
+              "testing-validation"
+            ],
+            "hit": true,
+            "id": "n3-obj-test",
+            "recommended": [
+              "accessibility-review",
+              "autonomy-budget",
+              "capability-planning",
+              "code-structure-cleanup",
+              "testing-validation"
+            ]
+          },
+          {
+            "expected": [
+              "repository-discovery"
+            ],
+            "hit": false,
+            "id": "n3-obj-discover",
+            "recommended": [
+              "accessibility-review",
+              "autonomy-budget",
+              "capability-planning",
+              "code-structure-cleanup",
+              "implementation-planning"
+            ]
+          },
+          {
+            "expected": [
+              "project-overseer"
+            ],
+            "hit": false,
+            "id": "n3-obj-overseer",
+            "recommended": [
+              "accessibility-review",
+              "dependency-supply-chain",
+              "github-integration",
+              "pull-request-preparation",
+              "security-review"
+            ]
+          }
+        ],
+        "experience_skill_count": 5,
+        "hits": 3,
+        "total": 5
+      },
+      "name": "skill_reuse",
+      "status": "pass",
+      "summary": "skill reuse hits=3/5 with_evidence=True",
+      "unit": "hit_rate",
+      "value": 0.6
+    },
+    "training_effectiveness": {
+      "details": {
+        "delta_stub_minus_retrieval": 0.0,
+        "prompt_rate": 1.0,
+        "retrieval_rate": 1.0,
+        "stub_student_rate": 1.0,
+        "task_total": 24
+      },
+      "name": "training_effectiveness",
+      "status": "pass",
+      "summary": "retrieval=1.000 prompt=1.000 stub=1.000 delta_stub_minus_retrieval=0.000",
+      "unit": "stub_student_rate",
+      "value": 1.0
+    }
+  },
+  "northstar_version": "1.73.0",
+  "notes": "N3 Adaptive Intelligence Validation scorecard. Hermetic metrics only. Does not apply routing weights, promote Skills/policies, or authorize Level 3 GPU spend.",
+  "phase": "with_evidence",
+  "plan_id": "n3-adaptive-intelligence-validation",
+  "report_id": "adaptive-with_evidence-843a0a2a2ab3",
+  "repository_sha": "415c6379239ed918b785e424b47ec6a9ddaf025d",
+  "schema_version": "1",
+  "warnings": []
+}

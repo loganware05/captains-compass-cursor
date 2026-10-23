@@ -23,4 +23,5 @@ COMPASS_ASSESS_ENABLED=1 ./scripts/northstar assess project \
 
 ## Follow-on
 
-**N3** Adaptive Intelligence Validation · Level 3 remains **DEFERRED**.
+**N3** Adaptive Intelligence Validation **COMPLETE** (**v1.73.0**).
+Level 3 remains **DEFERRED**.

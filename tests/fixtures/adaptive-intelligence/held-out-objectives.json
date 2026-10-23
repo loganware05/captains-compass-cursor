@@ -1,0 +1,31 @@
+{
+  "schema_version": "1",
+  "description": "Held-out objectives for N3 Skill-reuse scoring (hermetic).",
+  "objectives": [
+    {
+      "id": "n3-obj-plan",
+      "objective": "Create an approval-gated implementation plan for a React form",
+      "expected_skill_ids": ["implementation-planning", "react-engineering"]
+    },
+    {
+      "id": "n3-obj-review",
+      "objective": "Run evidence-only code review on a security-sensitive auth change",
+      "expected_skill_ids": ["code-reviewer", "security-review"]
+    },
+    {
+      "id": "n3-obj-test",
+      "objective": "Add unit and integration tests with Definition of Done evidence",
+      "expected_skill_ids": ["testing-validation"]
+    },
+    {
+      "id": "n3-obj-discover",
+      "objective": "Map repository structure tooling risks and conventions",
+      "expected_skill_ids": ["repository-discovery"]
+    },
+    {
+      "id": "n3-obj-overseer",
+      "objective": "Snapshot project status and draft a reconcile proposal without mutating authority",
+      "expected_skill_ids": ["project-overseer"]
+    }
+  ]
+}

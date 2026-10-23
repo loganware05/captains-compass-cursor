@@ -4,6 +4,22 @@
 
 ## Unreleased
 
+## 1.73.0 — 2026-10-22
+
+### Added
+
+- **N3 Adaptive Intelligence Validation** (plan `n3-adaptive-intelligence-validation`):
+  - Gated `northstar adaptive scorecard` / `run-adaptive-intelligence.sh`
+    (`COMPASS_ADAPTIVE_INTEL_ENABLED` or `--enable-gates`)
+  - Schema `adaptive-intelligence-scorecard` with seven metrics + authority
+    locks (`auto_applied` / `authority_mutation` / `approved_for_execution` false)
+  - Phases `baseline` / `with_evidence` / `compare`; Experiences inform Skill
+    reuse scoring only — never auto-apply weights/policies/Skills
+  - Explicit `level3_recommendation` (`defer` | `consider`); hermetic compare
+    recommends **defer** (stub_student ≈ retrieval)
+  - Evidence under `.agent/evidence/n3-adaptive-intelligence-validation/`
+  - ADR-093; doctor fail-closed; unit tests; Level 3 remains **DEFERRED**
+
 ## 1.72.0 — 2026-10-22
 
 ### Added
