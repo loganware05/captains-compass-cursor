@@ -1,12 +1,12 @@
 # Implementation Plan — Open UI Control Plane (v1.74.0 proposed)
 
-- Status: **AWAITING APPROVAL**
+- Status: **APPROVED**
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING APPROVAL** |
+| Status | **APPROVED** |
 | Plan ID | `openui-control-plane` |
 | Issue | *(placeholder — create after approval)* |
 | Baseline | **v1.73.0** @ `6432c23` (#240 merged) |
@@ -21,9 +21,9 @@
 
 | Field | Value |
 |---|---|
-| Approved by | — |
-| Approval date | — |
-| Notes | Implementation must not begin until Captain explicitly approves this plan. |
+| Approved by | Logan Ware (Captain) |
+| Approval date | 2026-10-24 |
+| Notes | Explicit: “I approve, proceed with Open UI”. Standing order applies. |
 
 ---
 
