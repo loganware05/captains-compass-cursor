@@ -135,6 +135,7 @@ def validate_openui_lang(text: str) -> dict[str, Any]:
 
 
 _CALL_NAME = re.compile(r"\b([A-Za-z_][A-Za-z0-9_]*)\s*\(")
+_STRING_LIT = re.compile(r'"(?:\\.|[^"\\])*"')
 
 
 def _validate_expr(expr: str, errors: list[str], *, line_no: int) -> None:
@@ -146,16 +147,13 @@ def _validate_expr(expr: str, errors: list[str], *, line_no: int) -> None:
         return
     if _IDENT.match(expr):
         return
-    # Arrays and nested calls: recursively allowlist every TypeName(…) occurrence.
+    # Arrays and nested calls: allowlist TypeName(…) outside string literals
+    # (titles like "Control Plane (v1.74.0)" must not be treated as calls).
     if expr.startswith("[") or _CALL.match(expr):
-        for name in _CALL_NAME.findall(expr):
+        stripped = _STRING_LIT.sub('""', expr)
+        for name in _CALL_NAME.findall(stripped):
             if name not in KNOWN_COMPONENTS:
                 errors.append(f"line {line_no}: unknown component {name}")
-        # Strip string literals before checking residual structure lightly.
-        stripped = re.sub(r'"(?:\\.|[^"\\])*"', '""', expr)
-        if re.search(r"[^\w\s\[\]\(\),\.\+\-\"\:]", stripped):
-            # Allow common OpenUI tokens only; reject odd punctuation.
-            pass
         return
     errors.append(f"line {line_no}: invalid expression")
 

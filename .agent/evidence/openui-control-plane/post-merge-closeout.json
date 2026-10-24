@@ -1,0 +1,228 @@
+{
+  "report": {
+    "approved_for_execution": false,
+    "authority_mutation": false,
+    "created_at": "2026-10-24T22:37:29Z",
+    "drift_finding_ids": [
+      "drift-memory-docs-present"
+    ],
+    "evidence_path": "/agent/repos/captains-compass-cursor/.agent/evidence/n1-operational-reconciliation/CLOSEOUT_REPORT.json",
+    "issues_auto_closed": false,
+    "ledger_items": [
+      {
+        "evidence": [
+          "https://github.com/loganware05/captains-compass-cursor/pull/221",
+          "docs/plans/C7_CLOSEOUT_STATE_RECONCILIATION.md COMPLETE",
+          "merge 96a8de3"
+        ],
+        "item_id": "issue-220",
+        "kind": "github_issue",
+        "notes": "Issue still OPEN on GitHub; implementation merged 2026-10-20.",
+        "recommended_disposition": "Verify acceptance criteria against PR #221 / v1.66.1 then close",
+        "status": "completed",
+        "subsystem": "cognitive-core",
+        "title": "Post-C7 closeout: state reconciliation (v1.66.1)"
+      },
+      {
+        "evidence": [
+          "https://github.com/loganware05/captains-compass-cursor/pull/224",
+          "docs/plans/E2E_COGNITIVE_CORE_EVALUATION.md COMPLETE",
+          "merge 05dcfba"
+        ],
+        "item_id": "issue-222",
+        "kind": "github_issue",
+        "notes": "Hermetic e2e harness shipped; fixture gold rates are not real-repo proof (N2).",
+        "recommended_disposition": "Verify acceptance criteria against PR #224 / v1.67.0 then close",
+        "status": "completed",
+        "subsystem": "cognitive-core",
+        "title": "E2E Cognitive Core evaluation (C1\u2013C7 sandbox/hermetic harness)"
+      },
+      {
+        "evidence": [
+          "https://github.com/loganware05/captains-compass-cursor/pull/143",
+          ".cursor/agents/code-reviewer.md",
+          "orchestrator/review/specialists.py"
+        ],
+        "item_id": "issue-144",
+        "kind": "github_issue",
+        "notes": "",
+        "recommended_disposition": "Verify acceptance against PR #143 then close",
+        "status": "completed",
+        "subsystem": "code-review",
+        "title": "M28: Code Reviewer specialist composition"
+      },
+      {
+        "evidence": [
+          "https://github.com/loganware05/captains-compass-cursor/pull/145",
+          "orchestrator/schemas/intent-pack.schema.json",
+          "templates/docs/INTENT_PACK.md"
+        ],
+        "item_id": "issue-146",
+        "kind": "github_issue",
+        "notes": "",
+        "recommended_disposition": "Verify acceptance against PR #145 / v1.32.0 then close",
+        "status": "completed",
+        "subsystem": "code-review",
+        "title": "M29: Intent packs + installer templates"
+      },
+      {
+        "evidence": [
+          "https://github.com/loganware05/captains-compass-cursor/pull/149",
+          "orchestrator/review/github_draft.py",
+          "scripts/run-code-review.sh --post-github-draft"
+        ],
+        "item_id": "issue-147",
+        "kind": "github_issue",
+        "notes": "Opt-in / allowlist-gated; not auto-post.",
+        "recommended_disposition": "Verify allowlist + posting tests against PR #149 / v1.33.0 then close",
+        "status": "completed",
+        "subsystem": "code-review",
+        "title": "M30: Opt-in GitHub draft reviews"
+      },
+      {
+        "evidence": [
+          "https://github.com/loganware05/captains-compass-cursor/pull/173",
+          "docs/plans/M38_SHELL_FORGE_GATE.md"
+        ],
+        "item_id": "issue-169",
+        "kind": "github_issue",
+        "notes": "Reassess any residual forge path; do not auto-close without Captain check.",
+        "recommended_disposition": "Verify residual risk vs PR #173 / v1.39.1 then close or file residual follow-up",
+        "status": "completed",
+        "subsystem": "hooks-security",
+        "title": "M38 / Phase C \u2014 Shell forge gate for IMPLEMENTATION_PLAN.md"
+      },
+      {
+        "evidence": [
+          "https://github.com/loganware05/captains-compass-cursor/pull/175",
+          "scripts/ingest-agentic-security.sh",
+          "docs/plans/AGENTIC_SECURITY_REVIEW_PHASE_B.md COMPLETE"
+        ],
+        "item_id": "issue-170",
+        "kind": "github_issue",
+        "notes": "Allowlist opt-in.",
+        "recommended_disposition": "Verify Phase B acceptance against PR #175 / v1.40.0 then close",
+        "status": "completed",
+        "subsystem": "code-review",
+        "title": "M39 / Phase B \u2014 Live Cursor Agentic Security ingestion (opt-in)"
+      },
+      {
+        "evidence": [
+          "https://github.com/loganware05/captains-compass-cursor/pull/166",
+          "docs/plans/C2_PRODUCT_REPO_INSTALL.md",
+          ".agent/evidence/c2-product-repo-install/"
+        ],
+        "item_id": "issue-164",
+        "kind": "github_issue",
+        "notes": "Track namespace: roadmap/C2 product-install \u2260 cognitive/C2 memory retrieval. N2 should re-prove lifecycle at current control VERSION.",
+        "recommended_disposition": "Close original M35 after verifying PR #166 / v1.38.0; track current-VERSION revalidation under N2",
+        "status": "completed",
+        "subsystem": "product-install",
+        "title": "M35 / C2: Product-repo install (bitcoin-data-collector)"
+      },
+      {
+        "evidence": [
+          "docs/plans/SPECIALIZED_MODEL_LEVEL_3.md",
+          "PROGRESS.md"
+        ],
+        "item_id": "plan-specialized-model-level-3",
+        "kind": "plan",
+        "notes": "Harness proposal preserved; no paid large-GPU authorization.",
+        "recommended_disposition": "Keep DEFERRED until N1\u2013N3 + Level 0\u20132 proof-of-value; re-approve separately",
+        "status": "deferred",
+        "subsystem": "specialized-model",
+        "title": "Specialized Model Level 3 (large single GPU)"
+      },
+      {
+        "evidence": [
+          "docs/INDEX.md",
+          "scripts/northstar help"
+        ],
+        "item_id": "docs-index-drift",
+        "kind": "docs",
+        "notes": "Fixed in N1 implementation.",
+        "recommended_disposition": "No further action \u2014 INDEX updated in N1 / v1.71.1",
+        "status": "completed",
+        "subsystem": "operator-docs",
+        "title": "docs/INDEX.md omits newer northstar surfaces"
+      },
+      {
+        "evidence": [
+          ".cursor/skills/",
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "count_skills_fs requires SKILL.md"
+        ],
+        "item_id": "skill-count-drift",
+        "kind": "docs",
+        "notes": "Audit false positive: directory count 48 included non-Skill inodes/ store.",
+        "recommended_disposition": "No further action \u2014 Forty-seven Skills with SKILL.md; inodes/ is content store",
+        "status": "completed",
+        "subsystem": "operator-docs",
+        "title": "README/PROJECT_CONTEXT skill count vs filesystem"
+      },
+      {
+        "evidence": [
+          "docs/INDEX.md Roadmap tracks",
+          "PROJECT_CONTEXT.md Terminology",
+          "docs/plans/C2_PRODUCT_REPO_INSTALL.md",
+          "docs/plans/C2_COGNITIVE_CORE_MEMORY_RETRIEVAL.md"
+        ],
+        "item_id": "track-namespace-c2",
+        "kind": "docs",
+        "notes": "Fixed in N1 implementation.",
+        "recommended_disposition": "No further action \u2014 track namespaces documented",
+        "status": "completed",
+        "subsystem": "governance",
+        "title": "Milestone ID collision: roadmap C2 vs Cognitive Core C2"
+      },
+      {
+        "evidence": [
+          "docs/plans/N2_PRODUCT_INTEGRATION_VALIDATION.md"
+        ],
+        "item_id": "follow-on-n2",
+        "kind": "plan",
+        "notes": "",
+        "recommended_disposition": "Promote after N1 merge; Captain chooses bitcoin-data-collector (#164 continuity) or sandbox refresh",
+        "status": "deferred",
+        "subsystem": "consolidation",
+        "title": "N2 Product Integration Validation"
+      },
+      {
+        "evidence": [
+          "docs/plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md"
+        ],
+        "item_id": "follow-on-n3",
+        "kind": "plan",
+        "notes": "",
+        "recommended_disposition": "Promote after N2 (or bounded parallel evals with Captain approval)",
+        "status": "deferred",
+        "subsystem": "consolidation",
+        "title": "N3 Adaptive Intelligence Validation"
+      }
+    ],
+    "ledger_path": "/agent/repos/captains-compass-cursor/.agent/evidence/n1-operational-reconciliation/CLOSEOUT_LEDGER.json",
+    "northstar_version": "1.74.1",
+    "plan_id": "n1-operational-reconciliation",
+    "readiness": "needs_captain_action",
+    "recommended_actions": [
+      "Captain: verify acceptance then close issue-220 \u2014 Verify acceptance criteria against PR #221 / v1.66.1 then close",
+      "Captain: verify acceptance then close issue-222 \u2014 Verify acceptance criteria against PR #224 / v1.67.0 then close",
+      "Captain: verify acceptance then close issue-144 \u2014 Verify acceptance against PR #143 then close",
+      "Captain: verify acceptance then close issue-146 \u2014 Verify acceptance against PR #145 / v1.32.0 then close",
+      "Captain: verify acceptance then close issue-147 \u2014 Verify allowlist + posting tests against PR #149 / v1.33.0 then close",
+      "Captain: verify acceptance then close issue-169 \u2014 Verify residual risk vs PR #173 / v1.39.1 then close or file residual follow-up",
+      "Captain: verify acceptance then close issue-170 \u2014 Verify Phase B acceptance against PR #175 / v1.40.0 then close",
+      "Captain: verify acceptance then close issue-164 \u2014 Close original M35 after verifying PR #166 / v1.38.0; track current-VERSION revalidation under N2",
+      "Keep deferred plan-specialized-model-level-3 until prerequisites met",
+      "Keep deferred follow-on-n2 until prerequisites met",
+      "Keep deferred follow-on-n3 until prerequisites met"
+    ],
+    "report_id": "closeout-142eafb52436",
+    "repository_sha": "7d78e293e21300508e95a36024352e3eb99c6856",
+    "schema_version": "1",
+    "snapshot_id": "psnap-940f1c13bf01",
+    "summary": "Closeout readiness=needs_captain_action; ledger_items=14 (completed=11, deferred=3, actionable=0); drift_findings=1. Issues are never auto-closed."
+  },
+  "status": "closeout_assessed"
+}
