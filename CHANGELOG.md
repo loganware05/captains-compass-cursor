@@ -4,6 +4,16 @@
 
 ## Unreleased
 
+## 1.74.1 — 2026-10-24
+
+### Fixed
+
+- Open UI Lang validator no longer treats `Word (` inside quoted strings as
+  component calls (false fail-closed on titles like "Control Plane (v1.74.0)"
+  and summaries containing `steward (`).
+- Post-merge closeout for `openui-control-plane` after PR #241.
+
+
 ## 1.74.0 — 2026-10-24
 
 ### Added

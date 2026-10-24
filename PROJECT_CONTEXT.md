@@ -140,12 +140,11 @@ gh auth status
 
 ## Current Priorities
 
-**Open UI Control Plane** shipping as **v1.74.0** (`northstar ui`,
-`orchestrator/ui`). N3 Adaptive Intelligence Validation COMPLETE at
-**v1.73.0**; N2 COMPLETE at **v1.72.0**; N1 COMPLETE at **v1.71.1**. Hermetic
-scorecard recommends **defer** Level 3. Specialized Model Level 3 remains
-**DEFERRED** until Level 0–2 proof-of-value and a separate Captain-approved
-Level 3 plan (`docs/plans/SPECIALIZED_MODEL_LEVEL_3.md`). Behavior Loop
-(M46–M54) remains complete at **v1.59.0**. Start here:
-`docs/guides/captain-handbook.md`.
+**Open UI Control Plane COMPLETE** (**v1.74.0** / #241; hotfix **v1.74.1**).
+N3 Adaptive Intelligence Validation COMPLETE at **v1.73.0**; N2 COMPLETE at
+**v1.72.0**; N1 COMPLETE at **v1.71.1**. Hermetic scorecard recommends
+**defer** Level 3. Specialized Model Level 3 remains **DEFERRED** until
+Level 0–2 proof-of-value and a separate Captain-approved Level 3 plan
+(`docs/plans/SPECIALIZED_MODEL_LEVEL_3.md`). Behavior Loop (M46–M54) remains
+complete at **v1.59.0**. Start here: `docs/guides/captain-handbook.md`.
 Live trading / AHF execution remains denied.

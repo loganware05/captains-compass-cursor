@@ -70,6 +70,15 @@ class LangTests(unittest.TestCase):
         with self.assertRaises(OpenUILangError):
             validate_openui_lang('root = NorthStarStack([EvilWidget("x")])\n')
 
+    def test_validate_ignores_parens_inside_string_literals(self) -> None:
+        lang = (
+            'card = PlanApprovalCard("id", "Open UI Control Plane (v1.74.0)", '
+            '"APPROVED", "r", "f", "s", "h")\n'
+            "root = NorthStarStack([card])\n"
+        )
+        meta = validate_openui_lang(lang)
+        self.assertTrue(meta["ok"])
+
     def test_validate_missing_root(self) -> None:
         with self.assertRaises(OpenUILangError):
             validate_openui_lang('card = CompassStatusBadge("a", "1", "ok")\n')

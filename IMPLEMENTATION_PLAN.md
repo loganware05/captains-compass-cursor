@@ -1,17 +1,17 @@
 # Implementation Plan — Open UI Control Plane (v1.74.0 proposed)
 
-- Status: **IN PROGRESS**
+- Status: **COMPLETE**
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **IN PROGRESS** |
+| Status | **COMPLETE** |
 | Plan ID | `openui-control-plane` |
 | Issue | *(placeholder — create after approval)* |
 | Baseline | **v1.73.0** @ `6432c23` (#240 merged) |
 | Branch | `cursor/openui-control-plane-010c` |
-| Rollback | `rollback/pre-openui-control-plane` *(tag after approval)* |
+| Rollback | `rollback/pre-openui-control-plane` @ `6432c23` |
 | Proposed release | **v1.74.0** |
 | Captain | Logan Ware |
 | Created | 2026-10-24 |
@@ -338,3 +338,12 @@ From Repository State PDF — track separately after this plan:
 2. **N5 feedback** — validate Skill-fit/routing proposals from N4 (no auto-promotion)  
 3. **Model proof** — small-adapter vs retrieval/hosted baselines (separate cost approval)  
 4. **Conditional Level 3** — only after demonstrated benefit
+
+## Completion record
+
+| Field | Value |
+|---|---|
+| Merged | PR #241 @ `7d78e29` (2026-10-24) |
+| Post-merge | Validator hotfix for string-literal false positives (v1.74.1) |
+| Closeout | `.agent/evidence/openui-control-plane/POST_MERGE.md` |
+| Completed | 2026-10-24 |

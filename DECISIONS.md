@@ -19,7 +19,8 @@
      N4/N5 remain separate plans.
 - **Consequences:** Captain can stream plan/tower/scorecard/closeout widgets
   without weakening hooks. Rollback `rollback/pre-openui-control-plane` @
-  `6432c23`.
+  `6432c23`. Post-merge **v1.74.1** fixes OpenUI Lang string-literal false
+  positives in the structural validator.
 
 
 ## ADR-093: N3 Adaptive Intelligence Validation (v1.73.0)
