@@ -1,0 +1,252 @@
+{
+  "root": "NorthStarStack",
+  "components": {
+    "NorthStarStack": {
+      "signature": "NorthStarStack(children: any[])",
+      "description": "Root stack for NorthStar Open UI control widgets"
+    },
+    "PlanApprovalCard": {
+      "signature": "PlanApprovalCard(planId: string, title: string, status: string, riskSummary: string, affectedFiles: string, specialists: string, hookStatus: string)",
+      "description": "Interactive plan approval summary with risk context"
+    },
+    "ControlTowerTelemetry": {
+      "signature": "ControlTowerTelemetry(activeAgents: string, skillRanking: string, budgetProgress: string, hookGrid: string)",
+      "description": "Control tower: agents, Skills, budgets, safety hooks"
+    },
+    "HermeticScorecard": {
+      "signature": "HermeticScorecard(phase: string, recommendation: string, rationale: string, metricsSummary: string, baselineVsEvidence: string)",
+      "description": "N3 hermetic adaptive intelligence scorecard"
+    },
+    "CompassStatusBadge": {
+      "signature": "CompassStatusBadge(label: string, version: string, tone: string)",
+      "description": "Reusable NorthStar status badge (N2 pattern)"
+    },
+    "CloseoutLedgerWidget": {
+      "signature": "CloseoutLedgerWidget(snapshotId: string, readiness: string, shaLocal: string, shaRemote: string, evidenceSummary: string, recommendedActions: string)",
+      "description": "N1 closeout ledger with SHA reconciliation view"
+    },
+    "RecommendationCard": {
+      "signature": "RecommendationCard(topic: string, recommendation: string, rationale: string)",
+      "description": "Advisory recommendation card (e.g. Level 3 deferral)"
+    }
+  },
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "NorthStarStack": {
+        "$ref": "#/$defs/NorthStarStack"
+      },
+      "PlanApprovalCard": {
+        "$ref": "#/$defs/PlanApprovalCard"
+      },
+      "ControlTowerTelemetry": {
+        "$ref": "#/$defs/ControlTowerTelemetry"
+      },
+      "HermeticScorecard": {
+        "$ref": "#/$defs/HermeticScorecard"
+      },
+      "CompassStatusBadge": {
+        "$ref": "#/$defs/CompassStatusBadge"
+      },
+      "CloseoutLedgerWidget": {
+        "$ref": "#/$defs/CloseoutLedgerWidget"
+      },
+      "RecommendationCard": {
+        "$ref": "#/$defs/RecommendationCard"
+      }
+    },
+    "required": [
+      "NorthStarStack",
+      "PlanApprovalCard",
+      "ControlTowerTelemetry",
+      "HermeticScorecard",
+      "CompassStatusBadge",
+      "CloseoutLedgerWidget",
+      "RecommendationCard"
+    ],
+    "additionalProperties": false,
+    "$defs": {
+      "NorthStarStack": {
+        "type": "object",
+        "properties": {
+          "children": {
+            "type": "array",
+            "items": {}
+          }
+        },
+        "required": [
+          "children"
+        ],
+        "additionalProperties": false,
+        "description": "Root stack for NorthStar Open UI control widgets"
+      },
+      "PlanApprovalCard": {
+        "type": "object",
+        "properties": {
+          "planId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "riskSummary": {
+            "type": "string"
+          },
+          "affectedFiles": {
+            "type": "string"
+          },
+          "specialists": {
+            "type": "string"
+          },
+          "hookStatus": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "planId",
+          "title",
+          "status",
+          "riskSummary",
+          "affectedFiles",
+          "specialists",
+          "hookStatus"
+        ],
+        "additionalProperties": false,
+        "description": "Interactive plan approval summary with risk context"
+      },
+      "ControlTowerTelemetry": {
+        "type": "object",
+        "properties": {
+          "activeAgents": {
+            "type": "string"
+          },
+          "skillRanking": {
+            "type": "string"
+          },
+          "budgetProgress": {
+            "type": "string"
+          },
+          "hookGrid": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "activeAgents",
+          "skillRanking",
+          "budgetProgress",
+          "hookGrid"
+        ],
+        "additionalProperties": false,
+        "description": "Control tower: agents, Skills, budgets, safety hooks"
+      },
+      "HermeticScorecard": {
+        "type": "object",
+        "properties": {
+          "phase": {
+            "type": "string"
+          },
+          "recommendation": {
+            "type": "string"
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "metricsSummary": {
+            "type": "string"
+          },
+          "baselineVsEvidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "phase",
+          "recommendation",
+          "rationale",
+          "metricsSummary",
+          "baselineVsEvidence"
+        ],
+        "additionalProperties": false,
+        "description": "N3 hermetic adaptive intelligence scorecard"
+      },
+      "CompassStatusBadge": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "tone": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "label",
+          "version",
+          "tone"
+        ],
+        "additionalProperties": false,
+        "description": "Reusable NorthStar status badge (N2 pattern)"
+      },
+      "CloseoutLedgerWidget": {
+        "type": "object",
+        "properties": {
+          "snapshotId": {
+            "type": "string"
+          },
+          "readiness": {
+            "type": "string"
+          },
+          "shaLocal": {
+            "type": "string"
+          },
+          "shaRemote": {
+            "type": "string"
+          },
+          "evidenceSummary": {
+            "type": "string"
+          },
+          "recommendedActions": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "snapshotId",
+          "readiness",
+          "shaLocal",
+          "shaRemote",
+          "evidenceSummary",
+          "recommendedActions"
+        ],
+        "additionalProperties": false,
+        "description": "N1 closeout ledger with SHA reconciliation view"
+      },
+      "RecommendationCard": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string"
+          },
+          "recommendation": {
+            "type": "string"
+          },
+          "rationale": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "topic",
+          "recommendation",
+          "rationale"
+        ],
+        "additionalProperties": false,
+        "description": "Advisory recommendation card (e.g. Level 3 deferral)"
+      }
+    }
+  }
+}

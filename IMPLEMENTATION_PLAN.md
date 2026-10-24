@@ -1,12 +1,12 @@
 # Implementation Plan — Open UI Control Plane (v1.74.0 proposed)
 
-- Status: **APPROVED**
+- Status: **IN PROGRESS**
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
+| Status | **IN PROGRESS** |
 | Plan ID | `openui-control-plane` |
 | Issue | *(placeholder — create after approval)* |
 | Baseline | **v1.73.0** @ `6432c23` (#240 merged) |
@@ -55,16 +55,16 @@ Also perform the **documentation closeout** called out in the 24 Oct 2026 reposi
 
 ## Acceptance Criteria
 
-- [ ] README / PROGRESS / prior N3 plan closure reconciled to **v1.73.0** / #240 merged (Workstream 0)
-- [ ] `orchestrator/ui` package builds; depends on `@openuidev/react-lang` and `@openuidev/lang-core` (pinned; supply-chain review recorded)
-- [ ] OpenUI system prompt / library spec checked in under control paths (e.g. `.cursor/templates/openui-system-prompt.md` + generated `openui.spec.json`)
-- [ ] Components exist for Targets A–D with accessible labels and keyboard-operable actions
-- [ ] `northstar … --ui` (or documented equivalent) emits OpenUI Lang for at least: plan approval summary, status/control tower, adaptive scorecard, status closeout
-- [ ] Invalid OpenUI Lang or stream disconnect → fail closed; markdown/CLI path still works
-- [ ] UI APPROVE does **not** bypass hooks: requires Captain attestation env + committed plan status; REJECT writes feedback without unlocking implementation
-- [ ] Doctor + unit/structural tests pass; browser screenshots for widgets recorded
-- [ ] Security + accessibility reviews recorded; no product-repo pollution (assets stay in `.cursor/`, `orchestrator/`, `scripts/`)
-- [ ] CHANGELOG / VERSION / ADR for **v1.74.0**; rollback tag documented
+- [x] README / PROGRESS / prior N3 plan closure reconciled to **v1.73.0** / #240 merged (Workstream 0)
+- [x] `orchestrator/ui` package builds; depends on `@openuidev/react-lang` and `@openuidev/lang-core` (pinned; supply-chain review recorded)
+- [x] OpenUI system prompt / library spec checked in under control paths (e.g. `.cursor/templates/openui-system-prompt.md` + generated `openui.spec.json`)
+- [x] Components exist for Targets A–D with accessible labels and keyboard-operable actions
+- [x] `northstar … --ui` (or documented equivalent) emits OpenUI Lang for at least: plan approval summary, status/control tower, adaptive scorecard, status closeout
+- [x] Invalid OpenUI Lang or stream disconnect → fail closed; markdown/CLI path still works
+- [x] UI APPROVE does **not** bypass hooks: requires Captain attestation env + committed plan status; REJECT writes feedback without unlocking implementation
+- [x] Doctor + unit/structural tests pass; browser screenshots for widgets recorded
+- [x] Security + accessibility reviews recorded; no product-repo pollution (assets stay in `.cursor/`, `orchestrator/`, `scripts/`)
+- [x] CHANGELOG / VERSION / ADR for **v1.74.0**; rollback tag documented
 
 ## Non-Goals
 

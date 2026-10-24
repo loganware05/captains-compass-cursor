@@ -655,6 +655,40 @@ PY
   else
     fail "adaptive-intelligence should exit 2 mentioning COMPASS_ADAPTIVE_INTEL_ENABLED when unset (rc=$ai_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
+    ok "orchestrator/openui present"
+  else
+    fail "missing orchestrator/openui/service.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-openui.sh" ]]; then
+    ok "scripts/run-openui.sh present"
+  else
+    fail "missing executable scripts/run-openui.sh"
+  fi
+  if [[ -f "$ROOT/orchestrator/ui/src/library.ts" && -f "$ROOT/orchestrator/ui/openui.spec.json" ]]; then
+    ok "orchestrator/ui Open UI library + spec present"
+  else
+    fail "missing orchestrator/ui library or openui.spec.json"
+  fi
+  if [[ -f "$ROOT/.cursor/templates/openui-system-prompt.md" ]]; then
+    ok "openui-system-prompt.md present"
+  else
+    fail "missing .cursor/templates/openui-system-prompt.md"
+  fi
+  if grep -q 'northstar ui' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents ui surface"
+  else
+    fail "northstar missing ui surface"
+  fi
+  set +e
+  ou_out="$(env -u COMPASS_OPENUI_ENABLED "$ROOT/scripts/run-openui.sh" emit --surface plan --repo-root "$ROOT" 2>&1)"
+  ou_rc=$?
+  set -e
+  if [[ "$ou_rc" -eq 2 && "$ou_out" == *"COMPASS_OPENUI_ENABLED"* ]]; then
+    ok "openui fail-closed when COMPASS_OPENUI_ENABLED unset"
+  else
+    fail "openui should exit 2 mentioning COMPASS_OPENUI_ENABLED when unset (rc=$ou_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/project-state-snapshot.schema.json" ]]; then
     ok "project-state-snapshot.schema.json present"
   else
