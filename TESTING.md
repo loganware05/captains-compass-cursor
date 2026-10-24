@@ -521,6 +521,20 @@ enables brain/assess/route for hermetic compose):
 PYTHONPATH=. python3 -m unittest tests.orchestrator.test_n3_adaptive_intelligence -v
 ```
 
+Open UI control plane (requires `COMPASS_OPENUI_ENABLED` or `--enable-gates`):
+
+```bash
+./scripts/run-openui.sh emit --surface plan --repo-root . --enable-gates
+./scripts/northstar ui emit --surface tower|scorecard|closeout --repo . --enable-gates
+./scripts/northstar ui validate --surface plan --repo . --enable-gates
+# Approve requires COMPASS_CAPTAIN_APPROVE=1 (never auto-approves)
+# Reject: ./scripts/northstar ui reject --feedback "…" --repo . --enable-gates
+# UI package (optional Node 20+):
+#   cd orchestrator/ui && npm ci && npm test && npm run generate:spec
+# Evidence: .agent/evidence/openui-control-plane/
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_openui_control_plane -v
+```
+
 Cognitive Core e2e evaluation (C1–C7; requires all Cognitive Core gates or `--enable-gates`):
 
 ```bash

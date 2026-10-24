@@ -1,5 +1,27 @@
 # Decisions
 
+## ADR-094: Open UI Control Plane (v1.74.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-24
+- **Context:** Captain approved `openui-control-plane` after N3 (#240 / v1.73.0)
+  with “I approve, proceed with Open UI”. Repository-state assessment called out
+  text-heavy orchestration overhead and v1.73.0 doc drift; meta-prompt specified
+  Open UI Targets A–D.
+- **Decision:**
+  1. Ship gated OpenUI Lang emitters + React library under control paths only
+     (`orchestrator/openui`, `orchestrator/ui`, `.cursor/templates/`).
+  2. Use `@openuidev/react-lang` + `@openuidev/lang-core` (pinned); do not install
+     UI into product repos by default.
+  3. UI APPROVE requires `COMPASS_CAPTAIN_APPROVE=1`; never auto-approve; fail
+     closed on invalid OpenUI Lang to markdown/CLI.
+  4. Ship control **v1.74.0**; keep Specialized Model Level 3 **DEFERRED**;
+     N4/N5 remain separate plans.
+- **Consequences:** Captain can stream plan/tower/scorecard/closeout widgets
+  without weakening hooks. Rollback `rollback/pre-openui-control-plane` @
+  `6432c23`.
+
+
 ## ADR-093: N3 Adaptive Intelligence Validation (v1.73.0)
 
 - **Status:** Accepted

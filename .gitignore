@@ -31,6 +31,9 @@ wandb/
 *.pth
 *.onnx
 
+# Open UI emitted streams (regenerable)
+.agent/ui/*.openui
+
 # Local agent evidence that may contain sensitive output
 .agent/evidence/private/
 .agent/budgets/private/

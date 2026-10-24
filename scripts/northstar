@@ -65,6 +65,7 @@ Surfaces (one-line purpose):
   oversight   Read-only persistent oversight — requires COMPASS_STATUS_ENABLED=1 (optional brain)
   specialized Specialized Model Level 0/1/2 (baseline + LoRA + GPU) — requires COMPASS_SPECIALIZED_MODEL_ENABLED=1
   adaptive   N3 Adaptive Intelligence scorecard — requires COMPASS_ADAPTIVE_INTEL_ENABLED=1
+  ui         Open UI emitters + gated approve/reject — requires COMPASS_OPENUI_ENABLED=1
   provenance Execution provenance ledger (M53) — requires COMPASS_PROVENANCE_ENABLED=1
   examples   Behavior exemplars (M53) — proposal-only; requires COMPASS_PROVENANCE_ENABLED=1
 
@@ -144,6 +145,10 @@ Commands:
             [--captain-approval-recorded] [--repo PATH]
   northstar adaptive scorecard [--phase baseline|with_evidence|compare]
             [--repo PATH] [--enable-gates]
+  northstar ui emit --surface plan|tower|scorecard|closeout [--repo PATH] [--enable-gates]
+  northstar ui validate --surface SURFACE [--repo PATH] [--enable-gates]
+  northstar ui approve [--repo PATH] [--enable-gates]   # requires COMPASS_CAPTAIN_APPROVE=1
+  northstar ui reject --feedback TEXT [--repo PATH] [--enable-gates]
   northstar provenance capture --execution-id ID [--repo PATH]
   northstar provenance list [--repo PATH]
   northstar provenance show --provenance-id ID [--repo PATH]
@@ -206,6 +211,9 @@ Locks:
   curated .agent/examples/ as cases (default off; never auto-promotes).
   Provenance/examples (M53) require COMPASS_PROVENANCE_ENABLED=1; proposal-only;
   never auto-promote Skills/Policies or grant approved_for_execution.
+  Open UI (v1.74.0) requires COMPASS_OPENUI_ENABLED=1; emits OpenUI Lang for
+  plan/tower/scorecard/closeout; approve requires COMPASS_CAPTAIN_APPROVE=1;
+  never auto-approves; invalid lang fails closed to markdown/CLI.
 USAGE
 }
 
@@ -862,6 +870,29 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown adaptive subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  ui)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      emit|validate|approve|reject)
+        exec "$ROOT/scripts/run-openui.sh" "$sub" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown ui subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;

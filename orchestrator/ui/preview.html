@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>NorthStar Open UI — widget preview</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 1.5rem;
+        font-family: "IBM Plex Sans", "Source Sans 3", "Segoe UI", sans-serif;
+        color: #0f172a;
+        background: linear-gradient(160deg, #f0f7f4 0%, #e8eef7 45%, #f7f3ea 100%);
+        min-height: 100vh;
+      }
+      h1 {
+        font-family: Fraunces, Georgia, serif;
+        letter-spacing: -0.02em;
+      }
+      section {
+        border: 1px solid #c5d0c8;
+        border-radius: 12px;
+        padding: 1rem 1.15rem;
+        margin-bottom: 0.75rem;
+        background: rgba(255, 255, 255, 0.55);
+      }
+      h2 {
+        font-family: Fraunces, Georgia, serif;
+        font-size: 1.25rem;
+        margin: 0 0 0.35rem;
+      }
+      p { color: #475569; margin: 0.35rem 0; }
+      .badge {
+        display: inline-flex;
+        gap: 0.5rem;
+        align-items: baseline;
+        border: 1px solid #c5d0c8;
+        border-radius: 12px;
+        padding: 0.55rem 0.85rem;
+        margin-bottom: 0.75rem;
+        background: linear-gradient(120deg, #f7f0e8, #eef2f7);
+      }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      code { font-size: 0.9em; }
+    </style>
+  </head>
+  <body>
+    <h1>NorthStar Open UI</h1>
+    <div class="badge" role="status" aria-label="NorthStar 1.74.0">
+      <strong>NorthStar</strong> <span>v1.74.0</span> <span>ok</span>
+    </div>
+    <section aria-label="Plan approval">
+      <h2>Plan approval</h2>
+      <p><strong>Open UI Control Plane</strong> · <code>openui-control-plane</code></p>
+      <p>Status: <strong>IN PROGRESS</strong></p>
+      <details open>
+        <summary>Risk scorecard</summary>
+        <p>hooks=7; specialists=12</p>
+        <p>Files: orchestrator/ui/**, orchestrator/openui/**, scripts/northstar</p>
+      </details>
+      <p>Actions: <code>northstar ui approve</code> requires <code>COMPASS_CAPTAIN_APPROVE=1</code></p>
+    </section>
+    <section aria-label="Control tower">
+      <h2>Control tower</h2>
+      <p>Agents: implementation-agent, test-engineer, …</p>
+      <p>Skills: react-engineering, testing-validation, …</p>
+      <p>Hooks: plan-approval-check.sh:ready, …</p>
+    </section>
+    <section aria-label="Hermetic scorecard">
+      <h2>Hermetic scorecard (N3)</h2>
+      <p>Phase: <strong>compare</strong> · Level 3: <strong>defer</strong></p>
+      <p>Proposal-only advisory; no auto-apply.</p>
+    </section>
+    <section aria-label="Closeout ledger">
+      <h2>Closeout ledger</h2>
+      <div class="grid">
+        <div><p><strong>Local SHA</strong></p><code>6432c23…</code></div>
+        <div><p><strong>Compared SHA</strong></p><code>n/a</code></div>
+      </div>
+    </section>
+  </body>
+</html>

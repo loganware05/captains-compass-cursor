@@ -4,6 +4,24 @@
 
 ## Unreleased
 
+## 1.74.0 — 2026-10-24
+
+### Added
+
+- **Open UI Control Plane** (plan `openui-control-plane`):
+  - Gated `northstar ui emit|validate|approve|reject` / `run-openui.sh`
+    (`COMPASS_OPENUI_ENABLED` or `--enable-gates`)
+  - `orchestrator/openui` OpenUI Lang emitters for plan, control tower,
+    hermetic scorecard, and closeout ledger surfaces
+  - `orchestrator/ui` React library (`@openuidev/react-lang` / `@openuidev/lang-core`)
+    with Targets A–D widgets + checked-in `openui.spec.json`
+  - System prompt template `.cursor/templates/openui-system-prompt.md`
+  - Approve requires `COMPASS_CAPTAIN_APPROVE=1`; never auto-approves;
+    invalid OpenUI Lang fails closed to markdown/CLI
+  - Evidence under `.agent/evidence/openui-control-plane/`
+  - ADR-094; doctor fail-closed; unit tests
+  - WS0 doc closeout: README version aligned after N3 (#240)
+
 ## 1.73.0 — 2026-10-22
 
 ### Added

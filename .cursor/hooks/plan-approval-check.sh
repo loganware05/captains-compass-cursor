@@ -100,7 +100,17 @@ _PROMOTE = re.compile(
 
 
 def shell_forges_plan(cmd: str) -> bool:
-    if not cmd or not re.search(_PLAN_FILE, cmd, re.I):
+    if not cmd:
+        return False
+    # Open UI approve mutates IMPLEMENTATION_PLAN.md to APPROVED (Captain-gated).
+    # Reject returns status to AWAITING APPROVAL and is handled in Python without
+    # requiring COMPASS_CAPTAIN_APPROVE at the shell forge layer.
+    if re.search(
+        r"(?i)(?:run-openui\.sh|\bnorthstar\s+ui)\s+approve\b",
+        cmd,
+    ):
+        return True
+    if not re.search(_PLAN_FILE, cmd, re.I):
         return False
     if _FORGE_WRITE.search(cmd):
         return True

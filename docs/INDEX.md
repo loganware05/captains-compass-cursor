@@ -35,12 +35,14 @@ Launcher: `scripts/northstar` (control repo only).
 | `oversight` | Read-only persistent oversight compose | [`plans/READ_ONLY_PERSISTENT_OVERSIGHT.md`](plans/READ_ONLY_PERSISTENT_OVERSIGHT.md) |
 | `specialized` | Specialized Model Level 0–2 (baseline / LoRA / GPU) | [`plans/SPECIALIZED_MODEL_LEVEL_0.md`](plans/SPECIALIZED_MODEL_LEVEL_0.md) |
 | `adaptive` | N3 Adaptive Intelligence scorecard (proposal-only) | [`plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md`](plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md) |
+| `ui` | Open UI emitters (plan/tower/scorecard/closeout) + gated approve/reject | [`plans/OPENUI_CONTROL_PLANE.md`](plans/OPENUI_CONTROL_PLANE.md) |
 
 ```bash
 # From the control repo
 ./scripts/northstar help
 ./scripts/northstar review --repo /path/to/product
 ./scripts/northstar status closeout --repo .
+./scripts/northstar ui emit --surface plan --repo . --enable-gates
 ./scripts/northstar skills learn --repo /path/to/sandbox --objective "…"
 ```
 

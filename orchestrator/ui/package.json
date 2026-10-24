@@ -1,0 +1,31 @@
+{
+  "name": "@northstar/openui-control-plane",
+  "version": "1.74.0",
+  "private": true,
+  "description": "NorthStar Open UI control-plane widgets (PlanApproval, ControlTower, Scorecard, Closeout)",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "generate:spec": "tsx scripts/generate-spec.ts",
+    "generate:prompt": "tsx scripts/generate-prompt.ts",
+    "test": "tsx --test src/**/*.test.ts"
+  },
+  "dependencies": {
+    "@openuidev/lang-core": "1.0.1",
+    "@openuidev/react-lang": "1.0.1",
+    "zod": "^4.0.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0"
+  }
+}
