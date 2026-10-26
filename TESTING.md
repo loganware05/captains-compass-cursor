@@ -531,6 +531,17 @@ N4 Cross-Stack Benchmark (requires `COMPASS_N4_BENCHMARK_ENABLED` or `--enable-g
 PYTHONPATH=. python3 -m unittest tests.orchestrator.test_n4_cross_stack_benchmark -v
 ```
 
+N5 Skill-Fit / Routing Feedback (requires `COMPASS_N5_FEEDBACK_ENABLED` or `--enable-gates`):
+
+```bash
+./scripts/run-n5-feedback.sh --enable-gates
+./scripts/northstar feedback n5 --repo . --enable-gates
+# Optional: --n4-report PATH --no-write-proposals
+# Evidence: .agent/evidence/n5-skill-routing-feedback/
+# Proposal-only; never applies weights; Level 3 stays deferred
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_n5_skill_routing_feedback -v
+```
+
 Open UI control plane (requires `COMPASS_OPENUI_ENABLED` or `--enable-gates`):
 
 ```bash

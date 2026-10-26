@@ -148,6 +148,8 @@ Commands:
             [--repo PATH] [--enable-gates]
   northstar benchmark n4 [--mode hermetic|live] [--seed N]
             [--repo PATH] [--enable-gates]
+  northstar feedback n5 [--n4-report PATH] [--no-write-proposals]
+            [--repo PATH] [--enable-gates]
   northstar ui emit --surface plan|tower|scorecard|closeout [--repo PATH] [--enable-gates]
   northstar ui validate --surface SURFACE [--repo PATH] [--enable-gates]
   northstar ui approve [--repo PATH] [--enable-gates]   # requires COMPASS_CAPTAIN_APPROVE=1
@@ -898,6 +900,29 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown benchmark subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  feedback)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      n5)
+        exec "$ROOT/scripts/run-n5-feedback.sh" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown feedback subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;

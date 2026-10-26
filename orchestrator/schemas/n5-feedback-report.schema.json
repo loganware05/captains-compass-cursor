@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/n5-feedback-report.schema.json",
+  "title": "N5FeedbackReport",
+  "description": "N5 Skill-fit / routing feedback from N4 deltas. Proposal-only; never applies weights.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "feedback_id",
+    "created_at",
+    "plan_id",
+    "northstar_version",
+    "n4_report_id",
+    "n4_report_path",
+    "n4_seed",
+    "n4_mode",
+    "n4_deltas",
+    "min_delta_threshold",
+    "skill_fit_suggestions",
+    "validation_summary",
+    "notes",
+    "approved_for_execution",
+    "authority_mutation",
+    "auto_applied",
+    "policy_promoted",
+    "weights_applied"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "feedback_id": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "plan_id": { "type": "string", "const": "n5-skill-routing-feedback" },
+    "northstar_version": { "type": "string" },
+    "repository_sha": { "type": "string" },
+    "n4_report_id": { "type": "string", "minLength": 1 },
+    "n4_report_path": { "type": "string", "minLength": 1 },
+    "n4_seed": { "type": "integer" },
+    "n4_mode": { "type": "string" },
+    "n4_deltas": {
+      "type": "object",
+      "required": [
+        "accept_rate",
+        "skill_reuse_rate",
+        "retrieval_precision",
+        "primary_efficiency"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "accept_rate": { "type": "number" },
+        "skill_reuse_rate": { "type": "number" },
+        "retrieval_precision": { "type": "number" },
+        "primary_efficiency": { "type": "number" }
+      }
+    },
+    "min_delta_threshold": { "type": "number" },
+    "skill_fit_suggestions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "skill_id",
+          "action",
+          "confidence_delta",
+          "metric",
+          "rationale"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "skill_id": { "type": "string" },
+          "action": {
+            "type": "string",
+            "enum": ["boost", "dampen", "no_change"]
+          },
+          "confidence_delta": { "type": "number" },
+          "metric": { "type": "string" },
+          "rationale": { "type": "string" }
+        }
+      }
+    },
+    "routing_proposal_id": { "type": ["string", "null"] },
+    "routing_proposal_path": { "type": ["string", "null"] },
+    "validation_summary": {
+      "type": "object",
+      "required": [
+        "actionable_suggestions",
+        "proposal_written",
+        "proposal_applied",
+        "n4_security_regression"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "actionable_suggestions": { "type": "integer", "minimum": 0 },
+        "proposal_written": { "type": "boolean" },
+        "proposal_applied": { "type": "boolean", "const": false },
+        "n4_security_regression": { "type": "boolean" }
+      }
+    },
+    "notes": { "type": "string" },
+    "evidence_path": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "auto_applied": { "type": "boolean", "const": false },
+    "policy_promoted": { "type": "boolean", "const": false },
+    "weights_applied": { "type": "boolean", "const": false }
+  }
+}

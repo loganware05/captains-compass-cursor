@@ -1,0 +1,154 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "auto_applied": false,
+  "created_at": "2026-10-26T23:58:40Z",
+  "feedback_id": "n5-feedback-df7350bb46f5",
+  "min_delta_threshold": 0.05,
+  "n4_deltas": {
+    "accept_rate": 0.4,
+    "primary_efficiency": 0.116728,
+    "retrieval_precision": 0.0573,
+    "skill_reuse_rate": 0.0573
+  },
+  "n4_mode": "hermetic",
+  "n4_report_id": "n4-hermetic-f3fe1c36562a",
+  "n4_report_path": "/agent/repos/captains-compass-cursor/.agent/evidence/n4-cross-stack-benchmark/LATEST_hermetic.json",
+  "n4_seed": 20261026,
+  "northstar_version": "1.75.0",
+  "notes": "N5 Skill-fit / routing feedback. Proposal-only. Does not apply matcher weights, promote policies, or authorize Level 3 GPU spend.",
+  "plan_id": "n5-skill-routing-feedback",
+  "policy_promoted": false,
+  "repository_sha": "9874a42b2ab211ceed0f4466054a45519ccbbefd",
+  "routing_proposal_id": "n5-route-df7350bb46f5",
+  "routing_proposal_path": "/agent/repos/captains-compass-cursor/.agent/routing/proposals/n5-route-df7350bb46f5.json",
+  "schema_version": "1",
+  "skill_fit_suggestions": [
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "skill_reuse_rate",
+      "rationale": "N4 delta skill_reuse_rate=+0.0573 (threshold \u00b10.05); proposal-only",
+      "skill_id": "experience-routing"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "skill_reuse_rate",
+      "rationale": "N4 delta skill_reuse_rate=+0.0573 (threshold \u00b10.05); proposal-only",
+      "skill_id": "knowledge-steward"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "accept_rate",
+      "rationale": "N4 delta accept_rate=+0.4000 (threshold \u00b10.05); proposal-only",
+      "skill_id": "testing-validation"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "accept_rate",
+      "rationale": "N4 delta accept_rate=+0.4000 (threshold \u00b10.05); proposal-only",
+      "skill_id": "capability-planning"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "retrieval_precision",
+      "rationale": "N4 delta retrieval_precision=+0.0573 (threshold \u00b10.05); proposal-only",
+      "skill_id": "knowledge-steward"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "retrieval_precision",
+      "rationale": "N4 delta retrieval_precision=+0.0573 (threshold \u00b10.05); proposal-only",
+      "skill_id": "repository-discovery"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "primary_efficiency",
+      "rationale": "N4 delta primary_efficiency=+0.1167 (threshold \u00b10.05); proposal-only",
+      "skill_id": "execution-telemetry"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "primary_efficiency",
+      "rationale": "N4 delta primary_efficiency=+0.1167 (threshold \u00b10.05); proposal-only",
+      "skill_id": "autonomy-budget"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "stack_fit",
+      "rationale": "Stack traphouse evidence arm improved vs baseline; Skill-fit proposal-only",
+      "skill_id": "experience-routing"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "stack_fit",
+      "rationale": "Stack traphouse evidence arm improved vs baseline; Skill-fit proposal-only",
+      "skill_id": "testing-validation"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "stack_fit",
+      "rationale": "Stack traphouse evidence arm improved vs baseline; Skill-fit proposal-only",
+      "skill_id": "execution-telemetry"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "stack_fit",
+      "rationale": "Stack sandbox evidence arm improved vs baseline; Skill-fit proposal-only",
+      "skill_id": "capability-planning"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "stack_fit",
+      "rationale": "Stack sandbox evidence arm improved vs baseline; Skill-fit proposal-only",
+      "skill_id": "implementation-planning"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "stack_fit",
+      "rationale": "Stack sandbox evidence arm improved vs baseline; Skill-fit proposal-only",
+      "skill_id": "autonomy-budget"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "stack_fit",
+      "rationale": "Stack bitcoin evidence arm improved vs baseline; Skill-fit proposal-only",
+      "skill_id": "repository-discovery"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "stack_fit",
+      "rationale": "Stack bitcoin evidence arm improved vs baseline; Skill-fit proposal-only",
+      "skill_id": "docker-cloud"
+    },
+    {
+      "action": "boost",
+      "confidence_delta": 0.05,
+      "metric": "stack_fit",
+      "rationale": "Stack bitcoin evidence arm improved vs baseline; Skill-fit proposal-only",
+      "skill_id": "harness-gc"
+    }
+  ],
+  "validation_summary": {
+    "actionable_suggestions": 17,
+    "n4_security_regression": false,
+    "proposal_applied": false,
+    "proposal_written": true
+  },
+  "weights_applied": false
+}

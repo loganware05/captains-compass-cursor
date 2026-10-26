@@ -1,5 +1,24 @@
 # Decisions
 
+## ADR-096: N5 Skill-Fit / Routing Feedback (v1.76.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-26
+- **Context:** Captain approved `n5-skill-routing-feedback` after N4 (#243)
+  with “I approve, proceed with N5”. Repository State priority 3: validate
+  Skill-fit / routing improvements from N4 deltas with no automatic promotion.
+- **Decision:**
+  1. Ship gated `northstar feedback n5` / `run-n5-feedback.sh`
+     (`COMPASS_N5_FEEDBACK_ENABLED`).
+  2. Ingest N4 hermetic report; emit Skill-fit suggestions + optional
+     RoutingProposal (`auto_apply=false`).
+  3. Never call apply paths; lock `weights_applied` / promotion flags false.
+  4. Minimum delta threshold ±0.05; Level 3 stays **DEFERRED**.
+  5. Ship control **v1.76.0**.
+- **Consequences:** Operators can review N4-derived proposals without silent
+  weight mutation. Rollback `rollback/pre-n5-skill-routing-feedback` @ `2cd6aef`.
+
+
 ## ADR-095: N4 Cross-Stack Benchmark (v1.75.0)
 
 - **Status:** Accepted
