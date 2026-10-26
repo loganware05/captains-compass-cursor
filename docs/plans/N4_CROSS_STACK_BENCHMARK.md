@@ -1,8 +1,8 @@
 # N4 — Cross-Stack Benchmark
 
-> **IN PROGRESS** (2026-10-26) — Plan ID `n4-cross-stack-benchmark`.
+> **COMPLETE** (2026-10-26) — Plan ID `n4-cross-stack-benchmark`.
 > Baseline: **v1.74.1** @ `db17050`.
-> Release: **v1.75.0**.
+> Release: **v1.75.0** / PR [#243](https://github.com/loganware05/captains-compass-cursor/pull/243) @ `2cd6aef`.
 > Evidence: `.agent/evidence/n4-cross-stack-benchmark/`.
 > Rollback: `rollback/pre-n4-cross-stack-benchmark` @ `db17050`.
 
