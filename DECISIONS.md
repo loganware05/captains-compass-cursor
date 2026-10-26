@@ -1,5 +1,24 @@
 # Decisions
 
+## ADR-095: N4 Cross-Stack Benchmark (v1.75.0)
+
+- **Status:** Accepted
+- **Date:** 2026-10-26
+- **Context:** Captain approved `n4-cross-stack-benchmark` after Open UI
+  (#241/#242) with “Approve, proceed with N4”. Repository State assessment
+  called for randomized baseline vs evidence-informed tasks across three stacks.
+- **Decision:**
+  1. Ship gated hermetic-first `northstar benchmark n4` with 15 fixture tasks.
+  2. Substitute Verdant.sys with captain-compass-sandbox until NorthStar install.
+  3. Pin bitcoin-data-collector to M35 NorthStar install branch SHA.
+  4. Evaluate-only; refuse `COMPASS_N4_LIVE_IMPLEMENT` in this release.
+  5. Lock promotion/authority flags false; Level 3 stays **DEFERRED**; N5 separate.
+  6. Ship control **v1.75.0**.
+- **Consequences:** Measurable cross-stack hermetic deltas exist without claiming
+  production productivity. Rollback `rollback/pre-n4-cross-stack-benchmark` @
+  `db17050`.
+
+
 ## ADR-094: Open UI Control Plane (v1.74.0)
 
 - **Status:** Accepted

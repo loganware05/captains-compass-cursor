@@ -1,0 +1,146 @@
+{
+  "approved_for_execution": false,
+  "arms": {
+    "baseline": {
+      "accept_rate": 0.6,
+      "accepted": 9,
+      "engineering_cost_units": 15.0,
+      "first_pass_test_rate": 0.6,
+      "inference_cost_units": 28.5,
+      "latency_p50_ms": 160.0,
+      "latency_p95_ms": 320.0,
+      "retries": 0.4,
+      "retrieval_precision": 0.5,
+      "review_precision": 0.75,
+      "skill_reuse_rate": 0.43,
+      "total": 15
+    },
+    "evidence": {
+      "accept_rate": 1.0,
+      "accepted": 15,
+      "engineering_cost_units": 15.0,
+      "first_pass_test_rate": 0.6,
+      "inference_cost_units": 31.35,
+      "latency_p50_ms": 168.0,
+      "latency_p95_ms": 336.0,
+      "retries": 0.4,
+      "retrieval_precision": 0.5573,
+      "review_precision": 0.75,
+      "skill_reuse_rate": 0.4873,
+      "total": 15
+    }
+  },
+  "authority_mutation": false,
+  "auto_applied": false,
+  "created_at": "2026-10-26T23:29:27Z",
+  "deltas": {
+    "accept_rate": 0.4,
+    "primary_efficiency": 0.116728,
+    "retrieval_precision": 0.0573,
+    "skill_reuse_rate": 0.0573
+  },
+  "evidence_path": "/agent/repos/captains-compass-cursor/.agent/evidence/n4-cross-stack-benchmark/n4-hermetic-7186acd425bb.json",
+  "frozen_config": {
+    "evidence_gates": "baseline=off; evidence=brain/assess/Experiences simulated via fixture boost",
+    "model_proxy": "hermetic-fixture-v1",
+    "tool_config": "northstar-evaluate-only"
+  },
+  "held_out": {
+    "baseline_accept_rate": 0.0,
+    "evidence_accept_rate": 1.0,
+    "task_ids": [
+      "n4-sb-04",
+      "n4-bc-04"
+    ],
+    "transfer_delta": 1.0
+  },
+  "mode": "hermetic",
+  "northstar_version": "1.74.1",
+  "notes": "N4 Cross-Stack Benchmark. Evaluate-only. Does not promote Skills/policies, approve plans, or authorize Level 3 GPU spend.",
+  "plan_id": "n4-cross-stack-benchmark",
+  "policy_promoted": false,
+  "primary_outcome": {
+    "baseline": 0.206897,
+    "evidence": 0.323625,
+    "name": "accepted_per_cost",
+    "summary": "Primary efficiency under no security/authorization regression; proxy cost units only.",
+    "unit": "accepted/(inference+engineering)"
+  },
+  "report_id": "n4-hermetic-7186acd425bb",
+  "repository_sha": "f8ab0332fcab1822487f5c8cf51e4e0895e471a0",
+  "schema_version": "1",
+  "secondary_outcomes": {
+    "accept_rate": {
+      "baseline": 0.6,
+      "evidence": 1.0,
+      "summary": "Accepted tasks / total",
+      "unit": "rate"
+    },
+    "first_pass_test_rate": {
+      "baseline": 0.6,
+      "evidence": 0.6,
+      "unit": "rate"
+    },
+    "latency_p95_ms": {
+      "baseline": 320.0,
+      "evidence": 336.0,
+      "unit": "ms"
+    },
+    "retries": {
+      "baseline": 0.4,
+      "evidence": 0.4,
+      "unit": "mean"
+    },
+    "retrieval_precision": {
+      "baseline": 0.5,
+      "evidence": 0.5573,
+      "unit": "rate"
+    },
+    "review_precision": {
+      "baseline": 0.75,
+      "evidence": 0.75,
+      "unit": "rate"
+    },
+    "skill_reuse_rate": {
+      "baseline": 0.43,
+      "evidence": 0.4873,
+      "unit": "rate"
+    }
+  },
+  "security_regression": false,
+  "seed": 20261026,
+  "stacks": [
+    {
+      "notes": "TrapHouseKitchen",
+      "pin_ref": "main",
+      "pin_sha": "f7c4719ba016feae17308c5d39a929187671aa72",
+      "role": "order-status",
+      "stack_id": "traphouse",
+      "substituted": false
+    },
+    {
+      "notes": "Substitutes Verdant.sys (no NorthStar install at pin time)",
+      "pin_ref": "main",
+      "pin_sha": "5a1d32e0a8d49ffebcd62c598c12201e3f19985e",
+      "role": "verdant-substitute",
+      "stack_id": "sandbox",
+      "substituted": true
+    },
+    {
+      "notes": "Pinned M35 NorthStar install branch; not default feature branch",
+      "pin_ref": "cursor/m35-c2-northstar-install-5182",
+      "pin_sha": "468c9483a1731afc80bec0e1bcfc45bfe09e5b2e",
+      "role": "idempotent-recovery",
+      "stack_id": "bitcoin",
+      "substituted": false
+    }
+  ],
+  "task_count": 15,
+  "uncertainty_notes": [
+    "Sample size n=15 tasks (hermetic fixtures); not production proof.",
+    "Inference/engineering costs are fixture proxy units, not invoices.",
+    "Verdant.sys substituted by captain-compass-sandbox in hermetic stack table.",
+    "bitcoin-data-collector pin is M35 NorthStar install branch, not default feature branch."
+  ],
+  "warnings": []
+}

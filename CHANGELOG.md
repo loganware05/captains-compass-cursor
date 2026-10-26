@@ -4,6 +4,24 @@
 
 ## Unreleased
 
+## 1.75.0 — 2026-10-26
+
+### Added
+
+- **N4 Cross-Stack Benchmark** (plan `n4-cross-stack-benchmark`):
+  - Gated `northstar benchmark n4` / `run-n4-benchmark.sh`
+    (`COMPASS_N4_BENCHMARK_ENABLED` or `--enable-gates`)
+  - Hermetic 15-task pack (TrapHouse / sandbox-as-Verdant / bitcoin pins)
+  - Schema `n4-benchmark-report` with primary efficiency + secondaries;
+    authority locks (`auto_applied` / `authority_mutation` /
+    `approved_for_execution` / `policy_promoted` false)
+  - Seeded baseline vs evidence-informed arms; held-out transfer section
+  - Evaluate-only; live implement refused; no silent clones
+  - Evidence under `.agent/evidence/n4-cross-stack-benchmark/`
+  - ADR-095; doctor fail-closed; unit tests
+  - Level 3 remains **DEFERRED**; N5 separate
+
+
 ## 1.74.1 — 2026-10-24
 
 ### Fixed
