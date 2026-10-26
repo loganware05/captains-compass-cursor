@@ -1,12 +1,12 @@
 # Implementation Plan — N4 Cross-Stack Benchmark
 
-- Status: **AWAITING APPROVAL**
+- Status: **APPROVED**
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **AWAITING APPROVAL** |
+| Status | **APPROVED** |
 | Plan ID | `n4-cross-stack-benchmark` |
 | Issue | *(placeholder — create after approval)* |
 | Baseline | **v1.74.1** @ `db17050` (#242 merged) |
@@ -22,9 +22,9 @@
 
 | Field | Value |
 |---|---|
-| Approved by | — |
-| Approval date | — |
-| Notes | Implementation must not begin until Captain explicitly approves this plan. |
+| Approved by | Logan Ware (Captain) |
+| Approval date | 2026-10-26 |
+| Notes | Explicit: “Approve, proceed with N4”. Defaults accepted (evaluate-only; 15 tasks; seed 20261026; COMPASS_N4_BENCHMARK_ENABLED). |
 
 ---
 
