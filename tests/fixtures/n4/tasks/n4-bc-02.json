@@ -1,0 +1,27 @@
+{
+  "task_id": "n4-bc-02",
+  "stack_id": "bitcoin",
+  "difficulty": "easy",
+  "held_out": false,
+  "objective": "Hermetic check: duplicate job key does not double-write fixture",
+  "acceptance": [
+    "hermetic fixture checks pass",
+    "no secrets in artifacts",
+    "evaluate-only (no product PR required)"
+  ],
+  "hermetic": {
+    "baseline_accept": true,
+    "evidence_accept": true,
+    "inference_cost_units": 1.0,
+    "engineering_cost_units": 1.0,
+    "latency_ms": 80.0,
+    "retries": 0.0,
+    "first_pass_test_rate": 1.0,
+    "skill_reuse_rate": 0.35,
+    "retrieval_precision": 0.5,
+    "review_precision": 0.75,
+    "evidence_boost": 0.03,
+    "evidence_cost_factor": 1.1,
+    "evidence_latency_factor": 1.05
+  }
+}

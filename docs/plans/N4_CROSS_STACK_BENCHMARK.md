@@ -1,24 +1,24 @@
 # N4 — Cross-Stack Benchmark
 
-- **Plan ID:** `n4-cross-stack-benchmark`
-- **Status:** AWAITING APPROVAL (see root [`IMPLEMENTATION_PLAN.md`](../../IMPLEMENTATION_PLAN.md))
-- **Proposed release:** v1.75.0
-- **Branch:** `cursor/n4-cross-stack-benchmark-010c`
-- **Baseline:** v1.74.1 @ `db17050`
-- **Source:** Repository State assessment 2026-10-24 (priority 2)
+> **IN PROGRESS** (2026-10-26) — Plan ID `n4-cross-stack-benchmark`.
+> Baseline: **v1.74.1** @ `db17050`.
+> Release: **v1.75.0**.
+> Evidence: `.agent/evidence/n4-cross-stack-benchmark/`.
+> Rollback: `rollback/pre-n4-cross-stack-benchmark` @ `db17050`.
 
-## One-line summary
+## Operator note
 
-Randomized baseline vs evidence-informed NorthStar benchmark across three
-independent stacks (TrapHouseKitchen, Verdant.sys / sandbox substitute,
-bitcoin-data-collector), with held-out tasks and cost/latency/accuracy/security
-logging — proposal-only; no Skill/policy auto-promotion; Level 3 stays deferred.
+```bash
+./scripts/northstar benchmark n4 --mode hermetic --seed 20261026 --enable-gates
+# or:
+COMPASS_N4_BENCHMARK_ENABLED=1 ./scripts/run-n4-benchmark.sh --mode hermetic --seed 20261026
+```
 
-## Candidate stacks (verified 2026-10-26)
+## Primary outcome
 
-| Stack | Role | NorthStar present? |
-|---|---|---|
-| `TrapHouseKitchen` | Order-status tasks | Yes (`.cursor/`) |
-| `Verdant.sys` | Plant/data validation | **No** at root — install or substitute sandbox |
-| `bitcoin-data-collector` | Idempotent recovery | Yes; pin ref (default branch is feature branch) |
-| `captain-compass-sandbox` | Fallback | Yes (N2 evidence) |
+`accepted_tasks / (inference_cost_units + engineering_cost_units)` with
+`security_regression=false` and no authorization bypass.
+
+## Non-goals honored
+
+No Skill/policy auto-promotion; no Level 3 GPU; evaluate-only; no silent clones.

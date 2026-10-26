@@ -521,6 +521,16 @@ enables brain/assess/route for hermetic compose):
 PYTHONPATH=. python3 -m unittest tests.orchestrator.test_n3_adaptive_intelligence -v
 ```
 
+N4 Cross-Stack Benchmark (requires `COMPASS_N4_BENCHMARK_ENABLED` or `--enable-gates`):
+
+```bash
+./scripts/run-n4-benchmark.sh --mode hermetic --seed 20261026 --enable-gates
+./scripts/northstar benchmark n4 --mode hermetic --repo . --enable-gates
+# Evidence: .agent/evidence/n4-cross-stack-benchmark/
+# Authority locks false; evaluate-only; Level 3 stays deferred
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_n4_cross_stack_benchmark -v
+```
+
 Open UI control plane (requires `COMPASS_OPENUI_ENABLED` or `--enable-gates`):
 
 ```bash

@@ -1,17 +1,17 @@
 # Implementation Plan — N4 Cross-Stack Benchmark
 
-- Status: **APPROVED**
+- Status: **IN PROGRESS**
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
+| Status | **IN PROGRESS** |
 | Plan ID | `n4-cross-stack-benchmark` |
 | Issue | *(placeholder — create after approval)* |
 | Baseline | **v1.74.1** @ `db17050` (#242 merged) |
 | Branch | `cursor/n4-cross-stack-benchmark-010c` |
-| Rollback | `rollback/pre-n4-cross-stack-benchmark` *(tag after approval)* |
+| Rollback | `rollback/pre-n4-cross-stack-benchmark` @ `db17050` |
 | Proposed release | **v1.75.0** |
 | Track | `consolidation/N4` |
 | Captain | Logan Ware |
@@ -53,17 +53,17 @@ N3 proved hermetic Adaptive Intelligence metrics and recommended **defer** Level
 
 ## Acceptance Criteria
 
-- [ ] Fail-closed without `COMPASS_N4_BENCHMARK_ENABLED` / `--enable-gates`
-- [ ] Schema-validated N4 report: primary outcome + secondaries + authority locks (`auto_applied` / `authority_mutation` / `approved_for_execution` / `policy_promoted` all **false**)
-- [ ] ≥12 task definitions with difficulty strata; deterministic seed for randomization
-- [ ] Matched baseline vs evidence-informed variants per task (same acceptance tests)
-- [ ] Hermetic fixture run completes in CI/doctor smoke without cloning external repos
-- [ ] Live mode documents required clone paths; refuses silent clone/execute of starred/external repos beyond Captain-listed targets
-- [ ] Metrics recorded: accepted/total, estimated cost, latency, first-pass tests, review precision (when available), retries, Skill reuse, retrieval precision, security regression flag
-- [ ] Held-out task subset scored separately; uncertainty / transfer notes present
-- [ ] Doctor + unit tests; security review recorded
-- [ ] No Skill/policy auto-promotion; no Level 3 GPU; no secrets in evidence
-- [ ] CHANGELOG / VERSION / ADR for **v1.75.0**
+- [x] Fail-closed without `COMPASS_N4_BENCHMARK_ENABLED` / `--enable-gates`
+- [x] Schema-validated N4 report: primary outcome + secondaries + authority locks (`auto_applied` / `authority_mutation` / `approved_for_execution` / `policy_promoted` all **false**)
+- [x] ≥12 task definitions with difficulty strata; deterministic seed for randomization
+- [x] Matched baseline vs evidence-informed variants per task (same acceptance tests)
+- [x] Hermetic fixture run completes in CI/doctor smoke without cloning external repos
+- [x] Live mode documents required clone paths; refuses silent clone/execute of starred/external repos beyond Captain-listed targets
+- [x] Metrics recorded: accepted/total, estimated cost, latency, first-pass tests, review precision (when available), retries, Skill reuse, retrieval precision, security regression flag
+- [x] Held-out task subset scored separately; uncertainty / transfer notes present
+- [x] Doctor + unit tests; security review recorded
+- [x] No Skill/policy auto-promotion; no Level 3 GPU; no secrets in evidence
+- [x] CHANGELOG / VERSION / ADR for **v1.75.0**
 
 ## Non-Goals
 

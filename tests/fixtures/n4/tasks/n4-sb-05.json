@@ -1,0 +1,27 @@
+{
+  "task_id": "n4-sb-05",
+  "stack_id": "sandbox",
+  "difficulty": "hard",
+  "held_out": false,
+  "objective": "Batch-validate plant dataset with clear error aggregation",
+  "acceptance": [
+    "hermetic fixture checks pass",
+    "no secrets in artifacts",
+    "evaluate-only (no product PR required)"
+  ],
+  "hermetic": {
+    "baseline_accept": false,
+    "evidence_accept": true,
+    "inference_cost_units": 3.5,
+    "engineering_cost_units": 1.0,
+    "latency_ms": 320.0,
+    "retries": 1.0,
+    "first_pass_test_rate": 0.0,
+    "skill_reuse_rate": 0.55,
+    "retrieval_precision": 0.5,
+    "review_precision": 0.75,
+    "evidence_boost": 0.1,
+    "evidence_cost_factor": 1.1,
+    "evidence_latency_factor": 1.05
+  }
+}

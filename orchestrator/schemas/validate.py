@@ -65,6 +65,7 @@ SCHEMA_FILES = (
     "specialized-model-gpu-job.schema.json",
     "specialized-model-gpu-run.schema.json",
     "adaptive-intelligence-scorecard.schema.json",
+    "n4-benchmark-report.schema.json",
 )
 
 

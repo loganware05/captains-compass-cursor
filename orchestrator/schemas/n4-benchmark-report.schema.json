@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/n4-benchmark-report.schema.json",
+  "title": "N4BenchmarkReport",
+  "description": "N4 cross-stack baseline vs evidence-informed benchmark. Proposal/observe only.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "report_id",
+    "created_at",
+    "plan_id",
+    "mode",
+    "seed",
+    "northstar_version",
+    "frozen_config",
+    "stacks",
+    "task_count",
+    "primary_outcome",
+    "secondary_outcomes",
+    "arms",
+    "deltas",
+    "held_out",
+    "uncertainty_notes",
+    "security_regression",
+    "approved_for_execution",
+    "authority_mutation",
+    "auto_applied",
+    "policy_promoted"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "report_id": { "type": "string", "minLength": 1 },
+    "plan_id": { "type": "string", "const": "n4-cross-stack-benchmark" },
+    "created_at": { "type": "string", "minLength": 1 },
+    "mode": { "type": "string", "enum": ["hermetic", "live"] },
+    "seed": { "type": "integer" },
+    "repository_sha": { "type": "string" },
+    "northstar_version": { "type": "string" },
+    "frozen_config": {
+      "type": "object",
+      "required": ["model_proxy", "tool_config", "evidence_gates"],
+      "additionalProperties": true,
+      "properties": {
+        "model_proxy": { "type": "string" },
+        "tool_config": { "type": "string" },
+        "evidence_gates": { "type": "string" }
+      }
+    },
+    "stacks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["stack_id", "role", "substituted"],
+        "additionalProperties": true,
+        "properties": {
+          "stack_id": { "type": "string" },
+          "role": { "type": "string" },
+          "substituted": { "type": "boolean" },
+          "pin_ref": { "type": "string" },
+          "pin_sha": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "task_count": { "type": "integer", "minimum": 1 },
+    "primary_outcome": {
+      "type": "object",
+      "required": ["name", "baseline", "evidence", "unit", "summary"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "baseline": { "type": ["number", "null"] },
+        "evidence": { "type": ["number", "null"] },
+        "unit": { "type": "string" },
+        "summary": { "type": "string" }
+      }
+    },
+    "secondary_outcomes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["baseline", "evidence"],
+        "additionalProperties": true,
+        "properties": {
+          "baseline": { "type": ["number", "null"] },
+          "evidence": { "type": ["number", "null"] },
+          "unit": { "type": "string" },
+          "summary": { "type": "string" }
+        }
+      }
+    },
+    "arms": {
+      "type": "object",
+      "required": ["baseline", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "baseline": { "$ref": "#/$defs/arm_summary" },
+        "evidence": { "$ref": "#/$defs/arm_summary" }
+      }
+    },
+    "deltas": {
+      "type": "object",
+      "additionalProperties": { "type": ["number", "null"] }
+    },
+    "held_out": {
+      "type": "object",
+      "required": ["task_ids", "baseline_accept_rate", "evidence_accept_rate", "transfer_delta"],
+      "additionalProperties": false,
+      "properties": {
+        "task_ids": { "type": "array", "items": { "type": "string" } },
+        "baseline_accept_rate": { "type": ["number", "null"] },
+        "evidence_accept_rate": { "type": ["number", "null"] },
+        "transfer_delta": { "type": ["number", "null"] }
+      }
+    },
+    "uncertainty_notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "security_regression": { "type": "boolean", "const": false },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "evidence_path": { "type": ["string", "null"] },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "auto_applied": { "type": "boolean", "const": false },
+    "policy_promoted": { "type": "boolean", "const": false }
+  },
+  "$defs": {
+    "arm_summary": {
+      "type": "object",
+      "required": [
+        "accepted",
+        "total",
+        "accept_rate",
+        "inference_cost_units",
+        "engineering_cost_units",
+        "latency_p50_ms",
+        "latency_p95_ms",
+        "retries",
+        "first_pass_test_rate",
+        "skill_reuse_rate",
+        "retrieval_precision",
+        "review_precision"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "accepted": { "type": "integer", "minimum": 0 },
+        "total": { "type": "integer", "minimum": 0 },
+        "accept_rate": { "type": "number" },
+        "inference_cost_units": { "type": "number" },
+        "engineering_cost_units": { "type": "number" },
+        "latency_p50_ms": { "type": "number" },
+        "latency_p95_ms": { "type": "number" },
+        "retries": { "type": "number" },
+        "first_pass_test_rate": { "type": "number" },
+        "skill_reuse_rate": { "type": "number" },
+        "retrieval_precision": { "type": "number" },
+        "review_precision": { "type": "number" }
+      }
+    }
+  }
+}

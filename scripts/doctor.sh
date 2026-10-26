@@ -655,6 +655,41 @@ PY
   else
     fail "adaptive-intelligence should exit 2 mentioning COMPASS_ADAPTIVE_INTEL_ENABLED when unset (rc=$ai_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/n4-benchmark-report.schema.json" ]]; then
+    ok "n4-benchmark-report.schema.json present"
+  else
+    fail "missing orchestrator/schemas/n4-benchmark-report.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/benchmark/n4/service.py" ]]; then
+    ok "orchestrator/benchmark/n4 present"
+  else
+    fail "missing orchestrator/benchmark/n4/service.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-n4-benchmark.sh" ]]; then
+    ok "scripts/run-n4-benchmark.sh present"
+  else
+    fail "missing executable scripts/run-n4-benchmark.sh"
+  fi
+  task_n="$(find "$ROOT/tests/fixtures/n4/tasks" -name '*.json' 2>/dev/null | wc -l | tr -d ' ')"
+  if [[ "${task_n:-0}" -ge 12 ]]; then
+    ok "n4 task fixtures present ($task_n)"
+  else
+    fail "need >=12 n4 task fixtures under tests/fixtures/n4/tasks (found ${task_n:-0})"
+  fi
+  if grep -q 'benchmark n4' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents benchmark n4"
+  else
+    fail "northstar missing benchmark n4 surface"
+  fi
+  set +e
+  n4_out="$(env -u COMPASS_N4_BENCHMARK_ENABLED "$ROOT/scripts/run-n4-benchmark.sh" --mode hermetic --repo-root "$ROOT" 2>&1)"
+  n4_rc=$?
+  set -e
+  if [[ "$n4_rc" -eq 2 && "$n4_out" == *"COMPASS_N4_BENCHMARK_ENABLED"* ]]; then
+    ok "n4 benchmark fail-closed when COMPASS_N4_BENCHMARK_ENABLED unset"
+  else
+    fail "n4 benchmark should exit 2 mentioning COMPASS_N4_BENCHMARK_ENABLED when unset (rc=$n4_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
     ok "orchestrator/openui present"
   else
