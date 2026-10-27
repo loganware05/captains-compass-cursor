@@ -4,6 +4,11 @@
 
 ## Unreleased
 
+### Changed
+
+- Post-merge N5 closeout: project memory idle; consolidation N1–N5 marked
+  complete; Overseer ledger refreshed (N2–N5 completed; Level 3 still deferred).
+
 ## 1.76.0 — 2026-10-26
 
 ### Added
