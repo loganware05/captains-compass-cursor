@@ -1,0 +1,74 @@
+{
+  "auto_apply": false,
+  "based_on_experiences": [
+    "n4-report:n4-hermetic-f3fe1c36562a"
+  ],
+  "captain_approval_required": true,
+  "captain_approved": false,
+  "created_at": "2026-10-26T23:58:40Z",
+  "decomposition_hints": [],
+  "kind": "routing-proposal",
+  "matcher_weight_suggestions": {
+    "agent_affinity": 0.1,
+    "capability_overlap": 0.45,
+    "lifecycle_stage": 0.15,
+    "security_bonus": 0.1,
+    "stack_match": 0.2
+  },
+  "notes": "N5 Skill-fit / routing feedback from N4 deltas. Proposal-only; do not apply until Captain sets captain_approved=true and runs apply-routing-proposal.sh.",
+  "proposal_id": "n5-route-df7350bb46f5",
+  "skill_confidence_deltas": [
+    {
+      "delta": 0.05,
+      "rationale": "N4 delta primary_efficiency=+0.1167 (threshold \u00b10.05); proposal-only",
+      "skill_id": "autonomy-budget"
+    },
+    {
+      "delta": 0.05,
+      "rationale": "N4 delta accept_rate=+0.4000 (threshold \u00b10.05); proposal-only",
+      "skill_id": "capability-planning"
+    },
+    {
+      "delta": 0.05,
+      "rationale": "Stack bitcoin evidence arm improved vs baseline; Skill-fit proposal-only",
+      "skill_id": "docker-cloud"
+    },
+    {
+      "delta": 0.05,
+      "rationale": "N4 delta primary_efficiency=+0.1167 (threshold \u00b10.05); proposal-only",
+      "skill_id": "execution-telemetry"
+    },
+    {
+      "delta": 0.05,
+      "rationale": "N4 delta skill_reuse_rate=+0.0573 (threshold \u00b10.05); proposal-only",
+      "skill_id": "experience-routing"
+    },
+    {
+      "delta": 0.05,
+      "rationale": "Stack bitcoin evidence arm improved vs baseline; Skill-fit proposal-only",
+      "skill_id": "harness-gc"
+    },
+    {
+      "delta": 0.05,
+      "rationale": "Stack sandbox evidence arm improved vs baseline; Skill-fit proposal-only",
+      "skill_id": "implementation-planning"
+    },
+    {
+      "delta": 0.05,
+      "rationale": "N4 delta skill_reuse_rate=+0.0573 (threshold \u00b10.05); proposal-only",
+      "skill_id": "knowledge-steward"
+    },
+    {
+      "delta": 0.05,
+      "rationale": "N4 delta retrieval_precision=+0.0573 (threshold \u00b10.05); proposal-only",
+      "skill_id": "repository-discovery"
+    },
+    {
+      "delta": 0.05,
+      "rationale": "N4 delta accept_rate=+0.4000 (threshold \u00b10.05); proposal-only",
+      "skill_id": "testing-validation"
+    }
+  ],
+  "source_n4_report_id": "n4-hermetic-f3fe1c36562a",
+  "source_plan_id": "n5-skill-routing-feedback"
+}

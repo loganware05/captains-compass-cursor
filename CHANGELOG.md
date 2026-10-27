@@ -4,6 +4,22 @@
 
 ## Unreleased
 
+## 1.76.0 — 2026-10-26
+
+### Added
+
+- **N5 Skill-Fit / Routing Feedback** (plan `n5-skill-routing-feedback`):
+  - Gated `northstar feedback n5` / `run-n5-feedback.sh`
+    (`COMPASS_N5_FEEDBACK_ENABLED` or `--enable-gates`)
+  - Ingests N4 hermetic report; emits Skill-fit suggestions + optional
+    RoutingProposal (`auto_apply=false`, never applied)
+  - Schema `n5-feedback-report` with authority locks including
+    `weights_applied=false`
+  - Evidence under `.agent/evidence/n5-skill-routing-feedback/`
+  - ADR-096; doctor fail-closed; unit tests
+  - Level 3 remains **DEFERRED**
+
+
 ## 1.75.0 — 2026-10-26
 
 ### Added

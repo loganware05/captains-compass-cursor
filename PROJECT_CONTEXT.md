@@ -140,7 +140,8 @@ gh auth status
 
 ## Current Priorities
 
-**N4 Cross-Stack Benchmark** shipping as **v1.75.0** (`northstar benchmark n4`).
+**N5 Skill-Fit / Routing Feedback** shipping as **v1.76.0**
+(`northstar feedback n5`). N4 COMPLETE at **v1.75.0** (#243).
 Open UI Control Plane COMPLETE (**v1.74.0** / #241; hotfix **v1.74.1**).
 N3 COMPLETE at **v1.73.0**; N2 COMPLETE at **v1.72.0**; N1 COMPLETE at
 **v1.71.1**. Specialized Model Level 3 remains **DEFERRED**. Behavior Loop

@@ -690,6 +690,35 @@ PY
   else
     fail "n4 benchmark should exit 2 mentioning COMPASS_N4_BENCHMARK_ENABLED when unset (rc=$n4_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/n5-feedback-report.schema.json" ]]; then
+    ok "n5-feedback-report.schema.json present"
+  else
+    fail "missing orchestrator/schemas/n5-feedback-report.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/feedback/n5/service.py" ]]; then
+    ok "orchestrator/feedback/n5 present"
+  else
+    fail "missing orchestrator/feedback/n5/service.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-n5-feedback.sh" ]]; then
+    ok "scripts/run-n5-feedback.sh present"
+  else
+    fail "missing executable scripts/run-n5-feedback.sh"
+  fi
+  if grep -q 'feedback n5' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents feedback n5"
+  else
+    fail "northstar missing feedback n5 surface"
+  fi
+  set +e
+  n5_out="$(env -u COMPASS_N5_FEEDBACK_ENABLED "$ROOT/scripts/run-n5-feedback.sh" --repo-root "$ROOT" 2>&1)"
+  n5_rc=$?
+  set -e
+  if [[ "$n5_rc" -eq 2 && "$n5_out" == *"COMPASS_N5_FEEDBACK_ENABLED"* ]]; then
+    ok "n5 feedback fail-closed when COMPASS_N5_FEEDBACK_ENABLED unset"
+  else
+    fail "n5 feedback should exit 2 mentioning COMPASS_N5_FEEDBACK_ENABLED when unset (rc=$n5_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
     ok "orchestrator/openui present"
   else
