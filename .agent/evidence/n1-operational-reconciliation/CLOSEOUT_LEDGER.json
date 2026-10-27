@@ -124,13 +124,13 @@
       "kind": "plan",
       "title": "Specialized Model Level 3 (large single GPU)",
       "status": "deferred",
-      "recommended_disposition": "Keep DEFERRED until N1–N3 + Level 0–2 proof-of-value; re-approve separately",
+      "recommended_disposition": "Keep DEFERRED until Level 0–2 proof-of-value; re-approve separately (N1–N5 complete)",
       "evidence": [
         "docs/plans/SPECIALIZED_MODEL_LEVEL_3.md",
         "PROGRESS.md"
       ],
       "subsystem": "specialized-model",
-      "notes": "Harness proposal preserved; no paid large-GPU authorization."
+      "notes": "Harness proposal preserved; no paid large-GPU authorization. Consolidation N1–N5 complete at v1.76.0."
     },
     {
       "item_id": "docs-index-drift",
@@ -179,25 +179,67 @@
       "item_id": "follow-on-n2",
       "kind": "plan",
       "title": "N2 Product Integration Validation",
-      "status": "deferred",
-      "recommended_disposition": "Promote after N1 merge; Captain chooses bitcoin-data-collector (#164 continuity) or sandbox refresh",
+      "status": "completed",
+      "recommended_disposition": "No further action — shipped v1.72.0 / #239",
       "evidence": [
-        "docs/plans/N2_PRODUCT_INTEGRATION_VALIDATION.md"
+        "docs/plans/N2_PRODUCT_INTEGRATION_VALIDATION.md",
+        "https://github.com/loganware05/captains-compass-cursor/pull/239"
       ],
       "subsystem": "consolidation",
-      "notes": ""
+      "notes": "Updated post N5 closeout 2026-10-26."
     },
     {
       "item_id": "follow-on-n3",
       "kind": "plan",
       "title": "N3 Adaptive Intelligence Validation",
-      "status": "deferred",
-      "recommended_disposition": "Promote after N2 (or bounded parallel evals with Captain approval)",
+      "status": "completed",
+      "recommended_disposition": "No further action — shipped v1.73.0 / #240",
       "evidence": [
-        "docs/plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md"
+        "docs/plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md",
+        "https://github.com/loganware05/captains-compass-cursor/pull/240"
+      ],
+      "subsystem": "consolidation",
+      "notes": "Updated post N5 closeout 2026-10-26."
+    },
+    {
+      "item_id": "follow-on-openui",
+      "kind": "plan",
+      "title": "Open UI Control Plane",
+      "status": "completed",
+      "recommended_disposition": "No further action — v1.74.0 / #241; hotfix v1.74.1 / #242",
+      "evidence": [
+        "docs/plans/OPENUI_CONTROL_PLANE.md",
+        "https://github.com/loganware05/captains-compass-cursor/pull/241"
       ],
       "subsystem": "consolidation",
       "notes": ""
+    },
+    {
+      "item_id": "follow-on-n4",
+      "kind": "plan",
+      "title": "N4 Cross-Stack Benchmark",
+      "status": "completed",
+      "recommended_disposition": "No further action — shipped v1.75.0 / #243",
+      "evidence": [
+        "docs/plans/N4_CROSS_STACK_BENCHMARK.md",
+        "https://github.com/loganware05/captains-compass-cursor/pull/243"
+      ],
+      "subsystem": "consolidation",
+      "notes": ""
+    },
+    {
+      "item_id": "follow-on-n5",
+      "kind": "plan",
+      "title": "N5 Skill-Fit / Routing Feedback",
+      "status": "completed",
+      "recommended_disposition": "No further action — shipped v1.76.0 / #244",
+      "evidence": [
+        "docs/plans/N5_SKILL_ROUTING_FEEDBACK.md",
+        "https://github.com/loganware05/captains-compass-cursor/pull/244",
+        ".agent/evidence/n5-skill-routing-feedback/"
+      ],
+      "subsystem": "consolidation",
+      "notes": "End of Repository State 2026-10-24 consolidation priorities."
     }
   ]
 }

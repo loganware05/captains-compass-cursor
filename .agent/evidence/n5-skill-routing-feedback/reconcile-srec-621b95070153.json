@@ -1,0 +1,11 @@
+{
+  "actions": [],
+  "applied": false,
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "created_at": "2026-10-27T01:02:13Z",
+  "notes": "Proposal-only reconcile draft. Captain must apply via reviewed PR. M51 never rewrites project memory automatically.",
+  "proposal_id": "srec-621b95070153",
+  "schema_version": "1",
+  "snapshot_id": "psnap-984c1531ff51"
+}

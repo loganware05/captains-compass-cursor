@@ -1,7 +1,7 @@
 {
   "approved_for_execution": false,
   "authority_mutation": false,
-  "created_at": "2026-10-22T23:29:55Z",
+  "created_at": "2026-10-27T01:03:53Z",
   "drift_finding_ids": [
     "drift-memory-docs-present"
   ],
@@ -126,8 +126,8 @@
       ],
       "item_id": "plan-specialized-model-level-3",
       "kind": "plan",
-      "notes": "Harness proposal preserved; no paid large-GPU authorization.",
-      "recommended_disposition": "Keep DEFERRED until N1\u2013N3 + Level 0\u20132 proof-of-value; re-approve separately",
+      "notes": "Harness proposal preserved; no paid large-GPU authorization. Consolidation N1\u2013N5 complete at v1.76.0.",
+      "recommended_disposition": "Keep DEFERRED until Level 0\u20132 proof-of-value; re-approve separately (N1\u2013N5 complete)",
       "status": "deferred",
       "subsystem": "specialized-model",
       "title": "Specialized Model Level 3 (large single GPU)"
@@ -177,31 +177,73 @@
     },
     {
       "evidence": [
-        "docs/plans/N2_PRODUCT_INTEGRATION_VALIDATION.md"
+        "docs/plans/N2_PRODUCT_INTEGRATION_VALIDATION.md",
+        "https://github.com/loganware05/captains-compass-cursor/pull/239"
       ],
       "item_id": "follow-on-n2",
       "kind": "plan",
-      "notes": "",
-      "recommended_disposition": "Promote after N1 merge; Captain chooses bitcoin-data-collector (#164 continuity) or sandbox refresh",
-      "status": "deferred",
+      "notes": "Updated post N5 closeout 2026-10-26.",
+      "recommended_disposition": "No further action \u2014 shipped v1.72.0 / #239",
+      "status": "completed",
       "subsystem": "consolidation",
       "title": "N2 Product Integration Validation"
     },
     {
       "evidence": [
-        "docs/plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md"
+        "docs/plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md",
+        "https://github.com/loganware05/captains-compass-cursor/pull/240"
       ],
       "item_id": "follow-on-n3",
       "kind": "plan",
-      "notes": "",
-      "recommended_disposition": "Promote after N2 (or bounded parallel evals with Captain approval)",
-      "status": "deferred",
+      "notes": "Updated post N5 closeout 2026-10-26.",
+      "recommended_disposition": "No further action \u2014 shipped v1.73.0 / #240",
+      "status": "completed",
       "subsystem": "consolidation",
       "title": "N3 Adaptive Intelligence Validation"
+    },
+    {
+      "evidence": [
+        "docs/plans/OPENUI_CONTROL_PLANE.md",
+        "https://github.com/loganware05/captains-compass-cursor/pull/241"
+      ],
+      "item_id": "follow-on-openui",
+      "kind": "plan",
+      "notes": "",
+      "recommended_disposition": "No further action \u2014 v1.74.0 / #241; hotfix v1.74.1 / #242",
+      "status": "completed",
+      "subsystem": "consolidation",
+      "title": "Open UI Control Plane"
+    },
+    {
+      "evidence": [
+        "docs/plans/N4_CROSS_STACK_BENCHMARK.md",
+        "https://github.com/loganware05/captains-compass-cursor/pull/243"
+      ],
+      "item_id": "follow-on-n4",
+      "kind": "plan",
+      "notes": "",
+      "recommended_disposition": "No further action \u2014 shipped v1.75.0 / #243",
+      "status": "completed",
+      "subsystem": "consolidation",
+      "title": "N4 Cross-Stack Benchmark"
+    },
+    {
+      "evidence": [
+        "docs/plans/N5_SKILL_ROUTING_FEEDBACK.md",
+        "https://github.com/loganware05/captains-compass-cursor/pull/244",
+        ".agent/evidence/n5-skill-routing-feedback/"
+      ],
+      "item_id": "follow-on-n5",
+      "kind": "plan",
+      "notes": "End of Repository State 2026-10-24 consolidation priorities.",
+      "recommended_disposition": "No further action \u2014 shipped v1.76.0 / #244",
+      "status": "completed",
+      "subsystem": "consolidation",
+      "title": "N5 Skill-Fit / Routing Feedback"
     }
   ],
   "ledger_path": "/agent/repos/captains-compass-cursor/.agent/evidence/n1-operational-reconciliation/CLOSEOUT_LEDGER.json",
-  "northstar_version": "1.71.1",
+  "northstar_version": "1.76.0",
   "plan_id": "n1-operational-reconciliation",
   "readiness": "needs_captain_action",
   "recommended_actions": [
@@ -213,13 +255,11 @@
     "Captain: verify acceptance then close issue-169 \u2014 Verify residual risk vs PR #173 / v1.39.1 then close or file residual follow-up",
     "Captain: verify acceptance then close issue-170 \u2014 Verify Phase B acceptance against PR #175 / v1.40.0 then close",
     "Captain: verify acceptance then close issue-164 \u2014 Close original M35 after verifying PR #166 / v1.38.0; track current-VERSION revalidation under N2",
-    "Keep deferred plan-specialized-model-level-3 until prerequisites met",
-    "Keep deferred follow-on-n2 until prerequisites met",
-    "Keep deferred follow-on-n3 until prerequisites met"
+    "Keep deferred plan-specialized-model-level-3 until prerequisites met"
   ],
-  "report_id": "closeout-a4612ed5d527",
-  "repository_sha": "c7679bf42dd35254a08eed8cc39ebe2b9ec339bc",
+  "report_id": "closeout-cdf3894e6966",
+  "repository_sha": "4b936fec3cfdd05347b53adfe0e1261a7969dec9",
   "schema_version": "1",
-  "snapshot_id": "psnap-2a2d6b2b3eec",
-  "summary": "Closeout readiness=needs_captain_action; ledger_items=14 (completed=11, deferred=3, actionable=0); drift_findings=1. Issues are never auto-closed."
+  "snapshot_id": "psnap-ae9a205e5790",
+  "summary": "Closeout readiness=needs_captain_action; ledger_items=17 (completed=16, deferred=1, actionable=0); drift_findings=1. Issues are never auto-closed."
 }
