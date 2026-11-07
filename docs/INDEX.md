@@ -30,6 +30,7 @@ Launcher: `scripts/northstar` (control repo only).
 | `evaluate` / `learn` / `instructions` / `prompt-eval` / `policy` | Behavior Intelligence Loop (M46–M50) | [`plans/M46_BEHAVIOR_INTELLIGENCE_FOUNDATION.md`](plans/M46_BEHAVIOR_INTELLIGENCE_FOUNDATION.md) |
 | `status` | Project Overseer snapshot/explain/compare/reconcile/**closeout** | [`plans/M51_PROJECT_OVERSEER.md`](plans/M51_PROJECT_OVERSEER.md), [`plans/N1_OPERATIONAL_RECONCILIATION.md`](plans/N1_OPERATIONAL_RECONCILIATION.md) |
 | `provenance` / `examples` | Execution provenance + exemplars (M53) | [`plans/M53_PROMPT_POLICY_PROVENANCE.md`](plans/M53_PROMPT_POLICY_PROVENANCE.md) |
+| `conversation` | ChatGPT / Obsidian trajectory ingest | [`integrations/conversation-ingest.md`](integrations/conversation-ingest.md) |
 | `brain` / `assess` / `cycle` / `learning` / `model` / `rea` / `train` | Cognitive Core C1–C7 | [`plans/C1_COGNITIVE_CORE_SOURCE_OF_TRUTH.md`](plans/C1_COGNITIVE_CORE_SOURCE_OF_TRUTH.md) |
 | `cognitive` | Hermetic C1–C7 e2e evaluation | [`plans/E2E_COGNITIVE_CORE_EVALUATION.md`](plans/E2E_COGNITIVE_CORE_EVALUATION.md) |
 | `oversight` | Read-only persistent oversight compose | [`plans/READ_ONLY_PERSISTENT_OVERSIGHT.md`](plans/READ_ONLY_PERSISTENT_OVERSIGHT.md) |

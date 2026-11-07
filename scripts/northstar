@@ -2,7 +2,7 @@
 # northstar — topology-free launcher for NorthStar control-plane operations (M24 / M34).
 #
 # One product surface for Skills Learning Loop + Code Reviewer:
-#   northstar skills … | review | intent | outcomes | repair | precision | evaluate | learn | instructions | prompt-eval | policy | status | brain | assess | cycle | learning | model | rea | train | cognitive | oversight | specialized | provenance | examples
+#   northstar skills … | review | intent | outcomes | repair | precision | evaluate | learn | instructions | prompt-eval | policy | status | brain | assess | cycle | learning | model | rea | train | cognitive | oversight | specialized | provenance | examples | conversation
 #
 # Scripts always live in this control repository. Product/sandbox checkouts do
 # not contain ./scripts/run-skill-learning-loop.sh (or siblings).
@@ -38,6 +38,7 @@ Usage:
   northstar assess <subcommand> …
   northstar provenance <subcommand> …
   northstar examples <subcommand> …
+  northstar conversation <subcommand> …
 
 Surfaces (one-line purpose):
   skills      Learning Loop — refresh TI, learn, promote, sync-ledger, route-agents
@@ -69,6 +70,7 @@ Surfaces (one-line purpose):
   ui         Open UI emitters + gated approve/reject — requires COMPASS_OPENUI_ENABLED=1
   provenance Execution provenance ledger (M53) — requires COMPASS_PROVENANCE_ENABLED=1
   examples   Behavior exemplars (M53) — proposal-only; requires COMPASS_PROVENANCE_ENABLED=1
+  conversation ChatGPT/Obsidian trajectory ingest — requires COMPASS_CONVERSATION_INGEST_ENABLED=1
 
 Commands:
   northstar skills refresh [--repo PATH] [refresh-ti-cache.sh options]
@@ -162,6 +164,12 @@ Commands:
   northstar examples show --exemplar-id ID [--repo PATH]
   northstar examples draft --polarity POLARITY [--evaluation-id ID] [--repo PATH]
   northstar examples export --format csv [--out PATH] [--repo PATH]
+  northstar conversation ingest --path FILE
+            [--source chatgpt|obsidian-ai-exporter|t3-attachment]
+            [--model LABEL] [--draft-exemplar positive|negative]
+            [--no-knowledge] [--repo PATH]
+  northstar conversation show --id TRAJECTORY_ID [--repo PATH]
+  northstar conversation list [--repo PATH]
 
 Topology:
   CONTROL  = directory containing this launcher (captains-compass-cursor)
@@ -978,6 +986,29 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown examples subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  conversation)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      ingest|show|list)
+        exec "$ROOT/scripts/run-conversation.sh" "$sub" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown conversation subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;

@@ -140,10 +140,7 @@ gh auth status
 
 ## Current Priorities
 
-**Consolidation track N1–N5 COMPLETE** at control **v1.76.0**
-(`northstar feedback n5` / #244). N4 **v1.75.0** (#243); Open UI **v1.74.0**
-(#241) + hotfix **v1.74.1** (#242); N3 **v1.73.0**; N2 **v1.72.0**; N1
-**v1.71.1**. No active plan. Specialized Model Level 3 remains **DEFERRED**.
-Behavior Loop (M46–M54) remains complete at **v1.59.0**. Start here:
-`docs/guides/captain-handbook.md`.
-Live trading / AHF execution remains denied.
+**Conversation trajectory ingest** in progress toward **v1.77.0** (#247).
+Consolidation track N1–N5 complete at **v1.76.0**. Queued next: **I1 Sentry**,
+then **I2 T3**. Specialized Model Level 3 remains **DEFERRED**. Start here:
+`docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.
