@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/conversation-trajectory.schema.json",
+  "title": "ConversationTrajectory",
+  "description": "External chat export trajectory (ChatGPT / Obsidian AI Exporter / T3 attachment). Evidence-only; never grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "trajectory_id",
+    "conversation_id",
+    "turn_index",
+    "source",
+    "model_or_source",
+    "user_prompt",
+    "assistant_suggestion",
+    "assistant_suggestion_excerpt",
+    "claim_kind",
+    "source_path",
+    "source_sha256",
+    "exported_at",
+    "ingested_at",
+    "approved_for_execution",
+    "authority_mutation",
+    "auto_promoted"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "trajectory_id": { "type": "string", "minLength": 1 },
+    "conversation_id": { "type": "string", "minLength": 1 },
+    "turn_index": { "type": "integer", "minimum": 0 },
+    "source": {
+      "type": "string",
+      "enum": ["chatgpt", "obsidian-ai-exporter", "t3-attachment"]
+    },
+    "model_or_source": { "type": "string", "minLength": 1 },
+    "user_prompt": { "type": "string", "minLength": 1 },
+    "assistant_suggestion": { "type": "string", "minLength": 1 },
+    "assistant_suggestion_excerpt": { "type": "string", "minLength": 1 },
+    "claim_kind": { "type": "string", "const": "external" },
+    "source_path": { "type": "string", "minLength": 1 },
+    "source_sha256": { "type": "string", "minLength": 1 },
+    "source_url": { "type": ["string", "null"] },
+    "exported_at": { "type": "string", "minLength": 1 },
+    "ingested_at": { "type": "string", "minLength": 1 },
+    "thread_title": { "type": "string" },
+    "keywords": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "auto_promoted": { "type": "boolean", "const": false }
+  }
+}

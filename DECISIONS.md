@@ -1,5 +1,26 @@
 # Decisions
 
+## ADR-097: Conversation Trajectory Ingest (v1.77.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-07
+- **Context:** Captain approved `conversation-trajectory-ingest` (#247) after
+  ChatGPT/Obsidian export cross-ref against v1.76.0, and queued I1 Sentry then
+  I2 T3 as follow-on integrations.
+- **Decision:**
+  1. Ship gated `northstar conversation ingest|show|list`
+     (`COMPASS_CONVERSATION_INGEST_ENABLED`).
+  2. Parse Obsidian AI Exporter ChatGPT markdown into per-turn trajectories
+     (`user_prompt`, `model_or_source`, `assistant_suggestion`).
+  3. Persist under `.agent/conversations/` + Knowledge Steward `know-conv-*`;
+     optional exemplar drafts; no C7 source enum extension in v1.77.0.
+  4. Always `claim_kind: external`; authority flags const false; no auto-promote.
+  5. Release as **v1.77.0**.
+- **Consequences:** Operators can reuse ChatGPT advisory loops as evidence
+  without treating chat as repository truth. Rollback
+  `rollback/pre-conversation-trajectory-ingest` @ `c46c161`.
+
+
 ## ADR-096: N5 Skill-Fit / Routing Feedback (v1.76.0)
 
 - **Status:** Accepted

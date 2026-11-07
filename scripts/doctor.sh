@@ -719,6 +719,35 @@ PY
   else
     fail "n5 feedback should exit 2 mentioning COMPASS_N5_FEEDBACK_ENABLED when unset (rc=$n5_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/conversation-trajectory.schema.json" ]]; then
+    ok "conversation-trajectory.schema.json present"
+  else
+    fail "missing orchestrator/schemas/conversation-trajectory.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/conversation/service.py" ]]; then
+    ok "orchestrator/conversation present"
+  else
+    fail "missing orchestrator/conversation/service.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-conversation.sh" ]]; then
+    ok "scripts/run-conversation.sh present"
+  else
+    fail "missing executable scripts/run-conversation.sh"
+  fi
+  if grep -q 'conversation ingest' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents conversation ingest"
+  else
+    fail "northstar missing conversation ingest surface"
+  fi
+  set +e
+  conv_out="$(env -u COMPASS_CONVERSATION_INGEST_ENABLED "$ROOT/scripts/run-conversation.sh" list --repo-root "$ROOT" 2>&1)"
+  conv_rc=$?
+  set -e
+  if [[ "$conv_rc" -eq 2 && "$conv_out" == *"COMPASS_CONVERSATION_INGEST_ENABLED"* ]]; then
+    ok "conversation ingest fail-closed when COMPASS_CONVERSATION_INGEST_ENABLED unset"
+  else
+    fail "conversation ingest should exit 2 mentioning COMPASS_CONVERSATION_INGEST_ENABLED when unset (rc=$conv_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
     ok "orchestrator/openui present"
   else

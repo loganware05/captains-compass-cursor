@@ -4,10 +4,18 @@
 
 ## Unreleased
 
-### Changed
+## 1.77.0 — 2026-11-07
 
-- Post-merge N5 closeout: project memory idle; consolidation N1–N5 marked
-  complete; Overseer ledger refreshed (N2–N5 completed; Level 3 still deferred).
+### Added
+
+- **Conversation trajectory ingest** (plan `conversation-trajectory-ingest` / #247):
+  - Gated `northstar conversation ingest|show|list` / `run-conversation.sh`
+    (`COMPASS_CONVERSATION_INGEST_ENABLED`)
+  - Obsidian AI Exporter / ChatGPT markdown parser → schema-validated
+    trajectories under `.agent/conversations/`
+  - Knowledge Steward `know-conv-*` items + optional exemplar drafts
+  - Authority locks always false; doctor fail-closed; hermetic fixture tests
+  - Queued next: I1 Sentry, then I2 T3 execution adapter (docs only)
 
 ## 1.76.0 — 2026-10-26
 
