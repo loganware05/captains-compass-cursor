@@ -2,16 +2,17 @@
 
 ## Current status
 
-**IN PROGRESS:** `conversation-trajectory-ingest` (#247) on
-`feature/247-conversation-trajectory-ingest` → release **v1.77.0**.
+**PR OPEN:** `conversation-trajectory-ingest` → **v1.77.0**
+([#248](https://github.com/loganware05/captains-compass-cursor/pull/248)).
 
-Local `main` fast-forwarded to **v1.76.0** @ `c46c161`.
+Local checkout was fast-forwarded to **v1.76.0** @ `c46c161` before implement.
 
 | Item | Value |
 |---|---|
 | Baseline | **v1.76.0** @ `c46c161` |
-| Active plan | `conversation-trajectory-ingest` **IN PROGRESS** |
+| Active plan | `conversation-trajectory-ingest` **COMPLETE** (PR open) |
 | Issue | [#247](https://github.com/loganware05/captains-compass-cursor/issues/247) |
+| PR | [#248](https://github.com/loganware05/captains-compass-cursor/pull/248) @ `571faff` |
 | Rollback | `rollback/pre-conversation-trajectory-ingest` @ `c46c161` |
 | Queued next | **I1 Sentry**, then **I2 T3** (docs/plans) |
 
