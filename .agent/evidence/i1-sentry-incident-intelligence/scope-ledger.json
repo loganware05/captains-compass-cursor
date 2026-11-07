@@ -1,0 +1,33 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "canonical_memory_untouched": true,
+  "created_at": "2026-11-07T10:41:35Z",
+  "entries": [
+    {
+      "claim_kind": "observed",
+      "entry_id": "drift-memory-docs-present",
+      "kind": "memory_docs",
+      "severity": "info",
+      "summary": "All required project memory docs are present."
+    },
+    {
+      "claim_kind": "documented",
+      "entry_id": "dev-active-plan",
+      "kind": "active_development",
+      "severity": "info",
+      "summary": "Active development plan `i1-sentry-incident-intelligence` is '**APPROVED**'; Overseer is tracking process without granting authority."
+    },
+    {
+      "claim_kind": "external",
+      "entry_id": "dev-sentry-incidents",
+      "kind": "external_incident_evidence",
+      "severity": "info",
+      "summary": "Observed 2 Sentry incident evidence packet(s) under .agent/incidents/sentry/."
+    }
+  ],
+  "northstar_version": "1.78.0",
+  "repository_sha": "ff738a5bd6b332a4caea106a44ff514aa0e3a1c4",
+  "schema_version": "1",
+  "snapshot_id": "psnap-bfb92673f05a"
+}

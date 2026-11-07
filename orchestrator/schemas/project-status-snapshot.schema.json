@@ -81,6 +81,40 @@
         }
       }
     },
+    "incident_refs": {
+      "type": "array",
+      "description": "Read-only refs to Sentry incident evidence packets (I1).",
+      "items": {
+        "type": "object",
+        "required": ["packet_id"],
+        "additionalProperties": false,
+        "properties": {
+          "packet_id": { "type": "string", "minLength": 1 },
+          "issue_id": { "type": "string" },
+          "title": { "type": "string" },
+          "severity": { "type": "string" },
+          "mode": { "type": "string" },
+          "path": { "type": "string" },
+          "claim_kind": { "type": "string", "const": "external" }
+        }
+      }
+    },
+    "conversation_refs": {
+      "type": "array",
+      "description": "Read-only refs to ingested ChatGPT/Obsidian trajectories.",
+      "items": {
+        "type": "object",
+        "required": ["trajectory_id"],
+        "additionalProperties": false,
+        "properties": {
+          "trajectory_id": { "type": "string", "minLength": 1 },
+          "conversation_id": { "type": "string" },
+          "model_or_source": { "type": "string" },
+          "path": { "type": "string" },
+          "claim_kind": { "type": "string", "const": "external" }
+        }
+      }
+    },
     "approved_for_execution": { "type": "boolean", "const": false },
     "authority_mutation": { "type": "boolean", "const": false }
   }

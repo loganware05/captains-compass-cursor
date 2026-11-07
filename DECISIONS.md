@@ -1,5 +1,26 @@
 # Decisions
 
+## ADR-098: I1 Sentry Incident Intelligence + Overseer Development Refs (v1.78.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-07
+- **Context:** Captain approved `i1-sentry-incident-intelligence` (#249) after
+  v1.77.0 conversation ingest, and directed Overseer to track the development
+  process and external evidence changes.
+- **Decision:**
+  1. Ship gated read-only `northstar sentry` with fixture default and optional
+     live HTTPS (`COMPASS_SENTRY_LIVE` + token).
+  2. Persist schema-validated packets with `write_to_sentry: false` and
+     authority locks const false.
+  3. Extend Project Overseer snapshots with `incident_refs` and
+     `conversation_refs`; emit info findings for active plans and external
+     evidence stores; never auto-rewrite canonical memory.
+  4. Release as **v1.78.0**. I2 T3 remains queued.
+- **Consequences:** Production failures and chat trajectories become visible to
+  Overseer as external evidence without granting repair authority. Rollback
+  `rollback/pre-i1-sentry-incident-intelligence` @ `ff738a5`.
+
+
 ## ADR-097: Conversation Trajectory Ingest (v1.77.0)
 
 - **Status:** Accepted

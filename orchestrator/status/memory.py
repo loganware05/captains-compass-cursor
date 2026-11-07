@@ -62,6 +62,8 @@ def render_system_map(snapshot: dict[str, Any]) -> str:
         f"- Skills on disk (observed): `{snapshot.get('skill_count_fs')}`",
         f"- Skills in docs (documented): `{snapshot.get('skill_count_docs')}`",
         f"- Provenance refs (observed): `{len(snapshot.get('provenance_refs') or [])}`",
+        f"- Incident refs (external): `{len(snapshot.get('incident_refs') or [])}`",
+        f"- Conversation refs (external): `{len(snapshot.get('conversation_refs') or [])}`",
         "",
         "## Findings",
         "",
@@ -77,6 +79,26 @@ def render_system_map(snapshot: dict[str, Any]) -> str:
                 f"- [{finding.get('severity')}/{claim}] "
                 f"{finding.get('summary')}"
             )
+    incident_refs = snapshot.get("incident_refs") or []
+    conversation_refs = snapshot.get("conversation_refs") or []
+    lines.extend(["", "## Development evidence (external)", ""])
+    if not incident_refs and not conversation_refs:
+        lines.append("- (none observed under `.agent/incidents` / `.agent/conversations`)")
+    else:
+        for ref in incident_refs[:10]:
+            if not isinstance(ref, dict):
+                continue
+            lines.append(
+                f"- [incident/{ref.get('severity') or 'unknown'}] "
+                f"`{ref.get('packet_id')}` — {ref.get('title') or ''}"
+            )
+        for ref in conversation_refs[:10]:
+            if not isinstance(ref, dict):
+                continue
+            lines.append(
+                f"- [conversation/{ref.get('model_or_source') or 'external'}] "
+                f"`{ref.get('trajectory_id')}`"
+            )
     lines.extend(
         [
             "",
@@ -85,6 +107,7 @@ def render_system_map(snapshot: dict[str, Any]) -> str:
             "- `approved_for_execution`: false",
             "- `authority_mutation`: false",
             "- Reconcile proposals remain proposal-only.",
+            "- Incident/conversation refs are external evidence only.",
             "",
         ]
     )
