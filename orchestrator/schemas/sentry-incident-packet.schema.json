@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/sentry-incident-packet.schema.json",
+  "title": "SentryIncidentPacket",
+  "description": "Read-only Sentry incident evidence packet (I1). Never grants repair or write authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "packet_id",
+    "provider",
+    "mode",
+    "org",
+    "project",
+    "issue_id",
+    "title",
+    "severity",
+    "severity",
+    "occurrence_count",
+    "first_seen",
+    "last_seen",
+    "claim_kind",
+    "source_refs",
+    "stack_excerpt",
+    "retrieved_at",
+    "approved_for_execution",
+    "authority_mutation",
+    "auto_promoted",
+    "write_to_sentry"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "packet_id": { "type": "string", "minLength": 1 },
+    "provider": { "type": "string", "const": "sentry" },
+    "mode": { "type": "string", "enum": ["fixture", "live"] },
+    "org": { "type": "string", "minLength": 1 },
+    "project": { "type": "string", "minLength": 1 },
+    "environment": { "type": ["string", "null"] },
+    "issue_id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "culprit": { "type": "string" },
+    "fingerprint": { "type": "string", "minLength": 1 },
+    "severity": {
+      "type": "string",
+      "enum": ["fatal", "error", "warning", "info", "debug", "unknown"]
+    },
+    "occurrence_count": { "type": "integer", "minimum": 0 },
+    "first_seen": { "type": "string", "minLength": 1 },
+    "last_seen": { "type": "string", "minLength": 1 },
+    "release": { "type": ["string", "null"] },
+    "commit_sha": { "type": ["string", "null"] },
+    "permalink": { "type": ["string", "null"] },
+    "stack_excerpt": { "type": "string" },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": ["sentry_issue", "sentry_event", "release", "git", "fixture"]
+          },
+          "ref": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "claim_kind": { "type": "string", "const": "external" },
+    "investigation_hint": { "type": "string" },
+    "retrieved_at": { "type": "string", "minLength": 1 },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "auto_promoted": { "type": "boolean", "const": false },
+    "write_to_sentry": { "type": "boolean", "const": false }
+  }
+}

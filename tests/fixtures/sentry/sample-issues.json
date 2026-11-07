@@ -1,0 +1,42 @@
+{
+  "org": "fixture-org",
+  "project": "fixture-project",
+  "issues": [
+    {
+      "id": "1001",
+      "shortId": "FIX-1001",
+      "title": "TypeError: cannot read property of undefined",
+      "culprit": "api/orders.py in get_status",
+      "level": "error",
+      "count": 12,
+      "firstSeen": "2026-11-06T10:00:00Z",
+      "lastSeen": "2026-11-07T08:00:00Z",
+      "fingerprint": ["typeerror", "orders", "get_status"],
+      "environment": "production",
+      "release": "1.77.0",
+      "commit_sha": "ff738a5bd6b332a4caea106a44ff514aa0e3a1c4",
+      "permalink": "https://sentry.io/organizations/fixture-org/issues/1001/",
+      "stack_excerpt": "File \"api/orders.py\", line 42, in get_status\n    return order.status.lower()\nTypeError: cannot read property of undefined",
+      "metadata": {
+        "type": "TypeError",
+        "value": "cannot read property of undefined",
+        "level": "error"
+      }
+    },
+    {
+      "id": "1002",
+      "shortId": "FIX-1002",
+      "title": "TimeoutError: upstream payment gateway",
+      "culprit": "payments/client.py in charge",
+      "level": "warning",
+      "count": 3,
+      "firstSeen": "2026-11-07T01:00:00Z",
+      "lastSeen": "2026-11-07T07:30:00Z",
+      "fingerprint": ["timeout", "payments"],
+      "environment": "production",
+      "release": "1.77.0",
+      "permalink": "https://sentry.io/organizations/fixture-org/issues/1002/",
+      "stack_excerpt": "TimeoutError: upstream payment gateway after 30s"
+    }
+  ]
+}

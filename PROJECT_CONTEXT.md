@@ -140,7 +140,8 @@ gh auth status
 
 ## Current Priorities
 
-**Conversation trajectory ingest** in progress toward **v1.77.0** (#247).
-Consolidation track N1–N5 complete at **v1.76.0**. Queued next: **I1 Sentry**,
-then **I2 T3**. Specialized Model Level 3 remains **DEFERRED**. Start here:
-`docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.
+**I1 Sentry** (`i1-sentry-incident-intelligence` / #249) shipping toward
+**v1.78.0** with Overseer development refs. Conversation ingest **v1.77.0**
+merged (#248). **I2 T3** queued next. Specialized Model Level 3 remains
+**DEFERRED**. Start here: `docs/guides/captain-handbook.md`. Live trading /
+AHF execution remains denied.

@@ -205,6 +205,65 @@ def detect_drift(repo_root: Path) -> dict[str, Any]:
                     }
                 )
 
+    # Development-process awareness: active plan + external evidence stores.
+    status_upper = (plan_status or "").upper()
+    if plan_id and any(
+        token in status_upper for token in ("APPROVED", "IN PROGRESS", "VALIDATING")
+    ):
+        findings.append(
+            {
+                "finding_id": "dev-active-plan",
+                "kind": "active_development",
+                "severity": "info",
+                "claim_kind": "documented",
+                "summary": (
+                    f"Active development plan `{plan_id}` is {plan_status!r}; "
+                    "Overseer is tracking process without granting authority."
+                ),
+                "evidence": [
+                    f"plan_id={plan_id}",
+                    f"plan_status={plan_status}",
+                    f"progress_plan_id={progress_plan_id or ''}",
+                ],
+            }
+        )
+
+    incident_dir = root / ".agent" / "incidents" / "sentry"
+    incident_count = (
+        len(list(incident_dir.glob("*.json"))) if incident_dir.is_dir() else 0
+    )
+    if incident_count:
+        findings.append(
+            {
+                "finding_id": "dev-sentry-incidents",
+                "kind": "external_incident_evidence",
+                "severity": "info",
+                "claim_kind": "external",
+                "summary": (
+                    f"Observed {incident_count} Sentry incident evidence packet(s) "
+                    "under .agent/incidents/sentry/."
+                ),
+                "evidence": [f"count={incident_count}"],
+            }
+        )
+
+    conv_dir = root / ".agent" / "conversations" / "trajectories"
+    conv_count = len(list(conv_dir.glob("*.json"))) if conv_dir.is_dir() else 0
+    if conv_count:
+        findings.append(
+            {
+                "finding_id": "dev-conversation-trajectories",
+                "kind": "external_conversation_evidence",
+                "severity": "info",
+                "claim_kind": "external",
+                "summary": (
+                    f"Observed {conv_count} conversation trajectory(ies) under "
+                    ".agent/conversations/trajectories/."
+                ),
+                "evidence": [f"count={conv_count}"],
+            }
+        )
+
     return {
         "northstar_version": version,
         "memory_docs": memory,

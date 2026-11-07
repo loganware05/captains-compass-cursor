@@ -8,6 +8,7 @@ from typing import Any
 
 from orchestrator.status.drift import detect_drift
 from orchestrator.status.memory import write_overseer_memory
+from orchestrator.status.development_refs import attach_development_refs
 from orchestrator.status.provenance_refs import attach_provenance_refs
 from orchestrator.status.providers.base import StatusProvider
 from orchestrator.status.providers.select import (
@@ -67,6 +68,7 @@ def build_snapshot(
         "authority_mutation": False,
     }
     attach_provenance_refs(snapshot, repo_root)
+    attach_development_refs(snapshot, repo_root)
     snapshot["snapshot_id"] = snapshot_id_for(snapshot)
     if include_explanation:
         snapshot["explanation"] = provider.explain(snapshot)

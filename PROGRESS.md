@@ -2,28 +2,22 @@
 
 ## Current status
 
-**PR OPEN:** `conversation-trajectory-ingest` → **v1.77.0**
-([#248](https://github.com/loganware05/captains-compass-cursor/pull/248)).
+**IN PROGRESS / VALIDATING:** `i1-sentry-incident-intelligence` (#249) on
+`feature/249-i1-sentry-incident-intelligence` → **v1.78.0**.
 
-Local checkout was fast-forwarded to **v1.76.0** @ `c46c161` before implement.
+Overseer now tracks active-plan development findings plus `incident_refs` /
+`conversation_refs` (external evidence only).
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.76.0** @ `c46c161` |
-| Active plan | `conversation-trajectory-ingest` **COMPLETE** (PR open) |
-| Issue | [#247](https://github.com/loganware05/captains-compass-cursor/issues/247) |
-| PR | [#248](https://github.com/loganware05/captains-compass-cursor/pull/248) @ `571faff` |
-| Rollback | `rollback/pre-conversation-trajectory-ingest` @ `c46c161` |
-| Queued next | **I1 Sentry**, then **I2 T3** (docs/plans) |
+| Baseline | **v1.77.0** @ `ff738a5` |
+| Active plan | `i1-sentry-incident-intelligence` **APPROVED** / validating |
+| Issue | [#249](https://github.com/loganware05/captains-compass-cursor/issues/249) |
+| Rollback | `rollback/pre-i1-sentry-incident-intelligence` @ `ff738a5` |
+| Queued next | I2 T3 |
+| Next | Validate → commit → open PR |
 
-## Consolidation track
-
-| Milestone | Status |
-|---|---|
-| N1–N5 | **Complete** through v1.76.0 |
-| Specialized Model Level 3 | **Deferred** |
-
-## Standing order (Captain — 2026-10-13)
+## Standing order
 
 Approve ⇒ implement → validate → commit → open PR. Merge remains Captain-only.
 

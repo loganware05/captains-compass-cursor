@@ -4,6 +4,20 @@
 
 ## Unreleased
 
+## 1.78.0 — 2026-11-07
+
+### Added
+
+- **I1 Sentry incident intelligence** (`i1-sentry-incident-intelligence` / #249):
+  - Gated `northstar sentry fetch|show|list` (`COMPASS_SENTRY_INGEST_ENABLED`;
+    live dual-gate `COMPASS_SENTRY_LIVE`)
+  - Fixture-first packets under `.agent/incidents/sentry/` with authority/write
+    locks always false
+  - Project Overseer attaches `incident_refs` + `conversation_refs` and records
+    active-development / external-evidence findings in system-map
+  - Doctor fail-closed; hermetic unit tests; `docs/integrations/sentry.md`
+  - I2 T3 remains queued
+
 ## 1.77.0 — 2026-11-07
 
 ### Added

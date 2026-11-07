@@ -748,6 +748,40 @@ PY
   else
     fail "conversation ingest should exit 2 mentioning COMPASS_CONVERSATION_INGEST_ENABLED when unset (rc=$conv_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/sentry-incident-packet.schema.json" ]]; then
+    ok "sentry-incident-packet.schema.json present"
+  else
+    fail "missing orchestrator/schemas/sentry-incident-packet.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/integrations/sentry/service.py" ]]; then
+    ok "orchestrator/integrations/sentry present"
+  else
+    fail "missing orchestrator/integrations/sentry/service.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-sentry.sh" ]]; then
+    ok "scripts/run-sentry.sh present"
+  else
+    fail "missing executable scripts/run-sentry.sh"
+  fi
+  if grep -q 'sentry fetch' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents sentry fetch"
+  else
+    fail "northstar missing sentry fetch surface"
+  fi
+  if [[ -f "$ROOT/orchestrator/status/development_refs.py" ]]; then
+    ok "orchestrator/status/development_refs present"
+  else
+    fail "missing orchestrator/status/development_refs.py"
+  fi
+  set +e
+  sentry_out="$(env -u COMPASS_SENTRY_INGEST_ENABLED "$ROOT/scripts/run-sentry.sh" list --repo-root "$ROOT" 2>&1)"
+  sentry_rc=$?
+  set -e
+  if [[ "$sentry_rc" -eq 2 && "$sentry_out" == *"COMPASS_SENTRY_INGEST_ENABLED"* ]]; then
+    ok "sentry ingest fail-closed when COMPASS_SENTRY_INGEST_ENABLED unset"
+  else
+    fail "sentry ingest should exit 2 mentioning COMPASS_SENTRY_INGEST_ENABLED when unset (rc=$sentry_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
     ok "orchestrator/openui present"
   else

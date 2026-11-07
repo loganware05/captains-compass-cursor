@@ -1,4 +1,4 @@
-# Implementation Plan — Conversation Trajectory Ingest (ChatGPT / Obsidian → NorthStar)
+# Implementation Plan — I1 Sentry Production Incident Intelligence
 
 - Status: **COMPLETE**
 
@@ -7,50 +7,32 @@
 | Field | Value |
 |---|---|
 | Status | **COMPLETE** |
-| Plan ID | `conversation-trajectory-ingest` |
-| Issue | [#247](https://github.com/loganware05/captains-compass-cursor/issues/247) |
-| Product | **NorthStar** (control repo) |
-| Baseline | **v1.76.0** @ `c46c161` |
-| Branch | `feature/247-conversation-trajectory-ingest` |
-| Rollback | `rollback/pre-conversation-trajectory-ingest` @ `c46c161` |
-| Proposed release | **v1.77.0** |
-| Captain | Logan Ware |
-| Created | 2026-11-06 |
-| Queued next | I1 Sentry (`docs/plans/I1_SENTRY_INCIDENT_INTELLIGENCE.md`), then I2 T3 |
-
-## Approval record
-
-| Field | Value |
-|---|---|
+| Plan ID | `i1-sentry-incident-intelligence` |
+| Issue | [#249](https://github.com/loganware05/captains-compass-cursor/issues/249) |
+| Baseline | **v1.77.0** @ `ff738a5` |
+| Branch | `feature/249-i1-sentry-incident-intelligence` |
+| Rollback | `rollback/pre-i1-sentry-incident-intelligence` @ `ff738a5` |
+| Proposed release | **v1.78.0** |
 | Approved by | Logan Ware (Captain) |
-| Approval date | 2026-11-06 |
-| Notes | Standing order: approval ⇒ implement → validate → commit → open PR. Queue I1 Sentry then I2 T3. FF local main completed. |
+| Approval date | 2026-11-07 |
 
-## Request
+## Outcome
 
-Ship gated conversation trajectory ingest for Obsidian AI Exporter / ChatGPT
-markdown so NorthStar can store `user_prompt` + `model_or_source` +
-`assistant_suggestion` as external evidence without granting authority.
+- Gated `northstar sentry fetch|show|list` with fixture-first packets
+- Overseer snapshots include `incident_refs`, `conversation_refs`, and
+  active-development findings; system-map cites external evidence
+- Authority/write locks always false; doctor + unit tests pass
 
-## Acceptance Criteria
+## Acceptance
 
-- [x] Fail-closed without `COMPASS_CONVERSATION_INGEST_ENABLED=1`
-- [x] Parses Obsidian AI Exporter ChatGPT markdown into ≥1 trajectory per Q/A turn
-- [x] Schema validation; authority flags always false
-- [x] Ingest writes store + ingest-log; Knowledge Steward `know-conv-*` items
-- [x] Does not mutate `.cursor/`, policies, routing, or canonical memory docs
-- [x] Fixtures + unit tests; doctor updated
-- [x] Docs: handbook blurb, `docs/integrations/conversation-ingest.md`, CHANGELOG, ADR
-- [x] Evidence under `.agent/evidence/conversation-trajectory-ingest/`
-- [x] Implementation on FF'd `origin/main` v1.76.0 baseline
+- [x] Fail-closed without `COMPASS_SENTRY_INGEST_ENABLED`
+- [x] Fixture mode offline/CI
+- [x] Live dual-gate documented (https-only)
+- [x] Packets schema-validated; write/authority false
+- [x] Overseer tracks development process + incident/conversation refs
+- [x] Doctor + tests + docs/ADR/CHANGELOG
 - [ ] PR opened (standing order)
 
-## Non-Goals
+## Queued next
 
-- Live ChatGPT scraping; auto-promotion; Level 3; I1–I5 implementation in this PR
-- C7 `source: conversations` enum extension (deferred; knowledge + exemplar drafts only)
-
-## Rollback
-
-1. Disable `COMPASS_CONVERSATION_INGEST_ENABLED`
-2. Revert merge / checkout `rollback/pre-conversation-trajectory-ingest`
+I2 T3 execution adapter (`docs/plans/I2_T3_EXECUTION_ADAPTER.md`)
