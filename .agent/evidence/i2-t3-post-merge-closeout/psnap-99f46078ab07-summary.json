@@ -1,0 +1,9 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "created_at": "2026-11-08T23:04:45Z",
+  "finding_count": 3,
+  "northstar_version": "1.79.0",
+  "repository_sha": "7c6d4a21ca06181481bc193061fa732f4161d75f",
+  "snapshot_id": "psnap-99f46078ab07"
+}

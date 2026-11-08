@@ -1,4 +1,4 @@
-# Implementation Plan — I2 T3 Code Execution Adapter
+# Implementation Plan — I3 Apify MCP Technology Intelligence
 
 - Status: **COMPLETE**
 
@@ -7,27 +7,27 @@
 | Field | Value |
 |---|---|
 | Status | **COMPLETE** |
-| Plan ID | `i2-t3-execution-adapter` |
-| Issue | [#251](https://github.com/loganware05/captains-compass-cursor/issues/251) |
-| Baseline | **v1.78.0** @ `36ffff9` |
-| Branch | `feature/251-i2-t3-execution-adapter` |
-| Rollback | `rollback/pre-i2-t3-execution-adapter` @ `36ffff9` |
-| Proposed release | **v1.79.0** |
+| Plan ID | `i3-apify-ti-provider` |
+| Issue | [#253](https://github.com/loganware05/captains-compass-cursor/issues/253) |
+| Baseline | **v1.79.0** @ `7c6d4a2` |
+| Branch | `feature/253-i3-apify-ti-provider` |
+| Rollback | `rollback/pre-i3-apify-ti-provider` @ `7c6d4a2` |
+| Proposed release | **v1.80.0** |
 | Approved by | Logan Ware (Captain) |
-| Approval date | 2026-11-07 |
+| Approval date | 2026-11-08 |
 
 ## Outcome
 
-- Gated `northstar t3` ExecutionAdapter (fixture-first, plan-bound)
-- Overseer `execution_refs` + `dev-t3-executions`
-- Authority locks + `bypassed_plan_gate: false`
-- Doctor + unit tests pass
+- `apify-file` TI provider + gated `northstar apify` CLI
+- Research packets + Overseer `research_refs`
+- Live skeleton fail-closed; no call-actor
+- Doctor + 9 unit tests pass
 
 ## Acceptance
 
-- [x] Fail-closed without `COMPASS_T3_EXEC_ENABLED`
-- [x] Fixture lifecycle start→status→collect→cancel
-- [x] Refuse start without approved plan (unless `--allow-fixture-plan`)
-- [x] Overseer execution_refs
-- [x] Doctor + tests + docs/ADR/CHANGELOG
-- [x] PR opened: [#252](https://github.com/loganware05/captains-compass-cursor/pull/252)
+- [x] Fixture TI provider
+- [x] Live fail-closed
+- [x] CLI search|show|list
+- [x] Overseer research_refs
+- [x] Doctor + tests + docs
+- [ ] PR opened (standing order)

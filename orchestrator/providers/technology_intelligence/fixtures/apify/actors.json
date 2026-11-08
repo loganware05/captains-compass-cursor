@@ -1,0 +1,44 @@
+[
+  {
+    "id": "apify-rag-web-browser",
+    "actor_id": "apify/rag-web-browser",
+    "title": "RAG Web Browser",
+    "description": "Browse and extract web data for RAG-style research (fixture).",
+    "capabilities_provided": ["web-research", "content-extraction", "external-research"],
+    "discovery_signal": "apify-file:apify/rag-web-browser",
+    "source": {
+      "type": "external-candidate",
+      "path": "apify:apify/rag-web-browser",
+      "provenance_url": "https://apify.com/apify/rag-web-browser"
+    },
+    "notes": "Offline Apify Actor-shaped fixture — NOT APPROVED FOR EXECUTION"
+  },
+  {
+    "id": "apify-web-fetch",
+    "actor_id": "apify/web-fetch",
+    "title": "Web Fetch",
+    "description": "Fetch one http(s) URL with JS rendering (fixture).",
+    "capabilities_provided": ["web-fetch", "content-extraction", "external-research"],
+    "discovery_signal": "apify-file:apify/web-fetch",
+    "source": {
+      "type": "external-candidate",
+      "path": "apify:apify/web-fetch",
+      "provenance_url": "https://apify.com/apify/web-fetch"
+    },
+    "notes": "Offline Apify Actor-shaped fixture — NOT APPROVED FOR EXECUTION"
+  },
+  {
+    "id": "apify-github-issues",
+    "actor_id": "apify/github-issues-scraper",
+    "title": "GitHub Issues Scraper (fixture)",
+    "description": "Collect public GitHub issue metadata for TI signals (fixture).",
+    "capabilities_provided": ["github-research", "issue-mining", "external-research"],
+    "discovery_signal": "apify-file:apify/github-issues-scraper",
+    "source": {
+      "type": "external-candidate",
+      "path": "apify:apify/github-issues-scraper",
+      "provenance_url": "https://apify.com/apify/github-issues-scraper"
+    },
+    "notes": "Offline Apify Actor-shaped fixture — NOT APPROVED FOR EXECUTION"
+  }
+]

@@ -1,0 +1,72 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "auto_promoted": false,
+  "called_actor": false,
+  "candidates": [
+    {
+      "approved_for_execution": false,
+      "capabilities_provided": [
+        "web-research",
+        "content-extraction",
+        "external-research"
+      ],
+      "discovery_signal": "apify-file:apify/rag-web-browser",
+      "id": "apify-rag-web-browser",
+      "kind": "candidate",
+      "lifecycle_stage": "DISCOVERED",
+      "notes": "Offline Apify Actor-shaped fixture \u2014 NOT APPROVED FOR EXECUTION",
+      "source": {
+        "path": "apify:apify/rag-web-browser",
+        "provenance_url": "https://apify.com/apify/rag-web-browser",
+        "type": "external-candidate"
+      },
+      "version": "0.1.0"
+    },
+    {
+      "approved_for_execution": false,
+      "capabilities_provided": [
+        "web-fetch",
+        "content-extraction",
+        "external-research"
+      ],
+      "discovery_signal": "apify-file:apify/web-fetch",
+      "id": "apify-web-fetch",
+      "kind": "candidate",
+      "lifecycle_stage": "DISCOVERED",
+      "notes": "Offline Apify Actor-shaped fixture \u2014 NOT APPROVED FOR EXECUTION",
+      "source": {
+        "path": "apify:apify/web-fetch",
+        "provenance_url": "https://apify.com/apify/web-fetch",
+        "type": "external-candidate"
+      },
+      "version": "0.1.0"
+    },
+    {
+      "approved_for_execution": false,
+      "capabilities_provided": [
+        "github-research",
+        "issue-mining",
+        "external-research"
+      ],
+      "discovery_signal": "apify-file:apify/github-issues-scraper",
+      "id": "apify-github-issues",
+      "kind": "candidate",
+      "lifecycle_stage": "DISCOVERED",
+      "notes": "Offline Apify Actor-shaped fixture \u2014 NOT APPROVED FOR EXECUTION",
+      "source": {
+        "path": "apify:apify/github-issues-scraper",
+        "provenance_url": "https://apify.com/apify/github-issues-scraper",
+        "type": "external-candidate"
+      },
+      "version": "0.1.0"
+    }
+  ],
+  "created_at": "2026-11-08T23:21:54Z",
+  "mode": "fixture",
+  "notes": "Fixture Apify research packet \u2014 NOT APPROVED FOR EXECUTION",
+  "packet_id": "apify-research-24fb954d8898",
+  "provider": "apify",
+  "query": "web research",
+  "schema_version": "1"
+}

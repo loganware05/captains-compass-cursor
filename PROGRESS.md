@@ -2,17 +2,16 @@
 
 ## Current status
 
-**PR OPEN:** [#252](https://github.com/loganware05/captains-compass-cursor/pull/252)
-`i2-t3-execution-adapter` (#251) on `feature/251-i2-t3-execution-adapter`
-→ **v1.79.0** @ `330f223`.
+**PR READY:** `i3-apify-ti-provider` (#253) on
+`feature/253-i3-apify-ti-provider` → **v1.80.0**.
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.78.0** @ `36ffff9` |
-| Active plan | `i2-t3-execution-adapter` **COMPLETE** (opening PR) |
-| Issue | [#251](https://github.com/loganware05/captains-compass-cursor/issues/251) |
-| Rollback | `rollback/pre-i2-t3-execution-adapter` @ `36ffff9` |
-| Queued next | I3 Apify (not activated) |
+| Baseline | **v1.79.0** @ `7c6d4a2` |
+| Active plan | `i3-apify-ti-provider` **COMPLETE** (opening PR) |
+| Issue | [#253](https://github.com/loganware05/captains-compass-cursor/issues/253) |
+| Rollback | `rollback/pre-i3-apify-ti-provider` @ `7c6d4a2` |
+| Queued next | I4 Scrimba Explain (not activated) |
 
 ## Standing order
 

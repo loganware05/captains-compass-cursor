@@ -41,6 +41,7 @@ Usage:
   northstar conversation <subcommand> …
   northstar sentry <subcommand> …
   northstar t3 <subcommand> …
+  northstar apify <subcommand> …
 
 Surfaces (one-line purpose):
   skills      Learning Loop — refresh TI, learn, promote, sync-ledger, route-agents
@@ -75,6 +76,7 @@ Surfaces (one-line purpose):
   conversation ChatGPT/Obsidian trajectory ingest — requires COMPASS_CONVERSATION_INGEST_ENABLED=1
   sentry      Read-only Sentry incident packets (I1) — requires COMPASS_SENTRY_INGEST_ENABLED=1
   t3         T3 Code ExecutionAdapter (I2) — requires COMPASS_T3_EXEC_ENABLED=1
+  apify      Apify research / TI (I3) — requires COMPASS_APIFY_ENABLED=1
 
 Commands:
   northstar skills refresh [--repo PATH] [refresh-ti-cache.sh options]
@@ -186,6 +188,9 @@ Commands:
   northstar t3 cancel --execution-id ID [--repo PATH]
   northstar t3 show --execution-id ID [--repo PATH]
   northstar t3 list [--repo PATH]
+  northstar apify search --query TEXT [--repo PATH]
+  northstar apify show --packet-id ID [--repo PATH]
+  northstar apify list [--repo PATH]
 
 Topology:
   CONTROL  = directory containing this launcher (captains-compass-cursor)
@@ -1071,6 +1076,29 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown t3 subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  apify)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      search|show|list)
+        exec "$ROOT/scripts/run-apify.sh" "$sub" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown apify subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;
