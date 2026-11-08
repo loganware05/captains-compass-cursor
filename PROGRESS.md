@@ -2,8 +2,9 @@
 
 ## Current status
 
-**PR READY:** `i3-apify-ti-provider` (#253) on
-`feature/253-i3-apify-ti-provider` → **v1.80.0**.
+**PR OPEN:** [#254](https://github.com/loganware05/captains-compass-cursor/pull/254)
+`i3-apify-ti-provider` (#253) on `feature/253-i3-apify-ti-provider`
+→ **v1.80.0** @ `21c74a5`.
 
 | Item | Value |
 |---|---|
