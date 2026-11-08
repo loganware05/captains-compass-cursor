@@ -51,6 +51,42 @@ def candidate_from_huggingface_shaped(raw: dict) -> CandidateCapability:
     )
 
 
+def candidate_from_apify_shaped(raw: dict) -> CandidateCapability:
+    """Map Apify Actor/search-shaped records to CandidateCapability."""
+    source = raw.get("source") if isinstance(raw.get("source"), dict) else {}
+    actor_id = str(
+        raw.get("actor_id") or raw.get("id") or source.get("path") or "unknown-actor"
+    )
+    caps = list(raw.get("capabilities_provided") or [])
+    if not caps:
+        caps = ["external-research", "apify-actor"]
+    provenance = str(
+        source.get("provenance_url")
+        or raw.get("url")
+        or (
+            f"https://apify.com/{actor_id}"
+            if "/" in actor_id
+            else f"https://apify.com/store?q={actor_id}"
+        )
+    )
+    return CandidateCapability(
+        id=str(raw.get("id") or f"apify-{actor_id.replace('/', '-')}"),
+        version=str(raw.get("version") or "0.1.0"),
+        capabilities_provided=caps,
+        discovery_signal=str(
+            raw.get("discovery_signal") or f"apify-file:{actor_id}"
+        ),
+        source_path=str(source.get("path") or f"apify:{actor_id}"),
+        provenance_url=provenance,
+        notes=str(
+            raw.get("notes")
+            or raw.get("description")
+            or raw.get("title")
+            or ""
+        ),
+    )
+
+
 def candidate_from_package_registry_shaped(raw: dict) -> CandidateCapability:
     """Map npm/PyPI-shaped package records to CandidateCapability."""
     source = raw.get("source") if isinstance(raw.get("source"), dict) else {}

@@ -811,6 +811,40 @@ PY
   else
     fail "t3 exec should exit 2 mentioning COMPASS_T3_EXEC_ENABLED when unset (rc=$t3_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/apify-research-packet.schema.json" ]]; then
+    ok "apify-research-packet.schema.json present"
+  else
+    fail "missing orchestrator/schemas/apify-research-packet.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/providers/technology_intelligence/apify_file_provider.py" ]]; then
+    ok "apify TI file provider present"
+  else
+    fail "missing orchestrator/providers/technology_intelligence/apify_file_provider.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-apify.sh" ]]; then
+    ok "scripts/run-apify.sh present"
+  else
+    fail "missing executable scripts/run-apify.sh"
+  fi
+  if grep -q 'apify search' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents apify search"
+  else
+    fail "northstar missing apify search surface"
+  fi
+  if [[ -f "$ROOT/orchestrator/providers/technology_intelligence/fixtures/apify/actors.json" ]]; then
+    ok "apify TI fixtures present"
+  else
+    fail "missing apify TI fixtures"
+  fi
+  set +e
+  apify_out="$(env -u COMPASS_APIFY_ENABLED "$ROOT/scripts/run-apify.sh" list --repo-root "$ROOT" 2>&1)"
+  apify_rc=$?
+  set -e
+  if [[ "$apify_rc" -eq 2 && "$apify_out" == *"COMPASS_APIFY_ENABLED"* ]]; then
+    ok "apify fail-closed when COMPASS_APIFY_ENABLED unset"
+  else
+    fail "apify should exit 2 mentioning COMPASS_APIFY_ENABLED when unset (rc=$apify_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
     ok "orchestrator/openui present"
   else

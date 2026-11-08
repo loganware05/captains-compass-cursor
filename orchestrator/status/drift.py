@@ -281,6 +281,25 @@ def detect_drift(repo_root: Path) -> dict[str, Any]:
             }
         )
 
+    research_dir = root / ".agent" / "research" / "apify"
+    research_count = (
+        len(list(research_dir.glob("*.json"))) if research_dir.is_dir() else 0
+    )
+    if research_count:
+        findings.append(
+            {
+                "finding_id": "dev-apify-research",
+                "kind": "external_research_evidence",
+                "severity": "info",
+                "claim_kind": "external",
+                "summary": (
+                    f"Observed {research_count} Apify research packet(s) under "
+                    ".agent/research/apify/."
+                ),
+                "evidence": [f"count={research_count}"],
+            }
+        )
+
     return {
         "northstar_version": version,
         "memory_docs": memory,

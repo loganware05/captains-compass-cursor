@@ -4,6 +4,18 @@
 
 ## Unreleased
 
+## 1.80.0 — 2026-11-08
+
+### Added
+
+- **I3 Apify TI provider** (`i3-apify-ti-provider` / #253):
+  - `COMPASS_TI_PROVIDER=apify-file` fixture Actor → `CandidateCapability`
+  - Gated `northstar apify search|show|list` (`COMPASS_APIFY_ENABLED`;
+    live dual-gate skeleton; **no call-actor**)
+  - Research packets under `.agent/research/apify/` with authority locks
+  - Overseer `research_refs` + `dev-apify-research`
+  - Doctor fail-closed; `docs/integrations/apify.md`; ADR-100
+
 ## 1.79.0 — 2026-11-07
 
 ### Added

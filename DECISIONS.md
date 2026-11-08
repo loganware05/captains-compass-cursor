@@ -1,5 +1,26 @@
 # Decisions
 
+## ADR-100: I3 Apify MCP Technology Intelligence (v1.80.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-08
+- **Context:** Captain approved `i3-apify-ti-provider` (#253) after I2 T3
+  (#252 / v1.79.0) under standing order with recommended scope (defer live
+  Actor runs).
+- **Decision:**
+  1. Ship `COMPASS_TI_PROVIDER=apify-file` fixture provider mapping Actor-shaped
+     records to validated `CandidateCapability` (`approved_for_execution: false`).
+  2. Ship gated `northstar apify search|show|list` with research packets under
+     `.agent/research/apify/` (`called_actor: false`).
+  3. Live Apify MCP remains dual-gated fail-closed skeleton; no `call-actor`
+     spend in v1.80.0.
+  4. Overseer exposes `research_refs` + `dev-apify-research`.
+  5. Release **v1.80.0**.
+- **Consequences:** External research signals can enter TI / Overseer loops
+  without Actor execution authority. Rollback
+  `rollback/pre-i3-apify-ti-provider` @ `7c6d4a2`.
+
+
 ## ADR-099: I2 T3 Code ExecutionAdapter (v1.79.0)
 
 - **Status:** Accepted

@@ -33,7 +33,7 @@ Launcher: `scripts/northstar` (control repo only).
 | `conversation` | ChatGPT / Obsidian trajectory ingest | [`integrations/conversation-ingest.md`](integrations/conversation-ingest.md) |
 | `sentry` | Read-only Sentry incident packets (I1) | [`integrations/sentry.md`](integrations/sentry.md) |
 | `t3` | T3 Code ExecutionAdapter (I2) | [`integrations/t3-code.md`](integrations/t3-code.md) |
-| `t3` | T3 Code ExecutionAdapter (I2) | [`integrations/t3-code.md`](integrations/t3-code.md) |
+| `apify` | Apify research / TI (I3) | [`integrations/apify.md`](integrations/apify.md) |
 | `brain` / `assess` / `cycle` / `learning` / `model` / `rea` / `train` | Cognitive Core C1–C7 | [`plans/C1_COGNITIVE_CORE_SOURCE_OF_TRUTH.md`](plans/C1_COGNITIVE_CORE_SOURCE_OF_TRUTH.md) |
 | `cognitive` | Hermetic C1–C7 e2e evaluation | [`plans/E2E_COGNITIVE_CORE_EVALUATION.md`](plans/E2E_COGNITIVE_CORE_EVALUATION.md) |
 | `oversight` | Read-only persistent oversight compose | [`plans/READ_ONLY_PERSISTENT_OVERSIGHT.md`](plans/READ_ONLY_PERSISTENT_OVERSIGHT.md) |

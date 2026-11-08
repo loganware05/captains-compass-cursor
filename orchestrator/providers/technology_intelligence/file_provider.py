@@ -59,6 +59,12 @@ def select_ti_provider(repo_root: Path | None = None):
     from orchestrator.providers.technology_intelligence.huggingface_live_provider import (
         HuggingFaceHubLiveTechnologyIntelligenceProvider,
     )
+    from orchestrator.providers.technology_intelligence.apify_file_provider import (
+        ApifyFileTechnologyIntelligenceProvider,
+    )
+    from orchestrator.providers.technology_intelligence.apify_live_provider import (
+        ApifyLiveTechnologyIntelligenceProvider,
+    )
     from orchestrator.providers.technology_intelligence.package_registry_file_provider import (
         PackageRegistryFileTechnologyIntelligenceProvider,
     )
@@ -88,4 +94,8 @@ def select_ti_provider(repo_root: Path | None = None):
         return PackageRegistryFileTechnologyIntelligenceProvider()
     if name in {"package-registry", "package-registry-live", "npm-pypi-live"}:
         return PackageRegistryLiveTechnologyIntelligenceProvider()
+    if name in {"apify-file", "apify-fixture", "apify-fixtures"}:
+        return ApifyFileTechnologyIntelligenceProvider()
+    if name in {"apify", "apify-live", "apify-mcp"}:
+        return ApifyLiveTechnologyIntelligenceProvider()
     return StubTechnologyIntelligenceProvider()

@@ -140,8 +140,7 @@ gh auth status
 
 ## Current Priorities
 
-**v1.78.0** I1 Sentry + Overseer development refs merged (#250). Next plan
-**I2 T3 execution adapter** (`i2-t3-execution-adapter` / #251) awaiting
-approval. Conversation ingest **v1.77.0** complete. Specialized Model Level 3
-remains **DEFERRED**. Start here: `docs/guides/captain-handbook.md`. Live
-trading / AHF execution remains denied.
+**v1.80.0** I3 Apify TI provider in progress (#253) after I2 T3 ExecutionAdapter
+(**v1.79.0** / #252) and I1 Sentry (**v1.78.0** / #250). Specialized Model
+Level 3 remains **DEFERRED**. Start here: `docs/guides/captain-handbook.md`.
+Live trading / AHF execution remains denied.

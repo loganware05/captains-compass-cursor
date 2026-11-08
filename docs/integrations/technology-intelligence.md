@@ -61,7 +61,7 @@ with `TechnologyIntelligenceValidationError`.
 
 | Env var | Values | Default |
 |---|---|---|
-| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` \| `github-stars-categorized` \| `huggingface-file` \| `huggingface-hub` \| `package-registry-file` \| `package-registry` | `stub` |
+| `COMPASS_TI_PROVIDER` | `stub` \| `file` \| `github-stars` \| `github-stars-cached` \| `github-stars-categorized` \| `huggingface-file` \| `huggingface-hub` \| `package-registry-file` \| `package-registry` \| `apify-file` \| `apify` / `apify-live` | `stub` |
 | `COMPASS_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/` |
 | `COMPASS_EMBEDDING_PROVIDER` | `tfidf` \| `fixture` \| `openai-compatible` | `tfidf` |
 | `COMPASS_EMBEDDING_API_KEY` | API key for openai-compatible | (required when live) |
@@ -69,6 +69,7 @@ with `TechnologyIntelligenceValidationError`.
 | `COMPASS_EMBEDDING_MODEL` | embedding model id | `text-embedding-3-small` |
 | `COMPASS_PACKAGE_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/package-registry/` |
 | `COMPASS_PACKAGE_TI_ECOSYSTEMS` | `npm,pypi` | `npm,pypi` |
+| `COMPASS_APIFY_TI_FIXTURES_DIR` | absolute/relative path | package `fixtures/apify/` |
 | `COMPASS_HF_HUB_TOKEN` | optional Hub auth token | (unset) |
 
 `orchestrator/plan_writer/build.py` calls `select_ti_provider()`. CI and default
@@ -85,9 +86,11 @@ Hugging Face model-card fixtures (no Hub network in CI). Set
 `COMPASS_TI_PROVIDER=huggingface-hub` for **live Hub model search** (Captain local
 only; mocked HTTP in CI). Set
 `COMPASS_TI_PROVIDER=package-registry-file` for offline npm/PyPI-shaped package
-fixtures (no registry network in CI). Dense knowledge embeddings are separate
-(`COMPASS_EMBEDDING_PROVIDER=fixture`; Skill `embedding-providers`) — TF-IDF
-remains the default fallback.
+fixtures (no registry network in CI). Set `COMPASS_TI_PROVIDER=apify-file` for
+offline Apify Actor-shaped fixtures (I3; no MCP network; never auto-runs Actors).
+Live `apify` / `apify-live` is dual-gated and fail-closed skeleton in v1.80.0.
+Dense knowledge embeddings are separate (`COMPASS_EMBEDDING_PROVIDER=fixture`;
+Skill `embedding-providers`) — TF-IDF remains the default fallback.
 
 Explicit read-only queries:
 
@@ -104,6 +107,7 @@ COMPASS_TI_PROVIDER=huggingface-file ./scripts/query-technology-intelligence.sh 
 COMPASS_TI_PROVIDER=huggingface-hub ./scripts/query-technology-intelligence.sh --query "sentence embeddings"
 COMPASS_TI_PROVIDER=package-registry-file ./scripts/query-technology-intelligence.sh --query "schema validation"
 COMPASS_TI_PROVIDER=package-registry ./scripts/query-technology-intelligence.sh --query "schema validation"
+COMPASS_TI_PROVIDER=apify-file ./scripts/query-technology-intelligence.sh --query "web research"
 ```
 
 ## Plan rendering
