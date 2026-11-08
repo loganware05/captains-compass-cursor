@@ -4,6 +4,18 @@
 
 ## Unreleased
 
+## 1.79.0 — 2026-11-07
+
+### Added
+
+- **I2 T3 Code ExecutionAdapter** (`i2-t3-execution-adapter` / #251):
+  - Gated `northstar t3 capabilities|start|status|collect|cancel|list|show`
+    (`COMPASS_T3_EXEC_ENABLED`; live dual-gate `COMPASS_T3_EXEC_LIVE`)
+  - Fixture-first plan-bound runs under `.agent/executions/t3/` with
+    `bypassed_plan_gate: false` and authority locks
+  - Overseer `execution_refs` + `dev-t3-executions` drift finding
+  - Doctor fail-closed; `docs/integrations/t3-code.md`; ADR-099
+
 ## 1.78.0 — 2026-11-07
 
 ### Added

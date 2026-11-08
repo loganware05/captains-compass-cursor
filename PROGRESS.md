@@ -2,20 +2,16 @@
 
 ## Current status
 
-**IN PROGRESS / VALIDATING:** `i1-sentry-incident-intelligence` (#249) on
-`feature/249-i1-sentry-incident-intelligence` → **v1.78.0**.
-
-Overseer now tracks active-plan development findings plus `incident_refs` /
-`conversation_refs` (external evidence only).
+**PR READY:** `i2-t3-execution-adapter` (#251) on
+`feature/251-i2-t3-execution-adapter` → **v1.79.0**.
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.77.0** @ `ff738a5` |
-| Active plan | `i1-sentry-incident-intelligence` **APPROVED** / validating |
-| Issue | [#249](https://github.com/loganware05/captains-compass-cursor/issues/249) |
-| Rollback | `rollback/pre-i1-sentry-incident-intelligence` @ `ff738a5` |
-| Queued next | I2 T3 |
-| Next | Validate → commit → open PR |
+| Baseline | **v1.78.0** @ `36ffff9` |
+| Active plan | `i2-t3-execution-adapter` **COMPLETE** (opening PR) |
+| Issue | [#251](https://github.com/loganware05/captains-compass-cursor/issues/251) |
+| Rollback | `rollback/pre-i2-t3-execution-adapter` @ `36ffff9` |
+| Queued next | I3 Apify (not activated) |
 
 ## Standing order
 

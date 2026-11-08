@@ -58,6 +58,7 @@ Launcher: `"$CONTROL/scripts/northstar" <surface> …`
 | `provenance` / `examples` | Explain run-to-run prompt/policy lineage; curate exemplars | `COMPASS_PROVENANCE_ENABLED=1`; `auto_promoted: false` |
 | `conversation` | Ingest ChatGPT / Obsidian AI Exporter trajectories | `COMPASS_CONVERSATION_INGEST_ENABLED=1`; external evidence only |
 | `sentry` | Read-only Sentry incident evidence packets | `COMPASS_SENTRY_INGEST_ENABLED=1`; live needs `COMPASS_SENTRY_LIVE=1` |
+| `t3` | T3 Code ExecutionAdapter (plan-bound) | `COMPASS_T3_EXEC_ENABLED=1`; never bypasses plan gate |
 | `context` | Filesystem-gated context inodes | Build/walk only |
 | `intent` / `outcomes` / `repair` / `precision` | Review intent packs, triage, repair packets, precision ledger | Never Captain approval substitutes |
 

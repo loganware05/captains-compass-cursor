@@ -1,5 +1,24 @@
 # Decisions
 
+## ADR-099: I2 T3 Code ExecutionAdapter (v1.79.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-07
+- **Context:** Captain approved `i2-t3-execution-adapter` (#251) after I1
+  Sentry (#250). Need a NorthStar-owned T3 execution surface that cannot
+  bypass plan gates.
+- **Decision:**
+  1. Ship gated `northstar t3` with fixture-first ExecutionAdapter protocol.
+  2. Refuse `start` unless plan_id matches APPROVED/IN PROGRESS/VALIDATING
+     plan (or explicit `--allow-fixture-plan` for hermetic tests).
+  3. Persist runs with `bypassed_plan_gate: false` and authority locks.
+  4. Overseer exposes `execution_refs`; live MCP remains injectable skeleton.
+  5. Release **v1.79.0**.
+- **Consequences:** T3 work can enter NorthStar evidence/Overseer loops without
+  inventing Captain approval. Rollback
+  `rollback/pre-i2-t3-execution-adapter` @ `36ffff9`.
+
+
 ## ADR-098: I1 Sentry Incident Intelligence + Overseer Development Refs (v1.78.0)
 
 - **Status:** Accepted

@@ -1,0 +1,26 @@
+{
+  "approved_for_execution": false,
+  "artifacts": [],
+  "authority_mutation": false,
+  "auto_promoted": false,
+  "bypassed_plan_gate": false,
+  "collected_summary": "",
+  "created_at": "2026-11-07T17:05:16Z",
+  "execution_id": "t3-exec-39a769032ba0",
+  "mode": "fixture",
+  "model": "fixture-model",
+  "objective": "post-approve fixture run",
+  "plan_id": "i2-t3-execution-adapter",
+  "provider": "fixture",
+  "schema_version": "1",
+  "status": "started",
+  "thread_ref": "fixture-thread-69032ba0",
+  "timeline": [
+    {
+      "at": "2026-11-07T17:05:16Z",
+      "note": "binding=fixture-allow",
+      "status": "started"
+    }
+  ],
+  "updated_at": "2026-11-07T17:05:16Z"
+}

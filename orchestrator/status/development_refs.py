@@ -8,6 +8,8 @@ from typing import Any
 
 MAX_INCIDENT_REFS = 10
 MAX_CONVERSATION_REFS = 10
+MAX_EXECUTION_REFS = 10
+MAX_EXECUTION_REFS = 10
 
 
 def _read_json(path: Path) -> dict[str, Any] | None:
@@ -85,8 +87,43 @@ def collect_conversation_refs(
     return out
 
 
+def collect_execution_refs(
+    repo_root: Path, *, limit: int = MAX_EXECUTION_REFS
+) -> list[dict[str, str]]:
+    """Newest-ish T3 execution run refs (empty if store missing)."""
+    root = Path(repo_root) / ".agent" / "executions" / "t3"
+    if not root.is_dir():
+        return []
+    items: list[tuple[str, dict[str, Any], Path]] = []
+    for path in sorted(root.glob("*.json")):
+        doc = _read_json(path)
+        if not doc:
+            continue
+        updated = str(doc.get("updated_at") or doc.get("created_at") or "")
+        items.append((updated, doc, path))
+    items.sort(key=lambda t: (t[0], t[1].get("execution_id") or ""), reverse=True)
+    out: list[dict[str, str]] = []
+    for _, doc, path in items[: max(0, limit)]:
+        exec_id = str(doc.get("execution_id") or "")
+        if not exec_id:
+            continue
+        out.append(
+            {
+                "execution_id": exec_id,
+                "plan_id": str(doc.get("plan_id") or ""),
+                "status": str(doc.get("status") or ""),
+                "mode": str(doc.get("mode") or ""),
+                "provider": str(doc.get("provider") or ""),
+                "path": str(path),
+                "claim_kind": "observed",
+            }
+        )
+    return out
+
+
 def attach_development_refs(snapshot: dict[str, Any], repo_root: Path) -> dict[str, Any]:
-    """Attach incident_refs + conversation_refs; return snapshot."""
+    """Attach incident/conversation/execution refs; return snapshot."""
     snapshot["incident_refs"] = collect_incident_refs(repo_root)
     snapshot["conversation_refs"] = collect_conversation_refs(repo_root)
+    snapshot["execution_refs"] = collect_execution_refs(repo_root)
     return snapshot
