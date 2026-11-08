@@ -264,6 +264,23 @@ def detect_drift(repo_root: Path) -> dict[str, Any]:
             }
         )
 
+    exec_dir = root / ".agent" / "executions" / "t3"
+    exec_count = len(list(exec_dir.glob("*.json"))) if exec_dir.is_dir() else 0
+    if exec_count:
+        findings.append(
+            {
+                "finding_id": "dev-t3-executions",
+                "kind": "t3_execution_evidence",
+                "severity": "info",
+                "claim_kind": "observed",
+                "summary": (
+                    f"Observed {exec_count} T3 ExecutionAdapter run(s) under "
+                    ".agent/executions/t3/."
+                ),
+                "evidence": [f"count={exec_count}"],
+            }
+        )
+
     return {
         "northstar_version": version,
         "memory_docs": memory,

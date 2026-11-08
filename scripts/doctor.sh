@@ -782,6 +782,35 @@ PY
   else
     fail "sentry ingest should exit 2 mentioning COMPASS_SENTRY_INGEST_ENABLED when unset (rc=$sentry_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/t3-execution-run.schema.json" ]]; then
+    ok "t3-execution-run.schema.json present"
+  else
+    fail "missing orchestrator/schemas/t3-execution-run.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/integrations/t3/service.py" ]]; then
+    ok "orchestrator/integrations/t3 present"
+  else
+    fail "missing orchestrator/integrations/t3/service.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-t3-exec.sh" ]]; then
+    ok "scripts/run-t3-exec.sh present"
+  else
+    fail "missing executable scripts/run-t3-exec.sh"
+  fi
+  if grep -q 't3 start' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents t3 start"
+  else
+    fail "northstar missing t3 start surface"
+  fi
+  set +e
+  t3_out="$(env -u COMPASS_T3_EXEC_ENABLED "$ROOT/scripts/run-t3-exec.sh" list --repo-root "$ROOT" 2>&1)"
+  t3_rc=$?
+  set -e
+  if [[ "$t3_rc" -eq 2 && "$t3_out" == *"COMPASS_T3_EXEC_ENABLED"* ]]; then
+    ok "t3 exec fail-closed when COMPASS_T3_EXEC_ENABLED unset"
+  else
+    fail "t3 exec should exit 2 mentioning COMPASS_T3_EXEC_ENABLED when unset (rc=$t3_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
     ok "orchestrator/openui present"
   else

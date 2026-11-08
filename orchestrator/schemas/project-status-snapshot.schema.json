@@ -115,6 +115,24 @@
         }
       }
     },
+    "execution_refs": {
+      "type": "array",
+      "description": "Read-only refs to T3 ExecutionAdapter runs (I2).",
+      "items": {
+        "type": "object",
+        "required": ["execution_id"],
+        "additionalProperties": false,
+        "properties": {
+          "execution_id": { "type": "string", "minLength": 1 },
+          "plan_id": { "type": "string" },
+          "status": { "type": "string" },
+          "mode": { "type": "string" },
+          "provider": { "type": "string" },
+          "path": { "type": "string" },
+          "claim_kind": { "type": "string", "const": "observed" }
+        }
+      }
+    },
     "approved_for_execution": { "type": "boolean", "const": false },
     "authority_mutation": { "type": "boolean", "const": false }
   }

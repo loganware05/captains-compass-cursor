@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/t3-execution-run.schema.json",
+  "title": "T3ExecutionRun",
+  "description": "NorthStar-governed T3 Code execution record (I2). Never bypasses plan gates.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "execution_id",
+    "plan_id",
+    "mode",
+    "provider",
+    "objective",
+    "status",
+    "thread_ref",
+    "timeline",
+    "artifacts",
+    "created_at",
+    "updated_at",
+    "approved_for_execution",
+    "authority_mutation",
+    "auto_promoted",
+    "bypassed_plan_gate"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "execution_id": { "type": "string", "minLength": 1 },
+    "plan_id": { "type": "string", "minLength": 1 },
+    "mode": { "type": "string", "enum": ["fixture", "live"] },
+    "provider": { "type": "string", "minLength": 1 },
+    "model": { "type": "string" },
+    "objective": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["started", "running", "completed", "cancelled", "failed"]
+    },
+    "thread_ref": { "type": "string", "minLength": 1 },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["at", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "at": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "minLength": 1 },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "collected_summary": { "type": "string" },
+    "created_at": { "type": "string", "minLength": 1 },
+    "updated_at": { "type": "string", "minLength": 1 },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "auto_promoted": { "type": "boolean", "const": false },
+    "bypassed_plan_gate": { "type": "boolean", "const": false }
+  }
+}
