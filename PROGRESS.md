@@ -2,8 +2,9 @@
 
 ## Current status
 
-**PR READY:** `i2-t3-execution-adapter` (#251) on
-`feature/251-i2-t3-execution-adapter` → **v1.79.0**.
+**PR OPEN:** [#252](https://github.com/loganware05/captains-compass-cursor/pull/252)
+`i2-t3-execution-adapter` (#251) on `feature/251-i2-t3-execution-adapter`
+→ **v1.79.0** @ `330f223`.
 
 | Item | Value |
 |---|---|

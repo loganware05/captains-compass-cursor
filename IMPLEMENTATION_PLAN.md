@@ -30,4 +30,4 @@
 - [x] Refuse start without approved plan (unless `--allow-fixture-plan`)
 - [x] Overseer execution_refs
 - [x] Doctor + tests + docs/ADR/CHANGELOG
-- [ ] PR opened (standing order)
+- [x] PR opened: [#252](https://github.com/loganware05/captains-compass-cursor/pull/252)
