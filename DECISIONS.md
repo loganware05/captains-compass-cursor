@@ -1,5 +1,23 @@
 # Decisions
 
+## ADR-103: I6 Cross-Provider Validation (v1.83.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-08
+- **Context:** Captain approved `i6-cross-provider-validation` (#259) after
+  I1–I5 shipped on main (through #258 / v1.82.0). Roadmap I6 measures those
+  surfaces hermetically.
+- **Decision:**
+  1. Ship gated `northstar validate integrations` with fail-closed + fixture
+     probes for Sentry, T3, Apify, Scrimba Explain, and WorkOS identity.
+  2. Persist schema-validated scorecards under
+     `.agent/evidence/i6-cross-provider/` with authority locks const false.
+  3. No live network in v1.83.0.
+  4. Release **v1.83.0**.
+- **Consequences:** Integration health is measurable in CI without expanding
+  authority. Rollback `rollback/pre-i6-cross-provider-validation` @ `d2e0f37`.
+
+
 ## ADR-102: I5 WorkOS AuthKit Identity / RBAC (v1.82.0)
 
 - **Status:** Accepted

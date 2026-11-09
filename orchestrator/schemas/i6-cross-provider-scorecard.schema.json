@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://northstar.local/schemas/i6-cross-provider-scorecard.schema.json",
+  "title": "I6CrossProviderScorecard",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "scorecard_id",
+    "provider",
+    "mode",
+    "created_at",
+    "providers",
+    "passed",
+    "failed",
+    "approved_for_execution",
+    "authority_mutation",
+    "auto_promoted"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1" },
+    "scorecard_id": { "type": "string", "minLength": 1 },
+    "provider": { "type": "string", "const": "i6" },
+    "mode": { "type": "string", "const": "hermetic" },
+    "created_at": { "type": "string", "minLength": 1 },
+    "providers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "fail_closed", "fixture_ok", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "fail_closed": { "type": "boolean" },
+          "fixture_ok": { "type": "boolean" },
+          "status": { "type": "string", "enum": ["pass", "fail"] },
+          "detail": { "type": "string" }
+        }
+      }
+    },
+    "passed": { "type": "integer", "minimum": 0 },
+    "failed": { "type": "integer", "minimum": 0 },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "auto_promoted": { "type": "boolean", "const": false },
+    "notes": { "type": "string" }
+  }
+}
