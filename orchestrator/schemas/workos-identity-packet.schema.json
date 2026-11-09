@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://northstar.local/schemas/workos-identity-packet.schema.json",
+  "title": "WorkOSIdentityPacket",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "packet_id",
+    "provider",
+    "mode",
+    "created_at",
+    "organization",
+    "memberships",
+    "approved_for_execution",
+    "authority_mutation",
+    "grants_captain_approval",
+    "live_synced"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1" },
+    "packet_id": { "type": "string", "minLength": 1 },
+    "provider": { "type": "string", "const": "workos" },
+    "mode": { "type": "string", "enum": ["fixture", "live"] },
+    "created_at": { "type": "string", "minLength": 1 },
+    "organization": {
+      "type": "object",
+      "required": ["id", "name"],
+      "additionalProperties": true,
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      }
+    },
+    "users": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "memberships": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "grants_captain_approval": { "type": "boolean", "const": false },
+    "live_synced": { "type": "boolean", "const": false },
+    "notes": { "type": "string" }
+  }
+}

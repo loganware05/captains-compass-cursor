@@ -167,6 +167,23 @@
         }
       }
     },
+    "identity_refs": {
+      "type": "array",
+      "description": "Read-only refs to WorkOS identity packets (I5).",
+      "items": {
+        "type": "object",
+        "required": ["packet_id"],
+        "additionalProperties": false,
+        "properties": {
+          "packet_id": { "type": "string", "minLength": 1 },
+          "organization_id": { "type": "string" },
+          "mode": { "type": "string" },
+          "provider": { "type": "string" },
+          "path": { "type": "string" },
+          "claim_kind": { "type": "string", "const": "external" }
+        }
+      }
+    },
     "approved_for_execution": { "type": "boolean", "const": false },
     "authority_mutation": { "type": "boolean", "const": false }
   }

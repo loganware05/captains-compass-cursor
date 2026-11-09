@@ -1,5 +1,26 @@
 # Decisions
 
+## ADR-102: I5 WorkOS AuthKit Identity / RBAC (v1.82.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-08
+- **Context:** Captain approved `i5-workos-identity` (#257) after I4 Scrimba
+  (#256 / v1.81.0) with recommended scope (`northstar identity` + fixtures;
+  defer live API / JWT verify).
+- **Decision:**
+  1. Ship gated `northstar identity sync|show|list` (alias `workos`) with
+     WorkOS AuthKit-shaped fixture packets.
+  2. Persist under `.agent/identity/workos/` with
+     `grants_captain_approval: false` / `live_synced: false` and authority locks.
+  3. Live WorkOS API remains dual-gated fail-closed skeleton in v1.82.0.
+  4. Overseer exposes `identity_refs` + `dev-workos-identity`.
+  5. Document that WorkOS roles never replace GitHub Captain approval.
+  6. Release **v1.82.0**.
+- **Consequences:** Identity/RBAC evidence enters Overseer loops without
+  expanding approval authority. Rollback
+  `rollback/pre-i5-workos-identity` @ `ca6309d`.
+
+
 ## ADR-101: I4 Scrimba Explain (`northstar explain`) (v1.81.0)
 
 - **Status:** Accepted

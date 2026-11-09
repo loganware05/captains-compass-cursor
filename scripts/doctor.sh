@@ -874,6 +874,40 @@ PY
   else
     fail "explain should exit 2 mentioning COMPASS_EXPLAIN_ENABLED when unset (rc=$explain_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/workos-identity-packet.schema.json" ]]; then
+    ok "workos-identity-packet.schema.json present"
+  else
+    fail "missing orchestrator/schemas/workos-identity-packet.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/integrations/workos/service.py" ]]; then
+    ok "orchestrator/integrations/workos present"
+  else
+    fail "missing orchestrator/integrations/workos/service.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-identity.sh" ]]; then
+    ok "scripts/run-identity.sh present"
+  else
+    fail "missing executable scripts/run-identity.sh"
+  fi
+  if grep -q 'identity sync' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents identity sync"
+  else
+    fail "northstar missing identity sync surface"
+  fi
+  if [[ -f "$ROOT/orchestrator/integrations/workos/fixtures/memberships.json" ]]; then
+    ok "workos identity fixtures present"
+  else
+    fail "missing workos identity fixtures"
+  fi
+  set +e
+  identity_out="$(env -u COMPASS_IDENTITY_ENABLED -u COMPASS_WORKOS_ENABLED "$ROOT/scripts/run-identity.sh" list --repo-root "$ROOT" 2>&1)"
+  identity_rc=$?
+  set -e
+  if [[ "$identity_rc" -eq 2 && "$identity_out" == *"COMPASS_IDENTITY_ENABLED"* ]]; then
+    ok "identity fail-closed when COMPASS_IDENTITY_ENABLED unset"
+  else
+    fail "identity should exit 2 mentioning COMPASS_IDENTITY_ENABLED when unset (rc=$identity_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
     ok "orchestrator/openui present"
   else

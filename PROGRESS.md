@@ -2,17 +2,17 @@
 
 ## Current status
 
-**PR OPEN:** [#256](https://github.com/loganware05/captains-compass-cursor/pull/256)
-`i4-scrimba-explain` (#255) on `feature/255-i4-scrimba-explain`
-→ **v1.81.0** @ `4bb5927`.
+**PR OPEN:** [#258](https://github.com/loganware05/captains-compass-cursor/pull/258)
+`i5-workos-identity` (#257) on `feature/257-i5-workos-identity`
+→ **v1.82.0** @ `db9e034`.
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.80.0** @ `773e21a` |
-| Active plan | `i4-scrimba-explain` **COMPLETE** (opening PR) |
-| Issue | [#255](https://github.com/loganware05/captains-compass-cursor/issues/255) |
-| Rollback | `rollback/pre-i4-scrimba-explain` @ `773e21a` |
-| Queued next | I5 WorkOS (not activated) |
+| Baseline | **v1.81.0** @ `ca6309d` |
+| Active plan | `i5-workos-identity` **COMPLETE** (opening PR) |
+| Issue | [#257](https://github.com/loganware05/captains-compass-cursor/issues/257) |
+| Rollback | `rollback/pre-i5-workos-identity` @ `ca6309d` |
+| Queued next | I6 Cross-provider validation (not activated) |
 
 ## Standing order
 
