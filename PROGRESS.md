@@ -2,8 +2,9 @@
 
 ## Current status
 
-**PR READY:** `i4-scrimba-explain` (#255) on
-`feature/255-i4-scrimba-explain` → **v1.81.0**.
+**PR OPEN:** [#256](https://github.com/loganware05/captains-compass-cursor/pull/256)
+`i4-scrimba-explain` (#255) on `feature/255-i4-scrimba-explain`
+→ **v1.81.0** @ `4bb5927`.
 
 | Item | Value |
 |---|---|
