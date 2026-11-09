@@ -62,6 +62,7 @@ Launcher: `"$CONTROL/scripts/northstar" <surface> …`
 | `apify` | Apify research / TI (fixture-first) | `COMPASS_APIFY_ENABLED=1`; never auto-runs Actors |
 | `explain` | Scrimba Explain packets (≠ status explain) | `COMPASS_EXPLAIN_ENABLED=1`; never auto-publishes |
 | `identity` | WorkOS AuthKit identity/RBAC evidence | `COMPASS_IDENTITY_ENABLED=1`; never grants Captain approval |
+| `validate` | I6 hermetic I1–I5 cross-provider scorecard | `COMPASS_I6_VALIDATE_ENABLED=1`; no live network |
 | `context` | Filesystem-gated context inodes | Build/walk only |
 | `intent` / `outcomes` / `repair` / `precision` | Review intent packs, triage, repair packets, precision ledger | Never Captain approval substitutes |
 

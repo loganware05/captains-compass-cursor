@@ -4,6 +4,16 @@
 
 ## Unreleased
 
+## 1.83.0 — 2026-11-08
+
+### Added
+
+- **I6 cross-provider validation** (`i6-cross-provider-validation` / #259):
+  - Gated `northstar validate integrations` (`COMPASS_I6_VALIDATE_ENABLED`)
+  - Hermetic fail-closed + fixture probes for I1–I5
+  - Scorecards under `.agent/evidence/i6-cross-provider/` with authority locks
+  - Doctor fail-closed; `docs/integrations/i6-cross-provider.md`; ADR-103
+
 ## 1.82.0 — 2026-11-08
 
 ### Added

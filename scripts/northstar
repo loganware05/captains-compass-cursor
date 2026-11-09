@@ -44,6 +44,7 @@ Usage:
   northstar apify <subcommand> …
   northstar explain <subcommand> …
   northstar identity <subcommand> …
+  northstar validate <subcommand> …
 
 Surfaces (one-line purpose):
   skills      Learning Loop — refresh TI, learn, promote, sync-ledger, route-agents
@@ -83,6 +84,7 @@ Surfaces (one-line purpose):
              (distinct from status explain)
   identity   WorkOS AuthKit identity/RBAC (I5) — requires COMPASS_IDENTITY_ENABLED=1
              (never grants Captain approval; alias COMPASS_WORKOS_ENABLED)
+  validate   I6 cross-provider validation — requires COMPASS_I6_VALIDATE_ENABLED=1
 
 Commands:
   northstar skills refresh [--repo PATH] [refresh-ti-cache.sh options]
@@ -203,6 +205,7 @@ Commands:
   northstar identity sync [--repo PATH]
   northstar identity show --packet-id ID [--repo PATH]
   northstar identity list [--repo PATH]
+  northstar validate integrations [--repo PATH] [--no-write]
 
 Topology:
   CONTROL  = directory containing this launcher (captains-compass-cursor)
@@ -1157,6 +1160,29 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown identity subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  validate)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    # shellcheck disable=SC2207
+    mapped=()
+    while IFS= read -r -d '' item; do
+      mapped+=("$item")
+    done < <(map_repo_flag "$@")
+    case "$sub" in
+      integrations|i6)
+        exec "$ROOT/scripts/run-i6-validate.sh" run "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      *)
+        echo "error: unknown validate subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;

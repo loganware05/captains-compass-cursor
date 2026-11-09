@@ -36,6 +36,7 @@ Launcher: `scripts/northstar` (control repo only).
 | `apify` | Apify research / TI (I3) | [`integrations/apify.md`](integrations/apify.md) |
 | `explain` | Scrimba Explain packets (I4; ≠ status explain) | [`integrations/scrimba-explain.md`](integrations/scrimba-explain.md) |
 | `identity` | WorkOS AuthKit identity/RBAC (I5; ≠ Captain approval) | [`integrations/workos.md`](integrations/workos.md) |
+| `validate` | I6 cross-provider validation (I1–I5 hermetic) | [`integrations/i6-cross-provider.md`](integrations/i6-cross-provider.md) |
 | `brain` / `assess` / `cycle` / `learning` / `model` / `rea` / `train` | Cognitive Core C1–C7 | [`plans/C1_COGNITIVE_CORE_SOURCE_OF_TRUTH.md`](plans/C1_COGNITIVE_CORE_SOURCE_OF_TRUTH.md) |
 | `cognitive` | Hermetic C1–C7 e2e evaluation | [`plans/E2E_COGNITIVE_CORE_EVALUATION.md`](plans/E2E_COGNITIVE_CORE_EVALUATION.md) |
 | `oversight` | Read-only persistent oversight compose | [`plans/READ_ONLY_PERSISTENT_OVERSIGHT.md`](plans/READ_ONLY_PERSISTENT_OVERSIGHT.md) |

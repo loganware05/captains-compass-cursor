@@ -140,8 +140,7 @@ gh auth status
 
 ## Current Priorities
 
-**v1.82.0** I5 WorkOS identity in progress (#257) after I4 Scrimba (**v1.81.0** /
-#256), I3 Apify (**v1.80.0** / #254), I2 T3 (**v1.79.0** / #252), and I1 Sentry
-(**v1.78.0** / #250). Specialized Model Level 3 remains **DEFERRED**. Start
-here: `docs/guides/captain-handbook.md`. Live trading / AHF execution remains
-denied.
+**v1.83.0** I6 cross-provider validation in progress (#259) after I1–I5 shipped
+(through WorkOS **v1.82.0** / #258). Specialized Model Level 3 remains
+**DEFERRED**. Start here: `docs/guides/captain-handbook.md`. Live trading /
+AHF execution remains denied.

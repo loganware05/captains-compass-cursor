@@ -1,0 +1,54 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "canonical_memory_untouched": true,
+  "created_at": "2026-11-09T01:30:01Z",
+  "entries": [
+    {
+      "claim_kind": "observed",
+      "entry_id": "drift-memory-docs-present",
+      "kind": "memory_docs",
+      "severity": "info",
+      "summary": "All required project memory docs are present."
+    },
+    {
+      "claim_kind": "external",
+      "entry_id": "dev-sentry-incidents",
+      "kind": "external_incident_evidence",
+      "severity": "info",
+      "summary": "Observed 2 Sentry incident evidence packet(s) under .agent/incidents/sentry/."
+    },
+    {
+      "claim_kind": "observed",
+      "entry_id": "dev-t3-executions",
+      "kind": "t3_execution_evidence",
+      "severity": "info",
+      "summary": "Observed 2 T3 ExecutionAdapter run(s) under .agent/executions/t3/."
+    },
+    {
+      "claim_kind": "external",
+      "entry_id": "dev-apify-research",
+      "kind": "external_research_evidence",
+      "severity": "info",
+      "summary": "Observed 1 Apify research packet(s) under .agent/research/apify/."
+    },
+    {
+      "claim_kind": "external",
+      "entry_id": "dev-scrimba-explainers",
+      "kind": "external_explainer_evidence",
+      "severity": "info",
+      "summary": "Observed 1 Scrimba explainer packet(s) under .agent/explainers/."
+    },
+    {
+      "claim_kind": "external",
+      "entry_id": "dev-workos-identity",
+      "kind": "external_identity_evidence",
+      "severity": "info",
+      "summary": "Observed 1 WorkOS identity packet(s) under .agent/identity/workos/."
+    }
+  ],
+  "northstar_version": "1.82.0",
+  "repository_sha": "d2e0f37ae7bced7d5801022e9907a0857ec18bc3",
+  "schema_version": "1",
+  "snapshot_id": "psnap-a827ae6b958c"
+}

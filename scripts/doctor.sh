@@ -908,6 +908,35 @@ PY
   else
     fail "identity should exit 2 mentioning COMPASS_IDENTITY_ENABLED when unset (rc=$identity_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/i6-cross-provider-scorecard.schema.json" ]]; then
+    ok "i6-cross-provider-scorecard.schema.json present"
+  else
+    fail "missing orchestrator/schemas/i6-cross-provider-scorecard.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/integrations/i6/service.py" ]]; then
+    ok "orchestrator/integrations/i6 present"
+  else
+    fail "missing orchestrator/integrations/i6/service.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-i6-validate.sh" ]]; then
+    ok "scripts/run-i6-validate.sh present"
+  else
+    fail "missing executable scripts/run-i6-validate.sh"
+  fi
+  if grep -q 'validate integrations' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents validate integrations"
+  else
+    fail "northstar missing validate integrations surface"
+  fi
+  set +e
+  i6_out="$(env -u COMPASS_I6_VALIDATE_ENABLED "$ROOT/scripts/run-i6-validate.sh" run --repo-root "$ROOT" 2>&1)"
+  i6_rc=$?
+  set -e
+  if [[ "$i6_rc" -eq 2 && "$i6_out" == *"COMPASS_I6_VALIDATE_ENABLED"* ]]; then
+    ok "i6 validate fail-closed when COMPASS_I6_VALIDATE_ENABLED unset"
+  else
+    fail "i6 validate should exit 2 mentioning COMPASS_I6_VALIDATE_ENABLED when unset (rc=$i6_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
     ok "orchestrator/openui present"
   else
