@@ -1,4 +1,4 @@
-# Implementation Plan — I4 Scrimba Explain (`northstar explain`)
+# Implementation Plan — I5 WorkOS AuthKit Identity / RBAC
 
 - Status: **COMPLETE**
 
@@ -7,25 +7,25 @@
 | Field | Value |
 |---|---|
 | Status | **COMPLETE** |
-| Plan ID | `i4-scrimba-explain` |
-| Issue | [#255](https://github.com/loganware05/captains-compass-cursor/issues/255) |
-| Baseline | **v1.80.0** @ `773e21a` |
-| Branch | `feature/255-i4-scrimba-explain` |
-| Rollback | `rollback/pre-i4-scrimba-explain` @ `773e21a` |
-| Proposed release | **v1.81.0** |
+| Plan ID | `i5-workos-identity` |
+| Issue | [#257](https://github.com/loganware05/captains-compass-cursor/issues/257) |
+| Baseline | **v1.81.0** @ `ca6309d` |
+| Branch | `feature/257-i5-workos-identity` |
+| Rollback | `rollback/pre-i5-workos-identity` @ `ca6309d` |
+| Proposed release | **v1.82.0** |
 | Approved by | Logan Ware (Captain) |
 | Approval date | 2026-11-08 |
 
 ## Outcome
 
-- Gated fixture `northstar explain` + Overseer `explainer_refs`
-- Live MCP skeleton fail-closed; no auto-publish
+- Gated fixture `northstar identity` + Overseer `identity_refs`
+- Live API skeleton fail-closed; `grants_captain_approval: false`
 - Doctor + 4 unit tests pass
 
 ## Acceptance
 
-- [x] Fixture create|show|list
+- [x] Fixture sync|show|list
 - [x] Live fail-closed
-- [x] Overseer explainer_refs
+- [x] Overseer identity_refs
 - [x] Doctor + tests + docs
-- [x] PR opened: [#256](https://github.com/loganware05/captains-compass-cursor/pull/256)
+- [ ] PR opened (standing order)

@@ -1,5 +1,5 @@
 # Plan — I4 Scrimba Explain (`northstar explain`)
 
-- Status: **COMPLETE** (feature branch; PR pending)
+- Status: **SHIPPED** (PR #256 → v1.81.0 @ `ca6309d`)
 
-Canonical: root `IMPLEMENTATION_PLAN.md`. Issue #255. Release v1.81.0.
+Canonical closeout: `.agent/evidence/i4-scrimba-post-merge-closeout/`.

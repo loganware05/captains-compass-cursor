@@ -319,6 +319,25 @@ def detect_drift(repo_root: Path) -> dict[str, Any]:
             }
         )
 
+    identity_dir = root / ".agent" / "identity" / "workos"
+    identity_count = (
+        len(list(identity_dir.glob("*.json"))) if identity_dir.is_dir() else 0
+    )
+    if identity_count:
+        findings.append(
+            {
+                "finding_id": "dev-workos-identity",
+                "kind": "external_identity_evidence",
+                "severity": "info",
+                "claim_kind": "external",
+                "summary": (
+                    f"Observed {identity_count} WorkOS identity packet(s) under "
+                    ".agent/identity/workos/."
+                ),
+                "evidence": [f"count={identity_count}"],
+            }
+        )
+
     return {
         "northstar_version": version,
         "memory_docs": memory,

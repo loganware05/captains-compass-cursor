@@ -4,6 +4,18 @@
 
 ## Unreleased
 
+## 1.82.0 — 2026-11-08
+
+### Added
+
+- **I5 WorkOS AuthKit identity / RBAC** (`i5-workos-identity` / #257):
+  - Gated `northstar identity sync|show|list` (`COMPASS_IDENTITY_ENABLED`;
+    alias `COMPASS_WORKOS_ENABLED`; live dual-gate skeleton; **no live API**)
+  - Fixture packets under `.agent/identity/workos/` with
+    `grants_captain_approval: false` and authority locks
+  - Overseer `identity_refs` + `dev-workos-identity`
+  - Docs state WorkOS ≠ Captain approval; ADR-102
+
 ## 1.81.0 — 2026-11-08
 
 ### Added

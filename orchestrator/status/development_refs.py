@@ -11,6 +11,7 @@ MAX_CONVERSATION_REFS = 10
 MAX_EXECUTION_REFS = 10
 MAX_RESEARCH_REFS = 10
 MAX_EXPLAINER_REFS = 10
+MAX_IDENTITY_REFS = 10
 
 
 def _read_json(path: Path) -> dict[str, Any] | None:
@@ -188,11 +189,46 @@ def collect_explainer_refs(
     return out
 
 
+def collect_identity_refs(
+    repo_root: Path, *, limit: int = MAX_IDENTITY_REFS
+) -> list[dict[str, str]]:
+    """Newest-ish WorkOS identity packet refs (empty if store missing)."""
+    root = Path(repo_root) / ".agent" / "identity" / "workos"
+    if not root.is_dir():
+        return []
+    items: list[tuple[str, dict[str, Any], Path]] = []
+    for path in sorted(root.glob("*.json")):
+        doc = _read_json(path)
+        if not doc:
+            continue
+        created = str(doc.get("created_at") or "")
+        items.append((created, doc, path))
+    items.sort(key=lambda t: (t[0], t[1].get("packet_id") or ""), reverse=True)
+    out: list[dict[str, str]] = []
+    for _, doc, path in items[: max(0, limit)]:
+        packet_id = str(doc.get("packet_id") or "")
+        if not packet_id:
+            continue
+        org = doc.get("organization") if isinstance(doc.get("organization"), dict) else {}
+        out.append(
+            {
+                "packet_id": packet_id,
+                "organization_id": str(org.get("id") or "")[:160],
+                "mode": str(doc.get("mode") or ""),
+                "provider": str(doc.get("provider") or ""),
+                "path": str(path),
+                "claim_kind": "external",
+            }
+        )
+    return out
+
+
 def attach_development_refs(snapshot: dict[str, Any], repo_root: Path) -> dict[str, Any]:
-    """Attach incident/conversation/execution/research/explainer refs."""
+    """Attach incident/conversation/execution/research/explainer/identity refs."""
     snapshot["incident_refs"] = collect_incident_refs(repo_root)
     snapshot["conversation_refs"] = collect_conversation_refs(repo_root)
     snapshot["execution_refs"] = collect_execution_refs(repo_root)
     snapshot["research_refs"] = collect_research_refs(repo_root)
     snapshot["explainer_refs"] = collect_explainer_refs(repo_root)
+    snapshot["identity_refs"] = collect_identity_refs(repo_root)
     return snapshot

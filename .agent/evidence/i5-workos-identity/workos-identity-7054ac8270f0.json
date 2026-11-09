@@ -1,0 +1,67 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "created_at": "2026-11-09T01:19:05Z",
+  "grants_captain_approval": false,
+  "live_synced": false,
+  "memberships": [
+    {
+      "id": "om_fixture_captain",
+      "organization_id": "org_fixture_northstar",
+      "permissions": [
+        "identity:read",
+        "org:admin"
+      ],
+      "role": {
+        "slug": "admin"
+      },
+      "roles": [
+        {
+          "slug": "admin"
+        }
+      ],
+      "status": "active",
+      "user_id": "user_fixture_captain"
+    },
+    {
+      "id": "om_fixture_mate",
+      "organization_id": "org_fixture_northstar",
+      "permissions": [
+        "identity:read"
+      ],
+      "role": {
+        "slug": "member"
+      },
+      "roles": [
+        {
+          "slug": "member"
+        }
+      ],
+      "status": "active",
+      "user_id": "user_fixture_mate"
+    }
+  ],
+  "mode": "fixture",
+  "notes": "Fixture WorkOS AuthKit identity packet \u2014 NOT LIVE SYNCED. Roles are advisory evidence only; never replace GitHub Captain approval.",
+  "organization": {
+    "id": "org_fixture_northstar",
+    "name": "NorthStar Fixture Org"
+  },
+  "packet_id": "workos-identity-7054ac8270f0",
+  "provider": "workos",
+  "schema_version": "1",
+  "users": [
+    {
+      "email": "captain@example.invalid",
+      "first_name": "Captain",
+      "id": "user_fixture_captain",
+      "last_name": "Fixture"
+    },
+    {
+      "email": "firstmate@example.invalid",
+      "first_name": "First",
+      "id": "user_fixture_mate",
+      "last_name": "Mate"
+    }
+  ]
+}

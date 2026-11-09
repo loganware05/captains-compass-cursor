@@ -1,0 +1,41 @@
+{
+  "organization": {
+    "id": "org_fixture_northstar",
+    "name": "NorthStar Fixture Org"
+  },
+  "users": [
+    {
+      "id": "user_fixture_captain",
+      "email": "captain@example.invalid",
+      "first_name": "Captain",
+      "last_name": "Fixture"
+    },
+    {
+      "id": "user_fixture_mate",
+      "email": "firstmate@example.invalid",
+      "first_name": "First",
+      "last_name": "Mate"
+    }
+  ],
+  "memberships": [
+    {
+      "id": "om_fixture_captain",
+      "user_id": "user_fixture_captain",
+      "organization_id": "org_fixture_northstar",
+      "status": "active",
+      "role": { "slug": "admin" },
+      "roles": [{ "slug": "admin" }],
+      "permissions": ["identity:read", "org:admin"]
+    },
+    {
+      "id": "om_fixture_mate",
+      "user_id": "user_fixture_mate",
+      "organization_id": "org_fixture_northstar",
+      "status": "active",
+      "role": { "slug": "member" },
+      "roles": [{ "slug": "member" }],
+      "permissions": ["identity:read"]
+    }
+  ],
+  "notes": "Offline WorkOS AuthKit-shaped fixture — NOT APPROVED FOR EXECUTION; does not grant Captain approval"
+}
