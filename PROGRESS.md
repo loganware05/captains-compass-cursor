@@ -2,8 +2,9 @@
 
 ## Current status
 
-**PR READY:** `i5-workos-identity` (#257) on
-`feature/257-i5-workos-identity` → **v1.82.0**.
+**PR OPEN:** [#258](https://github.com/loganware05/captains-compass-cursor/pull/258)
+`i5-workos-identity` (#257) on `feature/257-i5-workos-identity`
+→ **v1.82.0** @ `db9e034`.
 
 | Item | Value |
 |---|---|

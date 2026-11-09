@@ -28,4 +28,4 @@
 - [x] Live fail-closed
 - [x] Overseer identity_refs
 - [x] Doctor + tests + docs
-- [ ] PR opened (standing order)
+- [x] PR opened: [#258](https://github.com/loganware05/captains-compass-cursor/pull/258)
