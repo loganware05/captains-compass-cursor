@@ -27,4 +27,4 @@
 - [x] Harness run produces scorecard
 - [x] Fail-closed without gate
 - [x] Doctor + tests + docs
-- [ ] PR opened (standing order)
+- [x] PR opened: [#260](https://github.com/loganware05/captains-compass-cursor/pull/260)

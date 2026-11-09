@@ -2,8 +2,9 @@
 
 ## Current status
 
-**PR READY:** `i6-cross-provider-validation` (#259) on
-`feature/259-i6-cross-provider-validation` → **v1.83.0**.
+**PR OPEN:** [#260](https://github.com/loganware05/captains-compass-cursor/pull/260)
+`i6-cross-provider-validation` (#259) on
+`feature/259-i6-cross-provider-validation` → **v1.83.0** @ `85dc698`.
 
 | Item | Value |
 |---|---|
