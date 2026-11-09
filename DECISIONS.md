@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-101: I4 Scrimba Explain (`northstar explain`) (v1.81.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-08
+- **Context:** Captain approved `i4-scrimba-explain` (#255) after I3 Apify
+  (#254 / v1.80.0) with recommended scope (fixture CLI + Overseer; defer live
+  MCP streaming).
+- **Decision:**
+  1. Ship gated `northstar explain create|show|list` distinct from
+     `status explain`.
+  2. Persist schema-validated fixture packets under `.agent/explainers/` with
+     `auto_published: false` / `streamed_live: false` and authority locks.
+  3. Live Scrimba MCP remains dual-gated fail-closed skeleton in v1.81.0.
+  4. Overseer exposes `explainer_refs` + `dev-scrimba-explainers`.
+  5. Release **v1.81.0**.
+- **Consequences:** Explainer drafts enter evidence/Overseer loops without
+  Scrimba publish authority. Rollback
+  `rollback/pre-i4-scrimba-explain` @ `773e21a`.
+
+
 ## ADR-100: I3 Apify MCP Technology Intelligence (v1.80.0)
 
 - **Status:** Accepted

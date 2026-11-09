@@ -4,6 +4,17 @@
 
 ## Unreleased
 
+## 1.81.0 — 2026-11-08
+
+### Added
+
+- **I4 Scrimba Explain** (`i4-scrimba-explain` / #255):
+  - Gated `northstar explain create|show|list` (`COMPASS_EXPLAIN_ENABLED`;
+    live dual-gate skeleton; **no MCP stream / auto-publish**)
+  - Fixture packets under `.agent/explainers/` with authority locks
+  - Overseer `explainer_refs` + `dev-scrimba-explainers`
+  - Distinct from `status explain`; `docs/integrations/scrimba-explain.md`; ADR-101
+
 ## 1.80.0 — 2026-11-08
 
 ### Added

@@ -1,4 +1,4 @@
-# Implementation Plan — I3 Apify MCP Technology Intelligence
+# Implementation Plan — I4 Scrimba Explain (`northstar explain`)
 
 - Status: **COMPLETE**
 
@@ -7,27 +7,25 @@
 | Field | Value |
 |---|---|
 | Status | **COMPLETE** |
-| Plan ID | `i3-apify-ti-provider` |
-| Issue | [#253](https://github.com/loganware05/captains-compass-cursor/issues/253) |
-| Baseline | **v1.79.0** @ `7c6d4a2` |
-| Branch | `feature/253-i3-apify-ti-provider` |
-| Rollback | `rollback/pre-i3-apify-ti-provider` @ `7c6d4a2` |
-| Proposed release | **v1.80.0** |
+| Plan ID | `i4-scrimba-explain` |
+| Issue | [#255](https://github.com/loganware05/captains-compass-cursor/issues/255) |
+| Baseline | **v1.80.0** @ `773e21a` |
+| Branch | `feature/255-i4-scrimba-explain` |
+| Rollback | `rollback/pre-i4-scrimba-explain` @ `773e21a` |
+| Proposed release | **v1.81.0** |
 | Approved by | Logan Ware (Captain) |
 | Approval date | 2026-11-08 |
 
 ## Outcome
 
-- `apify-file` TI provider + gated `northstar apify` CLI
-- Research packets + Overseer `research_refs`
-- Live skeleton fail-closed; no call-actor
-- Doctor + 9 unit tests pass
+- Gated fixture `northstar explain` + Overseer `explainer_refs`
+- Live MCP skeleton fail-closed; no auto-publish
+- Doctor + 4 unit tests pass
 
 ## Acceptance
 
-- [x] Fixture TI provider
+- [x] Fixture create|show|list
 - [x] Live fail-closed
-- [x] CLI search|show|list
-- [x] Overseer research_refs
+- [x] Overseer explainer_refs
 - [x] Doctor + tests + docs
-- [x] PR opened: [#254](https://github.com/loganware05/captains-compass-cursor/pull/254)
+- [x] PR opened: [#256](https://github.com/loganware05/captains-compass-cursor/pull/256)

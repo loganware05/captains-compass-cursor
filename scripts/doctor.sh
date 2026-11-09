@@ -845,6 +845,35 @@ PY
   else
     fail "apify should exit 2 mentioning COMPASS_APIFY_ENABLED when unset (rc=$apify_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/scrimba-explainer-packet.schema.json" ]]; then
+    ok "scrimba-explainer-packet.schema.json present"
+  else
+    fail "missing orchestrator/schemas/scrimba-explainer-packet.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/integrations/scrimba/service.py" ]]; then
+    ok "orchestrator/integrations/scrimba present"
+  else
+    fail "missing orchestrator/integrations/scrimba/service.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-explain.sh" ]]; then
+    ok "scripts/run-explain.sh present"
+  else
+    fail "missing executable scripts/run-explain.sh"
+  fi
+  if grep -q 'explain create' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents explain create"
+  else
+    fail "northstar missing explain create surface"
+  fi
+  set +e
+  explain_out="$(env -u COMPASS_EXPLAIN_ENABLED "$ROOT/scripts/run-explain.sh" list --repo-root "$ROOT" 2>&1)"
+  explain_rc=$?
+  set -e
+  if [[ "$explain_rc" -eq 2 && "$explain_out" == *"COMPASS_EXPLAIN_ENABLED"* ]]; then
+    ok "explain fail-closed when COMPASS_EXPLAIN_ENABLED unset"
+  else
+    fail "explain should exit 2 mentioning COMPASS_EXPLAIN_ENABLED when unset (rc=$explain_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
     ok "orchestrator/openui present"
   else
