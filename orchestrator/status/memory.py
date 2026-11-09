@@ -66,6 +66,7 @@ def render_system_map(snapshot: dict[str, Any]) -> str:
         f"- Conversation refs (external): `{len(snapshot.get('conversation_refs') or [])}`",
         f"- Execution refs (observed): `{len(snapshot.get('execution_refs') or [])}`",
         f"- Research refs (external): `{len(snapshot.get('research_refs') or [])}`",
+        f"- Explainer refs (external): `{len(snapshot.get('explainer_refs') or [])}`",
         "",
         "## Findings",
         "",
@@ -85,17 +86,19 @@ def render_system_map(snapshot: dict[str, Any]) -> str:
     conversation_refs = snapshot.get("conversation_refs") or []
     execution_refs = snapshot.get("execution_refs") or []
     research_refs = snapshot.get("research_refs") or []
+    explainer_refs = snapshot.get("explainer_refs") or []
     lines.extend(["", "## Development evidence", ""])
     if (
         not incident_refs
         and not conversation_refs
         and not execution_refs
         and not research_refs
+        and not explainer_refs
     ):
         lines.append(
             "- (none observed under `.agent/incidents` / "
             "`.agent/conversations` / `.agent/executions/t3` / "
-            "`.agent/research/apify`)"
+            "`.agent/research/apify` / `.agent/explainers`)"
         )
     else:
         for ref in incident_refs[:10]:
@@ -126,6 +129,13 @@ def render_system_map(snapshot: dict[str, Any]) -> str:
                 f"- [apify/{ref.get('mode') or 'external'}] "
                 f"`{ref.get('packet_id')}` query=`{ref.get('query') or ''}`"
             )
+        for ref in explainer_refs[:10]:
+            if not isinstance(ref, dict):
+                continue
+            lines.append(
+                f"- [scrimba/{ref.get('mode') or 'external'}] "
+                f"`{ref.get('packet_id')}` topic=`{ref.get('topic') or ''}`"
+            )
     lines.extend(
         [
             "",
@@ -134,7 +144,8 @@ def render_system_map(snapshot: dict[str, Any]) -> str:
             "- `approved_for_execution`: false",
             "- `authority_mutation`: false",
             "- Reconcile proposals remain proposal-only.",
-            "- Incident/conversation/research refs are external; T3 refs are observed.",
+            "- Incident/conversation/research/explainer refs are external; "
+            "T3 refs are observed.",
             "",
         ]
     )

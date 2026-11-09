@@ -1,0 +1,32 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "auto_published": false,
+  "created_at": "2026-11-09T00:32:15Z",
+  "explainer_url": "https://scrimba.com/explain/fixture/scrimba-explain-768f714e9d6a",
+  "mcp_endpoint": "https://scrimba.com/explain/mcp",
+  "mode": "fixture",
+  "notes": "Fixture Scrimba explainer packet \u2014 NOT STREAMED / NOT AUTO-PUBLISHED. Distinct from northstar status explain.",
+  "packet_id": "scrimba-explain-768f714e9d6a",
+  "provider": "fixture",
+  "schema_version": "1",
+  "slides": [
+    {
+      "code": "",
+      "narration": "Fixture overview for: How NorthStar approval gates work",
+      "title": "Overview"
+    },
+    {
+      "code": "# fixture \u2014 not streamed to Scrimba",
+      "narration": "This is a NorthStar fixture explainer packet. Live Scrimba MCP streaming is deferred; auto_published remains false.",
+      "title": "Key points"
+    },
+    {
+      "code": "",
+      "narration": "Captain may approve a follow-on to enable live MCP streaming under COMPASS_EXPLAIN_LIVE. Claiming Scrimba drafts stays manual.",
+      "title": "Next steps"
+    }
+  ],
+  "streamed_live": false,
+  "topic": "How NorthStar approval gates work"
+}

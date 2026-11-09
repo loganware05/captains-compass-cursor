@@ -140,7 +140,7 @@ gh auth status
 
 ## Current Priorities
 
-**v1.80.0** I3 Apify TI provider in progress (#253) after I2 T3 ExecutionAdapter
-(**v1.79.0** / #252) and I1 Sentry (**v1.78.0** / #250). Specialized Model
-Level 3 remains **DEFERRED**. Start here: `docs/guides/captain-handbook.md`.
-Live trading / AHF execution remains denied.
+**v1.81.0** I4 Scrimba Explain in progress (#255) after I3 Apify (**v1.80.0** /
+#254), I2 T3 (**v1.79.0** / #252), and I1 Sentry (**v1.78.0** / #250).
+Specialized Model Level 3 remains **DEFERRED**. Start here:
+`docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.

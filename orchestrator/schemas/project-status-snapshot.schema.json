@@ -150,6 +150,23 @@
         }
       }
     },
+    "explainer_refs": {
+      "type": "array",
+      "description": "Read-only refs to Scrimba explainer packets (I4).",
+      "items": {
+        "type": "object",
+        "required": ["packet_id"],
+        "additionalProperties": false,
+        "properties": {
+          "packet_id": { "type": "string", "minLength": 1 },
+          "topic": { "type": "string" },
+          "mode": { "type": "string" },
+          "provider": { "type": "string" },
+          "path": { "type": "string" },
+          "claim_kind": { "type": "string", "const": "external" }
+        }
+      }
+    },
     "approved_for_execution": { "type": "boolean", "const": false },
     "authority_mutation": { "type": "boolean", "const": false }
   }

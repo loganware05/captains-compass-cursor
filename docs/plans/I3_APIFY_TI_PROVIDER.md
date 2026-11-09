@@ -1,5 +1,5 @@
 # Plan — I3 Apify MCP Technology Intelligence
 
-- Status: **COMPLETE** (feature branch; PR pending)
+- Status: **SHIPPED** (PR #254 → v1.80.0 @ `773e21a`)
 
-Canonical: root `IMPLEMENTATION_PLAN.md`. Issue #253. Release v1.80.0.
+Canonical closeout: `.agent/evidence/i3-apify-post-merge-closeout/`.

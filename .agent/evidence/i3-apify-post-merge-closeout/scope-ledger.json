@@ -1,0 +1,40 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "canonical_memory_untouched": true,
+  "created_at": "2026-11-08T23:31:42Z",
+  "entries": [
+    {
+      "claim_kind": "observed",
+      "entry_id": "drift-memory-docs-present",
+      "kind": "memory_docs",
+      "severity": "info",
+      "summary": "All required project memory docs are present."
+    },
+    {
+      "claim_kind": "external",
+      "entry_id": "dev-sentry-incidents",
+      "kind": "external_incident_evidence",
+      "severity": "info",
+      "summary": "Observed 2 Sentry incident evidence packet(s) under .agent/incidents/sentry/."
+    },
+    {
+      "claim_kind": "observed",
+      "entry_id": "dev-t3-executions",
+      "kind": "t3_execution_evidence",
+      "severity": "info",
+      "summary": "Observed 2 T3 ExecutionAdapter run(s) under .agent/executions/t3/."
+    },
+    {
+      "claim_kind": "external",
+      "entry_id": "dev-apify-research",
+      "kind": "external_research_evidence",
+      "severity": "info",
+      "summary": "Observed 1 Apify research packet(s) under .agent/research/apify/."
+    }
+  ],
+  "northstar_version": "1.80.0",
+  "repository_sha": "773e21ab727efa698e08ceeefc0b9819fb9d6535",
+  "schema_version": "1",
+  "snapshot_id": "psnap-4e494369c9d6"
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://northstar.local/schemas/scrimba-explainer-packet.schema.json",
+  "title": "ScrimbaExplainerPacket",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "packet_id",
+    "provider",
+    "mode",
+    "topic",
+    "created_at",
+    "slides",
+    "approved_for_execution",
+    "authority_mutation",
+    "auto_published",
+    "streamed_live"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1" },
+    "packet_id": { "type": "string", "minLength": 1 },
+    "provider": { "type": "string", "enum": ["scrimba", "fixture"] },
+    "mode": { "type": "string", "enum": ["fixture", "live"] },
+    "topic": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "slides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "narration"],
+        "additionalProperties": false,
+        "properties": {
+          "title": { "type": "string" },
+          "narration": { "type": "string" },
+          "code": { "type": "string" }
+        }
+      }
+    },
+    "explainer_url": { "type": "string" },
+    "mcp_endpoint": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "auto_published": { "type": "boolean", "const": false },
+    "streamed_live": { "type": "boolean", "const": false },
+    "notes": { "type": "string" }
+  }
+}

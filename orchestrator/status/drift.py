@@ -300,6 +300,25 @@ def detect_drift(repo_root: Path) -> dict[str, Any]:
             }
         )
 
+    explainer_dir = root / ".agent" / "explainers"
+    explainer_count = (
+        len(list(explainer_dir.glob("*.json"))) if explainer_dir.is_dir() else 0
+    )
+    if explainer_count:
+        findings.append(
+            {
+                "finding_id": "dev-scrimba-explainers",
+                "kind": "external_explainer_evidence",
+                "severity": "info",
+                "claim_kind": "external",
+                "summary": (
+                    f"Observed {explainer_count} Scrimba explainer packet(s) under "
+                    ".agent/explainers/."
+                ),
+                "evidence": [f"count={explainer_count}"],
+            }
+        )
+
     return {
         "northstar_version": version,
         "memory_docs": memory,

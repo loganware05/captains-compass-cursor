@@ -60,6 +60,7 @@ Launcher: `"$CONTROL/scripts/northstar" <surface> …`
 | `sentry` | Read-only Sentry incident evidence packets | `COMPASS_SENTRY_INGEST_ENABLED=1`; live needs `COMPASS_SENTRY_LIVE=1` |
 | `t3` | T3 Code ExecutionAdapter (plan-bound) | `COMPASS_T3_EXEC_ENABLED=1`; never bypasses plan gate |
 | `apify` | Apify research / TI (fixture-first) | `COMPASS_APIFY_ENABLED=1`; never auto-runs Actors |
+| `explain` | Scrimba Explain packets (≠ status explain) | `COMPASS_EXPLAIN_ENABLED=1`; never auto-publishes |
 | `context` | Filesystem-gated context inodes | Build/walk only |
 | `intent` / `outcomes` / `repair` / `precision` | Review intent packs, triage, repair packets, precision ledger | Never Captain approval substitutes |
 
