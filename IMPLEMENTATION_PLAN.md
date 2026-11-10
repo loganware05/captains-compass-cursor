@@ -1,12 +1,12 @@
 # Implementation Plan — XRV W1: Release Integrity & Project-State Reconciliation
 
-- Status: **IN PROGRESS**
+- Status: **COMPLETE** (PR open)
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **IN PROGRESS** |
+| Status | **COMPLETE** (PR [#262](https://github.com/loganware05/captains-compass-cursor/pull/262)) |
 | Plan ID | `xrv-release-integrity` |
 | Issue | [#261](https://github.com/loganware05/captains-compass-cursor/issues/261) |
 | Baseline | **v1.83.0** @ `987a49c` (merged I6 / #260) |

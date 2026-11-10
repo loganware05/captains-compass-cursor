@@ -2,13 +2,14 @@
 
 ## Current status
 
-**IN PROGRESS:** [#261](https://github.com/loganware05/captains-compass-cursor/issues/261)
-`xrv-release-integrity` on `feature/261-xrv-release-integrity` → **v1.83.1**.
+**PR OPEN:** [#262](https://github.com/loganware05/captains-compass-cursor/pull/262)
+`xrv-release-integrity` (#261) on
+`feature/261-xrv-release-integrity` → **v1.83.1** @ `77faa93`.
 
 | Item | Value |
 |---|---|
 | Baseline | **v1.83.0** @ `987a49c` (I6 / #260 merged) |
-| Active plan | `xrv-release-integrity` **APPROVED** |
+| Active plan | `xrv-release-integrity` **COMPLETE** (opening PR) |
 | Issue | [#261](https://github.com/loganware05/captains-compass-cursor/issues/261) |
 | Rollback | `rollback/pre-xrv-release-integrity` @ `987a49c` |
 
