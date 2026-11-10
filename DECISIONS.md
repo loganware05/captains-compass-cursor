@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-104: XRV W1 Release Integrity & Experience Evidence Records (v1.83.1)
+
+- **Status:** Accepted
+- **Date:** 2026-11-10
+- **Context:** Captain approved Cross-Repository Validation program kickoff after
+  reviewing the Notion XRV roadmap and ChatGPT outline. I6 (#260) had merged but
+  README/PROGRESS/issue state drifted. Pilot handoffs to TrapHouseKitchen and
+  bitcoin-data-collector run as separate plan-gated threads.
+- **Decision:**
+  1. Ship `northstar evidence drift` (ungated hermetic VERSION↔README check) and
+     gated `northstar evidence validate` (`COMPASS_XRV_EER_ENABLED`).
+  2. Add Experience Evidence Record schema with authority locks const false.
+  3. Publish I6 reconstruction fixture under `.agent/evidence/xrv/`.
+  4. Document XRV program in `docs/plans/XRV_CROSS_REPOSITORY_VALIDATION.md`.
+  5. Release **v1.83.1**. Pilot product edits require their own approved plans.
+- **Consequences:** Release drift is CI-detectable; cross-repo cycles share an
+  auditable evidence shape without expanding authority. Rollback
+  `rollback/pre-xrv-release-integrity` @ `987a49c`.
+
+
 ## ADR-103: I6 Cross-Provider Validation (v1.83.0)
 
 - **Status:** Accepted

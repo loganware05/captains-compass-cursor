@@ -140,7 +140,8 @@ gh auth status
 
 ## Current Priorities
 
-**v1.83.0** I6 cross-provider validation in progress (#259) after I1–I5 shipped
-(through WorkOS **v1.82.0** / #258). Specialized Model Level 3 remains
-**DEFERRED**. Start here: `docs/guides/captain-handbook.md`. Live trading /
-AHF execution remains denied.
+**v1.83.1** XRV W1 release integrity + Experience Evidence Records in progress
+(#261) after I6 **v1.83.0** / #260. Cross-repo pilot discovery handoffs:
+TrapHouseKitchen + bitcoin-data-collector (separate plans). Specialized Model
+Level 3 remains **DEFERRED**. Start here: `docs/guides/captain-handbook.md`.
+Live trading / AHF execution remains denied.

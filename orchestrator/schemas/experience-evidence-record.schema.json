@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/experience-evidence-record.schema.json",
+  "title": "ExperienceEvidenceRecord",
+  "description": "Cross-repository Experience Evidence Record (XRV). Reconstructs issue→plan→implement→validate→review→merge→verified outcome. Proposal/evidence only; never grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "eer_id",
+    "created_at",
+    "repository",
+    "commit_sha",
+    "plan_id",
+    "lifecycle_state",
+    "skills_selected",
+    "test_evidence",
+    "verified_outcome",
+    "approved_for_execution",
+    "authority_mutation",
+    "issues_auto_closed",
+    "auto_promoted"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "xrv-eer-1" },
+    "eer_id": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "repository": {
+      "type": "object",
+      "required": ["owner", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "owner": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": "string" }
+      }
+    },
+    "commit_sha": { "type": "string", "minLength": 7 },
+    "plan_id": { "type": "string", "minLength": 1 },
+    "issue": { "type": ["string", "null"] },
+    "pull_request": { "type": ["string", "null"] },
+    "branch": { "type": ["string", "null"] },
+    "lifecycle_state": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "implemented",
+        "merged",
+        "tested",
+        "deployed",
+        "operationally_verified"
+      ],
+      "description": "Highest verified state. merged ≠ operationally_verified."
+    },
+    "skills_selected": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "budget_ref": { "type": ["string", "null"] },
+    "permissions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "test_evidence": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "failure_repair": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "review_refs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "rollback_ref": { "type": ["string", "null"] },
+    "latency_cost": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "notes": { "type": "string" },
+        "wall_time": { "type": "string" },
+        "cost_notes": { "type": "string" }
+      }
+    },
+    "verified_outcome": { "type": "string", "minLength": 1 },
+    "experience_id": { "type": ["string", "null"] },
+    "execution_run_id": { "type": ["string", "null"] },
+    "related_evidence_paths": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "issues_auto_closed": { "type": "boolean", "const": false },
+    "auto_promoted": { "type": "boolean", "const": false }
+  }
+}

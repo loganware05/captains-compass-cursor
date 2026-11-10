@@ -28,6 +28,14 @@ Orchestrator schema unit tests (included in `tests/run.sh`):
 PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_*.py' -v
 ```
 
+XRV release integrity / Experience Evidence Records (v1.83.1):
+
+```bash
+./scripts/northstar evidence drift --repo .
+COMPASS_XRV_EER_ENABLED=1 ./scripts/northstar evidence validate --repo .
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_xrv_release_integrity -v
+```
+
 Capability resolve CLI:
 
 ```bash

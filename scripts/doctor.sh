@@ -937,6 +937,44 @@ PY
   else
     fail "i6 validate should exit 2 mentioning COMPASS_I6_VALIDATE_ENABLED when unset (rc=$i6_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/experience-evidence-record.schema.json" ]]; then
+    ok "experience-evidence-record.schema.json present"
+  else
+    fail "missing orchestrator/schemas/experience-evidence-record.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/xrv/eer.py" ]]; then
+    ok "orchestrator/xrv present"
+  else
+    fail "missing orchestrator/xrv/eer.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-xrv-eer.sh" ]]; then
+    ok "scripts/run-xrv-eer.sh present"
+  else
+    fail "missing executable scripts/run-xrv-eer.sh"
+  fi
+  if grep -q 'evidence validate' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents evidence validate"
+  else
+    fail "northstar missing evidence validate surface"
+  fi
+  set +e
+  eer_out="$(env -u COMPASS_XRV_EER_ENABLED "$ROOT/scripts/run-xrv-eer.sh" validate --repo-root "$ROOT" 2>&1)"
+  eer_rc=$?
+  set -e
+  if [[ "$eer_rc" -eq 2 && "$eer_out" == *"COMPASS_XRV_EER_ENABLED"* ]]; then
+    ok "xrv eer fail-closed when COMPASS_XRV_EER_ENABLED unset"
+  else
+    fail "xrv eer should exit 2 mentioning COMPASS_XRV_EER_ENABLED when unset (rc=$eer_rc)"
+  fi
+  set +e
+  drift_out="$("$ROOT/scripts/run-xrv-eer.sh" drift --repo-root "$ROOT" 2>&1)"
+  drift_rc=$?
+  set -e
+  if [[ "$drift_rc" -eq 0 ]]; then
+    ok "release document drift check clean (VERSION ↔ README)"
+  else
+    fail "release document drift (VERSION ↔ README): $drift_out"
+  fi
   if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
     ok "orchestrator/openui present"
   else
