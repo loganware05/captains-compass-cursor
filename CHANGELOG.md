@@ -4,6 +4,12 @@
 
 ## Unreleased
 
+### Added
+
+- XRV Pilot C EER (PrizePicksBot [#3](https://github.com/loganware05/PrizePicksBot/pull/3)
+  merged): `.agent/evidence/xrv/eer-prizepicks-pilot-c-baseline.json` at
+  `lifecycle_state: merged` (#270).
+
 ## 1.85.0 — 2026-11-11
 
 ### Added

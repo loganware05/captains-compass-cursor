@@ -140,7 +140,7 @@ gh auth status
 
 ## Current Priorities
 
-**v1.85.0** XRV W3 portfolio shipped (#267). Pilots A/B complete; Pilot C
-PrizePicksBot onboard/baseline running in product repo (fixture/mock only).
-Specialized Model Level 3 remains **DEFERRED**. Start here:
-`docs/guides/captain-handbook.md`. Live trading / AHF / live wagers remain denied.
+**v1.85.0** XRV W3 portfolio shipped (#267). Pilots A/B/C baselines complete
+(PrizePicksBot [#3](https://github.com/loganware05/PrizePicksBot/pull/3); fixture/mock only).
+Ops-verified / adaptive benefit still open. Specialized Model Level 3 **DEFERRED**.
+Start here: `docs/guides/captain-handbook.md`. Live trading / AHF / live wagers denied.
