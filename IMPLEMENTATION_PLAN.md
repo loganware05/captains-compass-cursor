@@ -33,8 +33,13 @@
 - [x] Pilot EERs validate under EER gate
 - [x] Doctor + tests + docs/ADR/VERSION 1.85.0
 
-## Follow-ons (not this PR)
+## Merged
 
-- PrizePicksBot Pilot C inventory (handoff launched; plan-only)
+[#267](https://github.com/loganware05/captains-compass-cursor/pull/267) @ `5c399ac` → **v1.85.0**.
+
+## Follow-ons
+
+- PrizePicksBot Pilot C onboard/baseline — **APPROVED**; product workstream
+  ([`docs/plans/XRV_PILOT_C_PRIZEPICKS_BASELINE.md`](docs/plans/XRV_PILOT_C_PRIZEPICKS_BASELINE.md))
 - TrapHouse ops-verified E2E (Captain-gated)
-- Live trading / providers remain denied
+- Live trading / providers / live wagers remain denied

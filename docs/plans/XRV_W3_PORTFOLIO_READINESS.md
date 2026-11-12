@@ -1,7 +1,9 @@
 # XRV W3 — Cross-Repo Readiness Portfolio + Pilot EERs
 
-> **IN PROGRESS** — [#266](https://github.com/loganware05/captains-compass-cursor/issues/266) → **v1.85.0**.
+> **COMPLETE** — [#266](https://github.com/loganware05/captains-compass-cursor/issues/266) /
+> [#267](https://github.com/loganware05/captains-compass-cursor/pull/267) → **v1.85.0** @ `5c399ac`.
 > Rollback: `rollback/pre-xrv-portfolio-readiness` @ `2016cd5`.
+> Follow-on: [`XRV_PILOT_C_PRIZEPICKS_BASELINE.md`](XRV_PILOT_C_PRIZEPICKS_BASELINE.md).
 
 ## Operator surfaces
 
@@ -13,10 +15,11 @@ COMPASS_XRV_READINESS_ENABLED=1 \
   ./scripts/northstar assess portfolio \
   --repo northstar=. \
   --repo traphouse=/Users/loganware/TrapHouseKitchen \
-  --repo bitcoin=/Users/loganware/bitcoin-data-collector
+  --repo bitcoin=/Users/loganware/bitcoin-data-collector \
+  --repo prizepicks=/Users/loganware/Documents/Personal/Code/PrizePicksBot
 ```
 
-Local smoke (2026-11-11): all three `ready`/`effective`; locks false.
+Local smoke at merge: northstar/traphouse/bitcoin `ready`/`effective`; locks false.
 
 ## Pilot EERs
 

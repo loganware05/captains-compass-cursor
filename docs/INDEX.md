@@ -40,6 +40,7 @@ Launcher: `scripts/northstar` (control repo only).
 | `evidence` | XRV Experience Evidence Record validate + release drift | [`plans/XRV_CROSS_REPOSITORY_VALIDATION.md`](plans/XRV_CROSS_REPOSITORY_VALIDATION.md) |
 | `assess readiness` | XRV eight-pillar readiness vs NorthStar effectiveness | [`plans/XRV_W2_READINESS_ASSESSOR.md`](plans/XRV_W2_READINESS_ASSESSOR.md) |
 | `assess portfolio` | Multi-repo XRV readiness portfolio | [`plans/XRV_W3_PORTFOLIO_READINESS.md`](plans/XRV_W3_PORTFOLIO_READINESS.md) |
+| XRV Pilot C | PrizePicksBot onboard/baseline (product) | [`plans/XRV_PILOT_C_PRIZEPICKS_BASELINE.md`](plans/XRV_PILOT_C_PRIZEPICKS_BASELINE.md) |
 | `brain` / `assess` / `cycle` / `learning` / `model` / `rea` / `train` | Cognitive Core C1–C7 | [`plans/C1_COGNITIVE_CORE_SOURCE_OF_TRUTH.md`](plans/C1_COGNITIVE_CORE_SOURCE_OF_TRUTH.md) |
 | `cognitive` | Hermetic C1–C7 e2e evaluation | [`plans/E2E_COGNITIVE_CORE_EVALUATION.md`](plans/E2E_COGNITIVE_CORE_EVALUATION.md) |
 | `oversight` | Read-only persistent oversight compose | [`plans/READ_ONLY_PERSISTENT_OVERSIGHT.md`](plans/READ_ONLY_PERSISTENT_OVERSIGHT.md) |
