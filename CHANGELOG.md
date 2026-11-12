@@ -4,6 +4,22 @@
 
 ## Unreleased
 
+## 1.83.1 — 2026-11-10
+
+### Added
+
+- **XRV W1 release integrity** (`xrv-release-integrity` / #261):
+  - `northstar evidence drift` — VERSION ↔ README consistency check
+  - Gated `northstar evidence validate` (`COMPASS_XRV_EER_ENABLED`) for
+    Experience Evidence Records
+  - Schema `experience-evidence-record.schema.json` + I6 reconstruction fixture
+  - Doctor fail-closed for EER gate + drift check
+  - Program plan `docs/plans/XRV_CROSS_REPOSITORY_VALIDATION.md`; ADR-104
+
+### Fixed
+
+- README current version drifted at 1.76.0 while `VERSION` was 1.83.0
+
 ## 1.83.0 — 2026-11-08
 
 ### Added

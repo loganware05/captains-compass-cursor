@@ -37,6 +37,7 @@ Launcher: `scripts/northstar` (control repo only).
 | `explain` | Scrimba Explain packets (I4; ≠ status explain) | [`integrations/scrimba-explain.md`](integrations/scrimba-explain.md) |
 | `identity` | WorkOS AuthKit identity/RBAC (I5; ≠ Captain approval) | [`integrations/workos.md`](integrations/workos.md) |
 | `validate` | I6 cross-provider validation (I1–I5 hermetic) | [`integrations/i6-cross-provider.md`](integrations/i6-cross-provider.md) |
+| `evidence` | XRV Experience Evidence Record validate + release drift | [`plans/XRV_CROSS_REPOSITORY_VALIDATION.md`](plans/XRV_CROSS_REPOSITORY_VALIDATION.md) |
 | `brain` / `assess` / `cycle` / `learning` / `model` / `rea` / `train` | Cognitive Core C1–C7 | [`plans/C1_COGNITIVE_CORE_SOURCE_OF_TRUTH.md`](plans/C1_COGNITIVE_CORE_SOURCE_OF_TRUTH.md) |
 | `cognitive` | Hermetic C1–C7 e2e evaluation | [`plans/E2E_COGNITIVE_CORE_EVALUATION.md`](plans/E2E_COGNITIVE_CORE_EVALUATION.md) |
 | `oversight` | Read-only persistent oversight compose | [`plans/READ_ONLY_PERSISTENT_OVERSIGHT.md`](plans/READ_ONLY_PERSISTENT_OVERSIGHT.md) |
@@ -74,6 +75,7 @@ Use a track prefix in prose and plan IDs when referring to milestones:
 | `cognitive/*` | `cognitive/C2` memory retrieval | Cognitive Core C1–C7 |
 | `specialized/*` | `specialized/L3` | Specialized Model Levels 0–3 |
 | `consolidation/*` | `consolidation/N1` | N1–N3 closeout / validation track |
+| `xrv/*` | `xrv-release-integrity` | Cross-Repository Validation program |
 
 - Continuation roadmap: [`plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md`](plans/NORTHSTAR_CAPTAIN_CONTINUATION_ROADMAP.md)
 - Consolidation: [`plans/N1_OPERATIONAL_RECONCILIATION.md`](plans/N1_OPERATIONAL_RECONCILIATION.md) → [`plans/N2_PRODUCT_INTEGRATION_VALIDATION.md`](plans/N2_PRODUCT_INTEGRATION_VALIDATION.md) → [`plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md`](plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md) (**complete**)

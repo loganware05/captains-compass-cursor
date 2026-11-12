@@ -45,6 +45,7 @@ Usage:
   northstar explain <subcommand> …
   northstar identity <subcommand> …
   northstar validate <subcommand> …
+  northstar evidence <subcommand> …
 
 Surfaces (one-line purpose):
   skills      Learning Loop — refresh TI, learn, promote, sync-ledger, route-agents
@@ -85,6 +86,7 @@ Surfaces (one-line purpose):
   identity   WorkOS AuthKit identity/RBAC (I5) — requires COMPASS_IDENTITY_ENABLED=1
              (never grants Captain approval; alias COMPASS_WORKOS_ENABLED)
   validate   I6 cross-provider validation — requires COMPASS_I6_VALIDATE_ENABLED=1
+  evidence   XRV Experience Evidence Record + release drift — EER validate requires COMPASS_XRV_EER_ENABLED=1
 
 Commands:
   northstar skills refresh [--repo PATH] [refresh-ti-cache.sh options]
@@ -206,6 +208,8 @@ Commands:
   northstar identity show --packet-id ID [--repo PATH]
   northstar identity list [--repo PATH]
   northstar validate integrations [--repo PATH] [--no-write]
+  northstar evidence validate [--path PATH] [--repo PATH]
+  northstar evidence drift [--repo PATH]
 
 Topology:
   CONTROL  = directory containing this launcher (captains-compass-cursor)
@@ -1183,6 +1187,38 @@ case "$cmd" in
         ;;
       *)
         echo "error: unknown validate subcommand: $sub" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  evidence)
+    if [[ $# -lt 1 ]]; then
+      usage
+      exit 2
+    fi
+    sub="$1"
+    shift
+    case "$sub" in
+      validate|drift)
+        # Map --repo to --repo-root for the helper script
+        args=()
+        while [[ $# -gt 0 ]]; do
+          case "$1" in
+            --repo)
+              args+=(--repo-root "$2")
+              shift 2
+              ;;
+            *)
+              args+=("$1")
+              shift
+              ;;
+          esac
+        done
+        exec "$ROOT/scripts/run-xrv-eer.sh" "$sub" "${args[@]+"${args[@]}"}"
+        ;;
+      *)
+        echo "error: unknown evidence subcommand: $sub" >&2
         usage >&2
         exit 2
         ;;

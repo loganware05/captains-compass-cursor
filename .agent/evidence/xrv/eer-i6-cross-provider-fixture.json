@@ -1,0 +1,51 @@
+{
+  "schema_version": "xrv-eer-1",
+  "eer_id": "eer-i6-987a49c23001",
+  "created_at": "2026-11-10T21:00:00Z",
+  "repository": {
+    "owner": "loganware05",
+    "name": "captains-compass-cursor",
+    "url": "https://github.com/loganware05/captains-compass-cursor"
+  },
+  "commit_sha": "987a49c23001c7acb310cfaf511a19d2f2565eb0",
+  "plan_id": "i6-cross-provider-validation",
+  "issue": "https://github.com/loganware05/captains-compass-cursor/issues/259",
+  "pull_request": "https://github.com/loganware05/captains-compass-cursor/pull/260",
+  "branch": "feature/259-i6-cross-provider-validation",
+  "lifecycle_state": "merged",
+  "skills_selected": [
+    "implementation-planning",
+    "testing-validation",
+    "github-integration"
+  ],
+  "budget_ref": ".agent/budgets/i6-cross-provider-validation.md",
+  "permissions": [
+    "hermetic-fixture-only",
+    "no-live-provider-network"
+  ],
+  "test_evidence": [
+    ".agent/evidence/i6-cross-provider/",
+    "tests/orchestrator/test_i6_cross_provider_validation.py",
+    "GitHub Actions CI: Doctor and tests (PR #260) SUCCESS"
+  ],
+  "failure_repair": [],
+  "review_refs": [
+    "Cursor Security Agent: Security Reviewer SUCCESS on PR #260"
+  ],
+  "rollback_ref": "rollback/pre-i6-cross-provider-validation @ d2e0f37",
+  "latency_cost": {
+    "notes": "Hermetic I6 scorecard; no live provider spend"
+  },
+  "verified_outcome": "I6 hermetic scorecard shipped in v1.83.0; PR #260 merged. Not operationally_verified for live provider interoperability (fixture-only).",
+  "experience_id": null,
+  "execution_run_id": null,
+  "related_evidence_paths": [
+    "docs/integrations/i6-cross-provider.md",
+    "orchestrator/integrations/i6/service.py"
+  ],
+  "notes": "XRV W1 fixture demonstrating auditor reconstruction of issue→plan→PR→merge. lifecycle_state=merged (not operationally_verified).",
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "issues_auto_closed": false,
+  "auto_promoted": false
+}
