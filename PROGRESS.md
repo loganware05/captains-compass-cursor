@@ -2,27 +2,23 @@
 
 ## Current status
 
-**PR OPEN:** [#262](https://github.com/loganware05/captains-compass-cursor/pull/262)
-`xrv-release-integrity` (#261) on
-`feature/261-xrv-release-integrity` → **v1.83.1** @ `77faa93`.
+**Plan complete:** XRV W1 `xrv-release-integrity` (#261) merged via
+[#262](https://github.com/loganware05/captains-compass-cursor/pull/262) @
+`dece600` → **v1.83.1**.
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.83.0** @ `987a49c` (I6 / #260 merged) |
-| Active plan | `xrv-release-integrity` **COMPLETE** (opening PR) |
-| Issue | [#261](https://github.com/loganware05/captains-compass-cursor/issues/261) |
-| Rollback | `rollback/pre-xrv-release-integrity` @ `987a49c` |
+| Baseline | **v1.83.1** @ `dece600` |
+| Active plan | **COMPLETE** (W1). Next draft: `xrv-readiness-assessor` (#263) AWAITING APPROVAL |
+| Closed | I1–I6 (#249/#251/#253/#255/#257/#259) + #261 (Captain 2026-11-11) |
+| Deferred | Specialized Model Level 3 (#237) |
 
-### Parallel handoffs (plan-only in pilot repos)
+### Pilot handoffs (XRV)
 
-- TrapHouseKitchen Slice 17 reconcile discovery (separate T3 thread)
-- bitcoin-data-collector paper-continuity discovery (separate T3 thread)
-
-### Prior closeout
-
-I6 cross-provider validation **merged** via
-[#260](https://github.com/loganware05/captains-compass-cursor/pull/260) @ `987a49c`
-(v1.83.0). Issue #259 remains open pending Captain close confirmation (no auto-close).
+| Pilot | Status |
+|---|---|
+| TrapHouseKitchen Slice 17 reconcile | PR [#37](https://github.com/loganware05/TrapHouseKitchen/pull/37) open (docs/evidence); deploy/ops verify still open |
+| bitcoin-data-collector Pilot B | Plan approved; PR #16 merged; continuity hardening awaiting commit/PR (#17) |
 
 ## Standing order
 

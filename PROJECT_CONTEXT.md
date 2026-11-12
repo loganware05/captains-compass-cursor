@@ -140,8 +140,8 @@ gh auth status
 
 ## Current Priorities
 
-**v1.83.1** XRV W1 release integrity + Experience Evidence Records in progress
-(#261) after I6 **v1.83.0** / #260. Cross-repo pilot discovery handoffs:
-TrapHouseKitchen + bitcoin-data-collector (separate plans). Specialized Model
+**v1.83.1** XRV W1 merged (#262). Next control-plane candidate: eight-pillar
+readiness assessor (#263). Pilots: TrapHouse Slice 17 reconcile PR #37;
+bitcoin Pilot B continuity (#17). I1–I6 issues closed. Specialized Model
 Level 3 remains **DEFERRED**. Start here: `docs/guides/captain-handbook.md`.
 Live trading / AHF execution remains denied.

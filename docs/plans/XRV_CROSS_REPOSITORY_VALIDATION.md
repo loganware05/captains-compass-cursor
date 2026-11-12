@@ -1,8 +1,8 @@
 # XRV — Cross-Repository Engineering Intelligence Validation
 
-> **IN PROGRESS** (2026-11-10) — Control-plane Week 1 plan `xrv-release-integrity` (#261).
-> Proposed release: **v1.83.1**.
-> Rollback: `rollback/pre-xrv-release-integrity` @ `987a49c`.
+> **W1 COMPLETE** (2026-11-11) — `xrv-release-integrity` (#261) merged [#262](https://github.com/loganware05/captains-compass-cursor/pull/262) @ `dece600` → **v1.83.1**.
+> **W2 next:** `xrv-readiness-assessor` (#263) — AWAITING APPROVAL.
+> Rollback (W1): `rollback/pre-xrv-release-integrity` @ `987a49c`.
 > Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
 
 ## One-line summary
@@ -35,8 +35,11 @@ COMPASS_XRV_EER_ENABLED=1 \
 - [x] NorthStar VERSION / README aligned (control PR)
 - [x] Machine-checked release drift
 - [x] EER schema + I6 reconstruction fixture
-- [ ] TrapHouse Slice 17 docs/evidence reconcile (companion plan; handoff thread)
-- [ ] Independent auditor can reconstruct at least one full engineering cycle
+- [x] I1–I6 + #261 issues closed (Captain 2026-11-11)
+- [ ] TrapHouse Slice 17 docs/evidence reconcile (PR [#37](https://github.com/loganware05/TrapHouseKitchen/pull/37))
+- [ ] Bitcoin Pilot B continuity PR (#17)
+- [ ] Eight-pillar readiness assessor (#263)
+- [ ] Independent auditor can reconstruct at least one full engineering cycle per pilot
 
 ## Explicit deferrals
 
