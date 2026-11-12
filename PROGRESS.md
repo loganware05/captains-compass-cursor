@@ -2,27 +2,33 @@
 
 ## Current status
 
-**PR OPEN:** [#265](https://github.com/loganware05/captains-compass-cursor/pull/265)
-`xrv-readiness-assessor` (#263) on
-`feature/263-xrv-readiness-assessor` → **v1.84.0** @ `7712f73`.
+**IN PROGRESS:** [#266](https://github.com/loganware05/captains-compass-cursor/issues/266)
+`xrv-portfolio-readiness` on `feature/266-xrv-portfolio-readiness` → **v1.85.0**.
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.83.1** @ `cb85c4a` |
-| Active plan | `xrv-readiness-assessor` **COMPLETE** (opening PR) |
-| Issue | [#263](https://github.com/loganware05/captains-compass-cursor/issues/263) |
-| Rollback | `rollback/pre-xrv-readiness-assessor` @ `cb85c4a` |
+| Baseline | **v1.84.0** @ `2016cd5` |
+| Active plan | `xrv-portfolio-readiness` **APPROVED** |
+| Issue | [#266](https://github.com/loganware05/captains-compass-cursor/issues/266) |
+| Rollback | `rollback/pre-xrv-portfolio-readiness` @ `2016cd5` |
 
-### Prior
+### Prior closeout
 
-- XRV W1 merged [#262](https://github.com/loganware05/captains-compass-cursor/pull/262)
-- TrapHouse Pilot A reconcile merged [#37](https://github.com/loganware05/TrapHouseKitchen/pull/37)
-- Bitcoin Pilot B continuity merged [#18](https://github.com/loganware05/bitcoin-data-collector/pull/18)
-- I1–I6 + #261 closed
+- W2 readiness assessor merged [#265](https://github.com/loganware05/captains-compass-cursor/pull/265); #263 closed
+- TrapHouse Pilot A reconcile [#37](https://github.com/loganware05/TrapHouseKitchen/pull/37) merged
+- Bitcoin Pilot B [#18](https://github.com/loganware05/bitcoin-data-collector/pull/18) merged
 
 ## Standing order
 
 Approve ⇒ implement → validate → commit → open PR. Merge remains Captain-only.
+
+## Validation (local)
+
+- XRV unit tests: pass
+- `./scripts/doctor.sh`: pass
+- `./tests/run.sh`: 125 passed, 0 failed
+- Portfolio smoke: northstar/traphouse/bitcoin all ready/effective; locks false
+- PrizePicksBot Pilot C inventory handoff launched (plan-only)
 
 ## Blockers
 

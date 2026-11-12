@@ -1,8 +1,7 @@
 # XRV — Cross-Repository Engineering Intelligence Validation
 
-> **W1 COMPLETE** (2026-11-11) — `xrv-release-integrity` (#261) merged [#262](https://github.com/loganware05/captains-compass-cursor/pull/262) @ `dece600` → **v1.83.1**.
-> **W2 IN PROGRESS:** `xrv-readiness-assessor` (#263) — APPROVED → **v1.84.0**.
-> Rollback (W1): `rollback/pre-xrv-release-integrity` @ `987a49c`.
+> **W1 COMPLETE** — #262 → **v1.83.1**. **W2 COMPLETE** — #265 → **v1.84.0**.
+> **W3 IN PROGRESS:** `xrv-portfolio-readiness` (#266) → **v1.85.0**.
 > Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
 
 ## One-line summary
@@ -36,10 +35,12 @@ COMPASS_XRV_EER_ENABLED=1 \
 - [x] Machine-checked release drift
 - [x] EER schema + I6 reconstruction fixture
 - [x] I1–I6 + #261 issues closed (Captain 2026-11-11)
-- [ ] TrapHouse Slice 17 docs/evidence reconcile (PR [#37](https://github.com/loganware05/TrapHouseKitchen/pull/37))
-- [ ] Bitcoin Pilot B continuity PR (#17)
-- [x] Eight-pillar readiness assessor (#263) — implementing v1.84.0
-- [ ] Independent auditor can reconstruct at least one full engineering cycle per pilot
+- [x] TrapHouse Slice 17 docs/evidence reconcile (PR [#37](https://github.com/loganware05/TrapHouseKitchen/pull/37) merged)
+- [x] Bitcoin Pilot B continuity (PR [#18](https://github.com/loganware05/bitcoin-data-collector/pull/18) merged)
+- [x] Eight-pillar readiness assessor (#263 / #265 → v1.84.0)
+- [x] Cross-repo portfolio + Pilot A/B EERs (#266 → v1.85.0)
+- [ ] PrizePicksBot onboard / baseline (Pilot C)
+- [ ] Independent auditor can reconstruct full cycles incl. ops-verified states
 
 ## Explicit deferrals
 

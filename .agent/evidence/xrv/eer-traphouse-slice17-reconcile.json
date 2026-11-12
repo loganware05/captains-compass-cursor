@@ -1,0 +1,50 @@
+{
+  "schema_version": "xrv-eer-1",
+  "eer_id": "eer-traphouse-slice17-3ba1506",
+  "created_at": "2026-11-12T01:05:00Z",
+  "repository": {
+    "owner": "loganware05",
+    "name": "TrapHouseKitchen",
+    "url": "https://github.com/loganware05/TrapHouseKitchen"
+  },
+  "commit_sha": "3ba150638fb4c486d601a4547b19d1f85727f525",
+  "plan_id": "slice-17-xrv-reconcile-2026-11-10",
+  "issue": "https://github.com/loganware05/TrapHouseKitchen/issues/36",
+  "pull_request": "https://github.com/loganware05/TrapHouseKitchen/pull/37",
+  "branch": "docs/local-slice-17-xrv-reconcile",
+  "lifecycle_state": "merged",
+  "skills_selected": [
+    "implementation-planning",
+    "documentation-agent",
+    "testing-validation"
+  ],
+  "budget_ref": null,
+  "permissions": [
+    "docs-evidence-only",
+    "no-payment-code-changes"
+  ],
+  "test_evidence": [
+    "PR #37 CI: Run Tests SUCCESS",
+    "PR #37 CI: Playwright E2E SUCCESS",
+    ".agent/evidence/slice-17-xrv-pilot-a-20261111/validation.md"
+  ],
+  "failure_repair": [],
+  "review_refs": [
+    "Cursor Security Agent SUCCESS on PR #37"
+  ],
+  "rollback_ref": "checkpoint/slice-17-xrv-reconcile-2026-11-11 → a195175",
+  "latency_cost": {
+    "notes": "Docs/evidence reconcile only"
+  },
+  "verified_outcome": "Slice 17 status docs aligned on main via PR #37. Payment code already merged in #35. Deploy/ops verification still open — lifecycle_state=merged not operationally_verified.",
+  "experience_id": null,
+  "execution_run_id": null,
+  "related_evidence_paths": [
+    ".agent/evidence/slice-17-xrv-pilot-a-20261111/validation.md"
+  ],
+  "notes": "XRV Pilot A docs reconcile cycle. Production Stripe soft-launch retest and Render deploy attestation remain open.",
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "issues_auto_closed": false,
+  "auto_promoted": false
+}

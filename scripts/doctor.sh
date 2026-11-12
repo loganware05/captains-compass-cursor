@@ -1004,6 +1004,21 @@ PY
   else
     fail "xrv readiness should exit 2 mentioning COMPASS_XRV_READINESS_ENABLED when unset (rc=$ready_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/xrv-portfolio-scorecard.schema.json" ]]; then
+    ok "xrv-portfolio-scorecard.schema.json present"
+  else
+    fail "missing orchestrator/schemas/xrv-portfolio-scorecard.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/xrv/portfolio.py" ]]; then
+    ok "orchestrator/xrv/portfolio present"
+  else
+    fail "missing orchestrator/xrv/portfolio.py"
+  fi
+  if grep -q 'assess portfolio' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents assess portfolio"
+  else
+    fail "northstar missing assess portfolio surface"
+  fi
   if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
     ok "orchestrator/openui present"
   else

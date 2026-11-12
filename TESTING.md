@@ -36,11 +36,13 @@ COMPASS_XRV_EER_ENABLED=1 ./scripts/northstar evidence validate --repo .
 PYTHONPATH=. python3 -m unittest tests.orchestrator.test_xrv_release_integrity -v
 ```
 
-XRV eight-pillar readiness (v1.84.0):
+XRV eight-pillar readiness (v1.84.0) + portfolio (v1.85.0):
 
 ```bash
 COMPASS_XRV_READINESS_ENABLED=1 ./scripts/northstar assess readiness --repo .
-PYTHONPATH=. python3 -m unittest tests.orchestrator.test_xrv_readiness_assessor -v
+COMPASS_XRV_READINESS_ENABLED=1 ./scripts/northstar assess readiness --profile product --repo /path/to/product
+COMPASS_XRV_READINESS_ENABLED=1 ./scripts/northstar assess portfolio --repo northstar=. --repo app=/path/to/product
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_xrv_readiness_assessor tests.orchestrator.test_xrv_portfolio_readiness -v
 ```
 
 Capability resolve CLI:

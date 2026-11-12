@@ -1,0 +1,52 @@
+{
+  "schema_version": "xrv-eer-1",
+  "eer_id": "eer-bitcoin-pilot-b-59367ad",
+  "created_at": "2026-11-12T01:05:00Z",
+  "repository": {
+    "owner": "loganware05",
+    "name": "bitcoin-data-collector",
+    "url": "https://github.com/loganware05/bitcoin-data-collector"
+  },
+  "commit_sha": "59367ad5e2121d4c0b2e336c33f5abb69946e754",
+  "plan_id": "xrv-pilot-b-paper-continuity",
+  "issue": "https://github.com/loganware05/bitcoin-data-collector/issues/17",
+  "pull_request": "https://github.com/loganware05/bitcoin-data-collector/pull/18",
+  "branch": "feature/17-xrv-pilot-b-paper-continuity",
+  "lifecycle_state": "merged",
+  "skills_selected": [
+    "implementation-planning",
+    "testing-validation",
+    "python-ml"
+  ],
+  "budget_ref": null,
+  "permissions": [
+    "paper-simulation-only",
+    "live-trading-denied"
+  ],
+  "test_evidence": [
+    "PR #18 Cursor Approval + Security Review SUCCESS",
+    ".agent/evidence/xrv-pilot-b-paper-continuity/",
+    "DayClock / paper tick unit tests (7 passed on implement branch)"
+  ],
+  "failure_repair": [
+    "Hardened paper_tick_daily.sh remote→local staging fallback; soft-skip writes continuity_alert.json"
+  ],
+  "review_refs": [
+    "Cursor Security Agent SUCCESS on PR #18"
+  ],
+  "rollback_ref": "rollback/pre-xrv-pilot-b-paper-continuity @ 8db4fcc",
+  "latency_cost": {
+    "notes": "Paper continuity; no live order spend"
+  },
+  "verified_outcome": "Pilot B paper-tick continuity hardening merged (PR #18). LaunchAgent install evidenced. Live Kalshi orders remain DENIED. 30-day paper clock still in progress — not operationally_verified for full 30d track.",
+  "experience_id": null,
+  "execution_run_id": null,
+  "related_evidence_paths": [
+    ".agent/evidence/xrv-pilot-b-paper-continuity/"
+  ],
+  "notes": "XRV Pilot B. approved_for_execution stays false.",
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "issues_auto_closed": false,
+  "auto_promoted": false
+}

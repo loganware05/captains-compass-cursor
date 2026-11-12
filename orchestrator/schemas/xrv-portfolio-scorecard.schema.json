@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/xrv-portfolio-scorecard.schema.json",
+  "title": "XrvPortfolioScorecard",
+  "description": "Multi-repo XRV readiness portfolio summary. Evidence-only; never grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "portfolio_id",
+    "created_at",
+    "repos",
+    "approved_for_execution",
+    "authority_mutation",
+    "auto_promoted",
+    "scores_invented"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "xrv-portfolio-1" },
+    "portfolio_id": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string" },
+    "repos": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "repo_path",
+          "profile",
+          "repository_sha",
+          "readiness_status",
+          "effectiveness_status",
+          "scorecard_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "label": { "type": "string" },
+          "repo_path": { "type": "string" },
+          "profile": { "type": "string", "enum": ["control", "product"] },
+          "repository_sha": { "type": "string" },
+          "readiness_status": { "type": "string" },
+          "readiness_score": { "type": ["number", "null"] },
+          "effectiveness_status": { "type": "string" },
+          "effectiveness_score": { "type": ["number", "null"] },
+          "scorecard_id": { "type": "string" }
+        }
+      }
+    },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "auto_promoted": { "type": "boolean", "const": false },
+    "scores_invented": { "type": "boolean", "const": false }
+  }
+}
