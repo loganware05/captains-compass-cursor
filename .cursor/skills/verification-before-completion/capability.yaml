@@ -1,0 +1,29 @@
+id: verification-before-completion
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/verification-before-completion/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.9
+  inspired_by: "obra/superpowers verification-before-completion (DISCOVERED; not installed)"
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, validation, governance]
+tags:
+  - verification
+  - evidence
+  - definition-of-done
+capabilities_provided:
+  - verification-before-completion
+  - evidence-before-claims
+  - fresh-command-validation
+compatible_stacks:
+  - any
+security_sensitivity: low
+agent_affinity:
+  - test-engineer
+  - documentation-agent
+maturity: available
+confidence: 0.9

@@ -1,45 +1,60 @@
-# Implementation Plan — XRV W3: Cross-Repo Readiness Portfolio + Pilot EERs
+# Implementation Plan — Superpowers Process Harvest + C2 Session Memory
 
-- Status: **COMPLETE**
+- Status: **APPROVED**
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **COMPLETE** |
-| Plan ID | `xrv-portfolio-readiness` |
-| Issue | [#266](https://github.com/loganware05/captains-compass-cursor/issues/266) |
-| Baseline | **v1.84.0** @ `2016cd5` |
-| Branch | `feature/266-xrv-portfolio-readiness` |
-| Rollback | `rollback/pre-xrv-portfolio-readiness` @ `2016cd5` |
-| Release | **v1.85.0** |
-| Approved by | Logan Ware (Captain) — continue after #265 merge |
-| Approval date | 2026-11-11 |
-| Completed | 2026-11-11 |
+| Status | **APPROVED** |
+| Plan ID | `superpowers-c2-session-memory` |
+| Issue | [#272](https://github.com/loganware05/captains-compass-cursor/issues/272) |
+| Baseline | **v1.85.0** @ `151ce6a` |
+| Branch | `feature/272-superpowers-c2-session-memory` |
+| Rollback | `rollback/pre-superpowers-c2-session-memory` @ `151ce6a` |
+| Proposed release | **v1.86.0** |
+| Created | 2026-11-12 |
+| Last updated | 2026-11-12 |
+| Approved by | Logan Ware (Captain) — chat “Approve” |
+| Approval date | 2026-11-12 |
+| Approved revision | defaults: include subagent Skill; non-trivial design gate; citation enum + optional context include |
+| Worktree | `/Users/loganware/Documents/Personal/Code/captains-compass-cursor-superpowers-c2` |
 
-## Outcome
+Durable copy: `docs/plans/SUPERPOWERS_C2_SESSION_MEMORY.md`
 
-1. Assess readiness against product repos (control-root imports/schema)
-2. `profile=control|product` signal packs
-3. Portfolio scorecard across pilot roots
-4. EER fixtures for TrapHouse #37 and Bitcoin #18
-5. W2 closeout docs; PrizePicksBot inventory handoff (plan-only)
+## Request
 
-## Acceptance
+Harvest Superpowers process patterns (Wave A), then C2 local session memory
+(Wave B). No ECC/TradingAgents install. Authority locks false.
 
-- [x] Product repo assess works without requiring orchestrator in product tree
-- [x] Product profile scores NorthStar-installed product markers
-- [x] Portfolio command emits multi-repo summary with locks false
-- [x] Pilot EERs validate under EER gate
-- [x] Doctor + tests + docs/ADR/VERSION 1.85.0
+## Acceptance Criteria
 
-## Merged
+### Wave A
 
-[#267](https://github.com/loganware05/captains-compass-cursor/pull/267) @ `5c399ac` → **v1.85.0**.
+- [x] Skills: design-before-plan, verification-before-completion,
+      finishing-a-development-branch, subagent-driven-development
+- [x] `/design-feature` + rule 01/03 cross-links
+- [x] doctor + tests/run.sh green
+- [x] Handbook + ADR-107
+- [x] Evidence under `.agent/evidence/superpowers-process-harvest/`
 
-## Follow-ons
+### Wave B
 
-- PrizePicksBot Pilot C onboard/baseline — **APPROVED**; product workstream
-  ([`docs/plans/XRV_PILOT_C_PRIZEPICKS_BASELINE.md`](docs/plans/XRV_PILOT_C_PRIZEPICKS_BASELINE.md))
-- TrapHouse ops-verified E2E (Captain-gated)
-- Live trading / providers / live wagers remain denied
+- [x] Schema + dual-gated memory CLI + progressive search/show
+- [x] `--include-session-memory` citation kind
+- [x] doctor + unit tests green
+- [x] ADR-108 + TESTING/handbook notes
+- [x] Evidence under `.agent/evidence/c2-session-memory/`
+
+## Non-Goals
+
+ECC/TradingAgents install; hosted observer; auto capture hooks; memory doc rewrite;
+live trading authority.
+
+## Rollback
+
+Tag `rollback/pre-superpowers-c2-session-memory` @ `151ce6a`; revert PR.
+
+## Autonomy Budget
+
+`.agent/budgets/superpowers-c2-session-memory.md` — ACTIVE

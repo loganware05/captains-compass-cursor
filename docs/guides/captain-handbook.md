@@ -49,7 +49,7 @@ Launcher: `"$CONTROL/scripts/northstar" <surface> …`
 | `status` | Project Overseer snapshot / explain / reconcile | `COMPASS_STATUS_ENABLED=1`; proposal-only reconcile |
 | `oversight` / `status post-merge` | Read-only persistent oversight compose | `COMPASS_STATUS_ENABLED=1`; optional brain; never auto-applies |
 | `specialized` | Specialized Model L0 baseline + L1 LoRA + L2 GPU | `COMPASS_SPECIALIZED_MODEL_ENABLED=1`; weights outside repo; GPU non-dry-run needs `--cost-ack` |
-| `brain` | Cognitive Core project-state + memory/retrieval context | `COMPASS_BRAIN_ENABLED=1`; C1 snapshots under `.agent/project-state/`; C2 `brain context --query` |
+| `brain` | Cognitive Core project-state + memory/retrieval + optional session memory | `COMPASS_BRAIN_ENABLED=1`; C1 snapshots under `.agent/project-state/`; C2 `brain context --query`; session memory also needs `COMPASS_SESSION_MEMORY_ENABLED=1` (`brain memory …`, `--include-session-memory`) |
 | `assess` | Cognitive Core difficulty / capability-fit | `COMPASS_ASSESS_ENABLED=1`; advisory score/band only — never bypasses approval |
 | `cycle` / `learning` | Cognitive Core Adaptive Development Loop (begin→checkpoint→close + Learning Review) | `COMPASS_CYCLE_ENABLED=1`; begin also needs assess flag; draft proposals only — never auto-promote |
 | `model` | Cognitive Core Adaptive routing (`route` / `evaluate`) | `COMPASS_ROUTE_ENABLED=1`; advisory local/hosted/premium — never auto-switch live models |
@@ -68,15 +68,20 @@ Launcher: `"$CONTROL/scripts/northstar" <surface> …`
 
 Full operator map: [`docs/INDEX.md`](../INDEX.md).
 
-## Core loop: issue → plan → approve → implement → evidence → PR
+## Core loop: design → issue → plan → approve → implement → evidence → PR
 
 1. Inspect repo + memory (`PROJECT_CONTEXT.md`, `PROGRESS.md`, `DECISIONS.md`).
-2. Write/update `IMPLEMENTATION_PLAN.md` → **AWAITING APPROVAL**.
-3. You set Status → **APPROVED** (explicit).
-4. Branch + rollback tag (never implement on `main`).
-5. Implement within plan boundaries; run doctor/tests; store evidence under `.agent/evidence/`.
-6. First Mate **commits and opens the PR** (standing order — no separate ask).
-7. You merge only after your review.
+2. For non-trivial / creative work: `/design-feature` (Skill `design-before-plan`) —
+   approaches + short design → your design approval. Skip only for fully-specified
+   quick tasks.
+3. Write/update `IMPLEMENTATION_PLAN.md` → **AWAITING APPROVAL** (`/plan-feature`).
+4. You set Status → **APPROVED** (explicit).
+5. Branch + rollback tag (never implement on `main`).
+6. Implement within plan boundaries; run doctor/tests; store evidence under `.agent/evidence/`.
+   Agents must use Skill `verification-before-completion` before claiming green.
+7. First Mate **commits and opens the PR** (standing order — no separate ask).
+   Skill `finishing-a-development-branch` presents integration options; merge stays yours.
+8. You merge only after your review.
 
 **Standing order (2026-10-13):** Plan approval authorizes implement → validate →
 commit → open PR. It does **not** authorize merge, deploy, or authority mutation.

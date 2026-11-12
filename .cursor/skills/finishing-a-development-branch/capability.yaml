@@ -1,0 +1,29 @@
+id: finishing-a-development-branch
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/finishing-a-development-branch/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+  inspired_by: "obra/superpowers finishing-a-development-branch (DISCOVERED; not installed)"
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, git, governance]
+tags:
+  - branch
+  - worktree
+  - pull-request
+capabilities_provided:
+  - finishing-a-development-branch
+  - integration-options-menu
+  - worktree-cleanup-guidance
+compatible_stacks:
+  - any
+security_sensitivity: low
+agent_affinity:
+  - documentation-agent
+  - implementation-agent
+maturity: available
+confidence: 0.85

@@ -89,10 +89,17 @@ def context(
     query: str,
     mode: str = "hybrid",
     top_n: int = 10,
+    include_session_memory: bool = False,
 ) -> dict[str, Any]:
     """C2 memory/retrieval — compose project-state + knowledge + ADR links."""
     require_brain_enabled()
     try:
-        return build_context(repo_root, query, mode=mode, top_n=top_n)
+        return build_context(
+            repo_root,
+            query,
+            mode=mode,
+            top_n=top_n,
+            include_session_memory=include_session_memory,
+        )
     except ValueError as exc:
         raise BrainServiceError(str(exc)) from exc

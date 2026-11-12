@@ -84,6 +84,10 @@ SKILL_SLUGS = (
     "agent-skills-packaging",
     "goose-agent-orchestration",
     "security-audit-procedures",
+    "design-before-plan",
+    "verification-before-completion",
+    "finishing-a-development-branch",
+    "subagent-driven-development",
 )
 
 AGENT_PROFILES = (

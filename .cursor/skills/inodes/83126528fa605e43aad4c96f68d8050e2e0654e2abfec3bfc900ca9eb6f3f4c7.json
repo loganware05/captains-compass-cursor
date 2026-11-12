@@ -1,0 +1,15 @@
+{
+  "content_hash": "83126528fa605e43aad4c96f68d8050e2e0654e2abfec3bfc900ca9eb6f3f4c7",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-83126528fa605e43",
+  "slug": "subagent-driven-development",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

@@ -1,0 +1,29 @@
+id: subagent-driven-development
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/subagent-driven-development/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+  inspired_by: "obra/superpowers subagent-driven-development (DISCOVERED; not installed)"
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, orchestration, governance]
+tags:
+  - subagent
+  - worktree
+  - execution
+capabilities_provided:
+  - subagent-driven-development
+  - per-task-fresh-context
+  - continuous-plan-execution-with-rulings
+compatible_stacks:
+  - any
+security_sensitivity: medium
+agent_affinity:
+  - implementation-agent
+  - architecture-agent
+maturity: available
+confidence: 0.85

@@ -413,6 +413,28 @@ Composes project-state + knowledge hits + ADR decision links. Gold-set fixture:
 `tests/fixtures/brain-goldset/questions.json` (30 questions; ≥90% evidence-linked).
 See `.agent/evidence/c2-cognitive-core-memory-retrieval/VALIDATION.md`.
 
+C2 session memory (dual gate; local observations; progressive index → detail):
+
+```bash
+PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_c2_session_memory.py' -v
+
+COMPASS_BRAIN_ENABLED=1 COMPASS_SESSION_MEMORY_ENABLED=1 \
+./scripts/northstar brain memory ingest --path tests/fixtures/session-memory/obs-design-gate-approved.json --repo .
+
+COMPASS_BRAIN_ENABLED=1 COMPASS_SESSION_MEMORY_ENABLED=1 \
+./scripts/northstar brain memory search --query "design session" --repo .
+
+COMPASS_BRAIN_ENABLED=1 COMPASS_SESSION_MEMORY_ENABLED=1 \
+./scripts/northstar brain memory show --id obs-fixture-design-gate --repo .
+
+COMPASS_BRAIN_ENABLED=1 COMPASS_SESSION_MEMORY_ENABLED=1 \
+./scripts/northstar brain context --query "design session" --include-session-memory --repo .
+```
+
+Unset either gate → exit 2. Observations under `.agent/session-memory/` (gitignored).
+Never auto-rewrites canonical memory docs. See
+`.agent/evidence/c2-session-memory/VALIDATION.md`.
+
 Cognitive Core difficulty / capability-fit (C3; requires assess flag):
 
 ```bash

@@ -1,5 +1,47 @@
 # Decisions
 
+## ADR-108: C2 Session Memory Progressive Retrieval (v1.86.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-12
+- **Context:** Captain approved `superpowers-c2-session-memory` (#272). C2
+  `brain context` lacked session residue; claude-mem progressive index→detail
+  is DISCOVERED inspiration only (no plugin install / hosted observer).
+- **Decision:**
+  1. Dual-gate `COMPASS_BRAIN_ENABLED` + `COMPASS_SESSION_MEMORY_ENABLED`.
+  2. Local store `.agent/session-memory/` (gitignored) with schema-validated
+     observations; authority consts false.
+  3. CLI `northstar brain memory ingest|search|timeline|show` — search returns
+     compact index; `show` returns full body by id.
+  4. Optional `brain context --include-session-memory` adds
+     `session_observation` citations.
+  5. Explicit CLI/fixture ingest only; secret-pattern reject; no auto-hooks;
+     never rewrite canonical memory docs. Release **v1.86.0**.
+- **Consequences:** Operators can persist and retrieve session notes without
+  cloud observers. Rollback `rollback/pre-superpowers-c2-session-memory` @
+  `151ce6a`.
+
+
+## ADR-107: Superpowers Process Skills Harvest (v1.86.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-12
+- **Context:** Captain approved plan `superpowers-c2-session-memory` (#272)
+  after TI review of obra/superpowers. NorthStar needed design-before-plan,
+  verification iron law, finish-branch menu, and subagent execution playbook
+  without installing third-party plugins.
+- **Decision:**
+  1. Ship Skills `design-before-plan`, `verification-before-completion`,
+     `finishing-a-development-branch`, `subagent-driven-development`
+     (NorthStar-authored; Superpowers DISCOVERED inspiration).
+  2. Add `/design-feature`; cross-link rules 01/03; keep Captain plan gate.
+  3. Subagent Skill is playbook-only and cannot override security/irreversible
+     stop rules. Release **v1.86.0** with ADR-108.
+- **Consequences:** Agents pause for design on non-trivial work and cannot claim
+  green without fresh evidence. Rollback
+  `rollback/pre-superpowers-c2-session-memory` @ `151ce6a`.
+
+
 ## ADR-106: XRV W3 Cross-Repo Readiness Portfolio (v1.85.0)
 
 - **Status:** Accepted

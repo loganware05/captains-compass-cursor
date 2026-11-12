@@ -51,7 +51,7 @@ agentic engineering process across multiple product repositories.
 
 1. AGENTS.md operating contract
 2. Five always-applied core rules
-3. Forty-seven Skills (including Wave 1 Stars-derived `agent-skills-packaging`,
+3. Fifty-one Skills (including Wave 1 Stars-derived `agent-skills-packaging`,
    `goose-agent-orchestration`, `security-audit-procedures`, plus
    `project-overseer`, `code-reviewer`, `context-inodes`,
    northstar-connected-routine, skill-learning-loop, embedding-providers,
@@ -59,11 +59,13 @@ agentic engineering process across multiple product repositories.
    procedure-playbooks, knowledge-steward, technology-intelligence-live,
    persistent-role-promotion, bounded-autonomy, compass-evaluator,
    experience-routing, capability-planning, execution-telemetry,
-   candidate-promotion, experience-skill-training).
+   candidate-promotion, experience-skill-training, plus Superpowers-inspired
+   `design-before-plan`, `verification-before-completion`,
+   `finishing-a-development-branch`, `subagent-driven-development`).
    `.cursor/skills/inodes/` is the context-inode content store (not a Skill).
 4. Twelve specialist subagents (including `project-overseer`, `code-reviewer`, `compass-evaluator`, `knowledge-steward`)
 5. Seven safety hooks (three critical fail-closed; four soft fail-open with multi-path skips)
-6. Six Cursor phase commands under `.cursor/commands/`
+6. Seven Cursor phase commands under `.cursor/commands/` (includes `/design-feature`)
 7. Documentation, budget/session templates, evidence matrix, multi-runtime adapters, evals
 8. Installation, update, uninstall, and doctor scripts
 9. Control-repo CI (doctor + tests + harness evals)
@@ -140,7 +142,7 @@ gh auth status
 
 ## Current Priorities
 
-**v1.85.0** XRV W3 portfolio shipped (#267). Pilots A/B/C baselines complete
-(PrizePicksBot [#3](https://github.com/loganware05/PrizePicksBot/pull/3); fixture/mock only).
-Ops-verified / adaptive benefit still open. Specialized Model Level 3 **DEFERRED**.
-Start here: `docs/guides/captain-handbook.md`. Live trading / AHF / live wagers denied.
+**v1.86.0** Superpowers process Skills + C2 session memory (#272) in flight.
+Prior: **v1.85.0** XRV W3 (#267); Pilot C [#3](https://github.com/loganware05/PrizePicksBot/pull/3).
+Specialized Model Level 3 **DEFERRED**. Start here: `docs/guides/captain-handbook.md`.
+Live trading / AHF / live wagers denied.

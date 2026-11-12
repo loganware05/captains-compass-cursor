@@ -1,0 +1,15 @@
+{
+  "content_hash": "95fdaf1b9acc836f12653e9d390a17997dc43d27fa54e8051c143b32489b1c6e",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-95fdaf1b9acc836f",
+  "slug": "verification-before-completion",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

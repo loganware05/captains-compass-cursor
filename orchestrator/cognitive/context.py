@@ -6,8 +6,12 @@ from pathlib import Path
 from typing import Any
 
 from orchestrator.cognitive.decisions import rank_decision_links
-from orchestrator.cognitive.enabled import require_brain_enabled
+from orchestrator.cognitive.enabled import (
+    require_brain_enabled,
+    session_memory_enabled,
+)
 from orchestrator.cognitive.git_facts import git_sha
+from orchestrator.cognitive.session_memory import search_observations
 from orchestrator.cognitive.store import BrainStoreError, load_latest
 from orchestrator.knowledge.query import query_knowledge
 from orchestrator.schemas.validate import validate_document
@@ -59,6 +63,7 @@ def build_context(
     *,
     mode: str = "hybrid",
     top_n: int = 10,
+    include_session_memory: bool = False,
 ) -> dict[str, Any]:
     """Return schema-validated brain context for a query (read-oriented)."""
     require_brain_enabled()
@@ -70,6 +75,11 @@ def build_context(
         top_n = 1
     if top_n > 50:
         top_n = 50
+    if include_session_memory and not session_memory_enabled():
+        raise ValueError(
+            "--include-session-memory requires COMPASS_SESSION_MEMORY_ENABLED=1 "
+            "(and COMPASS_BRAIN_ENABLED=1)"
+        )
 
     normalized_mode = _normalize_mode(mode)
     try:
@@ -175,6 +185,32 @@ def build_context(
             }
         )
 
+    session_hits: list[dict[str, Any]] = []
+    if include_session_memory:
+        session_index = search_observations(repo_root, q, top_n=min(5, top_n))
+        for row in session_index.get("results") or []:
+            oid = str(row.get("observation_id") or "")
+            if not oid:
+                continue
+            session_hits.append(
+                {
+                    "item_id": oid,
+                    "kind": "session_observation",
+                    "title": str(row.get("title") or ""),
+                    "summary": str(row.get("summary") or ""),
+                    "source_path": f".agent/session-memory/observations/{oid}.json",
+                    "query_score": float(row.get("query_score") or 0.0),
+                    "search_mode": "session_keyword",
+                }
+            )
+            citations.append(
+                {
+                    "kind": "session_observation",
+                    "ref": oid,
+                    "claim_kind": "observed",
+                }
+            )
+
     # Deduplicate citations by (kind, ref)
     deduped: list[dict[str, str]] = []
     seen_cite: set[tuple[str, str]] = set()
@@ -186,7 +222,22 @@ def build_context(
         deduped.append(cite)
 
     # Query-grounded only: snapshot/git metadata alone is not evidence-linked.
-    evidence_linked = bool(hits or decision_links)
+    evidence_linked = bool(hits or decision_links or session_hits)
+
+    notes = (
+        "Cognitive Core C2 memory/retrieval context. "
+        "Includes project-state freshness/SHA metadata plus query-ranked "
+        "knowledge hits and ADR decision links. "
+        "Does not approve plans or mutate authority. "
+        "evidence_linked requires hits or decision_links for this query."
+    )
+    if include_session_memory:
+        notes += (
+            " Session-memory index hits included when "
+            "COMPASS_SESSION_MEMORY_ENABLED=1; use brain memory show --id "
+            "for full observation bodies."
+        )
+        hits = hits + session_hits
 
     payload: dict[str, Any] = {
         "schema_version": "1",
@@ -201,13 +252,7 @@ def build_context(
         "hits": hits,
         "decision_links": decision_links,
         "evidence_linked": evidence_linked,
-        "notes": (
-            "Cognitive Core C2 memory/retrieval context. "
-            "Includes project-state freshness/SHA metadata plus query-ranked "
-            "knowledge hits and ADR decision links. "
-            "Does not approve plans or mutate authority. "
-            "evidence_linked requires hits or decision_links for this query."
-        ),
+        "notes": notes,
         "approved_for_execution": False,
         "authority_mutation": False,
     }

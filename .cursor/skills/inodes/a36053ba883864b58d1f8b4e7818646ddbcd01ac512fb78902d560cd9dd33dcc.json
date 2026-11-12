@@ -1,0 +1,15 @@
+{
+  "content_hash": "a36053ba883864b58d1f8b4e7818646ddbcd01ac512fb78902d560cd9dd33dcc",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-a36053ba883864b5",
+  "slug": "design-before-plan",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

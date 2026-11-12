@@ -7,6 +7,7 @@ name is passed through as additional context.
 | Command | Phase |
 |---|---|
 | `/initialize-project` | Onboard / fill project context (no product implementation) |
+| `/design-feature` | Approaches + short design → Captain design approval; then `/plan-feature` |
 | `/plan-feature` | Write `IMPLEMENTATION_PLAN.md` → AWAITING APPROVAL; stop |
 | `/implement-approved-plan` | Implement only if plan is APPROVED |
 | `/validate-change` | Run validation + collect evidence per evidence matrix |

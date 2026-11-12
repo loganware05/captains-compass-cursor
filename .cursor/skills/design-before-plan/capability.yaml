@@ -1,0 +1,29 @@
+id: design-before-plan
+version: "1.0.0"
+kind: skill
+source:
+  type: compass-skill
+  path: .cursor/skills/design-before-plan/SKILL.md
+provenance:
+  authored_by: compass
+  inferred: false
+  confidence: 0.85
+  inspired_by: "obra/superpowers brainstorming (DISCOVERED; not installed)"
+lifecycle_stage: AVAILABLE_SKILL
+categories: [process, planning, governance]
+tags:
+  - design
+  - brainstorming
+  - approval
+capabilities_provided:
+  - design-before-plan
+  - approach-comparison
+  - pre-plan-captain-signoff
+compatible_stacks:
+  - any
+security_sensitivity: low
+agent_affinity:
+  - architecture-agent
+  - repository-scout
+maturity: available
+confidence: 0.85

@@ -4,11 +4,26 @@
 
 ## Unreleased
 
+## 1.86.0 — 2026-11-12
+
 ### Added
+
+- **Superpowers process harvest** (`superpowers-c2-session-memory` / #272):
+  - Skills `design-before-plan`, `verification-before-completion`,
+    `finishing-a-development-branch`, `subagent-driven-development`
+  - Command `/design-feature`; rule 01/03 cross-links
+  - ADR-107
+- **C2 session memory** (same issue):
+  - Dual-gated `northstar brain memory ingest|search|timeline|show`
+    (`COMPASS_SESSION_MEMORY_ENABLED`)
+  - Optional `brain context --include-session-memory`
+  - Schema + hermetic fixtures; secret-pattern reject; ADR-108
+
+### Notes
 
 - XRV Pilot C EER (PrizePicksBot [#3](https://github.com/loganware05/PrizePicksBot/pull/3)
   merged): `.agent/evidence/xrv/eer-prizepicks-pilot-c-baseline.json` at
-  `lifecycle_state: merged` (#270).
+  `lifecycle_state: merged` (#270) — carried from Unreleased.
 
 ## 1.85.0 — 2026-11-11
 

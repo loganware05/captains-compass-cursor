@@ -49,6 +49,8 @@ SCHEMA_FILES = (
     "behavior-exemplar.schema.json",
     "project-state-snapshot.schema.json",
     "brain-context-response.schema.json",
+    "session-observation.schema.json",
+    "session-memory-search-response.schema.json",
     "project-difficulty-assessment.schema.json",
     "cycle-state.schema.json",
     "learning-review.schema.json",

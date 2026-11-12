@@ -6,22 +6,25 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.85.0
+## Current version: 1.86.0
 
 ### Included
 
 - Approval-gated operating model (`AGENTS.md` + five core rules)
-- Forty-seven Skills (including Wave 1 `agent-skills-packaging`,
+- Fifty-one Skills (including Wave 1 `agent-skills-packaging`,
   `goose-agent-orchestration`, `security-audit-procedures`, plus
   skill-learning-loop, knowledge-steward, code-reviewer, persistent-role-promotion,
   bounded-autonomy, compass-evaluator, experience-routing, capability-planning,
   execution-telemetry, candidate-promotion, experience-skill-training,
-  `context-inodes`, `project-overseer`)
+  `context-inodes`, `project-overseer`, Superpowers-inspired `design-before-plan`,
+  `verification-before-completion`, `finishing-a-development-branch`,
+  `subagent-driven-development`)
   — note: `.cursor/skills/inodes/` is the context-inode content store, not a Skill
 - Capability-aware planning orchestrator (`orchestrator/`, `scripts/capability-plan.sh`)
 - Twelve specialist subagents (also indexed as reference agent profiles)
 - Seven safety hooks (critical fail-closed; soft skips via env / command string / marker)
-- Six Cursor phase slash commands (`.cursor/commands/`)
+- Seven Cursor phase slash commands (`.cursor/commands/`, includes `/design-feature`)
+- C2 session memory (`brain memory …`, `COMPASS_SESSION_MEMORY_ENABLED`)
 - Autonomy budgets + session notes (`.agent/budgets/`, `.agent/sessions/`)
 - Evidence matrix, multi-runtime docs, technology-intelligence adapter contract, harness evals + sandbox behavioral checklist
 - Behavior Intelligence (M46–M54): evaluate → learn → instructions → prompt-eval → policy → status/oversight → provenance — proposal/observe/eval-only

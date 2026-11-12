@@ -1,0 +1,21 @@
+{
+  "schema_version": "1",
+  "observation_id": "obs-fixture-design-gate",
+  "title": "Captain approved design-before-plan for Superpowers harvest",
+  "summary": "Design gate approaches approved before IMPLEMENTATION_PLAN for session memory extension.",
+  "body": "Captain chose sequential Wave A Superpowers Skills then Wave B local session memory. Non-goals: ECC install, hosted observer, auto hooks. Authority locks remain false.",
+  "keywords": [
+    "design-before-plan",
+    "superpowers",
+    "session-memory",
+    "cognitive-core",
+    "approval"
+  ],
+  "created_at": "2026-11-12T20:00:00Z",
+  "source": {
+    "type": "fixture",
+    "id": "obs-fixture-design-gate"
+  },
+  "approved_for_execution": false,
+  "authority_mutation": false
+}
