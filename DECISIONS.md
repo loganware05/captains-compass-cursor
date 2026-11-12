@@ -1,5 +1,23 @@
 # Decisions
 
+## ADR-105: XRV W2 Eight-Pillar Readiness Assessor (v1.84.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-11
+- **Context:** Captain approved `xrv-readiness-assessor` (#263) after W1 merge
+  (#262) and pilot reconcile/continuity PRs. Notion/Software Factory roadmap
+  requires measurable readiness distinct from NorthStar effectiveness.
+- **Decision:**
+  1. Ship gated `northstar assess readiness` (`COMPASS_XRV_READINESS_ENABLED`).
+  2. Hermetic file/path probes only; missing evidence → unscored, never invented.
+  3. Dual sections: repository_readiness (8 pillars) vs northstar_effectiveness.
+  4. Authority locks + `scores_invented: false` const in schema.
+  5. Release **v1.84.0**.
+- **Consequences:** Operators can measure guarded-agent readiness without
+  conflating host-repo maturity with NorthStar outcomes. Rollback
+  `rollback/pre-xrv-readiness-assessor` @ `cb85c4a`.
+
+
 ## ADR-104: XRV W1 Release Integrity & Experience Evidence Records (v1.83.1)
 
 - **Status:** Accepted

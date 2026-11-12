@@ -1,41 +1,30 @@
 # XRV W2 — Eight-Pillar Repository Readiness Assessor
 
-> **AWAITING APPROVAL** — Issue [#263](https://github.com/loganware05/captains-compass-cursor/issues/263).
-> After Captain approval, copy/activate into repo-root `IMPLEMENTATION_PLAN.md`.
+> **IN PROGRESS** — Issue [#263](https://github.com/loganware05/captains-compass-cursor/issues/263).
+> Canonical gate: repo root `IMPLEMENTATION_PLAN.md` (APPROVED).
+> Proposed release: **v1.84.0**.
+> Rollback: `rollback/pre-xrv-readiness-assessor` @ `cb85c4a`.
 
-## Metadata
+## Operator surface
 
-| Field | Value |
-|---|---|
-| Status | **AWAITING APPROVAL** |
-| Plan ID | `xrv-readiness-assessor` |
-| Issue | [#263](https://github.com/loganware05/captains-compass-cursor/issues/263) |
-| Baseline | **v1.83.1** @ `dece600` |
-| Proposed release | **v1.84.0** |
-| Prior | W1 `xrv-release-integrity` (#261/#262) **COMPLETE** |
+```bash
+COMPASS_XRV_READINESS_ENABLED=1 \
+  ./scripts/northstar assess readiness --repo .
+```
 
-## Problem
+## Pillars (repository readiness)
 
-XRV needs measurable eight-pillar readiness (Software Factory model) that separates
-**repository readiness** from **NorthStar effectiveness**, scoring only from
-verifiable evidence.
+1. Style & validation  
+2. Build systems  
+3. Testing  
+4. Documentation  
+5. Development environments  
+6. Code quality  
+7. Observability  
+8. Security & governance  
 
-## Desired outcome
+## Effectiveness (separate)
 
-Gated hermetic `northstar assess readiness` (name TBD) with schema-validated
-scorecard, authority locks false, doctor fail-closed, fixtures + tests.
+NorthStar control signals (EER schema/fixture, I6 schema, XRV docs, drift module).
 
-## Out of scope
-
-Live providers, Level 3, auto-promotion, TrapHouse/Bitcoin product edits.
-
-## Acceptance
-
-- Fail-closed without gate
-- Dual score sections (readiness vs effectiveness)
-- No invented scores; missing evidence → unscored/blocked
-- Doctor + unit tests + docs/ADR
-
-## Captain decision
-
-Reply: `Approve xrv-readiness-assessor as written` (or with changes).
+Missing paths → **unscored** (never invented). Authority locks always false.

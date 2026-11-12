@@ -140,8 +140,7 @@ gh auth status
 
 ## Current Priorities
 
-**v1.83.1** XRV W1 merged (#262). Next control-plane candidate: eight-pillar
-readiness assessor (#263). Pilots: TrapHouse Slice 17 reconcile PR #37;
-bitcoin Pilot B continuity (#17). I1–I6 issues closed. Specialized Model
-Level 3 remains **DEFERRED**. Start here: `docs/guides/captain-handbook.md`.
-Live trading / AHF execution remains denied.
+**v1.84.0** XRV W2 eight-pillar readiness assessor in progress (#263) after W1
+**v1.83.1** / #262. Pilots: TrapHouse #37 and Bitcoin #18 merged. I1–I6 closed.
+Specialized Model Level 3 remains **DEFERRED**. Start here:
+`docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.

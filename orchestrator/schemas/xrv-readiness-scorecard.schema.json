@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/xrv-readiness-scorecard.schema.json",
+  "title": "XrvReadinessScorecard",
+  "description": "Eight-pillar repository readiness vs NorthStar effectiveness (XRV W2). Evidence-only; never invents scores or grants authority.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "scorecard_id",
+    "created_at",
+    "repository_sha",
+    "mode",
+    "repository_readiness",
+    "northstar_effectiveness",
+    "approved_for_execution",
+    "authority_mutation",
+    "auto_promoted",
+    "scores_invented"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "xrv-readiness-1" },
+    "scorecard_id": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "repository_sha": { "type": "string" },
+    "repo_path": { "type": "string" },
+    "mode": { "type": "string", "enum": ["hermetic"] },
+    "summary": { "type": "string" },
+    "repository_readiness": {
+      "type": "object",
+      "required": ["pillars", "scored_count", "unscored_count", "overall_status"],
+      "additionalProperties": false,
+      "properties": {
+        "overall_status": {
+          "type": "string",
+          "enum": ["ready", "partial", "blocked", "unscored"]
+        },
+        "overall_score": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+        "scored_count": { "type": "integer", "minimum": 0 },
+        "unscored_count": { "type": "integer", "minimum": 0 },
+        "pillars": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/pillar" }
+        }
+      }
+    },
+    "northstar_effectiveness": {
+      "type": "object",
+      "required": ["signals", "scored_count", "unscored_count", "overall_status"],
+      "additionalProperties": false,
+      "properties": {
+        "overall_status": {
+          "type": "string",
+          "enum": ["effective", "partial", "blocked", "unscored"]
+        },
+        "overall_score": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+        "scored_count": { "type": "integer", "minimum": 0 },
+        "unscored_count": { "type": "integer", "minimum": 0 },
+        "signals": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/signal" }
+        }
+      }
+    },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "auto_promoted": { "type": "boolean", "const": false },
+    "scores_invented": { "type": "boolean", "const": false }
+  },
+  "$defs": {
+    "signal": {
+      "type": "object",
+      "required": ["signal_id", "status", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "signal_id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["present", "missing", "unscored"]
+        },
+        "score": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+        "evidence": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "pillar": {
+      "type": "object",
+      "required": ["pillar_id", "label", "status", "signals"],
+      "additionalProperties": false,
+      "properties": {
+        "pillar_id": {
+          "type": "string",
+          "enum": [
+            "style_validation",
+            "build_systems",
+            "testing",
+            "documentation",
+            "development_environments",
+            "code_quality",
+            "observability",
+            "security_governance"
+          ]
+        },
+        "label": { "type": "string", "minLength": 1 },
+        "status": {
+          "type": "string",
+          "enum": ["scored", "unscored", "blocked"]
+        },
+        "score": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+        "signals": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/signal" },
+          "minItems": 1
+        }
+      }
+    }
+  }
+}

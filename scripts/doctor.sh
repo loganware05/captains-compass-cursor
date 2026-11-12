@@ -975,6 +975,35 @@ PY
   else
     fail "release document drift (VERSION ↔ README): $drift_out"
   fi
+  if [[ -f "$ROOT/orchestrator/schemas/xrv-readiness-scorecard.schema.json" ]]; then
+    ok "xrv-readiness-scorecard.schema.json present"
+  else
+    fail "missing orchestrator/schemas/xrv-readiness-scorecard.schema.json"
+  fi
+  if [[ -f "$ROOT/orchestrator/xrv/readiness.py" ]]; then
+    ok "orchestrator/xrv/readiness present"
+  else
+    fail "missing orchestrator/xrv/readiness.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-xrv-readiness.sh" ]]; then
+    ok "scripts/run-xrv-readiness.sh present"
+  else
+    fail "missing executable scripts/run-xrv-readiness.sh"
+  fi
+  if grep -q 'assess readiness' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents assess readiness"
+  else
+    fail "northstar missing assess readiness surface"
+  fi
+  set +e
+  ready_out="$(env -u COMPASS_XRV_READINESS_ENABLED "$ROOT/scripts/run-xrv-readiness.sh" run --repo-root "$ROOT" 2>&1)"
+  ready_rc=$?
+  set -e
+  if [[ "$ready_rc" -eq 2 && "$ready_out" == *"COMPASS_XRV_READINESS_ENABLED"* ]]; then
+    ok "xrv readiness fail-closed when COMPASS_XRV_READINESS_ENABLED unset"
+  else
+    fail "xrv readiness should exit 2 mentioning COMPASS_XRV_READINESS_ENABLED when unset (rc=$ready_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/openui/service.py" ]]; then
     ok "orchestrator/openui present"
   else
