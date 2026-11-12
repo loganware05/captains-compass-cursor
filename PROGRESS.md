@@ -2,7 +2,8 @@
 
 ## Current status
 
-**IN PROGRESS:** [#266](https://github.com/loganware05/captains-compass-cursor/issues/266)
+**IN PROGRESS:** [#266](https://github.com/loganware05/captains-compass-cursor/issues/266) /
+PR [#267](https://github.com/loganware05/captains-compass-cursor/pull/267)
 `xrv-portfolio-readiness` on `feature/266-xrv-portfolio-readiness` → **v1.85.0**.
 
 | Item | Value |
