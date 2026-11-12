@@ -140,7 +140,7 @@ gh auth status
 
 ## Current Priorities
 
-**v1.84.0** XRV W2 eight-pillar readiness assessor in progress (#263) after W1
-**v1.83.1** / #262. Pilots: TrapHouse #37 and Bitcoin #18 merged. I1–I6 closed.
+**v1.85.0** XRV W3 cross-repo readiness portfolio in progress (#266) after W2
+**v1.84.0** / #265. Pilots A/B PRs merged; PrizePicksBot inventory next.
 Specialized Model Level 3 remains **DEFERRED**. Start here:
 `docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.

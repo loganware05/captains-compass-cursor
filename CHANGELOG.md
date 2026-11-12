@@ -4,6 +4,17 @@
 
 ## Unreleased
 
+## 1.85.0 — 2026-11-11
+
+### Added
+
+- **XRV W3 cross-repo readiness portfolio** (`xrv-portfolio-readiness` / #266):
+  - Product vs control readiness profiles; assess works on product repos via
+    control-root schema/imports
+  - `northstar assess portfolio --repo LABEL=PATH …`
+  - Pilot EERs for TrapHouse #37 and Bitcoin #18
+  - Doctor wiring; ADR-106
+
 ## 1.84.0 — 2026-11-11
 
 ### Added

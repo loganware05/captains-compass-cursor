@@ -137,7 +137,8 @@ Commands:
   northstar brain show --snapshot-id ID [--repo PATH]
   northstar brain context --query TEXT [--mode hybrid|keyword|vector] [--top N] [--repo PATH]
   northstar assess project --objective TEXT [--repo PATH]
-  northstar assess readiness [--repo PATH] [--no-write]
+  northstar assess readiness [--profile control|product] [--repo PATH] [--no-write]
+  northstar assess portfolio --repo LABEL=PATH [--repo LABEL=PATH ...] [--no-write]
   northstar cycle begin --objective TEXT [--plan-id ID] [--repo PATH]
   northstar cycle checkpoint --execution-id ID --checkpoint-key KEY [options] [--repo PATH]
   northstar cycle close --execution-id ID [--outcome success|partial|failed|cancelled] [--repo PATH]
@@ -669,17 +670,25 @@ case "$cmd" in
     fi
     sub="$1"
     shift
-    # shellcheck disable=SC2207
-    mapped=()
-    while IFS= read -r -d '' item; do
-      mapped+=("$item")
-    done < <(map_repo_flag "$@")
     case "$sub" in
       project)
+        # shellcheck disable=SC2207
+        mapped=()
+        while IFS= read -r -d '' item; do
+          mapped+=("$item")
+        done < <(map_repo_flag "$@")
         exec "$ROOT/scripts/run-assess.sh" "$sub" "${mapped[@]+"${mapped[@]}"}"
         ;;
       readiness)
+        # shellcheck disable=SC2207
+        mapped=()
+        while IFS= read -r -d '' item; do
+          mapped+=("$item")
+        done < <(map_repo_flag "$@")
         exec "$ROOT/scripts/run-xrv-readiness.sh" run "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      portfolio)
+        exec "$ROOT/scripts/run-xrv-readiness.sh" portfolio "$@"
         ;;
       *)
         echo "error: unknown assess subcommand: $sub" >&2

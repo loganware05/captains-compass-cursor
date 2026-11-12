@@ -1,5 +1,22 @@
 # Decisions
 
+## ADR-106: XRV W3 Cross-Repo Readiness Portfolio (v1.85.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-11
+- **Context:** Captain continued after W2 merge (#265). Assessing TrapHouse
+  failed because schemas/imports were tied to the assessed repo root. Pilots
+  A/B completed docs/continuity PRs needing EERs.
+- **Decision:**
+  1. Load readiness/portfolio schemas from `COMPASS_CONTROL_ROOT`.
+  2. Add `control|product` profiles; auto-detect when unset.
+  3. Ship `northstar assess portfolio` multi-repo summary.
+  4. Record TrapHouse #37 and Bitcoin #18 EERs under `.agent/evidence/xrv/`.
+  5. Release **v1.85.0**.
+- **Consequences:** Pilot portfolio readiness is measurable from the control
+  plane. Rollback `rollback/pre-xrv-portfolio-readiness` @ `2016cd5`.
+
+
 ## ADR-105: XRV W2 Eight-Pillar Readiness Assessor (v1.84.0)
 
 - **Status:** Accepted

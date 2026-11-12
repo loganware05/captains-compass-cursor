@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# run-xrv-readiness.sh — Hermetic eight-pillar readiness assessor (XRV W2).
+# run-xrv-readiness.sh — Hermetic eight-pillar readiness / portfolio (XRV).
 #
 # Requires COMPASS_XRV_READINESS_ENABLED=1.
 # Never invents scores; never grants authority.
@@ -8,24 +8,37 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REPO_ROOT="$ROOT"
 NO_WRITE="0"
+CMD="run"
+PROFILE=""
+PORTFOLIO_ARGS=()
 
 usage() {
   cat <<'USAGE'
 Usage:
-  run-xrv-readiness.sh run [--no-write] [--repo-root PATH]
+  run-xrv-readiness.sh run [--profile control|product] [--no-write] [--repo-root PATH]
+  run-xrv-readiness.sh portfolio --repo LABEL=PATH [--repo LABEL=PATH ...] [--no-write]
 
 Requires COMPASS_XRV_READINESS_ENABLED=1.
-Hermetic path probes for eight pillars + NorthStar effectiveness signals.
+Imports/schemas always load from the control repo (this script's parent).
 USAGE
 }
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    run)
+    run|portfolio)
+      CMD="$1"
       shift
       ;;
     --repo-root)
       REPO_ROOT="$2"
+      shift 2
+      ;;
+    --profile)
+      PROFILE="$2"
+      shift 2
+      ;;
+    --repo)
+      PORTFOLIO_ARGS+=("$2")
       shift 2
       ;;
     --no-write)
@@ -52,21 +65,59 @@ if [[ "${COMPASS_XRV_READINESS_ENABLED:-}" != "1" && \
   exit 2
 fi
 
-export PYTHONPATH="${REPO_ROOT}${PYTHONPATH:+:$PYTHONPATH}"
-cd "$REPO_ROOT"
+export COMPASS_CONTROL_ROOT="${COMPASS_CONTROL_ROOT:-$ROOT}"
+export PYTHONPATH="${ROOT}${PYTHONPATH:+:$PYTHONPATH}"
 
-python3 - "$REPO_ROOT" "$NO_WRITE" <<'PY'
+python3 - "$CMD" "$ROOT" "$REPO_ROOT" "$NO_WRITE" "$PROFILE" "${PORTFOLIO_ARGS[@]+"${PORTFOLIO_ARGS[@]}"}" <<'PY'
 import json
 import sys
 from pathlib import Path
 
+from orchestrator.xrv.portfolio import assess_portfolio
 from orchestrator.xrv.readiness import assess_readiness
 
-repo_root = Path(sys.argv[1])
-write = sys.argv[2] not in {"1", "true", "yes", "on"}
+cmd = sys.argv[1]
+control_root = Path(sys.argv[2])
+repo_root = Path(sys.argv[3])
+no_write = sys.argv[4] in {"1", "true", "yes", "on"}
+profile = sys.argv[5] or None
+portfolio_args = sys.argv[6:]
+
+write = not no_write
 
 try:
-    result = assess_readiness(repo_root, require_gate=True, write_evidence=write)
+    if cmd == "run":
+        if profile is not None and profile not in {"control", "product"}:
+            print("error: --profile must be control|product", file=sys.stderr)
+            sys.exit(2)
+        result = assess_readiness(
+            repo_root,
+            require_gate=True,
+            write_evidence=write,
+            profile=profile,
+            control_root=control_root,
+            evidence_root=control_root if repo_root != control_root else None,
+        )
+    elif cmd == "portfolio":
+        if not portfolio_args:
+            print("error: portfolio requires one or more --repo LABEL=PATH", file=sys.stderr)
+            sys.exit(2)
+        entries = []
+        for item in portfolio_args:
+            if "=" not in item:
+                print(f"error: expected LABEL=PATH, got {item!r}", file=sys.stderr)
+                sys.exit(2)
+            label, path = item.split("=", 1)
+            entries.append((label, Path(path), None))
+        result = assess_portfolio(
+            entries,
+            require_gate=True,
+            write_evidence=write,
+            control_root=control_root,
+        )
+    else:
+        print(f"error: unknown command {cmd}", file=sys.stderr)
+        sys.exit(2)
 except PermissionError as exc:
     print(f"error: {exc}", file=sys.stderr)
     sys.exit(2)

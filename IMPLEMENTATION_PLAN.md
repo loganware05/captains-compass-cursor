@@ -1,36 +1,40 @@
-# Implementation Plan — XRV W2: Eight-Pillar Readiness Assessor
+# Implementation Plan — XRV W3: Cross-Repo Readiness Portfolio + Pilot EERs
 
-- Status: **COMPLETE** (PR open)
+- Status: **COMPLETE**
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **COMPLETE** (PR [#265](https://github.com/loganware05/captains-compass-cursor/pull/265)) |
-| Plan ID | `xrv-readiness-assessor` |
-| Issue | [#263](https://github.com/loganware05/captains-compass-cursor/issues/263) |
-| Baseline | **v1.83.1** @ `cb85c4a` |
-| Branch | `feature/263-xrv-readiness-assessor` |
-| Rollback | `rollback/pre-xrv-readiness-assessor` @ `cb85c4a` |
-| Proposed release | **v1.84.0** |
-| Program | Cross-Repository Validation (XRV) |
-| Prior | W1 `xrv-release-integrity` (#261/#262) **COMPLETE** |
-| Approved by | Logan Ware (Captain) — “Approve xrv-readiness-assessor as written” |
+| Status | **COMPLETE** |
+| Plan ID | `xrv-portfolio-readiness` |
+| Issue | [#266](https://github.com/loganware05/captains-compass-cursor/issues/266) |
+| Baseline | **v1.84.0** @ `2016cd5` |
+| Branch | `feature/266-xrv-portfolio-readiness` |
+| Rollback | `rollback/pre-xrv-portfolio-readiness` @ `2016cd5` |
+| Release | **v1.85.0** |
+| Approved by | Logan Ware (Captain) — continue after #265 merge |
 | Approval date | 2026-11-11 |
+| Completed | 2026-11-11 |
 
-## Desired Outcome
+## Outcome
 
-Gated hermetic `northstar assess readiness` with dual score sections
-(repository readiness vs NorthStar effectiveness), schema locks, doctor
-fail-closed, fixtures + tests. No invented scores.
+1. Assess readiness against product repos (control-root imports/schema)
+2. `profile=control|product` signal packs
+3. Portfolio scorecard across pilot roots
+4. EER fixtures for TrapHouse #37 and Bitcoin #18
+5. W2 closeout docs; PrizePicksBot inventory handoff (plan-only)
 
-## Acceptance Criteria
+## Acceptance
 
-- [x] Fail-closed without `COMPASS_XRV_READINESS_ENABLED`
-- [x] Dual sections; missing evidence → unscored (not invented)
-- [x] Authority locks const false
-- [x] Doctor + unit tests + docs/ADR/VERSION 1.84.0
+- [x] Product repo assess works without requiring orchestrator in product tree
+- [x] Product profile scores NorthStar-installed product markers
+- [x] Portfolio command emits multi-repo summary with locks false
+- [x] Pilot EERs validate under EER gate
+- [x] Doctor + tests + docs/ADR/VERSION 1.85.0
 
-## Autonomy Budget
+## Follow-ons (not this PR)
 
-See `.agent/budgets/xrv-readiness-assessor.md`.
+- PrizePicksBot Pilot C inventory (handoff launched; plan-only)
+- TrapHouse ops-verified E2E (Captain-gated)
+- Live trading / providers remain denied
