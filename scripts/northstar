@@ -62,7 +62,7 @@ Surfaces (one-line purpose):
   prompt-eval Prompt evaluation harness (M49) — eval-only; requires COMPASS_PROMPT_EVAL_ENABLED=1
   policy      Policy promotion lifecycle (M50) — requires COMPASS_POLICY_PROMOTE_ENABLED=1
   status      Project Overseer (M51/M52/N1) — snapshot/explain/compare/reconcile/closeout; requires COMPASS_STATUS_ENABLED=1
-  brain       Cognitive Core project-state + context (C1/C2) — requires COMPASS_BRAIN_ENABLED=1
+  brain       Cognitive Core project-state + context + optional session memory (C1/C2) — requires COMPASS_BRAIN_ENABLED=1; session memory also needs COMPASS_SESSION_MEMORY_ENABLED=1
   assess      C3 project difficulty (COMPASS_ASSESS_ENABLED=1); XRV readiness (COMPASS_XRV_READINESS_ENABLED=1)
   cycle       Cognitive Core Adaptive Development Loop (C4) — requires COMPASS_CYCLE_ENABLED=1
   learning    Captain Learning Review (C4) — requires COMPASS_CYCLE_ENABLED=1
@@ -135,7 +135,12 @@ Commands:
   northstar brain sync [--repo PATH]
   northstar brain status [--repo PATH]
   northstar brain show --snapshot-id ID [--repo PATH]
-  northstar brain context --query TEXT [--mode hybrid|keyword|vector] [--top N] [--repo PATH]
+  northstar brain context --query TEXT [--mode hybrid|keyword|vector] [--top N]
+                         [--include-session-memory] [--repo PATH]
+  northstar brain memory ingest --path FILE [--repo PATH]
+  northstar brain memory search --query TEXT [--top N] [--repo PATH]
+  northstar brain memory timeline [--limit N] [--repo PATH]
+  northstar brain memory show --id ID [--repo PATH]
   northstar assess project --objective TEXT [--repo PATH]
   northstar assess readiness [--profile control|product] [--repo PATH] [--no-write]
   northstar assess portfolio --repo LABEL=PATH [--repo LABEL=PATH ...] [--no-write]
@@ -653,7 +658,7 @@ case "$cmd" in
       mapped+=("$item")
     done < <(map_repo_flag "$@")
     case "$sub" in
-      sync|status|show|context)
+      sync|status|show|context|memory)
         exec "$ROOT/scripts/run-brain.sh" "$sub" "${mapped[@]+"${mapped[@]}"}"
         ;;
       *)

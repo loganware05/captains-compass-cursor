@@ -1,0 +1,15 @@
+{
+  "content_hash": "8a9c47e2379c6e14a28bd9b06d4653e7afef185cbb3a16562d932e575d678316",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-8a9c47e2379c6e14",
+  "slug": "finishing-a-development-branch",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

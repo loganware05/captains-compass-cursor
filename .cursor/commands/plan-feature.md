@@ -1,5 +1,8 @@
 Create or update an approval-gated implementation plan for the Captain's request.
 
+0. For creative / behavior-changing work without an approved design, load Skill
+   `design-before-plan` (or run `/design-feature`) first and stop until the
+   Captain signs off on the design. Skip only for quick, fully-specified tasks.
 1. Load Skills `implementation-planning` and `capability-planning` and follow them.
 2. Read required project memory docs and inspect the current implementation.
 3. Run `./scripts/capability-plan.sh --plan-id <plan-id> "<objective>"` and merge the rendered capability sections into root `IMPLEMENTATION_PLAN.md`.

@@ -1,5 +1,5 @@
 {
-  "skill_count": 47,
+  "skill_count": 51,
   "skills": {
     "accessibility-review": {
       "content_hash": "1bc05cf1b3b769ac134964c94d95b649c86b21ea8056beb9c93e57002d737990",
@@ -100,6 +100,15 @@
       },
       "skill_inode_id": "skl-60efbca38f87bd82"
     },
+    "design-before-plan": {
+      "content_hash": "a36053ba883864b58d1f8b4e7818646ddbcd01ac512fb78902d560cd9dd33dcc",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-a36053ba883864b5"
+    },
     "docker-cloud": {
       "content_hash": "f05a256f8afce73ca5ea64440edc83c3cb6359ab3ddf4b9d7e3a7a87a96cd9ec",
       "lifecycle_stage": "PROVEN_SKILL",
@@ -153,6 +162,15 @@
         "carry_over_from": null
       },
       "skill_inode_id": "skl-c3af27a5d076a78d"
+    },
+    "finishing-a-development-branch": {
+      "content_hash": "8a9c47e2379c6e14a28bd9b06d4653e7afef185cbb3a16562d932e575d678316",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-8a9c47e2379c6e14"
     },
     "github-integration": {
       "content_hash": "e0500739c3347b582b04dae80ee1c043aedb7960b9093cb6729dd021d2ef5c1e",
@@ -397,6 +415,15 @@
       },
       "skill_inode_id": "skl-9876b235a02a8cc8"
     },
+    "subagent-driven-development": {
+      "content_hash": "83126528fa605e43aad4c96f68d8050e2e0654e2abfec3bfc900ca9eb6f3f4c7",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-83126528fa605e43"
+    },
     "technology-intelligence-live": {
       "content_hash": "e2750e26c1e75fd010ad225af29ba7e7b68bd10d8421ab259ec34d049bde9afa",
       "lifecycle_stage": "AVAILABLE_SKILL",
@@ -414,6 +441,15 @@
         "carry_over_from": null
       },
       "skill_inode_id": "skl-c762380bfac3769c"
+    },
+    "verification-before-completion": {
+      "content_hash": "95fdaf1b9acc836f12653e9d390a17997dc43d27fa54e8051c143b32489b1c6e",
+      "lifecycle_stage": "AVAILABLE_SKILL",
+      "reputation": {
+        "captain_approved": false,
+        "carry_over_from": null
+      },
+      "skill_inode_id": "skl-95fdaf1b9acc836f"
     },
     "worktree-orchestration": {
       "content_hash": "b3a836914db119b819944dd52075b237829e3cd3426c94ce9045c2193dadab6b",

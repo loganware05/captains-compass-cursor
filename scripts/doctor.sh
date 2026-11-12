@@ -1226,6 +1226,35 @@ PY
   else
     fail "brain context should exit 2 mentioning COMPASS_BRAIN_ENABLED when unset (rc=$br_ctx_rc)"
   fi
+  set +e
+  br_mem_out="$(env -u COMPASS_SESSION_MEMORY_ENABLED COMPASS_BRAIN_ENABLED=1 "$ROOT/scripts/run-brain.sh" memory search --query test --repo-root "$ROOT" 2>&1)"
+  br_mem_rc=$?
+  set -e
+  if [[ "$br_mem_rc" -eq 2 && "$br_mem_out" == *"COMPASS_SESSION_MEMORY_ENABLED"* ]]; then
+    ok "brain memory fail-closed when COMPASS_SESSION_MEMORY_ENABLED unset"
+  else
+    fail "brain memory should exit 2 mentioning COMPASS_SESSION_MEMORY_ENABLED when unset (rc=$br_mem_rc)"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/session-observation.schema.json" ]]; then
+    ok "session-observation.schema.json present"
+  else
+    fail "missing orchestrator/schemas/session-observation.schema.json"
+  fi
+  if [[ -f "$ROOT/.cursor/skills/design-before-plan/SKILL.md" ]]; then
+    ok "design-before-plan Skill present"
+  else
+    fail "missing .cursor/skills/design-before-plan/SKILL.md"
+  fi
+  if [[ -f "$ROOT/.cursor/skills/verification-before-completion/SKILL.md" ]]; then
+    ok "verification-before-completion Skill present"
+  else
+    fail "missing .cursor/skills/verification-before-completion/SKILL.md"
+  fi
+  if [[ -f "$ROOT/.cursor/commands/design-feature.md" ]]; then
+    ok "design-feature command present"
+  else
+    fail "missing .cursor/commands/design-feature.md"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/scope-ledger.schema.json" ]]; then
     ok "scope-ledger.schema.json present"
   else

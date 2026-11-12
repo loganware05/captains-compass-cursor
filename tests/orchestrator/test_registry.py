@@ -49,9 +49,10 @@ class InferTests(unittest.TestCase):
 class RegistryCompileTests(unittest.TestCase):
     def test_compile_control_repo_registry(self) -> None:
         result = compile_registry(ROOT)
-        # 44 through M52 + Wave 1 Stars Skills (OVA-71): agent-skills-packaging,
-        # goose-agent-orchestration, security-audit-procedures
-        self.assertEqual(len(result.registry["skills"]), 47)
+        # 47 prior + Superpowers harvest (#272): design-before-plan,
+        # verification-before-completion, finishing-a-development-branch,
+        # subagent-driven-development
+        self.assertEqual(len(result.registry["skills"]), 51)
         self.assertEqual(len(result.registry["reference_profiles"]), 11)
         # SKILL_SLUGS must cover every on-disk Skill directory.
         self.assertEqual(result.warnings, [])

@@ -6,11 +6,15 @@ alwaysApply: true
 For any request that changes product behavior:
 
 1. Investigate the current implementation.
-2. Identify requirements, assumptions, risks, and dependencies.
-3. Create or update IMPLEMENTATION_PLAN.md.
-4. Set its status to AWAITING APPROVAL.
-5. Present the plan to the Captain.
-6. Stop before changing product implementation files.
+2. For non-trivial / creative work, run Skill `design-before-plan` (or
+   `/design-feature`): approaches + short design, Captain design approval —
+   before the implementation plan. Skip only when the request already specifies
+   everything that matters.
+3. Identify requirements, assumptions, risks, and dependencies.
+4. Create or update IMPLEMENTATION_PLAN.md.
+5. Set its status to AWAITING APPROVAL.
+6. Present the plan to the Captain.
+7. Stop before changing product implementation files.
 
 Implementation may begin only after explicit approval.
 

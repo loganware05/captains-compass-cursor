@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/session-observation.schema.json",
+  "title": "SessionObservation",
+  "description": "Local C2 session-memory observation. Evidence-linked; never grants authority. Inspired by progressive session memory patterns (claude-mem DISCOVERED; not installed).",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "observation_id",
+    "title",
+    "summary",
+    "body",
+    "created_at",
+    "approved_for_execution",
+    "authority_mutation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "observation_id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string", "minLength": 1 },
+    "body": { "type": "string", "minLength": 1 },
+    "keywords": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "created_at": { "type": "string", "minLength": 1 },
+    "source": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["fixture", "manual", "cli"]
+        },
+        "path": { "type": "string" },
+        "id": { "type": "string" }
+      }
+    },
+    "notes": { "type": "string" },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false }
+  }
+}

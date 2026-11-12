@@ -65,8 +65,11 @@ wandb/
 .agent/project-state/snapshots/**/*.json
 !.agent/project-state/snapshots/**/.gitkeep
 .agent/project-state/latest.json
+.agent/session-memory/**
+!.agent/session-memory/.gitkeep
 .agent/tmp-c1-tests/
 .agent/tmp-c2-tests/
+.agent/tmp-session-memory-tests/
 .agent/tmp-c3-tests/
 .agent/tmp-c4-tests/
 .agent/tmp-c5-tests/

@@ -5,6 +5,10 @@ alwaysApply: true
 
 A change is not done until applicable validation passes and evidence is recorded.
 
+Iron law (Skill `verification-before-completion`): no completion, fix, or pass
+claims without fresh verification command output in-session. Prior runs and
+“should pass” are not evidence.
+
 Required when applicable:
 
 - Static analysis / lint
