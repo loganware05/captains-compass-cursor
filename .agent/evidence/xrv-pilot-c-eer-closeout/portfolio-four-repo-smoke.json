@@ -1,0 +1,1313 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "auto_promoted": false,
+  "portfolio": {
+    "approved_for_execution": false,
+    "authority_mutation": false,
+    "auto_promoted": false,
+    "created_at": "2026-11-12T01:31:29Z",
+    "portfolio_id": "xrv-port-6548bf54205b",
+    "repos": [
+      {
+        "effectiveness_score": 100.0,
+        "effectiveness_status": "effective",
+        "label": "northstar",
+        "profile": "control",
+        "readiness_score": 100.0,
+        "readiness_status": "ready",
+        "repo_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor-xrv-pilot-c-closeout",
+        "repository_sha": "73ea6371fc6f34e62f7262f5a538d3a053d2e998",
+        "scorecard_id": "xrv-ready-4aa348a42bfb"
+      },
+      {
+        "effectiveness_score": 100.0,
+        "effectiveness_status": "effective",
+        "label": "traphouse",
+        "profile": "product",
+        "readiness_score": 100.0,
+        "readiness_status": "ready",
+        "repo_path": "/Users/loganware/TrapHouseKitchen",
+        "repository_sha": "c69ed58e4eb3b60eb3fc3a43f665fdf73c82dae9",
+        "scorecard_id": "xrv-ready-eff20dd25f69"
+      },
+      {
+        "effectiveness_score": 100.0,
+        "effectiveness_status": "effective",
+        "label": "bitcoin",
+        "profile": "product",
+        "readiness_score": 100.0,
+        "readiness_status": "ready",
+        "repo_path": "/Users/loganware/bitcoin-data-collector",
+        "repository_sha": "789ac814ed8aef70f43c0b6939893f94112a925a",
+        "scorecard_id": "xrv-ready-a7a6e951a1c4"
+      },
+      {
+        "effectiveness_score": 100.0,
+        "effectiveness_status": "effective",
+        "label": "prizepicks",
+        "profile": "product",
+        "readiness_score": 100.0,
+        "readiness_status": "ready",
+        "repo_path": "/Users/loganware/Documents/Personal/Code/PrizePicksBot",
+        "repository_sha": "d9481b98854bbf6253ffd1db472cd61f5c74ad81",
+        "scorecard_id": "xrv-ready-f7cb3af18579"
+      }
+    ],
+    "schema_version": "xrv-portfolio-1",
+    "scores_invented": false,
+    "summary": "4 repos assessed; northstar=ready/effective, traphouse=ready/effective, bitcoin=ready/effective, prizepicks=ready/effective"
+  },
+  "scorecards": [
+    {
+      "approved_for_execution": false,
+      "authority_mutation": false,
+      "auto_promoted": false,
+      "created_at": "2026-11-12T01:31:29Z",
+      "mode": "hermetic",
+      "northstar_effectiveness": {
+        "overall_score": 100.0,
+        "overall_status": "effective",
+        "scored_count": 5,
+        "signals": [
+          {
+            "evidence": [
+              "orchestrator/schemas/experience-evidence-record.schema.json"
+            ],
+            "label": "Experience Evidence Record schema",
+            "score": 100.0,
+            "signal_id": "eer_schema",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              ".agent/evidence/xrv/eer-i6-cross-provider-fixture.json"
+            ],
+            "label": "I6 EER fixture",
+            "score": 100.0,
+            "signal_id": "eer_fixture",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              "orchestrator/schemas/i6-cross-provider-scorecard.schema.json"
+            ],
+            "label": "I6 scorecard schema",
+            "score": 100.0,
+            "signal_id": "i6_scorecard_schema",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              "docs/plans/XRV_CROSS_REPOSITORY_VALIDATION.md"
+            ],
+            "label": "XRV program plan",
+            "score": 100.0,
+            "signal_id": "xrv_program_docs",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              "orchestrator/xrv/release_drift.py"
+            ],
+            "label": "Release drift checker",
+            "score": 100.0,
+            "signal_id": "release_drift_module",
+            "status": "present"
+          }
+        ],
+        "unscored_count": 0
+      },
+      "notes": "Hermetic path probes only. Missing paths yield unscored signals \u2014 scores are never invented. Separate readiness vs effectiveness.",
+      "profile": "control",
+      "repo_path": "/Users/loganware/Documents/Personal/Code/captains-compass-cursor-xrv-pilot-c-closeout",
+      "repository_readiness": {
+        "overall_score": 100.0,
+        "overall_status": "ready",
+        "pillars": [
+          {
+            "label": "Style & validation",
+            "pillar_id": "style_validation",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".cursor/hooks.json"
+                ],
+                "label": "Cursor hooks policy",
+                "score": 100.0,
+                "signal_id": "hooks_json",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "scripts/doctor.sh"
+                ],
+                "label": "Doctor script",
+                "score": 100.0,
+                "signal_id": "doctor_script",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Build systems",
+            "pillar_id": "build_systems",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".github/workflows/ci.yml"
+                ],
+                "label": "Control CI workflow",
+                "score": 100.0,
+                "signal_id": "ci_workflow",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "scripts/install.sh"
+                ],
+                "label": "Installer",
+                "score": 100.0,
+                "signal_id": "install_script",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Testing",
+            "pillar_id": "testing",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "tests/run.sh"
+                ],
+                "label": "Automated test runner",
+                "score": 100.0,
+                "signal_id": "tests_runner",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "TESTING.md"
+                ],
+                "label": "TESTING.md",
+                "score": 100.0,
+                "signal_id": "testing_md",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Documentation",
+            "pillar_id": "documentation",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "AGENTS.md"
+                ],
+                "label": "AGENTS.md",
+                "score": 100.0,
+                "signal_id": "agents_md",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "PROJECT_CONTEXT.md"
+                ],
+                "label": "PROJECT_CONTEXT.md",
+                "score": 100.0,
+                "signal_id": "project_context",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "README.md"
+                ],
+                "label": "README.md",
+                "score": 100.0,
+                "signal_id": "readme",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Development environments",
+            "pillar_id": "development_environments",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".cursor/skills"
+                ],
+                "label": "Cursor Skills tree",
+                "score": 100.0,
+                "signal_id": "cursor_skills",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "scripts/update.sh"
+                ],
+                "label": "Update script",
+                "score": 100.0,
+                "signal_id": "update_script",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Code quality",
+            "pillar_id": "code_quality",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".cursor/skills/code-reviewer/SKILL.md"
+                ],
+                "label": "Code reviewer Skill",
+                "score": 100.0,
+                "signal_id": "code_reviewer_skill",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  ".cursor/rules/01-plan-approval-gate.mdc"
+                ],
+                "label": "Plan approval rule",
+                "score": 100.0,
+                "signal_id": "plan_gate_rule",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Observability",
+            "pillar_id": "observability",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".agent/evidence"
+                ],
+                "label": "Evidence directory",
+                "score": 100.0,
+                "signal_id": "evidence_dir",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "docs/EVIDENCE_MATRIX.md"
+                ],
+                "label": "Evidence matrix",
+                "score": 100.0,
+                "signal_id": "evidence_matrix",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Security & governance",
+            "pillar_id": "security_governance",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "IMPLEMENTATION_PLAN.md"
+                ],
+                "label": "IMPLEMENTATION_PLAN.md",
+                "score": 100.0,
+                "signal_id": "implementation_plan",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "DECISIONS.md"
+                ],
+                "label": "DECISIONS.md",
+                "score": 100.0,
+                "signal_id": "decisions",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  ".cursor/hooks/secret-protection.sh"
+                ],
+                "label": "Secret protection hook",
+                "score": 100.0,
+                "signal_id": "secret_hook",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          }
+        ],
+        "scored_count": 8,
+        "unscored_count": 0
+      },
+      "repository_sha": "73ea6371fc6f34e62f7262f5a538d3a053d2e998",
+      "schema_version": "xrv-readiness-1",
+      "scorecard_id": "xrv-ready-4aa348a42bfb",
+      "scores_invented": false,
+      "summary": "profile=control; readiness=ready (8/8 pillars scored); effectiveness=effective (5 signals scored)"
+    },
+    {
+      "approved_for_execution": false,
+      "authority_mutation": false,
+      "auto_promoted": false,
+      "created_at": "2026-11-12T01:31:29Z",
+      "mode": "hermetic",
+      "northstar_effectiveness": {
+        "overall_score": 100.0,
+        "overall_status": "effective",
+        "scored_count": 5,
+        "signals": [
+          {
+            "evidence": [
+              "AGENTS.md"
+            ],
+            "label": "AGENTS.md installed",
+            "score": 100.0,
+            "signal_id": "agents_md",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              ".cursor/rules/01-plan-approval-gate.mdc"
+            ],
+            "label": "Plan approval rule installed",
+            "score": 100.0,
+            "signal_id": "plan_gate",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              "IMPLEMENTATION_PLAN.md"
+            ],
+            "label": "Active implementation plan",
+            "score": 100.0,
+            "signal_id": "implementation_plan",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              ".agent/evidence"
+            ],
+            "label": "Evidence directory",
+            "score": 100.0,
+            "signal_id": "evidence_dir",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              ".agent/COMPASS_VERSION"
+            ],
+            "label": "Compass install marker",
+            "score": 100.0,
+            "signal_id": "compass_version",
+            "status": "present"
+          }
+        ],
+        "unscored_count": 0
+      },
+      "notes": "Hermetic path probes only. Missing paths yield unscored signals \u2014 scores are never invented. Separate readiness vs effectiveness.",
+      "profile": "product",
+      "repo_path": "/Users/loganware/TrapHouseKitchen",
+      "repository_readiness": {
+        "overall_score": 100.0,
+        "overall_status": "ready",
+        "pillars": [
+          {
+            "label": "Style & validation",
+            "pillar_id": "style_validation",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".cursor/hooks.json"
+                ],
+                "label": "Cursor hooks policy",
+                "score": 100.0,
+                "signal_id": "hooks_json",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  ".cursor/hooks/secret-protection.sh"
+                ],
+                "label": "Secret protection hook",
+                "score": 100.0,
+                "signal_id": "hooks_runner",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Build systems",
+            "pillar_id": "build_systems",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "missing:.github/workflows/ci.yml",
+                  "missing:.github/workflows/test.yml"
+                ],
+                "label": "CI workflow",
+                "score": null,
+                "signal_id": "ci_workflow",
+                "status": "missing"
+              },
+              {
+                "evidence": [
+                  "package.json"
+                ],
+                "label": "Package manifest",
+                "score": 100.0,
+                "signal_id": "package_manifest",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Testing",
+            "pillar_id": "testing",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "TESTING.md"
+                ],
+                "label": "TESTING.md",
+                "score": 100.0,
+                "signal_id": "testing_md",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "playwright.config.ts",
+                  "backend/vitest.config.ts"
+                ],
+                "label": "Test runner config",
+                "score": 100.0,
+                "signal_id": "test_config",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Documentation",
+            "pillar_id": "documentation",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "AGENTS.md"
+                ],
+                "label": "AGENTS.md",
+                "score": 100.0,
+                "signal_id": "agents_md",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "PROJECT_CONTEXT.md"
+                ],
+                "label": "PROJECT_CONTEXT.md",
+                "score": 100.0,
+                "signal_id": "project_context",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "README.md"
+                ],
+                "label": "README.md",
+                "score": 100.0,
+                "signal_id": "readme",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "STATUS.md",
+                  "PROGRESS.md"
+                ],
+                "label": "STATUS/PROGRESS",
+                "score": 100.0,
+                "signal_id": "status_or_progress",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Development environments",
+            "pillar_id": "development_environments",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".cursor/rules"
+                ],
+                "label": "Cursor rules",
+                "score": 100.0,
+                "signal_id": "cursor_rules",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  ".cursor/skills"
+                ],
+                "label": "Cursor Skills",
+                "score": 100.0,
+                "signal_id": "cursor_skills",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Code quality",
+            "pillar_id": "code_quality",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".cursor/rules/01-plan-approval-gate.mdc"
+                ],
+                "label": "Plan approval rule",
+                "score": 100.0,
+                "signal_id": "plan_gate_rule",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "missing:.cursor/skills/code-reviewer/SKILL.md",
+                  "missing:.cursor/agents/code-reviewer.md"
+                ],
+                "label": "Code reviewer Skill or agent",
+                "score": null,
+                "signal_id": "code_reviewer",
+                "status": "missing"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Observability",
+            "pillar_id": "observability",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".agent/evidence"
+                ],
+                "label": "Evidence directory",
+                "score": 100.0,
+                "signal_id": "evidence_dir",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "missing:docs/EVIDENCE_MATRIX.md"
+                ],
+                "label": "Evidence matrix (optional)",
+                "score": null,
+                "signal_id": "evidence_matrix",
+                "status": "missing"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Security & governance",
+            "pillar_id": "security_governance",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "IMPLEMENTATION_PLAN.md"
+                ],
+                "label": "IMPLEMENTATION_PLAN.md",
+                "score": 100.0,
+                "signal_id": "implementation_plan",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "DECISIONS.md"
+                ],
+                "label": "DECISIONS.md",
+                "score": 100.0,
+                "signal_id": "decisions",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  ".agent/COMPASS_VERSION"
+                ],
+                "label": "Installed Compass version marker",
+                "score": 100.0,
+                "signal_id": "compass_version",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          }
+        ],
+        "scored_count": 8,
+        "unscored_count": 0
+      },
+      "repository_sha": "c69ed58e4eb3b60eb3fc3a43f665fdf73c82dae9",
+      "schema_version": "xrv-readiness-1",
+      "scorecard_id": "xrv-ready-eff20dd25f69",
+      "scores_invented": false,
+      "summary": "profile=product; readiness=ready (8/8 pillars scored); effectiveness=effective (5 signals scored)"
+    },
+    {
+      "approved_for_execution": false,
+      "authority_mutation": false,
+      "auto_promoted": false,
+      "created_at": "2026-11-12T01:31:29Z",
+      "mode": "hermetic",
+      "northstar_effectiveness": {
+        "overall_score": 100.0,
+        "overall_status": "effective",
+        "scored_count": 5,
+        "signals": [
+          {
+            "evidence": [
+              "AGENTS.md"
+            ],
+            "label": "AGENTS.md installed",
+            "score": 100.0,
+            "signal_id": "agents_md",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              ".cursor/rules/01-plan-approval-gate.mdc"
+            ],
+            "label": "Plan approval rule installed",
+            "score": 100.0,
+            "signal_id": "plan_gate",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              "IMPLEMENTATION_PLAN.md"
+            ],
+            "label": "Active implementation plan",
+            "score": 100.0,
+            "signal_id": "implementation_plan",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              ".agent/evidence"
+            ],
+            "label": "Evidence directory",
+            "score": 100.0,
+            "signal_id": "evidence_dir",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              ".agent/COMPASS_VERSION"
+            ],
+            "label": "Compass install marker",
+            "score": 100.0,
+            "signal_id": "compass_version",
+            "status": "present"
+          }
+        ],
+        "unscored_count": 0
+      },
+      "notes": "Hermetic path probes only. Missing paths yield unscored signals \u2014 scores are never invented. Separate readiness vs effectiveness.",
+      "profile": "product",
+      "repo_path": "/Users/loganware/bitcoin-data-collector",
+      "repository_readiness": {
+        "overall_score": 100.0,
+        "overall_status": "ready",
+        "pillars": [
+          {
+            "label": "Style & validation",
+            "pillar_id": "style_validation",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".cursor/hooks.json"
+                ],
+                "label": "Cursor hooks policy",
+                "score": 100.0,
+                "signal_id": "hooks_json",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  ".cursor/hooks/secret-protection.sh"
+                ],
+                "label": "Secret protection hook",
+                "score": 100.0,
+                "signal_id": "hooks_runner",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Build systems",
+            "pillar_id": "build_systems",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "missing:.github/workflows/ci.yml",
+                  "missing:.github/workflows/test.yml"
+                ],
+                "label": "CI workflow",
+                "score": null,
+                "signal_id": "ci_workflow",
+                "status": "missing"
+              },
+              {
+                "evidence": [
+                  "requirements.txt"
+                ],
+                "label": "Package manifest",
+                "score": 100.0,
+                "signal_id": "package_manifest",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Testing",
+            "pillar_id": "testing",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "TESTING.md"
+                ],
+                "label": "TESTING.md",
+                "score": 100.0,
+                "signal_id": "testing_md",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "missing:playwright.config.ts",
+                  "missing:backend/vitest.config.ts",
+                  "missing:vitest.config.ts",
+                  "missing:pytest.ini",
+                  "missing:pyproject.toml"
+                ],
+                "label": "Test runner config",
+                "score": null,
+                "signal_id": "test_config",
+                "status": "missing"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Documentation",
+            "pillar_id": "documentation",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "AGENTS.md"
+                ],
+                "label": "AGENTS.md",
+                "score": 100.0,
+                "signal_id": "agents_md",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "PROJECT_CONTEXT.md"
+                ],
+                "label": "PROJECT_CONTEXT.md",
+                "score": 100.0,
+                "signal_id": "project_context",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "README.md"
+                ],
+                "label": "README.md",
+                "score": 100.0,
+                "signal_id": "readme",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "PROGRESS.md"
+                ],
+                "label": "STATUS/PROGRESS",
+                "score": 100.0,
+                "signal_id": "status_or_progress",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Development environments",
+            "pillar_id": "development_environments",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".cursor/rules"
+                ],
+                "label": "Cursor rules",
+                "score": 100.0,
+                "signal_id": "cursor_rules",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  ".cursor/skills"
+                ],
+                "label": "Cursor Skills",
+                "score": 100.0,
+                "signal_id": "cursor_skills",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Code quality",
+            "pillar_id": "code_quality",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".cursor/rules/01-plan-approval-gate.mdc"
+                ],
+                "label": "Plan approval rule",
+                "score": 100.0,
+                "signal_id": "plan_gate_rule",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  ".cursor/skills/code-reviewer/SKILL.md",
+                  ".cursor/agents/code-reviewer.md"
+                ],
+                "label": "Code reviewer Skill or agent",
+                "score": 100.0,
+                "signal_id": "code_reviewer",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Observability",
+            "pillar_id": "observability",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".agent/evidence"
+                ],
+                "label": "Evidence directory",
+                "score": 100.0,
+                "signal_id": "evidence_dir",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "docs/EVIDENCE_MATRIX.md"
+                ],
+                "label": "Evidence matrix (optional)",
+                "score": 100.0,
+                "signal_id": "evidence_matrix",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Security & governance",
+            "pillar_id": "security_governance",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "IMPLEMENTATION_PLAN.md"
+                ],
+                "label": "IMPLEMENTATION_PLAN.md",
+                "score": 100.0,
+                "signal_id": "implementation_plan",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "DECISIONS.md"
+                ],
+                "label": "DECISIONS.md",
+                "score": 100.0,
+                "signal_id": "decisions",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  ".agent/COMPASS_VERSION"
+                ],
+                "label": "Installed Compass version marker",
+                "score": 100.0,
+                "signal_id": "compass_version",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          }
+        ],
+        "scored_count": 8,
+        "unscored_count": 0
+      },
+      "repository_sha": "789ac814ed8aef70f43c0b6939893f94112a925a",
+      "schema_version": "xrv-readiness-1",
+      "scorecard_id": "xrv-ready-a7a6e951a1c4",
+      "scores_invented": false,
+      "summary": "profile=product; readiness=ready (8/8 pillars scored); effectiveness=effective (5 signals scored)"
+    },
+    {
+      "approved_for_execution": false,
+      "authority_mutation": false,
+      "auto_promoted": false,
+      "created_at": "2026-11-12T01:31:29Z",
+      "mode": "hermetic",
+      "northstar_effectiveness": {
+        "overall_score": 100.0,
+        "overall_status": "effective",
+        "scored_count": 5,
+        "signals": [
+          {
+            "evidence": [
+              "AGENTS.md"
+            ],
+            "label": "AGENTS.md installed",
+            "score": 100.0,
+            "signal_id": "agents_md",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              ".cursor/rules/01-plan-approval-gate.mdc"
+            ],
+            "label": "Plan approval rule installed",
+            "score": 100.0,
+            "signal_id": "plan_gate",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              "IMPLEMENTATION_PLAN.md"
+            ],
+            "label": "Active implementation plan",
+            "score": 100.0,
+            "signal_id": "implementation_plan",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              ".agent/evidence"
+            ],
+            "label": "Evidence directory",
+            "score": 100.0,
+            "signal_id": "evidence_dir",
+            "status": "present"
+          },
+          {
+            "evidence": [
+              ".agent/COMPASS_VERSION"
+            ],
+            "label": "Compass install marker",
+            "score": 100.0,
+            "signal_id": "compass_version",
+            "status": "present"
+          }
+        ],
+        "unscored_count": 0
+      },
+      "notes": "Hermetic path probes only. Missing paths yield unscored signals \u2014 scores are never invented. Separate readiness vs effectiveness.",
+      "profile": "product",
+      "repo_path": "/Users/loganware/Documents/Personal/Code/PrizePicksBot",
+      "repository_readiness": {
+        "overall_score": 100.0,
+        "overall_status": "ready",
+        "pillars": [
+          {
+            "label": "Style & validation",
+            "pillar_id": "style_validation",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".cursor/hooks.json"
+                ],
+                "label": "Cursor hooks policy",
+                "score": 100.0,
+                "signal_id": "hooks_json",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  ".cursor/hooks/secret-protection.sh"
+                ],
+                "label": "Secret protection hook",
+                "score": 100.0,
+                "signal_id": "hooks_runner",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Build systems",
+            "pillar_id": "build_systems",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "missing:.github/workflows/ci.yml",
+                  "missing:.github/workflows/test.yml"
+                ],
+                "label": "CI workflow",
+                "score": null,
+                "signal_id": "ci_workflow",
+                "status": "missing"
+              },
+              {
+                "evidence": [
+                  "requirements.txt",
+                  "pyproject.toml"
+                ],
+                "label": "Package manifest",
+                "score": 100.0,
+                "signal_id": "package_manifest",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Testing",
+            "pillar_id": "testing",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "TESTING.md"
+                ],
+                "label": "TESTING.md",
+                "score": 100.0,
+                "signal_id": "testing_md",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "pyproject.toml"
+                ],
+                "label": "Test runner config",
+                "score": 100.0,
+                "signal_id": "test_config",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Documentation",
+            "pillar_id": "documentation",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "AGENTS.md"
+                ],
+                "label": "AGENTS.md",
+                "score": 100.0,
+                "signal_id": "agents_md",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "PROJECT_CONTEXT.md"
+                ],
+                "label": "PROJECT_CONTEXT.md",
+                "score": 100.0,
+                "signal_id": "project_context",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "README.md"
+                ],
+                "label": "README.md",
+                "score": 100.0,
+                "signal_id": "readme",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "PROGRESS.md"
+                ],
+                "label": "STATUS/PROGRESS",
+                "score": 100.0,
+                "signal_id": "status_or_progress",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Development environments",
+            "pillar_id": "development_environments",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".cursor/rules"
+                ],
+                "label": "Cursor rules",
+                "score": 100.0,
+                "signal_id": "cursor_rules",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  ".cursor/skills"
+                ],
+                "label": "Cursor Skills",
+                "score": 100.0,
+                "signal_id": "cursor_skills",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Code quality",
+            "pillar_id": "code_quality",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".cursor/rules/01-plan-approval-gate.mdc"
+                ],
+                "label": "Plan approval rule",
+                "score": 100.0,
+                "signal_id": "plan_gate_rule",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "missing:.cursor/skills/code-reviewer/SKILL.md",
+                  "missing:.cursor/agents/code-reviewer.md"
+                ],
+                "label": "Code reviewer Skill or agent",
+                "score": null,
+                "signal_id": "code_reviewer",
+                "status": "missing"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Observability",
+            "pillar_id": "observability",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  ".agent/evidence"
+                ],
+                "label": "Evidence directory",
+                "score": 100.0,
+                "signal_id": "evidence_dir",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "docs/EVIDENCE_MATRIX.md"
+                ],
+                "label": "Evidence matrix (optional)",
+                "score": 100.0,
+                "signal_id": "evidence_matrix",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          },
+          {
+            "label": "Security & governance",
+            "pillar_id": "security_governance",
+            "score": 100.0,
+            "signals": [
+              {
+                "evidence": [
+                  "IMPLEMENTATION_PLAN.md"
+                ],
+                "label": "IMPLEMENTATION_PLAN.md",
+                "score": 100.0,
+                "signal_id": "implementation_plan",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  "DECISIONS.md"
+                ],
+                "label": "DECISIONS.md",
+                "score": 100.0,
+                "signal_id": "decisions",
+                "status": "present"
+              },
+              {
+                "evidence": [
+                  ".agent/COMPASS_VERSION"
+                ],
+                "label": "Installed Compass version marker",
+                "score": 100.0,
+                "signal_id": "compass_version",
+                "status": "present"
+              }
+            ],
+            "status": "scored"
+          }
+        ],
+        "scored_count": 8,
+        "unscored_count": 0
+      },
+      "repository_sha": "d9481b98854bbf6253ffd1db472cd61f5c74ad81",
+      "schema_version": "xrv-readiness-1",
+      "scorecard_id": "xrv-ready-f7cb3af18579",
+      "scores_invented": false,
+      "summary": "profile=product; readiness=ready (8/8 pillars scored); effectiveness=effective (5 signals scored)"
+    }
+  ],
+  "scores_invented": false,
+  "status": "ok"
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": "xrv-eer-1",
+  "eer_id": "eer-prizepicks-pilot-c-187a695",
+  "created_at": "2026-11-12T01:30:00Z",
+  "repository": {
+    "owner": "loganware05",
+    "name": "PrizePicksBot",
+    "url": "https://github.com/loganware05/PrizePicksBot"
+  },
+  "commit_sha": "187a695a932e9406f41c19fcab260317469fa4d7",
+  "plan_id": "xrv-pilot-c-onboard-baseline",
+  "issue": "https://github.com/loganware05/PrizePicksBot/issues/2",
+  "pull_request": "https://github.com/loganware05/PrizePicksBot/pull/3",
+  "branch": "feature/2-xrv-pilot-c-onboard-baseline",
+  "lifecycle_state": "merged",
+  "skills_selected": [
+    "implementation-planning",
+    "testing-validation",
+    "python-ml"
+  ],
+  "budget_ref": ".agent/budgets/xrv-pilot-c-onboard-baseline.md",
+  "permissions": [
+    "fixture-mock-only",
+    "live-wager-denied",
+    "paper-ok"
+  ],
+  "test_evidence": [
+    "pytest -q → 34 passed on implement branch",
+    ".agent/evidence/xrv-pilot-c-onboard-baseline/",
+    "money-safety greps CLEAN (no submit / httpx.post)"
+  ],
+  "failure_repair": [],
+  "review_refs": [],
+  "rollback_ref": "rollback/pre-xrv-pilot-c-onboard-baseline @ d9481b9",
+  "latency_cost": {
+    "notes": "Fixture-only Pilot C baseline; no live wager spend"
+  },
+  "verified_outcome": "Pilot C board schema + stale-age gate merged (PR #3 @ 187a695). Live PrizePicks entries remain DENIED. Ops-verified / transfer-learning deferred.",
+  "experience_id": null,
+  "execution_run_id": null,
+  "related_evidence_paths": [
+    ".agent/evidence/xrv-pilot-c-onboard-baseline/",
+    ".agent/evidence/xrv-pilot-c-prizepicks/"
+  ],
+  "notes": "XRV Pilot C. approved_for_execution stays false. Dirty paper-trade WIP not modified.",
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "issues_auto_closed": false,
+  "auto_promoted": false
+}
