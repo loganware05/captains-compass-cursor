@@ -2,15 +2,16 @@
 
 ## Current status
 
-**IN PROGRESS:** [#272](https://github.com/loganware05/captains-compass-cursor/issues/272)
-`superpowers-c2-session-memory` on `feature/272-superpowers-c2-session-memory`
-→ **v1.86.0**.
+**PR OPEN:** [#273](https://github.com/loganware05/captains-compass-cursor/pull/273)
+for [#272](https://github.com/loganware05/captains-compass-cursor/issues/272)
+`superpowers-c2-session-memory` → **v1.86.0**. Merge Captain-only.
 
 | Item | Value |
 |---|---|
 | Baseline | **v1.85.0** @ `151ce6a` |
 | Active plan | `superpowers-c2-session-memory` **APPROVED** |
 | Issue | [#272](https://github.com/loganware05/captains-compass-cursor/issues/272) |
+| PR | [#273](https://github.com/loganware05/captains-compass-cursor/pull/273) @ `41f25e5` |
 | Rollback | `rollback/pre-superpowers-c2-session-memory` @ `151ce6a` |
 | Worktree | `/Users/loganware/Documents/Personal/Code/captains-compass-cursor-superpowers-c2` |
 
