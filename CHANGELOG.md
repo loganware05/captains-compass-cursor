@@ -4,6 +4,18 @@
 
 ## Unreleased
 
+## 1.84.0 — 2026-11-11
+
+### Added
+
+- **XRV W2 eight-pillar readiness assessor** (`xrv-readiness-assessor` / #263):
+  - Gated `northstar assess readiness` (`COMPASS_XRV_READINESS_ENABLED`)
+  - Hermetic path probes for eight Software Factory pillars + separate
+    NorthStar effectiveness signals
+  - Scorecard schema with authority locks; missing evidence → unscored
+    (never invented)
+  - Doctor fail-closed; ADR-105
+
 ## 1.83.1 — 2026-11-10
 
 ### Added

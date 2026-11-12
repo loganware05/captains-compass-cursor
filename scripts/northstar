@@ -63,7 +63,7 @@ Surfaces (one-line purpose):
   policy      Policy promotion lifecycle (M50) — requires COMPASS_POLICY_PROMOTE_ENABLED=1
   status      Project Overseer (M51/M52/N1) — snapshot/explain/compare/reconcile/closeout; requires COMPASS_STATUS_ENABLED=1
   brain       Cognitive Core project-state + context (C1/C2) — requires COMPASS_BRAIN_ENABLED=1
-  assess      Cognitive Core difficulty / capability-fit (C3) — requires COMPASS_ASSESS_ENABLED=1
+  assess      C3 project difficulty (COMPASS_ASSESS_ENABLED=1); XRV readiness (COMPASS_XRV_READINESS_ENABLED=1)
   cycle       Cognitive Core Adaptive Development Loop (C4) — requires COMPASS_CYCLE_ENABLED=1
   learning    Captain Learning Review (C4) — requires COMPASS_CYCLE_ENABLED=1
   model       Cognitive Core Adaptive routing (C5) — requires COMPASS_ROUTE_ENABLED=1
@@ -137,6 +137,7 @@ Commands:
   northstar brain show --snapshot-id ID [--repo PATH]
   northstar brain context --query TEXT [--mode hybrid|keyword|vector] [--top N] [--repo PATH]
   northstar assess project --objective TEXT [--repo PATH]
+  northstar assess readiness [--repo PATH] [--no-write]
   northstar cycle begin --objective TEXT [--plan-id ID] [--repo PATH]
   northstar cycle checkpoint --execution-id ID --checkpoint-key KEY [options] [--repo PATH]
   northstar cycle close --execution-id ID [--outcome success|partial|failed|cancelled] [--repo PATH]
@@ -676,6 +677,9 @@ case "$cmd" in
     case "$sub" in
       project)
         exec "$ROOT/scripts/run-assess.sh" "$sub" "${mapped[@]+"${mapped[@]}"}"
+        ;;
+      readiness)
+        exec "$ROOT/scripts/run-xrv-readiness.sh" run "${mapped[@]+"${mapped[@]}"}"
         ;;
       *)
         echo "error: unknown assess subcommand: $sub" >&2
