@@ -140,7 +140,7 @@ gh auth status
 
 ## Current Priorities
 
-**v1.85.0** XRV W3 cross-repo readiness portfolio in progress (#266) after W2
-**v1.84.0** / #265. Pilots A/B PRs merged; PrizePicksBot inventory next.
+**v1.85.0** XRV W3 portfolio shipped (#267). Pilots A/B complete; Pilot C
+PrizePicksBot onboard/baseline running in product repo (fixture/mock only).
 Specialized Model Level 3 remains **DEFERRED**. Start here:
-`docs/guides/captain-handbook.md`. Live trading / AHF execution remains denied.
+`docs/guides/captain-handbook.md`. Live trading / AHF / live wagers remain denied.

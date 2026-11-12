@@ -1,8 +1,9 @@
 # XRV — Cross-Repository Engineering Intelligence Validation
 
 > **W1 COMPLETE** — #262 → **v1.83.1**. **W2 COMPLETE** — #265 → **v1.84.0**.
-> **W3 IN PROGRESS:** `xrv-portfolio-readiness` (#266) → **v1.85.0**.
-> Canonical gate: repo root `IMPLEMENTATION_PLAN.md`.
+> **W3 COMPLETE** — #267 → **v1.85.0** @ `5c399ac`.
+> **Pilot C IN PROGRESS:** PrizePicksBot onboard/baseline (product repo; Captain-approved).
+> Canonical gate: repo root `IMPLEMENTATION_PLAN.md` (control); product plans in pilot repos.
 
 ## One-line summary
 
@@ -38,8 +39,8 @@ COMPASS_XRV_EER_ENABLED=1 \
 - [x] TrapHouse Slice 17 docs/evidence reconcile (PR [#37](https://github.com/loganware05/TrapHouseKitchen/pull/37) merged)
 - [x] Bitcoin Pilot B continuity (PR [#18](https://github.com/loganware05/bitcoin-data-collector/pull/18) merged)
 - [x] Eight-pillar readiness assessor (#263 / #265 → v1.84.0)
-- [x] Cross-repo portfolio + Pilot A/B EERs (#266 → v1.85.0)
-- [ ] PrizePicksBot onboard / baseline (Pilot C)
+- [x] Cross-repo portfolio + Pilot A/B EERs (#266 / #267 → v1.85.0)
+- [ ] PrizePicksBot onboard / baseline (Pilot C) — approved; implementing in product repo
 - [ ] Independent auditor can reconstruct full cycles incl. ops-verified states
 
 ## Explicit deferrals
