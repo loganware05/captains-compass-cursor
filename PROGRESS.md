@@ -2,13 +2,14 @@
 
 ## Current status
 
-**IN PROGRESS:** [#263](https://github.com/loganware05/captains-compass-cursor/issues/263)
-`xrv-readiness-assessor` on `feature/263-xrv-readiness-assessor` → **v1.84.0**.
+**PR OPEN:** [#265](https://github.com/loganware05/captains-compass-cursor/pull/265)
+`xrv-readiness-assessor` (#263) on
+`feature/263-xrv-readiness-assessor` → **v1.84.0** @ `7712f73`.
 
 | Item | Value |
 |---|---|
 | Baseline | **v1.83.1** @ `cb85c4a` |
-| Active plan | `xrv-readiness-assessor` **APPROVED** |
+| Active plan | `xrv-readiness-assessor` **COMPLETE** (opening PR) |
 | Issue | [#263](https://github.com/loganware05/captains-compass-cursor/issues/263) |
 | Rollback | `rollback/pre-xrv-readiness-assessor` @ `cb85c4a` |
 

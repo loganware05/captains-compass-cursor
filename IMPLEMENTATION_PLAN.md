@@ -1,12 +1,12 @@
 # Implementation Plan — XRV W2: Eight-Pillar Readiness Assessor
 
-- Status: **IN PROGRESS**
+- Status: **COMPLETE** (PR open)
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **IN PROGRESS** |
+| Status | **COMPLETE** (PR [#265](https://github.com/loganware05/captains-compass-cursor/pull/265)) |
 | Plan ID | `xrv-readiness-assessor` |
 | Issue | [#263](https://github.com/loganware05/captains-compass-cursor/issues/263) |
 | Baseline | **v1.83.1** @ `cb85c4a` |
