@@ -1,0 +1,15 @@
+{
+  "content_hash": "5a7d3b393e511cfae086349519f67e0b9f5432dc7ec128a13ffc99ed0626dd5a",
+  "lifecycle_stage": "AVAILABLE_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": null
+  },
+  "skill_inode_id": "skl-5a7d3b393e511cfa",
+  "slug": "post-merge-wave-continue",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

@@ -69,6 +69,7 @@ SCHEMA_FILES = (
     "adaptive-intelligence-scorecard.schema.json",
     "n4-benchmark-report.schema.json",
     "n5-feedback-report.schema.json",
+    "wave-ledger.schema.json",
 )
 
 

@@ -88,6 +88,7 @@ SKILL_SLUGS = (
     "verification-before-completion",
     "finishing-a-development-branch",
     "subagent-driven-development",
+    "post-merge-wave-continue",
 )
 
 AGENT_PROFILES = (

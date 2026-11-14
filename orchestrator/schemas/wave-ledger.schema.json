@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://captains-compass.dev/schemas/wave-ledger.schema.json",
+  "title": "WaveLedger",
+  "description": "Multi-wave plan ledger for post-merge continue. Never grants authority; never auto-merges.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "plan_id",
+    "approved_revision",
+    "plan_status",
+    "waves",
+    "pause_between_waves",
+    "next_action",
+    "approved_for_execution",
+    "authority_mutation",
+    "auto_merge"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "plan_id": { "type": "string", "minLength": 1 },
+    "approved_revision": { "type": "string", "minLength": 1 },
+    "plan_status": {
+      "type": "string",
+      "enum": ["APPROVED", "IN_PROGRESS", "COMPLETE", "PAUSED", "REFUSED"]
+    },
+    "created_at": { "type": "string", "minLength": 1 },
+    "updated_at": { "type": "string", "minLength": 1 },
+    "pause_between_waves": { "type": "boolean" },
+    "next_thread_id": { "type": ["string", "null"] },
+    "next_action": {
+      "type": "string",
+      "enum": [
+        "implement_wave",
+        "await_merge",
+        "continue_after_merge",
+        "settle_complete",
+        "paused",
+        "refused"
+      ]
+    },
+    "active_wave_id": { "type": ["string", "null"] },
+    "waves": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["wave_id", "title", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "wave_id": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "in_progress", "open", "merged", "complete", "skipped"]
+          },
+          "pr_url": { "type": ["string", "null"] },
+          "merged_sha": { "type": ["string", "null"] },
+          "merged_at": { "type": ["string", "null"] },
+          "optional": { "type": "boolean" }
+        }
+      }
+    },
+    "approved_for_execution": { "type": "boolean", "const": false },
+    "authority_mutation": { "type": "boolean", "const": false },
+    "auto_merge": { "type": "boolean", "const": false }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "content_hash": "9ee372f6e16cd880d54db2c7fff15b20a1e2fcdca04d7244cf40fee239b1b120",
+  "lifecycle_stage": "PROVEN_SKILL",
+  "reputation": {
+    "captain_approved": false,
+    "carry_over_from": "skl-3aa00c2d28085eaa"
+  },
+  "skill_inode_id": "skl-9ee372f6e16cd880",
+  "slug": "pull-request-preparation",
+  "sources": [
+    "SKILL.md",
+    "capability.yaml"
+  ],
+  "store_version": "1.0.0"
+}

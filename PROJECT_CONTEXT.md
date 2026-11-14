@@ -51,7 +51,7 @@ agentic engineering process across multiple product repositories.
 
 1. AGENTS.md operating contract
 2. Five always-applied core rules
-3. Fifty-one Skills (including Wave 1 Stars-derived `agent-skills-packaging`,
+3. Fifty-two Skills (including Wave 1 Stars-derived `agent-skills-packaging`,
    `goose-agent-orchestration`, `security-audit-procedures`, plus
    `project-overseer`, `code-reviewer`, `context-inodes`,
    northstar-connected-routine, skill-learning-loop, embedding-providers,
@@ -61,7 +61,8 @@ agentic engineering process across multiple product repositories.
    experience-routing, capability-planning, execution-telemetry,
    candidate-promotion, experience-skill-training, plus Superpowers-inspired
    `design-before-plan`, `verification-before-completion`,
-   `finishing-a-development-branch`, `subagent-driven-development`).
+   `finishing-a-development-branch`, `subagent-driven-development`, and
+   `post-merge-wave-continue`).
    `.cursor/skills/inodes/` is the context-inode content store (not a Skill).
 4. Twelve specialist subagents (including `project-overseer`, `code-reviewer`, `compass-evaluator`, `knowledge-steward`)
 5. Seven safety hooks (three critical fail-closed; four soft fail-open with multi-path skips)
@@ -142,7 +143,7 @@ gh auth status
 
 ## Current Priorities
 
-**v1.86.0** Superpowers process Skills + C2 session memory (#272) in flight.
+**v1.87.0** post-merge wave continue Skill + CLI (#274) in flight.
 Prior: **v1.85.0** XRV W3 (#267); Pilot C [#3](https://github.com/loganware05/PrizePicksBot/pull/3).
 Specialized Model Level 3 **DEFERRED**. Start here: `docs/guides/captain-handbook.md`.
 Live trading / AHF / live wagers denied.

@@ -2,21 +2,22 @@
 
 ## Current status
 
-**PR OPEN:** [#273](https://github.com/loganware05/captains-compass-cursor/pull/273)
-for [#272](https://github.com/loganware05/captains-compass-cursor/issues/272)
-`superpowers-c2-session-memory` → **v1.86.0**. Merge Captain-only.
+**PR OPEN:** [#275](https://github.com/loganware05/captains-compass-cursor/pull/275)
+for [#274](https://github.com/loganware05/captains-compass-cursor/issues/274)
+`post-merge-wave-continue` → **v1.87.0**. Merge Captain-only.
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.85.0** @ `151ce6a` |
-| Active plan | `superpowers-c2-session-memory` **APPROVED** |
-| Issue | [#272](https://github.com/loganware05/captains-compass-cursor/issues/272) |
-| PR | [#273](https://github.com/loganware05/captains-compass-cursor/pull/273) @ `41f25e5` |
-| Rollback | `rollback/pre-superpowers-c2-session-memory` @ `151ce6a` |
-| Worktree | `/Users/loganware/Documents/Personal/Code/captains-compass-cursor-superpowers-c2` |
+| Baseline | **v1.86.0** @ `9e2c0d1` |
+| Active plan | `post-merge-wave-continue` **APPROVED** |
+| Issue | [#274](https://github.com/loganware05/captains-compass-cursor/issues/274) |
+| PR | [#275](https://github.com/loganware05/captains-compass-cursor/pull/275) @ `ddbc95e` |
+| Rollback | `rollback/pre-post-merge-wave-continue` @ `9e2c0d1` |
+| Worktree | `/Users/loganware/.t3/worktrees/captains-compass-cursor/feature-274-post-merge-wave-continue` |
 
 ### Prior closeout
 
+- Superpowers + C2 session memory **v1.86.0** (#273)
 - XRV W3 **v1.85.0** (#267) + docs (#269)
 - PrizePicksBot Pilot C [#3](https://github.com/loganware05/PrizePicksBot/pull/3); EER #270
 - TrapHouse Pilot A [#37](https://github.com/loganware05/TrapHouseKitchen/pull/37)

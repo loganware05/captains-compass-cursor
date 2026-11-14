@@ -49,10 +49,8 @@ class InferTests(unittest.TestCase):
 class RegistryCompileTests(unittest.TestCase):
     def test_compile_control_repo_registry(self) -> None:
         result = compile_registry(ROOT)
-        # 47 prior + Superpowers harvest (#272): design-before-plan,
-        # verification-before-completion, finishing-a-development-branch,
-        # subagent-driven-development
-        self.assertEqual(len(result.registry["skills"]), 51)
+        # 51 prior + post-merge-wave-continue (#274)
+        self.assertEqual(len(result.registry["skills"]), 52)
         self.assertEqual(len(result.registry["reference_profiles"]), 11)
         # SKILL_SLUGS must cover every on-disk Skill directory.
         self.assertEqual(result.warnings, [])

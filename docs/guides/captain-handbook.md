@@ -88,6 +88,17 @@ commit → open PR. It does **not** authorize merge, deploy, or authority mutati
 
 Agents must stop at the approval gate. Saying “just implement” does not override it.
 
+### Multi-wave plans (T3 settle ≠ stop)
+
+When an APPROVED plan has Wave A, B, … N and an intermediate PR merges, T3 may
+**settle** the thread. That is not plan completion. Skill
+`post-merge-wave-continue` + `northstar plan waves` / `continue-after-merge`
+unsettle (or spawn a continuation thread) and resume the next remaining wave
+**without** a new Approve — as long as the wave was in the APPROVED revision.
+Hard stops: budget, scope expand, failed validation, security-sensitive surface,
+or `pause_between_waves: true`. Never auto-merge; never forge APPROVED.
+Guide: [`post-merge-wave-continue.md`](post-merge-wave-continue.md).
+
 ## Goal: GitHub repos → portable Skills
 
 ### What works today

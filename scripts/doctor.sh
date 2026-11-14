@@ -1250,6 +1250,26 @@ PY
   else
     fail "missing .cursor/skills/verification-before-completion/SKILL.md"
   fi
+  if [[ -f "$ROOT/.cursor/skills/post-merge-wave-continue/SKILL.md" ]]; then
+    ok "post-merge-wave-continue Skill present"
+  else
+    fail "missing .cursor/skills/post-merge-wave-continue/SKILL.md"
+  fi
+  if [[ -x "$ROOT/scripts/run-plan-waves.sh" ]]; then
+    ok "scripts/run-plan-waves.sh present"
+  else
+    fail "missing executable scripts/run-plan-waves.sh"
+  fi
+  if [[ -f "$ROOT/orchestrator/schemas/wave-ledger.schema.json" ]]; then
+    ok "wave-ledger.schema.json present"
+  else
+    fail "missing orchestrator/schemas/wave-ledger.schema.json"
+  fi
+  if grep -q 'plan)' "$ROOT/scripts/northstar" && grep -q 'run-plan-waves.sh' "$ROOT/scripts/northstar"; then
+    ok "northstar plan waves dispatch present"
+  else
+    fail "scripts/northstar missing plan waves dispatch"
+  fi
   if [[ -f "$ROOT/.cursor/commands/design-feature.md" ]]; then
     ok "design-feature command present"
   else

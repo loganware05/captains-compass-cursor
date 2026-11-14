@@ -435,6 +435,22 @@ Unset either gate → exit 2. Observations under `.agent/session-memory/` (gitig
 Never auto-rewrites canonical memory docs. See
 `.agent/evidence/c2-session-memory/VALIDATION.md`.
 
+Post-merge wave continue (v1.87.0 / #274) — ledger + refuse paths:
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_plan_waves -v
+
+./scripts/northstar plan waves init --plan-id post-merge-wave-continue \
+  --from IMPLEMENTATION_PLAN.md --repo .
+./scripts/northstar plan waves status --plan-id post-merge-wave-continue --repo .
+# continue-after-merge requires MERGED PR (mocked in unit tests):
+# ./scripts/northstar plan continue-after-merge --plan-id … --pr <url> --repo .
+```
+
+Never auto-merges; refuses non-APPROVED plans and OPEN PRs. See
+`.agent/evidence/post-merge-wave-continue/` and
+`docs/guides/post-merge-wave-continue.md`.
+
 Cognitive Core difficulty / capability-fit (C3; requires assess flag):
 
 ```bash
