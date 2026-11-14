@@ -30,3 +30,9 @@ After approval:
 If asked to skip the plan and implement immediately, refuse and create the plan first.
 
 If scope expands materially during implementation, update the plan and return to the approval gate.
+
+**Multi-wave continue:** After an intermediate PR merges, continuing the next
+remaining wave of the **same APPROVED revision** (wave ledger) does not require
+re-asking Approve. Load Skill `post-merge-wave-continue`. New plans, forged
+APPROVED status, auto-merge, and material scope expansion remain forbidden and
+return to AWAITING APPROVAL.

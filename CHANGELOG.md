@@ -4,6 +4,18 @@
 
 ## Unreleased
 
+## 1.87.0 — 2026-11-14
+
+### Added
+
+- **Post-merge wave continue** (`post-merge-wave-continue` / #274):
+  - Skill `post-merge-wave-continue` — multi-wave T3 continue vs settle decision tree
+  - Wave ledger schema + `northstar plan waves init|status|advance` and
+    `northstar plan continue-after-merge` (never auto-merge / forge APPROVED)
+  - Rule `01-plan-approval-gate` continue note; handbook + github/PR Skill cross-links
+  - Guide `docs/guides/post-merge-wave-continue.md` (schedule_task poll ≥60s)
+  - Doctor/installer assertions; ADR-109
+
 ## 1.86.0 — 2026-11-12
 
 ### Added

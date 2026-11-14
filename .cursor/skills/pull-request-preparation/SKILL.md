@@ -33,9 +33,15 @@ Implementation and validation are complete and the change is ready for Captain r
 
 See also: `review-fix-loop` when review feedback still needs iterative fixes before this Skill runs.
 
+**Multi-wave:** If the APPROVED plan has remaining waves after this PR, this is
+an intermediate handoff — link/watch the PR, register merge-continue
+(`post-merge-wave-continue`), and do **not** treat settle-on-merge as plan
+completion. Full completion report applies on the final wave.
+
 ## Output
 
-PR (remote when possible) or PR-ready description, plus completion report for the Captain.
+PR (remote when possible) or PR-ready description, plus completion report for the Captain
+(or intermediate-wave note when more waves remain).
 
 ## Prohibited actions
 
@@ -43,3 +49,4 @@ PR (remote when possible) or PR-ready description, plus completion report for th
 - Do not deploy to production without explicit approval.
 - Do not omit failed or skipped validation from the report.
 - Do not fail the workflow solely because GitHub auth is unavailable.
+- Do not close out a multi-wave plan after an intermediate PR merge.

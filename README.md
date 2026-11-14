@@ -6,20 +6,21 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.86.0
+## Current version: 1.87.0
 
 ### Included
 
 - Approval-gated operating model (`AGENTS.md` + five core rules)
-- Fifty-one Skills (including Wave 1 `agent-skills-packaging`,
+- Fifty-two Skills (including Wave 1 `agent-skills-packaging`,
   `goose-agent-orchestration`, `security-audit-procedures`, plus
   skill-learning-loop, knowledge-steward, code-reviewer, persistent-role-promotion,
   bounded-autonomy, compass-evaluator, experience-routing, capability-planning,
   execution-telemetry, candidate-promotion, experience-skill-training,
   `context-inodes`, `project-overseer`, Superpowers-inspired `design-before-plan`,
   `verification-before-completion`, `finishing-a-development-branch`,
-  `subagent-driven-development`)
+  `subagent-driven-development`, `post-merge-wave-continue`)
   — note: `.cursor/skills/inodes/` is the context-inode content store, not a Skill
+- Multi-wave ledger CLI (`northstar plan waves` / `continue-after-merge`)
 - Capability-aware planning orchestrator (`orchestrator/`, `scripts/capability-plan.sh`)
 - Twelve specialist subagents (also indexed as reference agent profiles)
 - Seven safety hooks (critical fail-closed; soft skips via env / command string / marker)

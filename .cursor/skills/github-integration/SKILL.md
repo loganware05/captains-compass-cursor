@@ -42,8 +42,18 @@ Cursor GitHub MCP may also be enabled with repository read, issue create, PR cre
 - Pull-request creation and comments
 - CI status inspection
 
+## Multi-wave plans (T3)
+
+For APPROVED multi-wave plans, opening an intermediate PR is not “done.”
+`link_pull_request` may settle the T3 thread on merge — that must not stop the
+arc when the wave ledger still has remaining waves. Load Skill
+`post-merge-wave-continue`: verify merge with `gh`, unsettle/continue, and never
+auto-merge. Final-wave merge may settle normally. See also
+`pull-request-preparation`.
+
 ## Prohibited actions
 
 - Automatic merges
 - Automatic releases
 - Production deploys via GitHub Actions without Captain approval
+- Treating intermediate-wave merge as plan completion when waves remain

@@ -70,13 +70,13 @@ Companion bitcoin work (already in flight, not gated by this plan): after Kalshi
 
 ## Acceptance Criteria
 
-- [ ] Skill `post-merge-wave-continue` exists with clear continue vs settle decision tree.
-- [ ] Wave ledger schema + CLI can init/status/advance with tests.
-- [ ] `continue-after-merge` refuses when plan is not APPROVED, when PR is not MERGED, or when no remaining waves.
-- [ ] Docs: captain-handbook + Skills cross-links; ADR for continue-without-reapprove.
-- [ ] Never auto-merge; never set plan status to APPROVED without Captain.
-- [ ] Doctor/installer asserts Skill (+ CLI entry) present.
-- [ ] Validation evidence recorded under `.agent/evidence/post-merge-wave-continue/`.
+- [x] Skill `post-merge-wave-continue` exists with clear continue vs settle decision tree.
+- [x] Wave ledger schema + CLI can init/status/advance with tests.
+- [x] `continue-after-merge` refuses when plan is not APPROVED, when PR is not MERGED, or when no remaining waves.
+- [x] Docs: captain-handbook + Skills cross-links; ADR for continue-without-reapprove.
+- [x] Never auto-merge; never set plan status to APPROVED without Captain.
+- [x] Doctor/installer asserts Skill (+ CLI entry) present.
+- [x] Validation evidence recorded under `.agent/evidence/post-merge-wave-continue/`.
 
 ## Non-Goals
 
@@ -307,10 +307,10 @@ Approve Wave A+B as one release. This closes the exact gap exposed by the Kalshi
 
 | Wave | Status | Notes |
 |---|---|---|
-| A Skill+docs | not started | awaiting Approve |
-| B CLI+ledger | not started | awaiting Approve |
-| C T3 polish | optional | after A/B |
+| A Skill+docs | done | Skill + rule 01 + handbook + cross-links + guide |
+| B CLI+ledger | done | schema + northstar plan waves / continue-after-merge + tests |
+| C T3 polish | done (docs) | poll pattern in guide; no T3 product change |
 
 ## Status
 
-**APPROVED** — implement Waves A+B in dedicated T3 thread (Captain directed). Wave C optional.
+**APPROVED** — Waves A+B implemented; validation/PR in progress.

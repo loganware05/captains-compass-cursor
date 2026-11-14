@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-109: Post-Merge Wave Continue (v1.87.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-14
+- **Context:** T3 `link_pull_request` settles on merge; `watch_pull_request` does
+  not wake on merge. Multi-wave APPROVED plans (e.g. Kalshi multi-PR arcs) needed
+  a NorthStar continue path without auto-merge or forging approval.
+- **Decision:**
+  1. Skill `post-merge-wave-continue` + wave ledger bound to plan_id + APPROVED
+     revision.
+  2. Merge detect via `schedule_task` interval + `gh` poll (≥60s); webhook optional.
+  3. Same-thread unsettle primary; new-thread fallback recorded in ledger.
+  4. Auto-continue remaining APPROVED waves with hard stops (budget, scope,
+     validation, security, `pause_between_waves`).
+  5. CLI `northstar plan waves` / `continue-after-merge`; authority locks false;
+     never auto-merge; never forge APPROVED. Release **v1.87.0**.
+- **Consequences:** Intermediate PR merges resume the next wave instead of ending
+  the arc. Rollback `rollback/pre-post-merge-wave-continue` @ `9e2c0d1`.
+
+
 ## ADR-108: C2 Session Memory Progressive Retrieval (v1.86.0)
 
 - **Status:** Accepted

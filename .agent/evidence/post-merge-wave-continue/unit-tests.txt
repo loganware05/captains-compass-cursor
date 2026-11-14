@@ -1,0 +1,20 @@
+test_cli_init_and_status (tests.orchestrator.test_plan_waves.PlanWavesCliTests.test_cli_init_and_status) ... ok
+test_cli_refuse_open_via_continue (tests.orchestrator.test_plan_waves.PlanWavesCliTests.test_cli_refuse_open_via_continue) ... ok
+test_parse_wave_headings (tests.orchestrator.test_plan_waves.PlanWavesParseTests.test_parse_wave_headings) ... ok
+test_init_status_advance_continue (tests.orchestrator.test_plan_waves.PlanWavesServiceTests.test_init_status_advance_continue) ... ok
+test_pause_between_waves (tests.orchestrator.test_plan_waves.PlanWavesServiceTests.test_pause_between_waves) ... ok
+test_refuse_draft_plan (tests.orchestrator.test_plan_waves.PlanWavesServiceTests.test_refuse_draft_plan) ... ok
+test_refuse_no_remaining_waves (tests.orchestrator.test_plan_waves.PlanWavesServiceTests.test_refuse_no_remaining_waves) ... ok
+test_refuse_open_pr (tests.orchestrator.test_plan_waves.PlanWavesServiceTests.test_refuse_open_pr) ... ok
+test_require_merged_helper (tests.orchestrator.test_plan_waves.PlanWavesServiceTests.test_require_merged_helper) ... ok
+test_infer_from_description (tests.orchestrator.test_registry.InferTests.test_infer_from_description) ... ok
+test_compile_control_repo_registry (tests.orchestrator.test_registry.RegistryCompileTests.test_compile_control_repo_registry) ... ok
+test_id_mismatch_raises (tests.orchestrator.test_registry.RegistryCompileTests.test_id_mismatch_raises) ... ok
+test_path_traversal_in_source_path_raises (tests.orchestrator.test_registry.RegistryCompileTests.test_path_traversal_in_source_path_raises) ... ok
+test_skill_ids_are_unique (tests.orchestrator.test_registry.RegistryCompileTests.test_skill_ids_are_unique) ... ok
+test_parse_nested_sidecar (tests.orchestrator.test_registry.YamlSimpleTests.test_parse_nested_sidecar) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.914s
+
+OK

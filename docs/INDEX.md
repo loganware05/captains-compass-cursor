@@ -38,6 +38,7 @@ Launcher: `scripts/northstar` (control repo only).
 | `identity` | WorkOS AuthKit identity/RBAC (I5; ≠ Captain approval) | [`integrations/workos.md`](integrations/workos.md) |
 | `validate` | I6 cross-provider validation (I1–I5 hermetic) | [`integrations/i6-cross-provider.md`](integrations/i6-cross-provider.md) |
 | `evidence` | XRV Experience Evidence Record validate + release drift | [`plans/XRV_CROSS_REPOSITORY_VALIDATION.md`](plans/XRV_CROSS_REPOSITORY_VALIDATION.md) |
+| `plan` | Multi-wave ledger + continue-after-merge | [`guides/post-merge-wave-continue.md`](guides/post-merge-wave-continue.md) |
 | `assess readiness` | XRV eight-pillar readiness vs NorthStar effectiveness | [`plans/XRV_W2_READINESS_ASSESSOR.md`](plans/XRV_W2_READINESS_ASSESSOR.md) |
 | `assess portfolio` | Multi-repo XRV readiness portfolio | [`plans/XRV_W3_PORTFOLIO_READINESS.md`](plans/XRV_W3_PORTFOLIO_READINESS.md) |
 | XRV Pilot C | PrizePicksBot onboard/baseline (product) | [`plans/XRV_PILOT_C_PRIZEPICKS_BASELINE.md`](plans/XRV_PILOT_C_PRIZEPICKS_BASELINE.md) |
