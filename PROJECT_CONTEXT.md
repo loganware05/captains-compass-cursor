@@ -143,7 +143,7 @@ gh auth status
 
 ## Current Priorities
 
-**v1.87.0** post-merge wave continue Skill + CLI (#274) in flight.
-Prior: **v1.85.0** XRV W3 (#267); Pilot C [#3](https://github.com/loganware05/PrizePicksBot/pull/3).
+**v1.87.0** post-merge wave continue Skill + CLI (#274 / #275) **MERGED**.
+Prior: **v1.86.0** Superpowers + C2 session memory (#273); XRV W3 (#267).
 Specialized Model Level 3 **DEFERRED**. Start here: `docs/guides/captain-handbook.md`.
 Live trading / AHF / live wagers denied.

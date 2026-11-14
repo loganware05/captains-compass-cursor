@@ -2,18 +2,18 @@
 
 ## Current status
 
-**PR OPEN:** [#275](https://github.com/loganware05/captains-compass-cursor/pull/275)
+**MERGED:** [#275](https://github.com/loganware05/captains-compass-cursor/pull/275)
 for [#274](https://github.com/loganware05/captains-compass-cursor/issues/274)
-`post-merge-wave-continue` → **v1.87.0**. Merge Captain-only.
+`post-merge-wave-continue` → **v1.87.0** @ `6ee5fb6`.
 
 | Item | Value |
 |---|---|
 | Baseline | **v1.86.0** @ `9e2c0d1` |
-| Active plan | `post-merge-wave-continue` **APPROVED** |
+| Plan | `post-merge-wave-continue` **COMPLETE** |
 | Issue | [#274](https://github.com/loganware05/captains-compass-cursor/issues/274) |
-| PR | [#275](https://github.com/loganware05/captains-compass-cursor/pull/275) @ `ddbc95e` |
+| PR | [#275](https://github.com/loganware05/captains-compass-cursor/pull/275) |
+| Tag | `v1.87.0` (on merge commit) |
 | Rollback | `rollback/pre-post-merge-wave-continue` @ `9e2c0d1` |
-| Worktree | `/Users/loganware/.t3/worktrees/captains-compass-cursor/feature-274-post-merge-wave-continue` |
 
 ### Prior closeout
 
