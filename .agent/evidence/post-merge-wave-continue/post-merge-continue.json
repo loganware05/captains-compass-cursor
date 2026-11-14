@@ -1,0 +1,83 @@
+{
+  "action": "advanced",
+  "command": "continue-after-merge",
+  "completed_wave": {
+    "merged_at": "2026-11-14T20:16:05Z",
+    "merged_sha": "6ee5fb64898aa677be718086e943bd062c904276",
+    "optional": false,
+    "pr_url": "https://github.com/loganware05/captains-compass-cursor/pull/275",
+    "status": "complete",
+    "title": "Wave A \u2014 Contract + Skill (ship first)",
+    "wave_id": "wave-a"
+  },
+  "ledger": {
+    "active_wave_id": "wave-b",
+    "approved_for_execution": false,
+    "approved_revision": "48884af358b2d4cb",
+    "authority_mutation": false,
+    "auto_merge": false,
+    "created_at": "2026-11-14T20:18:58Z",
+    "next_action": "implement_wave",
+    "next_thread_id": null,
+    "pause_between_waves": false,
+    "plan_id": "post-merge-wave-continue",
+    "plan_status": "IN_PROGRESS",
+    "schema_version": "1.0.0",
+    "updated_at": "2026-11-14T20:18:59Z",
+    "waves": [
+      {
+        "merged_at": "2026-11-14T20:16:05Z",
+        "merged_sha": "6ee5fb64898aa677be718086e943bd062c904276",
+        "optional": false,
+        "pr_url": "https://github.com/loganware05/captains-compass-cursor/pull/275",
+        "status": "complete",
+        "title": "Wave A \u2014 Contract + Skill (ship first)",
+        "wave_id": "wave-a"
+      },
+      {
+        "merged_at": null,
+        "merged_sha": null,
+        "optional": false,
+        "pr_url": null,
+        "status": "in_progress",
+        "title": "Wave B \u2014 CLI wave ledger + merge detect",
+        "wave_id": "wave-b"
+      },
+      {
+        "merged_at": null,
+        "merged_sha": null,
+        "optional": true,
+        "pr_url": null,
+        "status": "pending",
+        "title": "Wave C \u2014 T3 harness polish (optional same release if cheap)",
+        "wave_id": "wave-c"
+      }
+    ]
+  },
+  "merged": {
+    "merged_at": "2026-11-14T20:16:05Z",
+    "merged_sha": "6ee5fb64898aa677be718086e943bd062c904276",
+    "number": 275,
+    "owner": "loganware05",
+    "pr_url": "https://github.com/loganware05/captains-compass-cursor/pull/275",
+    "repo": "captains-compass-cursor",
+    "state": "MERGED"
+  },
+  "next_action": "implement_wave",
+  "next_wave": {
+    "merged_at": null,
+    "merged_sha": null,
+    "optional": false,
+    "pr_url": null,
+    "status": "in_progress",
+    "title": "Wave B \u2014 CLI wave ledger + merge detect",
+    "wave_id": "wave-b"
+  },
+  "ok": true,
+  "resume_prompt": "Plan post-merge-wave-continue APPROVED revision 48884af358b2d4cb: continue wave wave-b (Wave B \u2014 CLI wave ledger + merge detect) without re-asking Approve. Unsettle this thread if settled; if unsettle fails, create a continuation thread and record next_thread_id. Hard stops: budget, scope expand, failed validation, security-sensitive surface, pause_between_waves. Never auto-merge; never forge plan APPROVED.",
+  "status_before": {
+    "active_wave_id": "wave-a",
+    "next_action": "implement_wave",
+    "remaining_count": 3
+  }
+}

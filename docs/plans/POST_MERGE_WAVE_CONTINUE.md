@@ -1,23 +1,24 @@
 # Implementation Plan — Post-Merge Wave Continue (T3 + NorthStar)
 
-- Status: **APPROVED**
+- Status: **COMPLETE**
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
+| Status | **COMPLETE** |
 | Plan ID | `post-merge-wave-continue` |
 | Issue | #274 (https://github.com/loganware05/captains-compass-cursor/issues/274) |
 | Baseline | `origin/main` @ `9e2c0d1cb6ca054eca3e293e478affb330cea370` (re-pin at branch create) |
 | Branch | `feature/274-post-merge-wave-continue` from `main` |
 | Rollback | `rollback/pre-post-merge-wave-continue` |
-| Proposed release | patch / minor Skills+CLI (no authority-lock change) |
+| Proposed release | **v1.87.0** |
 | Created | 2026-11-14 |
-| Last updated | 2026-11-14 (APPROVED; implement in dedicated T3 thread) |
+| Last updated | 2026-11-14 (COMPLETE — #275 merged @ `6ee5fb6`) |
 | Approved by | Logan Ware (Captain) — chat “I approve the NorthStar plan” |
 | Approval date | 2026-11-14 |
 | Approved revision | Q1=poll A; Q2=same-thread unsettle; Q3=auto-continue remaining waves; Waves A+B (C optional) |
+| Merged | [#275](https://github.com/loganware05/captains-compass-cursor/pull/275) @ `6ee5fb6` |
 
 Capability artifacts: `.agent/plans/post-merge-wave-continue/`  
 Durable copy: `docs/plans/POST_MERGE_WAVE_CONTINUE.md`  
@@ -313,4 +314,4 @@ Approve Wave A+B as one release. This closes the exact gap exposed by the Kalshi
 
 ## Status
 
-**APPROVED** — Waves A+B implemented; validation/PR in progress.
+**COMPLETE** — Waves A+B (+ C docs) merged via [#275](https://github.com/loganware05/captains-compass-cursor/pull/275) → **v1.87.0** @ `6ee5fb6`.
