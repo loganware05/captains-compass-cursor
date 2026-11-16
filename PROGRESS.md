@@ -23,6 +23,14 @@ for [#274](https://github.com/loganware05/captains-compass-cursor/issues/274)
 - TrapHouse Pilot A [#37](https://github.com/loganware05/TrapHouseKitchen/pull/37)
 - Bitcoin Pilot B [#18](https://github.com/loganware05/bitcoin-data-collector/pull/18)
 
+### External witness (2026-11-16)
+
+- **RedTailEnergy / OpenRemote** (AABE hackathon) witnessed via XRV product readiness + portfolio assess
+  - Product: https://github.com/loganware05/RedTailEnergy/commit/92323390a2549ef80bb912b7eb6c5d538b7d0200
+  - Evidence: `.agent/evidence/xrv/redtail-openremote-2026-11-16/`
+  - EER: `.agent/evidence/xrv/eer-redtail-openremote-telemetry.json` (`lifecycle_state=merged`, observe-only)
+  - Outcome: Demo Controls Headcount↔Occupancy + battery/solar/load married to cloudy-night OR hour; Packs Ready retained
+
 ## Standing order
 
 Approve ⇒ implement → validate → commit → open PR. Merge remains Captain-only.

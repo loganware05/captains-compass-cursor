@@ -1,0 +1,11 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "auto_promoted": false,
+  "eer_id": "eer-redtail-openremote-9232339",
+  "issues_auto_closed": false,
+  "lifecycle_state": "merged",
+  "path": ".agent/evidence/xrv/eer-redtail-openremote-telemetry.json",
+  "status": "ok",
+  "validator": "jsonschema"
+}
