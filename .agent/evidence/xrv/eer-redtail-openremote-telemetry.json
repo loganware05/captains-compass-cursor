@@ -1,0 +1,53 @@
+{
+  "schema_version": "xrv-eer-1",
+  "eer_id": "eer-redtail-openremote-9232339",
+  "created_at": "2026-11-16T21:10:00Z",
+  "repository": {
+    "owner": "loganware05",
+    "name": "RedTailEnergy",
+    "url": "https://github.com/loganware05/RedTailEnergy"
+  },
+  "commit_sha": "92323390a2549ef80bb912b7eb6c5d538b7d0200",
+  "plan_id": "redtail-openremote-telemetry-align-2026-11-16",
+  "issue": null,
+  "pull_request": null,
+  "branch": "main",
+  "lifecycle_state": "merged",
+  "skills_selected": [
+    "testing-validation",
+    "documentation-agent"
+  ],
+  "budget_ref": null,
+  "permissions": [
+    "docs-evidence-only",
+    "product-repo-witness",
+    "no-northstar-authority-mutation"
+  ],
+  "test_evidence": [
+    "RedTailEnergy npm run lint → pass",
+    "https://github.com/loganware05/RedTailEnergy/commit/92323390a2549ef80bb912b7eb6c5d538b7d0200",
+    ".agent/evidence/xrv/redtail-openremote-2026-11-16/",
+    "Browser Demo Controls hr4: Headcount=Occupancy=42; Battery≈SOC; Packs Ready retained"
+  ],
+  "failure_repair": [],
+  "review_refs": [
+    "t3-thread://v2/6f2ef0e3-84db-45f4-b721-1941b59842dd/75bf98b5-9289-4201-a21e-6870ffc41140",
+    "t3-thread://v2/6f2ef0e3-84db-45f4-b721-1941b59842dd/298d8008-bc59-4997-94bb-f97d2f84df19"
+  ],
+  "rollback_ref": "RedTailEnergy 1b9c90f (pre-align OpenRemote embed)",
+  "latency_cost": {
+    "notes": "Hackathon demo indicator alignment + XRV witness only; no control-plane feature work"
+  },
+  "verified_outcome": "RedTailEnergy main @ 9232339 embeds OpenRemote cloudy-night telemetry under Demo Presentation Controls and marries Headcount/Battery/Solar/Load with Occupancy/SOC/Solar AC/Critical load. Packs Ready retained. NorthStar product readiness scored partial (2/8). OpenRemote Manager optional (self-signed localhost).",
+  "experience_id": null,
+  "execution_run_id": null,
+  "related_evidence_paths": [
+    ".agent/evidence/xrv/redtail-openremote-2026-11-16/",
+    "https://github.com/loganware05/RedTailEnergy/tree/main/.agent/evidence/openremote-telemetry-align"
+  ],
+  "notes": "XRV witness of AABE RedTailEnergy / OpenRemote hackathon work. approved_for_execution stays false. Not a numbered Pilot A/B/C; portfolio observe-only.",
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "issues_auto_closed": false,
+  "auto_promoted": false
+}
