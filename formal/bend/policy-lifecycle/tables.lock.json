@@ -1,6 +1,11 @@
 {
+  "files_sha256": {
+    "Conformance.bend": "6bd01d158beff8f3405d7025390048a685543b7bbfbfd981c1033368dc1ae98b",
+    "Model.bend": "bb145c3f3b50432b5973506452bdc7070032aff89dbf93a2c6d14a472ebee82f"
+  },
   "laws": [
     "p10_outcome_agrees",
+    "p11_liveness",
     "p1_pipeline",
     "p2_captain_gate",
     "p3_terminal",
@@ -25,6 +30,8 @@
       "retired"
     ],
     "promote_structure": {
+      "ast_sha256": "fd5bb7b7b4adc9ead764ecc008a9144b0a76459b260f0956005e2d839e7eed17",
+      "bindings_ok": true,
       "captain": true,
       "evidence": {
         "approved": [
@@ -80,5 +87,5 @@
       ]
     }
   },
-  "tables_sha256": "81efce8303bea71b9e6d79c259d352139f8a046081ba70a0516e802626f54dcf"
+  "tables_sha256": "85f32f8944b90528e6af186053c266ff840ed18a4f3f34b8f44f9e5ccf071315"
 }

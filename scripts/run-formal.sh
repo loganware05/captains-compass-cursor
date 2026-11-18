@@ -81,6 +81,12 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+# `lock` always runs the full proofs (with --verdict) and never mutates; refuse flags it would ignore.
+if [[ "$CMD" == "lock" && ( "$MUTATIONS" != 1 || "$VERDICT" != 1 || "$WRITE" != 1 || "$REQUIRE_TOOL" != 0 || "$STRICT_LAWS" != 0 ) ]]; then
+  echo "error: lock does not accept --no-mutations/--no-verdict/--no-write/--require-tool/--strict-laws" >&2
+  exit 2
+fi
+
 export COMPASS_CONTROL_ROOT="${COMPASS_CONTROL_ROOT:-$ROOT}"
 export PYTHONPATH="${ROOT}${PYTHONPATH:+:$PYTHONPATH}"
 # Run from the control repo so a stray module in the caller's cwd cannot shadow ours.

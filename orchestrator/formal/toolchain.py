@@ -24,7 +24,7 @@ from typing import Any
 
 MAX_OUTPUT = 1_000_000
 ENV_ALLOWLIST = (
-    "PATH", "HOME", "USER", "LANG", "LC_ALL", "LC_CTYPE", "TMPDIR", "TERM",
+    "PATH", "LANG", "LC_ALL", "LC_CTYPE", "TMPDIR", "TERM",
     "ELAN_HOME", "BEND_HOME",
 )
 

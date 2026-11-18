@@ -542,6 +542,123 @@ def outcome_lemma(ok: Bool, +t: M.State) -> {S.outcome_agrees(ok, t, M.finish(ok
 def Laws.p10_outcome_agrees(f, t, c, p):
   outcome_lemma(M.decide(f, t, c, p), t)
 
+# P11 liveness: a finite case analysis over every (from, to) pair; Bend decides
+# each leaf by computation (Captain and evidence are concrete True).
+def Laws.p11_liveness(f, t):
+  match f:
+    case M.Candidate{}:
+      match t:
+        case M.Candidate{}:
+          {==}
+        case M.SandboxEvaluated{}:
+          {==}
+        case M.Shadowed{}:
+          {==}
+        case M.Approved{}:
+          {==}
+        case M.Active{}:
+          {==}
+        case M.Proven{}:
+          {==}
+        case M.Retired{}:
+          {==}
+    case M.SandboxEvaluated{}:
+      match t:
+        case M.Candidate{}:
+          {==}
+        case M.SandboxEvaluated{}:
+          {==}
+        case M.Shadowed{}:
+          {==}
+        case M.Approved{}:
+          {==}
+        case M.Active{}:
+          {==}
+        case M.Proven{}:
+          {==}
+        case M.Retired{}:
+          {==}
+    case M.Shadowed{}:
+      match t:
+        case M.Candidate{}:
+          {==}
+        case M.SandboxEvaluated{}:
+          {==}
+        case M.Shadowed{}:
+          {==}
+        case M.Approved{}:
+          {==}
+        case M.Active{}:
+          {==}
+        case M.Proven{}:
+          {==}
+        case M.Retired{}:
+          {==}
+    case M.Approved{}:
+      match t:
+        case M.Candidate{}:
+          {==}
+        case M.SandboxEvaluated{}:
+          {==}
+        case M.Shadowed{}:
+          {==}
+        case M.Approved{}:
+          {==}
+        case M.Active{}:
+          {==}
+        case M.Proven{}:
+          {==}
+        case M.Retired{}:
+          {==}
+    case M.Active{}:
+      match t:
+        case M.Candidate{}:
+          {==}
+        case M.SandboxEvaluated{}:
+          {==}
+        case M.Shadowed{}:
+          {==}
+        case M.Approved{}:
+          {==}
+        case M.Active{}:
+          {==}
+        case M.Proven{}:
+          {==}
+        case M.Retired{}:
+          {==}
+    case M.Proven{}:
+      match t:
+        case M.Candidate{}:
+          {==}
+        case M.SandboxEvaluated{}:
+          {==}
+        case M.Shadowed{}:
+          {==}
+        case M.Approved{}:
+          {==}
+        case M.Active{}:
+          {==}
+        case M.Proven{}:
+          {==}
+        case M.Retired{}:
+          {==}
+    case M.Retired{}:
+      match t:
+        case M.Candidate{}:
+          {==}
+        case M.SandboxEvaluated{}:
+          {==}
+        case M.Shadowed{}:
+          {==}
+        case M.Approved{}:
+          {==}
+        case M.Active{}:
+          {==}
+        case M.Proven{}:
+          {==}
+        case M.Retired{}:
+          {==}
+
 # P7: split the evidence flag; when it is False the target is rejected, which
 # needs the source state (and Captain approval) only for the gated target.
 def Laws.p7a_sandbox_needs_eval_pass(p, t, f, c):

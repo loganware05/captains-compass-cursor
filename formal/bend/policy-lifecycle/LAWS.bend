@@ -145,3 +145,12 @@ law p10_outcome_agrees:
   for +c: Bool
   for +p: M.Pre
   {S.outcome_agrees(M.decide(f, t, c, p), t, M.apply(f, t, c, p)) == True{} : Bool}
+
+# P11 LIVENESS: every law above is a safety law, and a model that rejects
+# everything satisfies all of them. This one does not. With Captain approval and
+# every piece of evidence present, each pipeline step (and the exit to
+# `retired`) is accepted, except out of `retired` (P3).
+law p11_liveness:
+  for +f: M.State
+  for +t: M.State
+  {Bool.or(S.is_retired(f), Bool.or(Bool.not(S.successor_ok(f, t)), M.decide(f, t, True{}, M.Pre{True{}, True{}, True{}, True{}}))) == True{} : Bool}

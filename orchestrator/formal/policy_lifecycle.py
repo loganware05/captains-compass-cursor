@@ -122,11 +122,23 @@ def structure_from_source(source: str) -> dict[str, Any]:
         "captain": captain,
         "evidence": dict(sorted(evidence.items())),
         "order_ok": bool(order_ok),
+        # Coarse but honest: the extracted flags above only see *which* gates are called,
+        # not their arguments, guards or the authority assignments. Pinning a hash of the
+        # whole function makes any edit to promote_policy require a re-prove + re-lock.
+        "ast_sha256": hashlib.sha256(ast.dump(fn, include_attributes=False).encode("utf-8")).hexdigest(),
     }
 
 
-def promote_structure() -> dict[str, Any]:
-    return structure_from_source(inspect.getsource(policy_promote.promote_policy))
+def promote_structure(source: str | None = None) -> dict[str, Any]:
+    """Structure of ``promote_policy`` (or of ``source``, for mutants) plus binding identity."""
+    structure = structure_from_source(inspect.getsource(policy_promote.promote_policy) if source is None else source)
+    # The grid calls states.can_transition / gates.require_captain_approved; promote_policy
+    # must be using those same objects, not a shadowed local or a different import.
+    structure["bindings_ok"] = bool(
+        getattr(policy_promote, "can_transition", None) is policy_states.can_transition
+        and getattr(policy_promote, "require_captain_approved", None) is policy_gates.require_captain_approved
+    )
+    return structure
 
 
 # --------------------------------------------------------------------------
@@ -184,6 +196,15 @@ def _atomic_write(path: Path, text: str) -> None:
         raise
 
 
+# Files whose content links the proved `M.decide` to the printed conformance grid.
+LOCKED_FILES = ("Model.bend", "Conformance.bend")
+
+
+def locked_file_hashes(root: Path) -> dict[str, str]:
+    d = root / FORMAL_REL
+    return {n: hashlib.sha256((d / n).read_bytes()).hexdigest() for n in LOCKED_FILES}
+
+
 def write_lock(root: Path) -> dict[str, Any]:
     require_bend_proof_enabled()
     tables = canonical_tables()
@@ -191,6 +212,7 @@ def write_lock(root: Path) -> dict[str, Any]:
         "tables_sha256": tables_sha256(tables),
         "tables": tables,
         "laws": law_names(root)["laws"],
+        "files_sha256": locked_file_hashes(root),
     }
     _atomic_write(lock_path(root), json.dumps(lock, indent=2, sort_keys=True) + "\n")
     return lock
@@ -218,6 +240,14 @@ def check_drift(root: Path) -> dict[str, Any]:
             f"law manifest changed vs lock: removed={sorted(set(lock.get('laws', [])) - set(names['laws']))} "
             f"added={sorted(set(names['laws']) - set(lock.get('laws', [])))}"
         )
+    try:
+        current_files = locked_file_hashes(root)
+    except OSError as exc:
+        current_files = {}
+        problems.append(f"locked formal file unreadable: {exc}")
+    if current_files and current_files != lock.get("files_sha256", {}):
+        changed = sorted(n for n in LOCKED_FILES if current_files.get(n) != lock.get("files_sha256", {}).get(n))
+        problems.append(f"{', '.join(changed)} changed since the lock; re-prove and re-lock (Captain reviews the lock diff)")
     if problems:
         return {"status": "fail", "reason": "; ".join(problems),
                 "expected": lock.get("tables_sha256", ""), "actual": actual}
@@ -436,6 +466,9 @@ MODEL_MUTANTS: tuple[ModelMutant, ...] = (
                 LEGALITY_LAWS),
     ModelMutant("drop-legal-gate", "decide ignores legality",
                 lambda s: _replace_in(s, "decide", "legal(f, t)", "True{}"), LEGALITY_LAWS),
+    ModelMutant("always-reject", "decide rejects everything (vacuously satisfies every safety law)",
+                lambda s: _replace_in(s, "decide", "Bool.and(legal(f, t), Bool.and(captain_ok(t, cap), pre_ok(t, p)))",
+                                      "False{}"), ("p11_liveness",)),
     ModelMutant("captain-drop-approved", "approved no longer needs the Captain",
                 lambda s: set_captain_required(s, "approved", False), ("p2_captain_gate",)),
     ModelMutant("captain-drop-retired", "retired no longer needs the Captain",
@@ -492,6 +525,7 @@ class PythonMutant:
     transitions: dict[str, frozenset[str]] | None = None
     captain_required: frozenset[str] | None = None
     source_edit: tuple[str, str] | None = None  # (old, new) applied to promote_policy source
+    grid_visible: bool = True  # False: behavior change the extractor/grid cannot see; only the lock can
 
 
 def _python_mutants() -> tuple[PythonMutant, ...]:
@@ -519,6 +553,26 @@ def _python_mutants() -> tuple[PythonMutant, ...]:
                      source_edit=("if not can_transition(from_state, to_state):", "if False:")),
         PythonMutant("py-promote-proven-gate-moved", "the proven evidence gate guards active instead",
                      source_edit=('if to_state == "proven":', 'if to_state == "active":')),
+        # Evasions: same gates are *called*, behavior differs. Only the AST pin sees these.
+        PythonMutant("py-evade-captain-arg-true", "captain gate is called but always passed True",
+                     source_edit=("require_captain_approved(to_state, captain_approved=captain_approved)",
+                                  "require_captain_approved(to_state, captain_approved=True)"),
+                     grid_visible=False),
+        PythonMutant("py-evade-legality-inverted", "legality check inverted",
+                     source_edit=("if not can_transition(from_state, to_state):",
+                                  "if can_transition(from_state, to_state):"), grid_visible=False),
+        PythonMutant("py-evade-shadow-dead-call", "shadow-present gate called only under a dead conditional",
+                     source_edit=("require_shadow_present(policy)",
+                                  "require_shadow_present(policy) if False else None"), grid_visible=False),
+        PythonMutant("py-evade-authority-flag", "promote sets approved_for_execution to True",
+                     source_edit=('policy["approved_for_execution"] = False',
+                                  'policy["approved_for_execution"] = True'), grid_visible=False),
+        PythonMutant("py-evade-event-authority", "audit event records authority_mutation True",
+                     source_edit=('"authority_mutation": False,', '"authority_mutation": True,'),
+                     grid_visible=False),
+        PythonMutant("py-evade-skip-write", "promoted policy is never written",
+                     source_edit=("write_policy(repo_root, policy)\n    _sync", "pass\n    _sync"),
+                     grid_visible=False),
     )
 
 
@@ -579,17 +633,22 @@ def run_python_mutants(model: dict[Row, int]) -> list[dict[str, Any]]:
             old, new = m.source_edit
             if old not in base_src:
                 raise MutationError(f"python mutant {m.mutant_id}: anchor missing in promote_policy")
-            structure = structure_from_source(base_src.replace(old, new, 1))
+            structure = promote_structure(base_src.replace(old, new, 1))
         with patched_python_tables(transitions=m.transitions, captain_required=m.captain_required):
             diffs = compare_tables(python_decisions(structure), model)
-        caught_by = ["conformance"] if diffs else []
+            drift = tables_sha256(canonical_tables(structure=structure)) != tables_sha256()
+        caught_by = (["conformance"] if diffs else []) + (["drift-lock"] if drift else [])
+        grid_saw_it = bool(diffs)
         results.append({
             "mutant_id": m.mutant_id,
             "kind": "python",
             "description": m.description,
             "caught": bool(caught_by),
             "caught_by": caught_by,
-            "as_expected": bool(caught_by),
+            "grid_visible": m.grid_visible,
+            # A grid-visible mutant must be seen by the grid; an evasion must NOT be (that is
+            # exactly why the AST pin exists) and must still trip the lock.
+            "as_expected": bool(caught_by) and grid_saw_it == m.grid_visible,
         })
     return results
 
@@ -600,7 +659,7 @@ def python_mutants_flag_drift(root: Path) -> list[dict[str, Any]]:
     base_src = inspect.getsource(policy_promote.promote_policy)
     out = []
     for m in _python_mutants():
-        structure = structure_from_source(base_src.replace(*m.source_edit, 1)) if m.source_edit else None
+        structure = promote_structure(base_src.replace(*m.source_edit, 1)) if m.source_edit else None
         mutated = tables_sha256(canonical_tables(
             transitions=m.transitions, captain_required=m.captain_required, structure=structure))
         out.append({"mutant_id": m.mutant_id, "drift_detected": mutated != lock})
@@ -643,7 +702,10 @@ def law_integrity(root: Path, base_ref: str = "origin/main") -> dict[str, Any]:
     changed = False
     for name in CAPTAIN_OWNED:
         rel = (FORMAL_REL / name).as_posix()
-        current = _sha256_file(root / rel)
+        try:
+            current = _sha256_file(root / rel)
+        except OSError:
+            current = "missing"
         listing = _git(root, "ls-tree", "--name-only", verified_sha, "--", rel)
         if listing.returncode != 0:
             return {"status": "error", "base_ref": base_ref, "reason": "git ls-tree failed", "changed": None}
@@ -656,7 +718,7 @@ def law_integrity(root: Path, base_ref: str = "origin/main") -> dict[str, Any]:
         if proc.returncode != 0:
             return {"status": "error", "base_ref": base_ref, "reason": "git show failed", "changed": None}
         base = hashlib.sha256(proc.stdout).hexdigest()
-        differs = base != current
+        differs = base != current  # includes "missing"
         changed = changed or differs
         files[name] = {"sha256": current, "base_sha256": base, "base": "present", "changed": differs}
     return {
@@ -816,7 +878,10 @@ def check(
         if result["mutations"]["uncaught"] or result["mutations"]["unexpected"]:
             failures.append("mutations")
 
-    result["status"] = "fail" if failures else "ok"
+    skipped_components = [name for name, ran in (("verdict", verdict), ("mutations", mutations)) if not ran]
+    result["skipped_components"] = skipped_components
+    result["degraded"] = bool(skipped_components)
+    result["status"] = "fail" if failures else ("partial" if skipped_components else "ok")
     result["failures"] = failures
 
     if write_evidence:

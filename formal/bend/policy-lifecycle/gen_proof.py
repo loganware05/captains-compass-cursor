@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate PROOF.bend: the mechanical case-split proofs for P1-P7.
+"""Regenerate PROOF.bend: the mechanical case-split proofs for P1-P11.
 
 The proofs are finite case analyses; Bend has no tactics, so the cases are
 written out. Run `python3 gen_proof.py > PROOF.bend` after adding a state.
@@ -125,6 +125,8 @@ def main():
     L.append(f"{ind(1)}match ok:")
     L += [f"{ind(2)}case True{{}}:"] + match_states("t", 3) + [f"{ind(2)}case False{{}}:", f"{ind(3)}{{==}}"]
     L += ["", "def Laws.p10_outcome_agrees(f, t, c, p):", f"{ind(1)}outcome_lemma(M.decide(f, t, c, p), t)", ""]
+    L.append("# P11 liveness: a finite case analysis over every (from, to) pair; Bend decides\n# each leaf by computation (Captain and evidence are concrete True).")
+    L.extend(["def Laws.p11_liveness(f, t):"] + pair_split(1) + [""])
     L.append("# P7: split the evidence flag; when it is False the target is rejected, which\n# needs the source state (and Captain approval) only for the gated target.")
     L.extend(p7("p7a_sandbox_needs_eval_pass", "is_sandbox_evaluated", "eval_pass", "SandboxEvaluated")); L.append("")
     L.extend(p7("p7b_shadowed_needs_shadow_ok", "is_shadowed", "shadow_ok", "Shadowed")); L.append("")

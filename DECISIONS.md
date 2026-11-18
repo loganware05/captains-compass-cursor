@@ -9,11 +9,13 @@
 - **Decision (proposed):** **Conditional go** — keep the experiment as an opt-in, additive command
   (`COMPASS_BEND_PROOF_ENABLED=1 northstar formal check policy-lifecycle`). Do **not** wire it into
   CI, make Bend a dependency, or extend to other targets until the Captain decides.
-  1. Model + 16 laws proved with the Lean-checked kernel; Captain owns `LAWS.bend` and `SPEC.bend`.
+  1. Model + 17 laws (incl. P11 liveness) proved with the Lean-checked kernel; Captain owns `LAWS.bend` and `SPEC.bend`.
   2. Conformance is exhaustive (1568 rows) against the *real* Python functions; drift, law-manifest
-     and 31 + 9 mutation controls reject unpaired change.
+     a whole-function AST pin of `promote_policy`, and 23 model + 15 Python-side mutation controls
+     reject unpaired change (6 of the Python mutants are evasions only the AST pin can see).
   3. **Boundary:** only transitions are modeled. P4/P5 are per-step, evidence gates are booleans,
-     gate order is pinned (not proved), and policy *entry* is outside the model.
+     gate order is pinned (not proved), P6/P8/P10 are model-internal (not linked to production
+     code), the `promote_policy` pin is coarse, Lean is unpinned, and policy *entry* is outside the model.
   4. Finding 001 (direct entry into `proven` bypasses all gates) is the main yield; it came from
      adversarial review of the model's boundary, not from a failing proof.
 - **Consequences:** Positive — a precise, checkable statement of the lifecycle safety contract and a

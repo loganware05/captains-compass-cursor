@@ -109,6 +109,40 @@ class StructureTests(unittest.TestCase):
         self.assertFalse(pl.structure_from_source(moved)["order_ok"])
 
 
+class StructureEvasionTests(unittest.TestCase):
+    """Edits that keep the same gates *called* but change behavior must still trip the pin."""
+
+    def test_evasions_are_invisible_to_the_flags_but_not_the_pin(self) -> None:
+        src = inspect.getsource(policy_promote.promote_policy)
+        base = pl.promote_structure()
+        evasions = [m for m in pl._python_mutants() if not m.grid_visible]
+        self.assertGreaterEqual(len(evasions), 6)
+        for m in evasions:
+            with self.subTest(m.mutant_id):
+                old, new = m.source_edit
+                self.assertIn(old, src)
+                mutated = pl.promote_structure(src.replace(old, new, 1))
+                flags = lambda st: {k: v for k, v in st.items() if k != "ast_sha256"}  # noqa: E731
+                self.assertEqual(flags(mutated), flags(base), "extractor flags should not see this edit")
+                self.assertNotEqual(mutated["ast_sha256"], base["ast_sha256"])
+
+    def test_comment_only_edits_do_not_trip_the_pin(self) -> None:
+        src = inspect.getsource(policy_promote.promote_policy)
+        anchor = '    from_state = str(policy.get("lifecycle_state") or "candidate")\n'
+        self.assertIn(anchor, src)
+        edited = src.replace(anchor, "    # harmless comment\n" + anchor, 1)
+        self.assertNotEqual(edited, src)
+        self.assertEqual(pl.promote_structure(edited), pl.promote_structure())
+
+    def test_shadowed_gate_functions_break_binding_identity(self) -> None:
+        self.assertTrue(pl.promote_structure()["bindings_ok"])
+        with mock.patch.object(policy_promote, "can_transition", lambda f, t: True):
+            self.assertFalse(pl.promote_structure()["bindings_ok"])
+            self.assertEqual(pl.check_drift(REPO)["status"], "fail")
+        with mock.patch.object(policy_promote, "require_captain_approved", lambda *a, **k: None):
+            self.assertFalse(pl.promote_structure()["bindings_ok"])
+
+
 class TablesAndDriftTests(unittest.TestCase):
     def test_lock_matches_python(self) -> None:
         result = pl.check_drift(REPO)
@@ -155,6 +189,25 @@ class TablesAndDriftTests(unittest.TestCase):
             result = pl.check_drift(root)
             self.assertEqual(result["status"], "fail")
             self.assertIn("p5_shadow_before_approval", result["reason"])
+
+    def test_conformance_and_model_files_are_locked(self) -> None:
+        for name in pl.LOCKED_FILES:
+            with self.subTest(name), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                shutil.copytree(FORMAL, root / pl.FORMAL_REL)
+                with mock.patch.dict(os.environ, GATE_ON):
+                    pl.write_lock(root)
+                self.assertEqual(pl.check_drift(root)["status"], "pass")
+                target = root / pl.FORMAL_REL / name
+                target.write_text(target.read_text(encoding="utf-8") + "\n# tampered\n", encoding="utf-8")
+                result = pl.check_drift(root)
+                self.assertEqual(result["status"], "fail")
+                self.assertIn(name, result["reason"])
+
+    def test_liveness_law_exists_and_is_proved(self) -> None:
+        names = pl.law_names(REPO)
+        self.assertIn("p11_liveness", names["laws"])
+        self.assertIn("p11_liveness", names["proofs"])
 
     def test_law_without_proof_is_flagged(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -244,12 +297,14 @@ class ToolchainHardeningTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             fake = self._fake_bend(Path(tmp), "env\n")
             env = {"PATH": "/usr/bin:/bin", "AWS_SECRET_ACCESS_KEY": "s3cret", "GITHUB_TOKEN": "tok",
-                   "COMPASS_BEND_BIN": str(fake)}
+                   "HOME": "/home/should-not-leak", "USER": "nobody-leak", "COMPASS_BEND_BIN": str(fake)}
             with mock.patch.dict(os.environ, env, clear=True):
                 tc = tcmod.discover(REPO)
                 out = tc.run([], cwd=Path(tmp))["stdout"]
             self.assertNotIn("s3cret", out)
             self.assertNotIn("GITHUB_TOKEN", out)
+            self.assertNotIn("should-not-leak", out)
+            self.assertNotIn("nobody-leak", out)
             self.assertIn("BEND_NO_TELEMETRY=1", out)
 
     def test_sha_pin_mismatch_is_refused(self) -> None:
@@ -332,6 +387,28 @@ class LawIntegrityTests(unittest.TestCase):
                 self.assertEqual(result["status"], "error")
                 self.assertIsNone(result["changed"])
 
+    def test_deleted_law_file_is_changed_not_a_crash(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for name in pl.CAPTAIN_OWNED:
+                dst = root / pl.FORMAL_REL / name
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                dst.write_text((FORMAL / name).read_text(encoding="utf-8"), encoding="utf-8")
+            subprocess.run(["git", "init", "-q"], cwd=root, check=True, capture_output=True)
+            subprocess.run(["git", "add", "."], cwd=root, check=True, capture_output=True)
+            subprocess.run(["git", "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "b"],
+                           cwd=root, check=True, capture_output=True)
+            (root / pl.FORMAL_REL / "LAWS.bend").unlink()
+            result = pl.law_integrity(root, base_ref="HEAD")
+            self.assertEqual(result["status"], "ok")
+            self.assertTrue(result["changed"])
+            self.assertEqual(result["files"]["LAWS.bend"]["sha256"], "missing")
+
+    def test_inherited_git_env_cannot_redirect_the_comparison(self) -> None:
+        with mock.patch.dict(os.environ, {"GIT_DIR": "/nonexistent/.git", "GIT_WORK_TREE": "/nonexistent"}):
+            result = pl.law_integrity(REPO, base_ref="HEAD")
+        self.assertEqual(result["status"], "ok")
+
     def test_option_like_ref_never_writes_a_file(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "out"
@@ -382,6 +459,34 @@ class LawIntegrityTests(unittest.TestCase):
             self.assertIn("laws-changed-vs-base", strict["failures"])
 
 
+class CliTests(unittest.TestCase):
+    def _run(self, *args: str, gate: bool = True) -> subprocess.CompletedProcess[str]:
+        env = {k: v for k, v in os.environ.items() if k != "COMPASS_BEND_PROOF_ENABLED"}
+        if gate:
+            env["COMPASS_BEND_PROOF_ENABLED"] = "1"
+        return subprocess.run([str(REPO / "scripts" / "northstar"), "formal", *args],
+                              capture_output=True, text=True, env=env, cwd="/tmp", timeout=120)
+
+    def test_lock_rejects_flags_it_would_ignore(self) -> None:
+        for flag in ("--no-verdict", "--no-mutations", "--no-write", "--require-tool", "--strict-laws"):
+            with self.subTest(flag):
+                res = self._run("lock", "policy-lifecycle", flag)
+                self.assertEqual(res.returncode, 2, res.stderr)
+                self.assertIn("lock does not accept", res.stderr)
+
+    def test_base_ref_requires_a_value(self) -> None:
+        for args in (("--base-ref",), ("--base-ref", "--x")):
+            with self.subTest(args):
+                res = self._run("check", "policy-lifecycle", *args)
+                self.assertEqual(res.returncode, 2)
+                self.assertIn("requires a value", res.stderr)
+
+    def test_gate_off_exits_2(self) -> None:
+        res = self._run("check", "policy-lifecycle", gate=False)
+        self.assertEqual(res.returncode, 2)
+        self.assertIn("disabled", res.stderr)
+
+
 class KnownGapTests(unittest.TestCase):
     def test_direct_entry_probe_runs_in_isolation(self) -> None:
         before = sorted(p.name for p in (REPO / ".agent").glob("evaluations*"))
@@ -389,8 +494,11 @@ class KnownGapTests(unittest.TestCase):
         after = sorted(p.name for p in (REPO / ".agent").glob("evaluations*"))
         self.assertEqual(before, after)
         self.assertTrue(gap["outside_model"])
-        self.assertIsInstance(gap["bypass_observed"], bool)
         self.assertTrue(gap["authority_flags_false"])
+        # If this ever flips, finding 001 was fixed: update the evidence, docs and ADR-110.
+        self.assertTrue(gap["bypass_observed"])
+        self.assertIn(gap["entered_state"], policy_states.LIFECYCLE_STATES)
+        self.assertIsNone(gap["captain_approved_at"])
 
 
 @needs_bend
@@ -431,6 +539,28 @@ class BendEndToEndTests(unittest.TestCase):
                 else:
                     # Restrictive mutants: laws are safety-only; the evidence grid catches them.
                     self.assertEqual(row["caught_by"], ["conformance"])
+
+    def test_evasions_are_caught_only_by_the_lock(self) -> None:
+        rows = [r for r in self.result["mutations"]["rows"] if r["kind"] == "python"]
+        evasions = [r for r in rows if not r["grid_visible"]]
+        self.assertGreaterEqual(len(evasions), 6)
+        for r in evasions:
+            with self.subTest(r["mutant_id"]):
+                self.assertEqual(r["caught_by"], ["drift-lock"])
+        for r in rows:
+            if r["grid_visible"]:
+                self.assertIn("conformance", r["caught_by"])
+
+    def test_always_reject_model_is_caught_by_liveness(self) -> None:
+        row = next(r for r in self.result["mutations"]["rows"] if r["mutant_id"] == "always-reject")
+        self.assertEqual(row["first_failed_law"], "p11_liveness")
+
+    def test_partial_runs_are_marked_degraded(self) -> None:
+        partial = pl.check(REPO, write_evidence=False, mutations=False, verdict=False)
+        self.assertEqual(partial["status"], "partial")
+        self.assertTrue(partial["degraded"])
+        self.assertEqual(sorted(partial["skipped_components"]), ["mutations", "verdict"])
+        self.assertFalse(self.result["degraded"])
 
     def test_known_gap_is_recorded(self) -> None:
         self.assertEqual(self.result["known_gaps"][0]["name"], "direct-entry-bypass")

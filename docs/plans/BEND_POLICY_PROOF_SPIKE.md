@@ -27,7 +27,7 @@ the filesystem are modeled as boolean preconditions only.
 4. P4 acyclic/monotone — **per accepted step** (amended; whole-sequence lifting not proved).
 5. P5 `shadowed` precedes `approved` — **per accepted step** (amended; same gap).
 6. P6 the model has no output granting execution authority.
-7. Added in implementation: P7a–d evidence gates, P8 `next`, P9 `run`, P10 outcome agreement, and
+7. Added in implementation: P7a–d evidence gates, P8 `next`, P9 `run`, P10 outcome agreement, P11 liveness, and
    P3′ (terminal over arbitrary sequences). See "Amendments" in the root `IMPLEMENTATION_PLAN.md`
    (A1–A8); A1 is a scope narrowing flagged for Captain review.
 

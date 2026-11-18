@@ -5,13 +5,15 @@
     "diffs": [],
     "model_rows": 1568,
     "rows": 1568,
-    "seconds": 0.11,
+    "seconds": 0.101,
     "status": "pass"
   },
-  "created_at": "2026-11-18T07:37:44Z",
+  "created_at": "2026-11-18T07:48:24Z",
+  "degraded": false,
   "drift": {
     "laws": [
       "p10_outcome_agrees",
+      "p11_liveness",
       "p1_pipeline",
       "p2_captain_gate",
       "p3_terminal",
@@ -29,14 +31,14 @@
       "p9b_run_step"
     ],
     "status": "pass",
-    "tables_sha256": "81efce8303bea71b9e6d79c259d352139f8a046081ba70a0516e802626f54dcf"
+    "tables_sha256": "85f32f8944b90528e6af186053c266ff840ed18a4f3f34b8f44f9e5ccf071315"
   },
   "failures": [],
   "files": {
     "Conformance.bend": "6bd01d158beff8f3405d7025390048a685543b7bbfbfd981c1033368dc1ae98b",
-    "LAWS.bend": "d2e93d64dfcc39ab97030097d4d805e82f95d542bf1f5503ada006bfb2d45a84",
+    "LAWS.bend": "7804068ab947c6a4870584842bd15a02418db2fbe014fc29aa6b66359d257e19",
     "Model.bend": "bb145c3f3b50432b5973506452bdc7070032aff89dbf93a2c6d14a472ebee82f",
-    "PROOF.bend": "573f3fd27e3f99ee34fd6275907e78095b7ab9adfc3f8fc23d6076b19b075887",
+    "PROOF.bend": "0eda491f3aef35158e514c5c30d3868a9829dc045ff8603931f2b65d5323bf21",
     "SPEC.bend": "9c3bffe8b362bf147dce7a7ea15abd78cb8cf7a112628179d9fef9ff9c295d99"
   },
   "kind": "bend-policy-lifecycle-check",
@@ -59,7 +61,7 @@
       "LAWS.bend": {
         "base": "absent",
         "changed": true,
-        "sha256": "d2e93d64dfcc39ab97030097d4d805e82f95d542bf1f5503ada006bfb2d45a84"
+        "sha256": "7804068ab947c6a4870584842bd15a02418db2fbe014fc29aa6b66359d257e19"
       },
       "SPEC.bend": {
         "base": "absent",
@@ -71,12 +73,12 @@
     "status": "ok"
   },
   "mutations": {
-    "caught": 31,
-    "caught_by_conformance": 26,
-    "caught_by_proofs": 18,
-    "injected": 31,
-    "python_mutants": 9,
-    "python_mutants_detected_by_drift_lock": 9,
+    "caught": 38,
+    "caught_by_conformance": 27,
+    "caught_by_proofs": 19,
+    "injected": 38,
+    "python_mutants": 15,
+    "python_mutants_detected_by_drift_lock": 15,
     "rows": [
       {
         "as_expected": true,
@@ -167,6 +169,21 @@
         "first_failed_law": "p1_pipeline",
         "kind": "model",
         "mutant_id": "drop-legal-gate"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "proofs",
+          "conformance"
+        ],
+        "description": "decide rejects everything (vacuously satisfies every safety law)",
+        "expected_laws": [
+          "p11_liveness"
+        ],
+        "first_failed_law": "p11_liveness",
+        "kind": "model",
+        "mutant_id": "always-reject"
       },
       {
         "as_expected": true,
@@ -417,6 +434,7 @@
           "conformance"
         ],
         "description": "python: candidate -> active added",
+        "grid_visible": true,
         "kind": "python",
         "mutant_id": "py-skip-stage"
       },
@@ -427,6 +445,7 @@
           "conformance"
         ],
         "description": "python: approved -> active removed",
+        "grid_visible": true,
         "kind": "python",
         "mutant_id": "py-edge-removed"
       },
@@ -437,6 +456,7 @@
           "conformance"
         ],
         "description": "python: retired -> candidate added",
+        "grid_visible": true,
         "kind": "python",
         "mutant_id": "py-retired-revived"
       },
@@ -447,6 +467,7 @@
           "conformance"
         ],
         "description": "python: approved leaves CAPTAIN_REQUIRED",
+        "grid_visible": true,
         "kind": "python",
         "mutant_id": "py-captain-drop-approved"
       },
@@ -457,6 +478,7 @@
           "conformance"
         ],
         "description": "python: active leaves CAPTAIN_REQUIRED",
+        "grid_visible": true,
         "kind": "python",
         "mutant_id": "py-captain-drop-active"
       },
@@ -464,9 +486,11 @@
         "as_expected": true,
         "caught": true,
         "caught_by": [
-          "conformance"
+          "conformance",
+          "drift-lock"
         ],
         "description": "promote_policy no longer calls require_captain_approved",
+        "grid_visible": true,
         "kind": "python",
         "mutant_id": "py-promote-no-captain-gate"
       },
@@ -474,9 +498,11 @@
         "as_expected": true,
         "caught": true,
         "caught_by": [
-          "conformance"
+          "conformance",
+          "drift-lock"
         ],
         "description": "promote_policy no longer calls require_shadow_present",
+        "grid_visible": true,
         "kind": "python",
         "mutant_id": "py-promote-no-shadow-present"
       },
@@ -484,9 +510,11 @@
         "as_expected": true,
         "caught": true,
         "caught_by": [
-          "conformance"
+          "conformance",
+          "drift-lock"
         ],
         "description": "promote_policy no longer calls can_transition",
+        "grid_visible": true,
         "kind": "python",
         "mutant_id": "py-promote-no-legality"
       },
@@ -494,17 +522,87 @@
         "as_expected": true,
         "caught": true,
         "caught_by": [
-          "conformance"
+          "conformance",
+          "drift-lock"
         ],
         "description": "the proven evidence gate guards active instead",
+        "grid_visible": true,
         "kind": "python",
         "mutant_id": "py-promote-proven-gate-moved"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "drift-lock"
+        ],
+        "description": "captain gate is called but always passed True",
+        "grid_visible": false,
+        "kind": "python",
+        "mutant_id": "py-evade-captain-arg-true"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "drift-lock"
+        ],
+        "description": "legality check inverted",
+        "grid_visible": false,
+        "kind": "python",
+        "mutant_id": "py-evade-legality-inverted"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "drift-lock"
+        ],
+        "description": "shadow-present gate called only under a dead conditional",
+        "grid_visible": false,
+        "kind": "python",
+        "mutant_id": "py-evade-shadow-dead-call"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "drift-lock"
+        ],
+        "description": "promote sets approved_for_execution to True",
+        "grid_visible": false,
+        "kind": "python",
+        "mutant_id": "py-evade-authority-flag"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "drift-lock"
+        ],
+        "description": "audit event records authority_mutation True",
+        "grid_visible": false,
+        "kind": "python",
+        "mutant_id": "py-evade-event-authority"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "drift-lock"
+        ],
+        "description": "promoted policy is never written",
+        "grid_visible": false,
+        "kind": "python",
+        "mutant_id": "py-evade-skip-write"
       }
     ],
     "uncaught": [],
     "unexpected": []
   },
   "promote_structure": {
+    "ast_sha256": "fd5bb7b7b4adc9ead764ecc008a9144b0a76459b260f0956005e2d839e7eed17",
+    "bindings_ok": true,
     "captain": true,
     "evidence": {
       "approved": [
@@ -531,13 +629,14 @@
     ],
     "exit_code": 0,
     "output": "ALL PROOFS CHECK",
-    "seconds": 0.17,
+    "seconds": 0.148,
     "status": "pass",
     "verdict": true
   },
   "schema_version": "2",
+  "skipped_components": [],
   "status": "ok",
-  "tables_sha256": "81efce8303bea71b9e6d79c259d352139f8a046081ba70a0516e802626f54dcf",
+  "tables_sha256": "85f32f8944b90528e6af186053c266ff840ed18a4f3f34b8f44f9e5ccf071315",
   "toolchain": {
     "bend_sha256": "c362cdac355d84f51278db97cb29a3b2e0be084d59b76a5cff013199b3513539",
     "bend_version": "bend 2.0.40",

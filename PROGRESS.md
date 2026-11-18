@@ -9,10 +9,10 @@ rollback `rollback/pre-bend-policy-proof-spike`. **Waves 0, A, B, C implemented;
 
 | Item | Value |
 |---|---|
-| Proofs | 16 laws, `bend PROOF.bend --verdict` → ALL PROOFS CHECK (Bend 2.0.40, Lean 4.34.0) |
+| Proofs | 17 laws (incl. P11 liveness), `bend PROOF.bend --verdict` → ALL PROOFS CHECK (Bend 2.0.40, Lean 4.34.0) |
 | Conformance | 1568-row exhaustive grid, 0 diffs vs real `can_transition`/`require_captain_approved` |
-| Mutation controls | 31/31 model mutants + 9/9 Python mutants rejected (each trips its declared law/grid) |
-| Validation | `tests/run.sh` 137/0 with and without the gate; formal unit tests 43 OK; doctor 0 errors |
+| Mutation controls | 38/38 rejected: 23 model mutants (19 by proofs, 18 by the evidence grid) + 15 Python-side (9 grid-visible; 6 evasions caught only by the AST-pin lock) |
+| Validation | `tests/run.sh` 137/0 with and without the gate; formal unit tests 56 OK; doctor 0 errors |
 | Finding | 001 direct entry into `proven` bypasses all gates (reported, not fixed; outside the model) |
 | ADR | ADR-110 **Proposed** — Captain decides go/no-go |
 
@@ -24,7 +24,8 @@ rollback `rollback/pre-bend-policy-proof-spike`. **Waves 0, A, B, C implemented;
    fails on this branch by design until you review them.
 3. **Pre-existing flake (not fixed, out of scope):** `doctor.sh` can fail
    `northstar help missing Surfaces map (C1)` (`grep -q` + `pipefail` SIGPIPE; 4/300 on `origin/main`).
-4. Merge is Captain-only.
+4. Known limits (see ADR-110): P6/P8/P10 are model-internal, not linked to production code; the `promote_policy` pin is a coarse whole-function AST hash (any edit there needs a re-lock); Lean is not pinned; `--base-ref` is caller-chosen.
+5. Merge is Captain-only.
 
 ### Previous
 

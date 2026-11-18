@@ -10,11 +10,11 @@
   "decision_gate": {
     "all_properties_proved": {
       "result": "partial",
-      "detail": "P1-P3, P3', P6-P10 proved over all inputs / arbitrary sequences (P3'); P4 and P5 proved per accepted step only. Whole-history lifting of P4/P5 is NOT proved (Amendment A1, flagged to Captain)."
+      "detail": "P1-P3, P3', P6-P11 proved over all inputs / arbitrary sequences (P3'); P4 and P5 proved per accepted step only. Whole-history lifting of P4/P5 is NOT proved (Amendment A1, flagged to Captain). P6/P8/P10 are model-internal."
     },
     "mutants_rejected": {
       "result": "pass",
-      "detail": "31/31 model mutants caught (18 by proofs, 26 by conformance grid, overlap allowed), each tripping its declared law or the evidence grid; 9/9 Python-side mutants detected by the drift lock."
+      "detail": "38/38 caught: 23 model mutants (19 by proofs, 18 by the evidence grid; each trips its declared law, or the grid alone for restrictive mutants) + 15 Python-side (9 grid-visible; 6 evasions invisible to the grid and caught only by the whole-function AST pin in the drift lock)."
     },
     "conformance_exhaustive": {
       "result": "pass",
@@ -26,26 +26,31 @@
     }
   },
   "metrics": {
-    "toolchain_install_seconds": {"bend": 5, "lean_download": 36, "first_verdict_kernel_build": 54},
+    "toolchain_install_seconds": {
+      "bend": 5,
+      "lean_download": 36,
+      "first_verdict_kernel_build": 54
+    },
     "check_pipeline_seconds_approx": 6,
     "proof_check_seconds_with_verdict": 0.17,
     "conformance_seconds": 0.11,
     "loc": {
       "Model.bend": 229,
       "SPEC.bend": 213,
-      "LAWS.bend": 147,
-      "PROOF.bend_generated": 806,
+      "LAWS.bend": 156,
+      "PROOF.bend_generated": 923,
       "gen_proof.py": 135,
-      "policy_lifecycle.py": 826,
+      "policy_lifecycle.py": 891,
       "toolchain.py": 141,
-      "tests": 445
+      "tests": 575
     },
-    "laws": 16,
+    "laws": 17,
     "proof_authoring_fix_iterations": "6+ (affine binders, match order, name collisions, computed-value matching)",
-    "harness_hardening_rounds_after_review": 1,
+    "harness_hardening_rounds_after_review": 2,
     "tests_default": "137 passed / 0 failed (tests/run.sh), with and without COMPASS_BEND_PROOF_ENABLED",
-    "unit_tests_formal": "43 passed with Bend+Lean+gate; E2E classes skip otherwise",
-    "doctor": "0 errors, 1 pre-existing warning"
+    "unit_tests_formal": "56 passed with Bend+Lean+gate; E2E classes skip otherwise",
+    "doctor": "0 errors, 1 pre-existing warning",
+    "implementation_loops_used": "8 of 8 (cap reached)"
   },
   "known_gaps": [
     "P4/P5 not lifted to whole histories (transitivity lemma not written)",
@@ -53,7 +58,11 @@
     "Gate order in promote_policy is pinned by the drift lock, not proved",
     "Direct-entry bypass (finding-001) is outside the model",
     "Compiler pin (COMPASS_BEND_SHA256) is optional; evidence records pinned=false when unset",
-    "CI wiring of --strict-laws is deferred; on this branch --strict-laws correctly fails because the laws are new"
+    "CI wiring of --strict-laws is deferred; on this branch --strict-laws correctly fails because the laws are new",
+    "P6/P8/P10 are model-internal; production linkage is only the AST pin on promote_policy",
+    "The promote_policy pin is a coarse whole-function AST hash: benign edits also require a re-lock",
+    "Lean kernel is not pinned; the optional Bend pin is checked at discovery (TOCTOU before exec)",
+    "--base-ref is caller-chosen; no pinned approved SHA for the Captain-owned laws"
   ],
   "observations_out_of_scope": [
     "scripts/doctor.sh flakes ('northstar help missing Surfaces map (C1)'): `northstar help | grep -q` under pipefail; help output exceeds the 16 KB macOS pipe buffer so grep -q can SIGPIPE the writer. Measured on origin/main's launcher: 4/300 failures; this branch: 1/300. Not caused by this change; not fixed here."

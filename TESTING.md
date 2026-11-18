@@ -668,7 +668,7 @@ COMPASS_BEND_PROOF_ENABLED=1 PYTHONPATH=. python3 -m unittest tests.orchestrator
 # Fail-closed without the gate (exit 2):
 ./scripts/northstar formal check policy-lifecycle
 
-# Opt-in full check (proofs + --verdict, 1568-row conformance, 31+9 mutants, writes LATEST_check.json):
+# Opt-in full check (proofs + --verdict, 1568-row conformance, 23 model + 15 python mutants, writes LATEST_check.json):
 COMPASS_BEND_PROOF_ENABLED=1 ./scripts/northstar formal check policy-lifecycle
 COMPASS_BEND_PROOF_ENABLED=1 ./scripts/northstar formal check policy-lifecycle --strict-laws --base-ref origin/main
 ```

@@ -186,7 +186,7 @@ and is flagged for explicit Captain review.**
 - **A2 — Evidence gates are in the conformance grid.** The approved text abstracted them as
   booleans. They remain abstracted, but the exhaustive differential grid now covers all 16
   evidence combinations (1568 rows) so restrictive-direction mutants are detectable.
-- **A3 — Added laws P7a–d, P8a/b, P9a/b, P10** (evidence gates; `next` is rejection-stable and
+- **A3 — Added laws P7a–d, P8a/b, P9a/b, P10, P11 (liveness)** (evidence gates; `next` is rejection-stable and
   acceptance-lands; `run` agrees with `next`; outcome agrees with `decide`), plus a
   Captain-owned `SPEC.bend` of independent observers so a mutated model cannot satisfy the laws
   vacuously.
