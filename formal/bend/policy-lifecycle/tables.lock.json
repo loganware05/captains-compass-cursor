@@ -1,0 +1,47 @@
+{
+  "tables": {
+    "captain_required": [
+      "active",
+      "approved",
+      "proven",
+      "retired"
+    ],
+    "schema_version": "1",
+    "states": [
+      "active",
+      "approved",
+      "candidate",
+      "proven",
+      "retired",
+      "sandbox_evaluated",
+      "shadowed"
+    ],
+    "transitions": {
+      "active": [
+        "proven",
+        "retired"
+      ],
+      "approved": [
+        "active",
+        "retired"
+      ],
+      "candidate": [
+        "retired",
+        "sandbox_evaluated"
+      ],
+      "proven": [
+        "retired"
+      ],
+      "retired": [],
+      "sandbox_evaluated": [
+        "retired",
+        "shadowed"
+      ],
+      "shadowed": [
+        "approved",
+        "retired"
+      ]
+    }
+  },
+  "tables_sha256": "8fe3921debb99226e07c21c9f742b46a11e7bb5c51b96dd95f45b27c8353e5b6"
+}
