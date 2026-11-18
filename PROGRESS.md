@@ -2,6 +2,13 @@
 
 ## Current status
 
+**IN PROGRESS:** [#278](https://github.com/loganware05/captains-compass-cursor/issues/278)
+`bend-policy-proof-spike` (plan **APPROVED** 2026-11-18) on `feature/278-bend-policy-proof-spike`
+— opt-in Bend 2 proof experiment for the policy lifecycle decision core. Baseline **v1.87.0** @ `ef0ca32`;
+rollback `rollback/pre-bend-policy-proof-spike`. Wave 0 (toolchain provenance) next.
+
+### Previous
+
 **MERGED:** [#275](https://github.com/loganware05/captains-compass-cursor/pull/275)
 for [#274](https://github.com/loganware05/captains-compass-cursor/issues/274)
 `post-merge-wave-continue` → **v1.87.0** @ `6ee5fb6`.
