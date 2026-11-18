@@ -30,6 +30,7 @@ Launcher: `scripts/northstar` (control repo only).
 | `evaluate` / `learn` / `instructions` / `prompt-eval` / `policy` | Behavior Intelligence Loop (M46–M50) | [`plans/M46_BEHAVIOR_INTELLIGENCE_FOUNDATION.md`](plans/M46_BEHAVIOR_INTELLIGENCE_FOUNDATION.md) |
 | `status` | Project Overseer snapshot/explain/compare/reconcile/**closeout** | [`plans/M51_PROJECT_OVERSEER.md`](plans/M51_PROJECT_OVERSEER.md), [`plans/N1_OPERATIONAL_RECONCILIATION.md`](plans/N1_OPERATIONAL_RECONCILIATION.md) |
 | `provenance` / `examples` | Execution provenance + exemplars (M53) | [`plans/M53_PROMPT_POLICY_PROVENANCE.md`](plans/M53_PROMPT_POLICY_PROVENANCE.md) |
+| `formal` | Opt-in Bend proof spike for the policy lifecycle (#278) | [`integrations/bend-policy-proof.md`](integrations/bend-policy-proof.md) |
 | `conversation` | ChatGPT / Obsidian trajectory ingest | [`integrations/conversation-ingest.md`](integrations/conversation-ingest.md) |
 | `sentry` | Read-only Sentry incident packets (I1) | [`integrations/sentry.md`](integrations/sentry.md) |
 | `t3` | T3 Code ExecutionAdapter (I2) | [`integrations/t3-code.md`](integrations/t3-code.md) |

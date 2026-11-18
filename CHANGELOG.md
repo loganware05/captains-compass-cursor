@@ -4,6 +4,18 @@
 
 ## Unreleased
 
+### Added
+
+- **Bend policy-lifecycle proof spike** (`bend-policy-proof-spike` / #278) — opt-in, additive,
+  no production semantics change, no required dependency:
+  - `northstar formal check|lock policy-lifecycle` behind `COMPASS_BEND_PROOF_ENABLED=1`
+  - `formal/bend/policy-lifecycle/` Bend model, Captain-owned `SPEC.bend`/`LAWS.bend` (16 laws),
+    generated `PROOF.bend` checked with `--verdict`
+  - Exhaustive 1568-row Python↔model conformance; drift lock; 31 + 9 mutation controls;
+    `--strict-laws` law-integrity check (fails closed)
+  - Finding 001: direct entry into `proven` bypasses gates (reported; not fixed)
+  - ADR-110 (Proposed); see `docs/integrations/bend-policy-proof.md`
+
 ## 1.87.0 — 2026-11-14
 
 ### Added

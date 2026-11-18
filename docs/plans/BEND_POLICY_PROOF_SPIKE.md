@@ -24,9 +24,12 @@ the filesystem are modeled as boolean preconditions only.
 1. P1 legality: accept ⇒ edge in transition table.
 2. P2 Captain gate: accept ∧ target ∈ `CAPTAIN_REQUIRED` ⇒ `captain_approved`.
 3. P3 `retired` is terminal.
-4. P4 acyclic/monotone over arbitrary accepted sequences.
-5. P5 `shadowed` precedes `approved` in any accepted history.
+4. P4 acyclic/monotone — **per accepted step** (amended; whole-sequence lifting not proved).
+5. P5 `shadowed` precedes `approved` — **per accepted step** (amended; same gap).
 6. P6 the model has no output granting execution authority.
+7. Added in implementation: P7a–d evidence gates, P8 `next`, P9 `run`, P10 outcome agreement, and
+   P3′ (terminal over arbitrary sequences). See "Amendments" in the root `IMPLEMENTATION_PLAN.md`
+   (A1–A8); A1 is a scope narrowing flagged for Captain review.
 
 ## Waves
 

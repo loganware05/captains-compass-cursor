@@ -5,7 +5,26 @@
 **IN PROGRESS:** [#278](https://github.com/loganware05/captains-compass-cursor/issues/278)
 `bend-policy-proof-spike` (plan **APPROVED** 2026-11-18) on `feature/278-bend-policy-proof-spike`
 — opt-in Bend 2 proof experiment for the policy lifecycle decision core. Baseline **v1.87.0** @ `ef0ca32`;
-rollback `rollback/pre-bend-policy-proof-spike`. Wave 0 (toolchain provenance) next.
+rollback `rollback/pre-bend-policy-proof-spike`. **Waves 0, A, B, C implemented; awaiting Captain review/PR.**
+
+| Item | Value |
+|---|---|
+| Proofs | 16 laws, `bend PROOF.bend --verdict` → ALL PROOFS CHECK (Bend 2.0.40, Lean 4.34.0) |
+| Conformance | 1568-row exhaustive grid, 0 diffs vs real `can_transition`/`require_captain_approved` |
+| Mutation controls | 31/31 model mutants + 9/9 Python mutants rejected (each trips its declared law/grid) |
+| Validation | `tests/run.sh` 137/0 with and without the gate; formal unit tests 43 OK; doctor 0 errors |
+| Finding | 001 direct entry into `proven` bypasses all gates (reported, not fixed; outside the model) |
+| ADR | ADR-110 **Proposed** — Captain decides go/no-go |
+
+**Captain attention:**
+
+1. **Scope narrowing (Amendment A1):** P4/P5 are proved *per accepted step*, not over whole histories as
+   the approved plan said. Declared in the plan, ADR and docs.
+2. **Laws review:** `LAWS.bend` / `SPEC.bend` are Captain-owned; `--strict-laws --base-ref origin/main`
+   fails on this branch by design until you review them.
+3. **Pre-existing flake (not fixed, out of scope):** `doctor.sh` can fail
+   `northstar help missing Surfaces map (C1)` (`grep -q` + `pipefail` SIGPIPE; 4/300 on `origin/main`).
+4. Merge is Captain-only.
 
 ### Previous
 
