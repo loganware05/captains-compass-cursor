@@ -17,7 +17,7 @@
 | Approved by | Logan Ware (Captain) — chat "Approve" |
 | Approval date | 2026-11-18 |
 | Approved revision | Q1=replace active plan file; Q2=policy lifecycle only; Q3=isolated project-local toolchain; Q4=default budget; Q5=`LAWS.bend` Captain-reviewed (Captain accepted recommended defaults) |
-| Bend pin | `bendlang/bend@9c586f094f4fc88bef440dc8b4d77a2f92c257cc` (Apache-2.0; re-confirm at start) |
+| Bend pin | Release `v2.0.40` (tag `624dd9f`), sha256-verified prebuilt + Lean `v4.34.0` — refined at Wave 0 from `bendlang/bend@9c586f0`; see `.agent/evidence/bend-policy-proof-spike/wave0-provenance.md` (Apache-2.0) |
 
 Budget: `.agent/budgets/bend-policy-proof-spike.md`  
 Durable copy: `docs/plans/BEND_POLICY_PROOF_SPIKE.md`  

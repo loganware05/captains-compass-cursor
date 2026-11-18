@@ -1,6 +1,8 @@
 # Bend Policy-Lifecycle Proof Spike (durable plan copy)
 
-> **AWAITING APPROVAL** — plan ID `bend-policy-proof-spike`. Active gate text lives in the
+> **APPROVED** (Captain, 2026-11-18) — issue [#278](https://github.com/loganware05/captains-compass-cursor/issues/278),
+> plan ID `bend-policy-proof-spike`. Decisions: Q1 replace active plan; Q2 lifecycle only; Q3 isolated local
+> toolchain; Q4 default budget; Q5 `LAWS.bend` Captain-reviewed. Active gate text lives in the
 > root `IMPLEMENTATION_PLAN.md` while it is the active plan; this file is the durable copy.
 > Budget: `.agent/budgets/bend-policy-proof-spike.md`. Source: Captain thread
 > 62fcd31d-9f2e-448b-943b-14022585e272 (Bend assessment, 2026-11-18).
