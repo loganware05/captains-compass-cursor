@@ -1,9 +1,13 @@
 """Locate and run the isolated Bend toolchain (Bend + Lean for ``--verdict``).
 
-Search order for Bend: ``$COMPASS_BEND_BIN``, ``<root>/.agent/tools/bend/bin/bend``,
-then ``bend`` on PATH. Lean comes from ``$COMPASS_BEND_ELAN_HOME`` or
-``<root>/.agent/tools/elan`` when present, else the ambient PATH. Commands are
-always run without a shell, with a timeout, and with telemetry disabled.
+Search order for Bend: ``$COMPASS_BEND_BIN`` (explicit; never falls back),
+``<root>/.agent/tools/bend/bin/bend``, then ``bend`` on PATH. Lean comes from
+``$COMPASS_BEND_ELAN_HOME`` or ``<root>/.agent/tools/elan`` when present.
+
+Hardening: commands run without a shell, in their own process group with a
+timeout, with truncated output, and with an *allowlisted* environment (the
+compiler is unaudited, so credentials in the caller's environment are never
+forwarded). ``COMPASS_BEND_SHA256`` optionally pins the binary.
 """
 
 from __future__ import annotations
@@ -11,11 +15,34 @@ from __future__ import annotations
 import hashlib
 import os
 import shutil
+import signal
 import subprocess
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+
+MAX_OUTPUT = 1_000_000
+ENV_ALLOWLIST = (
+    "PATH", "HOME", "USER", "LANG", "LC_ALL", "LC_CTYPE", "TMPDIR", "TERM",
+    "ELAN_HOME", "BEND_HOME",
+)
+
+
+class ToolchainError(RuntimeError):
+    """The toolchain is present but untrusted or unusable."""
+
+
+def explicit_bin() -> str:
+    return (os.environ.get("COMPASS_BEND_BIN") or "").strip()
+
+
+def _clip(text: str | bytes | None) -> str:
+    if text is None:
+        return ""
+    if isinstance(text, bytes):
+        text = text.decode("utf-8", "replace")
+    return text[:MAX_OUTPUT]
 
 
 @dataclass
@@ -23,40 +50,43 @@ class Toolchain:
     bend: Path
     env: dict[str, str] = field(default_factory=dict)
 
-    def run(
-        self,
-        args: list[str],
-        *,
-        cwd: Path,
-        timeout: float = 600.0,
-    ) -> dict[str, Any]:
+    def run(self, args: list[str], *, cwd: Path, timeout: float = 600.0) -> dict[str, Any]:
         started = time.monotonic()
+        proc = subprocess.Popen(
+            [str(self.bend), *args],
+            cwd=str(cwd),
+            env=self.env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            start_new_session=True,
+        )
         try:
-            proc = subprocess.run(
-                [str(self.bend), *args],
-                cwd=str(cwd),
-                env=self.env,
-                capture_output=True,
-                text=True,
-                timeout=timeout,
-                check=False,
-            )
-            code, out, err = proc.returncode, proc.stdout, proc.stderr
-        except subprocess.TimeoutExpired as exc:
+            out, err = proc.communicate(timeout=timeout)
+            code = proc.returncode
+        except subprocess.TimeoutExpired:
+            try:
+                os.killpg(proc.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            out, err = proc.communicate()
             code = 124
-            out = (exc.stdout or b"").decode() if isinstance(exc.stdout, bytes) else (exc.stdout or "")
-            err = f"timeout after {timeout}s"
+            err = f"{_clip(err)}\ntimeout after {timeout}s"
         return {
             "command": [self.bend.name, *args],
             "exit_code": code,
-            "stdout": out,
-            "stderr": err,
+            "stdout": _clip(out),
+            "stderr": _clip(err),
             "seconds": round(time.monotonic() - started, 3),
         }
 
     def version(self) -> str:
-        res = self.run(["version"], cwd=self.bend.parent, timeout=30)
-        return (res["stdout"] or res["stderr"]).strip().splitlines()[0] if res["exit_code"] == 0 else ""
+        try:
+            res = self.run(["version"], cwd=self.bend.parent, timeout=30)
+        except OSError:
+            return ""
+        lines = (res["stdout"] or res["stderr"]).strip().splitlines()
+        return lines[0] if res["exit_code"] == 0 and lines else ""
 
     def binary_sha256(self) -> str:
         return hashlib.sha256(self.bend.read_bytes()).hexdigest()
@@ -65,19 +95,28 @@ class Toolchain:
         lean = shutil.which("lean", path=self.env.get("PATH"))
         if not lean:
             return ""
-        proc = subprocess.run(
-            [lean, "--version"], env=self.env, capture_output=True, text=True, timeout=30, check=False
-        )
-        return proc.stdout.strip().splitlines()[0] if proc.returncode == 0 and proc.stdout else ""
+        try:
+            proc = subprocess.run(
+                [lean, "--version"], env=self.env, capture_output=True, text=True,
+                timeout=30, check=False,
+            )
+        except (OSError, subprocess.TimeoutExpired):
+            return ""
+        lines = (proc.stdout or "").strip().splitlines()
+        return lines[0] if proc.returncode == 0 and lines else ""
 
 
 def discover(root: Path) -> Toolchain | None:
-    explicit = (os.environ.get("COMPASS_BEND_BIN") or "").strip()
-    candidates: list[Path] = []
+    """Return the toolchain, or None when it is absent.
+
+    An explicit ``COMPASS_BEND_BIN`` that is not executable is *not* silently
+    replaced; callers can detect it with :func:`explicit_bin`.
+    """
+    explicit = explicit_bin()
     if explicit:
-        candidates.append(Path(explicit))
+        candidates = [Path(explicit)]
     else:
-        candidates.append(root / ".agent" / "tools" / "bend" / "bin" / "bend")
+        candidates = [root / ".agent" / "tools" / "bend" / "bin" / "bend"]
         on_path = shutil.which("bend")
         if on_path:
             candidates.append(Path(on_path))
@@ -85,11 +124,18 @@ def discover(root: Path) -> Toolchain | None:
     if bend is None:
         return None
 
-    env = dict(os.environ)
+    env = {k: os.environ[k] for k in ENV_ALLOWLIST if k in os.environ}
     env["BEND_NO_TELEMETRY"] = "1"
     elan = (os.environ.get("COMPASS_BEND_ELAN_HOME") or "").strip()
     elan_home = Path(elan) if elan else root / ".agent" / "tools" / "elan"
     if (elan_home / "bin" / "lean").exists():
         env["ELAN_HOME"] = str(elan_home)
         env["PATH"] = f"{elan_home / 'bin'}{os.pathsep}{env.get('PATH', '')}"
-    return Toolchain(bend=bend, env=env)
+    tc = Toolchain(bend=bend, env=env)
+
+    pin = (os.environ.get("COMPASS_BEND_SHA256") or "").strip().lower()
+    if pin and tc.binary_sha256() != pin:
+        raise ToolchainError(
+            f"bend binary sha256 does not match COMPASS_BEND_SHA256 ({tc.binary_sha256()[:12]}…)"
+        )
+    return tc

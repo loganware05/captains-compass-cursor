@@ -3,187 +3,415 @@
   "authority_mutation": false,
   "conformance": {
     "diffs": [],
-    "rows": 98,
-    "seconds": 0.108,
+    "model_rows": 1568,
+    "rows": 1568,
+    "seconds": 0.11,
     "status": "pass"
   },
-  "created_at": "2026-11-18T07:11:58Z",
+  "created_at": "2026-11-18T07:37:44Z",
   "drift": {
+    "laws": [
+      "p10_outcome_agrees",
+      "p1_pipeline",
+      "p2_captain_gate",
+      "p3_terminal",
+      "p3_terminal_sequences",
+      "p4_forward_only",
+      "p5_shadow_before_approval",
+      "p6_no_authority_grant",
+      "p7a_sandbox_needs_eval_pass",
+      "p7b_shadowed_needs_shadow_ok",
+      "p7c_approved_needs_shadow_present",
+      "p7d_proven_needs_proven_ok",
+      "p8a_rejected_stays",
+      "p8b_accepted_lands",
+      "p9a_run_empty",
+      "p9b_run_step"
+    ],
     "status": "pass",
-    "tables_sha256": "8fe3921debb99226e07c21c9f742b46a11e7bb5c51b96dd95f45b27c8353e5b6"
+    "tables_sha256": "81efce8303bea71b9e6d79c259d352139f8a046081ba70a0516e802626f54dcf"
   },
   "failures": [],
   "files": {
-    "Conformance.bend": "541eea75d245a6b20851d647eda112dee75e017fa45f95470c780a1f072ec6aa",
-    "LAWS.bend": "c2f7488c6dff1e32f7dbb4e862584afe6d63d80df3624e2abf1d2961abd8e68e",
-    "Model.bend": "4007e39c6e2bf95287bfd53b795bbfeb28618983471391ebc030c7db7b4fb766",
-    "PROOF.bend": "f7ab654135603892fa804ff3618fb4fe678f8dd6e897b6db54f160d9ce361ebb",
-    "SPEC.bend": "e0754876da12c5ad8d7ee00da771a47afa996ccd76f432a1299e990544bd887e"
+    "Conformance.bend": "6bd01d158beff8f3405d7025390048a685543b7bbfbfd981c1033368dc1ae98b",
+    "LAWS.bend": "d2e93d64dfcc39ab97030097d4d805e82f95d542bf1f5503ada006bfb2d45a84",
+    "Model.bend": "bb145c3f3b50432b5973506452bdc7070032aff89dbf93a2c6d14a472ebee82f",
+    "PROOF.bend": "573f3fd27e3f99ee34fd6275907e78095b7ab9adfc3f8fc23d6076b19b075887",
+    "SPEC.bend": "9c3bffe8b362bf147dce7a7ea15abd78cb8cf7a112628179d9fef9ff9c295d99"
   },
   "kind": "bend-policy-lifecycle-check",
+  "known_gaps": [
+    {
+      "authority_flags_false": true,
+      "bypass_observed": true,
+      "captain_approved_at": null,
+      "entered_state": "proven",
+      "name": "direct-entry-bypass",
+      "note": "ensure_policy_for_instruction trusts the instruction's approval_state; P2/P5/P7 hold only for transitions from a legitimately entered state.",
+      "outside_model": true,
+      "shadow_report_id": null
+    }
+  ],
   "law_integrity": {
     "base_ref": "origin/main",
-    "changed": false,
+    "changed": true,
     "files": {
       "LAWS.bend": {
         "base": "absent",
-        "changed": false,
-        "sha256": "c2f7488c6dff1e32f7dbb4e862584afe6d63d80df3624e2abf1d2961abd8e68e"
+        "changed": true,
+        "sha256": "d2e93d64dfcc39ab97030097d4d805e82f95d542bf1f5503ada006bfb2d45a84"
       },
       "SPEC.bend": {
         "base": "absent",
-        "changed": false,
-        "sha256": "e0754876da12c5ad8d7ee00da771a47afa996ccd76f432a1299e990544bd887e"
+        "changed": true,
+        "sha256": "9c3bffe8b362bf147dce7a7ea15abd78cb8cf7a112628179d9fef9ff9c295d99"
       }
     },
-    "needs_captain_review": false
+    "needs_captain_review": true,
+    "status": "ok"
   },
   "mutations": {
-    "caught": 18,
-    "caught_by_conformance": 13,
-    "caught_by_proofs": 13,
-    "injected": 18,
-    "python_mutants_detected_by_drift_lock": 5,
+    "caught": 31,
+    "caught_by_conformance": 26,
+    "caught_by_proofs": 18,
+    "injected": 31,
+    "python_mutants": 9,
+    "python_mutants_detected_by_drift_lock": 9,
     "rows": [
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "proofs",
           "conformance"
         ],
         "description": "candidate -> active becomes legal",
+        "expected_laws": [
+          "p1_pipeline",
+          "p3_terminal",
+          "p4_forward_only",
+          "p5_shadow_before_approval"
+        ],
         "first_failed_law": "p1_pipeline",
         "kind": "model",
         "mutant_id": "skip-stage"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "proofs",
           "conformance"
         ],
         "description": "candidate -> approved becomes legal",
+        "expected_laws": [
+          "p1_pipeline",
+          "p3_terminal",
+          "p4_forward_only",
+          "p5_shadow_before_approval"
+        ],
         "first_failed_law": "p1_pipeline",
         "kind": "model",
         "mutant_id": "skip-shadow"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "proofs",
           "conformance"
         ],
         "description": "approved -> candidate becomes legal",
+        "expected_laws": [
+          "p1_pipeline",
+          "p3_terminal",
+          "p4_forward_only",
+          "p5_shadow_before_approval"
+        ],
         "first_failed_law": "p1_pipeline",
         "kind": "model",
         "mutant_id": "backward-edge"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "proofs",
           "conformance"
         ],
         "description": "retired -> candidate becomes legal",
+        "expected_laws": [
+          "p1_pipeline",
+          "p3_terminal",
+          "p4_forward_only",
+          "p5_shadow_before_approval"
+        ],
         "first_failed_law": "p1_pipeline",
         "kind": "model",
         "mutant_id": "retired-not-terminal"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "proofs",
           "conformance"
         ],
         "description": "decide ignores legality",
+        "expected_laws": [
+          "p1_pipeline",
+          "p3_terminal",
+          "p4_forward_only",
+          "p5_shadow_before_approval"
+        ],
         "first_failed_law": "p1_pipeline",
         "kind": "model",
         "mutant_id": "drop-legal-gate"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "proofs",
           "conformance"
         ],
         "description": "approved no longer needs the Captain",
+        "expected_laws": [
+          "p2_captain_gate"
+        ],
         "first_failed_law": "p2_captain_gate",
         "kind": "model",
         "mutant_id": "captain-drop-approved"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "proofs",
           "conformance"
         ],
         "description": "retired no longer needs the Captain",
+        "expected_laws": [
+          "p2_captain_gate"
+        ],
         "first_failed_law": "p2_captain_gate",
         "kind": "model",
         "mutant_id": "captain-drop-retired"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "proofs",
           "conformance"
         ],
         "description": "captain_ok always passes",
+        "expected_laws": [
+          "p2_captain_gate"
+        ],
         "first_failed_law": "p2_captain_gate",
         "kind": "model",
         "mutant_id": "captain-ignored"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
-          "proofs"
+          "proofs",
+          "conformance"
         ],
         "description": "approved no longer needs shadow_present",
+        "expected_laws": [
+          "p7c_approved_needs_shadow_present"
+        ],
         "first_failed_law": "p7c_approved_needs_shadow_present",
         "kind": "model",
         "mutant_id": "evidence-drop-shadow-present"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
-          "proofs"
+          "proofs",
+          "conformance"
         ],
         "description": "proven no longer needs proven_ok",
+        "expected_laws": [
+          "p7d_proven_needs_proven_ok"
+        ],
         "first_failed_law": "p7d_proven_needs_proven_ok",
         "kind": "model",
         "mutant_id": "evidence-drop-proven"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
-          "proofs"
+          "proofs",
+          "conformance"
         ],
         "description": "sandbox_evaluated no longer needs eval_pass",
+        "expected_laws": [
+          "p7a_sandbox_needs_eval_pass"
+        ],
         "first_failed_law": "p7a_sandbox_needs_eval_pass",
         "kind": "model",
         "mutant_id": "evidence-drop-eval"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
-          "proofs"
+          "proofs",
+          "conformance"
         ],
         "description": "shadowed no longer needs shadow_ok",
+        "expected_laws": [
+          "p7b_shadowed_needs_shadow_ok"
+        ],
         "first_failed_law": "p7b_shadowed_needs_shadow_ok",
         "kind": "model",
         "mutant_id": "evidence-drop-shadow-ok"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "proofs"
         ],
         "description": "a promotion sets approved_for_execution",
+        "expected_laws": [
+          "p6_no_authority_grant",
+          "finish_no_authority"
+        ],
         "first_failed_law": "finish_no_authority",
         "kind": "model",
         "mutant_id": "authority-granted"
       },
       {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "proofs"
+        ],
+        "description": "a rejected attempt still moves the state when legal",
+        "expected_laws": [
+          "p8a_rejected_stays",
+          "next_rejected"
+        ],
+        "first_failed_law": "p8a_rejected_stays",
+        "kind": "model",
+        "mutant_id": "next-ignores-gates"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "proofs"
+        ],
+        "description": "sequences stop applying attempts",
+        "expected_laws": [
+          "p9b_run_step"
+        ],
+        "first_failed_law": "p9b_run_step",
+        "kind": "model",
+        "mutant_id": "run-ignores-next"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "proofs"
+        ],
+        "description": "accept and reject outcomes are swapped",
+        "expected_laws": [
+          "p10_outcome_agrees",
+          "outcome_lemma"
+        ],
+        "first_failed_law": "outcome_lemma",
+        "kind": "model",
+        "mutant_id": "finish-swapped"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "proofs"
+        ],
+        "description": "a promotion lands on retired",
+        "expected_laws": [
+          "p10_outcome_agrees",
+          "outcome_lemma"
+        ],
+        "first_failed_law": "outcome_lemma",
+        "kind": "model",
+        "mutant_id": "finish-wrong-target"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "conformance"
+        ],
+        "description": "active additionally requires eval_pass",
+        "expected_laws": [],
+        "first_failed_law": "",
+        "kind": "model",
+        "mutant_id": "restrict-active-needs-eval"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "conformance"
+        ],
+        "description": "retired additionally requires eval_pass",
+        "expected_laws": [],
+        "first_failed_law": "",
+        "kind": "model",
+        "mutant_id": "restrict-retired-needs-eval"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "conformance"
+        ],
+        "description": "approved additionally requires eval_pass",
+        "expected_laws": [],
+        "first_failed_law": "",
+        "kind": "model",
+        "mutant_id": "restrict-approved-needs-eval"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "conformance"
+        ],
+        "description": "proven additionally requires shadow_ok",
+        "expected_laws": [],
+        "first_failed_law": "",
+        "kind": "model",
+        "mutant_id": "restrict-proven-needs-shadow"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "proofs",
+          "conformance"
+        ],
+        "description": "approved checks shadow_ok instead of shadow_present",
+        "expected_laws": [
+          "p7c_approved_needs_shadow_present"
+        ],
+        "first_failed_law": "p7c_approved_needs_shadow_present",
+        "kind": "model",
+        "mutant_id": "evidence-fields-swapped"
+      },
+      {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "conformance"
@@ -193,6 +421,7 @@
         "mutant_id": "py-skip-stage"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "conformance"
@@ -202,6 +431,7 @@
         "mutant_id": "py-edge-removed"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "conformance"
@@ -211,6 +441,7 @@
         "mutant_id": "py-retired-revived"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "conformance"
@@ -220,6 +451,7 @@
         "mutant_id": "py-captain-drop-approved"
       },
       {
+        "as_expected": true,
         "caught": true,
         "caught_by": [
           "conformance"
@@ -227,9 +459,69 @@
         "description": "python: active leaves CAPTAIN_REQUIRED",
         "kind": "python",
         "mutant_id": "py-captain-drop-active"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "conformance"
+        ],
+        "description": "promote_policy no longer calls require_captain_approved",
+        "kind": "python",
+        "mutant_id": "py-promote-no-captain-gate"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "conformance"
+        ],
+        "description": "promote_policy no longer calls require_shadow_present",
+        "kind": "python",
+        "mutant_id": "py-promote-no-shadow-present"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "conformance"
+        ],
+        "description": "promote_policy no longer calls can_transition",
+        "kind": "python",
+        "mutant_id": "py-promote-no-legality"
+      },
+      {
+        "as_expected": true,
+        "caught": true,
+        "caught_by": [
+          "conformance"
+        ],
+        "description": "the proven evidence gate guards active instead",
+        "kind": "python",
+        "mutant_id": "py-promote-proven-gate-moved"
       }
     ],
-    "uncaught": []
+    "uncaught": [],
+    "unexpected": []
+  },
+  "promote_structure": {
+    "captain": true,
+    "evidence": {
+      "approved": [
+        "shadow_present"
+      ],
+      "proven": [
+        "proven_ok"
+      ],
+      "sandbox_evaluated": [
+        "eval_pass"
+      ],
+      "shadowed": [
+        "shadow_ok"
+      ]
+    },
+    "legality": true,
+    "order_ok": true
   },
   "proofs": {
     "command": [
@@ -239,16 +531,17 @@
     ],
     "exit_code": 0,
     "output": "ALL PROOFS CHECK",
-    "seconds": 0.18,
+    "seconds": 0.17,
     "status": "pass",
     "verdict": true
   },
-  "schema_version": "1",
+  "schema_version": "2",
   "status": "ok",
-  "tables_sha256": "8fe3921debb99226e07c21c9f742b46a11e7bb5c51b96dd95f45b27c8353e5b6",
+  "tables_sha256": "81efce8303bea71b9e6d79c259d352139f8a046081ba70a0516e802626f54dcf",
   "toolchain": {
     "bend_sha256": "c362cdac355d84f51278db97cb29a3b2e0be084d59b76a5cff013199b3513539",
     "bend_version": "bend 2.0.40",
-    "lean_version": "Lean (version 4.34.0, arm64-apple-darwin24.6.0, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)"
+    "lean_version": "Lean (version 4.34.0, arm64-apple-darwin24.6.0, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)",
+    "pinned": false
   }
 }

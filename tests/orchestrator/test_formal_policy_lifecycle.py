@@ -1,26 +1,55 @@
-"""Bend proof spike (#278): policy-lifecycle conformance, drift, and mutation controls.
+"""Bend proof spike (#278): policy-lifecycle conformance, drift, hardening, mutation controls.
 
-Tests that need the Bend toolchain skip when it is not installed, so default
-CI and doctor behave exactly as before.
+Pure-Python tests always run. Tests that execute Bend require *all* of: the
+toolchain, Lean (for ``--verdict``), and ``COMPASS_BEND_PROOF_ENABLED=1`` (the
+experiment is opt-in), so default CI and doctor behave exactly as before.
 """
 
 from __future__ import annotations
 
+import inspect
 import os
+import shutil
+import stat
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
 from unittest import mock
 
+from orchestrator.behavior.policy import promote as policy_promote
 from orchestrator.behavior.policy import states as policy_states
 from orchestrator.formal import policy_lifecycle as pl
+from orchestrator.formal import toolchain as tcmod
 from orchestrator.formal.gates import require_bend_proof_enabled
-from orchestrator.formal.toolchain import discover
 
 REPO = Path(__file__).resolve().parents[2]
 FORMAL = REPO / pl.FORMAL_REL
-TOOLCHAIN = discover(REPO)
-needs_bend = unittest.skipUnless(TOOLCHAIN is not None, "Bend toolchain not installed")
+GATE_ON = {"COMPASS_BEND_PROOF_ENABLED": "1"}
+
+
+def _optional_toolchain():
+    try:
+        return tcmod.discover(REPO)
+    except tcmod.ToolchainError:
+        return None
+
+
+TOOLCHAIN = _optional_toolchain()
+E2E_READY = bool(
+    TOOLCHAIN
+    and TOOLCHAIN.lean_version()
+    and (os.environ.get("COMPASS_BEND_PROOF_ENABLED") or "").strip().lower() in {"1", "true", "yes", "on"}
+)
+needs_bend = unittest.skipUnless(
+    E2E_READY, "needs Bend + Lean and COMPASS_BEND_PROOF_ENABLED=1 (opt-in experiment)"
+)
+
+
+def lock_hash() -> str:
+    import json
+
+    return json.loads(pl.lock_path(REPO).read_text(encoding="utf-8"))["tables_sha256"]
 
 
 class GateTests(unittest.TestCase):
@@ -34,80 +63,151 @@ class GateTests(unittest.TestCase):
             with mock.patch.dict(os.environ, {"COMPASS_BEND_PROOF_ENABLED": value}, clear=True):
                 require_bend_proof_enabled()
 
+    def test_library_entry_points_enforce_the_gate(self) -> None:
+        with mock.patch.dict(os.environ, {}, clear=True):
+            with self.assertRaises(PermissionError):
+                pl.check(REPO, write_evidence=False, toolchain=None)
+            with self.assertRaises(PermissionError):
+                pl.write_lock(REPO)
+
+
+class StructureTests(unittest.TestCase):
+    def test_real_promote_structure(self) -> None:
+        st = pl.promote_structure()
+        self.assertTrue(st["legality"])
+        self.assertTrue(st["captain"])
+        self.assertTrue(st["order_ok"])
+        self.assertEqual(
+            st["evidence"],
+            {
+                "approved": ["shadow_present"],
+                "proven": ["proven_ok"],
+                "sandbox_evaluated": ["eval_pass"],
+                "shadowed": ["shadow_ok"],
+            },
+        )
+
+    def test_source_edits_change_the_structure(self) -> None:
+        src = inspect.getsource(policy_promote.promote_policy)
+        base = pl.structure_from_source(src)
+        for m in pl._python_mutants():
+            if not m.source_edit:
+                continue
+            with self.subTest(m.mutant_id):
+                old, new = m.source_edit
+                self.assertIn(old, src)
+                self.assertNotEqual(pl.structure_from_source(src.replace(old, new, 1)), base)
+
+    def test_reordering_breaks_order_flag(self) -> None:
+        src = inspect.getsource(policy_promote.promote_policy)
+        a = "        require_captain_approved(to_state, captain_approved=captain_approved)\n"
+        self.assertIn(a, src)
+        moved = src.replace(a, "        pass\n", 1).replace(
+            "    if not can_transition(from_state, to_state):",
+            f"    {a.strip()}\n    if not can_transition(from_state, to_state):", 1)
+        self.assertNotEqual(moved, src)
+        self.assertFalse(pl.structure_from_source(moved)["order_ok"])
+
 
 class TablesAndDriftTests(unittest.TestCase):
-    def test_lock_matches_python_tables(self) -> None:
+    def test_lock_matches_python(self) -> None:
         result = pl.check_drift(REPO)
         self.assertEqual(result["status"], "pass", result)
 
-    def test_drift_detected_when_tables_change(self) -> None:
+    def test_drift_when_transitions_change(self) -> None:
         mutated = dict(policy_states.TRANSITIONS)
         mutated["candidate"] = mutated["candidate"] | {"active"}
         with pl.patched_python_tables(transitions=mutated):
-            self.assertNotEqual(pl.tables_sha256(), json_lock_hash())
+            self.assertNotEqual(pl.tables_sha256(), lock_hash())
             self.assertEqual(pl.check_drift(REPO)["status"], "fail")
 
-    def test_drift_detected_when_captain_set_changes(self) -> None:
-        cap = policy_states.CAPTAIN_REQUIRED - {"approved"}
-        with pl.patched_python_tables(captain_required=cap):
+    def test_drift_when_captain_set_changes(self) -> None:
+        with pl.patched_python_tables(captain_required=policy_states.CAPTAIN_REQUIRED - {"approved"}):
+            self.assertEqual(pl.check_drift(REPO)["status"], "fail")
+
+    def test_drift_when_promote_structure_changes(self) -> None:
+        fake = dict(pl.promote_structure())
+        fake["captain"] = False
+        with mock.patch.object(pl, "promote_structure", return_value=fake):
             self.assertEqual(pl.check_drift(REPO)["status"], "fail")
 
     def test_missing_lock_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             self.assertEqual(pl.check_drift(Path(tmp))["status"], "fail")
 
-    def test_write_lock_roundtrip(self) -> None:
+    def test_write_lock_roundtrip_and_manifest(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            (root / pl.FORMAL_REL).mkdir(parents=True)
-            pl.write_lock(root)
+            shutil.copytree(FORMAL, root / pl.FORMAL_REL)
+            with mock.patch.dict(os.environ, GATE_ON):
+                pl.write_lock(root)
             self.assertEqual(pl.check_drift(root)["status"], "pass")
+            # Deleting a law *and* its proof together must trip the manifest.
+            d = root / pl.FORMAL_REL
+            laws = (d / "LAWS.bend").read_text(encoding="utf-8")
+            start = laws.index("law p5_shadow_before_approval:")
+            end = laws.index("# P6", start)
+            (d / "LAWS.bend").write_text(laws[:start] + laws[end:], encoding="utf-8")
+            proof = (d / "PROOF.bend").read_text(encoding="utf-8")
+            start = proof.index("def Laws.p5_shadow_before_approval(")
+            end = proof.index("def Laws.", start + 10)
+            (d / "PROOF.bend").write_text(proof[:start] + proof[end:], encoding="utf-8")
+            result = pl.check_drift(root)
+            self.assertEqual(result["status"], "fail")
+            self.assertIn("p5_shadow_before_approval", result["reason"])
 
-
-def json_lock_hash() -> str:
-    import json
-
-    return json.loads(pl.lock_path(REPO).read_text(encoding="utf-8"))["tables_sha256"]
+    def test_law_without_proof_is_flagged(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            shutil.copytree(FORMAL, root / pl.FORMAL_REL)
+            with mock.patch.dict(os.environ, GATE_ON):
+                pl.write_lock(root)
+            d = root / pl.FORMAL_REL
+            (d / "LAWS.bend").write_text(
+                (d / "LAWS.bend").read_text(encoding="utf-8")
+                + "\nlaw extra_open:\n  for +t: M.State\n  {S.is_retired(t) == S.is_retired(t) : Bool}\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(pl.check_drift(root)["status"], "fail")
 
 
 class PythonDecisionTests(unittest.TestCase):
-    def test_table_is_exhaustive(self) -> None:
-        rows = pl.python_decisions()
+    def test_grid_is_exhaustive(self) -> None:
         n = len(policy_states.LIFECYCLE_STATES)
-        self.assertEqual(len(rows), n * n * 2)
+        self.assertEqual(len(pl.python_decisions()), n * n * 2 * 16)
 
     def test_known_decisions(self) -> None:
         rows = pl.python_decisions()
-        self.assertEqual(rows[("candidate", "sandbox_evaluated", 0)], 1)  # no Captain needed
-        self.assertEqual(rows[("shadowed", "approved", 0)], 0)  # Captain required
-        self.assertEqual(rows[("shadowed", "approved", 1)], 1)
-        self.assertEqual(rows[("candidate", "approved", 1)], 0)  # skips stages
+        self.assertEqual(rows[("candidate", "sandbox_evaluated", 0, "1000")], 1)
+        self.assertEqual(rows[("candidate", "sandbox_evaluated", 0, "0000")], 0)  # needs eval_pass
+        self.assertEqual(rows[("shadowed", "approved", 0, "0010")], 0)  # needs the Captain
+        self.assertEqual(rows[("shadowed", "approved", 1, "0000")], 0)  # needs shadow_present
+        self.assertEqual(rows[("shadowed", "approved", 1, "0010")], 1)
+        self.assertEqual(rows[("candidate", "approved", 1, "1111")], 0)  # skips stages
         for t in policy_states.LIFECYCLE_STATES:
-            for cap in (0, 1):
-                self.assertEqual(rows[("retired", t, cap)], 0)  # terminal
+            for bits in pl.PRE_COMBOS:
+                self.assertEqual(rows[("retired", t, 1, bits)], 0)  # terminal
 
     def test_parse_roundtrip_and_errors(self) -> None:
-        parsed = pl.parse_model_table("candidate retired 1 1\n\nactive proven 0 0\n")
-        self.assertEqual(parsed[("candidate", "retired", 1)], 1)
-        self.assertEqual(parsed[("active", "proven", 0)], 0)
+        parsed = pl.parse_model_table("candidate retired 1 0000 1\n\nactive proven 0 0001 0\n")
+        self.assertEqual(parsed[("candidate", "retired", 1, "0000")], 1)
+        for bad in ("candidate retired 1 1\n", "a b 2 0000 1\n", "a b 1 000 1\n", "a b 1 0000 2\n"):
+            with self.assertRaises(ValueError):
+                pl.parse_model_table(bad)
         with self.assertRaises(ValueError):
-            pl.parse_model_table("candidate retired 1\n")
-        with self.assertRaises(ValueError):
-            pl.parse_model_table("a b 2 1\n")
+            pl.parse_model_table("a b 1 0000 1\na b 1 0000 0\n")  # duplicate row
 
     def test_compare_detects_mismatch_and_gaps(self) -> None:
-        py = {("a", "b", 0): 1, ("a", "b", 1): 1}
+        py = {("a", "b", 0, "0000"): 1, ("a", "b", 1, "0000"): 1}
         self.assertEqual(pl.compare_tables(py, dict(py)), [])
-        self.assertEqual(len(pl.compare_tables(py, {("a", "b", 0): 0, ("a", "b", 1): 1})), 1)
-        self.assertTrue(pl.compare_tables(py, {("a", "b", 0): 1})[0].startswith("missing in model"))
+        self.assertEqual(len(pl.compare_tables(py, {("a", "b", 0, "0000"): 0, ("a", "b", 1, "0000"): 1})), 1)
+        self.assertTrue(pl.compare_tables(py, {("a", "b", 0, "0000"): 1})[0].startswith("missing in model"))
         extra = dict(py)
-        extra[("a", "c", 0)] = 0
+        extra[("a", "c", 0, "0000")] = 0
         self.assertTrue(any(d.startswith("missing in python") for d in pl.compare_tables(py, extra)))
 
 
 class MutantDefinitionTests(unittest.TestCase):
-    """Mutants must apply to the shipped model; a renamed anchor fails loudly."""
-
     def test_every_model_mutant_changes_the_model(self) -> None:
         original = (FORMAL / "Model.bend").read_text(encoding="utf-8")
         for m in pl.MODEL_MUTANTS:
@@ -118,12 +218,87 @@ class MutantDefinitionTests(unittest.TestCase):
         with self.assertRaises(pl.MutationError):
             pl.set_legal("def legal(f, t):\n  x\n", "candidate", "active", True)
 
-    def test_mutant_ids_unique(self) -> None:
-        ids = [m.mutant_id for m in pl.MODEL_MUTANTS]
+    def test_ids_unique(self) -> None:
+        ids = [m.mutant_id for m in pl.MODEL_MUTANTS] + [m.mutant_id for m in pl._python_mutants()]
         self.assertEqual(len(ids), len(set(ids)))
+
+    def test_mutants_target_the_intended_case_only(self) -> None:
+        original = (FORMAL / "Model.bend").read_text(encoding="utf-8")
+        mutated = pl.pre_ok_edit(original, "active", "      True{}\n", "      False{}\n")
+        a, b = pl._function_slice(original, "pre_ok")
+        # Everything outside pre_ok must be byte-identical.
+        self.assertEqual(mutated[:a], original[:a])
+        self.assertEqual(mutated[len(mutated) - (len(original) - b):], original[b:])
+        self.assertNotEqual(mutated[a:], original[a:])
+        self.assertEqual(mutated.count("False{}"), original.count("False{}") + 1)
+
+
+class ToolchainHardeningTests(unittest.TestCase):
+    def _fake_bend(self, tmp: Path, body: str) -> Path:
+        path = tmp / "bend"
+        path.write_text("#!/bin/sh\n" + body, encoding="utf-8")
+        path.chmod(path.stat().st_mode | stat.S_IXUSR)
+        return path
+
+    def test_environment_is_allowlisted(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            fake = self._fake_bend(Path(tmp), "env\n")
+            env = {"PATH": "/usr/bin:/bin", "AWS_SECRET_ACCESS_KEY": "s3cret", "GITHUB_TOKEN": "tok",
+                   "COMPASS_BEND_BIN": str(fake)}
+            with mock.patch.dict(os.environ, env, clear=True):
+                tc = tcmod.discover(REPO)
+                out = tc.run([], cwd=Path(tmp))["stdout"]
+            self.assertNotIn("s3cret", out)
+            self.assertNotIn("GITHUB_TOKEN", out)
+            self.assertIn("BEND_NO_TELEMETRY=1", out)
+
+    def test_sha_pin_mismatch_is_refused(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            fake = self._fake_bend(Path(tmp), "echo hi\n")
+            env = {"PATH": "/usr/bin:/bin", "COMPASS_BEND_BIN": str(fake), "COMPASS_BEND_SHA256": "0" * 64}
+            with mock.patch.dict(os.environ, env, clear=True):
+                with self.assertRaises(tcmod.ToolchainError):
+                    tcmod.discover(REPO)
+
+    def test_sha_pin_match_is_accepted(self) -> None:
+        import hashlib
+
+        with tempfile.TemporaryDirectory() as tmp:
+            fake = self._fake_bend(Path(tmp), "echo hi\n")
+            digest = hashlib.sha256(fake.read_bytes()).hexdigest()
+            env = {"PATH": "/usr/bin:/bin", "COMPASS_BEND_BIN": str(fake), "COMPASS_BEND_SHA256": digest}
+            with mock.patch.dict(os.environ, env, clear=True):
+                self.assertIsNotNone(tcmod.discover(REPO))
+
+    def test_timeout_kills_the_process_group(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            fake = self._fake_bend(Path(tmp), "sleep 30 &\nsleep 30\n")
+            tc = tcmod.Toolchain(bend=fake, env={"PATH": "/usr/bin:/bin"})
+            res = tc.run([], cwd=Path(tmp), timeout=1)
+            self.assertEqual(res["exit_code"], 124)
+            self.assertIn("timeout", res["stderr"])
+            self.assertLess(res["seconds"], 10)
+
+    def test_version_tolerates_empty_output(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            fake = self._fake_bend(Path(tmp), "exit 0\n")
+            self.assertEqual(tcmod.Toolchain(bend=fake, env={"PATH": "/usr/bin:/bin"}).version(), "")
+
+    def test_explicit_missing_binary_is_not_a_silent_skip(self) -> None:
+        with mock.patch.dict(os.environ, {**GATE_ON, "COMPASS_BEND_BIN": "/nonexistent/bend"}):
+            self.assertIsNone(tcmod.discover(REPO))
+            result = pl.check(REPO, write_evidence=False)
+        self.assertEqual(result["status"], "fail")
+        self.assertIn("toolchain-explicit-missing", result["failures"])
 
 
 class CheckWithoutToolTests(unittest.TestCase):
+    def setUp(self) -> None:
+        patcher = mock.patch.dict(os.environ, GATE_ON)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        os.environ.pop("COMPASS_BEND_BIN", None)
+
     def test_skipped_when_tool_absent(self) -> None:
         result = pl.check(REPO, write_evidence=False, toolchain=None)
         self.assertEqual(result["status"], "skipped")
@@ -134,27 +309,62 @@ class CheckWithoutToolTests(unittest.TestCase):
         result = pl.check(REPO, write_evidence=False, toolchain=None, require_tool=True)
         self.assertEqual(result["status"], "fail")
 
-    def test_discover_honours_explicit_missing_binary(self) -> None:
-        with mock.patch.dict(os.environ, {"COMPASS_BEND_BIN": "/nonexistent/bend"}):
-            self.assertIsNone(discover(REPO))
+    def test_drift_is_not_hidden_by_a_skip(self) -> None:
+        mutated = dict(policy_states.TRANSITIONS)
+        mutated["candidate"] = mutated["candidate"] | {"active"}
+        with pl.patched_python_tables(transitions=mutated):
+            result = pl.check(REPO, write_evidence=False, toolchain=None)
+        self.assertEqual(result["status"], "fail")
+        self.assertIn("drift", result["failures"])
+
+    def test_strict_laws_fail_closed_on_bad_ref_even_without_tool(self) -> None:
+        result = pl.check(REPO, write_evidence=False, toolchain=None, strict_laws=True,
+                          base_ref="refs/does-not-exist")
+        self.assertEqual(result["status"], "fail")
+        self.assertIn("laws-unverified", result["failures"])
 
 
 class LawIntegrityTests(unittest.TestCase):
-    def test_absent_on_base_is_not_a_change(self) -> None:
-        result = pl.law_integrity(REPO, base_ref="refs/does-not-exist")
-        self.assertFalse(result["changed"])
-        self.assertEqual({v["base"] for v in result["files"].values()}, {"absent"})
+    def test_bad_ref_is_an_error_not_clean(self) -> None:
+        for ref in ("refs/does-not-exist", "--output=/tmp/x", ""):
+            with self.subTest(ref=ref):
+                result = pl.law_integrity(REPO, base_ref=ref)
+                self.assertEqual(result["status"], "error")
+                self.assertIsNone(result["changed"])
 
-    def test_modified_laws_flagged_against_head(self) -> None:
+    def test_option_like_ref_never_writes_a_file(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "out"
+            pl.law_integrity(REPO, base_ref=f"--output={target}")
+            self.assertFalse(target.exists())
+
+    def test_law_files_absent_at_base_count_as_changed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            import subprocess
-
             for name in pl.CAPTAIN_OWNED:
                 dst = root / pl.FORMAL_REL / name
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 dst.write_text((FORMAL / name).read_text(encoding="utf-8"), encoding="utf-8")
-            run = lambda *a: subprocess.run(a, cwd=root, check=True, capture_output=True)  # noqa: E731
+            subprocess.run(["git", "init", "-q"], cwd=root, check=True, capture_output=True)
+            subprocess.run(["git", "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q",
+                            "--allow-empty", "-m", "empty"], cwd=root, check=True, capture_output=True)
+            result = pl.law_integrity(root, base_ref="HEAD")
+            self.assertEqual(result["status"], "ok")
+            self.assertTrue(result["changed"])
+            self.assertTrue(result["needs_captain_review"])
+            self.assertTrue(all(f["base"] == "absent" for f in result["files"].values()))
+
+    def test_modified_laws_flagged_against_head(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for name in pl.CAPTAIN_OWNED:
+                dst = root / pl.FORMAL_REL / name
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                dst.write_text((FORMAL / name).read_text(encoding="utf-8"), encoding="utf-8")
+
+            def run(*a: str) -> None:
+                subprocess.run(a, cwd=root, check=True, capture_output=True)
+
             run("git", "init", "-q")
             run("git", "add", ".")
             run("git", "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "base")
@@ -162,10 +372,25 @@ class LawIntegrityTests(unittest.TestCase):
             laws = root / pl.FORMAL_REL / "LAWS.bend"
             laws.write_text(laws.read_text(encoding="utf-8") + "\n# weakened\n", encoding="utf-8")
             result = pl.law_integrity(root, base_ref="HEAD")
+            self.assertEqual(result["status"], "ok")
             self.assertTrue(result["changed"])
             self.assertTrue(result["needs_captain_review"])
             self.assertTrue(result["files"]["LAWS.bend"]["changed"])
             self.assertFalse(result["files"]["SPEC.bend"]["changed"])
+            with mock.patch.dict(os.environ, GATE_ON):
+                strict = pl.check(root, write_evidence=False, toolchain=None, strict_laws=True, base_ref="HEAD")
+            self.assertIn("laws-changed-vs-base", strict["failures"])
+
+
+class KnownGapTests(unittest.TestCase):
+    def test_direct_entry_probe_runs_in_isolation(self) -> None:
+        before = sorted(p.name for p in (REPO / ".agent").glob("evaluations*"))
+        gap = pl.probe_direct_entry()
+        after = sorted(p.name for p in (REPO / ".agent").glob("evaluations*"))
+        self.assertEqual(before, after)
+        self.assertTrue(gap["outside_model"])
+        self.assertIsInstance(gap["bypass_observed"], bool)
+        self.assertTrue(gap["authority_flags_false"])
 
 
 @needs_bend
@@ -177,32 +402,38 @@ class BendEndToEndTests(unittest.TestCase):
     def test_overall_ok(self) -> None:
         self.assertEqual(self.result["status"], "ok", self.result.get("failures"))
 
-    def test_proofs_pass_with_kernel_verdict_when_lean_present(self) -> None:
+    def test_proofs_pass_with_kernel_verdict(self) -> None:
+        self.assertTrue(self.result["proofs"]["verdict"])
         self.assertEqual(self.result["proofs"]["status"], "pass", self.result["proofs"]["output"])
 
     def test_python_matches_model_exhaustively(self) -> None:
         conf = self.result["conformance"]
         self.assertEqual(conf["status"], "pass", conf["diffs"])
-        self.assertEqual(conf["rows"], 98)
+        self.assertEqual(conf["rows"], 1568)
+        self.assertEqual(conf["model_rows"], 1568)
 
-    def test_all_mutants_rejected(self) -> None:
+    def test_all_mutants_rejected_as_expected(self) -> None:
         muts = self.result["mutations"]
         self.assertEqual(muts["uncaught"], [])
+        self.assertEqual(muts["unexpected"], [])
         self.assertEqual(muts["caught"], muts["injected"])
-        self.assertEqual(muts["python_mutants_detected_by_drift_lock"], 5)
+        self.assertEqual(muts["python_mutants_detected_by_drift_lock"], muts["python_mutants"])
 
-    def test_mutants_tripped_the_expected_law(self) -> None:
-        expect = {
-            "skip-stage": "p1_pipeline",
-            "backward-edge": "p1_pipeline",
-            "evidence-drop-shadow-present": "p7c_approved_needs_shadow_present",
-            "evidence-drop-proven": "p7d_proven_needs_proven_ok",
-        }
-        rows = {r["mutant_id"]: r for r in self.result["mutations"]["rows"]}
-        for mutant_id, law in expect.items():
-            with self.subTest(mutant_id):
-                self.assertIn("proofs", rows[mutant_id]["caught_by"])
-                self.assertEqual(rows[mutant_id]["first_failed_law"], law)
+    def test_proof_caught_mutants_trip_the_expected_law(self) -> None:
+        expected = {m.mutant_id: m.laws for m in pl.MODEL_MUTANTS}
+        for row in self.result["mutations"]["rows"]:
+            if row["kind"] != "model":
+                continue
+            with self.subTest(row["mutant_id"]):
+                if expected[row["mutant_id"]]:
+                    self.assertIn("proofs", row["caught_by"])
+                    self.assertIn(row["first_failed_law"], expected[row["mutant_id"]])
+                else:
+                    # Restrictive mutants: laws are safety-only; the evidence grid catches them.
+                    self.assertEqual(row["caught_by"], ["conformance"])
+
+    def test_known_gap_is_recorded(self) -> None:
+        self.assertEqual(self.result["known_gaps"][0]["name"], "direct-entry-bypass")
 
     def test_evidence_record_has_provenance(self) -> None:
         self.assertEqual(len(self.result["toolchain"]["bend_sha256"]), 64)

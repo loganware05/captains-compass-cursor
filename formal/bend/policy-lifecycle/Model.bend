@@ -1,11 +1,13 @@
 # Policy lifecycle decision core (NorthStar M50) — Bend model.
 #
 # Mirrors orchestrator/behavior/policy/states.py (TRANSITIONS, CAPTAIN_REQUIRED)
-# and the decision order of promote.promote_policy:
+# and the gates of promote.promote_policy:
 #   1. legality   (can_transition)
 #   2. Captain    (require_captain_approved)
 #   3. evidence   (prompt-eval / shadow / shadow-present / proven-evidence),
 #                 abstracted here as boolean preconditions.
+# `decide` is a pure conjunction of the three, so gate *order* is not modeled;
+# the order in promote_policy is pinned by the drift lock instead.
 # It models decisions only: no filesystem, no JSON, no clock.
 
 import Base
@@ -194,19 +196,16 @@ def finish(ok: Bool, t: State) -> Outcome:
 def apply(+f: State, +t: State, +cap: Bool, p: Pre) -> Outcome:
   finish(decide(f, t, cap, p), t)
 
-# Does an outcome grant any authority?
-def grants_authority(o: Outcome) -> Bool:
-  match o:
-    case Promoted{to, afe, am}:
-      Bool.or(afe, am)
-    case Rejected{}:
-      False{}
-
 # Sequences of promotion attempts
 # -------------------------------
 
 type Step is Data:
   Step{to: State, cap: Bool, pre: Pre}
+
+# A sequence of promotion attempts.
+type Plan is Data:
+  NoMore{}
+  Attempt{step: Step, rest: Plan}
 
 def pick(ok: Bool, +t: State, +f: State) -> State:
   match ok:
@@ -220,11 +219,11 @@ def next(+f: State, +t: State, +cap: Bool, p: Pre) -> State:
   pick(decide(f, t, cap, p), t, f)
 
 # State after an arbitrary sequence of attempts.
-def run(steps: List<Step>, +s: State) -> State:
+def run(steps: Plan, +s: State) -> State:
   match steps:
-    case Nil{}:
+    case NoMore{}:
       s
-    case Con{h, tl}:
+    case Attempt{h, tl}:
       match h:
         case Step{to, cap, pre}:
           run(tl, next(s, to, cap, pre))

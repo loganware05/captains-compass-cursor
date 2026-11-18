@@ -25,6 +25,11 @@ Exit: 0 ok/skipped, 1 failed, 2 usage or gate.
 USAGE
 }
 
+if [[ $# -eq 1 && ( "$1" == "-h" || "$1" == "--help" ) ]]; then
+  usage
+  exit 0
+fi
+
 if [[ $# -lt 2 ]]; then
   usage >&2
   exit 2
@@ -51,6 +56,14 @@ REQUIRE_TOOL=0
 STRICT_LAWS=0
 BASE_REF="origin/main"
 
+need_value() {
+  if [[ $# -lt 2 || "$2" == -* ]]; then
+    echo "error: $1 requires a value" >&2
+    usage >&2
+    exit 2
+  fi
+}
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --no-mutations) MUTATIONS=0; shift ;;
@@ -58,7 +71,7 @@ while [[ $# -gt 0 ]]; do
     --no-write) WRITE=0; shift ;;
     --require-tool) REQUIRE_TOOL=1; shift ;;
     --strict-laws) STRICT_LAWS=1; shift ;;
-    --base-ref) BASE_REF="$2"; shift 2 ;;
+    --base-ref) need_value "$@"; BASE_REF="$2"; shift 2 ;;
     -h|--help) usage; exit 0 ;;
     *)
       echo "error: unknown argument: $1" >&2
@@ -70,6 +83,8 @@ done
 
 export COMPASS_CONTROL_ROOT="${COMPASS_CONTROL_ROOT:-$ROOT}"
 export PYTHONPATH="${ROOT}${PYTHONPATH:+:$PYTHONPATH}"
+# Run from the control repo so a stray module in the caller's cwd cannot shadow ours.
+cd "$ROOT"
 
 python3 - "$CMD" "$ROOT" "$MUTATIONS" "$VERDICT" "$WRITE" "$REQUIRE_TOOL" "$STRICT_LAWS" "$BASE_REF" <<'PY'
 import json
@@ -98,19 +113,16 @@ try:
             verdict=verdict,
             write_evidence=write,
             require_tool=require_tool,
+            strict_laws=strict_laws,
             base_ref=base_ref,
         )
-        if strict_laws and (result.get("law_integrity") or {}).get("changed"):
-            result["status"] = "fail"
-            result.setdefault("failures", []).append("laws-changed-vs-base")
         print(json.dumps(result, indent=2, sort_keys=True))
         sys.exit(0 if result["status"] in {"ok", "skipped"} else 1)
     elif cmd == "lock":
         result = pl.check(root, mutations=False, write_evidence=False, require_tool=True, base_ref=base_ref)
         # Only a stale lock ("drift") may be outstanding; proofs and conformance must pass.
-        tool_missing = "failures" not in result
         failures = [f for f in result.get("failures", []) if f != "drift"]
-        if tool_missing or failures:
+        if failures or "proofs" not in result:
             print(json.dumps({"status": "refused",
                               "reason": "proofs and conformance must pass before locking",
                               "failures": failures or ["toolchain"]}, indent=2))
@@ -121,6 +133,9 @@ try:
     else:
         print(f"error: unknown command {cmd}", file=sys.stderr)
         sys.exit(2)
+except PermissionError as exc:
+    print(f"error: {exc}", file=sys.stderr)
+    sys.exit(2)
 except Exception as exc:  # noqa: BLE001
     print(f"error: {exc}", file=sys.stderr)
     sys.exit(1)

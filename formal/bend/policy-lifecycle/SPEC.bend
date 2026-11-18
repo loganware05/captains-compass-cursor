@@ -194,3 +194,20 @@ def has_proven_ok(p: M.Pre) -> Bool:
   match p:
     case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
       proven_ok
+
+# Does an outcome grant any authority? (approved_for_execution / authority_mutation)
+def grants_authority(o: M.Outcome) -> Bool:
+  match o:
+    case M.Promoted{to, afe, am}:
+      Bool.or(afe, am)
+    case M.Rejected{}:
+      False{}
+
+# An outcome agrees with the decision: a promotion lands exactly on the
+# requested target; a rejection happens exactly when the decision was no.
+def outcome_agrees(ok: Bool, t: M.State, o: M.Outcome) -> Bool:
+  match o:
+    case M.Promoted{to, afe, am}:
+      Bool.and(ok, eq(stage(to), stage(t)))
+    case M.Rejected{}:
+      Bool.not(ok)

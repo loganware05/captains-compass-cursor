@@ -93,15 +93,38 @@ def main():
     L.extend(["def Laws.p3_terminal(t, c, p):", f"{ind(1)}{{==}}", ""])
     L.append("# P3': induction on the sequence. A step out of `retired` is rejected (P3),\n# so `next` leaves the state at `retired` and the induction hypothesis applies.")
     L.extend(["def Laws.p3_terminal_sequences(steps):", f"{ind(1)}match steps:",
-              f"{ind(2)}case Nil{{}}:", f"{ind(3)}{{==}}", f"{ind(2)}case Con{{h, tl}}:",
+              f"{ind(2)}case M.NoMore{{}}:", f"{ind(3)}{{==}}", f"{ind(2)}case M.Attempt{{h, tl}}:",
               f"{ind(3)}match h:", f"{ind(4)}case M.Step{{to, cap, pre}}:",
               f"{ind(5)}Laws.p3_terminal_sequences(tl)", ""])
     L.append("# P6: `finish` only ever builds Promoted{_, False, False}.")
-    L.extend(["def finish_no_authority(ok: Bool, t: M.State) -> {M.grants_authority(M.finish(ok, t)) == False{} : Bool}:",
+    L.extend(["def finish_no_authority(ok: Bool, t: M.State) -> {S.grants_authority(M.finish(ok, t)) == False{} : Bool}:",
               f"{ind(1)}match ok:", f"{ind(2)}case True{{}}:", f"{ind(3)}{{==}}",
               f"{ind(2)}case False{{}}:", f"{ind(3)}{{==}}", "",
               "def Laws.p6_no_authority_grant(f, t, c, p):",
               f"{ind(1)}finish_no_authority(M.decide(f, t, c, p), t)", ""])
+    # P8-P10: lemmas over the decision result `ok`, then instantiated at `decide(...)`.
+    def match_states(var, depth):
+        out = [f"{ind(depth)}match {var}:"]
+        for s in STATES:
+            out += [f"{ind(depth+1)}case M.{s}{{}}:", f"{ind(depth+2)}{{==}}"]
+        return out
+    L.append("# P8: lemmas over the decision result, instantiated at decide(...).")
+    L.append("def next_rejected(ok: Bool, +t: M.State, +f: M.State) -> {Bool.or(ok, S.eq(S.stage(M.pick(ok, t, f)), S.stage(f))) == True{} : Bool}:")
+    L.append(f"{ind(1)}match ok:")
+    L += [f"{ind(2)}case True{{}}:", f"{ind(3)}{{==}}", f"{ind(2)}case False{{}}:"] + match_states("f", 3)
+    L += ["", "def Laws.p8a_rejected_stays(f, t, c, p):", f"{ind(1)}next_rejected(M.decide(f, t, c, p), t, f)", ""]
+    L.append("def next_accepted(ok: Bool, +t: M.State, +f: M.State) -> {Bool.or(Bool.not(ok), S.eq(S.stage(M.pick(ok, t, f)), S.stage(t))) == True{} : Bool}:")
+    L.append(f"{ind(1)}match ok:")
+    L += [f"{ind(2)}case True{{}}:"] + match_states("t", 3) + [f"{ind(2)}case False{{}}:", f"{ind(3)}{{==}}"]
+    L += ["", "def Laws.p8b_accepted_lands(f, t, c, p):", f"{ind(1)}next_accepted(M.decide(f, t, c, p), t, f)", ""]
+    L += ["# P9: both laws are the definition of `run`; Bend checks them by computation.",
+          "def Laws.p9a_run_empty(s):", f"{ind(1)}{{==}}", "",
+          "def Laws.p9b_run_step(to, cap, pre, tl, s):", f"{ind(1)}{{==}}", ""]
+    L.append("# P10: apply = finish(decide, t); check finish against the decision.")
+    L.append("def outcome_lemma(ok: Bool, +t: M.State) -> {S.outcome_agrees(ok, t, M.finish(ok, t)) == True{} : Bool}:")
+    L.append(f"{ind(1)}match ok:")
+    L += [f"{ind(2)}case True{{}}:"] + match_states("t", 3) + [f"{ind(2)}case False{{}}:", f"{ind(3)}{{==}}"]
+    L += ["", "def Laws.p10_outcome_agrees(f, t, c, p):", f"{ind(1)}outcome_lemma(M.decide(f, t, c, p), t)", ""]
     L.append("# P7: split the evidence flag; when it is False the target is rejected, which\n# needs the source state (and Captain approval) only for the gated target.")
     L.extend(p7("p7a_sandbox_needs_eval_pass", "is_sandbox_evaluated", "eval_pass", "SandboxEvaluated")); L.append("")
     L.extend(p7("p7b_shadowed_needs_shadow_ok", "is_shadowed", "shadow_ok", "Shadowed")); L.append("")

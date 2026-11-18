@@ -1,4 +1,22 @@
 {
+  "laws": [
+    "p10_outcome_agrees",
+    "p1_pipeline",
+    "p2_captain_gate",
+    "p3_terminal",
+    "p3_terminal_sequences",
+    "p4_forward_only",
+    "p5_shadow_before_approval",
+    "p6_no_authority_grant",
+    "p7a_sandbox_needs_eval_pass",
+    "p7b_shadowed_needs_shadow_ok",
+    "p7c_approved_needs_shadow_present",
+    "p7d_proven_needs_proven_ok",
+    "p8a_rejected_stays",
+    "p8b_accepted_lands",
+    "p9a_run_empty",
+    "p9b_run_step"
+  ],
   "tables": {
     "captain_required": [
       "active",
@@ -6,7 +24,26 @@
       "proven",
       "retired"
     ],
-    "schema_version": "1",
+    "promote_structure": {
+      "captain": true,
+      "evidence": {
+        "approved": [
+          "shadow_present"
+        ],
+        "proven": [
+          "proven_ok"
+        ],
+        "sandbox_evaluated": [
+          "eval_pass"
+        ],
+        "shadowed": [
+          "shadow_ok"
+        ]
+      },
+      "legality": true,
+      "order_ok": true
+    },
+    "schema_version": "2",
     "states": [
       "active",
       "approved",
@@ -43,5 +80,5 @@
       ]
     }
   },
-  "tables_sha256": "8fe3921debb99226e07c21c9f742b46a11e7bb5c51b96dd95f45b27c8353e5b6"
+  "tables_sha256": "81efce8303bea71b9e6d79c259d352139f8a046081ba70a0516e802626f54dcf"
 }

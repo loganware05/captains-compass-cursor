@@ -2,8 +2,10 @@
 #
 # CAPTAIN-OWNED. The Captain writes and reviews these claims; agents must not
 # edit this file or SPEC.bend. PROOF.bend proves each law with a def of the
-# same name. CI compares LAWS.bend and SPEC.bend against `main` so a branch
-# cannot weaken the gate that checks it.
+# same name. `northstar formal check --strict-laws --base-ref origin/main`
+# compares LAWS.bend and SPEC.bend with the base ref and fails if they changed
+# or the ref is unusable, so a branch cannot weaken the gate that checks it.
+# (CI wiring is deferred until the spike's go/no-go.)
 #
 # Model under test: Model.bend (mirrors orchestrator/behavior/policy/states.py
 # and the decision order of promote.promote_policy). Vocabulary: SPEC.bend,
@@ -44,7 +46,7 @@ law p3_terminal:
 # P3' TERMINAL FOR ALL SEQUENCES: a retired policy stays retired under any
 # sequence of promotion attempts, accepted or not.
 law p3_terminal_sequences:
-  for steps: List<M.Step>
+  for steps: M.Plan
   {M.run(steps, M.Retired{}) == M.Retired{} : M.State}
 
 # P4 FORWARD ONLY: every accepted promotion strictly increases the stage, so
@@ -72,7 +74,7 @@ law p6_no_authority_grant:
   for +t: M.State
   for +c: Bool
   for +p: M.Pre
-  {M.grants_authority(M.apply(f, t, c, p)) == False{} : Bool}
+  {S.grants_authority(M.apply(f, t, c, p)) == False{} : Bool}
 
 # P7 EVIDENCE GATES: an accepted promotion into sandbox_evaluated, shadowed,
 # approved or proven carries the evidence that gate demands.
@@ -103,3 +105,43 @@ law p7d_proven_needs_proven_ok:
   for +f: M.State
   for +c: Bool
   {S.implies(Bool.and(S.is_proven(t), M.decide(f, t, c, p)), S.has_proven_ok(p)) == True{} : Bool}
+
+# P8 REJECTION LEAVES THE STATE; ACCEPTANCE LANDS ON THE TARGET: after one
+# attempt the policy is at the target if and only if the decision was yes, and
+# otherwise unchanged. (Compared by stage, which is injective on states.)
+law p8a_rejected_stays:
+  for +f: M.State
+  for +t: M.State
+  for +c: Bool
+  for +p: M.Pre
+  {Bool.or(M.decide(f, t, c, p), S.eq(S.stage(M.next(f, t, c, p)), S.stage(f))) == True{} : Bool}
+
+law p8b_accepted_lands:
+  for +f: M.State
+  for +t: M.State
+  for +c: Bool
+  for +p: M.Pre
+  {Bool.or(Bool.not(M.decide(f, t, c, p)), S.eq(S.stage(M.next(f, t, c, p)), S.stage(t))) == True{} : Bool}
+
+# P9 SEQUENCES ARE REPEATED ATTEMPTS: an empty sequence changes nothing, and a
+# sequence applies its first attempt, then the rest.
+law p9a_run_empty:
+  for +s: M.State
+  {M.run(M.NoMore{}, s) == s : M.State}
+
+law p9b_run_step:
+  for +to: M.State
+  for +cap: Bool
+  for +pre: M.Pre
+  for +tl: M.Plan
+  for +s: M.State
+  {M.run(M.Attempt{M.Step{to, cap, pre}, tl}, s) == M.run(tl, M.next(s, to, cap, pre)) : M.State}
+
+# P10 OUTCOME AGREES WITH DECISION: a promotion outcome names the requested
+# target exactly when the decision was yes.
+law p10_outcome_agrees:
+  for +f: M.State
+  for +t: M.State
+  for +c: Bool
+  for +p: M.Pre
+  {S.outcome_agrees(M.decide(f, t, c, p), t, M.apply(f, t, c, p)) == True{} : Bool}

@@ -443,15 +443,15 @@ def Laws.p3_terminal(t, c, p):
 # so `next` leaves the state at `retired` and the induction hypothesis applies.
 def Laws.p3_terminal_sequences(steps):
   match steps:
-    case Nil{}:
+    case M.NoMore{}:
       {==}
-    case Con{h, tl}:
+    case M.Attempt{h, tl}:
       match h:
         case M.Step{to, cap, pre}:
           Laws.p3_terminal_sequences(tl)
 
 # P6: `finish` only ever builds Promoted{_, False, False}.
-def finish_no_authority(ok: Bool, t: M.State) -> {M.grants_authority(M.finish(ok, t)) == False{} : Bool}:
+def finish_no_authority(ok: Bool, t: M.State) -> {S.grants_authority(M.finish(ok, t)) == False{} : Bool}:
   match ok:
     case True{}:
       {==}
@@ -460,6 +460,87 @@ def finish_no_authority(ok: Bool, t: M.State) -> {M.grants_authority(M.finish(ok
 
 def Laws.p6_no_authority_grant(f, t, c, p):
   finish_no_authority(M.decide(f, t, c, p), t)
+
+# P8: lemmas over the decision result, instantiated at decide(...).
+def next_rejected(ok: Bool, +t: M.State, +f: M.State) -> {Bool.or(ok, S.eq(S.stage(M.pick(ok, t, f)), S.stage(f))) == True{} : Bool}:
+  match ok:
+    case True{}:
+      {==}
+    case False{}:
+      match f:
+        case M.Candidate{}:
+          {==}
+        case M.SandboxEvaluated{}:
+          {==}
+        case M.Shadowed{}:
+          {==}
+        case M.Approved{}:
+          {==}
+        case M.Active{}:
+          {==}
+        case M.Proven{}:
+          {==}
+        case M.Retired{}:
+          {==}
+
+def Laws.p8a_rejected_stays(f, t, c, p):
+  next_rejected(M.decide(f, t, c, p), t, f)
+
+def next_accepted(ok: Bool, +t: M.State, +f: M.State) -> {Bool.or(Bool.not(ok), S.eq(S.stage(M.pick(ok, t, f)), S.stage(t))) == True{} : Bool}:
+  match ok:
+    case True{}:
+      match t:
+        case M.Candidate{}:
+          {==}
+        case M.SandboxEvaluated{}:
+          {==}
+        case M.Shadowed{}:
+          {==}
+        case M.Approved{}:
+          {==}
+        case M.Active{}:
+          {==}
+        case M.Proven{}:
+          {==}
+        case M.Retired{}:
+          {==}
+    case False{}:
+      {==}
+
+def Laws.p8b_accepted_lands(f, t, c, p):
+  next_accepted(M.decide(f, t, c, p), t, f)
+
+# P9: both laws are the definition of `run`; Bend checks them by computation.
+def Laws.p9a_run_empty(s):
+  {==}
+
+def Laws.p9b_run_step(to, cap, pre, tl, s):
+  {==}
+
+# P10: apply = finish(decide, t); check finish against the decision.
+def outcome_lemma(ok: Bool, +t: M.State) -> {S.outcome_agrees(ok, t, M.finish(ok, t)) == True{} : Bool}:
+  match ok:
+    case True{}:
+      match t:
+        case M.Candidate{}:
+          {==}
+        case M.SandboxEvaluated{}:
+          {==}
+        case M.Shadowed{}:
+          {==}
+        case M.Approved{}:
+          {==}
+        case M.Active{}:
+          {==}
+        case M.Proven{}:
+          {==}
+        case M.Retired{}:
+          {==}
+    case False{}:
+      {==}
+
+def Laws.p10_outcome_agrees(f, t, c, p):
+  outcome_lemma(M.decide(f, t, c, p), t)
 
 # P7: split the evidence flag; when it is False the target is rejected, which
 # needs the source state (and Captain approval) only for the gated target.
