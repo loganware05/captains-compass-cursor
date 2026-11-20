@@ -2,6 +2,33 @@
 
 ## Current status
 
+**IN PROGRESS:** [#278](https://github.com/loganware05/captains-compass-cursor/issues/278)
+`bend-policy-proof-spike` (plan **APPROVED** 2026-11-18) on `feature/278-bend-policy-proof-spike`
+— opt-in Bend 2 proof experiment for the policy lifecycle decision core. Baseline **v1.87.0** @ `ef0ca32`;
+rollback `rollback/pre-bend-policy-proof-spike`. **Waves 0, A, B, C implemented; awaiting Captain review/PR.**
+
+| Item | Value |
+|---|---|
+| Proofs | 17 laws (incl. P11 liveness), `bend PROOF.bend --verdict` → ALL PROOFS CHECK (Bend 2.0.40, Lean 4.34.0) |
+| Conformance | 1568-row exhaustive grid, 0 diffs vs real `can_transition`/`require_captain_approved` |
+| Mutation controls | 38/38 rejected: 23 model mutants (19 by proofs, 18 by the evidence grid) + 15 Python-side (9 grid-visible; 6 evasions caught only by the AST-pin lock) |
+| Validation | `tests/run.sh` 137/0 with and without the gate; formal unit tests 56 OK; doctor 0 errors |
+| Finding | 001 direct entry into `proven` bypasses all gates (reported, not fixed; outside the model) |
+| ADR | ADR-110 **Proposed** — Captain decides go/no-go |
+
+**Captain attention:**
+
+1. **Scope narrowing (Amendment A1):** P4/P5 are proved *per accepted step*, not over whole histories as
+   the approved plan said. Declared in the plan, ADR and docs.
+2. **Laws review:** `LAWS.bend` / `SPEC.bend` are Captain-owned; `--strict-laws --base-ref origin/main`
+   fails on this branch by design until you review them.
+3. **Pre-existing flake (not fixed, out of scope):** `doctor.sh` can fail
+   `northstar help missing Surfaces map (C1)` (`grep -q` + `pipefail` SIGPIPE; 4/300 on `origin/main`).
+4. Known limits (see ADR-110): P6/P8/P10 are model-internal, not linked to production code; the `promote_policy` pin is a coarse whole-function AST hash (any edit there needs a re-lock); Lean is not pinned; `--base-ref` is caller-chosen.
+5. Merge is Captain-only.
+
+### Previous
+
 **MERGED:** [#275](https://github.com/loganware05/captains-compass-cursor/pull/275)
 for [#274](https://github.com/loganware05/captains-compass-cursor/issues/274)
 `post-merge-wave-continue` → **v1.87.0** @ `6ee5fb6`.

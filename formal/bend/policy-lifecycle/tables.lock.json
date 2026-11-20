@@ -1,0 +1,91 @@
+{
+  "files_sha256": {
+    "Conformance.bend": "6bd01d158beff8f3405d7025390048a685543b7bbfbfd981c1033368dc1ae98b",
+    "Model.bend": "bb145c3f3b50432b5973506452bdc7070032aff89dbf93a2c6d14a472ebee82f"
+  },
+  "laws": [
+    "p10_outcome_agrees",
+    "p11_liveness",
+    "p1_pipeline",
+    "p2_captain_gate",
+    "p3_terminal",
+    "p3_terminal_sequences",
+    "p4_forward_only",
+    "p5_shadow_before_approval",
+    "p6_no_authority_grant",
+    "p7a_sandbox_needs_eval_pass",
+    "p7b_shadowed_needs_shadow_ok",
+    "p7c_approved_needs_shadow_present",
+    "p7d_proven_needs_proven_ok",
+    "p8a_rejected_stays",
+    "p8b_accepted_lands",
+    "p9a_run_empty",
+    "p9b_run_step"
+  ],
+  "tables": {
+    "captain_required": [
+      "active",
+      "approved",
+      "proven",
+      "retired"
+    ],
+    "promote_structure": {
+      "ast_sha256": "d8ee5967e72205c2086644b5b85fc2699d0a52daf95cd8ae3c4f53ca0eea8858",
+      "bindings_ok": true,
+      "captain": true,
+      "evidence": {
+        "approved": [
+          "shadow_present"
+        ],
+        "proven": [
+          "proven_ok"
+        ],
+        "sandbox_evaluated": [
+          "eval_pass"
+        ],
+        "shadowed": [
+          "shadow_ok"
+        ]
+      },
+      "legality": true,
+      "order_ok": true
+    },
+    "schema_version": "2",
+    "states": [
+      "active",
+      "approved",
+      "candidate",
+      "proven",
+      "retired",
+      "sandbox_evaluated",
+      "shadowed"
+    ],
+    "transitions": {
+      "active": [
+        "proven",
+        "retired"
+      ],
+      "approved": [
+        "active",
+        "retired"
+      ],
+      "candidate": [
+        "retired",
+        "sandbox_evaluated"
+      ],
+      "proven": [
+        "retired"
+      ],
+      "retired": [],
+      "sandbox_evaluated": [
+        "retired",
+        "shadowed"
+      ],
+      "shadowed": [
+        "approved",
+        "retired"
+      ]
+    }
+  },
+  "tables_sha256": "f32725a02b10036c2726881361f6fb8279cb68f16662105b20fd335148932050"
+}

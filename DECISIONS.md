@@ -1,5 +1,31 @@
 # Decisions
 
+## ADR-110: Bend Policy-Lifecycle Proof Spike (go/no-go)
+
+- **Status:** **Proposed** — awaiting Captain decision (the agent does not accept its own ADR)
+- **Date:** 2026-11-18
+- **Context:** Bend 2 assessment recommended a small opt-in proof experiment on the policy
+  lifecycle decision core. Plan `bend-policy-proof-spike` (#278) approved by the Captain.
+- **Decision (proposed):** **Conditional go** — keep the experiment as an opt-in, additive command
+  (`COMPASS_BEND_PROOF_ENABLED=1 northstar formal check policy-lifecycle`). Do **not** wire it into
+  CI, make Bend a dependency, or extend to other targets until the Captain decides.
+  1. Model + 17 laws (incl. P11 liveness) proved with the Lean-checked kernel; Captain owns `LAWS.bend` and `SPEC.bend`.
+  2. Conformance is exhaustive (1568 rows) against the *real* Python functions; drift, law-manifest
+     a whole-function AST pin of `promote_policy`, and 23 model + 15 Python-side mutation controls
+     reject unpaired change (6 of the Python mutants are evasions only the AST pin can see).
+  3. **Boundary:** only transitions are modeled. P4/P5 are per-step, evidence gates are booleans,
+     gate order is pinned (not proved), P6/P8/P10 are model-internal (not linked to production
+     code), the `promote_policy` pin is coarse, Lean is unpinned, and policy *entry* is outside the model.
+  4. Finding 001 (direct entry into `proven` bypasses all gates) is the main yield; it came from
+     adversarial review of the model's boundary, not from a failing proof.
+- **Consequences:** Positive — a precise, checkable statement of the lifecycle safety contract and a
+  harness that rejects broken tables/structure. Negative — real authoring cost (6+ proof-fix
+  iterations; a review-driven hardening round), a tool that needs a Lean build for the strongest
+  check, and a risk of false assurance if the boundary is not read. No production semantics changed.
+- **No-go triggers:** if the Captain declines, archive as docs/evidence and delete `formal/`.
+- **Evidence:** `.agent/evidence/bend-policy-proof-spike/` (`report.json`, `LATEST_check.json`,
+  `finding-001-direct-entry-bypass.md`, `wave0-provenance.md`).
+
 ## ADR-109: Post-Merge Wave Continue (v1.87.0)
 
 - **Status:** Accepted

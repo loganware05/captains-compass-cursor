@@ -125,3 +125,6 @@ wandb/
 !.agent/specialized-gpu-jobs/.gitkeep
 .agent/status/oversight-runs/**
 !.agent/status/oversight-runs/**/.gitkeep
+
+# Bend proof spike toolchain (isolated, local only)
+.agent/tools/

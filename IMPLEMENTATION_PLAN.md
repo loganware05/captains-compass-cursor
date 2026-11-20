@@ -1,317 +1,211 @@
-# Implementation Plan — Post-Merge Wave Continue (T3 + NorthStar)
+# Implementation Plan — Bend Policy-Lifecycle Proof Spike
 
-- Status: **COMPLETE**
+- Status: **APPROVED**
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **COMPLETE** |
-| Plan ID | `post-merge-wave-continue` |
-| Issue | #274 (https://github.com/loganware05/captains-compass-cursor/issues/274) |
-| Baseline | `origin/main` @ `9e2c0d1cb6ca054eca3e293e478affb330cea370` (re-pin at branch create) |
-| Branch | `feature/274-post-merge-wave-continue` from `main` |
-| Rollback | `rollback/pre-post-merge-wave-continue` |
-| Proposed release | **v1.87.0** |
-| Created | 2026-11-14 |
-| Last updated | 2026-11-14 (COMPLETE — #275 merged @ `6ee5fb6`) |
-| Approved by | Logan Ware (Captain) — chat “I approve the NorthStar plan” |
-| Approval date | 2026-11-14 |
-| Approved revision | Q1=poll A; Q2=same-thread unsettle; Q3=auto-continue remaining waves; Waves A+B (C optional) |
-| Merged | [#275](https://github.com/loganware05/captains-compass-cursor/pull/275) @ `6ee5fb6` |
+| Status | **APPROVED** |
+| Plan ID | `bend-policy-proof-spike` |
+| Issue | #278 (https://github.com/loganware05/captains-compass-cursor/issues/278) |
+| Baseline | `origin/main` @ `ef0ca3203ff1e30e5455aae0dba944125bad250b` (v1.87.0) |
+| Branch | `feature/278-bend-policy-proof-spike` from `main` (worktree `../captains-compass-cursor-bend-spike`) |
+| Rollback | `rollback/pre-bend-policy-proof-spike` @ `ef0ca32` |
+| Proposed release | minor, **opt-in / experimental**; no authority-lock change; version assigned at release |
+| Created | 2026-11-18 |
+| Approved by | Logan Ware (Captain) — chat "Approve" |
+| Approval date | 2026-11-18 |
+| Approved revision | Q1=replace active plan file; Q2=policy lifecycle only; Q3=isolated project-local toolchain; Q4=default budget; Q5=`LAWS.bend` Captain-reviewed (Captain accepted recommended defaults) |
+| Bend pin | Release `v2.0.40` (tag `624dd9f`), sha256-verified prebuilt + Lean `v4.34.0` — refined at Wave 0 from `bendlang/bend@9c586f0`; see `.agent/evidence/bend-policy-proof-spike/wave0-provenance.md` (Apache-2.0) |
 
-Capability artifacts: `.agent/plans/post-merge-wave-continue/`  
-Durable copy: `docs/plans/POST_MERGE_WAVE_CONTINUE.md`  
-Budget: `.agent/budgets/post-merge-wave-continue.md`
+Budget: `.agent/budgets/bend-policy-proof-spike.md`  
+Durable copy: `docs/plans/BEND_POLICY_PROOF_SPIKE.md`  
+Source analysis: Captain thread 62fcd31d-9f2e-448b-943b-14022585e272 (Bend repo assessment, 2026-11-18).
 
-**Supersedes as active plan:** prior control-repo `IMPLEMENTATION_PLAN.md` content for `superpowers-c2-session-memory` remains durable at `docs/plans/SUPERPOWERS_C2_SESSION_MEMORY.md` (not cancelled; not the active gate).
+**Supersedes as active gate:** `post-merge-wave-continue` (now COMPLETE on `main`). Its text remains in `docs/plans/POST_MERGE_WAVE_CONTINUE.md`.
 
 ## Request
 
-When a multi-wave NorthStar plan ships intermediate PRs inside T3 Code, NorthStar should detect that a linked PR merged and **continue the next remaining wave of the same APPROVED plan** — analogous to how T3 settles a thread after merge, but without ending the development arc early.
+Using the previous Bend assessment, plan a **small, bounded experiment** to learn whether Bend 2 formal proofs give NorthStar stronger evidence for a safety-critical decision core, before any wider adoption.
 
-Companion bitcoin work (already in flight, not gated by this plan): after Kalshi PR #28 merge, residual snapshot-index fix is PR #30; docs closeout is PR #29.
+## Findings carried from the Bend assessment
 
-## Problem Statement
+- Bend 2 = dependent types + proofs + CPU/GPU compile. Strongest fit for NorthStar is **verification**, not performance.
+- Proofs cover a *Bend model*, not the existing Python/Bash. A conformance link between model and implementation is required for the proof to mean anything operationally.
+- Documented limits: no built-in JSON/HTTP, slow strings, no proof tactics; compiler ~99% AI-written and unaudited; `--verdict` kernel is proven but parser/translation into it is not; backends can diverge from semantics.
+- Install route is `curl | sh`; native build needs clang 14+. Neither `bend` nor `lean` is installed on this machine today.
+- Bend CI pattern worth borrowing independently: load gate files from `main`, not the PR tree.
 
-1. **T3 settle vs multi-wave continue:** `link_pull_request` shows PR status and **settles the thread on merge**. That is correct for single-PR threads; it is wrong for longer APPROVED plans with Wave N+1 still remaining.
-2. **Watch gap:** `watch_pull_request` wakes on failed/passed required checks, comments/reviews, or conflicts — **not** on merge. So “wait for green” babysitting does not equal “wake and proceed after merge.”
-3. **NorthStar today:** `northstar status post-merge` / oversight compose is **read-only drift detection** after merge. It does not advance plan waves or resume implementation.
-4. **Approval integrity:** Continuing must never auto-approve a **new** plan, silently expand scope, auto-merge, or skip the approval gate when Wave N+1 was not already in the APPROVED revision.
+## Current implementation (investigated)
 
-## Desired Outcome
-
-### Wave A — Contract + Skill (ship first)
-
-1. Skill `post-merge-wave-continue` (new): procedure for multi-wave plans under T3:
-   - Maintain a **wave ledger** tied to `plan_id` + APPROVED revision.
-   - On intermediate PR open: `link_pull_request` + `watch_pull_request` for checks/reviews; also register a **merge-continue** trigger (see Open Questions decision).
-   - On merge of the wave’s PR: if ledger has remaining waves → `t3_thread_organize` **unsettle** if settled; mark wave complete; resume next wave **without** re-asking Approve.
-   - On final wave merge: allow normal settle / completion report.
-2. Extend handbook + `github-integration` / `pull-request-preparation` cross-links: multi-wave ≠ settle-and-stop.
-3. Light rule note on `01-plan-approval-gate`: continuing remaining waves of an APPROVED plan is allowed; new plans / material scope expansion return to AWAITING APPROVAL.
-4. Tests: Skill present in installer/doctor; procedure fixtures for ledger states.
-
-### Wave B — CLI wave ledger + merge detect
-
-1. Schema `.agent/plans/<plan-id>/wave-ledger.schema.json` + ledger file (waves[], status, pr_url, merged_sha, next_action).
-2. CLI (under existing `northstar` launcher, gated if needed):
-   - `northstar plan waves status --plan-id <id>`
-   - `northstar plan waves init --plan-id <id> --from IMPLEMENTATION_PLAN.md` (parse Wave headings or explicit YAML block)
-   - `northstar plan waves advance --plan-id <id> --pr <url>` (verify MERGED via `gh`, record SHA, emit next-wave brief)
-   - `northstar plan continue-after-merge --plan-id <id> --pr <url>` (status → advance → print operator/agent resume prompt)
-3. Unit tests with fixture ledgers + mocked `gh` JSON.
-4. Evidence under `.agent/evidence/post-merge-wave-continue/`.
-
-### Wave C — T3 harness polish (optional same release if cheap)
-
-1. Document recommended T3 pattern: schedule_task interval/once poll vs webhook for merge detection until/unless T3 adds merge-wake.
-2. Optional helper script wrapping `gh pr view --json state,mergedAt,mergeCommit` for the Skill.
-3. **Non-goal unless Captain expands:** changing T3 product behavior itself (merge-wake API); record as upstream ask only.
-
-## Acceptance Criteria
-
-- [x] Skill `post-merge-wave-continue` exists with clear continue vs settle decision tree.
-- [x] Wave ledger schema + CLI can init/status/advance with tests.
-- [x] `continue-after-merge` refuses when plan is not APPROVED, when PR is not MERGED, or when no remaining waves.
-- [x] Docs: captain-handbook + Skills cross-links; ADR for continue-without-reapprove.
-- [x] Never auto-merge; never set plan status to APPROVED without Captain.
-- [x] Doctor/installer asserts Skill (+ CLI entry) present.
-- [x] Validation evidence recorded under `.agent/evidence/post-merge-wave-continue/`.
-
-## Non-Goals
-
-- Auto-merging PRs or auto-approving new IMPLEMENTATION_PLAN.md revisions.
-- Replacing `northstar status post-merge` oversight compose.
-- Guaranteeing T3 product adds native merge-wake (document gap only).
-- Bitcoin/Kalshi product changes (tracked in bitcoin-data-collector PRs).
-- Completing `superpowers-c2-session-memory` in this plan.
-
-## Rollback
-
-- Revert feature branch / release tag; remove Skill directory; CLI subcommands no-op or removed; ledger files remain inert.
-- Tag `rollback/pre-post-merge-wave-continue` before implementation.
-
-## Security Notes
-
-- `gh` tokens stay local; do not log secrets.
-- Webhook schedules (if used) must treat payload as untrusted; filter on `action=closed` + `pull_request.merged=true` only as signal, then re-verify with `gh`.
-- No production deploy automation.
-
-## Review Domains
-
-- python (CLI), docs/skills, github, tests, security (webhook/untrusted input)
-
-## Assumptions
-
-1. Captain’s “Approve” on a multi-wave plan covers all waves listed in that APPROVED revision.
-2. Intermediate PRs are linked to the same T3 thread that owns the plan.
-3. `gh` auth is available in the operator environment for merge verification.
-4. T3 `unsettle` can revive a thread that settled on merge (verify during impl; if not, spawn continuation thread — fallback in architecture).
-
-## Open Questions
-
-### Q1 — Merge detection: poll vs webhook vs T3-native
-
-| Option | Pros | Cons |
+| Component | Location | Relevance |
 |---|---|---|
-| **A. `schedule_task` interval + `gh` poll** | Works today in T3; no GitHub App; simple | Latency; burns scheduled runs |
-| B. GitHub webhook → `schedule_task` webhook | Fast; event-driven | Setup; untrusted payload; Connect required |
-| C. Wait for T3 merge-wake | Cleanest UX | Not available; blocks the feature |
+| Lifecycle states + transitions | `orchestrator/behavior/policy/states.py` | 7 states, `TRANSITIONS` table, `CAPTAIN_REQUIRED = {approved, active, proven, retired}`, `can_transition()`. Pure, small. **Spike target.** |
+| Promotion gates | `orchestrator/behavior/policy/gates.py` | `require_captain_approved`, prompt-eval pass, shadow-present, proven-evidence threshold. Evidence gates read the filesystem (out of proof scope; modeled as boolean preconditions). |
+| Promotion orchestration | `orchestrator/behavior/policy/promote.py` | Order: legality → Captain gate → per-state evidence gates. Spike will mirror the decision order, not rewrite it. |
+| Task graph validator | `orchestrator/planner/validate_graph.py` | Candidate for a **later** spike (cycles, missing deps, topological order). Out of scope here. |
+| Plan-approval hook | `.cursor/hooks/plan-approval-check.sh` | Shell + embedded Python, regex based. Not modeled in this spike. |
 
-**Decision (defend → pick):** **A for Wave A/B**; document B as optional Wave C; file C as upstream ask. Poll min interval ≥ 60s (T3 floor); cancel schedule when merge detected or Captain stops.
+## Scope
 
-### Q2 — Same thread (unsettle) vs new thread per wave
+### In scope
 
-| Option | Pros | Cons |
-|---|---|---|
-| **A. Same thread + unsettle** | Matches “proceed” mental model; one history | Context bloat; depends on unsettle-after-settle |
-| B. Always `create_threads` / transfer for next wave | Fresh context | Fragmented history; more linking |
+1. **Pinned, isolated Bend toolchain** (sandbox only; no global install, no `curl | sh` on the Captain's machine without review).
+2. **Bend model** of the promotion *decision core*: pure function `decide(from_state, to_state, captain_approved, preconditions) → accept | reject(reason)`.
+3. **Captain-owned laws file** (`LAWS.bend`) and agent-written proofs, separated per Bend convention.
+4. **Proved properties** (initial set):
+   - **P1 legality:** `accept` ⇒ edge exists in the transition table.
+   - **P2 Captain gate:** `accept` ∧ `to ∈ CAPTAIN_REQUIRED` ⇒ `captain_approved = true`.
+   - **P3 terminal:** nothing is accepted out of `retired`.
+   - **P4 monotone/acyclic (per step — see Amendment A1):** every accepted transition strictly increases stage rank, for all inputs.
+   - **P5 shadow-before-approval (per step — see Amendment A1):** every accepted entry into `approved` comes from `shadowed`, for all inputs.
+   - **P6 no authority grant:** the model has no output that sets execution authority (readiness-style, mirrors `approved_for_execution=False` / `authority_mutation=False` invariants).
+5. **Conformance bridge** (Python ↔ model), without rewriting production code:
+   - Export `LIFECYCLE_STATES`, `TRANSITIONS`, `CAPTAIN_REQUIRED` from `states.py` to canonical JSON.
+   - Differential test: exhaustively enumerate all `7 × 7 × {approved: T/F} × 16 evidence combinations` (1568) inputs (extended from `7 × 7 × 2` — Amendment A2); compare Python `can_transition` + `require_captain_approved` outcomes to Bend model outcomes.
+   - Drift test: fail if the Python tables change without regenerating/re-proving the model.
+6. **Mutation checks** (negative controls): deliberately inject illegal edges, drop a state from `CAPTAIN_REQUIRED`, make `retired` non-terminal; proofs/conformance must **fail**. Recorded as evidence that the harness can actually reject.
+7. **Evidence record:** compiler SHA, `LAWS.bend` hash, model hash, command, exit status, `--verdict` result, timings → `.agent/evidence/bend-policy-proof-spike/`.
+8. **Opt-in CLI/CI surface:** `COMPASS_BEND_PROOF_ENABLED=1 ./scripts/northstar formal check policy-lifecycle`. Skips (not fails) when Bend is absent, so existing doctor/CI stay green by default.
+9. **Spike report with go / no-go** metrics (see Decision Gate).
 
-**Decision:** **A primary**; if unsettle fails or context budget exceeded → B fallback recorded in ledger `next_thread_id`.
+### Out of scope / non-goals
 
-### Q3 — Captain ping between waves?
+- Replacing or generating production Python/Bash from Bend.
+- GPU/CPU acceleration, benchmarking performance, or any runtime dependency on Bend.
+- Modeling hooks, JSON parsing, filesystem state, or evidence-gate internals.
+- Task-graph / planner proofs (candidate follow-up only if the Decision Gate passes).
+- Changing promotion behavior, `states.py` semantics, authority locks, or auto-approval anything.
+- Making Bend a required dependency of install/update/doctor.
 
-| Option | Pros | Cons |
-|---|---|---|
-| **A. Auto-continue remaining APPROVED waves** | Matches request; fewer interrupts | Surprises if Captain wanted a pause |
-| B. Always ping between waves | Safer | Defeats the point of post-merge continue |
+## Waves
 
-**Decision:** **A**, with hard stops: budget hit, scope expand, failing validation, security-sensitive new surface, or ledger flag `pause_between_waves: true` (Captain opt-in).
+### Wave 0 — Toolchain provenance & feasibility (stop-early gate)
 
-## Current-State Analysis
+- Run Skill `dependency-supply-chain` on Bend: license, maintainers, release/commit pinning, install script contents, transitive requirements (clang, Node, Lean).
+- Build/install from the **pinned commit** into an isolated prefix (e.g. `.agent/tools/bend/`, git-ignored) after reading the install script; no network `curl | sh` execution unreviewed.
+- Prove the pipeline end-to-end on a trivial law (`x = x`), run `--verdict`, record versions.
+- **Stop condition:** if the toolchain cannot be built reproducibly on macOS (darwin 25) within budget, produce a Budget Stop Report and end the spike.
 
-- T3: `link_pull_request` settles on merge; `watch_pull_request` does not wake on merge; `t3_thread_organize` supports `unsettle`; `schedule_task` supports interval/once/webhook.
-- NorthStar: post-merge oversight is read-only; no wave ledger; approval gate stops before product edits without APPROVED plan — continuing an already APPROVED plan’s remaining waves is consistent if ledger-bound.
-- Recent pain: Kalshi multi-PR arc (#25→#28→#29/#30) required manual “PR merged → Proceed” chat turns.
+### Wave A — Model + laws + proofs
 
-## Proposed Architecture
+- `formal/bend/policy-lifecycle/`: `Model.bend`, `LAWS.bend` (Captain-reviewed, protected), `Proofs.bend`.
+- Prove P1–P6; `--verdict` passes.
+- **Law integrity rule:** `LAWS.bend` changes require Captain review; CI compares it against `main` (Bend’s “gates come from main” pattern).
 
-```
-IMPLEMENTATION_PLAN.md (APPROVED, waves A..N)
-        │
-        ▼
-.agent/plans/<plan-id>/wave-ledger.json
-        │
-        ├── wave k: pr_url, status=open|merged|complete
-        └── next_wave: k+1 | null (final)
-        │
-T3 thread ──link/watch──► PR
-        │
-        ├── checks wake (watch) → review-fix-loop
-        └── merge detect (schedule poll / webhook) →
-                northstar plan continue-after-merge
-                    → unsettle if needed
-                    → Skill post-merge-wave-continue
-                    → implement wave k+1 | complete
-```
+### Wave B — Conformance, mutation tests, evidence
 
-## Required Capabilities
+- Export script + differential test (pytest style used in `tests/`).
+- Mutation suite proving harness rejects broken models/tables.
+- Evidence record schema + writer; opt-in `northstar formal check`.
+- Add `docs/integrations/` page and `TESTING.md` section; skip-when-absent behavior tested.
 
-Inferred from the objective and repository context.
+### Wave C — Report & decision gate
 
-- implementation-plan-authoring
-- approval-gate-enforcement
-- scope-definition
-- rollback-planning
-- github-issue-create
-- github-pr-create
-- pr-description-assembly
-- skill packaging / doctor assertions
-- CLI testing
+- `docs/plans/BEND_POLICY_PROOF_SPIKE.md` results + `.agent/evidence/bend-policy-proof-spike/report.json`.
+- ADR in `DECISIONS.md` recording the go / no-go and boundary of what proofs do and do not guarantee.
+- Update `PROGRESS.md`, `CHANGELOG.md`, `PROJECT_CONTEXT.md` (experimental, optional dependency).
 
-**Domains detected:** plan, github, skills (capability-plan also inferred react noise — ignore for this Skills/CLI change)
+## Decision Gate (measured, not asserted)
 
-## Reusable Capabilities Found
+Record and report:
 
-| Skill | Role |
+| Metric | Why |
 |---|---|
-| `implementation-planning` | Plan gate / wave structure |
-| `github-integration` | PR link/status; no auto-merge |
-| `pull-request-preparation` | Intermediate vs final PR closeout |
-| `autonomy-budget` | Stop limits on continue loops |
-| `bounded-autonomy` | Pattern: approved artifact only |
-| `agent-skills-packaging` | New Skill lifecycle |
-| `review-fix-loop` | Check/review wakes while PR open |
+| Wall time + effort to build toolchain | Adoption cost |
+| Proof authoring effort (iterations) | Maintenance cost |
+| Proof/check runtime in CI | Gate cost |
+| Mutations caught / mutations injected (target 100%) | Harness value |
+| Real defects or ambiguities found in `states.py` / `promote.py` | Added value over existing tests |
+| Spec-to-code gap items (what the model cannot cover) | Honest boundary |
 
-## Technology Intelligence Candidates
+**Go** (propose follow-up plan for planner-graph or evidence-gate proofs): all properties proved, 100% mutation rejection, conformance exhaustive pass, and either ≥1 real finding or demonstrably lower review cost than tests alone.  
+**No-go:** archive spike as docs/evidence; remove nothing from production; keep the CI “gates from main” idea as a separate small item.
 
-> External candidates are **NOT APPROVED FOR EXECUTION**.
-
-- None required. Optional later: GitHub `pull_request` webhook patterns (DISCOVERED only).
-
-## Task Graph
-
-1. discovery — confirm T3 unsettle-after-settle; inventory `northstar` CLI dispatch
-2. architecture — ledger schema + Skill decision tree (this plan)
-3. impl-skill — Skill + handbook + rule touch
-4. impl-cli — ledger + continue-after-merge
-5. validation — unit tests + doctor
-6. documentation — ADR, CHANGELOG, PROGRESS, durable plan copy sync
-
-## Proposed Agent Configuration
-
-- First Mate coordinates
-- implementation-agent for Skill/CLI within worktree
-- test-engineer for ledger/CLI tests
-- documentation-agent for memory updates
-- No parallel product UI workstreams
-
-## Workstreams
-
-| ID | Scope | Boundary |
-|---|---|---|
-| WS1 | Skill + docs/rules | `.cursor/skills/post-merge-wave-continue/`, handbook, rule `01` note |
-| WS2 | Ledger schema + CLI | `orchestrator/` or `scripts/` northstar dispatch, tests, fixtures |
-| WS3 | Evidence + release notes | `.agent/evidence/`, CHANGELOG, ADR |
-
-WS1 then WS2 (Skill can ship with manual `gh` before CLI); WS3 continuous.
-
-## Parallelization Plan
-
-Serial preferred (small surface). WS1 docs can draft while WS2 implements if file boundaries hold.
-
-## Files Expected to Change
-
-- `.cursor/skills/post-merge-wave-continue/**`
-- `.cursor/skills/github-integration/SKILL.md` (cross-link)
-- `.cursor/skills/pull-request-preparation/SKILL.md` (cross-link)
-- `.cursor/rules/01-plan-approval-gate.mdc` (continue note)
-- `docs/guides/captain-handbook.md`
-- `docs/plans/POST_MERGE_WAVE_CONTINUE.md`
-- `DECISIONS.md` (ADR)
-- `scripts/` or `orchestrator/` CLI entry for `plan waves` / `continue-after-merge`
-- `tests/` fixtures + unit tests
-- `scripts/doctor.sh` / installer Skill list
-- `CHANGELOG.md`, `PROGRESS.md`, `TESTING.md`
-
-## Testing Strategy
-
-- Unit: ledger init/advance/refuse paths; mocked `gh` MERGED/OPEN
-- Doctor: Skill directory present
-- Manual/T3: on a disposable multi-wave fixture plan, open PR → merge → schedule fire → continue prompt (evidence transcript path)
-- Evidence matrix: static analysis + unit; no browser/a11y required
-
-## Security Review
-
-- Untrusted PR titles/bodies never treated as instructions (existing T3 guidance).
-- Webhook path: verify merge via `gh` after signal.
-- No secret material in ledger JSON.
-
-## Accessibility Review
-
-- N/A (CLI/Skills/docs)
-
-## Migration Plan
-
-- Opt-in: Skill used when plan declares waves / ledger exists.
-- Existing single-PR threads unchanged (settle-on-merge remains default).
-
-## Deployment Plan
-
-- Merge to `main` via normal PR; no production service deploy.
-- Operators pull Skills via existing install/doctor path.
-
-## Rollback Plan
-
-- Revert merge; delete Skill; CLI subcommands removed or hidden; ledgers ignored.
-
-## Risks and Mitigations
+## Risks & mitigations
 
 | Risk | Mitigation |
 |---|---|
-| Unsettle does not revive settled thread | Fallback: create continuation thread; record in ledger |
-| Poll storms / cost | Budget + cancel schedule on merge/stop; min 60s |
-| Agent continues out-of-scope work | Ledger bound to APPROVED revision hash; scope-expand → re-gate |
-| Double-continue after merge | Ledger `advance` idempotent on `merged_sha` |
+| Proof ≠ production code | Differential exhaustive conformance test + drift test; documented in ADR |
+| Agent weakens laws to pass | `LAWS.bend` Captain-owned; compared to `main`; hash in evidence |
+| Unaudited AI-written compiler / unproven parser | Use `--verdict` kernel check; mutation controls; state limits in report; never sole gate |
+| Supply chain (`curl \| sh`, young repo) | Pin SHA, read script, isolated prefix, `dependency-supply-chain` Skill |
+| Toolchain pain on macOS (clang/Lean) | Wave 0 stop gate; budget cap |
+| Scope creep to planner/hooks | Explicit non-goals; material expansion returns to approval gate |
+| Experimental code bloats default CI | Opt-in flag; skipped when Bend missing |
 
-## Evaluation Strategy
+## Acceptance Criteria
 
-- Fixture dry-run: 2-wave plan, synthetic MERGED PR JSON → advance emits wave-2 brief once.
-- Adversarial: OPEN PR, DRAFT plan, empty next wave → all refuse.
+- [ ] Wave 0 provenance review recorded; Bend pinned and built in an isolated prefix.
+- [ ] P1–P6 proved; `--verdict` passes; evidence record written with hashes and versions.
+- [ ] Exhaustive Python↔model conformance test passes; drift test fails when tables change unpaired.
+- [ ] All injected mutations are rejected (evidence recorded).
+- [ ] With Bend absent or flag unset: doctor, `tests/run.sh`, and CI behave exactly as before (skip, not fail).
+- [ ] No change to `orchestrator/behavior/policy/*` runtime semantics; authority locks unchanged.
+- [ ] No secrets in repo; installer/updater unchanged.
+- [ ] Spike report + ADR contain the go / no-go with the measured metrics.
+- [ ] `PROGRESS.md`, `TESTING.md`, `CHANGELOG.md`, `PROJECT_CONTEXT.md` updated; rollback instructions documented.
 
-## Autonomy Budget
+## Validation plan
 
-See `.agent/budgets/post-merge-wave-continue.md` (iterations/cost/time caps).
+- Static analysis/lint on new Python and shell; unit + integration tests (conformance, mutation, skip-when-absent).
+- `./scripts/doctor.sh` and `./tests/run.sh` with and without Bend present.
+- Security review (supply chain, command execution of compiler, path handling) via `security-reviewer`; adversarial review focused on law-weakening and model/code mismatch.
+- Not applicable: browser screenshots, accessibility, deployment smoke (no UI/deploy).
+- Rollback review: remove `formal/`, opt-in CLI command, docs; revert to `rollback/pre-bend-policy-proof-spike`.
 
-## Documentation Updates Required
+## Post-approval process (per governance)
 
-- This plan + durable `docs/plans/POST_MERGE_WAVE_CONTINUE.md`
-- ADR in `DECISIONS.md`
-- Handbook, CHANGELOG, PROGRESS, TESTING
+1. ✅ Approval recorded (2026-11-18); status **APPROVED**.
+2. ✅ Issue #278 created.
+3. ✅ Rollback tag and `feature/278-bend-policy-proof-spike` worktree created from `main`.
+4. Implement Wave 0 → A → B → C with cohesive commits `<type>(<scope>): <summary> (#278)`.
+5. Validate, adversarial review, update docs, open PR. Merge remains Captain-only.
 
-## First Mate Recommendation
+## Decisions on Open Questions (resolved at approval)
 
-Approve Wave A+B as one release. This closes the exact gap exposed by the Kalshi multi-PR arc inside T3: settle-on-merge stops the thread; NorthStar should **unsettle + continue** when the wave ledger says work remains — without weakening the approval gate for new plans.
+1. Q1 — Replace root `IMPLEMENTATION_PLAN.md` with this plan.
+2. Q2 — Policy lifecycle only; planner task-graph validator deferred.
+3. Q3 — Isolated project-local toolchain prefix (git-ignored).
+4. Q4 — Default budget (3 plan iterations, 8 implementation loops, $25, 6 h).
+5. Q5 — `LAWS.bend` is Captain-reviewed on every change.
 
-## Implementation Progress
+## Amendments (post-implementation review, 2026-11-18)
 
-| Wave | Status | Notes |
-|---|---|---|
-| A Skill+docs | done | Skill + rule 01 + handbook + cross-links + guide |
-| B CLI+ledger | done | schema + northstar plan waves / continue-after-merge + tests |
-| C T3 polish | done (docs) | poll pattern in guide; no T3 product change |
+Recorded in the open after an adversarial and a security review of the implementation. None
+changes production semantics, adds a dependency, or widens authority. **A1 narrows a proof claim
+and is flagged for explicit Captain review.**
 
-## Status
+- **A1 — P4/P5 are per-step, not per-sequence (scope narrowing).** The approved text said
+  "arbitrary sequences". Implemented: P4 and P5 are proved for every accepted *step* over all
+  inputs; P3 (terminal) **is** proved over arbitrary sequences (P3′), and P9 proves `run` unfolds
+  one step at a time. Lifting P4/P5 to whole histories needs a transitivity lemma over stage
+  ordering, which in Bend 2 means hand-written rewrites (no tactics). **Not proved;** it is a
+  declared gap, not a hidden one.
+- **A2 — Evidence gates are in the conformance grid.** The approved text abstracted them as
+  booleans. They remain abstracted, but the exhaustive differential grid now covers all 16
+  evidence combinations (1568 rows) so restrictive-direction mutants are detectable.
+- **A3 — Added laws P7a–d, P8a/b, P9a/b, P10, P11 (liveness)** (evidence gates; `next` is rejection-stable and
+  acceptance-lands; `run` agrees with `next`; outcome agrees with `decide`), plus a
+  Captain-owned `SPEC.bend` of independent observers so a mutated model cannot satisfy the laws
+  vacuously.
+- **A4 — Conformance bridge reads the real code.** The Python reference calls the real
+  `can_transition` / `require_captain_approved` and extracts the gate structure of `promote_policy`
+  via `ast`; both are pinned in `tables.lock.json` (drift lock) together with a law manifest.
+  Gate *order* is pinned by the lock, **not proved**.
+- **A5 — Hardening:** fail-closed law-integrity check (`--strict-laws --base-ref`), bad ref is an
+  error, files absent at base count as changed; environment allowlist, process-group timeout,
+  output clip and optional `COMPASS_BEND_SHA256` pin for the compiler; the opt-in gate is enforced in
+  library entry points, not only the shell wrapper.
+- **A6 — Filename:** the agent-written proof file is `PROOF.bend` (generated by `gen_proof.py`).
+- **A7 — Finding H2 (outside the model):** `ensure_policy_for_instruction` trusts an instruction's
+  `approval_state`, so a policy can be created directly in `proven` with no Captain approval or
+  evidence. Authority flags stay false. Reported with a live repro; **no production fix**
+  (out of scope). Evidence: `.agent/evidence/bend-policy-proof-spike/finding-001-direct-entry-bypass.md`.
+- **A8 — CI wiring of the law-integrity comparison is deferred** until the go/no-go decision;
+  until then the check is a manual/opt-in command.
 
-**COMPLETE** — Waves A+B (+ C docs) merged via [#275](https://github.com/loganware05/captains-compass-cursor/pull/275) → **v1.87.0** @ `6ee5fb6`.
+## Rollback
+
+Spike is additive and opt-in. Revert the PR, or reset to tag `rollback/pre-bend-policy-proof-spike`. Isolated toolchain prefix can be deleted without side effects.

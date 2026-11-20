@@ -46,6 +46,7 @@ agentic engineering process across multiple product repositories.
 - `examples/` — fixture projects for installer docs/tests
 - `tests/` — automated installer/doctor/hook tests
 - `docs/` — onboarding, agent install/activation prompts, upgrading, release checklist, integrations, design sources
+- `formal/bend/` — opt-in Bend 2 proof experiment for the policy lifecycle (#278); `orchestrator/formal/` harness; run via `northstar formal` (needs `COMPASS_BEND_PROOF_ENABLED=1`); toolchain is project-local under git-ignored `.agent/tools/`
 
 ## Major Components
 

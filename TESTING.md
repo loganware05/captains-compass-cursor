@@ -658,6 +658,27 @@ Default gate is off. Exemplars never auto-promote Skills/Policies
 (`auto_promoted: false`). See
 `.agent/evidence/m53-prompt-policy-provenance/VALIDATION.md`.
 
+Bend policy-lifecycle proof spike (#278, opt-in):
+
+```bash
+# Pure-Python tests always run; Bend-executing tests skip unless Bend + Lean + the gate are present.
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_formal_policy_lifecycle -v
+COMPASS_BEND_PROOF_ENABLED=1 PYTHONPATH=. python3 -m unittest tests.orchestrator.test_formal_policy_lifecycle -v
+
+# Fail-closed without the gate (exit 2):
+./scripts/northstar formal check policy-lifecycle
+
+# Opt-in full check (proofs + --verdict, 1568-row conformance, 23 model + 15 python mutants, writes LATEST_check.json):
+COMPASS_BEND_PROOF_ENABLED=1 ./scripts/northstar formal check policy-lifecycle
+COMPASS_BEND_PROOF_ENABLED=1 ./scripts/northstar formal check policy-lifecycle --strict-laws --base-ref origin/main
+```
+
+`--strict-laws` fails while the Captain-owned laws differ from (or are absent at) the base ref; that is
+expected on the introducing PR. `tests/run.sh` and `doctor.sh` behave identically with or without Bend.
+Never `git add -A` after `tests/run.sh` — it leaves generated evidence files; stage explicit paths.
+Note: `doctor.sh` can flake on `northstar help missing Surfaces map (C1)` (pre-existing `grep -q` +
+`pipefail` SIGPIPE race; measured on `origin/main` too). Re-run to confirm.
+
 Behavior Loop Operator Closure (M54):
 
 ```bash
