@@ -134,6 +134,17 @@ class StructureEvasionTests(unittest.TestCase):
         self.assertNotEqual(edited, src)
         self.assertEqual(pl.promote_structure(edited), pl.promote_structure())
 
+    def test_fingerprint_ignores_empty_and_none_fields(self) -> None:
+        import ast
+
+        fn = ast.parse("def f(a):\n    return a\n").body[0]
+        before = pl._ast_canonical(fn)
+        fn.type_params = []  # added in 3.12; absent or empty must hash the same
+        fn.returns = None
+        self.assertEqual(pl._ast_canonical(fn), before)
+        self.assertNotIn("type_params", before)
+        self.assertNotIn("returns", before)
+
     def test_shadowed_gate_functions_break_binding_identity(self) -> None:
         self.assertTrue(pl.promote_structure()["bindings_ok"])
         with mock.patch.object(policy_promote, "can_transition", lambda f, t: True):

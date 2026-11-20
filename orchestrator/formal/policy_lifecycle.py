@@ -125,8 +125,28 @@ def structure_from_source(source: str) -> dict[str, Any]:
         # Coarse but honest: the extracted flags above only see *which* gates are called,
         # not their arguments, guards or the authority assignments. Pinning a hash of the
         # whole function makes any edit to promote_policy require a re-prove + re-lock.
-        "ast_sha256": hashlib.sha256(ast.dump(fn, include_attributes=False).encode("utf-8")).hexdigest(),
+        "ast_sha256": hashlib.sha256(_ast_canonical(fn).encode("utf-8")).hexdigest(),
     }
+
+
+def _ast_canonical(node: Any) -> str:
+    """Serialize an AST the same way on every Python version.
+
+    ``ast.dump`` is not stable: 3.13 stopped printing ``None``/``[]`` fields, and
+    new versions add empty fields (e.g. ``type_params``). Always omitting them
+    keeps the lock hash identical between local and CI interpreters.
+    """
+    if isinstance(node, ast.AST):
+        fields = []
+        for name in node._fields:
+            value = getattr(node, name, None)
+            if value is None or value == []:
+                continue
+            fields.append(f"{name}={_ast_canonical(value)}")
+        return f"{type(node).__name__}({','.join(fields)})"
+    if isinstance(node, list):
+        return "[" + ",".join(_ast_canonical(item) for item in node) + "]"
+    return repr(node)
 
 
 def promote_structure(source: str | None = None) -> dict[str, Any]:

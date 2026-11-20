@@ -5,10 +5,10 @@
     "diffs": [],
     "model_rows": 1568,
     "rows": 1568,
-    "seconds": 0.101,
+    "seconds": 0.822,
     "status": "pass"
   },
-  "created_at": "2026-11-18T07:48:24Z",
+  "created_at": "2026-11-20T20:15:40Z",
   "degraded": false,
   "drift": {
     "laws": [
@@ -31,7 +31,7 @@
       "p9b_run_step"
     ],
     "status": "pass",
-    "tables_sha256": "85f32f8944b90528e6af186053c266ff840ed18a4f3f34b8f44f9e5ccf071315"
+    "tables_sha256": "f32725a02b10036c2726881361f6fb8279cb68f16662105b20fd335148932050"
   },
   "failures": [],
   "files": {
@@ -601,7 +601,7 @@
     "unexpected": []
   },
   "promote_structure": {
-    "ast_sha256": "fd5bb7b7b4adc9ead764ecc008a9144b0a76459b260f0956005e2d839e7eed17",
+    "ast_sha256": "d8ee5967e72205c2086644b5b85fc2699d0a52daf95cd8ae3c4f53ca0eea8858",
     "bindings_ok": true,
     "captain": true,
     "evidence": {
@@ -629,14 +629,14 @@
     ],
     "exit_code": 0,
     "output": "ALL PROOFS CHECK",
-    "seconds": 0.148,
+    "seconds": 0.847,
     "status": "pass",
     "verdict": true
   },
   "schema_version": "2",
   "skipped_components": [],
   "status": "ok",
-  "tables_sha256": "85f32f8944b90528e6af186053c266ff840ed18a4f3f34b8f44f9e5ccf071315",
+  "tables_sha256": "f32725a02b10036c2726881361f6fb8279cb68f16662105b20fd335148932050",
   "toolchain": {
     "bend_sha256": "c362cdac355d84f51278db97cb29a3b2e0be084d59b76a5cff013199b3513539",
     "bend_version": "bend 2.0.40",

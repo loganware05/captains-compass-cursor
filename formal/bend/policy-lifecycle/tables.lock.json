@@ -30,7 +30,7 @@
       "retired"
     ],
     "promote_structure": {
-      "ast_sha256": "fd5bb7b7b4adc9ead764ecc008a9144b0a76459b260f0956005e2d839e7eed17",
+      "ast_sha256": "d8ee5967e72205c2086644b5b85fc2699d0a52daf95cd8ae3c4f53ca0eea8858",
       "bindings_ok": true,
       "captain": true,
       "evidence": {
@@ -87,5 +87,5 @@
       ]
     }
   },
-  "tables_sha256": "85f32f8944b90528e6af186053c266ff840ed18a4f3f34b8f44f9e5ccf071315"
+  "tables_sha256": "f32725a02b10036c2726881361f6fb8279cb68f16662105b20fd335148932050"
 }
