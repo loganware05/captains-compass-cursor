@@ -2,7 +2,7 @@
 
 ## Current status
 
-**IN PROGRESS:** [#280](https://github.com/loganware05/captains-compass-cursor/issues/280) /
+**PR OPEN:** [#280](https://github.com/loganware05/captains-compass-cursor/issues/280) /
 `audit-p0-governance-hygiene` on `feature/280-audit-p0-governance-hygiene` → **v1.87.1**.
 
 | Item | Value |
@@ -11,6 +11,7 @@
 | Active plan | `audit-p0-governance-hygiene` **IN PROGRESS** |
 | Issue | [#280](https://github.com/loganware05/captains-compass-cursor/issues/280) |
 | Rollback | `rollback/pre-audit-p0-governance-hygiene` @ `38d3563` |
+| PR | [#281](https://github.com/loganware05/captains-compass-cursor/pull/281) |
 | Worktree | `captains-compass-cursor-audit-p0` |
 
 ### Prior closeout

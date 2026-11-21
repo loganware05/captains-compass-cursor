@@ -1,12 +1,12 @@
 # Implementation Plan — Audit P0 Governance & Hygiene
 
-- Status: **VALIDATING**
+- Status: **COMPLETE**
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **VALIDATING** |
+| Status | **COMPLETE** |
 | Plan ID | `audit-p0-governance-hygiene` |
 | Issue | [#280](https://github.com/loganware05/captains-compass-cursor/issues/280) |
 | Baseline | `origin/main` @ `38d3563` (v1.87.0 tip after #279) |
@@ -39,4 +39,4 @@ Capability artifacts: `.agent/plans/audit-p0-governance-hygiene/`
 - [x] `./scripts/doctor.sh` passes (0 errors).
 - [x] Memory docs + issue dispositions recorded (#247 closed; #278 kept open).
 - [x] Evidence under `.agent/evidence/audit-p0-governance-hygiene/`.
-- [ ] PR opened from feature branch off `main`.
+- [x] PR opened: [#281](https://github.com/loganware05/captains-compass-cursor/pull/281).
