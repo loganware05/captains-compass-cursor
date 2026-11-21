@@ -2,22 +2,24 @@
 
 ## Current status
 
-**PR OPEN:** [#280](https://github.com/loganware05/captains-compass-cursor/issues/280) /
-`audit-p0-governance-hygiene` on `feature/280-audit-p0-governance-hygiene` → **v1.87.1**.
+**MERGED:** [#281](https://github.com/loganware05/captains-compass-cursor/pull/281)
+for [#280](https://github.com/loganware05/captains-compass-cursor/issues/280)
+`audit-p0-governance-hygiene` → **v1.87.1** @ `e3debd4`.
 
 | Item | Value |
 |---|---|
 | Baseline | **v1.87.0** @ `38d3563` |
-| Active plan | `audit-p0-governance-hygiene` **IN PROGRESS** |
+| Plan | `audit-p0-governance-hygiene` **COMPLETE** |
 | Issue | [#280](https://github.com/loganware05/captains-compass-cursor/issues/280) |
-| Rollback | `rollback/pre-audit-p0-governance-hygiene` @ `38d3563` |
 | PR | [#281](https://github.com/loganware05/captains-compass-cursor/pull/281) |
-| Worktree | `captains-compass-cursor-audit-p0` |
+| Merge | `e3debd4` |
+| Tag | `v1.87.1` (pending annotated tag after this closeout) |
+| Rollback | `rollback/pre-audit-p0-governance-hygiene` @ `38d3563` |
 
 ### Prior closeout
 
-- Bend policy-lifecycle proof spike **merged** [#279](https://github.com/loganware05/captains-compass-cursor/pull/279) for [#278](https://github.com/loganware05/captains-compass-cursor/issues/278) → **v1.87.0** tip `38d3563`. Issue **#278 stays open** for Bend follow-ups (entry-state law, P4/P5 history, Lean pin, ADR-110 go/no-go). Finding 001 production bypass fixed in #280.
-- Conversation trajectory ingest **shipped** via [#248](https://github.com/loganware05/captains-compass-cursor/pull/248) (v1.77.0); Issue #247 closed as completed.
+- Bend policy-lifecycle proof spike **merged** [#279](https://github.com/loganware05/captains-compass-cursor/pull/279) for [#278](https://github.com/loganware05/captains-compass-cursor/issues/278). Issue **#278 stays open** for Bend follow-ups; Finding 001 production fix shipped in #280/#281.
+- Conversation trajectory ingest **shipped** via [#248](https://github.com/loganware05/captains-compass-cursor/pull/248); Issue #247 closed.
 - Post-merge wave continue **v1.87.0** (#275 / #274)
 - XRV W3 **v1.85.0** (#267); Superpowers + C2 **v1.86.0** (#273)
 
@@ -25,14 +27,11 @@
 
 Approve ⇒ implement → validate → commit → open PR. Merge remains Captain-only.
 
-## Validation (local)
+## Next (backlog from audit)
 
-- Finding 001 + N3 + specialized dry-run targeted tests: pass
-- Formal KnownGapTests (`bypass_observed=False`): pass
-- `unittest discover` orchestrator: **942 OK** (11 skipped)
-- Tracked fixture hygiene after tests: clean
-- `./scripts/doctor.sh`: **0 errors**, 1 warning (skill inode carry-over — P1 backlog)
-- Evidence: `.agent/evidence/audit-p0-governance-hygiene/`
+- **P1:** doctor.sh SIGPIPE flake; skill inode carry-over; `orchestrator/ui/` CI
+- **P2+:** live integrations / specialized eval / profiles (separate plans)
+- **#278:** Bend entry-state law, P4/P5 history, Lean pin, ADR-110 go/no-go
 
 ## Blockers
 

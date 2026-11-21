@@ -5,9 +5,10 @@
 - Plan ID: `audit-p0-governance-hygiene`
 - Issue: #280
 - Branch: `feature/280-audit-p0-governance-hygiene`
+- PR: #281 (merged)
 - Created: 2026-11-21
 - Last updated: 2026-11-21
-- Status: ACTIVE
+- Status: COMPLETE
 
 ## Limits (from approved plan)
 
@@ -15,26 +16,19 @@
 - Maximum failed validation cycles: 3
 - Maximum estimated cost (USD): default
 - Maximum elapsed minutes: 240
-- Stop on scope change: true
-- Stop on destructive operation: true
-- Stop on unresolved security high: true
 
 ## Usage
 
-- Iterations used: 1
+- Iterations used: 2
 - Failed validation cycles: 0
 - Estimated cost used (USD): 0
 - Cost is estimate: true
-- Elapsed minutes: ~40
+- Elapsed minutes: ~60
 
 ## Cycle log
 
 | Timestamp | Event | Iterations | Notes |
 |---|---|---:|---|
 | 2026-11-21 | Approved + provisioned | 0 | Issue #280, worktree, rollback tag |
-| 2026-11-21 | Impl cycle 1 | 1 | Finding 001 + test isolation + docs; targeted tests OK |
-
-## Stop condition
-
-When any usage field meets or exceeds its limit, stop immediately and write a
-Budget Stop Report under `.agent/evidence/audit-p0-governance-hygiene/BUDGET_STOP_REPORT.md`.
+| 2026-11-21 | Impl + validate + PR | 1 | #281 opened |
+| 2026-11-21 | Merged + docs closeout | 2 | main @ e3debd4; CHANGELOG 1.87.1 heading |

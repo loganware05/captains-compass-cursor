@@ -4,9 +4,11 @@
 
 ## Unreleased
 
+## 1.87.1 — 2026-11-21
+
 ### Fixed
 
-- **Audit P0 governance & hygiene** (`audit-p0-governance-hygiene` / #280):
+- **Audit P0 governance & hygiene** (`audit-p0-governance-hygiene` / #280 / #281):
   - Finding 001: `ensure_policy_for_instruction()` always starts new policies at `candidate`
     (no elevated instruction `approval_state` bypass of Captain/evidence gates)
   - N3 adaptive scorecard tests persist into temp evidence dirs (tracked `LATEST_*.json` stay clean)
