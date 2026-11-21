@@ -9,18 +9,23 @@
 | Status | **COMPLETE** |
 | Plan ID | `audit-p1-doctor-ui-ci` |
 | Issue | [#284](https://github.com/loganware05/captains-compass-cursor/issues/284) |
-| Baseline | `origin/main` @ `266d9e2` |
-| Branch | `feature/284-audit-p1-doctor-ui-ci` |
+| PR | [#285](https://github.com/loganware05/captains-compass-cursor/pull/285) **MERGED** |
+| Merge commit | `df810d3` |
 | Rollback | `rollback/pre-audit-p1-doctor-ui-ci` @ `266d9e2` |
-| Proposed release | **v1.87.2** |
+| Release | **v1.87.2** |
 | Approved by | Logan Ware (Captain) — 2026-11-21 |
-| Approved revision | Q1=yes; Q2=approve both inode carry-overs; Q3=Node 22; Q4=no Agents dynamize |
-| Worktree | `captains-compass-cursor-audit-p1` |
+| Completed | 2026-11-21 |
 
-## Acceptance criteria
+Durable: `docs/plans/AUDIT_P1_DOCTOR_UI_CI.md`  
+Evidence: `.agent/evidence/audit-p1-doctor-ui-ci/`
 
-- [x] Help buffered to temp file (no pipe of `northstar help` into `grep -q`)
-- [x] Dynamic Skill discovery
-- [x] Inode carry-over approved for github-integration + pull-request-preparation
-- [x] CI Node 22 job for orchestrator/ui
-- [x] Validation + PR [#285](https://github.com/loganware05/captains-compass-cursor/pull/285)
+## Delivered
+
+1. Doctor SIGPIPE flake fixed (help buffered to temp file).
+2. Dynamic Skill discovery (52 Skills).
+3. Inode carry-over approved for `github-integration` + `pull-request-preparation`.
+4. CI Node 22 job for `orchestrator/ui` typecheck + tests.
+
+## Follow-ups
+
+Audit P2+; Bend #278.

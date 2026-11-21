@@ -1,7 +1,7 @@
 # Audit P1 Doctor Hygiene & UI CI (durable plan copy)
 
-> **APPROVED / IN PROGRESS** — plan ID `audit-p1-doctor-ui-ci` / issue #284.
-> Budget: `.agent/budgets/audit-p1-doctor-ui-ci.md`.
+> **COMPLETE** — plan ID `audit-p1-doctor-ui-ci` / issue #284 / PR #285 merged @ `df810d3`
+> (v1.87.2). Budget: `.agent/budgets/audit-p1-doctor-ui-ci.md`.
 
 ## Goal
 

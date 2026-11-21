@@ -4,9 +4,11 @@
 
 ## Unreleased
 
+## 1.87.2 — 2026-11-21
+
 ### Fixed
 
-- **Audit P1 doctor hygiene & UI CI** (`audit-p1-doctor-ui-ci` / #284):
+- **Audit P1 doctor hygiene & UI CI** (`audit-p1-doctor-ui-ci` / #284 / #285):
   - Buffer `northstar help` to a temp file in `doctor.sh` (eliminates SIGPIPE flake under `pipefail`)
   - Discover Skills dynamically from `.cursor/skills/*/SKILL.md` (was missing 9 Skills)
   - Captain-approve skill inode carry-over for `github-integration` + `pull-request-preparation`
