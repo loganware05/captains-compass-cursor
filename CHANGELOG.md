@@ -4,17 +4,16 @@
 
 ## Unreleased
 
-### Added
+### Fixed
 
-- **Bend policy-lifecycle proof spike** (`bend-policy-proof-spike` / #278) — opt-in, additive,
-  no production semantics change, no required dependency:
-  - `northstar formal check|lock policy-lifecycle` behind `COMPASS_BEND_PROOF_ENABLED=1`
-  - `formal/bend/policy-lifecycle/` Bend model, Captain-owned `SPEC.bend`/`LAWS.bend` (17 laws),
-    generated `PROOF.bend` checked with `--verdict`
-  - Exhaustive 1568-row Python↔model conformance; drift lock (tables, `promote_policy` AST pin, law manifest, `Model`/`Conformance` hashes); 23 model + 15 Python-side mutation controls;
-    `--strict-laws` law-integrity check (fails closed)
-  - Finding 001: direct entry into `proven` bypasses gates (reported; not fixed)
-  - ADR-110 (Proposed); see `docs/integrations/bend-policy-proof.md`
+- **Audit P0 governance & hygiene** (`audit-p0-governance-hygiene` / #280):
+  - Finding 001: `ensure_policy_for_instruction()` always starts new policies at `candidate`
+    (no elevated instruction `approval_state` bypass of Captain/evidence gates)
+  - N3 adaptive scorecard tests persist into temp evidence dirs (tracked `LATEST_*.json` stay clean)
+  - Specialized LoRA/GPU dry-run adapters write under `.agent/tmp-specialized-dry-run/` instead of
+    mutating committed `tests/fixtures/**/fixture-adapter/train-metrics.json`
+  - Broader `.gitignore` for leftover `.agent/tmp-*-tests/` dirs
+  - Post-merge memory closeout for #279; #247 closed as shipped; #278 kept open for Bend follow-ups
 
 ## 1.87.0 — 2026-11-14
 

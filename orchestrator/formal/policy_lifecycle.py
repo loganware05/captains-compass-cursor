@@ -756,10 +756,11 @@ def law_integrity(root: Path, base_ref: str = "origin/main") -> dict[str, Any]:
 
 
 def probe_direct_entry() -> dict[str, Any]:
-    """Create a policy straight into ``proven`` via the instruction store.
+    """Probe whether ``ensure_policy_for_instruction`` can skip into a gated state.
 
-    Runs entirely in a temp dir. Records whether the lifecycle gates the model
-    proves can be bypassed by ``ensure_policy_for_instruction``.
+    Runs entirely in a temp dir. Production fix (#280): new policies always start
+    at ``candidate``. ``bypass_observed`` should be False; a Bend entry-state law
+    remains a #278 follow-up (still ``outside_model``).
     """
     from orchestrator.behavior.instructions import store as instr_store
 
@@ -785,8 +786,8 @@ def probe_direct_entry() -> dict[str, Any]:
         "shadow_report_id": policy.get("shadow_report_id"),
         "authority_flags_false": policy.get("approved_for_execution") is False
         and policy.get("authority_mutation") is False,
-        "note": "ensure_policy_for_instruction trusts the instruction's approval_state; "
-        "P2/P5/P7 hold only for transitions from a legitimately entered state.",
+        "note": "Production (#280): ensure_policy_for_instruction always creates "
+        "candidate. Formal entry-state law still outside the Bend model (#278).",
     }
 
 

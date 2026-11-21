@@ -202,13 +202,12 @@ def _default_adapter_root(repo_root: Path, *, dry_run: bool) -> Path:
     if env:
         return Path(env).expanduser().resolve()
     if dry_run:
-        # Fixture adapter metadata only (no weight binaries).
+        # Write dry-run metrics under gitignored tmp — never mutate committed fixtures.
         return (
             Path(repo_root).resolve()
-            / "tests"
-            / "fixtures"
-            / "specialized-model-lora"
-            / "fixture-adapter"
+            / ".agent"
+            / "tmp-specialized-dry-run"
+            / "lora-adapter"
         )
     raise SpecializedModelServiceError(
         "lora train requires COMPASS_SPECIALIZED_ADAPTER_ROOT outside the "
