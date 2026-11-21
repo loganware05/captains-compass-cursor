@@ -163,6 +163,33 @@ class LifecycleTests(unittest.TestCase):
             with self.assertRaises(PolicyServiceError):
                 promote(self.tmp, to_state="active", policy_id=pid, captain_approved=True)
 
+    def test_ensure_policy_ignores_elevated_instruction_state(self) -> None:
+        """Finding 001: elevated instruction approval_state must not skip gates."""
+        from orchestrator.behavior.instructions.store import load_instruction
+
+        for elevated in ("proven", "active", "approved", "shadowed"):
+            with self.subTest(approval_state=elevated):
+                instr = build_instruction(
+                    title=f"elevated-{elevated}",
+                    body="Must still enter at candidate.",
+                    scope="proposal",
+                    agent="implementation-agent",
+                    skill_id="testing-validation",
+                    approval_state=elevated,
+                )
+                write_instruction(self.tmp, instr)
+                iid = str(instr["instruction_id"])
+                with mock.patch.dict(
+                    os.environ, {"COMPASS_POLICY_PROMOTE_ENABLED": "1"}
+                ):
+                    created = create_from_instruction(self.tmp, iid)
+                policy = created["policy"]
+                self.assertEqual(policy["lifecycle_state"], "candidate")
+                self.assertFalse(policy["approved_for_execution"])
+                self.assertFalse(policy["authority_mutation"])
+                synced = load_instruction(self.tmp, iid)
+                self.assertEqual(synced["approval_state"], "candidate")
+
     def test_sandbox_requires_peval_pass(self) -> None:
         iid = _seed_instruction(self.tmp)
         with mock.patch.dict(os.environ, {"COMPASS_POLICY_PROMOTE_ENABLED": "1"}):

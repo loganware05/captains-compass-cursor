@@ -74,8 +74,9 @@ P8a/b `next` · P9a/b `run` · P10 outcome agrees · P11 liveness (a model that 
 1. P4/P5 are proved **per accepted step**, not over whole histories (Amendment A1; Captain review).
 2. Evidence gates are booleans; their filesystem checks are not modeled.
 3. Gate order in `promote_policy` is pinned by the lock, not proved.
-4. **Finding 001** — direct entry into `proven` via `ensure_policy_for_instruction` bypasses every
-   gate the model proves. See `.agent/evidence/bend-policy-proof-spike/finding-001-direct-entry-bypass.md`.
+4. **Finding 001** — historical direct entry into `proven` via `ensure_policy_for_instruction`
+   (production fixed in #280; Bend entry-state law still a #278 follow-up). See
+   `.agent/evidence/bend-policy-proof-spike/finding-001-direct-entry-bypass.md`.
 5. P6, P8 and P10 are about the model (`finish` hard-codes no authority); nothing links them to production
    code except the AST pin on `promote_policy`.
 6. The AST pin is coarse: it detects *any* edit to `promote_policy`, benign or not.

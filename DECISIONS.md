@@ -2,8 +2,9 @@
 
 ## ADR-110: Bend Policy-Lifecycle Proof Spike (go/no-go)
 
-- **Status:** **Proposed** — awaiting Captain decision (the agent does not accept its own ADR)
-- **Date:** 2026-11-18
+- **Status:** **Proposed** — awaiting Captain decision (the agent does not accept its own ADR).
+  Spike **merged** via PR #279; Issue #278 remains open for formal follow-ups.
+- **Date:** 2026-11-18 (amended 2026-11-21 for Finding 001 production fix under #280)
 - **Context:** Bend 2 assessment recommended a small opt-in proof experiment on the policy
   lifecycle decision core. Plan `bend-policy-proof-spike` (#278) approved by the Captain.
 - **Decision (proposed):** **Conditional go** — keep the experiment as an opt-in, additive command
@@ -16,8 +17,9 @@
   3. **Boundary:** only transitions are modeled. P4/P5 are per-step, evidence gates are booleans,
      gate order is pinned (not proved), P6/P8/P10 are model-internal (not linked to production
      code), the `promote_policy` pin is coarse, Lean is unpinned, and policy *entry* is outside the model.
-  4. Finding 001 (direct entry into `proven` bypasses all gates) is the main yield; it came from
-     adversarial review of the model's boundary, not from a failing proof.
+  4. Finding 001 (direct entry into `proven` bypasses all gates) was the main yield from boundary
+     review. **Production fix shipped in #280:** `ensure_policy_for_instruction()` always creates
+     policies at `candidate`. A Bend entry-state law remains a #278 follow-up.
 - **Consequences:** Positive — a precise, checkable statement of the lifecycle safety contract and a
   harness that rejects broken tables/structure. Negative — real authoring cost (6+ proof-fix
   iterations; a review-driven hardening round), a tool that needs a Lean build for the strongest

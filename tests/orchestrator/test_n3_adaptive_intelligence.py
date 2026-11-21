@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -78,8 +79,15 @@ class ScorecardTests(unittest.TestCase):
             "COMPASS_ROUTE_ENABLED": "1",
             "COMPASS_CONTROL_ROOT": str(ROOT),
         }
-        with mock.patch.dict(os.environ, env, clear=False):
-            report = run_scorecard(ROOT, phase="compare", persist=True)
+        # Persist into a temp evidence dir so tracked LATEST_*.json stay clean.
+        with tempfile.TemporaryDirectory(prefix="n3-ev-") as tmp:
+            evidence = Path(tmp)
+            with mock.patch.dict(os.environ, env, clear=False), mock.patch(
+                "orchestrator.adaptive.service._evidence_dir",
+                return_value=evidence,
+            ):
+                report = run_scorecard(ROOT, phase="compare", persist=True)
+            self.assertTrue((evidence / "LATEST_compare.json").is_file())
         self.assertEqual(report["phase"], "compare")
         self.assertFalse(report["auto_applied"])
         self.assertFalse(report["authority_mutation"])

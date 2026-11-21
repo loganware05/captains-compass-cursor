@@ -28,6 +28,11 @@ Orchestrator schema unit tests (included in `tests/run.sh`):
 PYTHONPATH=. python3 -m unittest discover -s tests/orchestrator -p 'test_*.py' -v
 ```
 
+After orchestrator unit tests, tracked fixtures under `tests/fixtures/**/fixture-adapter/` and
+`.agent/evidence/n3-adaptive-intelligence-validation/LATEST_*.json` should remain unmodified
+(v1.87.1 / #280). Scratch dirs live under `.agent/tmp-*-tests/` and `.agent/tmp-specialized-dry-run/`
+(gitignored).
+
 XRV release integrity / Experience Evidence Records (v1.83.1):
 
 ```bash

@@ -75,6 +75,13 @@ wandb/
 .agent/tmp-c5-tests/
 .agent/tmp-c6-tests/
 .agent/tmp-c7-tests/
+.agent/tmp-e2e-tests/
+.agent/tmp-oversight-tests/
+.agent/tmp-plan-waves-tests/
+.agent/tmp-specialized-model-tests/
+.agent/tmp-specialized-model-l1-tests/
+.agent/tmp-specialized-model-l2-tests/
+.agent/tmp-specialized-dry-run/
 .agent/cycles/*
 !.agent/cycles/.gitkeep
 .agent/training-exports/*

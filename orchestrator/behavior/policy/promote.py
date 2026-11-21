@@ -52,24 +52,14 @@ def ensure_policy_for_instruction(
         return load_policy(repo_root, pid)
     except PolicyStoreError:
         pass
-    state = str(instr.get("approval_state") or "candidate")
-    if state == "draft":
-        state = "candidate"
-    if state not in {
-        "candidate",
-        "sandbox_evaluated",
-        "shadowed",
-        "approved",
-        "active",
-        "proven",
-        "retired",
-    }:
-        state = "candidate"
+    # Finding 001: new policies ALWAYS start at candidate. Never copy elevated
+    # instruction approval_state into lifecycle_state (that bypassed Captain /
+    # evidence gates and Bend transition laws).
     policy = {
         "policy_id": pid,
         "title": title or str(instr.get("title") or instruction_id),
         "instruction_ids": [instruction_id],
-        "lifecycle_state": state if state != "draft" else "candidate",
+        "lifecycle_state": "candidate",
         "agent": str(instr.get("agent") or ""),
         "skill_id": str(instr.get("skill_id") or ""),
         "task_type": str(instr.get("task_type") or ""),
@@ -83,7 +73,8 @@ def ensure_policy_for_instruction(
     }
     write_policy(repo_root, policy)
     instr["policy_id"] = pid
-    if instr.get("approval_state") == "draft":
+    # Keep instruction aligned with the new policy entry state.
+    if str(instr.get("approval_state") or "") != "candidate":
         instr["approval_state"] = "candidate"
     write_instruction(repo_root, instr)
     return policy

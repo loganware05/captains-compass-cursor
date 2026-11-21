@@ -506,8 +506,9 @@ class KnownGapTests(unittest.TestCase):
         self.assertEqual(before, after)
         self.assertTrue(gap["outside_model"])
         self.assertTrue(gap["authority_flags_false"])
-        # If this ever flips, finding 001 was fixed: update the evidence, docs and ADR-110.
-        self.assertTrue(gap["bypass_observed"])
+        # Finding 001 production fix (#280): bypass must stay False.
+        self.assertFalse(gap["bypass_observed"])
+        self.assertEqual(gap["entered_state"], "candidate")
         self.assertIn(gap["entered_state"], policy_states.LIFECYCLE_STATES)
         self.assertIsNone(gap["captain_approved_at"])
 
