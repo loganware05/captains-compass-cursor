@@ -97,6 +97,24 @@ assert_true "experience layout in control" test -f "$ROOT/.agent/experience/.git
 echo "=== doctor on control repo ==="
 assert_true "doctor passes on control repo" "$ROOT/scripts/doctor.sh" "$ROOT"
 
+echo "=== doctor northstar help buffer (no SIGPIPE) ==="
+help_ok=1
+for _i in $(seq 1 20); do
+  help_tmp="$(mktemp "${TMPDIR:-/tmp}/ns-help-XXXXXX")"
+  if ! "$ROOT/scripts/northstar" help >"$help_tmp" 2>/dev/null; then
+    help_ok=0
+    rm -f "$help_tmp"
+    break
+  fi
+  if ! grep -q 'Surfaces (one-line purpose)' "$help_tmp"; then
+    help_ok=0
+    rm -f "$help_tmp"
+    break
+  fi
+  rm -f "$help_tmp"
+done
+assert_eq "northstar help buffer stress 20x" "1" "$help_ok"
+
 echo "=== hook: secret protection ==="
 out="$(echo '{"command":"npm test"}' | "$ROOT/.cursor/hooks/secret-protection.sh")"
 assert_contains "secret allows npm test" '"permission": ?"allow"|"permission":"allow"' "$out"

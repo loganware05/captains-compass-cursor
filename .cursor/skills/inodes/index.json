@@ -176,7 +176,7 @@
       "content_hash": "d32bd4b282697bd07369d80a85521c2844322f5c7970e5ebc13f400060dea6d2",
       "lifecycle_stage": "PROVEN_SKILL",
       "reputation": {
-        "captain_approved": false,
+        "captain_approved": true,
         "carry_over_from": "skl-e0500739c3347b58"
       },
       "skill_inode_id": "skl-d32bd4b282697bd0"
@@ -338,7 +338,7 @@
       "content_hash": "9ee372f6e16cd880d54db2c7fff15b20a1e2fcdca04d7244cf40fee239b1b120",
       "lifecycle_stage": "PROVEN_SKILL",
       "reputation": {
-        "captain_approved": false,
+        "captain_approved": true,
         "carry_over_from": "skl-3aa00c2d28085eaa"
       },
       "skill_inode_id": "skl-9ee372f6e16cd880"
