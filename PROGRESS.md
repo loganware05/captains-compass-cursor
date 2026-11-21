@@ -13,7 +13,7 @@ for [#284](https://github.com/loganware05/captains-compass-cursor/issues/284)
 | Issue | [#284](https://github.com/loganware05/captains-compass-cursor/issues/284) |
 | PR | [#285](https://github.com/loganware05/captains-compass-cursor/pull/285) |
 | Merge | `df810d3` |
-| Tag | `v1.87.2` (pending annotated tag after this closeout) |
+| Tag | [`v1.87.2`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.87.2) @ `572e7d8` |
 | Rollback | `rollback/pre-audit-p1-doctor-ui-ci` @ `266d9e2` |
 
 ### Prior closeout

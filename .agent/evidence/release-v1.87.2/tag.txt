@@ -1,0 +1,3 @@
+tag=v1.87.2
+commit=572e7d8af489104d03247805c8521931ebcad767
+release=https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.87.2
