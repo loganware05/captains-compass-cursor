@@ -13,7 +13,7 @@ for [#280](https://github.com/loganware05/captains-compass-cursor/issues/280)
 | Issue | [#280](https://github.com/loganware05/captains-compass-cursor/issues/280) |
 | PR | [#281](https://github.com/loganware05/captains-compass-cursor/pull/281) |
 | Merge | `e3debd4` |
-| Tag | `v1.87.1` (pending annotated tag after this closeout) |
+| Tag | [`v1.87.1`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.87.1) @ `e5c753e` |
 | Rollback | `rollback/pre-audit-p0-governance-hygiene` @ `38d3563` |
 
 ### Prior closeout
