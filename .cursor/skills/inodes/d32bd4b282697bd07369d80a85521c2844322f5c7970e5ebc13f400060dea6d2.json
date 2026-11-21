@@ -2,7 +2,7 @@
   "content_hash": "d32bd4b282697bd07369d80a85521c2844322f5c7970e5ebc13f400060dea6d2",
   "lifecycle_stage": "PROVEN_SKILL",
   "reputation": {
-    "captain_approved": false,
+    "captain_approved": true,
     "carry_over_from": "skl-e0500739c3347b58"
   },
   "skill_inode_id": "skl-d32bd4b282697bd0",

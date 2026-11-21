@@ -1,0 +1,4 @@
+
+> @northstar/openui-control-plane@1.74.0 typecheck
+> tsc -p tsconfig.json --noEmit
+

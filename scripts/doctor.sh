@@ -66,65 +66,25 @@ for r in "${RULES[@]}"; do
   fi
 done
 
-# Skills
-SKILLS=(
-  repository-discovery
-  implementation-planning
-  worktree-orchestration
-  testing-validation
-  security-review
-  accessibility-review
-  pull-request-preparation
-  github-integration
-  react-engineering
-  playwright-browser-validation
-  node-engineering
-  postgres-prisma
-  docker-cloud
-  linear-integration
-  notion-integration
-  python-ml
-  ios-engineering
-  source-code-context
-  code-structure-cleanup
-  review-fix-loop
-  autonomy-budget
-  harness-gc
-  dependency-supply-chain
-  capability-planning
-  execution-telemetry
-  candidate-promotion
-  experience-skill-training
-  compass-evaluator
-  experience-routing
-  persistent-role-promotion
-  bounded-autonomy
-  knowledge-steward
-  technology-intelligence-live
-  procedure-playbooks
-  skill-lifecycle
-  external-knowledge-ingest
-  embedding-providers
-  hosted-vector-db
-  package-registry-ti
-  skill-learning-loop
-  northstar-connected-routine
-  code-reviewer
-  context-inodes
-)
-
-for s in "${SKILLS[@]}"; do
-  path="$ROOT/.cursor/skills/$s/SKILL.md"
-  if [[ ! -f "$path" ]]; then
-    fail "missing Skill $s/SKILL.md"
+# Skills — discover dynamically (skip content-addressed inode store)
+SKILL_COUNT=0
+while IFS= read -r -d '' skill_md; do
+  s="$(basename "$(dirname "$skill_md")")"
+  if [[ "$s" == "inodes" ]]; then
     continue
   fi
-  if ! grep -q "^name:" "$path"; then
+  SKILL_COUNT=$((SKILL_COUNT + 1))
+  if ! grep -q "^name:" "$skill_md"; then
     fail "Skill $s missing name frontmatter"
   else
     ok "skill $s"
   fi
-done
+done < <(find "$ROOT/.cursor/skills" -mindepth 2 -maxdepth 2 -type f -name 'SKILL.md' -print0 | sort -z)
+if [[ "$SKILL_COUNT" -lt 1 ]]; then
+  fail "no Skills discovered under .cursor/skills/*/SKILL.md"
+else
+  ok "discovered $SKILL_COUNT Skills"
+fi
 
 # Agents
 AGENTS=(
@@ -1404,22 +1364,34 @@ PY
   else
     fail "missing executable scripts/northstar"
   fi
-  if "$ROOT/scripts/northstar" help 2>/dev/null | grep -q 'Surfaces (one-line purpose)'; then
-    ok "northstar help surface map"
+  # Buffer help once to a file — piping northstar help into grep -q under pipefail
+  # causes intermittent SIGPIPE when grep exits early on a match.
+  HELP_TMP="$(mktemp "${TMPDIR:-/tmp}/northstar-help.XXXXXX")"
+  if ! "$ROOT/scripts/northstar" help >"$HELP_TMP" 2>/dev/null; then
+    rm -f "$HELP_TMP"
+    fail "northstar help exited non-zero"
+  elif [[ ! -s "$HELP_TMP" ]]; then
+    rm -f "$HELP_TMP"
+    fail "northstar help produced no output"
   else
-    fail "northstar help missing Surfaces map (C1)"
-  fi
-  for surface in skills review intent outcomes repair precision context; do
-    if "$ROOT/scripts/northstar" help 2>/dev/null | grep -Eq "^  ${surface}[[:space:]]"; then
-      ok "northstar help lists ${surface}"
+    if grep -q 'Surfaces (one-line purpose)' "$HELP_TMP"; then
+      ok "northstar help surface map"
     else
-      fail "northstar help missing surface: ${surface}"
+      fail "northstar help missing Surfaces map (C1)"
     fi
-  done
-  if "$ROOT/scripts/northstar" help 2>/dev/null | grep -q 'docs/INDEX.md'; then
-    ok "northstar help points to docs/INDEX.md"
-  else
-    fail "northstar help missing docs/INDEX.md pointer"
+    for surface in skills review intent outcomes repair precision context; do
+      if grep -Eq "^  ${surface}[[:space:]]" "$HELP_TMP"; then
+        ok "northstar help lists ${surface}"
+      else
+        fail "northstar help missing surface: ${surface}"
+      fi
+    done
+    if grep -q 'docs/INDEX.md' "$HELP_TMP"; then
+      ok "northstar help points to docs/INDEX.md"
+    else
+      fail "northstar help missing docs/INDEX.md pointer"
+    fi
+    rm -f "$HELP_TMP"
   fi
   if [[ -f "$ROOT/docs/INDEX.md" ]]; then
     ok "docs/INDEX.md"

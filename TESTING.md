@@ -33,6 +33,9 @@ After orchestrator unit tests, tracked fixtures under `tests/fixtures/**/fixture
 (v1.87.1 / #280). Scratch dirs live under `.agent/tmp-*-tests/` and `.agent/tmp-specialized-dry-run/`
 (gitignored).
 
+Doctor Skill discovery is dynamic (`.cursor/skills/*/SKILL.md`); `northstar help` is buffered to a
+temp file before grepping (v1.87.2 / #284). UI package CI: `cd orchestrator/ui && npm ci && npm run typecheck && npm test`.
+
 XRV release integrity / Experience Evidence Records (v1.83.1):
 
 ```bash
