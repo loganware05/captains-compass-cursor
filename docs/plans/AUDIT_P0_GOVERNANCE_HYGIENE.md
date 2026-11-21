@@ -1,8 +1,7 @@
 # Audit P0 Governance & Hygiene (durable plan copy)
 
-> **AWAITING APPROVAL** — plan ID `audit-p0-governance-hygiene`. Active gate text lives in the
-> root `IMPLEMENTATION_PLAN.md` while it is the active plan. Budget:
-> `.agent/budgets/audit-p0-governance-hygiene.md`. Source: cloud agent
+> **COMPLETE** — plan ID `audit-p0-governance-hygiene`. Merged via PR #281 @ `e3debd4`
+> (v1.87.1). Budget: `.agent/budgets/audit-p0-governance-hygiene.md`. Source: cloud agent
 > `bc-22bbacc4-5283-4fa1-a382-29baec9fff57` (NorthStar full engineering audit canvas,
 > 2026-11-20/21).
 
