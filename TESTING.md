@@ -36,6 +36,20 @@ After orchestrator unit tests, tracked fixtures under `tests/fixtures/**/fixture
 Doctor Skill discovery is dynamic (`.cursor/skills/*/SKILL.md`); `northstar help` is buffered to a
 temp file before grepping (v1.87.2 / #284). UI package CI: `cd orchestrator/ui && npm ci && npm run typecheck && npm test`.
 
+Sentry live list queries embed `--window-hours` as `lastSeen:-Nh` (v1.88.0 / #288). Hermetic:
+
+```bash
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_sentry_window_hours -v
+```
+
+Additive `COMPASS_PROFILE=core|integrations` (v1.88.0 / #288) — individual flags win; never sets live dual-gates:
+
+```bash
+./scripts/northstar profile list
+./scripts/northstar profile export integrations
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_env_profiles -v
+```
+
 XRV release integrity / Experience Evidence Records (v1.83.1):
 
 ```bash

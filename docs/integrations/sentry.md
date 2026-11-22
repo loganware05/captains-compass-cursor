@@ -15,6 +15,21 @@ COMPASS_SENTRY_PROJECT=…                 # live project slug
 
 Default mode is **fixture** (CI-safe). Live requires https-only API access.
 
+`COMPASS_PROFILE=integrations` sets `COMPASS_SENTRY_INGEST_ENABLED=1` when unset;
+it never enables `COMPASS_SENTRY_LIVE` (live remains an explicit dual gate).
+
+## Live query window
+
+List fetches pass `--window-hours N` (default **24**) into the Issues API as
+Sentry search syntax:
+
+```text
+is:unresolved lastSeen:-{N}h
+```
+
+Valid range: 1–8760 hours. Single-issue `--issue-id` lookups skip the window
+filter (exact id path).
+
 ## Commands
 
 ```bash
@@ -22,7 +37,8 @@ COMPASS_SENTRY_INGEST_ENABLED=1 \
   ./scripts/northstar sentry fetch [--fixture PATH]
 
 COMPASS_SENTRY_INGEST_ENABLED=1 COMPASS_SENTRY_LIVE=1 \
-  ./scripts/northstar sentry fetch --org ORG --project PROJECT [--issue-id ID]
+  ./scripts/northstar sentry fetch --org ORG --project PROJECT \
+  [--issue-id ID] [--window-hours 24]
 
 COMPASS_SENTRY_INGEST_ENABLED=1 ./scripts/northstar sentry list
 COMPASS_SENTRY_INGEST_ENABLED=1 ./scripts/northstar sentry show --packet-id ID

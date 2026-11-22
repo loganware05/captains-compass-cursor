@@ -60,6 +60,31 @@ def _auth_token() -> str:
     return token
 
 
+def normalize_window_hours(window_hours: int) -> int:
+    """Clamp window_hours to a positive integer in [1, 8760] (1h–1y)."""
+    try:
+        hours = int(window_hours)
+    except (TypeError, ValueError) as exc:
+        raise SentryClientError(
+            f"window_hours must be an integer, got {window_hours!r}"
+        ) from exc
+    if hours < 1 or hours > 8760:
+        raise SentryClientError(
+            f"window_hours must be between 1 and 8760 inclusive, got {hours}"
+        )
+    return hours
+
+
+def build_issues_list_query(window_hours: int = 24) -> str:
+    """Build Sentry Issues search query including lastSeen window.
+
+    Uses Sentry search syntax: ``is:unresolved lastSeen:-{N}h``.
+    Single-issue fetches by id ignore this (exact lookup).
+    """
+    hours = normalize_window_hours(window_hours)
+    return f"is:unresolved lastSeen:-{hours}h"
+
+
 def fetch_live_issues(
     *,
     org: str,
@@ -95,11 +120,11 @@ def fetch_live_issues(
         issue["_project"] = project
         return [issue]
 
-    # Project issues list (bounded query window is advisory metadata for callers).
-    _ = window_hours
+    query = build_issues_list_query(window_hours)
     url = (
         f"{base}/projects/{quote(org, safe='')}/"
-        f"{quote(project, safe='')}/issues/?query=is:unresolved&limit=25"
+        f"{quote(project, safe='')}/issues/"
+        f"?query={quote(query, safe='')}&limit=25"
     )
     resp = http.request("GET", url, headers=headers, timeout=30.0)
     if resp.status >= 400:

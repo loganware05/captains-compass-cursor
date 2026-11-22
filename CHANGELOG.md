@@ -4,6 +4,17 @@
 
 ## Unreleased
 
+## 1.88.0 — 2026-11-21
+
+### Added
+
+- **Audit P2 Sentry polish & COMPASS profiles v0** (`audit-p2-sentry-profiles` / #288):
+  - Live Sentry Issues list queries embed `--window-hours` as `lastSeen:-Nh` (1–8760)
+  - Additive `COMPASS_PROFILE=core|integrations` expands unset `COMPASS_*` gates only
+    (individual flags win; never enables live dual-gates)
+  - `northstar profile list|show|export`; auto-apply when `COMPASS_PROFILE` is set
+  - Docs: `docs/integrations/compass-profiles.md`; Sentry window note; handbook + TESTING
+
 ## 1.87.2 — 2026-11-21
 
 ### Fixed
