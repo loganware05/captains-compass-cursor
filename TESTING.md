@@ -625,12 +625,18 @@ Open UI control plane (requires `COMPASS_OPENUI_ENABLED` or `--enable-gates`):
 ./scripts/run-openui.sh emit --surface plan --repo-root . --enable-gates
 ./scripts/northstar ui emit --surface tower|scorecard|closeout --repo . --enable-gates
 ./scripts/northstar ui validate --surface plan --repo . --enable-gates
+./scripts/northstar ui preview --repo . --enable-gates   # writes .agent/ui/preview.html
+# Optional localhost serve (127.0.0.1 only):
+# ./scripts/northstar ui serve --repo . --enable-gates --timeout 2
 # Approve requires COMPASS_CAPTAIN_APPROVE=1 (never auto-approves)
 # Reject: ./scripts/northstar ui reject --feedback "…" --repo . --enable-gates
+# Static sample only: orchestrator/ui/preview.sample.html
 # UI package (optional Node 20+):
 #   cd orchestrator/ui && npm ci && npm test && npm run generate:spec
-# Evidence: .agent/evidence/openui-control-plane/
-PYTHONPATH=. python3 -m unittest tests.orchestrator.test_openui_control_plane -v
+# Evidence: .agent/evidence/openui-control-plane/ · .agent/evidence/audit-p3-openui-viewer/
+PYTHONPATH=. python3 -m unittest \
+  tests.orchestrator.test_openui_control_plane \
+  tests.orchestrator.test_openui_preview -v
 ```
 
 Cognitive Core e2e evaluation (C1–C7; requires all Cognitive Core gates or `--enable-gates`):

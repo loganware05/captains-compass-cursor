@@ -1048,6 +1048,33 @@ PY
   else
     fail "openui should exit 2 mentioning COMPASS_OPENUI_ENABLED when unset (rc=$ou_rc)"
   fi
+  if [[ -f "$ROOT/orchestrator/openui/preview.py" ]]; then
+    ok "orchestrator/openui/preview.py present"
+  else
+    fail "missing orchestrator/openui/preview.py"
+  fi
+  if [[ -f "$ROOT/orchestrator/ui/preview.sample.html" ]]; then
+    ok "orchestrator/ui/preview.sample.html present"
+  else
+    fail "missing orchestrator/ui/preview.sample.html"
+  fi
+  if grep -q 'ui preview' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents ui preview"
+  else
+    fail "northstar missing ui preview surface"
+  fi
+  set +e
+  ou_prev="$(
+    COMPASS_OPENUI_ENABLED=1 "$ROOT/scripts/run-openui.sh" preview \
+      --repo-root "$ROOT" --enable-gates 2>&1
+  )"
+  ou_prev_rc=$?
+  set -e
+  if [[ "$ou_prev_rc" -eq 0 && "$ou_prev" == *"preview_written"* && -f "$ROOT/.agent/ui/preview.html" ]]; then
+    ok "openui preview writes .agent/ui/preview.html"
+  else
+    fail "openui preview failed (rc=$ou_prev_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/project-state-snapshot.schema.json" ]]; then
     ok "project-state-snapshot.schema.json present"
   else

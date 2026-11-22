@@ -6,7 +6,7 @@ Reusable **Cursor IDE** agentic engineering workflow template.
 
 This is a **control repository**. It owns rules, Skills, subagents, hooks, document templates, and scripts. Product application code does not live here.
 
-## Current version: 1.88.0
+## Current version: 1.89.0
 
 ### Included
 
@@ -33,7 +33,7 @@ This is a **control repository**. It owns rules, Skills, subagents, hooks, docum
 - Structural-test examples (`examples/structural-tests/`)
 - Thin `CLAUDE.md` adapter when missing
 - **N4 cross-stack benchmark** (`northstar benchmark n4`) — hermetic baseline vs evidence-informed scorecard
-- **Open UI control plane** (`orchestrator/ui`, `northstar ui`) — gated OpenUI Lang emitters for plan/tower/scorecard/closeout; never auto-approves
+- **Open UI control plane** (`orchestrator/ui`, `northstar ui`) — gated OpenUI Lang emitters for plan/tower/scorecard/closeout plus local `ui preview|serve`; never auto-approves
 - Topology-free `scripts/northstar` launcher (skills, review, behavior, status/closeout, brain, assess, cycle, model, rea, train, cognitive, oversight, specialized, …)
 - Operator docs index: [`docs/INDEX.md`](docs/INDEX.md)
 - `install.sh`, `update.sh`, `uninstall.sh`, `doctor.sh`

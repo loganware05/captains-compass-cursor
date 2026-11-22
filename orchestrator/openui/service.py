@@ -15,6 +15,12 @@ from orchestrator.openui.emitters import (
     emit_plan_approval,
 )
 from orchestrator.openui.lang import OpenUILangError, validate_openui_lang, wrap_fence
+from orchestrator.openui.preview import (
+    PreviewError,
+    list_persisted_surfaces,
+    serve_preview,
+    write_preview,
+)
 
 
 class OpenUIServiceError(ValueError):
@@ -84,6 +90,9 @@ def run_ui_command(
     feedback: str = "",
     fence: bool = True,
     persist: bool = True,
+    host: str = "127.0.0.1",
+    port: int = 8765,
+    timeout_seconds: float | None = None,
 ) -> dict[str, Any]:
     cmd = command.strip().lower()
     if cmd == "emit":
@@ -113,6 +122,58 @@ def run_ui_command(
         except OpenUILangError as exc:
             raise OpenUIServiceError(f"fail-closed: {exc}") from exc
         return {"status": "valid", "path": str(path), "meta": meta}
+
+    if cmd == "preview":
+        require_openui_gate()
+        try:
+            surfaces = [surface] if surface else None
+            if surfaces is None and not list_persisted_surfaces(repo_root):
+                # Convenience: emit plan when nothing persisted yet.
+                persist_emit(
+                    repo_root,
+                    "plan",
+                    lang=emit_surface(repo_root, "plan", fence=False),
+                )
+                surfaces = ["plan"]
+            path = write_preview(
+                repo_root,
+                surfaces=surfaces,
+                active=surface,
+            )
+        except PreviewError as exc:
+            raise OpenUIServiceError(str(exc)) from exc
+        return {
+            "status": "preview_written",
+            "path": str(path),
+            "surfaces": surfaces or list_persisted_surfaces(repo_root),
+            "auto_approved": False,
+            "authority_mutation": False,
+        }
+
+    if cmd == "serve":
+        require_openui_gate()
+        try:
+            surfaces = [surface] if surface else None
+            if surfaces is None and not list_persisted_surfaces(repo_root):
+                persist_emit(
+                    repo_root,
+                    "plan",
+                    lang=emit_surface(repo_root, "plan", fence=False),
+                )
+                surfaces = ["plan"]
+            outcome = serve_preview(
+                repo_root,
+                surfaces=surfaces,
+                active=surface,
+                host=host,
+                port=port,
+                timeout_seconds=timeout_seconds,
+            )
+        except PreviewError as exc:
+            raise OpenUIServiceError(str(exc)) from exc
+        except OSError as exc:
+            raise OpenUIServiceError(f"serve failed: {exc}") from exc
+        return outcome
 
     if cmd in {"approve", "reject"}:
         require_openui_gate()

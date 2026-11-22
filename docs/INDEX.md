@@ -51,7 +51,7 @@ Launcher: `scripts/northstar` (control repo only).
 | `adaptive` | N3 Adaptive Intelligence scorecard (proposal-only) | [`plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md`](plans/N3_ADAPTIVE_INTELLIGENCE_VALIDATION.md) |
 | `benchmark` | N4 cross-stack baseline vs evidence-informed scorecard | [`plans/N4_CROSS_STACK_BENCHMARK.md`](plans/N4_CROSS_STACK_BENCHMARK.md) |
 | `feedback` | N5 Skill-fit / routing proposals from N4 deltas (proposal-only) | [`plans/N5_SKILL_ROUTING_FEEDBACK.md`](plans/N5_SKILL_ROUTING_FEEDBACK.md) |
-| `ui` | Open UI emitters (plan/tower/scorecard/closeout) + gated approve/reject | [`plans/OPENUI_CONTROL_PLANE.md`](plans/OPENUI_CONTROL_PLANE.md) |
+| `ui` | Open UI emitters + local preview/serve + gated approve/reject | [`plans/OPENUI_CONTROL_PLANE.md`](plans/OPENUI_CONTROL_PLANE.md), [`plans/AUDIT_P3_OPENUI_VIEWER.md`](plans/AUDIT_P3_OPENUI_VIEWER.md) |
 
 ```bash
 # From the control repo
