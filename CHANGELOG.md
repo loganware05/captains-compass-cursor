@@ -4,6 +4,16 @@
 
 ## Unreleased
 
+## 1.89.0 — 2026-11-22
+
+### Added
+
+- **Audit P3 OpenUI local viewer** (`audit-p3-openui-viewer` / #291):
+  - `northstar ui preview` writes `.agent/ui/preview.html` from persisted `*.openui`
+  - Optional `northstar ui serve` on 127.0.0.1 only (`--timeout` for smoke)
+  - Static mock moved to `orchestrator/ui/preview.sample.html` (labeled sample)
+  - Hermetic emit→preview tests; doctor asserts preview path
+
 ## 1.88.0 — 2026-11-21
 
 ### Added

@@ -1,5 +1,23 @@
 # Decisions
 
+## ADR-112: Audit P3 OpenUI local viewer (v1.89.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-22
+- **Context:** After audit P0–P2, OpenUI emitters persisted `.agent/ui/*.openui` but
+  operators only had a static v1.74.0 mock (`preview.html`). Canvas P3 also listed
+  XRV ops-verified + branch prune; Captain approved viewer-only (`audit-p3-openui-viewer` / #291).
+- **Decision:**
+  1. Ship `northstar ui preview` generating `.agent/ui/preview.html` from persisted surfaces
+     (auto-emit `plan` when empty).
+  2. Optional `ui serve` bound to 127.0.0.1/localhost only.
+  3. Relabel static mock as `preview.sample.html`; do not treat it as live.
+  4. Leave approve/reject gates unchanged; defer T3/B4/specialized/Bend/#278.
+  5. Release **v1.89.0**.
+- **Consequences:** Operators can inspect real emitted surfaces locally without Node.
+  Rollback `rollback/pre-audit-p3-openui-viewer` @ `257a8e7`.
+
+
 ## ADR-111: Audit P2 Sentry window_hours + COMPASS_PROFILE v0 (v1.88.0)
 
 - **Status:** Accepted

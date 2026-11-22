@@ -59,6 +59,7 @@ Launcher: `"$CONTROL/scripts/northstar" <surface> …`
 | `conversation` | Ingest ChatGPT / Obsidian AI Exporter trajectories | `COMPASS_CONVERSATION_INGEST_ENABLED=1`; external evidence only |
 | `sentry` | Read-only Sentry incident evidence packets | `COMPASS_SENTRY_INGEST_ENABLED=1`; live needs `COMPASS_SENTRY_LIVE=1`; `--window-hours` → `lastSeen:-Nh` |
 | `profile` | Additive gate bundles (`core` / `integrations`) | `COMPASS_PROFILE=…`; individual flags win; never enables live dual-gates |
+| `ui` | Open UI emitters + local preview/serve | `COMPASS_OPENUI_ENABLED=1`; `ui preview` → `.agent/ui/preview.html`; serve localhost-only; approve needs `COMPASS_CAPTAIN_APPROVE=1` |
 | `t3` | T3 Code ExecutionAdapter (plan-bound) | `COMPASS_T3_EXEC_ENABLED=1`; never bypasses plan gate |
 | `apify` | Apify research / TI (fixture-first) | `COMPASS_APIFY_ENABLED=1`; never auto-runs Actors |
 | `explain` | Scrimba Explain packets (≠ status explain) | `COMPASS_EXPLAIN_ENABLED=1`; never auto-publishes |
