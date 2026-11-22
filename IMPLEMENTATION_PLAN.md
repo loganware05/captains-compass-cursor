@@ -1,33 +1,49 @@
-# Implementation Plan — Audit P3 OpenUI Local Viewer
+# Implementation Plan — Audit P4 Remote Hygiene
 
-- Status: **COMPLETE**
+- Status: **APPROVED** (implementation in progress)
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **COMPLETE** |
-| Plan ID | `audit-p3-openui-viewer` |
-| Issue | [#291](https://github.com/loganware05/captains-compass-cursor/issues/291) |
-| PR | [#292](https://github.com/loganware05/captains-compass-cursor/pull/292) **MERGED** |
-| Merge commit | `227d71d` |
-| Rollback | `rollback/pre-audit-p3-openui-viewer` @ `257a8e7` |
-| Release | **v1.89.0** @ `227d71d` |
+| Status | **APPROVED** |
+| Plan ID | `audit-p4-remote-hygiene` |
+| Issue | [#294](https://github.com/loganware05/captains-compass-cursor/issues/294) |
+| Baseline | `origin/main` @ `28bd0c2` / **v1.89.0** tip after #293 |
+| Branch | `docs/294-audit-p4-remote-hygiene` |
+| Rollback | `rollback/pre-audit-p4-remote-hygiene` @ `28bd0c2` |
+| Proposed release | **v1.89.1** |
+| Created | 2026-11-22 |
 | Approved by | Logan Ware (Captain) — 2026-11-22 |
-| Completed | 2026-11-22 |
 
-Durable: `docs/plans/AUDIT_P3_OPENUI_VIEWER.md`  
-Evidence: `.agent/evidence/audit-p3-openui-viewer/`  
-Release evidence: `.agent/evidence/release-v1.89.0/`
+Budget: `.agent/budgets/audit-p4-remote-hygiene.md`  
+Durable copy: `docs/plans/AUDIT_P4_REMOTE_HYGIENE.md`  
+Evidence: `.agent/evidence/audit-p4-remote-hygiene/`
 
-## Delivered
+## Approval decisions
 
-1. `northstar ui preview` writes `.agent/ui/preview.html` from persisted `*.openui`.
-2. Optional `ui serve` on 127.0.0.1/localhost only.
-3. Static mock moved to `preview.sample.html` (labeled sample).
-4. Doctor asserts + hermetic emit→preview tests; ADR-112.
+| Q | Decision |
+|---|---|
+| Q1 Hygiene-only | **yes** |
+| Q2 Dry-run merged allowlist | **yes** |
+| Q3 Enable auto-delete | **yes** |
+| Q4 Prefer XRV/Bend | **no** |
 
-## Follow-ups
+## Delivered (this branch)
 
-- Deferred: T3 live, specialized real eval, B4 FIX→SUBMIT, XRV ops-verified, branch prune
-- **#278:** Bend entry-state law, P4/P5 history, Lean pin, ADR-110 go/no-go
+1. Dry-run allowlist: 199 merged remotes; 5 skipped (main + 4 unmerged).
+2. Deleted 199 remote heads (204 → 5).
+3. Enabled `delete_branch_on_merge=true`.
+4. Archived obsolete P1/P2 awaiting stubs under `docs/plans/archive/`.
+
+## Out of scope (deferred)
+
+T3 live · specialized · B4 · XRV ops-verified · Bend #278 · the 4 leftover unmerged branches
+
+## Acceptance criteria
+
+- [x] Dry-run allowlist in evidence before deletes
+- [x] Remote head count reduced; deleted refs listed
+- [x] `delete_branch_on_merge` enabled
+- [x] P1/P2 awaiting stubs archived
+- [ ] doctor + tests green; PR cited

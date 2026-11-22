@@ -1,5 +1,23 @@
 # Decisions
 
+## ADR-113: Audit P4 remote hygiene (v1.89.1)
+
+- **Status:** Accepted
+- **Date:** 2026-11-22
+- **Context:** After P0–P3, ~204 remote heads remained and
+  `delete_branch_on_merge` was off. Canvas leftover ops item; Captain approved
+  hygiene-only (`audit-p4-remote-hygiene` / #294).
+- **Decision:**
+  1. Dry-run allowlist of tip-ancestors of `main`; delete those remotes only.
+  2. Leave unmerged leftovers untouched for Captain review.
+  3. Enable `delete_branch_on_merge`.
+  4. Archive obsolete P1/P2 awaiting stubs under `docs/plans/archive/`.
+  5. Release **v1.89.1**.
+- **Consequences:** Remote clutter reduced; future merges auto-delete head
+  branches. Rollback tag `rollback/pre-audit-p4-remote-hygiene` @ `28bd0c2`
+  (cannot undelete remotes from the tag alone — use evidence lists if recreate needed).
+
+
 ## ADR-112: Audit P3 OpenUI local viewer (v1.89.0)
 
 - **Status:** Accepted
