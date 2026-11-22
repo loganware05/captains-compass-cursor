@@ -2,7 +2,8 @@
 
 ## Current status
 
-**IN PROGRESS:** [#294](https://github.com/loganware05/captains-compass-cursor/issues/294)
+**IN PROGRESS:** [#294](https://github.com/loganware05/captains-compass-cursor/issues/294) /
+PR [#295](https://github.com/loganware05/captains-compass-cursor/pull/295)
 `audit-p4-remote-hygiene` on `docs/294-audit-p4-remote-hygiene` → **v1.89.1**.
 
 | Item | Value |
@@ -10,6 +11,7 @@
 | Baseline | **v1.89.0** @ `28bd0c2` |
 | Active plan | `audit-p4-remote-hygiene` **APPROVED** |
 | Issue | [#294](https://github.com/loganware05/captains-compass-cursor/issues/294) |
+| PR | [#295](https://github.com/loganware05/captains-compass-cursor/pull/295) |
 | Rollback | `rollback/pre-audit-p4-remote-hygiene` @ `28bd0c2` |
 
 ### Prior closeout

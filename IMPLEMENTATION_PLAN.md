@@ -9,6 +9,7 @@
 | Status | **APPROVED** |
 | Plan ID | `audit-p4-remote-hygiene` |
 | Issue | [#294](https://github.com/loganware05/captains-compass-cursor/issues/294) |
+| PR | [#295](https://github.com/loganware05/captains-compass-cursor/pull/295) |
 | Baseline | `origin/main` @ `28bd0c2` / **v1.89.0** tip after #293 |
 | Branch | `docs/294-audit-p4-remote-hygiene` |
 | Rollback | `rollback/pre-audit-p4-remote-hygiene` @ `28bd0c2` |
@@ -46,4 +47,4 @@ T3 live · specialized · B4 · XRV ops-verified · Bend #278 · the 4 leftover 
 - [x] Remote head count reduced; deleted refs listed
 - [x] `delete_branch_on_merge` enabled
 - [x] P1/P2 awaiting stubs archived
-- [ ] doctor + tests green; PR cited
+- [x] doctor + tests green; PR cited ([#295](https://github.com/loganware05/captains-compass-cursor/pull/295))
