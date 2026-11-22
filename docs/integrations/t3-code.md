@@ -46,6 +46,8 @@ tests never open a network socket.
 | cancel | POST | `/v1/threads/{id}/interrupt` | `t3_thread_interrupt` |
 
 Allowlisted ops only. No auto-merge, no authority mutation, no plan-gate bypass.
+`UrllibTransport` refuses HTTP redirects so `Authorization` cannot follow a 30x
+to another host.
 
 ## Storage
 

@@ -1,0 +1,6 @@
+test_refuses_redirect_and_does_not_soft_return_3xx (tests.orchestrator.test_http_transport_redirects.UrllibTransportRedirectTests.test_refuses_redirect_and_does_not_soft_return_3xx) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.527s
+
+OK

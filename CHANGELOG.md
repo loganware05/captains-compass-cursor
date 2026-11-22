@@ -14,6 +14,7 @@
   - Live credentials: `COMPASS_T3_API_BASE` (https only) + `COMPASS_T3_AUTH_TOKEN`
   - Hermetic `RecordingTransport` tests; fixture path unchanged
   - Authority locks remain false (no auto-merge / no plan-gate bypass)
+  - `UrllibTransport` refuses HTTP redirects so Bearer tokens cannot hop origins
 
 ## 1.89.2 — 2026-11-22
 

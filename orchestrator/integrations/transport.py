@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import urllib.error
 import urllib.request
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any, Protocol, runtime_checkable
 
 from orchestrator.integrations.events import redact_secrets
@@ -35,8 +35,21 @@ def _normalize_headers(headers: dict[str, str] | None) -> dict[str, str]:
     return {str(k).lower(): str(v) for k, v in (headers or {}).items()}
 
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    """Refuse redirects so Authorization is never forwarded to another host."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):  # noqa: ANN001
+        raise urllib.error.HTTPError(
+            req.full_url, code, f"redirect refused to {newurl}", headers, fp
+        )
+
+
 class UrllibTransport:
-    """Production HTTP transport. Never construct in CI unit tests."""
+    """Production HTTP transport. Never construct in CI unit tests.
+
+    Redirects are refused so Bearer tokens cannot follow a 30x to another origin
+    (including http://). Matches sibling live clients (JEV / status HTTP).
+    """
 
     def request(
         self,
@@ -53,11 +66,16 @@ class UrllibTransport:
             headers=headers or {},
             method=method.upper(),
         )
+        opener = urllib.request.build_opener(_NoRedirect())
         try:
-            with urllib.request.urlopen(req, timeout=timeout) as resp:
+            with opener.open(req, timeout=timeout) as resp:
                 raw_headers = {str(k).lower(): str(v) for k, v in resp.headers.items()}
                 return HttpResponse(status=int(resp.status), headers=raw_headers, body=resp.read())
         except urllib.error.HTTPError as exc:
+            # Do not soft-return 3xx: callers that only reject >=400 would treat
+            # a refused redirect as success and may parse attacker-controlled bodies.
+            if 300 <= int(exc.code) < 400:
+                raise
             raw_headers = {str(k).lower(): str(v) for k, v in (exc.headers or {}).items()}
             return HttpResponse(status=int(exc.code), headers=raw_headers, body=exc.read() or b"")
 
