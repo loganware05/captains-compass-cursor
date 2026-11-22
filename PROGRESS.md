@@ -2,16 +2,18 @@
 
 ## Current status
 
-**IN PROGRESS:** [#288](https://github.com/loganware05/captains-compass-cursor/issues/288) /
-PR [#289](https://github.com/loganware05/captains-compass-cursor/pull/289)
-`audit-p2-sentry-profiles` on `feature/288-audit-p2-sentry-profiles` → **v1.88.0**.
+**MERGED:** [#289](https://github.com/loganware05/captains-compass-cursor/pull/289)
+for [#288](https://github.com/loganware05/captains-compass-cursor/issues/288)
+`audit-p2-sentry-profiles` → **v1.88.0** @ `c069554`.
 
 | Item | Value |
 |---|---|
 | Baseline | **v1.87.2** @ `bb8f334` |
-| Active plan | `audit-p2-sentry-profiles` **APPROVED** |
+| Plan | `audit-p2-sentry-profiles` **COMPLETE** |
 | Issue | [#288](https://github.com/loganware05/captains-compass-cursor/issues/288) |
 | PR | [#289](https://github.com/loganware05/captains-compass-cursor/pull/289) |
+| Merge | `c069554` |
+| Tag | [`v1.88.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.88.0) @ `c069554` |
 | Rollback | `rollback/pre-audit-p2-sentry-profiles` @ `bb8f334` |
 
 ### Prior closeout
@@ -24,17 +26,11 @@ PR [#289](https://github.com/loganware05/captains-compass-cursor/pull/289)
 
 Approve ⇒ implement → validate → commit → open PR. Merge remains Captain-only.
 
-## Validation (local)
+## Next (audit backlog)
 
-- Unit: Sentry window_hours + env_profiles — pass
-- `./scripts/doctor.sh`: pass
-- `./tests/run.sh`: 138 passed, 0 failed
-- Evidence: `.agent/evidence/audit-p2-sentry-profiles/`
-
-## Next (after merge)
-
-- Tag **v1.88.0**; post-merge closeout
-- Deferred audit backlog: specialized real eval, T3 live, B4 FIX→SUBMIT
+- Specialized real local eval (deferred)
+- T3 MCP/HTTP live adapter (deferred)
+- B4 FIX→TEST→SUBMIT (deferred)
 - **#278:** Bend entry-state law, P4/P5 history, Lean pin, ADR-110 go/no-go
 
 ## Blockers
