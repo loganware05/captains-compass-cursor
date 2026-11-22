@@ -23,13 +23,43 @@ from orchestrator.integrations.t3.store import (
     load_execution,
     write_execution,
 )
+from orchestrator.integrations.transport import HttpTransport
 
 # Process-local fixture adapter so status/collect share state within a CLI process.
 _FIXTURE = FixtureT3ExecutionAdapter()
+# Optional process-local live adapter (tests inject transport once).
+_LIVE: LiveT3ExecutionAdapter | None = None
 
 
 class T3ServiceError(ValueError):
     """Operator-facing T3 adapter errors."""
+
+
+def reset_live_adapter_for_tests() -> None:
+    """Clear process-local live adapter (hermetic tests only)."""
+    global _LIVE
+    _LIVE = None
+
+
+def configure_live_adapter_for_tests(
+    *,
+    transport: HttpTransport | None = None,
+    api_base: str | None = None,
+    token: str | None = None,
+) -> LiveT3ExecutionAdapter:
+    """Inject a live adapter for hermetic tests."""
+    global _LIVE
+    _LIVE = LiveT3ExecutionAdapter(
+        transport=transport, api_base=api_base, token=token
+    )
+    return _LIVE
+
+
+def _live_adapter() -> LiveT3ExecutionAdapter:
+    global _LIVE
+    if _LIVE is None:
+        _LIVE = LiveT3ExecutionAdapter()
+    return _LIVE
 
 
 def _timeline_append(doc: dict[str, Any], status: str, note: str = "") -> None:
@@ -47,7 +77,7 @@ def list_capabilities(*, force_live: bool = False) -> dict[str, Any]:
     require_t3_exec_enabled()
     if force_live or t3_exec_live_enabled():
         require_t3_exec_live_enabled()
-        return LiveT3ExecutionAdapter().capabilities()
+        return _live_adapter().capabilities()
     return _FIXTURE.capabilities()
 
 
@@ -78,7 +108,7 @@ def start_execution(
     use_live = force_live or t3_exec_live_enabled()
     if use_live:
         require_t3_exec_live_enabled()
-        adapter = LiveT3ExecutionAdapter()
+        adapter = _live_adapter()
         mode = "live"
     else:
         adapter = _FIXTURE
@@ -91,7 +121,7 @@ def start_execution(
                 "execution_id": execution_id,
                 "plan_id": plan_id.strip(),
                 "objective": objective.strip(),
-                "provider": provider,
+                "provider": provider if mode == "fixture" else (provider or "t3"),
                 "model": model,
             }
         )
@@ -107,7 +137,7 @@ def start_execution(
         "provider": str(started.get("provider") or provider),
         "model": str(started.get("model") or model or ""),
         "objective": objective.strip(),
-        "status": "started",
+        "status": str(started.get("status") or "started"),
         "thread_ref": str(started.get("thread_ref") or ""),
         "timeline": [{"at": now, "status": "started", "note": f"binding={binding['binding']}"}],
         "artifacts": [],
@@ -147,6 +177,14 @@ def status_execution(repo_root: Path, execution_id: str) -> dict[str, Any]:
             # Persist-only status if process-local fixture state was lost.
             if doc["status"] == "started":
                 _timeline_append(doc, "running", "persisted-status-advance")
+    elif doc.get("mode") == "live":
+        require_t3_exec_live_enabled()
+        thread_ref = str(doc.get("thread_ref") or execution_id)
+        try:
+            live = _live_adapter().status(thread_ref)
+        except RuntimeError as exc:
+            raise T3ServiceError(str(exc)) from exc
+        _timeline_append(doc, str(live.get("status") or doc["status"]), "live-status")
     try:
         write_execution(repo_root, doc)
     except T3StoreError as exc:
@@ -172,8 +210,20 @@ def collect_execution(repo_root: Path, execution_id: str) -> dict[str, Any]:
         doc["artifacts"] = list(collected.get("artifacts") or [])
         doc["collected_summary"] = str(collected.get("collected_summary") or "")
         _timeline_append(doc, "completed", "fixture-collect")
+    elif doc.get("mode") == "live":
+        require_t3_exec_live_enabled()
+        thread_ref = str(doc.get("thread_ref") or execution_id)
+        try:
+            collected = _live_adapter().collect(thread_ref)
+        except RuntimeError as exc:
+            raise T3ServiceError(str(exc)) from exc
+        doc["artifacts"] = list(collected.get("artifacts") or [])
+        doc["collected_summary"] = str(collected.get("collected_summary") or "")
+        _timeline_append(
+            doc, str(collected.get("status") or "completed"), "live-collect"
+        )
     else:
-        raise T3ServiceError("live collect unavailable in v1.79.0 skeleton")
+        raise T3ServiceError(f"unknown t3 mode: {doc.get('mode')!r}")
     try:
         write_execution(repo_root, doc)
     except T3StoreError as exc:
@@ -193,8 +243,16 @@ def cancel_execution(repo_root: Path, execution_id: str) -> dict[str, Any]:
         except KeyError:
             pass
         _timeline_append(doc, "cancelled", "fixture-cancel")
+    elif doc.get("mode") == "live":
+        require_t3_exec_live_enabled()
+        thread_ref = str(doc.get("thread_ref") or execution_id)
+        try:
+            _live_adapter().cancel(thread_ref)
+        except RuntimeError as exc:
+            raise T3ServiceError(str(exc)) from exc
+        _timeline_append(doc, "cancelled", "live-cancel")
     else:
-        raise T3ServiceError("live cancel unavailable in v1.79.0 skeleton")
+        raise T3ServiceError(f"unknown t3 mode: {doc.get('mode')!r}")
     try:
         write_execution(repo_root, doc)
     except T3StoreError as exc:

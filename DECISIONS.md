@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-115: T3 MCP/HTTP live adapter (v1.90.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-22
+- **Context:** After audit P0–P5, I2 T3 still had a fail-closed live skeleton
+  (`LiveT3ExecutionAdapter` unavailable). Captain approved
+  `t3-mcp-live-adapter` (#300) as the next product plan (defer specialized/B4/XRV/Bend).
+- **Decision:**
+  1. Inject HTTPS JSON transport into live adapter behind dual gates.
+  2. Allowlist ops only (capabilities / start→thread / status+collect / cancel);
+     map routes to T3 MCP tools; never auto-merge or mutate authority.
+  3. CI uses `RecordingTransport` doubles; real HTTPS only with
+     `COMPASS_T3_EXEC_LIVE=1` + `COMPASS_T3_API_BASE` + `COMPASS_T3_AUTH_TOKEN`.
+  4. Keep fixture path default; plan gate unchanged.
+  5. Release **v1.90.0**.
+- **Consequences:** Operators can drive plan-bound T3 threads through a live
+  bridge when credentials are present. Rollback
+  `rollback/pre-t3-mcp-live-adapter` @ `5a76f27`.
+
+
 ## ADR-114: Audit P5 leftover remote closeout (v1.89.2)
 
 - **Status:** Accepted

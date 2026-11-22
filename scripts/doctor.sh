@@ -787,6 +787,11 @@ PY
   else
     fail "missing orchestrator/integrations/t3/service.py"
   fi
+  if [[ -f "$ROOT/orchestrator/integrations/t3/client.py" ]]; then
+    ok "orchestrator/integrations/t3/client.py present"
+  else
+    fail "missing orchestrator/integrations/t3/client.py"
+  fi
   if [[ -x "$ROOT/scripts/run-t3-exec.sh" ]]; then
     ok "scripts/run-t3-exec.sh present"
   else
@@ -805,6 +810,18 @@ PY
     ok "t3 exec fail-closed when COMPASS_T3_EXEC_ENABLED unset"
   else
     fail "t3 exec should exit 2 mentioning COMPASS_T3_EXEC_ENABLED when unset (rc=$t3_rc)"
+  fi
+  set +e
+  t3_live_out="$(
+    env -u COMPASS_T3_EXEC_LIVE COMPASS_T3_EXEC_ENABLED=1 \
+      "$ROOT/scripts/run-t3-exec.sh" capabilities --repo-root "$ROOT" 2>&1
+  )"
+  t3_live_rc=$?
+  set -e
+  if [[ "$t3_live_rc" -eq 0 && "$t3_live_out" == *"fixture"* ]]; then
+    ok "t3 capabilities default to fixture when COMPASS_T3_EXEC_LIVE unset"
+  else
+    fail "t3 capabilities should be fixture when live gate unset (rc=$t3_live_rc)"
   fi
   if [[ -f "$ROOT/orchestrator/schemas/apify-research-packet.schema.json" ]]; then
     ok "apify-research-packet.schema.json present"

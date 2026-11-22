@@ -4,6 +4,18 @@
 
 ## Unreleased
 
+## 1.90.0 — 2026-11-22
+
+### Added
+
+- **T3 MCP/HTTP live adapter** (`t3-mcp-live-adapter` / #300):
+  - Injectable HTTPS JSON client for live `capabilities|start|status|collect|cancel`
+  - Dual gates: `COMPASS_T3_EXEC_ENABLED` + `COMPASS_T3_EXEC_LIVE`
+  - Live credentials: `COMPASS_T3_API_BASE` (https only) + `COMPASS_T3_AUTH_TOKEN`
+  - Hermetic `RecordingTransport` tests; fixture path unchanged
+  - Authority locks remain false (no auto-merge / no plan-gate bypass)
+  - `UrllibTransport` refuses HTTP redirects so Bearer tokens cannot hop origins
+
 ## 1.89.2 — 2026-11-22
 
 ### Changed

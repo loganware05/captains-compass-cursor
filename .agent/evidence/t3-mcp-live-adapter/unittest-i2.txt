@@ -1,0 +1,17 @@
+test_cli_fail_closed (tests.orchestrator.test_i2_t3_execution_adapter.CliTests.test_cli_fail_closed) ... ok
+test_default_disabled (tests.orchestrator.test_i2_t3_execution_adapter.EnabledGateTests.test_default_disabled) ... ok
+test_live_adapter_lifecycle_hermetic (tests.orchestrator.test_i2_t3_execution_adapter.LiveAdapterTests.test_live_adapter_lifecycle_hermetic) ... ok
+test_live_service_lifecycle_hermetic (tests.orchestrator.test_i2_t3_execution_adapter.LiveAdapterTests.test_live_service_lifecycle_hermetic) ... ok
+test_live_unavailable_without_credentials (tests.orchestrator.test_i2_t3_execution_adapter.LiveAdapterTests.test_live_unavailable_without_credentials) ... ok
+test_drift_sees_t3_executions (tests.orchestrator.test_i2_t3_execution_adapter.OverseerTests.test_drift_sees_t3_executions) ... ok
+test_fixture_allow (tests.orchestrator.test_i2_t3_execution_adapter.PlanGateTests.test_fixture_allow) ... ok
+test_refuse_mismatched_plan (tests.orchestrator.test_i2_t3_execution_adapter.PlanGateTests.test_refuse_mismatched_plan) ... ok
+test_authority_locked (tests.orchestrator.test_i2_t3_execution_adapter.ServiceTests.test_authority_locked) ... ok
+test_fixture_lifecycle (tests.orchestrator.test_i2_t3_execution_adapter.ServiceTests.test_fixture_lifecycle) ... ok
+test_refuse_without_fixture_allow_when_plan_missing (tests.orchestrator.test_i2_t3_execution_adapter.ServiceTests.test_refuse_without_fixture_allow_when_plan_missing) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.131s
+
+OK
+EXIT:0

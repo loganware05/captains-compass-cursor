@@ -16,17 +16,29 @@ from orchestrator.integrations.t3.enabled import (
     t3_exec_enabled,
 )
 from orchestrator.integrations.t3.plan_gate import PlanGateError, require_plan_binding
+from orchestrator.integrations.t3.adapter import LiveT3ExecutionAdapter
 from orchestrator.integrations.t3.service import (
     T3ServiceError,
     cancel_execution,
     collect_execution,
+    configure_live_adapter_for_tests,
     list_capabilities,
+    reset_live_adapter_for_tests,
     start_execution,
     status_execution,
 )
+from orchestrator.integrations.transport import HttpResponse, RecordingTransport
 from orchestrator.schemas.validate import ValidationError, validate_document
 from orchestrator.status.development_refs import collect_execution_refs
 from orchestrator.status.drift import detect_drift
+
+LIVE_BASE = "https://t3.example.test"
+LIVE_ENV = {
+    "COMPASS_T3_EXEC_ENABLED": "1",
+    "COMPASS_T3_EXEC_LIVE": "1",
+    "COMPASS_T3_API_BASE": LIVE_BASE,
+    "COMPASS_T3_AUTH_TOKEN": "test-token-not-real",
+}
 
 
 class EnabledGateTests(unittest.TestCase):
@@ -175,6 +187,133 @@ class CliTests(unittest.TestCase):
         )
         self.assertEqual(proc.returncode, 2)
         self.assertIn("COMPASS_T3_EXEC_ENABLED", proc.stderr)
+
+
+class LiveAdapterTests(unittest.TestCase):
+    def tearDown(self) -> None:
+        reset_live_adapter_for_tests()
+
+    def _transport(self) -> RecordingTransport:
+        caps = HttpResponse(
+            status=200,
+            headers={"content-type": "application/json"},
+            body=b'{"providers":["cursor"],"models":["fixture-model"],"version":"test"}',
+        )
+        start = HttpResponse(
+            status=200,
+            headers={"content-type": "application/json"},
+            body=(
+                b'{"threadId":"thr-live-1","status":"started",'
+                b'"link":"t3://thread/thr-live-1","model":"fixture-model"}'
+            ),
+        )
+        activity = HttpResponse(
+            status=200,
+            headers={"content-type": "application/json"},
+            body=b'{"threadId":"thr-live-1","status":"running","runStatus":"working"}',
+        )
+        messages = HttpResponse(
+            status=200,
+            headers={"content-type": "application/json"},
+            body=(
+                b'{"threadId":"thr-live-1","status":"completed","link":"t3://thread/thr-live-1",'
+                b'"messages":[{"role":"assistant","text":"live collect ok"}]}'
+            ),
+        )
+        interrupt = HttpResponse(
+            status=200,
+            headers={"content-type": "application/json"},
+            body=b'{"threadId":"thr-live-1","status":"cancelled","reason":"interrupted"}',
+        )
+        transport = RecordingTransport(
+            {
+                ("GET", f"{LIVE_BASE}/v1/capabilities"): caps,
+                ("POST", f"{LIVE_BASE}/v1/threads"): start,
+                ("GET", f"{LIVE_BASE}/v1/threads/thr-live-1?view=activity"): activity,
+                ("GET", f"{LIVE_BASE}/v1/threads/thr-live-1?view=messages"): messages,
+                ("POST", f"{LIVE_BASE}/v1/threads/thr-live-1/interrupt"): interrupt,
+            }
+        )
+        return transport
+
+    def test_live_adapter_lifecycle_hermetic(self) -> None:
+        transport = self._transport()
+        with mock.patch.dict(os.environ, LIVE_ENV, clear=False):
+            adapter = LiveT3ExecutionAdapter(
+                transport=transport,
+                api_base=LIVE_BASE,
+                token="test-token-not-real",
+            )
+            caps = adapter.capabilities()
+            self.assertTrue(caps["available"])
+            self.assertFalse(caps["approved_for_execution"])
+            started = adapter.start(
+                {
+                    "execution_id": "t3-exec-liveherm",
+                    "plan_id": "t3-mcp-live-adapter",
+                    "objective": "hermetic live start",
+                    "provider": "cursor",
+                    "model": "fixture-model",
+                }
+            )
+            self.assertEqual(started["thread_ref"], "thr-live-1")
+            status = adapter.status(started["execution_id"])
+            self.assertEqual(status["status"], "running")
+            collected = adapter.collect(started["execution_id"])
+            self.assertEqual(collected["status"], "completed")
+            self.assertIn("live collect ok", collected["collected_summary"])
+            cancelled = adapter.cancel("thr-live-1")
+            self.assertEqual(cancelled["status"], "cancelled")
+        methods = [c["method"] for c in transport.calls]
+        self.assertEqual(methods, ["GET", "POST", "GET", "GET", "POST"])
+        # Auth header redacted in recording.
+        self.assertNotIn("test-token-not-real", str(transport.calls))
+
+    def test_live_service_lifecycle_hermetic(self) -> None:
+        transport = self._transport()
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            with mock.patch.dict(os.environ, LIVE_ENV, clear=False):
+                configure_live_adapter_for_tests(
+                    transport=transport,
+                    api_base=LIVE_BASE,
+                    token="test-token-not-real",
+                )
+                caps = list_capabilities(force_live=True)
+                self.assertTrue(caps["available"])
+                started = start_execution(
+                    repo,
+                    plan_id="t3-mcp-live-adapter",
+                    objective="service live start",
+                    provider="cursor",
+                    allow_fixture_plan=True,
+                    force_live=True,
+                )
+                self.assertEqual(started["execution"]["mode"], "live")
+                self.assertFalse(started["bypassed_plan_gate"])
+                validate_document(started["execution"], "t3-execution-run.schema.json")
+                exec_id = started["execution"]["execution_id"]
+                status = status_execution(repo, exec_id)
+                self.assertEqual(status["execution"]["status"], "running")
+                collected = collect_execution(repo, exec_id)
+                self.assertEqual(collected["execution"]["status"], "completed")
+                self.assertIn("live collect ok", collected["execution"]["collected_summary"])
+
+    def test_live_unavailable_without_credentials(self) -> None:
+        with mock.patch.dict(
+            os.environ,
+            {
+                "COMPASS_T3_EXEC_ENABLED": "1",
+                "COMPASS_T3_EXEC_LIVE": "1",
+            },
+            clear=False,
+        ):
+            os.environ.pop("COMPASS_T3_API_BASE", None)
+            os.environ.pop("COMPASS_T3_AUTH_TOKEN", None)
+            reset_live_adapter_for_tests()
+            caps = list_capabilities(force_live=True)
+            self.assertFalse(caps["available"])
+            self.assertIn("COMPASS_T3_API_BASE", caps["reason"])
 
 
 if __name__ == "__main__":
