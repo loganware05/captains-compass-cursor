@@ -9,6 +9,7 @@
 | Status | **APPROVED** |
 | Plan ID | `audit-p3-openui-viewer` |
 | Issue | [#291](https://github.com/loganware05/captains-compass-cursor/issues/291) |
+| PR | [#292](https://github.com/loganware05/captains-compass-cursor/pull/292) |
 | Baseline | `origin/main` @ `257a8e7` / **v1.88.0** tip after #290 |
 | Branch | `feature/291-audit-p3-openui-viewer` |
 | Rollback | `rollback/pre-audit-p3-openui-viewer` @ `257a8e7` |
@@ -52,5 +53,5 @@ T3 live · specialized real eval · B4 FIX→SUBMIT · XRV ops-verified · branc
 - [x] Preview real emitted surface without hand-editing HTML
 - [x] Hermetic emit → preview test
 - [x] Approve/reject gates unchanged
-- [ ] doctor + `tests/run.sh` green; evidence recorded
-- [ ] PR from `main`; rollback tag cited
+- [x] doctor + `tests/run.sh` green; evidence recorded
+- [x] PR from `main`; rollback tag cited ([#292](https://github.com/loganware05/captains-compass-cursor/pull/292))

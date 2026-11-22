@@ -2,7 +2,8 @@
 
 ## Current status
 
-**IN PROGRESS:** [#291](https://github.com/loganware05/captains-compass-cursor/issues/291)
+**IN PROGRESS:** [#291](https://github.com/loganware05/captains-compass-cursor/issues/291) /
+PR [#292](https://github.com/loganware05/captains-compass-cursor/pull/292)
 `audit-p3-openui-viewer` on `feature/291-audit-p3-openui-viewer` → **v1.89.0**.
 
 | Item | Value |
@@ -10,6 +11,7 @@
 | Baseline | **v1.88.0** @ `257a8e7` (closeout tip) / product tag `c069554` |
 | Active plan | `audit-p3-openui-viewer` **APPROVED** |
 | Issue | [#291](https://github.com/loganware05/captains-compass-cursor/issues/291) |
+| PR | [#292](https://github.com/loganware05/captains-compass-cursor/pull/292) |
 | Rollback | `rollback/pre-audit-p3-openui-viewer` @ `257a8e7` |
 
 ### Prior closeout
