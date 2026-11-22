@@ -1,0 +1,6 @@
+tag: v1.90.0
+commit: 412fcd3a8d2f8ccd313e33459a5e4b9434c1658d
+pr: https://github.com/loganware05/captains-compass-cursor/pull/301
+issue: https://github.com/loganware05/captains-compass-cursor/issues/300
+rollback: rollback/pre-t3-mcp-live-adapter @ 5a76f27
+release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.90.0
