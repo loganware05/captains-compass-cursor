@@ -2,23 +2,20 @@
 
 ## Current status
 
-**MERGED:** [#298](https://github.com/loganware05/captains-compass-cursor/pull/298)
-for [#297](https://github.com/loganware05/captains-compass-cursor/issues/297)
-`audit-p5-leftover-remote-closeout` → **v1.89.2** @ `4d17597`.
+**IN PROGRESS:** [#300](https://github.com/loganware05/captains-compass-cursor/issues/300)
+`t3-mcp-live-adapter` → proposed **v1.90.0**.
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.89.1** @ `9b65cd9` |
-| Plan | `audit-p5-leftover-remote-closeout` **COMPLETE** |
-| Issue | [#297](https://github.com/loganware05/captains-compass-cursor/issues/297) |
-| PR | [#298](https://github.com/loganware05/captains-compass-cursor/pull/298) |
-| Merge | `4d17597` |
-| Tag | [`v1.89.2`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.89.2) @ `4d17597` |
-| Rollback | `rollback/pre-audit-p5-leftover-remote-closeout` @ `9b65cd9` |
-| Remote heads | **`main` only** |
+| Baseline | **v1.89.2** / `origin/main` @ `5a76f27` |
+| Plan | `t3-mcp-live-adapter` **IN PROGRESS** |
+| Issue | [#300](https://github.com/loganware05/captains-compass-cursor/issues/300) |
+| Branch | `feature/300-t3-mcp-live-adapter` |
+| Rollback | `rollback/pre-t3-mcp-live-adapter` @ `5a76f27` |
 
 ### Prior closeout
 
+- Audit P5 **v1.89.2** (#298 / #297) + docs (#299)
 - Audit P4 **v1.89.1** (#295 / #294) + docs (#296)
 - Audit P3 **v1.89.0** (#292 / #291) + docs (#293)
 - Audit P2 **v1.88.0** (#289 / #288) + docs (#290)
@@ -32,9 +29,8 @@ Approve ⇒ implement → validate → commit → open PR. Merge remains Captain
 
 ## Next
 
-**Audit train parked** (Captain Q4). Pick a product plan when ready:
+Ship T3 live adapter PR; then Captain picks:
 
-- T3 MCP/HTTP live adapter
 - Specialized real local eval (not #237 Level 3 / paid GPU)
 - B4 FIX→TEST→SUBMIT
 - XRV ops-verified drill
