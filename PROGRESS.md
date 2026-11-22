@@ -2,7 +2,8 @@
 
 ## Current status
 
-**IN PROGRESS:** [#288](https://github.com/loganware05/captains-compass-cursor/issues/288)
+**IN PROGRESS:** [#288](https://github.com/loganware05/captains-compass-cursor/issues/288) /
+PR [#289](https://github.com/loganware05/captains-compass-cursor/pull/289)
 `audit-p2-sentry-profiles` on `feature/288-audit-p2-sentry-profiles` → **v1.88.0**.
 
 | Item | Value |
@@ -10,6 +11,7 @@
 | Baseline | **v1.87.2** @ `bb8f334` |
 | Active plan | `audit-p2-sentry-profiles` **APPROVED** |
 | Issue | [#288](https://github.com/loganware05/captains-compass-cursor/issues/288) |
+| PR | [#289](https://github.com/loganware05/captains-compass-cursor/pull/289) |
 | Rollback | `rollback/pre-audit-p2-sentry-profiles` @ `bb8f334` |
 
 ### Prior closeout

@@ -9,6 +9,7 @@
 | Status | **APPROVED** |
 | Plan ID | `audit-p2-sentry-profiles` |
 | Issue | [#288](https://github.com/loganware05/captains-compass-cursor/issues/288) |
+| PR | [#289](https://github.com/loganware05/captains-compass-cursor/pull/289) |
 | Baseline | `origin/main` @ `bb8f334` (**v1.87.2**) |
 | Branch | `feature/288-audit-p2-sentry-profiles` |
 | Rollback | `rollback/pre-audit-p2-sentry-profiles` @ `bb8f334` |
@@ -54,7 +55,7 @@ Specialized real eval · T3 live · B4 FIX→SUBMIT · N4 live arm · deleting i
 - [x] Fixture/hermetic Sentry tests pass; live dual-gated
 - [x] Profile expand documented + tested; flags override
 - [x] doctor + `tests/run.sh` green; evidence recorded
-- [ ] PR from `main`; rollback tag cited (pending open)
+- [x] PR from `main`; rollback tag cited ([#289](https://github.com/loganware05/captains-compass-cursor/pull/289))
 
 ## Validation
 
