@@ -1,0 +1,5 @@
+cursor/m36-hook-security-hardening-3b10	not-merged	42babc56e2ce
+feature/111-m19-skill-learning-loop	not-merged	282a1ac9f995
+feature/113-m20-experience-bridge	not-merged	8247dee3a749
+feature/35-m1-capability-aware-planning	not-merged	d33121d13b0b
+main	protected

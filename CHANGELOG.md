@@ -4,6 +4,15 @@
 
 ## Unreleased
 
+## 1.89.1 — 2026-11-22
+
+### Changed
+
+- **Audit P4 remote hygiene** (`audit-p4-remote-hygiene` / #294):
+  - Pruned 199 merged remote heads (204 → 5; left 4 unmerged + `main`)
+  - Enabled GitHub `delete_branch_on_merge`
+  - Archived obsolete `P1_`/`P2_AWAITING_APPROVAL.md` stubs under `docs/plans/archive/`
+
 ## 1.89.0 — 2026-11-22
 
 ### Added
