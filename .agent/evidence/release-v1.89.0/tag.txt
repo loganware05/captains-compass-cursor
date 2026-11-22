@@ -1,0 +1,4 @@
+tag=v1.89.0
+commit=227d71df33e5c2e32b127d196f696aa301831096
+release=https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.89.0
+227d71df33e5c2e32b127d196f696aa301831096
