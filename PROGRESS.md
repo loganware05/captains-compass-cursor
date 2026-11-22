@@ -2,17 +2,18 @@
 
 ## Current status
 
-**PR OPEN:** [#301](https://github.com/loganware05/captains-compass-cursor/pull/301)
+**MERGED:** [#301](https://github.com/loganware05/captains-compass-cursor/pull/301)
 for [#300](https://github.com/loganware05/captains-compass-cursor/issues/300)
-`t3-mcp-live-adapter` → proposed **v1.90.0** @ `7b25ca8`.
+`t3-mcp-live-adapter` → **v1.90.0** @ `412fcd3`.
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.89.2** / `origin/main` @ `5a76f27` |
+| Baseline | **v1.89.2** / `5a76f27` |
 | Plan | `t3-mcp-live-adapter` **COMPLETE** |
 | Issue | [#300](https://github.com/loganware05/captains-compass-cursor/issues/300) |
 | PR | [#301](https://github.com/loganware05/captains-compass-cursor/pull/301) |
-| Branch | `feature/300-t3-mcp-live-adapter` |
+| Merge | `412fcd3` |
+| Tag | [`v1.90.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.90.0) @ `412fcd3` |
 | Rollback | `rollback/pre-t3-mcp-live-adapter` @ `5a76f27` |
 
 ### Prior closeout
@@ -31,7 +32,7 @@ Approve ⇒ implement → validate → commit → open PR. Merge remains Captain
 
 ## Next
 
-Ship T3 live adapter PR; then Captain picks:
+Pick the next product plan when ready:
 
 - Specialized real local eval (not #237 Level 3 / paid GPU)
 - B4 FIX→TEST→SUBMIT
