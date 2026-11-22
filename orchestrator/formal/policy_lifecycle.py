@@ -17,8 +17,8 @@ Python (``orchestrator/behavior/policy``) without changing it:
 Boundaries (see the spike report): the evidence gates themselves (prompt-eval,
 shadow, shadow-present, proven-evidence) are modeled as booleans, and gate
 *order* inside ``promote_policy`` is pinned by the drift lock but not proved.
-The direct-entry path (``ensure_policy_for_instruction``) is outside the model
-and is probed separately as a known gap.
+The direct-entry path (``ensure_policy_for_instruction``) is covered by P12
+(``M.birth`` / ``S.entry_ok``); the Python probe confirms production entry.
 """
 
 from __future__ import annotations
@@ -756,11 +756,11 @@ def law_integrity(root: Path, base_ref: str = "origin/main") -> dict[str, Any]:
 
 
 def probe_direct_entry() -> dict[str, Any]:
-    """Probe whether ``ensure_policy_for_instruction`` can skip into a gated state.
+    """Conformance probe: ``ensure_policy_for_instruction`` must birth at candidate.
 
-    Runs entirely in a temp dir. Production fix (#280): new policies always start
-    at ``candidate``. ``bypass_observed`` should be False; a Bend entry-state law
-    remains a #278 follow-up (still ``outside_model``).
+    Runs entirely in a temp dir. Production fix (#280) + Bend P12
+    (``p12_entry_candidate`` / ``M.birth``). ``bypass_observed`` must stay False;
+    ``outside_model`` is False once P12 is in LAWS.bend.
     """
     from orchestrator.behavior.instructions import store as instr_store
 
@@ -779,15 +779,17 @@ def probe_direct_entry() -> dict[str, Any]:
     )
     return {
         "name": "direct-entry-bypass",
-        "outside_model": True,
+        "outside_model": False,
+        "law": "p12_entry_candidate",
+        "model_birth": "candidate",
         "bypass_observed": bool(bypass),
         "entered_state": entered,
+        "entry_ok": entered == "candidate" and not bypass,
         "captain_approved_at": policy.get("captain_approved_at"),
         "shadow_report_id": policy.get("shadow_report_id"),
         "authority_flags_false": policy.get("approved_for_execution") is False
         and policy.get("authority_mutation") is False,
-        "note": "Production (#280): ensure_policy_for_instruction always creates "
-        "candidate. Formal entry-state law still outside the Bend model (#278).",
+        "note": "P12 + #280: birth is candidate; elevated states only via promote_policy.",
     }
 
 

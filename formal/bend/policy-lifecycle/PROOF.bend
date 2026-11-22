@@ -659,6 +659,10 @@ def Laws.p11_liveness(f, t):
         case M.Retired{}:
           {==}
 
+# P12 entry state: birth() is Candidate{}; SPEC.entry_ok holds by computation.
+def Laws.p12_entry_candidate():
+  {==}
+
 # P7: split the evidence flag; when it is False the target is rejected, which
 # needs the source state (and Captain approval) only for the gated target.
 def Laws.p7a_sandbox_needs_eval_pass(p, t, f, c):

@@ -1,4 +1,4 @@
-# Implementation Plan — T3 MCP/HTTP Live Adapter
+# Implementation Plan — Bend ADR-110 Go + Entry-State Law
 
 - Status: **COMPLETE**
 
@@ -7,31 +7,34 @@
 | Field | Value |
 |---|---|
 | Status | **COMPLETE** |
-| Plan ID | `t3-mcp-live-adapter` |
-| Issue | [#300](https://github.com/loganware05/captains-compass-cursor/issues/300) |
-| PR | [#301](https://github.com/loganware05/captains-compass-cursor/pull/301) |
-| Merge | `412fcd3` |
-| Tag | [`v1.90.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.90.0) @ `412fcd3` |
-| Baseline | `origin/main` @ `5a76f27` / product **v1.89.2** |
-| Branch | `feature/300-t3-mcp-live-adapter` (merged) |
-| Rollback | `rollback/pre-t3-mcp-live-adapter` @ `5a76f27` |
-| Release | **v1.90.0** |
-| Approved | 2026-11-22 (Captain: Approve) |
-| Merged | 2026-11-22 |
+| Plan ID | `bend-adr-110-go` |
+| Issue | [#278](https://github.com/loganware05/captains-compass-cursor/issues/278) |
+| Baseline | `origin/main` @ `843af00` / **v1.90.0** |
+| Branch | `feature/278-bend-adr-110-go` |
+| Worktree | `/Users/loganware/Documents/Personal/Code/captains-compass-bend-adr-110` |
+| Rollback | `rollback/pre-bend-adr-110-go` @ `843af00` |
+| Proposed release | **v1.91.0** |
+| Approved | 2026-11-22 (Captain: Approve; Q1–Q5 recommended defaults) |
 
-Budget: `.agent/budgets/t3-mcp-live-adapter.md`  
-Durable copy: `docs/plans/T3_MCP_LIVE_ADAPTER.md`  
-Evidence: `.agent/evidence/t3-mcp-live-adapter/` · `.agent/evidence/release-v1.90.0/`
+Budget: `.agent/budgets/bend-adr-110-go.md`  
+Durable copy: `docs/plans/BEND_ADR_110_GO.md`  
+Evidence: `.agent/evidence/bend-adr-110-go/`
+
+## Approval record
+
+- Captain replied **Approve** on 2026-11-22.
+- Defaults: conditional-go; include P12 entry-state law; defer P4/P5/Lean pin/CI; not specialized.
 
 ## Delivered
 
-- HTTPS JSON live client + `LiveT3ExecutionAdapter` transport injection
-- Dual gates; hermetic RecordingTransport tests
-- `UrllibTransport` refuses redirects (Bearer cannot hop hosts)
-- Docs / ADR-115 / doctor; release tagged
+- [x] ADR-110 Accepted (conditional-go)
+- [x] P12 `p12_entry_candidate` + `M.birth` / `S.entry_ok` + regenerated PROOF
+- [x] Probe conformance (`outside_model: false`)
+- [x] Formal check ok (proofs + conformance + 38/38 mutants) with local Bend+Lean
+- [x] Docs / VERSION 1.91.0
 
 ## Rollback
 
 ```bash
-git checkout rollback/pre-t3-mcp-live-adapter
+git checkout rollback/pre-bend-adr-110-go
 ```

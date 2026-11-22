@@ -1,0 +1,25 @@
+{
+  "plan_id": "bend-adr-110-go",
+  "issue": 278,
+  "baseline": "v1.90.0 @ 843af00",
+  "rollback": "rollback/pre-bend-adr-110-go @ 843af00",
+  "status": "ready_for_pr",
+  "adr_110": "Accepted conditional-go",
+  "p12": "p12_entry_candidate",
+  "formal_check": {
+    "status": "ok",
+    "failures": [],
+    "proofs": "pass",
+    "conformance": "pass",
+    "mutations_caught": 38,
+    "law_integrity_changed": true
+  },
+  "known_gaps_remaining": [
+    "P4/P5 not lifted to whole histories",
+    "Lean SHA pin optional",
+    "--strict-laws CI wiring deferred",
+    "Evidence gates remain booleans; gate order pinned not proved"
+  ],
+  "authority_mutation": false,
+  "approved_for_execution": false
+}

@@ -227,3 +227,8 @@ def run(steps: Plan, +s: State) -> State:
       match h:
         case Step{to, cap, pre}:
           run(tl, next(s, to, cap, pre))
+
+# New policies always start here (mirrors ensure_policy_for_instruction / #280).
+# Elevated states are reachable only through decide/promote gates.
+def birth() -> State:
+  Candidate{}
