@@ -4,6 +4,15 @@
 
 ## Unreleased
 
+## 1.89.2 — 2026-11-22
+
+### Changed
+
+- **Audit P5 leftover remote closeout** (`audit-p5-leftover-remote-closeout` / #297):
+  - Deleted 4 superseded dual-land remotes left after P4 (heads **5 → 1** / `main` only)
+  - Cherry evidence under `.agent/evidence/audit-p5-leftover-remote-closeout/`
+  - Audit train parked until Captain picks next product plan
+
 ## 1.89.1 — 2026-11-22
 
 ### Changed

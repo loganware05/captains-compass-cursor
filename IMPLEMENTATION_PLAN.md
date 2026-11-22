@@ -1,33 +1,42 @@
-# Implementation Plan — Audit P4 Remote Hygiene
+# Implementation Plan — Audit P5 Leftover Remote Closeout
 
-- Status: **COMPLETE**
+- Status: **APPROVED** (implementation in progress)
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **COMPLETE** |
-| Plan ID | `audit-p4-remote-hygiene` |
-| Issue | [#294](https://github.com/loganware05/captains-compass-cursor/issues/294) |
-| PR | [#295](https://github.com/loganware05/captains-compass-cursor/pull/295) **MERGED** |
-| Merge commit | `f544fcf` |
-| Rollback | `rollback/pre-audit-p4-remote-hygiene` @ `28bd0c2` |
-| Release | **v1.89.1** @ `f544fcf` |
+| Status | **APPROVED** |
+| Plan ID | `audit-p5-leftover-remote-closeout` |
+| Issue | [#297](https://github.com/loganware05/captains-compass-cursor/issues/297) |
+| Baseline | `origin/main` @ `9b65cd9` / **v1.89.1** tip after #296 |
+| Branch | `docs/297-audit-p5-leftover-remote-closeout` |
+| Rollback | `rollback/pre-audit-p5-leftover-remote-closeout` @ `9b65cd9` |
+| Proposed release | **v1.89.2** |
+| Created | 2026-11-22 |
 | Approved by | Logan Ware (Captain) — 2026-11-22 |
-| Completed | 2026-11-22 |
 
-Durable: `docs/plans/AUDIT_P4_REMOTE_HYGIENE.md`  
-Evidence: `.agent/evidence/audit-p4-remote-hygiene/`  
-Release evidence: `.agent/evidence/release-v1.89.1/`
+Budget: `.agent/budgets/audit-p5-leftover-remote-closeout.md`  
+Durable: `docs/plans/AUDIT_P5_LEFTOVER_REMOTE_CLOSEOUT.md`  
+Evidence: `.agent/evidence/audit-p5-leftover-remote-closeout/`
+
+## Approval decisions
+
+| Q | Decision |
+|---|---|
+| Q1 Delete 4 leftovers only | **yes** |
+| Q2 Release v1.89.2 | **yes** |
+| Q3 Prefer Bend/XRV | **no** |
+| Q4 Park audit train after | **yes** |
 
 ## Delivered
 
-1. Dry-run allowlist then deleted 199 merged remote heads (204 → 5).
-2. Enabled `delete_branch_on_merge` (confirmed: PR branch auto-deleted after #295).
-3. Archived obsolete P1/P2 awaiting stubs under `docs/plans/archive/`.
-4. ADR-113; evidence under `.agent/evidence/audit-p4-remote-hygiene/`.
+1. Dossier: `git cherry` equivalent patches on main for all tip commits.
+2. Deleted 4 remotes; heads **5 → 1** (`main` only).
+3. Docs / ADR / evidence for **v1.89.2**.
 
-## Follow-ups
+## Acceptance
 
-- 4 leftover unmerged remotes (optional Captain review)
-- Deferred: T3 live, specialized, B4, XRV ops-verified, Bend #278
+- [x] Evidence dossier before delete
+- [x] Only `main` remains remotely
+- [ ] doctor + tests green; PR cited
