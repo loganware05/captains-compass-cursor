@@ -2,7 +2,8 @@
 
 ## Current status
 
-**IN PROGRESS:** [#278](https://github.com/loganware05/captains-compass-cursor/issues/278)
+**PR OPEN:** [#303](https://github.com/loganware05/captains-compass-cursor/pull/303)
+for [#278](https://github.com/loganware05/captains-compass-cursor/issues/278)
 `bend-adr-110-go` → proposed **v1.91.0**.
 
 | Item | Value |
@@ -10,6 +11,7 @@
 | Baseline | **v1.90.0** / `origin/main` @ `843af00` |
 | Plan | `bend-adr-110-go` **COMPLETE** |
 | Issue | [#278](https://github.com/loganware05/captains-compass-cursor/issues/278) |
+| PR | [#303](https://github.com/loganware05/captains-compass-cursor/pull/303) |
 | Branch | `feature/278-bend-adr-110-go` |
 | Rollback | `rollback/pre-bend-adr-110-go` @ `843af00` |
 
