@@ -2,14 +2,16 @@
 
 ## Current status
 
-**IN PROGRESS:** [#300](https://github.com/loganware05/captains-compass-cursor/issues/300)
-`t3-mcp-live-adapter` → proposed **v1.90.0**.
+**PR OPEN:** [#301](https://github.com/loganware05/captains-compass-cursor/pull/301)
+for [#300](https://github.com/loganware05/captains-compass-cursor/issues/300)
+`t3-mcp-live-adapter` → proposed **v1.90.0** @ `7b25ca8`.
 
 | Item | Value |
 |---|---|
 | Baseline | **v1.89.2** / `origin/main` @ `5a76f27` |
-| Plan | `t3-mcp-live-adapter` **IN PROGRESS** |
+| Plan | `t3-mcp-live-adapter` **COMPLETE** |
 | Issue | [#300](https://github.com/loganware05/captains-compass-cursor/issues/300) |
+| PR | [#301](https://github.com/loganware05/captains-compass-cursor/pull/301) |
 | Branch | `feature/300-t3-mcp-live-adapter` |
 | Rollback | `rollback/pre-t3-mcp-live-adapter` @ `5a76f27` |
 
