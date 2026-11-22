@@ -3,11 +3,12 @@
 | Field | Value |
 |---|---|
 | Plan ID | `audit-p2-sentry-profiles` |
-| Status | APPROVED / IN PROGRESS |
+| Status | COMPLETE |
 | Max iterations | 12 |
 | Max wall time | 4 hours |
-| Iterations used | 3 |
+| Iterations used | 5 |
 | Approved by | Logan Ware (Captain) — 2026-11-21 |
+| Completed | 2026-11-21 |
 
 ## Ledger
 
@@ -16,4 +17,6 @@
 | 2026-11-21 | Plan drafted | 0 | AWAITING APPROVAL |
 | 2026-11-21 | Captain Approve | 1 | Issue #288; branch + rollback |
 | 2026-11-21 | W1+W2 implemented | 2 | Sentry window + profiles |
-| 2026-11-21 | Validation green | 3 | doctor + 138 tests; docs |
+| 2026-11-21 | Validation green | 3 | doctor + 138 tests; PR #289 |
+| 2026-11-21 | README drift fix | 4 | CI green `f4a4ac6` |
+| 2026-11-21 | Merged + tagged v1.88.0 | 5 | Closeout docs |
