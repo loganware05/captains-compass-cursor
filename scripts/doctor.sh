@@ -742,6 +742,41 @@ PY
   else
     fail "sentry ingest should exit 2 mentioning COMPASS_SENTRY_INGEST_ENABLED when unset (rc=$sentry_rc)"
   fi
+  if grep -q 'lastSeen' "$ROOT/orchestrator/integrations/sentry/client.py" 2>/dev/null; then
+    ok "sentry client wires window_hours via lastSeen query"
+  else
+    fail "sentry client missing lastSeen window_hours wiring"
+  fi
+  if [[ -f "$ROOT/orchestrator/env_profiles.py" ]]; then
+    ok "orchestrator/env_profiles.py present"
+  else
+    fail "missing orchestrator/env_profiles.py"
+  fi
+  if [[ -x "$ROOT/scripts/run-profile.sh" ]]; then
+    ok "scripts/run-profile.sh present"
+  else
+    fail "missing executable scripts/run-profile.sh"
+  fi
+  if grep -q 'northstar profile' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents profile surface"
+  else
+    fail "northstar missing profile surface"
+  fi
+  set +e
+  profile_out="$(
+    env -u COMPASS_SENTRY_INGEST_ENABLED -u COMPASS_T3_EXEC_ENABLED \
+      -u COMPASS_APIFY_ENABLED -u COMPASS_EXPLAIN_ENABLED \
+      -u COMPASS_IDENTITY_ENABLED -u COMPASS_I6_VALIDATE_ENABLED \
+      -u COMPASS_CONVERSATION_INGEST_ENABLED -u COMPASS_PROFILE \
+      "$ROOT/scripts/northstar" profile export integrations 2>&1
+  )"
+  profile_rc=$?
+  set -e
+  if [[ "$profile_rc" -eq 0 && "$profile_out" == *"COMPASS_SENTRY_INGEST_ENABLED=1"* ]]; then
+    ok "northstar profile export integrations expands sentry gate"
+  else
+    fail "northstar profile export integrations failed (rc=$profile_rc)"
+  fi
   if [[ -f "$ROOT/orchestrator/schemas/t3-execution-run.schema.json" ]]; then
     ok "t3-execution-run.schema.json present"
   else

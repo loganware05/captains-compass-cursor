@@ -33,6 +33,7 @@ Launcher: `scripts/northstar` (control repo only).
 | `formal` | Opt-in Bend proof spike for the policy lifecycle (#278) | [`integrations/bend-policy-proof.md`](integrations/bend-policy-proof.md) |
 | `conversation` | ChatGPT / Obsidian trajectory ingest | [`integrations/conversation-ingest.md`](integrations/conversation-ingest.md) |
 | `sentry` | Read-only Sentry incident packets (I1) | [`integrations/sentry.md`](integrations/sentry.md) |
+| `profile` | Additive `COMPASS_PROFILE=core\|integrations` expand (v0) | [`integrations/compass-profiles.md`](integrations/compass-profiles.md) |
 | `t3` | T3 Code ExecutionAdapter (I2) | [`integrations/t3-code.md`](integrations/t3-code.md) |
 | `apify` | Apify research / TI (I3) | [`integrations/apify.md`](integrations/apify.md) |
 | `explain` | Scrimba Explain packets (I4; ≠ status explain) | [`integrations/scrimba-explain.md`](integrations/scrimba-explain.md) |
@@ -89,9 +90,11 @@ Use a track prefix in prose and plan IDs when referring to milestones:
 ## Integrations (selected)
 
 - [`integrations/code-reviewer.md`](integrations/code-reviewer.md)
+- [`integrations/compass-profiles.md`](integrations/compass-profiles.md)
 - [`integrations/linear-skills-learning-loop.md`](integrations/linear-skills-learning-loop.md)
 - [`integrations/linear.md`](integrations/linear.md)
 - [`integrations/github.md`](integrations/github.md)
 - [`integrations/agent-routing-contract.md`](integrations/agent-routing-contract.md)
 - [`integrations/decision-provider.md`](integrations/decision-provider.md)
 - [`integrations/northstar-live-ops.md`](integrations/northstar-live-ops.md)
+- [`integrations/sentry.md`](integrations/sentry.md)

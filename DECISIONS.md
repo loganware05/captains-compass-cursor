@@ -1,5 +1,25 @@
 # Decisions
 
+## ADR-111: Audit P2 Sentry window_hours + COMPASS_PROFILE v0 (v1.88.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-21
+- **Context:** After audit P0/P1, live Sentry list fetches discarded `window_hours`, and
+  operators had ~110 individual `COMPASS_*` gates with no named bundles. Captain approved
+  bounded P2 (`audit-p2-sentry-profiles` / #288): Sentry polish + thin additive profiles;
+  defer specialized real eval, T3 live, and B4 FIX→SUBMIT.
+- **Decision:**
+  1. Map `window_hours` into Sentry Issues search as `is:unresolved lastSeen:-{N}h`
+     (clamp 1–8760); single-issue id fetch unchanged.
+  2. Ship additive `COMPASS_PROFILE=core|integrations` that sets unset gates only;
+     never enables live dual-gates; individual flags always win.
+  3. Expose `northstar profile list|show|export` and auto-apply when `COMPASS_PROFILE` is set.
+  4. Release **v1.88.0**.
+- **Consequences:** Live incident windows are query-accurate; operators can opt into a
+  small named gate set without rewriting the flag surface. Rollback
+  `rollback/pre-audit-p2-sentry-profiles` @ `bb8f334`.
+
+
 ## ADR-110: Bend Policy-Lifecycle Proof Spike (go/no-go)
 
 - **Status:** **Proposed** — awaiting Captain decision (the agent does not accept its own ADR).
