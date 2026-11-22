@@ -2,7 +2,8 @@
 
 ## Current status
 
-**IN PROGRESS:** [#297](https://github.com/loganware05/captains-compass-cursor/issues/297)
+**IN PROGRESS:** [#297](https://github.com/loganware05/captains-compass-cursor/issues/297) /
+PR [#298](https://github.com/loganware05/captains-compass-cursor/pull/298)
 `audit-p5-leftover-remote-closeout` on `docs/297-audit-p5-leftover-remote-closeout` → **v1.89.2**.
 
 | Item | Value |
@@ -10,6 +11,7 @@
 | Baseline | **v1.89.1** @ `9b65cd9` |
 | Active plan | `audit-p5-leftover-remote-closeout` **APPROVED** |
 | Issue | [#297](https://github.com/loganware05/captains-compass-cursor/issues/297) |
+| PR | [#298](https://github.com/loganware05/captains-compass-cursor/pull/298) |
 | Rollback | `rollback/pre-audit-p5-leftover-remote-closeout` @ `9b65cd9` |
 
 ### Prior closeout

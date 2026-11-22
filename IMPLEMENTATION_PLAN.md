@@ -9,6 +9,7 @@
 | Status | **APPROVED** |
 | Plan ID | `audit-p5-leftover-remote-closeout` |
 | Issue | [#297](https://github.com/loganware05/captains-compass-cursor/issues/297) |
+| PR | [#298](https://github.com/loganware05/captains-compass-cursor/pull/298) |
 | Baseline | `origin/main` @ `9b65cd9` / **v1.89.1** tip after #296 |
 | Branch | `docs/297-audit-p5-leftover-remote-closeout` |
 | Rollback | `rollback/pre-audit-p5-leftover-remote-closeout` @ `9b65cd9` |
@@ -39,4 +40,4 @@ Evidence: `.agent/evidence/audit-p5-leftover-remote-closeout/`
 
 - [x] Evidence dossier before delete
 - [x] Only `main` remains remotely
-- [ ] doctor + tests green; PR cited
+- [x] doctor + tests green; PR cited ([#298](https://github.com/loganware05/captains-compass-cursor/pull/298))
