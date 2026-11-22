@@ -1,5 +1,22 @@
 # Decisions
 
+## ADR-114: Audit P5 leftover remote closeout (v1.89.2)
+
+- **Status:** Accepted
+- **Date:** 2026-11-22
+- **Context:** P4 left 4 remotes that failed the ancestor merge check but were
+  dual-lands / superseded (`git cherry` showed equivalent patches on `main`).
+  Captain approved delete-only (`audit-p5-leftover-remote-closeout` / #297) and
+  parking the audit train afterward.
+- **Decision:**
+  1. Record cherry dossier, then delete the 4 remotes.
+  2. Leave only `main` as a remote head.
+  3. Release **v1.89.2**; defer T3/B4/specialized/XRV/Bend until a new product plan.
+- **Consequences:** Remote hygiene complete for the audit wave. Rollback tag
+  `rollback/pre-audit-p5-leftover-remote-closeout` @ `9b65cd9` (cannot undelete
+  remotes from the tag alone — see evidence `deleted.txt`).
+
+
 ## ADR-113: Audit P4 remote hygiene (v1.89.1)
 
 - **Status:** Accepted
