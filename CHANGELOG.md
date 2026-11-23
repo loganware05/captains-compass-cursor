@@ -4,6 +4,16 @@
 
 ## Unreleased
 
+## 1.93.0 — 2026-11-23
+
+### Added
+
+- **Bend #278 leftovers** (`bend-278-leftovers` / #278):
+  - P4′ `p4_forward_sequences` and P5′ `p5_shadow_before_approval_sequences` (whole-history)
+  - Lean pin: `COMPASS_LEAN_VERSION` / `COMPASS_LEAN_SHA256` (fail-closed; rechecked at exec)
+  - Opt-in CI job `bend-law-integrity` when `vars.COMPASS_BEND_STRICT_LAWS_CI == '1'`
+  - ADR-110 amended; default CI stays green without Bend
+
 ## 1.92.0 — 2026-11-22
 
 ### Added

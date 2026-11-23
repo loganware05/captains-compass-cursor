@@ -48,3 +48,26 @@ jobs:
 
       - name: Test
         run: npm test
+
+  # Opt-in Bend law integrity (#278 leftovers). Default CI stays green without
+  # Bend: this job is skipped unless repository variable
+  # COMPASS_BEND_STRICT_LAWS_CI == '1'. Without a toolchain the check still
+  # fails closed on LAWS/SPEC drift vs origin/main; full proofs run only when
+  # Bend+Lean are present on the runner.
+  bend-law-integrity:
+    name: Bend law integrity (opt-in)
+    if: ${{ vars.COMPASS_BEND_STRICT_LAWS_CI == '1' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Law integrity (--strict-laws)
+        env:
+          COMPASS_BEND_PROOF_ENABLED: "1"
+        run: >
+          ./scripts/northstar formal check policy-lifecycle
+          --strict-laws --base-ref origin/main
+          --no-verdict --no-mutations

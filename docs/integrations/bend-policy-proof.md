@@ -33,7 +33,10 @@ Project-local and git-ignored under `.agent/tools/` (never a global install). Be
 |---|---|
 | `COMPASS_BEND_PROOF_ENABLED` | Required (`1`/`true`/`yes`/`on`); enforced in library entry points, not just the wrapper |
 | `COMPASS_BEND_BIN` | Explicit compiler path; never falls back if missing |
-| `COMPASS_BEND_SHA256` | Optional pin; mismatch is refused. Evidence records `pinned: false` when unset |
+| `COMPASS_BEND_SHA256` | Optional Bend pin; mismatch is refused (checked at discovery and each `run`) |
+| `COMPASS_LEAN_VERSION` | Optional Lean version substring pin (e.g. `4.34.0`); fail-closed |
+| `COMPASS_LEAN_SHA256` | Optional Lean binary sha256 pin; fail-closed |
+| `COMPASS_BEND_STRICT_LAWS_CI` | Repository variable: set to `1` to enable the opt-in CI law-integrity job |
 
 The compiler runs with an environment **allowlist** (no tokens/keys forwarded), in its own process
 group with a timeout and clipped output, with `BEND_NO_TELEMETRY=1`.
@@ -52,9 +55,9 @@ Files in `formal/bend/policy-lifecycle/`:
 | `tables.lock.json` | agent | drift lock: tables + `promote_policy` gate structure + law manifest |
 
 Laws: P1 legality · P2 Captain gate · P3 terminal (P3′ over arbitrary sequences) · P4 forward-only
-(per step) · P5 shadow-before-approval (per step) · P6 no authority grant · P7a–d evidence gates ·
-P8a/b `next` · P9a/b `run` · P10 outcome agrees · P11 liveness · **P12 entry-state**
-(`M.birth` → `candidate` / Finding 001).
+(per step) · **P4′ forward over sequences** · P5 shadow-before-approval (per step) · **P5′ shadow
+precedes approval from birth** · P6 no authority grant · P7a–d evidence gates · P8a/b `next` ·
+P9a/b `run` · P10 outcome agrees · P11 liveness · **P12 entry-state** (`M.birth` → `candidate`).
 
 ## Conformance and controls
 
@@ -74,18 +77,22 @@ P8a/b `next` · P9a/b `run` · P10 outcome agrees · P11 liveness · **P12 entry
 
 ## Known gaps (stated, not hidden)
 
-1. P4/P5 are proved **per accepted step**, not over whole histories (Amendment A1; Captain review).
-2. Evidence gates are booleans; their filesystem checks are not modeled.
-3. Gate order in `promote_policy` is pinned by the lock, not proved.
-4. Finding 001 entry path: **closed** by #280 + P12 (`p12_entry_candidate`). See
-   `.agent/evidence/bend-policy-proof-spike/finding-001-direct-entry-bypass.md`.
-5. P6, P8 and P10 are about the model (`finish` hard-codes no authority); nothing links them to production
+1. Evidence gates are booleans; their filesystem checks are not modeled.
+2. Gate order in `promote_policy` is pinned by the lock, not proved.
+3. Finding 001 entry path: **closed** by #280 + P12 (`p12_entry_candidate`).
+4. P6, P8 and P10 are about the model (`finish` hard-codes no authority); nothing links them to production
    code except the AST pin on `promote_policy`.
-6. The AST pin is coarse: it detects *any* edit to `promote_policy`, benign or not.
-7. Lean (the strongest check) is not pinned, and the optional Bend pin is checked at discovery, not at exec.
-8. `--base-ref` is caller-chosen (`HEAD` compares against itself); there is no pinned approved SHA.
-9. A run with `--no-verdict` or `--no-mutations` reports `status: partial` / `degraded: true`.
-10. CI wiring of `--strict-laws` remains deferred (conditional-go).
+5. The AST pin is coarse: it detects *any* edit to `promote_policy`, benign or not.
+6. `--base-ref` is caller-chosen (`HEAD` compares against itself); there is no pinned approved SHA.
+7. A run with `--no-verdict` or `--no-mutations` reports `status: partial` / `degraded: true`.
+8. Whole-history P4′/P5′ proofs case-split against the baseline `decide` table; restrictive model
+   mutants strip those laws during mutation testing (per-step laws still checked).
+
+## Closed leftovers (`bend-278-leftovers` / v1.93.0)
+
+- P4′ / P5′ whole-history laws proved.
+- Lean pin (`COMPASS_LEAN_VERSION` / `COMPASS_LEAN_SHA256`) + Bend pin rechecked at exec.
+- Opt-in CI job `bend-law-integrity` (repo var `COMPASS_BEND_STRICT_LAWS_CI=1`).
 
 ## Rollback
 

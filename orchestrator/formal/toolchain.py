@@ -7,7 +7,10 @@ Search order for Bend: ``$COMPASS_BEND_BIN`` (explicit; never falls back),
 Hardening: commands run without a shell, in their own process group with a
 timeout, with truncated output, and with an *allowlisted* environment (the
 compiler is unaudited, so credentials in the caller's environment are never
-forwarded). ``COMPASS_BEND_SHA256`` optionally pins the binary.
+forwarded). ``COMPASS_BEND_SHA256`` optionally pins the Bend binary.
+``COMPASS_LEAN_VERSION`` / ``COMPASS_LEAN_SHA256`` optionally pin Lean
+(fail-closed when set). Pins are checked at discovery and again before each
+``run`` that invokes the compiler.
 """
 
 from __future__ import annotations
@@ -49,8 +52,39 @@ def _clip(text: str | bytes | None) -> str:
 class Toolchain:
     bend: Path
     env: dict[str, str] = field(default_factory=dict)
+    bend_pin: str = ""
+    lean_version_pin: str = ""
+    lean_sha256_pin: str = ""
+
+    def _assert_pins(self) -> None:
+        """Re-check configured pins at exec time (not only at discovery)."""
+        if self.bend_pin and self.binary_sha256() != self.bend_pin:
+            raise ToolchainError(
+                f"bend binary sha256 does not match COMPASS_BEND_SHA256 ({self.binary_sha256()[:12]}…)"
+            )
+        if self.lean_version_pin or self.lean_sha256_pin:
+            self._assert_lean_pins()
+
+    def _assert_lean_pins(self) -> None:
+        lean = shutil.which("lean", path=self.env.get("PATH"))
+        if not lean:
+            raise ToolchainError("COMPASS_LEAN_VERSION/SHA256 set but lean is not on toolchain PATH")
+        if self.lean_sha256_pin:
+            digest = hashlib.sha256(Path(lean).read_bytes()).hexdigest()
+            if digest != self.lean_sha256_pin:
+                raise ToolchainError(
+                    f"lean binary sha256 does not match COMPASS_LEAN_SHA256 ({digest[:12]}…)"
+                )
+        if self.lean_version_pin:
+            ver = self.lean_version()
+            if self.lean_version_pin not in ver:
+                raise ToolchainError(
+                    f"lean version {ver!r} does not contain COMPASS_LEAN_VERSION="
+                    f"{self.lean_version_pin!r}"
+                )
 
     def run(self, args: list[str], *, cwd: Path, timeout: float = 600.0) -> dict[str, Any]:
+        self._assert_pins()
         started = time.monotonic()
         proc = subprocess.Popen(
             [str(self.bend), *args],
@@ -131,11 +165,23 @@ def discover(root: Path) -> Toolchain | None:
     if (elan_home / "bin" / "lean").exists():
         env["ELAN_HOME"] = str(elan_home)
         env["PATH"] = f"{elan_home / 'bin'}{os.pathsep}{env.get('PATH', '')}"
-    tc = Toolchain(bend=bend, env=env)
-
-    pin = (os.environ.get("COMPASS_BEND_SHA256") or "").strip().lower()
-    if pin and tc.binary_sha256() != pin:
+    bend_pin = (os.environ.get("COMPASS_BEND_SHA256") or "").strip().lower()
+    lean_ver_pin = (os.environ.get("COMPASS_LEAN_VERSION") or "").strip()
+    lean_sha_pin = (os.environ.get("COMPASS_LEAN_SHA256") or "").strip().lower()
+    tc = Toolchain(
+        bend=bend,
+        env=env,
+        bend_pin=bend_pin,
+        lean_version_pin=lean_ver_pin,
+        lean_sha256_pin=lean_sha_pin,
+    )
+    if bend_pin and tc.binary_sha256() != bend_pin:
         raise ToolchainError(
             f"bend binary sha256 does not match COMPASS_BEND_SHA256 ({tc.binary_sha256()[:12]}…)"
         )
+    if lean_ver_pin or lean_sha_pin:
+        # Fail closed at discovery when Lean pins are configured.
+        if not (elan_home / "bin" / "lean").exists() and not shutil.which("lean", path=env.get("PATH")):
+            raise ToolchainError("COMPASS_LEAN_VERSION/SHA256 set but lean is not available")
+        tc._assert_lean_pins()
     return tc

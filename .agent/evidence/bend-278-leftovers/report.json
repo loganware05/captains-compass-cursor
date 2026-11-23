@@ -1,0 +1,28 @@
+{
+  "plan_id": "bend-278-leftovers",
+  "issue": 278,
+  "baseline": "v1.92.0 @ 49e29c6",
+  "rollback": "rollback/pre-bend-278-leftovers @ 49e29c6",
+  "status": "ready_for_pr",
+  "version": "1.93.0",
+  "waves": {
+    "w1_p45": {
+      "p4_forward_sequences": true,
+      "p5_shadow_before_approval_sequences": true,
+      "proofs": "ALL PROOFS CHECK"
+    },
+    "w2_lean_pin": {
+      "COMPASS_LEAN_VERSION": true,
+      "COMPASS_LEAN_SHA256": true,
+      "recheck_at_exec": true
+    },
+    "w3_ci": {
+      "job": "bend-law-integrity",
+      "gate_var": "COMPASS_BEND_STRICT_LAWS_CI",
+      "default_ci_without_bend": true
+    }
+  },
+  "authority_mutation": false,
+  "approved_for_execution": false,
+  "recorded_at": "2026-11-23T05:46:33.104404+00:00"
+}

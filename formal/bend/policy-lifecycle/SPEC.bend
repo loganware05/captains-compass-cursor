@@ -48,6 +48,10 @@ def eq(+a: Nat, +b: Nat) -> Bool:
         case 1n+q:
           eq(p, q)
 
+# a <= b on Nat.
+def le(+a: Nat, +b: Nat) -> Bool:
+  Bool.or(lt(a, b), eq(a, b))
+
 # The lifecycle is a pipeline of stages: candidate, sandbox_evaluated,
 # shadowed, approved, active, proven, with `retired` as the exit.
 def stage(s: M.State) -> Nat:
@@ -232,3 +236,47 @@ def outcome_agrees(ok: Bool, t: M.State, o: M.Outcome) -> Bool:
       Bool.and(ok, eq(stage(to), stage(t)))
     case M.Rejected{}:
       Bool.not(ok)
+
+# True once the policy is at or past `shadowed` on the main pipeline (not retired).
+def post_shadow(s: M.State) -> Bool:
+  match s:
+    case M.Candidate{}:
+      False{}
+    case M.SandboxEvaluated{}:
+      False{}
+    case M.Shadowed{}:
+      True{}
+    case M.Approved{}:
+      True{}
+    case M.Active{}:
+      True{}
+    case M.Proven{}:
+      True{}
+    case M.Retired{}:
+      False{}
+
+# Whether `shadowed` appears as the current state at the start of any attempt,
+# or is the final state of an empty suffix (whole-history witness for P5).
+# `Shadowed` short-circuits so the predicate is True for any continuation.
+def shadowed_in_run(steps: M.Plan, +s: M.State) -> Bool:
+  match steps:
+    case M.NoMore{}:
+      is_shadowed(s)
+    case M.Attempt{h, tl}:
+      match h:
+        case M.Step{to, cap, pre}:
+          match s:
+            case M.Shadowed{}:
+              True{}
+            case M.Candidate{}:
+              shadowed_in_run(tl, M.next(M.Candidate{}, to, cap, pre))
+            case M.SandboxEvaluated{}:
+              shadowed_in_run(tl, M.next(M.SandboxEvaluated{}, to, cap, pre))
+            case M.Approved{}:
+              shadowed_in_run(tl, M.next(M.Approved{}, to, cap, pre))
+            case M.Active{}:
+              shadowed_in_run(tl, M.next(M.Active{}, to, cap, pre))
+            case M.Proven{}:
+              shadowed_in_run(tl, M.next(M.Proven{}, to, cap, pre))
+            case M.Retired{}:
+              shadowed_in_run(tl, M.next(M.Retired{}, to, cap, pre))

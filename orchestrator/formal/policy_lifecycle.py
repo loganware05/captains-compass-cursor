@@ -472,7 +472,14 @@ class ModelMutant:
     laws: tuple[str, ...]  # law/lemma that may report the failure; () = proofs must still pass
 
 
-LEGALITY_LAWS = ("p1_pipeline", "p3_terminal", "p4_forward_only", "p5_shadow_before_approval")
+LEGALITY_LAWS = (
+    "p1_pipeline",
+    "p3_terminal",
+    "p4_forward_only",
+    "p4_forward_sequences",
+    "p5_shadow_before_approval",
+    "p5_shadow_before_approval_sequences",
+)
 
 MODEL_MUTANTS: tuple[ModelMutant, ...] = (
     ModelMutant("skip-stage", "candidate -> active becomes legal",
@@ -602,6 +609,49 @@ def _copy_formal(src: Path, dst: Path) -> None:
         shutil.copy2(src / name, dst / name)
 
 
+SEQUENCE_LAWS = ("p4_forward_sequences", "p5_shadow_before_approval_sequences")
+
+
+def _strip_sequence_laws(formal_dir: Path) -> None:
+    """Drop whole-history laws from a mutant copy.
+
+    Sequence proofs case-split against the baseline ``decide`` table. Restrictive
+    mutants (extra evidence gates) keep every *safety* law true but break those
+    case splits; mutation testing therefore checks per-step laws only.
+    """
+    laws_path = formal_dir / "LAWS.bend"
+    proof_path = formal_dir / "PROOF.bend"
+    laws = laws_path.read_text(encoding="utf-8")
+    for name in SEQUENCE_LAWS:
+        start = laws.find(f"law {name}:")
+        if start < 0:
+            continue
+        # Cut through the blank line after the law body (next '# ' or 'law ').
+        rest = laws[start:]
+        nxt = re.search(r"\n(?:# |law )", rest[1:])
+        end = start + 1 + nxt.start() if nxt else len(laws)
+        laws = laws[:start] + laws[end:]
+    laws_path.write_text(laws, encoding="utf-8")
+    proof = proof_path.read_text(encoding="utf-8")
+    for name in SEQUENCE_LAWS:
+        # Helpers sit above Laws.<name>; drop from the helper marker through the def.
+        markers = {
+            "p4_forward_sequences": "# P4': stage is non-decreasing",
+            "p5_shadow_before_approval_sequences": "# P5': from birth",
+        }
+        mark = markers[name]
+        start = proof.find(mark)
+        if start < 0:
+            start = proof.find(f"def Laws.{name}(")
+        if start < 0:
+            continue
+        rest = proof[start + 1 :]
+        nxt = re.search(r"\n(?:# P|# ----|def Laws\.)", rest)
+        end = start + 1 + nxt.start() if nxt else len(proof)
+        proof = proof[:start] + proof[end:]
+    proof_path.write_text(proof, encoding="utf-8")
+
+
 def run_model_mutants(tc: Toolchain, formal_dir: Path, baseline_py: dict[Row, int]) -> list[dict[str, Any]]:
     results: list[dict[str, Any]] = []
     with tempfile.TemporaryDirectory(prefix="bend-mutant-") as tmp:
@@ -613,6 +663,8 @@ def run_model_mutants(tc: Toolchain, formal_dir: Path, baseline_py: dict[Row, in
             if mutated == original:
                 raise MutationError(f"mutant {m.mutant_id} did not change Model.bend")
             (work / "Model.bend").write_text(mutated, encoding="utf-8")
+            if not m.laws:
+                _strip_sequence_laws(work)
             proofs = run_proofs(tc, work, verdict=False)
             caught_by: list[str] = []
             failed_law = ""

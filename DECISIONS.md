@@ -114,29 +114,31 @@
 
 ## ADR-110: Bend Policy-Lifecycle Proof Spike (go/no-go)
 
-- **Status:** **Accepted** (conditional-go) — Captain approved plan `bend-adr-110-go` on 2026-11-22.
-- **Date:** 2026-11-18 (amended 2026-11-21 Finding 001/#280; accepted 2026-11-22 with P12)
+- **Status:** **Accepted** (conditional-go) — Captain approved plan `bend-adr-110-go` on 2026-11-22;
+  amended by `bend-278-leftovers` (2026-11-22) for P4/P5 whole-history, Lean pin, opt-in CI.
+- **Date:** 2026-11-18 (amended 2026-11-21 Finding 001/#280; accepted 2026-11-22 with P12;
+  leftovers 2026-11-22)
 - **Context:** Bend 2 assessment recommended a small opt-in proof experiment on the policy
   lifecycle decision core. Spike `bend-policy-proof-spike` (#278 / #279) shipped
   `ready_for_captain_decision` with recommendation `conditional-go`.
 - **Decision:** **Conditional go** — keep the experiment as an opt-in, additive command
-  (`COMPASS_BEND_PROOF_ENABLED=1 northstar formal check policy-lifecycle`). Do **not** wire it into
-  CI, make Bend a required dependency, or extend to other targets in this release.
-  1. Model + laws through **P12 entry-state** proved with the Lean-checked kernel; Captain owns
-     `LAWS.bend` and `SPEC.bend` (P12 authorized under `bend-adr-110-go`).
+  (`COMPASS_BEND_PROOF_ENABLED=1 northstar formal check policy-lifecycle`). Do **not** make Bend a
+  required dependency or extend to other targets in this release.
+  1. Model + laws through **P12 entry-state** plus **P4′/P5′ whole-history** proved with the
+     Lean-checked kernel; Captain owns `LAWS.bend` and `SPEC.bend`.
   2. Conformance is exhaustive (1568 rows) against the *real* Python functions; drift, law-manifest,
      a whole-function AST pin of `promote_policy`, and 23 model + 15 Python-side mutation controls
      reject unpaired change.
-  3. **Boundary (still explicit):** P4/P5 are per-step (not whole-history), evidence gates are
-     booleans, gate order is pinned (not proved), P6/P8/P10 are model-internal, the
-     `promote_policy` pin is coarse, Lean remains unpinned, `--strict-laws` CI wiring deferred.
-  4. Finding 001: production fix in #280; **P12** (`M.birth` / `S.entry_ok` /
-     `p12_entry_candidate`) closes the formal entry gap. Python probe remains as conformance.
-- **Consequences:** Opt-in formal surface is an accepted NorthStar capability with an entry-state
-  law. Remaining gaps stay parked under #278 follow-ups (P4/P5 lift, Lean pin, CI). No authority
+  3. **Boundary (still explicit):** evidence gates are booleans, gate order is pinned (not proved),
+     P6/P8/P10 are model-internal, the `promote_policy` pin is coarse.
+  4. Finding 001: production fix in #280; **P12** closes the formal entry gap.
+  5. **Leftovers (v1.93.0):** Lean pin via `COMPASS_LEAN_VERSION` / `COMPASS_LEAN_SHA256` (fail-closed;
+     rechecked at exec). Opt-in CI job `bend-law-integrity` when
+     `vars.COMPASS_BEND_STRICT_LAWS_CI == '1'` (default CI stays green without Bend).
+- **Consequences:** Opt-in formal surface covers per-step and whole-history P4/P5. No authority
   mutation; fixture/default CI stays green without Bend.
-- **Evidence:** `.agent/evidence/bend-policy-proof-spike/` (spike) ·
-  `.agent/evidence/bend-adr-110-go/` (accept + P12).
+- **Evidence:** `.agent/evidence/bend-policy-proof-spike/` · `.agent/evidence/bend-adr-110-go/` ·
+  `.agent/evidence/bend-278-leftovers/`.
 
 ## ADR-109: Post-Merge Wave Continue (v1.87.0)
 
