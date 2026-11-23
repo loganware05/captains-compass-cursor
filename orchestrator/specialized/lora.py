@@ -14,12 +14,18 @@ from uuid import uuid4
 from orchestrator.cognitive.git_facts import git_sha
 from orchestrator.schemas.validate import validate_document
 from orchestrator.specialized.enabled import require_specialized_model_gate
+from orchestrator.integrations.transport import HttpTransport
 from orchestrator.specialized.scoring import (
     default_gold_path,
     load_gold_set,
     score_gold_set,
 )
 from orchestrator.specialized.service import SpecializedModelServiceError
+from orchestrator.specialized.student import (
+    SpecializedStudent,
+    SpecializedStudentError,
+    resolve_student,
+)
 from orchestrator.train_bridge.store import (
     TrainBridgeStoreError,
     load_export,
@@ -324,13 +330,15 @@ def train_lora(
     }
 
 
-def _score_adapter_stub(gold: dict[str, Any], *, train_metrics: dict[str, Any] | None) -> dict[str, Any]:
-    """Hermetic adapter scorer: reuse gold stub answers (fixture student).
-
-    Dry-run does not claim improvement over Level 0; rates match baseline.
-    """
+def _score_adapter(
+    gold: dict[str, Any],
+    *,
+    train_metrics: dict[str, Any] | None,
+    student: SpecializedStudent,
+) -> dict[str, Any]:
+    """Score adapter path with the active student (stub or local)."""
     del train_metrics  # reserved for future live metrics coupling
-    return score_gold_set(gold)
+    return score_gold_set(gold, student=student)
 
 
 def evaluate_lora(
@@ -343,8 +351,10 @@ def evaluate_lora(
     evidence_dir: Path | None = None,
     write_evidence: bool = True,
     train_metrics: dict[str, Any] | None = None,
+    student: SpecializedStudent | None = None,
+    transport: HttpTransport | None = None,
 ) -> dict[str, Any]:
-    """Compare Level 0 baseline vs adapter stub on the held-out gold set."""
+    """Compare Level 0 baseline vs adapter student on the held-out gold set."""
     require_specialized_model_gate()
     repo_root = Path(repo_root).resolve()
     warnings: list[str] = []
@@ -366,12 +376,29 @@ def evaluate_lora(
         gold_file = Path(gold_path)
 
     gold = load_gold_set(gold_file)
-    baseline_scores = score_gold_set(gold)
-    adapter_scores = _score_adapter_stub(gold, train_metrics=train_metrics)
+    try:
+        active = resolve_student(transport=transport, student=student)
+        baseline_scores = score_gold_set(gold, student=active)
+        adapter_scores = _score_adapter(
+            gold, train_metrics=train_metrics, student=active
+        )
+    except SpecializedStudentError as exc:
+        raise SpecializedModelServiceError(str(exc)) from exc
+    local_mode = baseline_scores.get("student_mode") == "local"
+    if local_mode:
+        warnings.append(
+            f"local student active ({baseline_scores.get('student_name')})"
+        )
 
     def _rate(scores: dict[str, Any], key: str) -> float:
         val = scores.get(key)
         return float(val) if isinstance(val, (int, float)) else 0.0
+
+    def _min_rates(scores: dict[str, Any]) -> float:
+        keys = ["retrieval_rate", "prompt_rate", "stub_student_rate"]
+        if local_mode and isinstance(scores.get("local_student_rate"), (int, float)):
+            keys.append("local_student_rate")
+        return min(_rate(scores, k) for k in keys)
 
     comparison = {
         "retrieval_delta": round(
@@ -388,23 +415,16 @@ def evaluate_lora(
             - _rate(baseline_scores, "stub_student_rate"),
             4,
         ),
-        "baseline_min_rate": round(
-            min(
-                _rate(baseline_scores, "retrieval_rate"),
-                _rate(baseline_scores, "prompt_rate"),
-                _rate(baseline_scores, "stub_student_rate"),
-            ),
-            4,
-        ),
-        "adapter_min_rate": round(
-            min(
-                _rate(adapter_scores, "retrieval_rate"),
-                _rate(adapter_scores, "prompt_rate"),
-                _rate(adapter_scores, "stub_student_rate"),
-            ),
-            4,
-        ),
+        "baseline_min_rate": round(_min_rates(baseline_scores), 4),
+        "adapter_min_rate": round(_min_rates(adapter_scores), 4),
+        "student_mode": baseline_scores.get("student_mode") or "stub",
     }
+    if local_mode:
+        comparison["local_student_delta"] = round(
+            _rate(adapter_scores, "local_student_rate")
+            - _rate(baseline_scores, "local_student_rate"),
+            4,
+        )
 
     if dry_run:
         warnings.append("dry-run evaluate — fixture adapter; no live LoRA weights")
@@ -461,12 +481,16 @@ def evaluate_lora(
             "retrieval_rate": baseline_scores.get("retrieval_rate"),
             "prompt_rate": baseline_scores.get("prompt_rate"),
             "stub_student_rate": baseline_scores.get("stub_student_rate"),
+            "local_student_rate": baseline_scores.get("local_student_rate"),
+            "student_mode": baseline_scores.get("student_mode") or "stub",
             "task_total": baseline_scores.get("task_total"),
         },
         "adapter_scores": {
             "retrieval_rate": adapter_scores.get("retrieval_rate"),
             "prompt_rate": adapter_scores.get("prompt_rate"),
             "stub_student_rate": adapter_scores.get("stub_student_rate"),
+            "local_student_rate": adapter_scores.get("local_student_rate"),
+            "student_mode": adapter_scores.get("student_mode") or "stub",
             "task_total": adapter_scores.get("task_total"),
         },
         "comparison": comparison,
@@ -478,7 +502,8 @@ def evaluate_lora(
         "notes": (
             "Specialized Model Level 1 LoRA evaluate. Weights/adapters stay "
             "outside this control repo. Never auto-promotes into Adaptive "
-            "Intelligence routing."
+            "Intelligence routing. "
+            f"student_mode={comparison.get('student_mode')}."
         ),
         "weights_committed": False,
         "auto_promoted": False,
@@ -488,8 +513,11 @@ def evaluate_lora(
     }
 
     if write_evidence:
+        default_dir = (
+            "specialized-real-local-eval" if local_mode else "specialized-model-level-1"
+        )
         out_root = Path(evidence_dir) if evidence_dir else (
-            repo_root / ".agent" / "evidence" / "specialized-model-level-1"
+            repo_root / ".agent" / "evidence" / default_dir
         )
         out_root.mkdir(parents=True, exist_ok=True)
         json_path = out_root / f"{run_id}.json"

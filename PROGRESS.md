@@ -2,25 +2,23 @@
 
 ## Current status
 
-**MERGED:** [#303](https://github.com/loganware05/captains-compass-cursor/pull/303)
-for [#278](https://github.com/loganware05/captains-compass-cursor/issues/278)
-`bend-adr-110-go` → **v1.91.0** @ `9413ed9`.
+**PR OPEN:** [#306](https://github.com/loganware05/captains-compass-cursor/pull/306)
+for [#305](https://github.com/loganware05/captains-compass-cursor/issues/305)
+`specialized-real-local-eval` → proposed **v1.92.0**.
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.90.0** / `843af00` |
-| Plan | `bend-adr-110-go` **COMPLETE** |
-| Issue | [#278](https://github.com/loganware05/captains-compass-cursor/issues/278) (leftovers parked) |
-| PR | [#303](https://github.com/loganware05/captains-compass-cursor/pull/303) |
-| Merge | `9413ed9` |
-| Tag | [`v1.91.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.91.0) @ `9413ed9` |
-| Rollback | `rollback/pre-bend-adr-110-go` @ `843af00` |
+| Baseline | **v1.91.0** / `origin/main` @ `6d9f8a0` |
+| Plan | `specialized-real-local-eval` **COMPLETE** |
+| Issue | [#305](https://github.com/loganware05/captains-compass-cursor/issues/305) |
+| PR | [#306](https://github.com/loganware05/captains-compass-cursor/pull/306) |
+| Branch | `feature/305-specialized-real-local-eval` |
+| Rollback | `rollback/pre-specialized-real-local-eval` @ `6d9f8a0` |
 
 ### Prior closeout
 
+- Bend ADR-110 go **v1.91.0** (#303 / #278) + docs (#304)
 - T3 live adapter **v1.90.0** (#301 / #300) + docs (#302)
-- Audit P5 **v1.89.2** (#298 / #297) + docs (#299)
-- Audit P4–P0 as previously recorded
 
 ## Standing order
 
@@ -28,12 +26,7 @@ Approve ⇒ implement → validate → commit → open PR. Merge remains Captain
 
 ## Next
 
-Pick the next product plan when ready:
-
-- Specialized real local eval (not #237 Level 3 / paid GPU)
-- B4 FIX→TEST→SUBMIT
-- XRV ops-verified drill
-- #278 leftovers (P4/P5 whole-history, Lean pin, `--strict-laws` CI)
+After merge/tag: B4 FIX→TEST→SUBMIT · XRV ops-verified · #278 leftovers.
 
 ## Blockers
 

@@ -1,0 +1,33 @@
+test_baseline_local_holds_when_trailing (tests.orchestrator.test_specialized_real_local_eval.BaselineLocalTests.test_baseline_local_holds_when_trailing) ... ok
+test_baseline_stub_default_still_go (tests.orchestrator.test_specialized_real_local_eval.BaselineLocalTests.test_baseline_stub_default_still_go) ... ok
+test_recording_transport_roundtrip (tests.orchestrator.test_specialized_real_local_eval.HttpStudentTests.test_recording_transport_roundtrip) ... ok
+test_evaluate_records_local_mode (tests.orchestrator.test_specialized_real_local_eval.LoraEvaluateLocalTests.test_evaluate_records_local_mode) ... ok
+test_fixture_local_student_scores (tests.orchestrator.test_specialized_real_local_eval.ScoringLocalTests.test_fixture_local_student_scores) ... ok
+test_stub_path_unchanged (tests.orchestrator.test_specialized_real_local_eval.ScoringLocalTests.test_stub_path_unchanged) ... ok
+test_weak_local_student_recorded (tests.orchestrator.test_specialized_real_local_eval.ScoringLocalTests.test_weak_local_student_recorded) ... ok
+test_default_is_stub (tests.orchestrator.test_specialized_real_local_eval.StudentResolveTests.test_default_is_stub) ... ok
+test_http_student_https_only (tests.orchestrator.test_specialized_real_local_eval.StudentResolveTests.test_http_student_https_only) ... ok
+test_enabled (tests.orchestrator.test_specialized_model_level_0.GateTests.test_enabled) ... ok
+test_fail_closed (tests.orchestrator.test_specialized_model_level_0.GateTests.test_fail_closed) ... ok
+test_attach_export_fixture (tests.orchestrator.test_specialized_model_level_0.RunnerTests.test_attach_export_fixture) ... ok
+test_cli_enable_gates_smoke (tests.orchestrator.test_specialized_model_level_0.RunnerTests.test_cli_enable_gates_smoke) ... ok
+test_cli_fail_closed (tests.orchestrator.test_specialized_model_level_0.RunnerTests.test_cli_fail_closed) ... ok
+test_hermetic_baseline (tests.orchestrator.test_specialized_model_level_0.RunnerTests.test_hermetic_baseline) ... ok
+test_missing_export_errors (tests.orchestrator.test_specialized_model_level_0.RunnerTests.test_missing_export_errors) ... ok
+test_northstar_alias (tests.orchestrator.test_specialized_model_level_0.RunnerTests.test_northstar_alias) ... ok
+test_authority_and_weights_locked (tests.orchestrator.test_specialized_model_level_0.SchemaTests.test_authority_and_weights_locked) ... ok
+test_gold_set_perfect (tests.orchestrator.test_specialized_model_level_0.ScorerTests.test_gold_set_perfect) ... ok
+test_fail_closed (tests.orchestrator.test_specialized_model_level_1.GateTests.test_fail_closed) ... ok
+test_cli_lora_fail_closed (tests.orchestrator.test_specialized_model_level_1.PipelineTests.test_cli_lora_fail_closed) ... ok
+test_cli_pipeline_dry_run (tests.orchestrator.test_specialized_model_level_1.PipelineTests.test_cli_pipeline_dry_run) ... ok
+test_northstar_lora_help (tests.orchestrator.test_specialized_model_level_1.PipelineTests.test_northstar_lora_help) ... ok
+test_pipeline_convenience (tests.orchestrator.test_specialized_model_level_1.PipelineTests.test_pipeline_convenience) ... ok
+test_prepare_train_evaluate_dry_run (tests.orchestrator.test_specialized_model_level_1.PipelineTests.test_prepare_train_evaluate_dry_run) ... ok
+test_refuse_live_train_without_trainer (tests.orchestrator.test_specialized_model_level_1.PipelineTests.test_refuse_live_train_without_trainer) ... ok
+test_lora_run_locks (tests.orchestrator.test_specialized_model_level_1.SchemaTests.test_lora_run_locks) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.952s
+
+OK
+EXIT:0
