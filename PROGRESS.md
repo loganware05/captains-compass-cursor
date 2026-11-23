@@ -2,16 +2,18 @@
 
 ## Current status
 
-**IN PR:** `xrv-ops-verified` / [#310](https://github.com/loganware05/captains-compass-cursor/issues/310)
-→ proposed **v1.94.0** (hermetic ops-verified reconstruct; live deploy deferred).
+**MERGED:** [#311](https://github.com/loganware05/captains-compass-cursor/pull/311)
+for [#310](https://github.com/loganware05/captains-compass-cursor/issues/310)
+`xrv-ops-verified` → **v1.94.0** @ `50f4ff8`.
 
 | Item | Value |
 |---|---|
 | Baseline | **v1.93.0** / `4747994` |
-| Plan | `xrv-ops-verified` **APPROVED** / implementing |
-| Issue | [#310](https://github.com/loganware05/captains-compass-cursor/issues/310) |
-| Branch | `feature/310-xrv-ops-verified` |
+| Plan | `xrv-ops-verified` **COMPLETE** |
+| Issue | [#310](https://github.com/loganware05/captains-compass-cursor/issues/310) (closed) |
 | PR | [#311](https://github.com/loganware05/captains-compass-cursor/pull/311) |
+| Merge | `50f4ff8` |
+| Tag | [`v1.94.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.94.0) @ `50f4ff8` |
 | Rollback | `rollback/pre-xrv-ops-verified` @ `4747994` |
 
 ### Prior closeout
@@ -26,7 +28,12 @@ Approve ⇒ implement → validate → commit → open PR. Merge remains Captain
 
 ## Next
 
-After #310 merge/tag: B4 FIX→PACKET→SUBMIT (separate Approve), optional Bend CI var, live ops-verified drill.
+Pick the next product plan when ready:
+
+- B4 live FIX→SUBMIT (packet MVP already shipped; live still gated)
+- XRV live ops-verified deploy drill
+- Specialized Model Level 3 (#237)
+- Bend CI var enable (`COMPASS_BEND_STRICT_LAWS_CI=1`) — ops, not code
 
 ## Blockers
 
