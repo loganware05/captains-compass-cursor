@@ -1,0 +1,6 @@
+tag: v1.91.0
+commit: 9413ed98edae7ac11cdab1904a8fdc5694beb9da
+pr: https://github.com/loganware05/captains-compass-cursor/pull/303
+issue: https://github.com/loganware05/captains-compass-cursor/issues/278
+rollback: rollback/pre-bend-adr-110-go @ 843af00
+release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.91.0
