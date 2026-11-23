@@ -925,3 +925,3658 @@ def Laws.p7d_proven_needs_proven_ok(p, t, f, c):
             case M.Retired{}:
               {==}
 
+# P4': stage is non-decreasing under `run` (whole histories).
+def p4_from_stage(steps: M.Plan, +k: Nat, +s: M.State, bound: {S.le(k, S.stage(s)) == True{} : Bool}) -> {S.le(k, S.stage(M.run(steps, s))) == True{} : Bool}:
+  match steps:
+    case M.NoMore{}:
+      bound
+    case M.Attempt{h, tl}:
+      match h:
+        case M.Step{to, cap, pre}:
+          match to:
+            case M.Candidate{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match k:
+                        case 0n:
+                          match s:
+                            case M.Candidate{}:
+                              p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                            case M.SandboxEvaluated{}:
+                              p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                            case M.Shadowed{}:
+                              p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                            case M.Approved{}:
+                              p4_from_stage(tl, 0n, M.Approved{}, {==})
+                            case M.Active{}:
+                              p4_from_stage(tl, 0n, M.Active{}, {==})
+                            case M.Proven{}:
+                              p4_from_stage(tl, 0n, M.Proven{}, {==})
+                            case M.Retired{}:
+                              p4_from_stage(tl, 0n, M.Retired{}, {==})
+                        case 1n+p:
+                          match p:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match k:
+                        case 0n:
+                          match s:
+                            case M.Candidate{}:
+                              p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                            case M.SandboxEvaluated{}:
+                              p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                            case M.Shadowed{}:
+                              p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                            case M.Approved{}:
+                              p4_from_stage(tl, 0n, M.Approved{}, {==})
+                            case M.Active{}:
+                              p4_from_stage(tl, 0n, M.Active{}, {==})
+                            case M.Proven{}:
+                              p4_from_stage(tl, 0n, M.Proven{}, {==})
+                            case M.Retired{}:
+                              p4_from_stage(tl, 0n, M.Retired{}, {==})
+                        case 1n+p:
+                          match p:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+            case M.SandboxEvaluated{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match eval_pass:
+                        case True{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                        case False{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match eval_pass:
+                        case True{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                        case False{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+            case M.Shadowed{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match shadow_ok:
+                        case True{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                        case False{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match shadow_ok:
+                        case True{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                        case False{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+            case M.Approved{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match shadow_present:
+                        case True{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                        case False{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match shadow_present:
+                        case True{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                        case False{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+            case M.Active{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match k:
+                        case 0n:
+                          match s:
+                            case M.Candidate{}:
+                              p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                            case M.SandboxEvaluated{}:
+                              p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                            case M.Shadowed{}:
+                              p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                            case M.Approved{}:
+                              p4_from_stage(tl, 0n, M.Active{}, {==})
+                            case M.Active{}:
+                              p4_from_stage(tl, 0n, M.Active{}, {==})
+                            case M.Proven{}:
+                              p4_from_stage(tl, 0n, M.Proven{}, {==})
+                            case M.Retired{}:
+                              p4_from_stage(tl, 0n, M.Retired{}, {==})
+                        case 1n+p:
+                          match p:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match k:
+                        case 0n:
+                          match s:
+                            case M.Candidate{}:
+                              p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                            case M.SandboxEvaluated{}:
+                              p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                            case M.Shadowed{}:
+                              p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                            case M.Approved{}:
+                              p4_from_stage(tl, 0n, M.Approved{}, {==})
+                            case M.Active{}:
+                              p4_from_stage(tl, 0n, M.Active{}, {==})
+                            case M.Proven{}:
+                              p4_from_stage(tl, 0n, M.Proven{}, {==})
+                            case M.Retired{}:
+                              p4_from_stage(tl, 0n, M.Retired{}, {==})
+                        case 1n+p:
+                          match p:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+            case M.Proven{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match proven_ok:
+                        case True{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                        case False{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match proven_ok:
+                        case True{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                        case False{}:
+                          match k:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match p:
+                                                    case 0n:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case 1n+p:
+                                                      match s:
+                                                        case M.Candidate{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                        case M.SandboxEvaluated{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                        case M.Shadowed{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                        case M.Approved{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                        case M.Active{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                        case M.Proven{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                        case M.Retired{}:
+                                                          p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+            case M.Retired{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match k:
+                        case 0n:
+                          match s:
+                            case M.Candidate{}:
+                              p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case M.SandboxEvaluated{}:
+                              p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case M.Shadowed{}:
+                              p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case M.Approved{}:
+                              p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case M.Active{}:
+                              p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case M.Proven{}:
+                              p4_from_stage(tl, 0n, M.Retired{}, {==})
+                            case M.Retired{}:
+                              p4_from_stage(tl, 0n, M.Retired{}, {==})
+                        case 1n+p:
+                          match p:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match k:
+                        case 0n:
+                          match s:
+                            case M.Candidate{}:
+                              p4_from_stage(tl, 0n, M.Candidate{}, {==})
+                            case M.SandboxEvaluated{}:
+                              p4_from_stage(tl, 0n, M.SandboxEvaluated{}, {==})
+                            case M.Shadowed{}:
+                              p4_from_stage(tl, 0n, M.Shadowed{}, {==})
+                            case M.Approved{}:
+                              p4_from_stage(tl, 0n, M.Approved{}, {==})
+                            case M.Active{}:
+                              p4_from_stage(tl, 0n, M.Active{}, {==})
+                            case M.Proven{}:
+                              p4_from_stage(tl, 0n, M.Proven{}, {==})
+                            case M.Retired{}:
+                              p4_from_stage(tl, 0n, M.Retired{}, {==})
+                        case 1n+p:
+                          match p:
+                            case 0n:
+                              match s:
+                                case M.Candidate{}:
+                                  p4_from_stage(tl, 1n+0n, M.Candidate{}, bound)
+                                case M.SandboxEvaluated{}:
+                                  p4_from_stage(tl, 1n+0n, M.SandboxEvaluated{}, {==})
+                                case M.Shadowed{}:
+                                  p4_from_stage(tl, 1n+0n, M.Shadowed{}, {==})
+                                case M.Approved{}:
+                                  p4_from_stage(tl, 1n+0n, M.Approved{}, {==})
+                                case M.Active{}:
+                                  p4_from_stage(tl, 1n+0n, M.Active{}, {==})
+                                case M.Proven{}:
+                                  p4_from_stage(tl, 1n+0n, M.Proven{}, {==})
+                                case M.Retired{}:
+                                  p4_from_stage(tl, 1n+0n, M.Retired{}, {==})
+                            case 1n+p:
+                              match p:
+                                case 0n:
+                                  match s:
+                                    case M.Candidate{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Candidate{}, bound)
+                                    case M.SandboxEvaluated{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                    case M.Shadowed{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Shadowed{}, {==})
+                                    case M.Approved{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Approved{}, {==})
+                                    case M.Active{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Active{}, {==})
+                                    case M.Proven{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Proven{}, {==})
+                                    case M.Retired{}:
+                                      p4_from_stage(tl, 1n+1n+0n, M.Retired{}, {==})
+                                case 1n+p:
+                                  match p:
+                                    case 0n:
+                                      match s:
+                                        case M.Candidate{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Candidate{}, bound)
+                                        case M.SandboxEvaluated{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                        case M.Shadowed{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Shadowed{}, bound)
+                                        case M.Approved{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Approved{}, {==})
+                                        case M.Active{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Active{}, {==})
+                                        case M.Proven{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Proven{}, {==})
+                                        case M.Retired{}:
+                                          p4_from_stage(tl, 1n+1n+1n+0n, M.Retired{}, {==})
+                                    case 1n+p:
+                                      match p:
+                                        case 0n:
+                                          match s:
+                                            case M.Candidate{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                            case M.SandboxEvaluated{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                            case M.Shadowed{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                            case M.Approved{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                            case M.Active{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Active{}, {==})
+                                            case M.Proven{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                            case M.Retired{}:
+                                              p4_from_stage(tl, 1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                        case 1n+p:
+                                          match p:
+                                            case 0n:
+                                              match s:
+                                                case M.Candidate{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                case M.SandboxEvaluated{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                case M.Shadowed{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                case M.Approved{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                case M.Active{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                case M.Proven{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+                                                case M.Retired{}:
+                                                  p4_from_stage(tl, 1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                            case 1n+p:
+                                              match p:
+                                                case 0n:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Proven{}, bound)
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+                                                case 1n+p:
+                                                  match s:
+                                                    case M.Candidate{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Candidate{}, bound)
+                                                    case M.SandboxEvaluated{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.SandboxEvaluated{}, bound)
+                                                    case M.Shadowed{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Shadowed{}, bound)
+                                                    case M.Approved{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Approved{}, bound)
+                                                    case M.Active{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Active{}, bound)
+                                                    case M.Proven{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Proven{}, bound)
+                                                    case M.Retired{}:
+                                                      p4_from_stage(tl, 1n+1n+1n+1n+1n+1n+1n+p, M.Retired{}, bound)
+
+def Laws.p4_forward_sequences(s, steps):
+  match s:
+    case M.Candidate{}:
+      p4_from_stage(steps, 0n, M.Candidate{}, {==})
+    case M.SandboxEvaluated{}:
+      p4_from_stage(steps, 1n+0n, M.SandboxEvaluated{}, {==})
+    case M.Shadowed{}:
+      p4_from_stage(steps, 1n+1n+0n, M.Shadowed{}, {==})
+    case M.Approved{}:
+      p4_from_stage(steps, 1n+1n+1n+0n, M.Approved{}, {==})
+    case M.Active{}:
+      p4_from_stage(steps, 1n+1n+1n+1n+0n, M.Active{}, {==})
+    case M.Proven{}:
+      p4_from_stage(steps, 1n+1n+1n+1n+1n+0n, M.Proven{}, {==})
+    case M.Retired{}:
+      p4_from_stage(steps, 1n+1n+1n+1n+1n+1n+0n, M.Retired{}, {==})
+
+# P5': from birth, Approved implies shadowed appeared in the history.
+def p5_when_at_shadowed(steps: M.Plan) -> {S.implies(S.is_approved(M.run(steps, M.Shadowed{})), S.shadowed_in_run(steps, M.Shadowed{})) == True{} : Bool}:
+  match steps:
+    case M.NoMore{}:
+      {==}
+    case M.Attempt{h, tl}:
+      match h:
+        case M.Step{to, cap, pre}:
+          {==}
+
+def p5_from(steps: M.Plan, +s: M.State) -> {S.implies(S.is_approved(M.run(steps, s)), Bool.or(S.post_shadow(s), S.shadowed_in_run(steps, s))) == True{} : Bool}:
+  match steps:
+    case M.NoMore{}:
+      match s:
+        case M.Candidate{}:
+          {==}
+        case M.SandboxEvaluated{}:
+          {==}
+        case M.Shadowed{}:
+          {==}
+        case M.Approved{}:
+          {==}
+        case M.Active{}:
+          {==}
+        case M.Proven{}:
+          {==}
+        case M.Retired{}:
+          {==}
+    case M.Attempt{h, tl}:
+      match h:
+        case M.Step{to, cap, pre}:
+          match to:
+            case M.Candidate{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match s:
+                        case M.Candidate{}:
+                          p5_from(tl, M.Candidate{})
+                        case M.SandboxEvaluated{}:
+                          p5_from(tl, M.SandboxEvaluated{})
+                        case M.Shadowed{}:
+                          {==}
+                        case M.Approved{}:
+                          {==}
+                        case M.Active{}:
+                          {==}
+                        case M.Proven{}:
+                          {==}
+                        case M.Retired{}:
+                          p5_from(tl, M.Retired{})
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match s:
+                        case M.Candidate{}:
+                          p5_from(tl, M.Candidate{})
+                        case M.SandboxEvaluated{}:
+                          p5_from(tl, M.SandboxEvaluated{})
+                        case M.Shadowed{}:
+                          {==}
+                        case M.Approved{}:
+                          {==}
+                        case M.Active{}:
+                          {==}
+                        case M.Proven{}:
+                          {==}
+                        case M.Retired{}:
+                          p5_from(tl, M.Retired{})
+            case M.SandboxEvaluated{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match eval_pass:
+                        case True{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+                        case False{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match eval_pass:
+                        case True{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+                        case False{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+            case M.Shadowed{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match shadow_ok:
+                        case True{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_when_at_shadowed(tl)
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+                        case False{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match shadow_ok:
+                        case True{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_when_at_shadowed(tl)
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+                        case False{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+            case M.Approved{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match shadow_present:
+                        case True{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+                        case False{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match shadow_present:
+                        case True{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+                        case False{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+            case M.Active{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match s:
+                        case M.Candidate{}:
+                          p5_from(tl, M.Candidate{})
+                        case M.SandboxEvaluated{}:
+                          p5_from(tl, M.SandboxEvaluated{})
+                        case M.Shadowed{}:
+                          {==}
+                        case M.Approved{}:
+                          {==}
+                        case M.Active{}:
+                          {==}
+                        case M.Proven{}:
+                          {==}
+                        case M.Retired{}:
+                          p5_from(tl, M.Retired{})
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match s:
+                        case M.Candidate{}:
+                          p5_from(tl, M.Candidate{})
+                        case M.SandboxEvaluated{}:
+                          p5_from(tl, M.SandboxEvaluated{})
+                        case M.Shadowed{}:
+                          {==}
+                        case M.Approved{}:
+                          {==}
+                        case M.Active{}:
+                          {==}
+                        case M.Proven{}:
+                          {==}
+                        case M.Retired{}:
+                          p5_from(tl, M.Retired{})
+            case M.Proven{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match proven_ok:
+                        case True{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+                        case False{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match proven_ok:
+                        case True{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+                        case False{}:
+                          match s:
+                            case M.Candidate{}:
+                              p5_from(tl, M.Candidate{})
+                            case M.SandboxEvaluated{}:
+                              p5_from(tl, M.SandboxEvaluated{})
+                            case M.Shadowed{}:
+                              {==}
+                            case M.Approved{}:
+                              {==}
+                            case M.Active{}:
+                              {==}
+                            case M.Proven{}:
+                              {==}
+                            case M.Retired{}:
+                              p5_from(tl, M.Retired{})
+            case M.Retired{}:
+              match cap:
+                case True{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match s:
+                        case M.Candidate{}:
+                          p5_from(tl, M.Retired{})
+                        case M.SandboxEvaluated{}:
+                          p5_from(tl, M.Retired{})
+                        case M.Shadowed{}:
+                          {==}
+                        case M.Approved{}:
+                          {==}
+                        case M.Active{}:
+                          {==}
+                        case M.Proven{}:
+                          {==}
+                        case M.Retired{}:
+                          p5_from(tl, M.Retired{})
+                case False{}:
+                  match pre:
+                    case M.Pre{eval_pass, shadow_ok, shadow_present, proven_ok}:
+                      match s:
+                        case M.Candidate{}:
+                          p5_from(tl, M.Candidate{})
+                        case M.SandboxEvaluated{}:
+                          p5_from(tl, M.SandboxEvaluated{})
+                        case M.Shadowed{}:
+                          {==}
+                        case M.Approved{}:
+                          {==}
+                        case M.Active{}:
+                          {==}
+                        case M.Proven{}:
+                          {==}
+                        case M.Retired{}:
+                          p5_from(tl, M.Retired{})
+
+def Laws.p5_shadow_before_approval_sequences(steps):
+  p5_from(steps, M.Candidate{})
+

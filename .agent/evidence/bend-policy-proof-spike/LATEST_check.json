@@ -5,21 +5,24 @@
     "diffs": [],
     "model_rows": 1568,
     "rows": 1568,
-    "seconds": 0.822,
+    "seconds": 0.094,
     "status": "pass"
   },
-  "created_at": "2026-11-20T20:15:40Z",
+  "created_at": "2026-11-23T05:45:49Z",
   "degraded": false,
   "drift": {
     "laws": [
       "p10_outcome_agrees",
       "p11_liveness",
+      "p12_entry_candidate",
       "p1_pipeline",
       "p2_captain_gate",
       "p3_terminal",
       "p3_terminal_sequences",
       "p4_forward_only",
+      "p4_forward_sequences",
       "p5_shadow_before_approval",
+      "p5_shadow_before_approval_sequences",
       "p6_no_authority_grant",
       "p7a_sandbox_needs_eval_pass",
       "p7b_shadowed_needs_shadow_ok",
@@ -36,21 +39,24 @@
   "failures": [],
   "files": {
     "Conformance.bend": "6bd01d158beff8f3405d7025390048a685543b7bbfbfd981c1033368dc1ae98b",
-    "LAWS.bend": "7804068ab947c6a4870584842bd15a02418db2fbe014fc29aa6b66359d257e19",
-    "Model.bend": "bb145c3f3b50432b5973506452bdc7070032aff89dbf93a2c6d14a472ebee82f",
-    "PROOF.bend": "0eda491f3aef35158e514c5c30d3868a9829dc045ff8603931f2b65d5323bf21",
-    "SPEC.bend": "9c3bffe8b362bf147dce7a7ea15abd78cb8cf7a112628179d9fef9ff9c295d99"
+    "LAWS.bend": "cb37759ad500abe5f8f869013a188e4afeba390c64037c0f26ee155fc2449d3b",
+    "Model.bend": "c65bfd049d1eb7e46262f50b4860fcf60a65c791c510d46508da8ec3f47a618b",
+    "PROOF.bend": "e69e26deec2466361f76aa1725030b04165a6863c0b981ddede44d1023e9322a",
+    "SPEC.bend": "1ac4cfc9957c50d780bde445f74839e6d9ed7733f6afdb3aeac9958785a367cc"
   },
   "kind": "bend-policy-lifecycle-check",
   "known_gaps": [
     {
       "authority_flags_false": true,
-      "bypass_observed": true,
+      "bypass_observed": false,
       "captain_approved_at": null,
-      "entered_state": "proven",
+      "entered_state": "candidate",
+      "entry_ok": true,
+      "law": "p12_entry_candidate",
+      "model_birth": "candidate",
       "name": "direct-entry-bypass",
-      "note": "ensure_policy_for_instruction trusts the instruction's approval_state; P2/P5/P7 hold only for transitions from a legitimately entered state.",
-      "outside_model": true,
+      "note": "P12 + #280: birth is candidate; elevated states only via promote_policy.",
+      "outside_model": false,
       "shadow_report_id": null
     }
   ],
@@ -59,14 +65,16 @@
     "changed": true,
     "files": {
       "LAWS.bend": {
-        "base": "absent",
+        "base": "present",
+        "base_sha256": "e84e5b1b29a9009c758aa39c6175f172c3c3fd9195a596491159a275857ffb99",
         "changed": true,
-        "sha256": "7804068ab947c6a4870584842bd15a02418db2fbe014fc29aa6b66359d257e19"
+        "sha256": "cb37759ad500abe5f8f869013a188e4afeba390c64037c0f26ee155fc2449d3b"
       },
       "SPEC.bend": {
-        "base": "absent",
+        "base": "present",
+        "base_sha256": "5fd5a345060e8bfe0816d1a73efe3b1553d824e3f56a2ad121577d4ceff30353",
         "changed": true,
-        "sha256": "9c3bffe8b362bf147dce7a7ea15abd78cb8cf7a112628179d9fef9ff9c295d99"
+        "sha256": "1ac4cfc9957c50d780bde445f74839e6d9ed7733f6afdb3aeac9958785a367cc"
       }
     },
     "needs_captain_review": true,
@@ -92,7 +100,9 @@
           "p1_pipeline",
           "p3_terminal",
           "p4_forward_only",
-          "p5_shadow_before_approval"
+          "p4_forward_sequences",
+          "p5_shadow_before_approval",
+          "p5_shadow_before_approval_sequences"
         ],
         "first_failed_law": "p1_pipeline",
         "kind": "model",
@@ -110,7 +120,9 @@
           "p1_pipeline",
           "p3_terminal",
           "p4_forward_only",
-          "p5_shadow_before_approval"
+          "p4_forward_sequences",
+          "p5_shadow_before_approval",
+          "p5_shadow_before_approval_sequences"
         ],
         "first_failed_law": "p1_pipeline",
         "kind": "model",
@@ -128,7 +140,9 @@
           "p1_pipeline",
           "p3_terminal",
           "p4_forward_only",
-          "p5_shadow_before_approval"
+          "p4_forward_sequences",
+          "p5_shadow_before_approval",
+          "p5_shadow_before_approval_sequences"
         ],
         "first_failed_law": "p1_pipeline",
         "kind": "model",
@@ -146,7 +160,9 @@
           "p1_pipeline",
           "p3_terminal",
           "p4_forward_only",
-          "p5_shadow_before_approval"
+          "p4_forward_sequences",
+          "p5_shadow_before_approval",
+          "p5_shadow_before_approval_sequences"
         ],
         "first_failed_law": "p1_pipeline",
         "kind": "model",
@@ -164,7 +180,9 @@
           "p1_pipeline",
           "p3_terminal",
           "p4_forward_only",
-          "p5_shadow_before_approval"
+          "p4_forward_sequences",
+          "p5_shadow_before_approval",
+          "p5_shadow_before_approval_sequences"
         ],
         "first_failed_law": "p1_pipeline",
         "kind": "model",
@@ -629,7 +647,7 @@
     ],
     "exit_code": 0,
     "output": "ALL PROOFS CHECK",
-    "seconds": 0.847,
+    "seconds": 0.455,
     "status": "pass",
     "verdict": true
   },

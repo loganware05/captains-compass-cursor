@@ -2,11 +2,11 @@
 #
 # CAPTAIN-OWNED. The Captain writes and reviews these claims; agents must not
 # edit this file or SPEC.bend except under an approved plan that explicitly
-# authorizes a law change (e.g. bend-adr-110-go / #278 entry-state P12).
+# authorizes a law change (e.g. bend-278-leftovers / #278 P4/P5 whole-history).
 # PROOF.bend proves each law with a def of the same name.
 # `northstar formal check --strict-laws --base-ref origin/main` compares
 # LAWS.bend and SPEC.bend with the base ref and fails if they changed or the
-# ref is unusable. (CI wiring of --strict-laws remains deferred.)
+# ref is unusable. Opt-in CI: repository variable COMPASS_BEND_STRICT_LAWS_CI=1.
 #
 # Model under test: Model.bend (mirrors orchestrator/behavior/policy/states.py
 # and the decision order of promote.promote_policy). Vocabulary: SPEC.bend,
@@ -59,6 +59,14 @@ law p4_forward_only:
   for +p: M.Pre
   {S.implies(M.decide(f, t, c, p), S.lt(S.stage(f), S.stage(t))) == True{} : Bool}
 
+# P4' FORWARD ONLY FOR ALL SEQUENCES: after any sequence of attempts the stage
+# is at least the starting stage (rejected steps leave the state unchanged;
+# accepted steps increase it by P4). Authorized by bend-278-leftovers (#278).
+law p4_forward_sequences:
+  for +s: M.State
+  for steps: M.Plan
+  {S.le(S.stage(s), S.stage(M.run(steps, s))) == True{} : Bool}
+
 # P5 SHADOW BEFORE APPROVAL: an accepted promotion into `approved` comes from
 # `shadowed`.
 law p5_shadow_before_approval:
@@ -67,6 +75,13 @@ law p5_shadow_before_approval:
   for +c: Bool
   for +p: M.Pre
   {S.implies(Bool.and(S.is_approved(t), M.decide(f, t, c, p)), S.is_shadowed(f)) == True{} : Bool}
+
+# P5' SHADOW BEFORE APPROVAL FOR ALL SEQUENCES: from birth (`candidate`), an
+# ending state of `approved` implies `shadowed` appeared in the history.
+# Authorized by bend-278-leftovers (#278).
+law p5_shadow_before_approval_sequences:
+  for steps: M.Plan
+  {S.implies(S.is_approved(M.run(steps, M.birth())), S.shadowed_in_run(steps, M.birth())) == True{} : Bool}
 
 # P6 NO AUTHORITY GRANT: no promotion outcome sets approved_for_execution or
 # authority_mutation.

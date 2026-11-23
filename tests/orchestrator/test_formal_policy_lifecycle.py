@@ -221,6 +221,11 @@ class TablesAndDriftTests(unittest.TestCase):
         self.assertIn("p11_liveness", names["proofs"])
         self.assertIn("p12_entry_candidate", names["laws"])
         self.assertIn("p12_entry_candidate", names["proofs"])
+        self.assertIn("p4_forward_sequences", names["laws"])
+        self.assertIn("p4_forward_sequences", names["proofs"])
+        self.assertIn("p5_shadow_before_approval_sequences", names["laws"])
+        self.assertIn("p5_shadow_before_approval_sequences", names["proofs"])
+        self.assertEqual(names["laws"], names["proofs"])
 
     def test_law_without_proof_is_flagged(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -337,6 +342,85 @@ class ToolchainHardeningTests(unittest.TestCase):
             env = {"PATH": "/usr/bin:/bin", "COMPASS_BEND_BIN": str(fake), "COMPASS_BEND_SHA256": digest}
             with mock.patch.dict(os.environ, env, clear=True):
                 self.assertIsNotNone(tcmod.discover(REPO))
+
+    def test_lean_version_pin_mismatch_is_refused(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            fake = self._fake_bend(root, "echo bend\n")
+            lean = root / "lean"
+            lean.write_text("#!/bin/sh\necho 'Lean (version 9.9.9)'\n", encoding="utf-8")
+            lean.chmod(lean.stat().st_mode | stat.S_IXUSR)
+            # Point ELAN_HOME at empty dir so discover does not prepend repo elan.
+            elan = root / "elan"
+            elan.mkdir()
+            env = {
+                "PATH": str(root),
+                "COMPASS_BEND_BIN": str(fake),
+                "COMPASS_BEND_ELAN_HOME": str(elan),
+                "COMPASS_LEAN_VERSION": "4.34.0",
+            }
+            with mock.patch.dict(os.environ, env, clear=True):
+                with self.assertRaises(tcmod.ToolchainError) as ctx:
+                    tcmod.discover(REPO)
+            self.assertIn("COMPASS_LEAN_VERSION", str(ctx.exception))
+
+    def test_lean_version_pin_match_is_accepted(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            fake = self._fake_bend(root, "echo bend\n")
+            lean = root / "lean"
+            lean.write_text(
+                "#!/bin/sh\necho 'Lean (version 4.34.0, arm64-apple-darwin)'\n",
+                encoding="utf-8",
+            )
+            lean.chmod(lean.stat().st_mode | stat.S_IXUSR)
+            elan = root / "elan"
+            elan.mkdir()
+            env = {
+                "PATH": str(root),
+                "COMPASS_BEND_BIN": str(fake),
+                "COMPASS_BEND_ELAN_HOME": str(elan),
+                "COMPASS_LEAN_VERSION": "4.34.0",
+            }
+            with mock.patch.dict(os.environ, env, clear=True):
+                self.assertIsNotNone(tcmod.discover(REPO))
+
+    def test_lean_sha_pin_mismatch_is_refused(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            fake = self._fake_bend(root, "echo bend\n")
+            lean = root / "lean"
+            lean.write_text("#!/bin/sh\necho 'Lean (version 4.34.0)'\n", encoding="utf-8")
+            lean.chmod(lean.stat().st_mode | stat.S_IXUSR)
+            elan = root / "elan"
+            elan.mkdir()
+            env = {
+                "PATH": str(root),
+                "COMPASS_BEND_BIN": str(fake),
+                "COMPASS_BEND_ELAN_HOME": str(elan),
+                "COMPASS_LEAN_SHA256": "0" * 64,
+            }
+            with mock.patch.dict(os.environ, env, clear=True):
+                with self.assertRaises(tcmod.ToolchainError) as ctx:
+                    tcmod.discover(REPO)
+            self.assertIn("COMPASS_LEAN_SHA256", str(ctx.exception))
+
+    def test_pins_rechecked_at_run(self) -> None:
+        import hashlib
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            fake = self._fake_bend(root, "echo ok\n")
+            digest = hashlib.sha256(fake.read_bytes()).hexdigest()
+            tc = tcmod.Toolchain(
+                bend=fake,
+                env={"PATH": "/usr/bin:/bin"},
+                bend_pin=digest,
+            )
+            self.assertEqual(tc.run([], cwd=root)["exit_code"], 0)
+            tc.bend_pin = "0" * 64
+            with self.assertRaises(tcmod.ToolchainError):
+                tc.run([], cwd=root)
 
     def test_timeout_kills_the_process_group(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
