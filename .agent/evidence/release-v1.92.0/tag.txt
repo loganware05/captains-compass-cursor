@@ -1,0 +1,6 @@
+tag: v1.92.0
+commit: 3465f7f37b703d3e2aecac6bffe6bbc5c31011be
+pr: https://github.com/loganware05/captains-compass-cursor/pull/306
+issue: https://github.com/loganware05/captains-compass-cursor/issues/305
+rollback: rollback/pre-specialized-real-local-eval @ 6d9f8a0
+release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.92.0
