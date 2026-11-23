@@ -4,6 +4,16 @@
 
 ## Unreleased
 
+## 1.94.0 — 2026-11-23
+
+### Added
+
+- **XRV ops-verified hermetic drill** (`xrv-ops-verified` / #310):
+  - EER `ops_verification` contract required when `lifecycle_state=operationally_verified`
+  - `reconstruct_cycle` / `northstar evidence reconstruct` for auditor stage walk
+  - Hermetic fixture `.agent/evidence/xrv/eer-ops-verified-hermetic.json` (`live_deploy=false`)
+  - Live deploy drill deferred (Captain Q2)
+
 ## 1.93.0 — 2026-11-23
 
 ### Added

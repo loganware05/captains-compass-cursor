@@ -1,0 +1,67 @@
+{
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "auto_promoted": false,
+  "cycle_complete_for_state": true,
+  "eer_id": "eer-ops-verified-hermetic-310",
+  "issues_auto_closed": false,
+  "lifecycle_rank": 5,
+  "lifecycle_state": "operationally_verified",
+  "ops_verified": true,
+  "path": ".agent/evidence/xrv/eer-ops-verified-hermetic.json",
+  "plan_id": "xrv-ops-verified",
+  "stages": [
+    {
+      "present": true,
+      "ref": "https://github.com/loganware05/captains-compass-cursor/issues/310",
+      "stage": "issue"
+    },
+    {
+      "present": true,
+      "ref": "xrv-ops-verified",
+      "stage": "plan"
+    },
+    {
+      "branch": "feature/310-xrv-ops-verified",
+      "commit_sha": "c0795c008617427f50c24e453a959abddabe0414",
+      "present": true,
+      "stage": "implement"
+    },
+    {
+      "present": true,
+      "refs": [
+        ".agent/evidence/xrv/eer-ops-verified-hermetic.json",
+        ".agent/evidence/xrv-ops-verified/",
+        "tests/orchestrator/test_xrv_ops_verified.py"
+      ],
+      "stage": "validate"
+    },
+    {
+      "present": true,
+      "refs": [
+        "Hermetic ops-verified reconstruct (no live deploy)"
+      ],
+      "stage": "review"
+    },
+    {
+      "present": true,
+      "ref": "https://github.com/loganware05/captains-compass-cursor/pull/311",
+      "stage": "merge"
+    },
+    {
+      "ops_verification": {
+        "evidence_paths": [
+          ".agent/evidence/xrv-ops-verified/hermetic-smoke.json",
+          ".agent/evidence/xrv/eer-ops-verified-hermetic.json"
+        ],
+        "live_deploy": false,
+        "repository_sha": "c0795c008617427f50c24e453a959abddabe0414",
+        "smoke_id": "hermetic-ops-smoke-310",
+        "verified_at": "2026-11-23T20:05:00Z"
+      },
+      "present": true,
+      "stage": "operationally_verified"
+    }
+  ],
+  "status": "ok"
+}

@@ -14,10 +14,15 @@ usage() {
   cat <<'USAGE'
 Usage:
   run-xrv-eer.sh validate [--path PATH] [--repo-root PATH]
+  run-xrv-eer.sh reconstruct [--path PATH] [--repo-root PATH]
   run-xrv-eer.sh drift [--repo-root PATH]
 
 validate: schema-check an Experience Evidence Record JSON file
   (default path: .agent/evidence/xrv/eer-i6-cross-provider-fixture.json)
+  Requires COMPASS_XRV_EER_ENABLED=1.
+
+reconstruct: validate then emit ordered cycle stages (incl. ops-verified)
+  (default path: .agent/evidence/xrv/eer-ops-verified-hermetic.json)
   Requires COMPASS_XRV_EER_ENABLED=1.
 
 drift: check VERSION ↔ README current-version consistency (no gate).
@@ -26,7 +31,7 @@ USAGE
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    validate|drift)
+    validate|reconstruct|drift)
       CMD="$1"
       shift
       ;;
@@ -53,7 +58,7 @@ done
 export PYTHONPATH="${REPO_ROOT}${PYTHONPATH:+:$PYTHONPATH}"
 cd "$REPO_ROOT"
 
-if [[ "$CMD" == "validate" ]]; then
+if [[ "$CMD" == "validate" || "$CMD" == "reconstruct" ]]; then
   if [[ "${COMPASS_XRV_EER_ENABLED:-}" != "1" && \
       "${COMPASS_XRV_EER_ENABLED:-}" != "true" && \
       "${COMPASS_XRV_EER_ENABLED:-}" != "yes" && \
@@ -62,7 +67,11 @@ if [[ "$CMD" == "validate" ]]; then
     exit 2
   fi
   if [[ -z "$EER_PATH" ]]; then
-    EER_PATH="$REPO_ROOT/.agent/evidence/xrv/eer-i6-cross-provider-fixture.json"
+    if [[ "$CMD" == "reconstruct" ]]; then
+      EER_PATH="$REPO_ROOT/.agent/evidence/xrv/eer-ops-verified-hermetic.json"
+    else
+      EER_PATH="$REPO_ROOT/.agent/evidence/xrv/eer-i6-cross-provider-fixture.json"
+    fi
   fi
 fi
 
@@ -71,7 +80,7 @@ import json
 import sys
 from pathlib import Path
 
-from orchestrator.xrv.eer import validate_eer_path
+from orchestrator.xrv.eer import reconstruct_eer_path, validate_eer_path
 from orchestrator.xrv.release_drift import check_release_document_drift
 
 cmd, repo_root, eer_path = sys.argv[1:4]
@@ -86,6 +95,11 @@ try:
         result = validate_eer_path(root, Path(eer_path), require_gate=True)
         print(json.dumps(result, indent=2, sort_keys=True))
         sys.exit(0 if result.get("status") == "ok" else 1)
+    if cmd == "reconstruct":
+        result = reconstruct_eer_path(root, Path(eer_path), require_gate=True)
+        print(json.dumps(result, indent=2, sort_keys=True))
+        ok = result.get("status") == "ok" and result.get("cycle_complete_for_state")
+        sys.exit(0 if ok else 1)
     print(f"error: unknown command {cmd}", file=sys.stderr)
     sys.exit(2)
 except PermissionError as exc:

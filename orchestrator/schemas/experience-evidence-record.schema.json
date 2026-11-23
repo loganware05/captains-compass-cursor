@@ -92,9 +92,45 @@
       "items": { "type": "string" }
     },
     "notes": { "type": "string" },
+    "ops_verification": {
+      "type": "object",
+      "description": "Required when lifecycle_state is operationally_verified. Hermetic or live ops smoke evidence.",
+      "required": [
+        "smoke_id",
+        "verified_at",
+        "repository_sha",
+        "evidence_paths",
+        "live_deploy"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "smoke_id": { "type": "string", "minLength": 1 },
+        "verified_at": { "type": "string", "minLength": 1 },
+        "repository_sha": { "type": "string", "minLength": 7 },
+        "evidence_paths": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        },
+        "live_deploy": {
+          "type": "boolean",
+          "description": "true only for a live deploy drill; hermetic fixtures must be false"
+        },
+        "notes": { "type": "string" }
+      }
+    },
     "approved_for_execution": { "type": "boolean", "const": false },
     "authority_mutation": { "type": "boolean", "const": false },
     "issues_auto_closed": { "type": "boolean", "const": false },
     "auto_promoted": { "type": "boolean", "const": false }
+  },
+  "if": {
+    "properties": {
+      "lifecycle_state": { "const": "operationally_verified" }
+    },
+    "required": ["lifecycle_state"]
+  },
+  "then": {
+    "required": ["ops_verification"]
   }
 }

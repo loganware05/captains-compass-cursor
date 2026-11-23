@@ -1,0 +1,63 @@
+{
+  "schema_version": "xrv-eer-1",
+  "eer_id": "eer-ops-verified-hermetic-310",
+  "created_at": "2026-11-23T20:00:00Z",
+  "repository": {
+    "owner": "loganware05",
+    "name": "captains-compass-cursor",
+    "url": "https://github.com/loganware05/captains-compass-cursor"
+  },
+  "commit_sha": "c0795c008617427f50c24e453a959abddabe0414",
+  "plan_id": "xrv-ops-verified",
+  "issue": "https://github.com/loganware05/captains-compass-cursor/issues/310",
+  "pull_request": "https://github.com/loganware05/captains-compass-cursor/pull/311",
+  "branch": "feature/310-xrv-ops-verified",
+  "lifecycle_state": "operationally_verified",
+  "skills_selected": [
+    "implementation-planning",
+    "testing-validation",
+    "github-integration"
+  ],
+  "budget_ref": ".agent/budgets/xrv-ops-verified.md",
+  "permissions": [
+    "hermetic-fixture-only",
+    "no-live-deploy"
+  ],
+  "test_evidence": [
+    ".agent/evidence/xrv/eer-ops-verified-hermetic.json",
+    ".agent/evidence/xrv-ops-verified/",
+    "tests/orchestrator/test_xrv_ops_verified.py"
+  ],
+  "failure_repair": [],
+  "review_refs": [
+    "Hermetic ops-verified reconstruct (no live deploy)"
+  ],
+  "rollback_ref": "rollback/pre-xrv-ops-verified @ 4747994",
+  "latency_cost": {
+    "notes": "Hermetic ops-verified drill; live_deploy=false"
+  },
+  "verified_outcome": "Auditor can reconstruct issue\u2192plan\u2192implement\u2192validate\u2192review\u2192merge\u2192operationally_verified via reconstruct_cycle; hermetic smoke only (live deploy deferred).",
+  "experience_id": null,
+  "execution_run_id": null,
+  "related_evidence_paths": [
+    "docs/plans/XRV_OPS_VERIFIED.md",
+    "docs/plans/XRV_CROSS_REPOSITORY_VALIDATION.md",
+    "orchestrator/xrv/eer.py"
+  ],
+  "notes": "XRV ops-verified hermetic fixture. lifecycle_state=operationally_verified with ops_verification.live_deploy=false. Does not claim a live production smoke.",
+  "ops_verification": {
+    "smoke_id": "hermetic-ops-smoke-310",
+    "verified_at": "2026-11-23T20:05:00Z",
+    "repository_sha": "c0795c008617427f50c24e453a959abddabe0414",
+    "evidence_paths": [
+      ".agent/evidence/xrv-ops-verified/hermetic-smoke.json",
+      ".agent/evidence/xrv/eer-ops-verified-hermetic.json"
+    ],
+    "live_deploy": false,
+    "notes": "Schema + reconstruct proof only; live deploy deferred per Captain Q2"
+  },
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "issues_auto_closed": false,
+  "auto_promoted": false
+}

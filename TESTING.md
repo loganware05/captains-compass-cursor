@@ -58,6 +58,16 @@ COMPASS_XRV_EER_ENABLED=1 ./scripts/northstar evidence validate --repo .
 PYTHONPATH=. python3 -m unittest tests.orchestrator.test_xrv_release_integrity -v
 ```
 
+
+XRV ops-verified reconstruct (v1.94.0):
+
+```bash
+COMPASS_XRV_EER_ENABLED=1 ./scripts/northstar evidence reconstruct --repo .
+COMPASS_XRV_EER_ENABLED=1 ./scripts/northstar evidence validate --repo . \
+  --path .agent/evidence/xrv/eer-ops-verified-hermetic.json
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_xrv_ops_verified -v
+```
+
 XRV eight-pillar readiness (v1.84.0) + portfolio (v1.85.0):
 
 ```bash
