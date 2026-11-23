@@ -127,6 +127,8 @@ def main():
     L += ["", "def Laws.p10_outcome_agrees(f, t, c, p):", f"{ind(1)}outcome_lemma(M.decide(f, t, c, p), t)", ""]
     L.append("# P11 liveness: a finite case analysis over every (from, to) pair; Bend decides\n# each leaf by computation (Captain and evidence are concrete True).")
     L.extend(["def Laws.p11_liveness(f, t):"] + pair_split(1) + [""])
+    L.append("# P12 entry state: birth() is Candidate{}; SPEC.entry_ok holds by computation.")
+    L.extend(["def Laws.p12_entry_candidate():", f"{ind(1)}{{==}}", ""])
     L.append("# P7: split the evidence flag; when it is False the target is rejected, which\n# needs the source state (and Captain approval) only for the gated target.")
     L.extend(p7("p7a_sandbox_needs_eval_pass", "is_sandbox_evaluated", "eval_pass", "SandboxEvaluated")); L.append("")
     L.extend(p7("p7b_shadowed_needs_shadow_ok", "is_shadowed", "shadow_ok", "Shadowed")); L.append("")

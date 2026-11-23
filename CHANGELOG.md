@@ -4,6 +4,15 @@
 
 ## Unreleased
 
+## 1.91.0 — 2026-11-22
+
+### Added
+
+- **Bend ADR-110 go + entry-state law** (`bend-adr-110-go` / #278):
+  - ADR-110 **Accepted** as conditional-go (opt-in; no CI wire; no target widen)
+  - P12 `p12_entry_candidate` (`M.birth` / `S.entry_ok`) closes Finding 001 formally
+  - Python probe is conformance (`outside_model: false`); remaining gaps parked (P4/P5 lift, Lean pin, `--strict-laws` CI)
+
 ## 1.90.0 — 2026-11-22
 
 ### Added

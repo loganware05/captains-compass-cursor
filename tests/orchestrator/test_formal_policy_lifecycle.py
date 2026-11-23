@@ -219,6 +219,8 @@ class TablesAndDriftTests(unittest.TestCase):
         names = pl.law_names(REPO)
         self.assertIn("p11_liveness", names["laws"])
         self.assertIn("p11_liveness", names["proofs"])
+        self.assertIn("p12_entry_candidate", names["laws"])
+        self.assertIn("p12_entry_candidate", names["proofs"])
 
     def test_law_without_proof_is_flagged(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -504,10 +506,12 @@ class KnownGapTests(unittest.TestCase):
         gap = pl.probe_direct_entry()
         after = sorted(p.name for p in (REPO / ".agent").glob("evaluations*"))
         self.assertEqual(before, after)
-        self.assertTrue(gap["outside_model"])
+        self.assertFalse(gap["outside_model"])
+        self.assertEqual(gap["law"], "p12_entry_candidate")
         self.assertTrue(gap["authority_flags_false"])
-        # Finding 001 production fix (#280): bypass must stay False.
+        # Finding 001 production fix (#280) + P12: bypass must stay False.
         self.assertFalse(gap["bypass_observed"])
+        self.assertTrue(gap["entry_ok"])
         self.assertEqual(gap["entered_state"], "candidate")
         self.assertIn(gap["entered_state"], policy_states.LIFECYCLE_STATES)
         self.assertIsNone(gap["captain_approved_at"])

@@ -2,29 +2,24 @@
 
 ## Current status
 
-**MERGED:** [#301](https://github.com/loganware05/captains-compass-cursor/pull/301)
-for [#300](https://github.com/loganware05/captains-compass-cursor/issues/300)
-`t3-mcp-live-adapter` → **v1.90.0** @ `412fcd3`.
+**PR OPEN:** [#303](https://github.com/loganware05/captains-compass-cursor/pull/303)
+for [#278](https://github.com/loganware05/captains-compass-cursor/issues/278)
+`bend-adr-110-go` → proposed **v1.91.0**.
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.89.2** / `5a76f27` |
-| Plan | `t3-mcp-live-adapter` **COMPLETE** |
-| Issue | [#300](https://github.com/loganware05/captains-compass-cursor/issues/300) |
-| PR | [#301](https://github.com/loganware05/captains-compass-cursor/pull/301) |
-| Merge | `412fcd3` |
-| Tag | [`v1.90.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.90.0) @ `412fcd3` |
-| Rollback | `rollback/pre-t3-mcp-live-adapter` @ `5a76f27` |
+| Baseline | **v1.90.0** / `origin/main` @ `843af00` |
+| Plan | `bend-adr-110-go` **COMPLETE** |
+| Issue | [#278](https://github.com/loganware05/captains-compass-cursor/issues/278) |
+| PR | [#303](https://github.com/loganware05/captains-compass-cursor/pull/303) |
+| Branch | `feature/278-bend-adr-110-go` |
+| Rollback | `rollback/pre-bend-adr-110-go` @ `843af00` |
 
 ### Prior closeout
 
+- T3 live adapter **v1.90.0** (#301 / #300) + docs (#302)
 - Audit P5 **v1.89.2** (#298 / #297) + docs (#299)
-- Audit P4 **v1.89.1** (#295 / #294) + docs (#296)
-- Audit P3 **v1.89.0** (#292 / #291) + docs (#293)
-- Audit P2 **v1.88.0** (#289 / #288) + docs (#290)
-- Audit P1 **v1.87.2** (#285 / #284) + docs (#286/#287)
-- Audit P0 **v1.87.1** (#281 / #280) + docs (#282/#283)
-- Bend spike #279; #278 open for formal follow-ups
+- Bend spike #279; ADR-110 Accepted under this plan
 
 ## Standing order
 
@@ -32,12 +27,8 @@ Approve ⇒ implement → validate → commit → open PR. Merge remains Captain
 
 ## Next
 
-Pick the next product plan when ready:
-
-- Specialized real local eval (not #237 Level 3 / paid GPU)
-- B4 FIX→TEST→SUBMIT
-- XRV ops-verified drill
-- Bend #278 / ADR-110 go/no-go
+After merge/tag: specialized real local eval · B4 FIX→TEST→SUBMIT · XRV ops-verified ·
+#278 leftovers (P4/P5 lift, Lean pin, `--strict-laws` CI).
 
 ## Blockers
 

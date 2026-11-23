@@ -1,11 +1,12 @@
 # Policy lifecycle: the laws.
 #
 # CAPTAIN-OWNED. The Captain writes and reviews these claims; agents must not
-# edit this file or SPEC.bend. PROOF.bend proves each law with a def of the
-# same name. `northstar formal check --strict-laws --base-ref origin/main`
-# compares LAWS.bend and SPEC.bend with the base ref and fails if they changed
-# or the ref is unusable, so a branch cannot weaken the gate that checks it.
-# (CI wiring is deferred until the spike's go/no-go.)
+# edit this file or SPEC.bend except under an approved plan that explicitly
+# authorizes a law change (e.g. bend-adr-110-go / #278 entry-state P12).
+# PROOF.bend proves each law with a def of the same name.
+# `northstar formal check --strict-laws --base-ref origin/main` compares
+# LAWS.bend and SPEC.bend with the base ref and fails if they changed or the
+# ref is unusable. (CI wiring of --strict-laws remains deferred.)
 #
 # Model under test: Model.bend (mirrors orchestrator/behavior/policy/states.py
 # and the decision order of promote.promote_policy). Vocabulary: SPEC.bend,
@@ -154,3 +155,9 @@ law p11_liveness:
   for +f: M.State
   for +t: M.State
   {Bool.or(S.is_retired(f), Bool.or(Bool.not(S.successor_ok(f, t)), M.decide(f, t, True{}, M.Pre{True{}, True{}, True{}, True{}}))) == True{} : Bool}
+
+# P12 ENTRY STATE (Finding 001): a newly created policy is always born in
+# `candidate`. Elevated states are reachable only through accepted promotions.
+# Authorized by Captain-approved plan bend-adr-110-go (#278).
+law p12_entry_candidate:
+  {S.entry_ok(M.birth()) == True{} : Bool}

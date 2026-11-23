@@ -84,6 +84,27 @@ def is_retired(t: M.State) -> Bool:
     case M.Retired{}:
       True{}
 
+# Entry vocabulary (Finding 001 / P12): birth must be candidate.
+def is_candidate(t: M.State) -> Bool:
+  match t:
+    case M.Candidate{}:
+      True{}
+    case M.SandboxEvaluated{}:
+      False{}
+    case M.Shadowed{}:
+      False{}
+    case M.Approved{}:
+      False{}
+    case M.Active{}:
+      False{}
+    case M.Proven{}:
+      False{}
+    case M.Retired{}:
+      False{}
+
+def entry_ok(s: M.State) -> Bool:
+  is_candidate(s)
+
 # Moving from f to t is a single pipeline step, or the exit to `retired`.
 def successor_ok(+f: M.State, +t: M.State) -> Bool:
   Bool.or(is_retired(t), eq(stage(t), 1n+stage(f)))

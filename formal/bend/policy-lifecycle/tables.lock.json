@@ -1,11 +1,12 @@
 {
   "files_sha256": {
     "Conformance.bend": "6bd01d158beff8f3405d7025390048a685543b7bbfbfd981c1033368dc1ae98b",
-    "Model.bend": "bb145c3f3b50432b5973506452bdc7070032aff89dbf93a2c6d14a472ebee82f"
+    "Model.bend": "c65bfd049d1eb7e46262f50b4860fcf60a65c791c510d46508da8ec3f47a618b"
   },
   "laws": [
     "p10_outcome_agrees",
     "p11_liveness",
+    "p12_entry_candidate",
     "p1_pipeline",
     "p2_captain_gate",
     "p3_terminal",

@@ -95,31 +95,29 @@
 
 ## ADR-110: Bend Policy-Lifecycle Proof Spike (go/no-go)
 
-- **Status:** **Proposed** — awaiting Captain decision (the agent does not accept its own ADR).
-  Spike **merged** via PR #279; Issue #278 remains open for formal follow-ups.
-- **Date:** 2026-11-18 (amended 2026-11-21 for Finding 001 production fix under #280)
+- **Status:** **Accepted** (conditional-go) — Captain approved plan `bend-adr-110-go` on 2026-11-22.
+- **Date:** 2026-11-18 (amended 2026-11-21 Finding 001/#280; accepted 2026-11-22 with P12)
 - **Context:** Bend 2 assessment recommended a small opt-in proof experiment on the policy
-  lifecycle decision core. Plan `bend-policy-proof-spike` (#278) approved by the Captain.
-- **Decision (proposed):** **Conditional go** — keep the experiment as an opt-in, additive command
+  lifecycle decision core. Spike `bend-policy-proof-spike` (#278 / #279) shipped
+  `ready_for_captain_decision` with recommendation `conditional-go`.
+- **Decision:** **Conditional go** — keep the experiment as an opt-in, additive command
   (`COMPASS_BEND_PROOF_ENABLED=1 northstar formal check policy-lifecycle`). Do **not** wire it into
-  CI, make Bend a dependency, or extend to other targets until the Captain decides.
-  1. Model + 17 laws (incl. P11 liveness) proved with the Lean-checked kernel; Captain owns `LAWS.bend` and `SPEC.bend`.
-  2. Conformance is exhaustive (1568 rows) against the *real* Python functions; drift, law-manifest
+  CI, make Bend a required dependency, or extend to other targets in this release.
+  1. Model + laws through **P12 entry-state** proved with the Lean-checked kernel; Captain owns
+     `LAWS.bend` and `SPEC.bend` (P12 authorized under `bend-adr-110-go`).
+  2. Conformance is exhaustive (1568 rows) against the *real* Python functions; drift, law-manifest,
      a whole-function AST pin of `promote_policy`, and 23 model + 15 Python-side mutation controls
-     reject unpaired change (6 of the Python mutants are evasions only the AST pin can see).
-  3. **Boundary:** only transitions are modeled. P4/P5 are per-step, evidence gates are booleans,
-     gate order is pinned (not proved), P6/P8/P10 are model-internal (not linked to production
-     code), the `promote_policy` pin is coarse, Lean is unpinned, and policy *entry* is outside the model.
-  4. Finding 001 (direct entry into `proven` bypasses all gates) was the main yield from boundary
-     review. **Production fix shipped in #280:** `ensure_policy_for_instruction()` always creates
-     policies at `candidate`. A Bend entry-state law remains a #278 follow-up.
-- **Consequences:** Positive — a precise, checkable statement of the lifecycle safety contract and a
-  harness that rejects broken tables/structure. Negative — real authoring cost (6+ proof-fix
-  iterations; a review-driven hardening round), a tool that needs a Lean build for the strongest
-  check, and a risk of false assurance if the boundary is not read. No production semantics changed.
-- **No-go triggers:** if the Captain declines, archive as docs/evidence and delete `formal/`.
-- **Evidence:** `.agent/evidence/bend-policy-proof-spike/` (`report.json`, `LATEST_check.json`,
-  `finding-001-direct-entry-bypass.md`, `wave0-provenance.md`).
+     reject unpaired change.
+  3. **Boundary (still explicit):** P4/P5 are per-step (not whole-history), evidence gates are
+     booleans, gate order is pinned (not proved), P6/P8/P10 are model-internal, the
+     `promote_policy` pin is coarse, Lean remains unpinned, `--strict-laws` CI wiring deferred.
+  4. Finding 001: production fix in #280; **P12** (`M.birth` / `S.entry_ok` /
+     `p12_entry_candidate`) closes the formal entry gap. Python probe remains as conformance.
+- **Consequences:** Opt-in formal surface is an accepted NorthStar capability with an entry-state
+  law. Remaining gaps stay parked under #278 follow-ups (P4/P5 lift, Lean pin, CI). No authority
+  mutation; fixture/default CI stays green without Bend.
+- **Evidence:** `.agent/evidence/bend-policy-proof-spike/` (spike) ·
+  `.agent/evidence/bend-adr-110-go/` (accept + P12).
 
 ## ADR-109: Post-Merge Wave Continue (v1.87.0)
 

@@ -1,0 +1,63 @@
+test_all_mutants_rejected_as_expected (tests.orchestrator.test_formal_policy_lifecycle.BendEndToEndTests.test_all_mutants_rejected_as_expected) ... ok
+test_always_reject_model_is_caught_by_liveness (tests.orchestrator.test_formal_policy_lifecycle.BendEndToEndTests.test_always_reject_model_is_caught_by_liveness) ... ok
+test_evasions_are_caught_only_by_the_lock (tests.orchestrator.test_formal_policy_lifecycle.BendEndToEndTests.test_evasions_are_caught_only_by_the_lock) ... ok
+test_evidence_record_has_provenance (tests.orchestrator.test_formal_policy_lifecycle.BendEndToEndTests.test_evidence_record_has_provenance) ... ok
+test_known_gap_is_recorded (tests.orchestrator.test_formal_policy_lifecycle.BendEndToEndTests.test_known_gap_is_recorded) ... ok
+test_overall_ok (tests.orchestrator.test_formal_policy_lifecycle.BendEndToEndTests.test_overall_ok) ... ok
+test_partial_runs_are_marked_degraded (tests.orchestrator.test_formal_policy_lifecycle.BendEndToEndTests.test_partial_runs_are_marked_degraded) ... ok
+test_proof_caught_mutants_trip_the_expected_law (tests.orchestrator.test_formal_policy_lifecycle.BendEndToEndTests.test_proof_caught_mutants_trip_the_expected_law) ... ok
+test_proofs_pass_with_kernel_verdict (tests.orchestrator.test_formal_policy_lifecycle.BendEndToEndTests.test_proofs_pass_with_kernel_verdict) ... ok
+test_python_matches_model_exhaustively (tests.orchestrator.test_formal_policy_lifecycle.BendEndToEndTests.test_python_matches_model_exhaustively) ... ok
+test_drift_is_not_hidden_by_a_skip (tests.orchestrator.test_formal_policy_lifecycle.CheckWithoutToolTests.test_drift_is_not_hidden_by_a_skip) ... ok
+test_require_tool_fails_when_absent (tests.orchestrator.test_formal_policy_lifecycle.CheckWithoutToolTests.test_require_tool_fails_when_absent) ... ok
+test_skipped_when_tool_absent (tests.orchestrator.test_formal_policy_lifecycle.CheckWithoutToolTests.test_skipped_when_tool_absent) ... ok
+test_strict_laws_fail_closed_on_bad_ref_even_without_tool (tests.orchestrator.test_formal_policy_lifecycle.CheckWithoutToolTests.test_strict_laws_fail_closed_on_bad_ref_even_without_tool) ... ok
+test_base_ref_requires_a_value (tests.orchestrator.test_formal_policy_lifecycle.CliTests.test_base_ref_requires_a_value) ... ok
+test_gate_off_exits_2 (tests.orchestrator.test_formal_policy_lifecycle.CliTests.test_gate_off_exits_2) ... ok
+test_lock_rejects_flags_it_would_ignore (tests.orchestrator.test_formal_policy_lifecycle.CliTests.test_lock_rejects_flags_it_would_ignore) ... ok
+test_disabled_by_default (tests.orchestrator.test_formal_policy_lifecycle.GateTests.test_disabled_by_default) ... ok
+test_enabled_values (tests.orchestrator.test_formal_policy_lifecycle.GateTests.test_enabled_values) ... ok
+test_library_entry_points_enforce_the_gate (tests.orchestrator.test_formal_policy_lifecycle.GateTests.test_library_entry_points_enforce_the_gate) ... ok
+test_direct_entry_probe_runs_in_isolation (tests.orchestrator.test_formal_policy_lifecycle.KnownGapTests.test_direct_entry_probe_runs_in_isolation) ... ok
+test_bad_ref_is_an_error_not_clean (tests.orchestrator.test_formal_policy_lifecycle.LawIntegrityTests.test_bad_ref_is_an_error_not_clean) ... ok
+test_deleted_law_file_is_changed_not_a_crash (tests.orchestrator.test_formal_policy_lifecycle.LawIntegrityTests.test_deleted_law_file_is_changed_not_a_crash) ... ok
+test_inherited_git_env_cannot_redirect_the_comparison (tests.orchestrator.test_formal_policy_lifecycle.LawIntegrityTests.test_inherited_git_env_cannot_redirect_the_comparison) ... ok
+test_law_files_absent_at_base_count_as_changed (tests.orchestrator.test_formal_policy_lifecycle.LawIntegrityTests.test_law_files_absent_at_base_count_as_changed) ... ok
+test_modified_laws_flagged_against_head (tests.orchestrator.test_formal_policy_lifecycle.LawIntegrityTests.test_modified_laws_flagged_against_head) ... ok
+test_option_like_ref_never_writes_a_file (tests.orchestrator.test_formal_policy_lifecycle.LawIntegrityTests.test_option_like_ref_never_writes_a_file) ... ok
+test_every_model_mutant_changes_the_model (tests.orchestrator.test_formal_policy_lifecycle.MutantDefinitionTests.test_every_model_mutant_changes_the_model) ... ok
+test_ids_unique (tests.orchestrator.test_formal_policy_lifecycle.MutantDefinitionTests.test_ids_unique) ... ok
+test_missing_anchor_raises (tests.orchestrator.test_formal_policy_lifecycle.MutantDefinitionTests.test_missing_anchor_raises) ... ok
+test_mutants_target_the_intended_case_only (tests.orchestrator.test_formal_policy_lifecycle.MutantDefinitionTests.test_mutants_target_the_intended_case_only) ... ok
+test_compare_detects_mismatch_and_gaps (tests.orchestrator.test_formal_policy_lifecycle.PythonDecisionTests.test_compare_detects_mismatch_and_gaps) ... ok
+test_grid_is_exhaustive (tests.orchestrator.test_formal_policy_lifecycle.PythonDecisionTests.test_grid_is_exhaustive) ... ok
+test_known_decisions (tests.orchestrator.test_formal_policy_lifecycle.PythonDecisionTests.test_known_decisions) ... ok
+test_parse_roundtrip_and_errors (tests.orchestrator.test_formal_policy_lifecycle.PythonDecisionTests.test_parse_roundtrip_and_errors) ... ok
+test_comment_only_edits_do_not_trip_the_pin (tests.orchestrator.test_formal_policy_lifecycle.StructureEvasionTests.test_comment_only_edits_do_not_trip_the_pin) ... ok
+test_evasions_are_invisible_to_the_flags_but_not_the_pin (tests.orchestrator.test_formal_policy_lifecycle.StructureEvasionTests.test_evasions_are_invisible_to_the_flags_but_not_the_pin) ... ok
+test_fingerprint_ignores_empty_and_none_fields (tests.orchestrator.test_formal_policy_lifecycle.StructureEvasionTests.test_fingerprint_ignores_empty_and_none_fields) ... ok
+test_shadowed_gate_functions_break_binding_identity (tests.orchestrator.test_formal_policy_lifecycle.StructureEvasionTests.test_shadowed_gate_functions_break_binding_identity) ... ok
+test_real_promote_structure (tests.orchestrator.test_formal_policy_lifecycle.StructureTests.test_real_promote_structure) ... ok
+test_reordering_breaks_order_flag (tests.orchestrator.test_formal_policy_lifecycle.StructureTests.test_reordering_breaks_order_flag) ... ok
+test_source_edits_change_the_structure (tests.orchestrator.test_formal_policy_lifecycle.StructureTests.test_source_edits_change_the_structure) ... ok
+test_conformance_and_model_files_are_locked (tests.orchestrator.test_formal_policy_lifecycle.TablesAndDriftTests.test_conformance_and_model_files_are_locked) ... ok
+test_drift_when_captain_set_changes (tests.orchestrator.test_formal_policy_lifecycle.TablesAndDriftTests.test_drift_when_captain_set_changes) ... ok
+test_drift_when_promote_structure_changes (tests.orchestrator.test_formal_policy_lifecycle.TablesAndDriftTests.test_drift_when_promote_structure_changes) ... ok
+test_drift_when_transitions_change (tests.orchestrator.test_formal_policy_lifecycle.TablesAndDriftTests.test_drift_when_transitions_change) ... ok
+test_law_without_proof_is_flagged (tests.orchestrator.test_formal_policy_lifecycle.TablesAndDriftTests.test_law_without_proof_is_flagged) ... ok
+test_liveness_law_exists_and_is_proved (tests.orchestrator.test_formal_policy_lifecycle.TablesAndDriftTests.test_liveness_law_exists_and_is_proved) ... ok
+test_lock_matches_python (tests.orchestrator.test_formal_policy_lifecycle.TablesAndDriftTests.test_lock_matches_python) ... ok
+test_missing_lock_fails (tests.orchestrator.test_formal_policy_lifecycle.TablesAndDriftTests.test_missing_lock_fails) ... ok
+test_write_lock_roundtrip_and_manifest (tests.orchestrator.test_formal_policy_lifecycle.TablesAndDriftTests.test_write_lock_roundtrip_and_manifest) ... ok
+test_environment_is_allowlisted (tests.orchestrator.test_formal_policy_lifecycle.ToolchainHardeningTests.test_environment_is_allowlisted) ... ok
+test_explicit_missing_binary_is_not_a_silent_skip (tests.orchestrator.test_formal_policy_lifecycle.ToolchainHardeningTests.test_explicit_missing_binary_is_not_a_silent_skip) ... ok
+test_sha_pin_match_is_accepted (tests.orchestrator.test_formal_policy_lifecycle.ToolchainHardeningTests.test_sha_pin_match_is_accepted) ... ok
+test_sha_pin_mismatch_is_refused (tests.orchestrator.test_formal_policy_lifecycle.ToolchainHardeningTests.test_sha_pin_mismatch_is_refused) ... ok
+test_timeout_kills_the_process_group (tests.orchestrator.test_formal_policy_lifecycle.ToolchainHardeningTests.test_timeout_kills_the_process_group) ... ok
+test_version_tolerates_empty_output (tests.orchestrator.test_formal_policy_lifecycle.ToolchainHardeningTests.test_version_tolerates_empty_output) ... ok
+
+----------------------------------------------------------------------
+Ran 57 tests in 10.294s
+
+OK
+EXIT:0
