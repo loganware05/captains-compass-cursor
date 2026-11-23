@@ -2,7 +2,8 @@
 
 ## Current status
 
-**IN PROGRESS:** [#305](https://github.com/loganware05/captains-compass-cursor/issues/305)
+**PR OPEN:** [#306](https://github.com/loganware05/captains-compass-cursor/pull/306)
+for [#305](https://github.com/loganware05/captains-compass-cursor/issues/305)
 `specialized-real-local-eval` → proposed **v1.92.0**.
 
 | Item | Value |
@@ -10,6 +11,7 @@
 | Baseline | **v1.91.0** / `origin/main` @ `6d9f8a0` |
 | Plan | `specialized-real-local-eval` **COMPLETE** |
 | Issue | [#305](https://github.com/loganware05/captains-compass-cursor/issues/305) |
+| PR | [#306](https://github.com/loganware05/captains-compass-cursor/pull/306) |
 | Branch | `feature/305-specialized-real-local-eval` |
 | Rollback | `rollback/pre-specialized-real-local-eval` @ `6d9f8a0` |
 
