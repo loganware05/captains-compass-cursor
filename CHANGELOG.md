@@ -4,6 +4,17 @@
 
 ## Unreleased
 
+## 1.92.0 — 2026-11-22
+
+### Added
+
+- **Specialized real local eval** (`specialized-real-local-eval` / #305):
+  - Opt-in local student via `COMPASS_SPECIALIZED_STUDENT` (argv) or
+    `COMPASS_SPECIALIZED_STUDENT_URL` (HTTPS)
+  - L0 baseline + L1 evaluate record `student_mode` + optional `local_student_*` rates
+  - Stub remains CI default; doctor asserts stub without student env
+  - Local mode holds when local rate trails retrieval by >0.05
+
 ## 1.91.0 — 2026-11-22
 
 ### Added

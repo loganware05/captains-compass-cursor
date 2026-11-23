@@ -41,6 +41,10 @@ Level 0: hermetic baseline (no fine-tuning).
 Level 1: LoRA prepare/train/evaluate (external trainer or --dry-run).
 Level 2: GPU QLoRA prepare/submit/evaluate; non-dry-run submit needs --cost-ack.
 Weights stay outside this control repo; never auto-promote.
+
+Optional local student (L0 baseline / L1 evaluate; stub remains CI default):
+  COMPASS_SPECIALIZED_STUDENT='./my-student.sh'   # argv: JSON stdin → answer stdout
+  COMPASS_SPECIALIZED_STUDENT_URL=https://…      # HTTPS POST → {"answer":"…"}
 USAGE
 }
 

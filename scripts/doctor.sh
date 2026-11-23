@@ -549,6 +549,11 @@ PY
   else
     fail "missing executable scripts/run-specialized-model.sh"
   fi
+  if [[ -f "$ROOT/orchestrator/specialized/student.py" ]]; then
+    ok "orchestrator/specialized/student.py present"
+  else
+    fail "missing orchestrator/specialized/student.py"
+  fi
   set +e
   sm_out="$(env -u COMPASS_SPECIALIZED_MODEL_ENABLED "$ROOT/scripts/run-specialized-model.sh" baseline --repo-root "$ROOT" 2>&1)"
   sm_rc=$?
@@ -557,6 +562,19 @@ PY
     ok "specialized-model fail-closed when COMPASS_SPECIALIZED_MODEL_ENABLED unset"
   else
     fail "specialized-model should exit 2 mentioning COMPASS_SPECIALIZED_MODEL_ENABLED when unset (rc=$sm_rc)"
+  fi
+  set +e
+  sm_stub_out="$(
+    env -u COMPASS_SPECIALIZED_STUDENT -u COMPASS_SPECIALIZED_STUDENT_URL \
+      COMPASS_SPECIALIZED_MODEL_ENABLED=1 \
+      "$ROOT/scripts/run-specialized-model.sh" baseline --repo-root "$ROOT" --no-write-evidence 2>&1
+  )"
+  sm_stub_rc=$?
+  set -e
+  if [[ "$sm_stub_rc" -eq 0 && "$sm_stub_out" == *'"student_mode": "stub"'* ]]; then
+    ok "specialized baseline defaults to student_mode stub without local student env"
+  else
+    fail "specialized baseline should default to stub student_mode (rc=$sm_stub_rc)"
   fi
   if [[ -f "$ROOT/orchestrator/schemas/specialized-model-dataset.schema.json" ]]; then
     ok "specialized-model-dataset.schema.json present"

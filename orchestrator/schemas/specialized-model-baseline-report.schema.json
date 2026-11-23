@@ -54,7 +54,12 @@
         "retrieval_passed": { "type": "integer", "minimum": 0 },
         "prompt_passed": { "type": "integer", "minimum": 0 },
         "stub_student_passed": { "type": "integer", "minimum": 0 },
-        "task_total": { "type": "integer", "minimum": 0 }
+        "task_total": { "type": "integer", "minimum": 0 },
+        "student_mode": { "type": "string", "enum": ["stub", "local"] },
+        "student_name": { "type": "string" },
+        "local_student_rate": { "type": ["number", "null"] },
+        "local_student_passed": { "type": "integer", "minimum": 0 },
+        "local_student_errors": { "type": "integer", "minimum": 0 }
       }
     },
     "export_attach": {

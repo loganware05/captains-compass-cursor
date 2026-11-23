@@ -1,5 +1,24 @@
 # Decisions
 
+## ADR-116: Specialized real local eval (v1.92.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-22
+- **Context:** After Bend ADR-110 Accepted (v1.91.0), L0/L1 specialized scoring still
+  used tautological gold stubs (`score_stub_student` / `_score_adapter_stub`).
+  Captain approved `specialized-real-local-eval` (#305).
+- **Decision:**
+  1. Ship opt-in local student protocol: `COMPASS_SPECIALIZED_STUDENT` (argv) and/or
+     `COMPASS_SPECIALIZED_STUDENT_URL` (HTTPS JSON); injectable transport for tests.
+  2. Wire into L0 `baseline` and L1 `evaluate`; always keep hermetic stub rates.
+  3. Stub remains CI default; doctor asserts stub mode without student env.
+  4. Local mode holds go/no-go when local rate trails retrieval by >0.05.
+  5. Defer #237 Level 3 / paid GPU, B4, XRV ops-verified, #278 leftovers.
+  6. Release **v1.92.0**.
+- **Consequences:** Operators can measure non-stub local student rates without
+  coupling CI to a model. Rollback `rollback/pre-specialized-real-local-eval` @ `6d9f8a0`.
+
+
 ## ADR-115: T3 MCP/HTTP live adapter (v1.90.0)
 
 - **Status:** Accepted

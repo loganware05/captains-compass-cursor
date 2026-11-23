@@ -65,6 +65,8 @@ class SchemaTests(unittest.TestCase):
                 "prompt_passed": 24,
                 "stub_student_passed": 24,
                 "task_total": 24,
+                "student_mode": "stub",
+                "student_name": "gold-stub",
             },
             "export_attach": {
                 "attached": False,

@@ -16,6 +16,12 @@ from orchestrator.specialized.scoring import (
     load_gold_set,
     score_gold_set,
 )
+from orchestrator.specialized.student import (
+    SpecializedStudent,
+    SpecializedStudentError,
+    resolve_student,
+)
+from orchestrator.integrations.transport import HttpTransport
 from orchestrator.train_bridge.store import (
     TrainBridgeStoreError,
     load_export,
@@ -106,6 +112,8 @@ def run_baseline(
     export_path: Path | None = None,
     evidence_dir: Path | None = None,
     write_evidence: bool = True,
+    student: SpecializedStudent | None = None,
+    transport: HttpTransport | None = None,
 ) -> dict[str, Any]:
     """Run gated Level 0 baseline and return a schema-validated report."""
     require_specialized_model_gate()
@@ -118,10 +126,20 @@ def run_baseline(
     except (OSError, ValueError) as exc:
         raise SpecializedModelServiceError(str(exc)) from exc
 
-    scores = score_gold_set(gold)
+    try:
+        active_student = resolve_student(transport=transport, student=student)
+        scores = score_gold_set(gold, student=active_student)
+    except SpecializedStudentError as exc:
+        raise SpecializedModelServiceError(str(exc)) from exc
+    local_mode = scores.get("student_mode") == "local"
     if scores.get("misses"):
         warnings.append(
             "gold misses: " + ", ".join(scores["misses"][:8])
+        )
+    if local_mode:
+        warnings.append(
+            "local student active "
+            f"({scores.get('student_name')}); stub rates remain hermetic reference"
         )
 
     export_attach = _attach_export(
@@ -131,6 +149,8 @@ def run_baseline(
         warnings.append("C7 export permission checklist incomplete")
 
     total = int(scores["task_total"] or 0)
+    # Hermetic go/no-go uses stub rates; local mode additionally holds unless
+    # local_student_rate is within 0.05 of retrieval (non-tautological signal).
     rates = [
         scores.get("retrieval_rate"),
         scores.get("prompt_rate"),
@@ -157,9 +177,40 @@ def run_baseline(
     else:
         go_no_go = "go"
 
+    if local_mode:
+        local_rate = scores.get("local_student_rate")
+        retrieval = scores.get("retrieval_rate")
+        if not isinstance(local_rate, (int, float)):
+            go_no_go = "hold"
+            overall = "warn"
+            warnings.append("local student produced no scorable rate")
+        elif isinstance(retrieval, (int, float)) and (retrieval - float(local_rate)) > 0.05:
+            go_no_go = "hold"
+            if overall == "pass":
+                overall = "warn"
+            warnings.append(
+                "local_student_rate trailing retrieval by >0.05 — hold (expected early)"
+            )
+
     report_id = f"sm0-{uuid4().hex[:10]}"
     head = git_sha(repo_root) or ""
     version = _version(repo_root)
+
+    score_block: dict[str, Any] = {
+        "retrieval_rate": scores.get("retrieval_rate"),
+        "prompt_rate": scores.get("prompt_rate"),
+        "stub_student_rate": scores.get("stub_student_rate"),
+        "retrieval_passed": scores.get("retrieval_passed"),
+        "prompt_passed": scores.get("prompt_passed"),
+        "stub_student_passed": scores.get("stub_student_passed"),
+        "task_total": total,
+        "student_mode": scores.get("student_mode") or "stub",
+        "student_name": scores.get("student_name") or "gold-stub",
+    }
+    if local_mode:
+        score_block["local_student_rate"] = scores.get("local_student_rate")
+        score_block["local_student_passed"] = scores.get("local_student_passed")
+        score_block["local_student_errors"] = scores.get("local_student_errors")
 
     report: dict[str, Any] = {
         "schema_version": "1",
@@ -170,15 +221,7 @@ def run_baseline(
         "northstar_version": version,
         "gold_set_path": str(gold_file),
         "gold_task_count": total,
-        "scores": {
-            "retrieval_rate": scores.get("retrieval_rate"),
-            "prompt_rate": scores.get("prompt_rate"),
-            "stub_student_rate": scores.get("stub_student_rate"),
-            "retrieval_passed": scores.get("retrieval_passed"),
-            "prompt_passed": scores.get("prompt_passed"),
-            "stub_student_passed": scores.get("stub_student_passed"),
-            "task_total": total,
-        },
+        "scores": score_block,
         "export_attach": export_attach,
         "checklist": checklist,
         "warnings": warnings,
@@ -188,7 +231,8 @@ def run_baseline(
         "notes": (
             "Specialized Model Level 0 local baseline. No fine-tuning, no weight "
             "training, no auto-upload. Weights/adapters stay outside this control "
-            "repo. Promote to Level 1 only after Captain review of go/no-go."
+            "repo. Promote to Level 1 only after Captain review of go/no-go. "
+            f"student_mode={score_block.get('student_mode')}."
         ),
         "weights_trained": False,
         "auto_uploaded": False,
@@ -198,8 +242,11 @@ def run_baseline(
     }
 
     if write_evidence:
+        default_dir = (
+            "specialized-real-local-eval" if local_mode else "specialized-model-level-0"
+        )
         out_root = Path(evidence_dir) if evidence_dir else (
-            repo_root / ".agent" / "evidence" / "specialized-model-level-0"
+            repo_root / ".agent" / "evidence" / default_dir
         )
         out_root.mkdir(parents=True, exist_ok=True)
         json_path = out_root / f"{report_id}.json"
@@ -222,6 +269,8 @@ def run_baseline(
             f"- retrieval_rate: `{scores.get('retrieval_rate')}`",
             f"- prompt_rate: `{scores.get('prompt_rate')}`",
             f"- stub_student_rate: `{scores.get('stub_student_rate')}`",
+            f"- student_mode: `{score_block.get('student_mode')}`",
+            f"- local_student_rate: `{score_block.get('local_student_rate')}`",
             f"- weights_trained: `false`",
             f"- auto_uploaded: `false`",
             f"- export_attached: `{export_attach.get('attached')}`",

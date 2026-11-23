@@ -1,4 +1,4 @@
-"""Hermetic Level 0 scorers — retrieval / prompt / stub-student (no live models)."""
+"""Hermetic Level 0 scorers — retrieval / prompt / student (stub or local)."""
 
 from __future__ import annotations
 
@@ -6,6 +6,12 @@ import json
 import re
 from pathlib import Path
 from typing import Any
+
+from orchestrator.specialized.student import (
+    GoldStubStudent,
+    SpecializedStudent,
+    SpecializedStudentError,
+)
 
 DEFAULT_GOLD_REL = Path("tests") / "fixtures" / "specialized-model-gold" / "tasks.json"
 
@@ -57,25 +63,48 @@ def score_prompt(task: dict[str, Any]) -> bool:
     return True
 
 
-def score_stub_student(task: dict[str, Any]) -> bool:
-    """Hermetic stub student: canned answer must contain expected keywords."""
-    answer = str(task.get("stub_student_answer") or "").lower()
-    expected = [str(x).lower() for x in (task.get("expected_keywords") or [])]
-    if not answer or not expected:
+def score_answer_keywords(answer: str, expected_keywords: list[Any]) -> bool:
+    """Keyword hit-rate for a student answer against expected keywords."""
+    answer_l = (answer or "").lower()
+    expected = [str(x).lower() for x in expected_keywords]
+    if not answer_l or not expected:
         return False
-    hits = sum(1 for kw in expected if kw in answer)
+    hits = sum(1 for kw in expected if kw in answer_l)
     need = max(1, (len(expected) + 1) // 2)
     return hits >= need
 
 
-def score_gold_set(gold: dict[str, Any]) -> dict[str, Any]:
+def score_stub_student(task: dict[str, Any]) -> bool:
+    """Hermetic stub student: canned answer must contain expected keywords."""
+    return score_answer_keywords(
+        str(task.get("stub_student_answer") or ""),
+        list(task.get("expected_keywords") or []),
+    )
+
+
+def score_gold_set(
+    gold: dict[str, Any],
+    *,
+    student: SpecializedStudent | None = None,
+) -> dict[str, Any]:
+    """Score gold tasks.
+
+    Always records hermetic stub rates. When ``student`` is local (or an
+    injected double), also records ``local_student_*`` rates from that student.
+    """
+    active = student or GoldStubStudent()
     tasks = list(gold.get("tasks") or [])
     retrieval_passed = 0
     prompt_passed = 0
     stub_passed = 0
+    local_passed = 0
+    local_errors = 0
     misses: list[str] = []
+    local_mode = active.mode == "local"
+
     for task in tasks:
         tid = str(task.get("id") or "?")
+        expected = list(task.get("expected_keywords") or [])
         r_ok = score_retrieval(task)
         p_ok = score_prompt(task)
         s_ok = score_stub_student(task)
@@ -91,8 +120,22 @@ def score_gold_set(gold: dict[str, Any]) -> dict[str, Any]:
             stub_passed += 1
         else:
             misses.append(f"{tid}:stub")
+
+        if local_mode:
+            try:
+                answer = active.answer(task)
+                l_ok = score_answer_keywords(answer, expected)
+            except SpecializedStudentError:
+                l_ok = False
+                local_errors += 1
+                misses.append(f"{tid}:local_error")
+            if l_ok:
+                local_passed += 1
+            else:
+                misses.append(f"{tid}:local")
+
     total = len(tasks)
-    return {
+    out: dict[str, Any] = {
         "retrieval_passed": retrieval_passed,
         "prompt_passed": prompt_passed,
         "stub_student_passed": stub_passed,
@@ -100,5 +143,12 @@ def score_gold_set(gold: dict[str, Any]) -> dict[str, Any]:
         "retrieval_rate": round(retrieval_passed / total, 4) if total else None,
         "prompt_rate": round(prompt_passed / total, 4) if total else None,
         "stub_student_rate": round(stub_passed / total, 4) if total else None,
+        "student_mode": active.mode,
+        "student_name": active.name,
         "misses": misses[:24],
     }
+    if local_mode:
+        out["local_student_passed"] = local_passed
+        out["local_student_rate"] = round(local_passed / total, 4) if total else None
+        out["local_student_errors"] = local_errors
+    return out
