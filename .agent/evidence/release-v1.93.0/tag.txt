@@ -1,0 +1,6 @@
+tag: v1.93.0
+commit: 06e7617b9eab18140b6cd9ca12298d4d33dbd0d8
+pr: https://github.com/loganware05/captains-compass-cursor/pull/308
+issue: https://github.com/loganware05/captains-compass-cursor/issues/278
+rollback: rollback/pre-bend-278-leftovers @ 49e29c6
+release: https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.93.0
