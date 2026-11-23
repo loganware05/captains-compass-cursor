@@ -1,20 +1,16 @@
 # Bend ADR-110 Go + Entry-State Law (durable plan copy)
 
-> Plan ID `bend-adr-110-go` — **COMPLETE**. Issue [#278](https://github.com/loganware05/captains-compass-cursor/issues/278).
-> Budget: `.agent/budgets/bend-adr-110-go.md`. Evidence: `.agent/evidence/bend-adr-110-go/`.
-
-## Goal
-
-Accept ADR-110 as conditional-go and add Finding 001 entry-state Bend law
-(birth-in-`candidate`). Keep opt-in; no CI wire; no target widen.
-
-## Baseline
-
-`origin/main` @ `843af00` / **v1.90.0**. Release **v1.91.0**.
-Rollback: `rollback/pre-bend-adr-110-go` @ `843af00`.
+> Plan ID `bend-adr-110-go` — **COMPLETE** (**v1.91.0**).
+> Issue [#278](https://github.com/loganware05/captains-compass-cursor/issues/278) ·
+> PR [#303](https://github.com/loganware05/captains-compass-cursor/pull/303) ·
+> Merge `9413ed9` · Tag [`v1.91.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.91.0).
+> Rollback: `rollback/pre-bend-adr-110-go` @ `843af00`.
 
 ## Delivered
 
-- ADR-110 Accepted
+- ADR-110 Accepted (conditional-go)
 - P12 `p12_entry_candidate`
-- Formal check evidence (proofs pass, 38/38 mutants, entry probe closed)
+
+## Parked
+
+P4/P5 whole-history · Lean pin · `--strict-laws` CI
