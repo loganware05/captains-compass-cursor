@@ -2,15 +2,18 @@
 
 ## Current status
 
-**IN PROGRESS:** [#278](https://github.com/loganware05/captains-compass-cursor/issues/278)
-`bend-278-leftovers` → **v1.93.0** on `feature/278-bend-leftovers`.
+**MERGED:** [#308](https://github.com/loganware05/captains-compass-cursor/pull/308)
+for [#278](https://github.com/loganware05/captains-compass-cursor/issues/278)
+`bend-278-leftovers` → **v1.93.0** @ `06e7617`.
 
 | Item | Value |
 |---|---|
 | Baseline | **v1.92.0** / `49e29c6` |
-| Plan | `bend-278-leftovers` **APPROVED** |
+| Plan | `bend-278-leftovers` **COMPLETE** |
 | Issue | [#278](https://github.com/loganware05/captains-compass-cursor/issues/278) |
-| Branch | `feature/278-bend-leftovers` |
+| PR | [#308](https://github.com/loganware05/captains-compass-cursor/pull/308) |
+| Merge | `06e7617` |
+| Tag | [`v1.93.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.93.0) @ `06e7617` |
 | Rollback | `rollback/pre-bend-278-leftovers` @ `49e29c6` |
 
 ### Prior closeout
@@ -25,7 +28,10 @@ Approve ⇒ implement → validate → commit → open PR. Merge remains Captain
 
 ## Next
 
-After v1.93.0 merge/closeout: B4 FIX→TEST→SUBMIT or XRV ops-verified drill.
+Pick the next product plan when ready:
+
+- B4 FIX→TEST→SUBMIT
+- XRV ops-verified drill
 
 ## Blockers
 
