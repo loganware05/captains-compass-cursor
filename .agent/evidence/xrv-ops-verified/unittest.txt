@@ -1,0 +1,19 @@
+test_ops_fixture_validates (tests.orchestrator.test_xrv_ops_verified.OpsVerifiedEerTests.test_ops_fixture_validates) ... /opt/anaconda3/lib/python3.12/site-packages/dateutil/tz/tz.py:37: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  EPOCH = datetime.datetime.utcfromtimestamp(0)
+ok
+test_ops_verified_requires_ops_verification (tests.orchestrator.test_xrv_ops_verified.OpsVerifiedEerTests.test_ops_verified_requires_ops_verification) ... ok
+test_reconstruct_merged_fixture_not_ops_verified (tests.orchestrator.test_xrv_ops_verified.OpsVerifiedEerTests.test_reconstruct_merged_fixture_not_ops_verified) ... ok
+test_reconstruct_ops_cycle_complete (tests.orchestrator.test_xrv_ops_verified.OpsVerifiedEerTests.test_reconstruct_ops_cycle_complete) ... ok
+test_authority_lock_rejected (tests.orchestrator.test_xrv_release_integrity.EerValidationTests.test_authority_lock_rejected) ... ok
+test_disabled_gate (tests.orchestrator.test_xrv_release_integrity.EerValidationTests.test_disabled_gate) ... ok
+test_i6_fixture_validates (tests.orchestrator.test_xrv_release_integrity.EerValidationTests.test_i6_fixture_validates) ... ok
+test_matching_versions_ok (tests.orchestrator.test_xrv_release_integrity.ReleaseDriftTests.test_matching_versions_ok) ... ok
+test_mismatch_fails (tests.orchestrator.test_xrv_release_integrity.ReleaseDriftTests.test_mismatch_fails) ... ok
+test_pilot_eers_validate (tests.orchestrator.test_xrv_portfolio_readiness.PilotEerTests.test_pilot_eers_validate) ... ok
+test_portfolio_two_repos (tests.orchestrator.test_xrv_portfolio_readiness.PortfolioTests.test_portfolio_two_repos) ... ok
+test_product_repo_uses_control_schema (tests.orchestrator.test_xrv_portfolio_readiness.ProductProfileTests.test_product_repo_uses_control_schema) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.465s
+
+OK

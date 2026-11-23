@@ -987,6 +987,16 @@ PY
   else
     fail "northstar missing evidence validate surface"
   fi
+  if grep -q 'evidence reconstruct' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents evidence reconstruct"
+  else
+    fail "northstar missing evidence reconstruct surface"
+  fi
+  if [[ -f "$ROOT/.agent/evidence/xrv/eer-ops-verified-hermetic.json" ]]; then
+    ok "ops-verified hermetic EER fixture present"
+  else
+    fail "missing .agent/evidence/xrv/eer-ops-verified-hermetic.json"
+  fi
   set +e
   eer_out="$(env -u COMPASS_XRV_EER_ENABLED "$ROOT/scripts/run-xrv-eer.sh" validate --repo-root "$ROOT" 2>&1)"
   eer_rc=$?

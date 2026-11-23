@@ -28,6 +28,9 @@ learning—before expanding features or autonomy.
 COMPASS_XRV_EER_ENABLED=1 \
   ./scripts/northstar evidence validate --repo . \
   --path .agent/evidence/xrv/eer-i6-cross-provider-fixture.json
+COMPASS_XRV_EER_ENABLED=1 \
+  ./scripts/northstar evidence reconstruct --repo . \
+  --path .agent/evidence/xrv/eer-ops-verified-hermetic.json
 ```
 
 ## Week 1–2 exit criteria
@@ -41,7 +44,7 @@ COMPASS_XRV_EER_ENABLED=1 \
 - [x] Eight-pillar readiness assessor (#263 / #265 → v1.84.0)
 - [x] Cross-repo portfolio + Pilot A/B EERs (#266 / #267 → v1.85.0)
 - [x] PrizePicksBot onboard / baseline (Pilot C) — [#3](https://github.com/loganware05/PrizePicksBot/pull/3) merged; control EER `merged`
-- [ ] Independent auditor can reconstruct full cycles incl. ops-verified states
+- [x] Independent auditor can reconstruct full cycles incl. ops-verified states (hermetic #310 / v1.94.0; live deploy deferred)
 
 ## Explicit deferrals
 

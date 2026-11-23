@@ -1,0 +1,16 @@
+{
+  "smoke_id": "hermetic-ops-smoke-310",
+  "plan_id": "xrv-ops-verified",
+  "issue": 310,
+  "mode": "hermetic",
+  "live_deploy": false,
+  "verified_at": "2026-11-23T20:05:00Z",
+  "repository_sha": "4747994a00000000000000000000000000000000",
+  "checks": [
+    "EER schema accepts operationally_verified + ops_verification",
+    "reconstruct_cycle returns ordered stages through ops-verified",
+    "authority locks remain false"
+  ],
+  "status": "pass",
+  "notes": "Not a live deploy drill. Captain deferred live (Q2)."
+}

@@ -245,6 +245,7 @@ Commands:
   northstar identity list [--repo PATH]
   northstar validate integrations [--repo PATH] [--no-write]
   northstar evidence validate [--path PATH] [--repo PATH]
+  northstar evidence reconstruct [--path PATH] [--repo PATH]
   northstar evidence drift [--repo PATH]
   northstar formal check policy-lifecycle [--no-mutations] [--no-verdict] [--no-write] [--require-tool] [--strict-laws]
   northstar formal lock policy-lifecycle
@@ -1253,7 +1254,7 @@ case "$cmd" in
     sub="$1"
     shift
     case "$sub" in
-      validate|drift)
+      validate|reconstruct|drift)
         # Map --repo to --repo-root for the helper script
         args=()
         while [[ $# -gt 0 ]]; do
