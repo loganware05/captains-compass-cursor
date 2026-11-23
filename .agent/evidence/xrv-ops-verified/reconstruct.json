@@ -23,7 +23,7 @@
     },
     {
       "branch": "feature/310-xrv-ops-verified",
-      "commit_sha": "4747994a00000000000000000000000000000000",
+      "commit_sha": "c0795c008617427f50c24e453a959abddabe0414",
       "present": true,
       "stage": "implement"
     },
@@ -45,7 +45,7 @@
     },
     {
       "present": true,
-      "ref": "https://github.com/loganware05/captains-compass-cursor/pull/0",
+      "ref": "https://github.com/loganware05/captains-compass-cursor/pull/311",
       "stage": "merge"
     },
     {
@@ -55,7 +55,7 @@
           ".agent/evidence/xrv/eer-ops-verified-hermetic.json"
         ],
         "live_deploy": false,
-        "repository_sha": "4747994a00000000000000000000000000000000",
+        "repository_sha": "c0795c008617427f50c24e453a959abddabe0414",
         "smoke_id": "hermetic-ops-smoke-310",
         "verified_at": "2026-11-23T20:05:00Z"
       },

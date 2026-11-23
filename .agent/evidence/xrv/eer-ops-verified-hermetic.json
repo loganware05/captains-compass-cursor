@@ -7,10 +7,10 @@
     "name": "captains-compass-cursor",
     "url": "https://github.com/loganware05/captains-compass-cursor"
   },
-  "commit_sha": "4747994a00000000000000000000000000000000",
+  "commit_sha": "c0795c008617427f50c24e453a959abddabe0414",
   "plan_id": "xrv-ops-verified",
   "issue": "https://github.com/loganware05/captains-compass-cursor/issues/310",
-  "pull_request": "https://github.com/loganware05/captains-compass-cursor/pull/0",
+  "pull_request": "https://github.com/loganware05/captains-compass-cursor/pull/311",
   "branch": "feature/310-xrv-ops-verified",
   "lifecycle_state": "operationally_verified",
   "skills_selected": [
@@ -36,7 +36,7 @@
   "latency_cost": {
     "notes": "Hermetic ops-verified drill; live_deploy=false"
   },
-  "verified_outcome": "Auditor can reconstruct issue→plan→implement→validate→review→merge→operationally_verified via reconstruct_cycle; hermetic smoke only (live deploy deferred).",
+  "verified_outcome": "Auditor can reconstruct issue\u2192plan\u2192implement\u2192validate\u2192review\u2192merge\u2192operationally_verified via reconstruct_cycle; hermetic smoke only (live deploy deferred).",
   "experience_id": null,
   "execution_run_id": null,
   "related_evidence_paths": [
@@ -48,7 +48,7 @@
   "ops_verification": {
     "smoke_id": "hermetic-ops-smoke-310",
     "verified_at": "2026-11-23T20:05:00Z",
-    "repository_sha": "4747994a00000000000000000000000000000000",
+    "repository_sha": "c0795c008617427f50c24e453a959abddabe0414",
     "evidence_paths": [
       ".agent/evidence/xrv-ops-verified/hermetic-smoke.json",
       ".agent/evidence/xrv/eer-ops-verified-hermetic.json"

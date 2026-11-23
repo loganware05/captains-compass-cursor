@@ -5,7 +5,7 @@
   "mode": "hermetic",
   "live_deploy": false,
   "verified_at": "2026-11-23T20:05:00Z",
-  "repository_sha": "4747994a00000000000000000000000000000000",
+  "repository_sha": "c0795c008617427f50c24e453a959abddabe0414",
   "checks": [
     "EER schema accepts operationally_verified + ops_verification",
     "reconstruct_cycle returns ordered stages through ops-verified",

@@ -11,6 +11,7 @@
 | Plan | `xrv-ops-verified` **APPROVED** / implementing |
 | Issue | [#310](https://github.com/loganware05/captains-compass-cursor/issues/310) |
 | Branch | `feature/310-xrv-ops-verified` |
+| PR | [#311](https://github.com/loganware05/captains-compass-cursor/pull/311) |
 | Rollback | `rollback/pre-xrv-ops-verified` @ `4747994` |
 
 ### Prior closeout
