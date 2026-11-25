@@ -1,0 +1,26 @@
+{
+  "smoke_id": "live-local-316",
+  "plan_id": "xrv-ops-live-local",
+  "mode": "live-local",
+  "live_deploy": false,
+  "repository_sha": "08c897f7b4a2ecfd6bd8b458cc6a0b13b8c464f3",
+  "verified_at": "2026-11-25T23:38:01Z",
+  "doctor": {
+    "command": "scripts/doctor.sh",
+    "exit_code": 0,
+    "ok": true,
+    "stdout_tail": "  ok: IMPLEMENTATION_PLAN.md intent sections\n  ok: export-intent-from-linear.sh\n  ok: record-finding-outcomes.sh\n  ok: start-repair-loop.sh\n  ok: start-repair-loop documents --open-draft-pr\n  ok: repair loop reaches submit_prepared\n  ok: aggregate-precision-ledger.sh\n  ok: code-reviewer reference profile\n  ok: orchestrator.integrations.ingress import\n  ok: reconcile-northstar-run.sh\n  ok: sandbox release smokes module\n  ok: .agent/knowledge layout\n  ok: ingest-knowledge.sh\n  ok: ingest-notion-live.sh\n  ok: query-knowledge.sh\n  ok: rebuild-knowledge-vector-index.sh\n  ok: rebuild-knowledge-embedding-index.sh\n  ok: refresh-ti-cache.sh\n  ok: .agent/intelligence layout\n  ok: .agent/capabilities/compiled layout\n  ok: planning fixtures (6)\n  ok: control CI workflow\n  ok: command initialize-project.md\n  ok: command plan-feature.md\n  ok: command implement-approved-plan.md\n  ok: command validate-change.md\n  ok: command prepare-pr.md\n  ok: command close-workstream.md\n  ok: docs/EVIDENCE_MATRIX.md\n  ok: docs/integrations/multi-runtime-agents.md\n  ok: docs/integrations/technology-intelligence.md\n  ok: TI candidate validation\n  ok: template CLAUDE.md\n  ok: hooks.json failClosed policy\n  ok: scripts/install.sh present\n  ok: scripts/doctor.sh present\n  ok: scripts/update.sh present\n  ok: scripts/uninstall.sh present\n\nDoctor passed: 0 errors, 0 warning(s)",
+    "stderr_tail": ""
+  },
+  "reconstruct": {
+    "ops_verified": true,
+    "cycle_complete_for_state": true,
+    "lifecycle_state": "operationally_verified"
+  },
+  "status": "pass",
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "issues_auto_closed": false,
+  "auto_promoted": false,
+  "notes": "Local tip smoke only; production deploy not claimed."
+}

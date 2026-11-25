@@ -1,0 +1,40 @@
+  ok: IMPLEMENTATION_PLAN.md intent sections
+  ok: export-intent-from-linear.sh
+  ok: record-finding-outcomes.sh
+  ok: start-repair-loop.sh
+  ok: start-repair-loop documents --open-draft-pr
+  ok: repair loop reaches submit_prepared
+  ok: aggregate-precision-ledger.sh
+  ok: code-reviewer reference profile
+  ok: orchestrator.integrations.ingress import
+  ok: reconcile-northstar-run.sh
+  ok: sandbox release smokes module
+  ok: .agent/knowledge layout
+  ok: ingest-knowledge.sh
+  ok: ingest-notion-live.sh
+  ok: query-knowledge.sh
+  ok: rebuild-knowledge-vector-index.sh
+  ok: rebuild-knowledge-embedding-index.sh
+  ok: refresh-ti-cache.sh
+  ok: .agent/intelligence layout
+  ok: .agent/capabilities/compiled layout
+  ok: planning fixtures (6)
+  ok: control CI workflow
+  ok: command initialize-project.md
+  ok: command plan-feature.md
+  ok: command implement-approved-plan.md
+  ok: command validate-change.md
+  ok: command prepare-pr.md
+  ok: command close-workstream.md
+  ok: docs/EVIDENCE_MATRIX.md
+  ok: docs/integrations/multi-runtime-agents.md
+  ok: docs/integrations/technology-intelligence.md
+  ok: TI candidate validation
+  ok: template CLAUDE.md
+  ok: hooks.json failClosed policy
+  ok: scripts/install.sh present
+  ok: scripts/doctor.sh present
+  ok: scripts/update.sh present
+  ok: scripts/uninstall.sh present
+
+Doctor passed: 0 errors, 0 warning(s)

@@ -1,0 +1,61 @@
+{
+  "schema_version": "xrv-eer-1",
+  "eer_id": "eer-ops-live-local-live-local-316",
+  "created_at": "2026-11-25T23:38:01Z",
+  "repository": {
+    "owner": "loganware05",
+    "name": "captains-compass-cursor",
+    "url": "https://github.com/loganware05/captains-compass-cursor"
+  },
+  "commit_sha": "08c897f7b4a2ecfd6bd8b458cc6a0b13b8c464f3",
+  "plan_id": "xrv-ops-live-local",
+  "issue": "https://github.com/loganware05/captains-compass-cursor/issues/316",
+  "pull_request": null,
+  "branch": null,
+  "lifecycle_state": "operationally_verified",
+  "skills_selected": [
+    "implementation-planning",
+    "testing-validation",
+    "github-integration"
+  ],
+  "budget_ref": ".agent/budgets/xrv-ops-live-local.md",
+  "permissions": [
+    "live-local-smoke",
+    "no-production-deploy"
+  ],
+  "test_evidence": [
+    ".agent/evidence/xrv-ops-live-local/live-local-316/smoke.json",
+    ".agent/evidence/xrv-ops-live-local/live-local-316/eer.json"
+  ],
+  "failure_repair": [],
+  "review_refs": [
+    "Live-local ops smoke (doctor + reconstruct; live_deploy=false)"
+  ],
+  "rollback_ref": "rollback/pre-xrv-ops-live-local",
+  "latency_cost": {
+    "notes": "Local doctor + reconstruct smoke; no external hosts"
+  },
+  "verified_outcome": "Local operational smoke bound to authentic tip SHA; auditor reconstruct complete; production deploy not claimed.",
+  "experience_id": null,
+  "execution_run_id": null,
+  "related_evidence_paths": [
+    "docs/plans/XRV_OPS_LIVE_LOCAL.md",
+    "orchestrator/xrv/live_local.py"
+  ],
+  "notes": "Live-local smoke. ops_verification.live_deploy=false. Does not claim production/remote deploy.",
+  "ops_verification": {
+    "smoke_id": "live-local-316",
+    "verified_at": "2026-11-25T23:38:01Z",
+    "repository_sha": "08c897f7b4a2ecfd6bd8b458cc6a0b13b8c464f3",
+    "evidence_paths": [
+      ".agent/evidence/xrv-ops-live-local/live-local-316/smoke.json",
+      ".agent/evidence/xrv-ops-live-local/live-local-316/eer.json"
+    ],
+    "live_deploy": false,
+    "notes": "Local control-repo tip smoke only"
+  },
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "issues_auto_closed": false,
+  "auto_promoted": false
+}

@@ -992,6 +992,16 @@ PY
   else
     fail "northstar missing evidence reconstruct surface"
   fi
+  if grep -q 'evidence live-local' "$ROOT/scripts/northstar" 2>/dev/null; then
+    ok "northstar documents evidence live-local"
+  else
+    fail "northstar missing evidence live-local surface"
+  fi
+  if [[ -x "$ROOT/scripts/run-xrv-live-local.sh" ]]; then
+    ok "scripts/run-xrv-live-local.sh present"
+  else
+    fail "missing executable scripts/run-xrv-live-local.sh"
+  fi
   if [[ -f "$ROOT/.agent/evidence/xrv/eer-ops-verified-hermetic.json" ]]; then
     ok "ops-verified hermetic EER fixture present"
   else

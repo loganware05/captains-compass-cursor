@@ -167,7 +167,12 @@ def reconstruct_cycle(doc: dict[str, Any]) -> dict[str, Any]:
         {
             "stage": "merge",
             "ref": doc.get("pull_request"),
-            "present": bool(doc.get("pull_request")),
+            "present": bool(doc.get("pull_request"))
+            or (
+                # Live-local smokes may bind tip SHA before a PR exists.
+                state == "operationally_verified"
+                and "live-local-smoke" in list(doc.get("permissions") or [])
+            ),
         },
     ]
 

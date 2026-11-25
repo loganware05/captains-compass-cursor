@@ -1,0 +1,14 @@
+test_gate_required (tests.orchestrator.test_xrv_ops_live_local.LiveLocalSmokeTests.test_gate_required) ... ok
+test_refuse_production_live_deploy (tests.orchestrator.test_xrv_ops_live_local.LiveLocalSmokeTests.test_refuse_production_live_deploy) ... ok
+test_smoke_binds_real_tip_sha (tests.orchestrator.test_xrv_ops_live_local.LiveLocalSmokeTests.test_smoke_binds_real_tip_sha) ... /opt/anaconda3/lib/python3.12/site-packages/dateutil/tz/tz.py:37: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  EPOCH = datetime.datetime.utcfromtimestamp(0)
+ok
+test_ops_fixture_validates (tests.orchestrator.test_xrv_ops_verified.OpsVerifiedEerTests.test_ops_fixture_validates) ... ok
+test_ops_verified_requires_ops_verification (tests.orchestrator.test_xrv_ops_verified.OpsVerifiedEerTests.test_ops_verified_requires_ops_verification) ... ok
+test_reconstruct_merged_fixture_not_ops_verified (tests.orchestrator.test_xrv_ops_verified.OpsVerifiedEerTests.test_reconstruct_merged_fixture_not_ops_verified) ... ok
+test_reconstruct_ops_cycle_complete (tests.orchestrator.test_xrv_ops_verified.OpsVerifiedEerTests.test_reconstruct_ops_cycle_complete) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.185s
+
+OK
