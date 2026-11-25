@@ -1,0 +1,23 @@
+586b8848882baf3963a567143c2035d4de22e889
+50f4ff845c0143084b1a72ecb94989960ab0ebad
+Merge pull request #311 from loganware05/feature/310-xrv-ops-verified
+2026-11-23 14:30:07 -0600
+title:	v1.94.0 — XRV ops-verified hermetic
+tag:	v1.94.0
+draft:	false
+prerelease:	false
+immutable:	false
+author:	loganware05
+created:	2026-11-23T20:30:54Z
+published:	2026-11-23T20:30:57Z
+url:	https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.94.0
+--
+## Summary
+Hermetic ops-verified cycle reconstruction via [#311](https://github.com/loganware05/captains-compass-cursor/pull/311) / [#310](https://github.com/loganware05/captains-compass-cursor/issues/310):
+
+- EER `ops_verification` contract for `lifecycle_state=operationally_verified`
+- `northstar evidence reconstruct` auditor stage walk
+- Hermetic fixture (`live_deploy=false`); live deploy deferred
+
+## Rollback
+`git checkout rollback/pre-xrv-ops-verified` (@ `4747994`)
