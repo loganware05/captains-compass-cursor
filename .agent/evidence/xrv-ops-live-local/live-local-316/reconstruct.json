@@ -1,0 +1,64 @@
+{
+  "eer_id": "eer-ops-live-local-live-local-316",
+  "plan_id": "xrv-ops-live-local",
+  "lifecycle_state": "operationally_verified",
+  "lifecycle_rank": 5,
+  "stages": [
+    {
+      "stage": "issue",
+      "ref": "https://github.com/loganware05/captains-compass-cursor/issues/316",
+      "present": true
+    },
+    {
+      "stage": "plan",
+      "ref": "xrv-ops-live-local",
+      "present": true
+    },
+    {
+      "stage": "implement",
+      "branch": null,
+      "commit_sha": "08c897f7b4a2ecfd6bd8b458cc6a0b13b8c464f3",
+      "present": true
+    },
+    {
+      "stage": "validate",
+      "refs": [
+        ".agent/evidence/xrv-ops-live-local/live-local-316/smoke.json",
+        ".agent/evidence/xrv-ops-live-local/live-local-316/eer.json"
+      ],
+      "present": true
+    },
+    {
+      "stage": "review",
+      "refs": [
+        "Live-local ops smoke (doctor + reconstruct; live_deploy=false)"
+      ],
+      "present": true
+    },
+    {
+      "stage": "merge",
+      "ref": null,
+      "present": true
+    },
+    {
+      "stage": "operationally_verified",
+      "present": true,
+      "ops_verification": {
+        "smoke_id": "live-local-316",
+        "verified_at": "2026-11-25T23:38:01Z",
+        "repository_sha": "08c897f7b4a2ecfd6bd8b458cc6a0b13b8c464f3",
+        "evidence_paths": [
+          ".agent/evidence/xrv-ops-live-local/live-local-316/smoke.json",
+          ".agent/evidence/xrv-ops-live-local/live-local-316/eer.json"
+        ],
+        "live_deploy": false
+      }
+    }
+  ],
+  "cycle_complete_for_state": true,
+  "ops_verified": true,
+  "approved_for_execution": false,
+  "authority_mutation": false,
+  "issues_auto_closed": false,
+  "auto_promoted": false
+}

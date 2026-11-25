@@ -4,6 +4,15 @@
 
 ## Unreleased
 
+## 1.96.0 — 2026-11-25
+
+### Added
+
+- **XRV live-local ops smoke** (`xrv-ops-live-local` / #316):
+  - `northstar evidence live-local` / `run-xrv-live-local.sh` binds EER to authentic tip SHA
+  - Doctor + reconstruct evidence; `live_deploy=false` (production refused)
+  - Gate: `COMPASS_XRV_EER_ENABLED=1`
+
 ## 1.95.0 — 2026-11-25
 
 ### Added

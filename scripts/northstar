@@ -246,6 +246,7 @@ Commands:
   northstar validate integrations [--repo PATH] [--no-write]
   northstar evidence validate [--path PATH] [--repo PATH]
   northstar evidence reconstruct [--path PATH] [--repo PATH]
+  northstar evidence live-local [--tip-sha SHA] [--smoke-id ID] [--skip-doctor] [--repo PATH]
   northstar evidence drift [--repo PATH]
   northstar formal check policy-lifecycle [--no-mutations] [--no-verdict] [--no-write] [--require-tool] [--strict-laws]
   northstar formal lock policy-lifecycle
@@ -1270,6 +1271,22 @@ case "$cmd" in
           esac
         done
         exec "$ROOT/scripts/run-xrv-eer.sh" "$sub" "${args[@]+"${args[@]}"}"
+        ;;
+      live-local)
+        args=()
+        while [[ $# -gt 0 ]]; do
+          case "$1" in
+            --repo)
+              args+=(--repo-root "$2")
+              shift 2
+              ;;
+            *)
+              args+=("$1")
+              shift
+              ;;
+          esac
+        done
+        exec "$ROOT/scripts/run-xrv-live-local.sh" "${args[@]+"${args[@]}"}"
         ;;
       *)
         echo "error: unknown evidence subcommand: $sub" >&2

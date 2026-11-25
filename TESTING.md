@@ -68,6 +68,14 @@ COMPASS_XRV_EER_ENABLED=1 ./scripts/northstar evidence validate --repo . \
 PYTHONPATH=. python3 -m unittest tests.orchestrator.test_xrv_ops_verified -v
 ```
 
+
+XRV live-local ops smoke (v1.96.0):
+
+```bash
+COMPASS_XRV_EER_ENABLED=1 ./scripts/northstar evidence live-local --repo .
+PYTHONPATH=. python3 -m unittest tests.orchestrator.test_xrv_ops_live_local -v
+```
+
 XRV eight-pillar readiness (v1.84.0) + portfolio (v1.85.0):
 
 ```bash
