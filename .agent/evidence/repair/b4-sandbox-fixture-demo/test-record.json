@@ -1,0 +1,15 @@
+{
+  "mode": "hermetic",
+  "executed": false,
+  "recorded_at": "2026-11-25T23:02:32Z",
+  "checks": [
+    "finding remains verified",
+    "suggested_fix present",
+    "allowlist + never_auto_merge locks held"
+  ],
+  "related_paths": [
+    "src/auth/session.py"
+  ],
+  "status": "recorded",
+  "note": "Hermetic TEST record only \u2014 no live suite invocation. CI remains the authority for product test green."
+}

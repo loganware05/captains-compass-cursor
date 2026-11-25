@@ -2,25 +2,22 @@
 
 ## Current status
 
-**MERGED:** [#311](https://github.com/loganware05/captains-compass-cursor/pull/311)
-for [#310](https://github.com/loganware05/captains-compass-cursor/issues/310)
-`xrv-ops-verified` → **v1.94.0** @ `50f4ff8`.
+**IN PR:** `b4-fix-submit-supervised` / [#313](https://github.com/loganware05/captains-compass-cursor/issues/313)
+→ proposed **v1.95.0** (hermetic FIX→TEST→submit_prepared; draft-PR helper; never auto-merge).
 
 | Item | Value |
 |---|---|
-| Baseline | **v1.93.0** / `4747994` |
-| Plan | `xrv-ops-verified` **COMPLETE** |
-| Issue | [#310](https://github.com/loganware05/captains-compass-cursor/issues/310) (closed) |
-| PR | [#311](https://github.com/loganware05/captains-compass-cursor/pull/311) |
-| Merge | `50f4ff8` |
-| Tag | [`v1.94.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.94.0) @ `50f4ff8` |
-| Rollback | `rollback/pre-xrv-ops-verified` @ `4747994` |
+| Baseline | **v1.94.0** / `59a149a` |
+| Plan | `b4-fix-submit-supervised` **APPROVED** / implementing |
+| Issue | [#313](https://github.com/loganware05/captains-compass-cursor/issues/313) |
+| Branch | `feature/313-b4-fix-submit-supervised` |
+| Rollback | `rollback/pre-b4-fix-submit-supervised` @ `59a149a` |
 
 ### Prior closeout
 
+- XRV ops-verified **v1.94.0** (#311 / #310) + docs (#312)
 - Bend leftovers **v1.93.0** (#308 / #278) + docs (#309)
 - Specialized real local eval **v1.92.0** (#306 / #305) + docs (#307)
-- Bend ADR-110 go **v1.91.0** (#303 / #278) + docs (#304)
 
 ## Standing order
 
@@ -28,12 +25,7 @@ Approve ⇒ implement → validate → commit → open PR. Merge remains Captain
 
 ## Next
 
-Pick the next product plan when ready:
-
-- B4 live FIX→SUBMIT (packet MVP already shipped; live still gated)
-- XRV live ops-verified deploy drill
-- Specialized Model Level 3 (#237)
-- Bend CI var enable (`COMPASS_BEND_STRICT_LAWS_CI=1`) — ops, not code
+After #313 merge/tag: XRV live ops-verified, Bend CI var, or #237 (still paused).
 
 ## Blockers
 

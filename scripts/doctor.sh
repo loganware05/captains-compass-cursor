@@ -1655,6 +1655,16 @@ PY
   else
     fail "missing executable scripts/start-repair-loop.sh"
   fi
+  if grep -q -- '--open-draft-pr' "$ROOT/scripts/start-repair-loop.sh" 2>/dev/null; then
+    ok "start-repair-loop documents --open-draft-pr"
+  else
+    fail "start-repair-loop missing --open-draft-pr"
+  fi
+  if grep -q 'submit_prepared' "$ROOT/orchestrator/repair/loop.py" 2>/dev/null; then
+    ok "repair loop reaches submit_prepared"
+  else
+    fail "repair loop missing submit_prepared stage"
+  fi
   if [[ -x "$ROOT/scripts/aggregate-precision-ledger.sh" ]]; then
     ok "aggregate-precision-ledger.sh"
   else

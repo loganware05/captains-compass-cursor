@@ -1,0 +1,107 @@
+{
+  "schema_version": "northstar.repair_run.v1",
+  "run_id": "b4-sandbox-fixture-demo",
+  "created_at": "2026-11-25T23:02:32Z",
+  "stage": "submit_prepared",
+  "repository": "loganware05/captain-compass-sandbox",
+  "finding": {
+    "finding_id": "sec-hardcoded-key",
+    "status": "verified",
+    "severity": "high",
+    "title": "Hardcoded API key introduced in session helper",
+    "suggested_fix": "Remove hardcoded secret; load from environment; rotate if exposed.",
+    "evidence_paths": [
+      "src/auth/session.py"
+    ],
+    "proved_at": "2026-11-25T23:02:32Z"
+  },
+  "report_path": "tests/fixtures/repair/sandbox-report.json",
+  "dispatch_packet": {
+    "kind": "northstar-repair-dispatch-packet",
+    "repair_run_id": "b4-sandbox-fixture-demo",
+    "created_at": "2026-11-25T23:02:32Z",
+    "dispatch_authorized": true,
+    "finding_id": "sec-hardcoded-key",
+    "repository": "loganware05/captain-compass-sandbox",
+    "selected_agent_id": null,
+    "objective": {
+      "title": "Repair verified finding sec-hardcoded-key: Hardcoded API key introduced in session helper",
+      "category": "devtool",
+      "target_repository": "loganware05/captain-compass-sandbox",
+      "required_skills": [
+        "code-reviewer",
+        "review-fix-loop"
+      ],
+      "skill_scope": "sandbox"
+    },
+    "awaiting_captain_utterance": "I authorize the repair fix",
+    "never_auto_merge": true,
+    "dispatch_authorized_at": "2026-11-25T23:02:32Z"
+  },
+  "fix": {
+    "mode": "hermetic",
+    "applied": false,
+    "recorded_at": "2026-11-25T23:02:32Z",
+    "suggested_fix": "Remove hardcoded secret; load from environment; rotate if exposed.",
+    "target_paths": [
+      "src/auth/session.py"
+    ],
+    "note": "Hermetic FIX record only \u2014 no product files modified. Live FIX requires a separate Captain-supervised worktree."
+  },
+  "test": {
+    "mode": "hermetic",
+    "executed": false,
+    "recorded_at": "2026-11-25T23:02:32Z",
+    "checks": [
+      "finding remains verified",
+      "suggested_fix present",
+      "allowlist + never_auto_merge locks held"
+    ],
+    "related_paths": [
+      "src/auth/session.py"
+    ],
+    "status": "recorded",
+    "note": "Hermetic TEST record only \u2014 no live suite invocation. CI remains the authority for product test green."
+  },
+  "submit": {
+    "prepared": true,
+    "auto_merge": false,
+    "suggested_branch": "cursor/repair-sec-hardcoded-key-05fd",
+    "suggested_pr_title": "fix: address verified finding sec-hardcoded-key",
+    "rollback": "Revert the repair PR; restore pre-fix evidence.",
+    "draft_pr": {
+      "requested": false,
+      "opened": false,
+      "helper": {
+        "tool": "gh",
+        "mode": "draft",
+        "auto_merge": false,
+        "argv": [
+          "gh",
+          "pr",
+          "create",
+          "--repo",
+          "loganware05/captain-compass-sandbox",
+          "--draft",
+          "--head",
+          "cursor/repair-sec-hardcoded-key-05fd",
+          "--title",
+          "fix: address verified finding sec-hardcoded-key",
+          "--body",
+          "## Summary\nSupervised B4 repair for `sec-hardcoded-key` (high).\n\n## Suggested fix\nRemove hardcoded secret; load from environment; rotate if exposed.\n\n## Locks\n- never auto-merge\n- hermetic FIX/TEST records only\n"
+        ],
+        "command": "gh pr create --repo loganware05/captain-compass-sandbox --draft --head cursor/repair-sec-hardcoded-key-05fd --title 'fix: address verified finding sec-hardcoded-key' --body '## Summary\nSupervised B4 repair for `sec-hardcoded-key` (high).\n\n## Suggested fix\nRemove hardcoded secret; load from environment; rotate if exposed.\n\n## Locks\n- never auto-merge\n- hermetic FIX/TEST records only\n'",
+        "note": "Helper only unless COMPASS_REPAIR_EXECUTE_DRAFT_PR=1 and --open-draft-pr was set. Never auto-merges."
+      },
+      "auto_merge": false
+    },
+    "note": "Captain authorized FIX \u2014 hermetic FIX/TEST recorded; submit prepared with draft-PR helper. Never auto-merge."
+  },
+  "locks": {
+    "never_auto_merge": true,
+    "verified_only": true,
+    "captain_fix_authorized": true,
+    "open_draft_pr_requested": false,
+    "auto_promoted": false
+  }
+}

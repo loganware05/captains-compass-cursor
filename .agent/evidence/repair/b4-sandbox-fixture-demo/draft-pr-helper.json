@@ -1,0 +1,21 @@
+{
+  "tool": "gh",
+  "mode": "draft",
+  "auto_merge": false,
+  "argv": [
+    "gh",
+    "pr",
+    "create",
+    "--repo",
+    "loganware05/captain-compass-sandbox",
+    "--draft",
+    "--head",
+    "cursor/repair-sec-hardcoded-key-05fd",
+    "--title",
+    "fix: address verified finding sec-hardcoded-key",
+    "--body",
+    "## Summary\nSupervised B4 repair for `sec-hardcoded-key` (high).\n\n## Suggested fix\nRemove hardcoded secret; load from environment; rotate if exposed.\n\n## Locks\n- never auto-merge\n- hermetic FIX/TEST records only\n"
+  ],
+  "command": "gh pr create --repo loganware05/captain-compass-sandbox --draft --head cursor/repair-sec-hardcoded-key-05fd --title 'fix: address verified finding sec-hardcoded-key' --body '## Summary\nSupervised B4 repair for `sec-hardcoded-key` (high).\n\n## Suggested fix\nRemove hardcoded secret; load from environment; rotate if exposed.\n\n## Locks\n- never auto-merge\n- hermetic FIX/TEST records only\n'",
+  "note": "Helper only unless COMPASS_REPAIR_EXECUTE_DRAFT_PR=1 and --open-draft-pr was set. Never auto-merges."
+}

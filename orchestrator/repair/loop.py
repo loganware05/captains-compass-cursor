@@ -1,12 +1,16 @@
-"""B4 repair loop — FIND→PROVE→packet (Captain-gated FIX/SUBMIT).
+"""B4 repair loop — FIND→PROVE→packet→FIX→TEST→SUBMIT prepare.
 
-Never auto-merges. Verified findings only. Hermetic by default.
+Captain-gated FIX/SUBMIT. Never auto-merges. Verified findings only.
+Hermetic by default; optional draft-PR helper (execute gated separately).
 """
 
 from __future__ import annotations
 
 import json
+import os
 import re
+import shutil
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -25,6 +29,8 @@ SEVERITY_RANK = {
     "info": 1,
     "none": 0,
 }
+
+_EXECUTE_DRAFT_TRUTHY = frozenset({"1", "true", "yes", "on"})
 
 
 class RepairError(ValueError):
@@ -156,6 +162,132 @@ def build_dispatch_packet(
     }
 
 
+def _draft_pr_helper(
+    *,
+    finding_id: str,
+    repository: str,
+    branch: str,
+    title: str,
+    body: str,
+) -> dict[str, Any]:
+    """Evidence-only gh draft-PR helper. Never implies auto-merge."""
+    argv = [
+        "gh",
+        "pr",
+        "create",
+        "--repo",
+        repository,
+        "--draft",
+        "--head",
+        branch,
+        "--title",
+        title,
+        "--body",
+        body,
+    ]
+    return {
+        "tool": "gh",
+        "mode": "draft",
+        "auto_merge": False,
+        "argv": argv,
+        "command": " ".join(shlex_quote(a) for a in argv),
+        "note": (
+            "Helper only unless COMPASS_REPAIR_EXECUTE_DRAFT_PR=1 and "
+            "--open-draft-pr was set. Never auto-merges."
+        ),
+    }
+
+
+def shlex_quote(value: str) -> str:
+    if re.fullmatch(r"[A-Za-z0-9_./:@+=,-]+", value):
+        return value
+    return "'" + value.replace("'", "'\"'\"'") + "'"
+
+
+def _record_hermetic_fix(proved: dict[str, Any], out_dir: Path) -> dict[str, Any]:
+    """Record FIX intent hermetically — does not mutate product sources."""
+    fix = {
+        "mode": "hermetic",
+        "applied": False,
+        "recorded_at": _utc_now(),
+        "suggested_fix": proved.get("suggested_fix") or "",
+        "target_paths": list(proved.get("evidence_paths") or []),
+        "note": (
+            "Hermetic FIX record only — no product files modified. "
+            "Live FIX requires a separate Captain-supervised worktree."
+        ),
+    }
+    (out_dir / "fix-record.json").write_text(
+        json.dumps(fix, indent=2) + "\n", encoding="utf-8"
+    )
+    return fix
+
+
+def _record_hermetic_test(proved: dict[str, Any], out_dir: Path) -> dict[str, Any]:
+    """Record TEST plan hermetically — does not execute product test suites."""
+    test = {
+        "mode": "hermetic",
+        "executed": False,
+        "recorded_at": _utc_now(),
+        "checks": [
+            "finding remains verified",
+            "suggested_fix present",
+            "allowlist + never_auto_merge locks held",
+        ],
+        "related_paths": list(proved.get("evidence_paths") or []),
+        "status": "recorded",
+        "note": (
+            "Hermetic TEST record only — no live suite invocation. "
+            "CI remains the authority for product test green."
+        ),
+    }
+    (out_dir / "test-record.json").write_text(
+        json.dumps(test, indent=2) + "\n", encoding="utf-8"
+    )
+    return test
+
+
+def _maybe_execute_draft_pr(helper: dict[str, Any]) -> dict[str, Any]:
+    """Optionally execute gh draft create when explicitly enabled."""
+    raw = (os.environ.get("COMPASS_REPAIR_EXECUTE_DRAFT_PR") or "").strip().lower()
+    if raw not in _EXECUTE_DRAFT_TRUTHY:
+        return {
+            "requested": True,
+            "opened": False,
+            "executed": False,
+            "reason": "COMPASS_REPAIR_EXECUTE_DRAFT_PR not enabled",
+            "helper": helper,
+        }
+    gh = shutil.which("gh")
+    if not gh:
+        raise RepairError("gh not found on PATH; cannot execute draft PR")
+    argv = list(helper.get("argv") or [])
+    if not argv or argv[0] != "gh":
+        raise RepairError("invalid draft-PR helper argv")
+    # Replace leading gh with resolved binary
+    cmd = [gh, *argv[1:]]
+    try:
+        completed = subprocess.run(  # noqa: S603 — argv from controlled helper
+            cmd,
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+    except subprocess.TimeoutExpired as exc:
+        raise RepairError("gh draft PR timed out") from exc
+    return {
+        "requested": True,
+        "opened": completed.returncode == 0,
+        "executed": True,
+        "exit_code": completed.returncode,
+        "stdout": (completed.stdout or "")[-2000:],
+        "stderr": (completed.stderr or "")[-2000:],
+        "helper": helper,
+        "auto_merge": False,
+    }
+
+
 def start_repair(
     *,
     repo_root: Path,
@@ -165,10 +297,21 @@ def start_repair(
     allowlist_path: Path | None = None,
     severity_floor: str = "medium",
     captain_authorized_fix: bool = False,
+    open_draft_pr: bool = False,
     selected_agent_id: str | None = None,
     repository_override: str | None = None,
 ) -> dict[str, Any]:
-    """Run FIND→PROVE→packet; optionally mark FIX authorized (still no auto-merge)."""
+    """Run FIND→PROVE→packet; on Captain FIX auth run hermetic FIX→TEST→SUBMIT prep.
+
+    Never auto-merges. ``open_draft_pr`` only prepares (or optionally executes) a
+    draft PR helper when Captain authorized FIX.
+    """
+    if open_draft_pr and not captain_authorized_fix:
+        raise RepairError(
+            "open_draft_pr requires --captain-authorized-fix "
+            "(unauthorized path cannot submit)"
+        )
+
     repo_root = Path(repo_root).resolve()
     report = load_report(Path(report_path))
     finding = find_finding(report, finding_id)
@@ -197,22 +340,65 @@ def start_repair(
     )
 
     stage = "packet_ready"
+    fix_record: dict[str, Any] | None = None
+    test_record: dict[str, Any] | None = None
     submit: dict[str, Any] = {
         "prepared": False,
         "auto_merge": False,
-        "note": "Draft PR / branch submit requires human review; never auto-merge.",
+        "draft_pr": {
+            "requested": False,
+            "opened": False,
+            "helper": None,
+        },
+        "note": "Draft PR / branch submit requires Captain FIX authorization; never auto-merge.",
     }
+
     if captain_authorized_fix:
-        stage = "fix_authorized_prepare_submit"
         packet["dispatch_authorized"] = True
         packet["dispatch_authorized_at"] = _utc_now()
+        fix_record = _record_hermetic_fix(proved, out_dir)
+        test_record = _record_hermetic_test(proved, out_dir)
+
+        branch = f"cursor/repair-{finding_id}-05fd"
+        title = f"fix: address verified finding {finding_id}"
+        body = (
+            f"## Summary\nSupervised B4 repair for `{finding_id}` "
+            f"({proved.get('severity')}).\n\n"
+            f"## Suggested fix\n{proved.get('suggested_fix') or '(none)'}\n\n"
+            "## Locks\n- never auto-merge\n- hermetic FIX/TEST records only\n"
+        )
+        helper = _draft_pr_helper(
+            finding_id=finding_id,
+            repository=repository,
+            branch=branch,
+            title=title,
+            body=body,
+        )
+        (out_dir / "draft-pr-helper.json").write_text(
+            json.dumps(helper, indent=2) + "\n", encoding="utf-8"
+        )
+
+        draft_pr: dict[str, Any] = {
+            "requested": bool(open_draft_pr),
+            "opened": False,
+            "helper": helper,
+            "auto_merge": False,
+        }
+        if open_draft_pr:
+            draft_pr = _maybe_execute_draft_pr(helper)
+
+        stage = "submit_prepared"
         submit = {
             "prepared": True,
             "auto_merge": False,
-            "suggested_branch": f"cursor/repair-{finding_id}-05fd",
-            "suggested_pr_title": f"fix: address verified finding {finding_id}",
+            "suggested_branch": branch,
+            "suggested_pr_title": title,
             "rollback": "Revert the repair PR; restore pre-fix evidence.",
-            "note": "Captain authorized FIX preparation only — open draft PR manually; never auto-merge.",
+            "draft_pr": draft_pr,
+            "note": (
+                "Captain authorized FIX — hermetic FIX/TEST recorded; "
+                "submit prepared with draft-PR helper. Never auto-merge."
+            ),
         }
 
     result = {
@@ -224,11 +410,15 @@ def start_repair(
         "finding": proved,
         "report_path": str(Path(report_path)),
         "dispatch_packet": packet,
+        "fix": fix_record,
+        "test": test_record,
         "submit": submit,
         "locks": {
             "never_auto_merge": True,
             "verified_only": True,
             "captain_fix_authorized": bool(captain_authorized_fix),
+            "open_draft_pr_requested": bool(open_draft_pr),
+            "auto_promoted": False,
         },
     }
 
@@ -251,6 +441,8 @@ def start_repair(
                 f"- Repository: `{packet['repository']}`",
                 f"- Auto-merge: **false**",
                 f"- Captain FIX authorized: `{bool(captain_authorized_fix)}`",
+                f"- Draft PR requested: `{bool(open_draft_pr)}`",
+                f"- Submit prepared: `{bool(submit.get('prepared'))}`",
                 "",
                 "## Title",
                 "",
