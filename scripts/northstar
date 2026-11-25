@@ -121,7 +121,7 @@ Commands:
   northstar review ingest-agentic-security --repo PATH --artifact PATH --github-repo OWNER/NAME [options]
   northstar intent export --out PATH [--fixture PATH | --issue ID]
   northstar outcomes record --report PATH --triage PATH [record-finding-outcomes.sh options]
-  northstar repair start --report PATH --finding ID [start-repair-loop.sh options]
+  northstar repair start --report PATH --finding ID [--captain-authorized-fix] [--open-draft-pr] [start-repair-loop.sh options]
   northstar precision aggregate (--outcomes PATH | --outcomes-dir PATH) [aggregate-precision-ledger.sh options]
   northstar context build --repo PATH [--check]
   northstar context walk --repo PATH --route domain/module

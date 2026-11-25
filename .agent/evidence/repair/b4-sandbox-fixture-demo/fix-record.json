@@ -1,0 +1,10 @@
+{
+  "mode": "hermetic",
+  "applied": false,
+  "recorded_at": "2026-11-25T23:02:32Z",
+  "suggested_fix": "Remove hardcoded secret; load from environment; rotate if exposed.",
+  "target_paths": [
+    "src/auth/session.py"
+  ],
+  "note": "Hermetic FIX record only \u2014 no product files modified. Live FIX requires a separate Captain-supervised worktree."
+}

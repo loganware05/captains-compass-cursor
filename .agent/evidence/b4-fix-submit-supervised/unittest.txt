@@ -1,0 +1,11 @@
+test_captain_authorized_reaches_submit_prepared (tests.orchestrator.test_m32_b4_repair_loop.RepairLoopTests.test_captain_authorized_reaches_submit_prepared) ... ok
+test_open_draft_pr_flag_requests_helper_without_execute (tests.orchestrator.test_m32_b4_repair_loop.RepairLoopTests.test_open_draft_pr_flag_requests_helper_without_execute) ... ok
+test_refuse_non_allowlisted_repo (tests.orchestrator.test_m32_b4_repair_loop.RepairLoopTests.test_refuse_non_allowlisted_repo) ... ok
+test_refuse_unverified (tests.orchestrator.test_m32_b4_repair_loop.RepairLoopTests.test_refuse_unverified) ... ok
+test_start_repair_packet_ready (tests.orchestrator.test_m32_b4_repair_loop.RepairLoopTests.test_start_repair_packet_ready) ... ok
+test_unauthorized_cannot_open_draft_pr (tests.orchestrator.test_m32_b4_repair_loop.RepairLoopTests.test_unauthorized_cannot_open_draft_pr) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.038s
+
+OK

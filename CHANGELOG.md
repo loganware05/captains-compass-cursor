@@ -4,6 +4,16 @@
 
 ## Unreleased
 
+## 1.95.0 — 2026-11-25
+
+### Added
+
+- **B4 supervised FIX→TEST→SUBMIT** (`b4-fix-submit-supervised` / #313):
+  - Authorized runs reach `submit_prepared` with hermetic FIX/TEST records
+  - Draft-PR helper evidence (`draft-pr-helper.json`); `--open-draft-pr` optional (off by default)
+  - Execute gated by `COMPASS_REPAIR_EXECUTE_DRAFT_PR=1`; never auto-merge
+  - Unauthorized path cannot request draft PR
+
 ## 1.94.0 — 2026-11-23
 
 ### Added
