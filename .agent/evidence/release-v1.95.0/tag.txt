@@ -1,0 +1,24 @@
+tag: v1.95.0
+46240102177d26cde94f60ac69ddc44a65a8d1f5
+703eda165db88fd9767cf928a223fd21a0ac803c
+Merge pull request #314 from loganware05/feature/313-b4-fix-submit-supervised
+2026-11-25 17:26:58 -0600
+title:	v1.95.0 — B4 supervised FIX→SUBMIT
+tag:	v1.95.0
+draft:	false
+prerelease:	false
+immutable:	false
+author:	loganware05
+created:	2026-11-25T23:27:37Z
+published:	2026-11-25T23:27:40Z
+url:	https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.95.0
+--
+## Summary
+Supervised B4 FIX→TEST→SUBMIT prepare via [#314](https://github.com/loganware05/captains-compass-cursor/pull/314) / [#313](https://github.com/loganware05/captains-compass-cursor/issues/313):
+
+- Authorized runs reach `submit_prepared` with hermetic FIX/TEST records
+- Draft-PR helper evidence; `--open-draft-pr` optional (execute gated)
+- Never auto-merge
+
+## Rollback
+`git checkout rollback/pre-b4-fix-submit-supervised` (@ `59a149a`)
