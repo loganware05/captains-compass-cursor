@@ -1,36 +1,41 @@
-# Implementation Plan — B4 Supervised FIX→SUBMIT
+# Implementation Plan — PrizePicks Slack Suggestions Pipeline
 
-- Status: **COMPLETE**
+- Status: **APPROVED / IMPLEMENTING**
+
+## Approval Record
+
+| Field | Value |
+|---|---|
+| Approved by | Captain |
+| Approved at | 2026-11-26 |
+| Issue | [#318](https://github.com/loganware05/captains-compass-cursor/issues/318) |
+| Product issue | PrizePicksBot [#4](https://github.com/loganware05/PrizePicksBot/issues/4) |
+| Rollback | `rollback/pre-prizepicks-slack-suggestions` @ `08c897f` |
+| Branch (control) | `feature/318-prizepicks-slack-suggestions` |
+| Branch (product) | `feature/4-slack-suggestions-dm` |
+| Worktree (control) | `/Users/loganware/Documents/Personal/Code/captains-compass-prizepicks-slack` |
+| Worktree (product) | `/Users/loganware/Documents/Personal/Code/PrizePicksBot-slack-suggestions` |
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **COMPLETE** |
-| Plan ID | `b4-fix-submit-supervised` |
-| Issue | [#313](https://github.com/loganware05/captains-compass-cursor/issues/313) |
-| PR | [#314](https://github.com/loganware05/captains-compass-cursor/pull/314) |
-| Merge | `703eda1` |
-| Tag | [`v1.95.0`](https://github.com/loganware05/captains-compass-cursor/releases/tag/v1.95.0) @ `703eda1` |
-| Baseline | `origin/main` @ `59a149a` / **v1.94.0** |
-| Branch | `feature/313-b4-fix-submit-supervised` (merged) |
-| Rollback | `rollback/pre-b4-fix-submit-supervised` @ `59a149a` |
-| Release | **v1.95.0** |
-| Approved | 2026-11-25 |
-| Merged | 2026-11-25 |
+| Status | **APPROVED** |
+| Plan ID | `prizepicks-slack-suggestions` |
+| Budget | `.agent/budgets/prizepicks-slack-suggestions.md` |
+| Durable copy | `docs/plans/PRIZEPICKS_SLACK_SUGGESTIONS.md` |
 
-Budget: `.agent/budgets/b4-fix-submit-supervised.md`  
-Durable copy: `docs/plans/B4_FIX_SUBMIT_SUPERVISED.md`  
-Evidence: `.agent/evidence/b4-fix-submit-supervised/` · `.agent/evidence/release-v1.95.0/`
+## Goal
 
-## Delivered
+NorthStar/T3 orchestrates PrizePicksBot research-only Slack DM suggestion cards:
+on-demand + daily **17:00 America/Chicago**. Product owns Slack client; control owns
+experience procedure + schedule ritual.
 
-- Authorized runs reach `submit_prepared` with hermetic FIX/TEST records
-- Draft-PR helper + optional `--open-draft-pr` (execute gated)
-- Never auto-merge; unauthorized cannot submit
+## Acceptance (control)
 
-## Rollback
+- [x] Approved plan + issues + worktrees
+- [ ] Procedure doc for T3 schedule + on-demand
+- [ ] Docs/memory updated
+- [ ] PR opened; product PR linked
 
-```bash
-git checkout rollback/pre-b4-fix-submit-supervised
-```
+Full product acceptance tracked on PrizePicksBot #4.

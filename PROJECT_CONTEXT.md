@@ -144,7 +144,7 @@ gh auth status
 
 ## Current Priorities
 
-**v1.87.0** post-merge wave continue Skill + CLI (#274 / #275) **MERGED**.
-Prior: **v1.86.0** Superpowers + C2 session memory (#273); XRV W3 (#267).
+**v1.96.0** PrizePicks Slack suggestions orchestration (#318) — in progress.
+Prior tip: **v1.95.0** B4 supervised FIX→TEST→SUBMIT (#313).
 Specialized Model Level 3 **DEFERRED**. Start here: `docs/guides/captain-handbook.md`.
-Live trading / AHF / live wagers denied.
+Live trading / AHF / live wagers denied. PrizePicks research DMs use separate Slack app.

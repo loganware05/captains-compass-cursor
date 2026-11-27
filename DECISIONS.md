@@ -1,5 +1,21 @@
 # Decisions
 
+## ADR-117: PrizePicks Slack suggestions orchestration (v1.96.0)
+
+- **Status:** Accepted
+- **Date:** 2026-11-26
+- **Context:** Captain approved `prizepicks-slack-suggestions` for research-only Flex
+  suggestion DMs with T3 daily 17:00 America/Chicago cadence (#318 / PrizePicksBot #4).
+- **Decision:**
+  1. Product Slack client lives in PrizePicksBot (`PRIZEPICKS_SLACK_*`); compact cards.
+  2. NorthStar owns experience procedure + `schedule_task` ritual only.
+  3. Feedback via reaction/reply poll on next run (no Events API in v1).
+  4. Do not overload `NORTHSTAR_SLACK_BOT_TOKEN` for picks by default.
+  5. Live PrizePicks entry remains DENIED; Slack never approves control plans.
+  6. Release **v1.96.0** (control docs/orchestration).
+- **Consequences:** Consistent DM delivery without expanding Slack authority.
+  Rollback `rollback/pre-prizepicks-slack-suggestions` @ `08c897f`.
+
 ## ADR-116: Specialized real local eval (v1.92.0)
 
 - **Status:** Accepted
