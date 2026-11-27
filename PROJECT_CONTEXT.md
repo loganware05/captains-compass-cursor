@@ -144,7 +144,8 @@ gh auth status
 
 ## Current Priorities
 
-**v1.96.0** PrizePicks Slack suggestions orchestration (#318) — in progress.
+**v1.96.0** PrizePicks Slack suggestions orchestration (#318 / #319) **MERGED**.
 Prior tip: **v1.95.0** B4 supervised FIX→TEST→SUBMIT (#313).
 Specialized Model Level 3 **DEFERRED**. Start here: `docs/guides/captain-handbook.md`.
-Live trading / AHF / live wagers denied. PrizePicks research DMs use separate Slack app.
+Live trading / AHF / live wagers denied. PrizePicks research DMs use separate Slack app
+(`PRIZEPICKS_SLACK_*`; daily 11:00 + 17:00 CT via T3).
