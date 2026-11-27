@@ -38,10 +38,10 @@ python -m flex_friday slack publish --board ... --odds ... --mode daily --dry-ru
 
 Create/update with MCP `schedule_task`:
 
-- **Title:** PrizePicks daily Flex Slack DM
-- **Schedule:** `fixed_time`, `timeOfDay` = `17:00` (**T3 local / America/Chicago** —
-  not UTC). Confirmed next-run maps to 17:00 CT.
-- **Local intent:** 17:00 America/Chicago every day (default; Captain may narrow weekdays)
+- **Titles:** PrizePicks daily Flex Slack DM (**11:00 CT**) and (**17:00 CT**)
+- **Schedule:** two `fixed_time` tasks — `timeOfDay` `11:00` and `17:00`
+  (**T3 local / America/Chicago**, not UTC).
+- **Local intent:** 11:00 and 17:00 America/Chicago every day (Captain may narrow weekdays)
 - **Prompt (sketch):**
 
 ```text
