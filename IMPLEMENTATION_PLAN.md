@@ -1,6 +1,6 @@
 # Implementation Plan — PrizePicks Slack Suggestions Pipeline
 
-- Status: **APPROVED / IMPLEMENTING**
+- Status: **COMPLETE**
 
 ## Approval Record
 
@@ -13,29 +13,31 @@
 | Rollback | `rollback/pre-prizepicks-slack-suggestions` @ `08c897f` |
 | Branch (control) | `feature/318-prizepicks-slack-suggestions` |
 | Branch (product) | `feature/4-slack-suggestions-dm` |
-| Worktree (control) | `/Users/loganware/Documents/Personal/Code/captains-compass-prizepicks-slack` |
-| Worktree (product) | `/Users/loganware/Documents/Personal/Code/PrizePicksBot-slack-suggestions` |
+| Control PR | [#319](https://github.com/loganware05/captains-compass-cursor/pull/319) **merged** `3e8c985` |
+| Product PR | [PrizePicksBot#5](https://github.com/loganware05/PrizePicksBot/pull/5) **merged** `a38f1d1` |
+| Release | **v1.96.0** |
 
 ## Metadata
 
 | Field | Value |
 |---|---|
-| Status | **APPROVED** |
+| Status | **COMPLETE** |
 | Plan ID | `prizepicks-slack-suggestions` |
+| Completed at | 2026-11-26 |
 | Budget | `.agent/budgets/prizepicks-slack-suggestions.md` |
 | Durable copy | `docs/plans/PRIZEPICKS_SLACK_SUGGESTIONS.md` |
 
-## Goal
+## Completion
 
-NorthStar/T3 orchestrates PrizePicksBot research-only Slack DM suggestion cards:
-on-demand + daily **17:00 America/Chicago**. Product owns Slack client; control owns
-experience procedure + schedule ritual.
+| Criterion | Status |
+|---|---|
+| Product compact DM cards + poll ledger | Done (PR #5) |
+| Control orchestration docs/procedure | Done (PR #319) |
+| Live DM smoke + Captain visual confirm | Done |
+| T3 schedules 11:00 + 17:00 CT | Done |
+| Hermetic tests / doctor | Done |
+| Live PrizePicks entry | Still DENIED |
 
-## Acceptance (control)
+## Rollback
 
-- [x] Approved plan + issues + worktrees
-- [ ] Procedure doc for T3 schedule + on-demand
-- [ ] Docs/memory updated
-- [ ] PR opened; product PR linked
-
-Full product acceptance tracked on PrizePicksBot #4.
+Disable T3 schedules; unset `PRIZEPICKS_SLACK_*`; revert to `rollback/pre-prizepicks-slack-suggestions` / product `rollback/pre-slack-suggestions-dm`.
