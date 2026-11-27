@@ -4,6 +4,15 @@
 
 ## Unreleased
 
+## 1.96.0 — 2026-11-26
+
+### Added
+
+- **PrizePicks Slack suggestions orchestration** (`prizepicks-slack-suggestions` / #318):
+  - Procedure for T3 daily 17:00 America/Chicago + on-demand PrizePicksBot DM cards
+  - Docs: `docs/integrations/prizepicks-slack-suggestions.md` (+ Slack.md cross-link)
+  - Product companion: PrizePicksBot #4 (compact card CLI; research-only)
+
 ## 1.95.0 — 2026-11-25
 
 ### Added

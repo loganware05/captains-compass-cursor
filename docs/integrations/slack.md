@@ -47,3 +47,10 @@ See `.cursor/skills/northstar-connected-routine/SKILL.md`.
 After GitHub + Linear health, Slack may notify allowlisted transitions in live
 mode via `NORTHSTAR_SLACK_BOT_TOKEN`. Slack remains non-authoritative. See
 `docs/integrations/northstar-live-ops.md`.
+
+## PrizePicks suggestion DMs (separate app)
+
+Personal Flex **research** cards are owned by PrizePicksBot and use
+`PRIZEPICKS_SLACK_*` (not `NORTHSTAR_SLACK_BOT_TOKEN`). NorthStar only
+orchestrates the T3 schedule/on-demand ritual. See
+`docs/integrations/prizepicks-slack-suggestions.md`.
