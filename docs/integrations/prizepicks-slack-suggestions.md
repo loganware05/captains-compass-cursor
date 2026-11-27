@@ -39,8 +39,8 @@ python -m flex_friday slack publish --board ... --odds ... --mode daily --dry-ru
 Create/update with MCP `schedule_task`:
 
 - **Title:** PrizePicks daily Flex Slack DM
-- **Schedule:** `fixed_time`, `timeOfDay` = `23:00` UTC while America/Chicago is **CST**
-  (UTC−6); use `22:00` UTC during **CDT** (UTC−5). Re-check at DST boundaries.
+- **Schedule:** `fixed_time`, `timeOfDay` = `17:00` (**T3 local / America/Chicago** —
+  not UTC). Confirmed next-run maps to 17:00 CT.
 - **Local intent:** 17:00 America/Chicago every day (default; Captain may narrow weekdays)
 - **Prompt (sketch):**
 
