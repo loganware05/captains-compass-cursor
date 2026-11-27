@@ -2,15 +2,17 @@
 
 ## Current status
 
-**IN PROGRESS:** [#318](https://github.com/loganware05/captains-compass-cursor/issues/318) —
+**IN PROGRESS → PR:** [#319](https://github.com/loganware05/captains-compass-cursor/pull/319)
+for [#318](https://github.com/loganware05/captains-compass-cursor/issues/318) —
 `prizepicks-slack-suggestions` on `feature/318-prizepicks-slack-suggestions` → **v1.96.0**.
 
 | Item | Value |
 |---|---|
 | Baseline | **v1.95.0** @ `08c897f` |
+| Head | `5a242b1` |
 | Plan | `prizepicks-slack-suggestions` **APPROVED** |
 | Issue | [#318](https://github.com/loganware05/captains-compass-cursor/issues/318) |
-| Product | PrizePicksBot [#4](https://github.com/loganware05/PrizePicksBot/issues/4) |
+| Product PR | [PrizePicksBot#5](https://github.com/loganware05/PrizePicksBot/pull/5) |
 | Rollback | `rollback/pre-prizepicks-slack-suggestions` @ `08c897f` |
 
 Product worktree implements Slack CLI; control ships orchestration docs/procedure.
